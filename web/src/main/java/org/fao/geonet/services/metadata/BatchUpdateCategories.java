@@ -36,6 +36,7 @@ import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.MdInfo;
 import org.fao.geonet.kernel.SelectionManager;
 import org.fao.geonet.services.NotInReadOnlyModeService;
+import org.fao.geonet.util.CSRFUtil;
 import org.jdom.Element;
 
 import java.util.HashSet;
@@ -105,8 +106,10 @@ public class BatchUpdateCategories extends NotInReadOnlyModeService {
 					Element el = (Element) list.get(i);
 					String name = el.getName();
 
-					if (name.startsWith("_"))
-						dm.setCategory(context, dbms, id, name.substring(1));
+                    if (name.startsWith("_") && !name.equals(CSRFUtil.TOKEN_PARAMETER_NAME)) {
+                        dm.setCategory(context, dbms, id, name.substring(1));
+                    }
+
 				}
 				metadata.add(Integer.valueOf(id));
 			}

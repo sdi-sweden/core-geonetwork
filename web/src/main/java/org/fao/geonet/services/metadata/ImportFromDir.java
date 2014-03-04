@@ -54,6 +54,7 @@ import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.search.spatial.Pair;
 import org.fao.geonet.kernel.MetadataIndexerProcessor;
 import org.fao.geonet.kernel.mef.MEFLib;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.fao.geonet.util.ThreadUtils;
 import org.jdom.Element;
@@ -359,6 +360,8 @@ public class ImportFromDir extends NotInReadOnlyModeService{
 	{
 		GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 		DataManager   dm = gc.getDataManager();
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
 
 		ImportConfig config = new ImportConfig(configFile, context);
 
@@ -400,7 +403,7 @@ public class ImportFromDir extends NotInReadOnlyModeService{
 
 				for(int k=0; k<files.length; k++)
 				{
-					Element xml = Xml.loadFile(files[k]);
+					Element xml = Xml.loadFile(files[k], allowDTD);
 
 					if (!style.equals("_none_"))
 						xml = Xml.transform(xml, stylePath +"/"+ style);
@@ -521,10 +524,12 @@ class ImportConfig
 	{
 		GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 		DataManager   dm = gc.getDataManager();
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
 
 		Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
 
-		Element config = Xml.loadFile(configFile);
+		Element config = Xml.loadFile(configFile, allowDTD);
 
 		fillCategIds(dbms);
 

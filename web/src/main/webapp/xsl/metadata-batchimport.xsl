@@ -35,6 +35,7 @@
 
 	<xsl:template name="form">
 		<form name="xmlbatch" accept-charset="UTF-8" action="{/root/gui/locService}/util.import" method="post">
+      <input type="hidden" name="_tk" value="{/root/gui/_tk}"/>
 			<input type="submit" style="display: none;" />
 			
 			<table class="text-aligned-left">

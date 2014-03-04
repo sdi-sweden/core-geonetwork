@@ -33,10 +33,10 @@ import java.io.InputStream;
  * Register XML or binary file to process for a MEF file.
  */
 public interface IMEFVisitor {
-	public void handleMetadata(Element md, int index) throws Exception;
+	public void handleMetadata(Element md, int index, boolean allowDTD) throws Exception;
 
 	public void handleMetadataFiles(File[] File, Element info, 
-			int index) throws Exception;
+			int index, boolean allowDTD) throws Exception;
 
 	public void handleInfo(Element info, int index) throws Exception;
 

@@ -188,7 +188,7 @@ public final class Processor {
 				
 					BufferedInputStream in = new BufferedInputStream(conn.getInputStream());
 					try {
-						remoteFragment = Xml.loadStream(in);
+						remoteFragment = Xml.loadStream(in, false);
 	                    if(Log.isDebugEnabled(Log.XLINK_PROCESSOR))
 	                        Log.debug(Log.XLINK_PROCESSOR,"Read:\n"+Xml.getString(remoteFragment));
 					} finally {

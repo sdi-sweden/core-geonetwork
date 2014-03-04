@@ -36,6 +36,7 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.exceptions.ConcurrentUpdateEx;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.fao.geonet.services.Utils;
 import org.fao.geonet.util.ISODate;
@@ -88,6 +89,9 @@ public class Update extends NotInReadOnlyModeService {
 
 
 		if (!forget) {
+            SettingManager sm = gc.getSettingManager();
+            boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+
 			int iLocalId = Integer.parseInt(id);
 			dataMan.setTemplateExt(dbms, iLocalId, isTemplate, title);
 
@@ -98,7 +102,7 @@ public class Update extends NotInReadOnlyModeService {
 			saf.onEdit(sa, iLocalId, minor.equals("true"));
 
 			if (data != null) {
-				Element md = Xml.loadString(data, false);
+				Element md = Xml.loadString(data, false, allowDTD);
 
                 String changeDate = null;
                 boolean validate = showValidationErrors.equals("true");
@@ -109,7 +113,7 @@ public class Update extends NotInReadOnlyModeService {
 					throw new ConcurrentUpdateEx(id);
 				}
 			} else {
-				ajaxEditUtils.updateContent(params, false, true);
+				ajaxEditUtils.updateContent(params, false, true, allowDTD);
 			}
 		}
 

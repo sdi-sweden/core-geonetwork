@@ -80,7 +80,7 @@ public class AjaxEditUtils extends EditUtils {
      * @throws Exception
      */
     protected Element applyChangesEmbedded(Dbms dbms, String id, 
-                                        Hashtable changes, String currVersion) throws Exception {
+                                        Hashtable changes, String currVersion, boolean allowDTD) throws Exception {
         Lib.resource.checkEditPrivilege(context, id);
         String schema = dataManager.getMetadataSchema(dbms, id);
         EditLib editLib = dataManager.getEditLib();
@@ -189,7 +189,7 @@ public class AjaxEditUtils extends EditUtils {
                             }
                             
                             name = name.replace(COLON_SEPARATOR, ":");
-                            editLib.addFragment(schema, el, name, fragment, replaceExisting);
+                            editLib.addFragment(schema, el, name, fragment, replaceExisting, allowDTD);
                         } else {
                             if(Log.isDebugEnabled(Geonet.EDITOR))
                                 Log.debug(Geonet.EDITOR, "Add XML fragment; " + fragment
@@ -200,7 +200,7 @@ public class AjaxEditUtils extends EditUtils {
                             fragment = addNamespaceToFragment(fragment);
                             
                             // Add content
-                            el.addContent(Xml.loadString(fragment, false));
+                            el.addContent(Xml.loadString(fragment, false, allowDTD));
                         }
                     }
                 }

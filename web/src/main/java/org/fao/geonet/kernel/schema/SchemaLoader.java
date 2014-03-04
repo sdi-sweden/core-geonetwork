@@ -648,7 +648,8 @@ public class SchemaLoader
 
 		//--- load xml-schema
 
-        Element elRoot = Xml.loadFile(xmlSchemaFile);
+        // allow DTDs here, because dublin-core's XSD uses a DTD !
+        Element elRoot = Xml.loadFile(xmlSchemaFile, true);
 		if (elFirst == null) elFirst = elRoot;
 
 		// change target namespace

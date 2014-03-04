@@ -37,6 +37,7 @@ import org.fao.geonet.kernel.harvest.harvester.CategoryMapper;
 import org.fao.geonet.kernel.harvest.harvester.GroupMapper;
 import org.fao.geonet.kernel.harvest.harvester.RecordInfo;
 import org.fao.geonet.kernel.harvest.harvester.UriMapper;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 
@@ -65,7 +66,12 @@ class Harvester extends BaseAligner{
 		GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 		dataMan = gc.getDataManager();
 		schemaMan = gc.getSchemamanager ();
-	}
+
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+        this.allowDTD = allowDTD;
+
+    }
 
 	//---------------------------------------------------------------------------
 	//---
@@ -199,7 +205,7 @@ class Harvester extends BaseAligner{
 	private Element retrieveMetadata(RemoteFile rf) {
 		try {
             if(log.isDebugEnabled()) log.debug("Getting remote file : "+ rf.getPath());
-			Element md = rf.getMetadata(schemaMan);
+			Element md = rf.getMetadata(schemaMan, allowDTD);
             if(log.isDebugEnabled()) log.debug("Record got:\n"+ Xml.getString(md));
 
 			String schema = dataMan.autodetectSchema(md);
@@ -321,6 +327,7 @@ class Harvester extends BaseAligner{
 	private UriMapper localUris;
 	private WebDavResult result;
 	private SchemaManager  schemaMan;
+    private boolean allowDTD;
 }
 
 //=============================================================================
@@ -336,7 +343,7 @@ interface RemoteRetriever {
 interface RemoteFile {
 	public String  getPath();
 	public String  getChangeDate();
-	public Element getMetadata(SchemaManager  schemaMan) throws JDOMException, IOException, Exception;
+	public Element getMetadata(SchemaManager  schemaMan, boolean allowDTD) throws JDOMException, IOException, Exception;
 	public boolean isMoreRecentThan(String localDate);
 }
 

@@ -995,7 +995,7 @@ public class SchemaManager {
      */
 	private Element getSchemaPluginCatalog() throws Exception {
 		// -- open schemaPlugins catalog, get children named uri
-        return Xml.loadFile(schemaPluginsCat);
+        return Xml.loadFile(schemaPluginsCat, true);
 	}
 
 	/**
@@ -1004,7 +1004,7 @@ public class SchemaManager {
     * @throws Exception
     */
   private Element getSchemaPluginCatalogTemplate() throws Exception {
-    return Xml.loadFile(basePath + FS + "WEB-INF" + FS + Geonet.File.SCHEMA_PLUGINS_CATALOG);
+    return Xml.loadFile(basePath + FS + "WEB-INF" + FS + Geonet.File.SCHEMA_PLUGINS_CATALOG, false);
   }
     
     /**
@@ -1253,9 +1253,9 @@ public class SchemaManager {
     try {
 			// validate the schema-ident file before reading it
 	 		stage = "reading schema-ident file "+idFile;
-			Element root = Xml.loadFile(idFile);
+			Element root = Xml.loadFile(idFile, false);
 	 		stage = "validating schema-ident file "+idFile;
-			Xml.validate(new Document(root));
+			Xml.validate(new Document(root), false);
 
     	if (hmSchemas.containsKey(saSchema)) { // exists so ignore it
 				Log.error(Geonet.SCHEMA_MANAGER, "Schema "+saSchema+" already exists - cannot add!");
@@ -1354,7 +1354,7 @@ public class SchemaManager {
    * @throws Exception
 	 */
 	private List<Element> extractDepends(String xmlIdFile) throws Exception {
-		Element root = Xml.loadFile(xmlIdFile);
+		Element root = Xml.loadFile(xmlIdFile, true);
 
 		// get list of depends elements from schema-ident.xml
 		List<Element> dependsList = root.getChildren("depends", GEONET_SCHEMA_NS);
@@ -1373,7 +1373,7 @@ public class SchemaManager {
 	 * @throws Exception
 	 */
 	private boolean extractReadWriteUuid(String xmlIdFile) throws Exception {
-		Element root = Xml.loadFile(xmlIdFile);
+		Element root = Xml.loadFile(xmlIdFile, true);
 
 		String id = root.getChildText("readwriteUuid", GEONET_SCHEMA_NS);
 		if (id == null) {
@@ -1396,7 +1396,7 @@ public class SchemaManager {
 	 */
 	private Pair<String, String> extractIdInfo(String xmlIdFile, String name) throws Exception {
 		// FIXME: should be validating parser
-		Element root = Xml.loadFile(xmlIdFile);
+		Element root = Xml.loadFile(xmlIdFile, false);
 
 		Element id = root.getChild("id", GEONET_SCHEMA_NS);
 		if (id == null) id = root.getChild("id", GEONET_SCHEMA_PREFIX_NS);
@@ -1420,7 +1420,7 @@ public class SchemaManager {
      * @throws Exception
 	 */
 	private List<Element> extractADElements(String xmlIdFile) throws Exception {
-		Element root = Xml.loadFile(xmlIdFile);
+		Element root = Xml.loadFile(xmlIdFile, false);
 		Element autodetect = root.getChild("autodetect", GEONET_SCHEMA_NS);
 		if (autodetect == null) autodetect = root.getChild("autodetect", GEONET_SCHEMA_PREFIX_NS);
 		return autodetect.getChildren();
@@ -1439,7 +1439,7 @@ public class SchemaManager {
             if(Log.isDebugEnabled(Geonet.SCHEMA_MANAGER))
                 Log.debug(Geonet.SCHEMA_MANAGER, "Schema conversions file not present");
 		} else {
-			Element root = Xml.loadFile(xmlConvFile);
+			Element root = Xml.loadFile(xmlConvFile, false);
 			ConfigurationOverrides.DEFAULT.updateWithOverrides(xmlConvFile, null, basePath, root);
 			
 			if (root.getName() != "conversions") throw new IllegalArgumentException("Schema conversions file "+xmlConvFile+" is invalid, no <conversions> root element");
@@ -1456,7 +1456,7 @@ public class SchemaManager {
      * @throws Exception
 	 */
 	private String extractSchemaLocation(String xmlIdFile) throws Exception {
-		Element root = Xml.loadFile(xmlIdFile);
+		Element root = Xml.loadFile(xmlIdFile, false);
 		Element schemaLocElem = root.getChild("schemaLocation", GEONET_SCHEMA_NS);
 		if (schemaLocElem == null) schemaLocElem = root.getChild("schemaLocation", GEONET_SCHEMA_PREFIX_NS);
 		return schemaLocElem.getText();

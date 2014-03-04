@@ -28,11 +28,13 @@ import jeeves.resources.dbms.Dbms;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.resources.ResourceManager;
 import jeeves.utils.Xml;
+import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.harvest.harvester.AbstractHarvester;
 import org.fao.geonet.kernel.harvest.harvester.AbstractParams;
 import org.fao.geonet.kernel.harvest.harvester.CategoryMapper;
 import org.fao.geonet.kernel.harvest.harvester.GroupMapper;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.resources.Resources;
 import org.fao.geonet.util.ISODate;
@@ -57,7 +59,8 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 	
 	private LocalFilesystemParams params;
 	private LocalFilesystemResult result;
-	
+    private boolean allowDTD;
+
 	public static void init(ServiceContext context) throws Exception {
 	}
 	
@@ -178,6 +181,12 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 	 */
 	private void align(List<String> results, ResourceManager rm) throws Exception {
 		System.out.println("Start of alignment for : "+ params.name);
+
+        GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+        this.allowDTD = allowDTD;
+
 		this.result = new LocalFilesystemResult();
 		Dbms dbms = (Dbms) rm.open(Geonet.Res.MAIN_DB);
 
@@ -203,7 +212,7 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 			Element xml;
 			try {
 				System.out.println("reading file: " + xmlFile);	
-				xml = Xml.loadFile(xmlFile);
+				xml = Xml.loadFile(xmlFile, allowDTD);
 			} catch (JDOMException e) { // JDOM problem
 				System.out.println("Error loading XML from file " + xmlFile +", ignoring");	
 				e.printStackTrace();

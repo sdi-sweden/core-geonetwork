@@ -26,6 +26,8 @@ package org.fao.geonet.services.util.z3950;
 import jeeves.server.context.ServiceContext;
 import jeeves.utils.Xml;
 import org.apache.commons.lang.StringUtils;
+import org.fao.geonet.GeonetContext;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.util.FileCopyMgr;
 import org.fao.geonet.constants.Geonet;
 import org.jdom.Comment;
@@ -54,7 +56,7 @@ public class Repositories
 
 	/** builds the repositories config file from template
 	  */
-	public static boolean build(URL cfgUrl, ServiceContext context) 
+	public static boolean build(URL cfgUrl, ServiceContext context, SettingManager sm)
 	{
 
 		try
@@ -70,7 +72,8 @@ public class Repositories
 			String realRepo = StringUtils.substringBefore(configPath,".tem");
 			String tempRepo = configPath;
 
-			buildRepositoriesFile(tempRepo, realRepo);
+            boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+        			buildRepositoriesFile(tempRepo, realRepo, allowDTD);
 
 		}
 		catch (Exception e)
@@ -96,8 +99,12 @@ public class Repositories
 		boolean restore = false;
 
 		try {
+            GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
+            SettingManager sm = gc.getSettingManager();
+            boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+
 			FileCopyMgr.copyFiles(new File(tempRepo), new File(backRepo));
-			Element root  = Xml.loadFile(tempRepo);
+			Element root  = Xml.loadFile(tempRepo, allowDTD);
 			Element copy  = new Element(root.getName());
 			List<Element> children = root.getChildren();
 			for (Element child : children) {
@@ -140,8 +147,12 @@ public class Repositories
 		boolean replaced = false;
 
 		try {
+            GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
+            SettingManager sm = gc.getSettingManager();
+            boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+
 			FileCopyMgr.copyFiles(new File(tempRepo), new File(backRepo));
-			Element root  = Xml.loadFile(tempRepo);
+			Element root  = Xml.loadFile(tempRepo, allowDTD);
 			Element copy  = new Element(root.getName());
 			List<Element> children = root.getChildren();
 			for (Element child : children) {
@@ -180,9 +191,9 @@ public class Repositories
 	//---
 	//--------------------------------------------------------------------------
 
-	private static void buildRepositoriesFile(String src, String des) throws Exception
+	private static void buildRepositoriesFile(String src, String des, boolean allowDTD) throws Exception
 	{
-		Element root  = Xml.loadFile(src);
+		Element root  = Xml.loadFile(src, allowDTD);
 
 		// --- insert warning into file as comment - first child element
 		root.addContent(0,new Comment("\nWARNING - Do NOT MODIFY this file!\n"+

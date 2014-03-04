@@ -43,6 +43,8 @@
 	<!-- ============================================================================================= -->
 
 	<xsl:template name="panel">
+    <input type="hidden" id="_tk" name="_tk" value="{/root/gui/_tk}"/>
+
 		<xsl:call-template name="site"/>
 		<xsl:call-template name="server"/>
 		<xsl:call-template name="intranet"/>
@@ -57,6 +59,7 @@
         <xsl:call-template name="multilingual"/>
 		<xsl:call-template name="downloadservice"/>
 		<xsl:call-template name="hyperlinks"/>
+    <xsl:call-template name="dtd"/>
 		<xsl:call-template name="localrating"/>
         <xsl:call-template name="autofixing"/>
         <xsl:call-template name="inspire"/>
@@ -573,6 +576,20 @@
 			</table>
 		</div>
 	</xsl:template>
+
+  <!-- ============================================================================================= -->
+  <xsl:template name="dtd">
+    <h1 align="left"><xsl:value-of select="/root/gui/config/dtd"/></h1>
+
+    <div align="left" style="{$style}">
+      <table>
+        <tr>
+          <td class="padded" width="{$width}"><xsl:value-of select="/root/gui/config/enable"/></td>
+          <td class="padded"><input id="dtd.enable" class="content" type="checkbox" value=""/></td>
+        </tr>
+      </table>
+    </div>
+  </xsl:template>
 
 	<!-- ============================================================================================= -->
 	<xsl:template name="localrating">

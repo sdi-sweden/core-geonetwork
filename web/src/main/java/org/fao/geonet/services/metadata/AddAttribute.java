@@ -34,6 +34,7 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.exceptions.ConcurrentUpdateEx;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.jdom.Element;
 
@@ -66,7 +67,11 @@ public class AddAttribute extends NotInReadOnlyModeService {
 		//-----------------------------------------------------------------------
 		//--- add element and return status
 
-		ajaxEditUtils.updateContent(params);
+        GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+
+		ajaxEditUtils.updateContent(params, allowDTD);
 
 		// version already checked in updateContent
 		if (! ajaxEditUtils.addAttribute(dbms, id, ref, name, null))

@@ -58,6 +58,7 @@ class Harvester {
 	private final DataManager dataMan;
 	private final SearchManager searchMan;
 	private final SettingManager settingMan;
+    private boolean allowDTD;
 
 	// --------------------------------------------------------------------------
 	// ---
@@ -77,6 +78,10 @@ class Harvester {
 		this.context = context;
 		this.dbms = dbms;
 		this.params = params;
+
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+        this.allowDTD = allowDTD;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -339,7 +344,7 @@ class Harvester {
 						docVal = new Document(md);
 					}
 
-					if (!dataMan.doValidate(dbms, schema, id$, docVal, context.getLanguage())) {
+					if (!dataMan.doValidate(dbms, schema, id$, docVal, context.getLanguage(), allowDTD)) {
 						result.doesNotValidate++;
 					} 
 				}

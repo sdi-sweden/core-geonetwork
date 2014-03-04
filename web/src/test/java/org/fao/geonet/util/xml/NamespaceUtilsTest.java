@@ -27,7 +27,7 @@ public class NamespaceUtilsTest extends TestCase {
                 "xmlns:c=\"http://ccc\" " +
                 "xmlns:d=\"http://ddd\">" +
                 "<a:a/></root>";
-        Element xmle = Xml.loadString(xml, false);
+        Element xmle = Xml.loadString(xml, false, false);
         List<Namespace> inScope = NamespaceUtils.getNamespacesInScope(xmle);
 
         assertContains("Expected inscope namespace " + Namespace.NO_NAMESPACE , Namespace.NO_NAMESPACE, inScope);
@@ -53,7 +53,7 @@ public class NamespaceUtilsTest extends TestCase {
                 "xmlns:c=\"http://ccc\" " +
                 "xmlns:d=\"http://ddd\">" +
                 "<a:a/></root>";
-        Element xmle = Xml.loadString(xml, false);
+        Element xmle = Xml.loadString(xml, false, false);
         List<Namespace> inHerited = NamespaceUtils.getNamespacesInherited(xmle);
 
         assertContains("Expected inherited namespace " + Namespace.NO_NAMESPACE , Namespace.NO_NAMESPACE, inHerited);
@@ -73,7 +73,7 @@ public class NamespaceUtilsTest extends TestCase {
                 "xmlns:c=\"http://ccc\" " +
                 "xmlns:d=\"http://ddd\">" +
                 "<a:a/></root>";
-        Element xmle = Xml.loadString(xml, false);
+        Element xmle = Xml.loadString(xml, false, false);
         List<Namespace> introduced = NamespaceUtils.getNamespacesIntroduced(xmle);
 
         assertContains("Expected introduced namespace " + Namespace.getNamespace("a", "http://aaa") , Namespace.getNamespace("a", "http://aaa"), introduced);

@@ -101,6 +101,8 @@ import java.util.UUID;
 public final class Xml 
 {
 
+    private static final String DISALLOW_DOCTYPE_DECL = "http://apache.org/xml/features/disallow-doctype-decl";
+
 	public static final Namespace xsiNS = Namespace.getNamespace("xsi", XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI);
 
    //--------------------------------------------------------------------------
@@ -110,16 +112,23 @@ public final class Xml
      * @param validate
      * @return
      */
-	private static SAXBuilder getSAXBuilder(boolean validate) {
+	/*private static SAXBuilder getSAXBuilder(boolean validate) {
 		SAXBuilder builder = getSAXBuilderWithoutXMLResolver(validate);
         Resolver resolver = ResolverWrapper.getInstance();
         builder.setEntityResolver(resolver.getXmlResolver());
         return builder;
-	}
+	}*/
 
-    private static SAXBuilder getSAXBuilderWithoutXMLResolver(boolean validate) {
+    private static SAXBuilder getSAXBuilderWithoutXMLResolver(boolean validate, boolean allowDTD) {
         SAXBuilder builder = new SAXBuilder(validate);
+        builder.getDTDHandler();
         builder.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        if(allowDTD) {
+            builder.setFeature(DISALLOW_DOCTYPE_DECL, false);
+        }
+        else {
+            builder.setFeature(DISALLOW_DOCTYPE_DECL, true);
+        }
         return builder;
     }
 
@@ -146,9 +155,9 @@ public final class Xml
      * @throws IOException
      * @throws JDOMException
      */
-	public static Element loadFile(String file) throws IOException, JDOMException
+	public static Element loadFile(String file, boolean allowDTD) throws IOException, JDOMException
 	{
-		return loadFile(new File(file));
+		return loadFile(new File(file), allowDTD);
 	}
 
 	//--------------------------------------------------------------------------
@@ -161,9 +170,9 @@ public final class Xml
      * @throws IOException
      * @throws JDOMException
      */
-	public static Element loadFile(URL url) throws IOException, JDOMException
+	public static Element loadFile(URL url, boolean allowDTD) throws IOException, JDOMException
 	{
-		SAXBuilder builder = getSAXBuilderWithoutXMLResolver(false);//new SAXBuilder();
+		SAXBuilder builder = getSAXBuilderWithoutXMLResolver(false, allowDTD);//new SAXBuilder();
 		Document   jdoc    = builder.build(url);
 
 		return (Element) jdoc.getRootElement().detach();
@@ -180,7 +189,7 @@ public final class Xml
      * @throws IOException
      * @throws JDOMException
      */
-	public static Element loadFile(URL url, Element xmlQuery) throws IOException, JDOMException
+	public static Element loadFile(URL url, Element xmlQuery, boolean allowDTD) throws IOException, JDOMException
 	{
 		Element result = null;
 		try {
@@ -194,7 +203,7 @@ public final class Xml
 			out.print(getString(xmlQuery));
 			out.close();
 
-			SAXBuilder builder = getSAXBuilderWithoutXMLResolver(false);//new SAXBuilder();
+			SAXBuilder builder = getSAXBuilderWithoutXMLResolver(false, allowDTD);//new SAXBuilder();
 			Document   jdoc    = builder.build(connection.getInputStream());
 
 			result = (Element)jdoc.getRootElement().detach();
@@ -215,16 +224,16 @@ public final class Xml
      * @throws IOException
      * @throws JDOMException
      */
-	public static Element loadFile(File file) throws IOException, JDOMException
+	public static Element loadFile(File file, boolean allowDTD) throws IOException, JDOMException
 	{
-		SAXBuilder builder = getSAXBuilderWithoutXMLResolver(false); //new SAXBuilder();
+		SAXBuilder builder = getSAXBuilderWithoutXMLResolver(false, allowDTD); //new SAXBuilder();
 
 		String convert = System.getProperty("jeeves.filecharsetdetectandconvert");
 
 		// detect charset and convert if required
 		if (convert != null && convert.equals("enabled")) { 
 			byte[] content = convertFileToUTF8ByteArray(file);
-			return loadStream(new ByteArrayInputStream(content));
+			return loadStream(new ByteArrayInputStream(content), allowDTD);
 
 		// no charset detection and conversion allowed
 		} else { 
@@ -332,11 +341,11 @@ public final class Xml
      * @throws IOException
      * @throws JDOMException
      */
-	public static Element loadString(String data, boolean validate)
+	public static Element loadString(String data, boolean validate, boolean allowDTD)
 												throws IOException, JDOMException
 	{
 		//SAXBuilder builder = new SAXBuilder(validate);
-		SAXBuilder builder = getSAXBuilderWithoutXMLResolver(validate); // oasis catalogs are used
+		SAXBuilder builder = getSAXBuilderWithoutXMLResolver(validate, allowDTD); // oasis catalogs are used
 		Document   jdoc    = builder.build(new StringReader(data));
 
 		return (Element) jdoc.getRootElement().detach();
@@ -352,9 +361,9 @@ public final class Xml
      * @throws IOException
      * @throws JDOMException
      */
-	public static Element loadStream(InputStream input) throws IOException, JDOMException
+	public static Element loadStream(InputStream input, boolean allowDTD) throws IOException, JDOMException
 	{
-		SAXBuilder builder = getSAXBuilderWithoutXMLResolver(false); //new SAXBuilder();
+		SAXBuilder builder = getSAXBuilderWithoutXMLResolver(false, allowDTD); //new SAXBuilder();
 		builder.setFeature("http://apache.org/xml/features/validation/schema",false);
 		builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd",false);
 		Document   jdoc    = builder.build(input);
@@ -989,9 +998,9 @@ public final class Xml
      * @param doc
      * @throws Exception
      */
-	public synchronized static void validate(Document doc) throws Exception {
+	public synchronized static void validate(Document doc, boolean allowDTD) throws Exception {
 		if (doc.getDocType() != null) { // assume DTD validation
-			SAXBuilder builder = getSAXBuilder(true);	
+            SAXBuilder builder = getSAXBuilderWithoutXMLResolver(false, allowDTD);
 			Document document = builder.build(new StringReader(getString(doc))); 
 		} 
 

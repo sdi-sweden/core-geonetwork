@@ -318,7 +318,7 @@ public class EditLib {
      * @throws Exception
      * @throws IllegalStateException Fail to parse the fragment.
      */
-    public void addFragment(String schema, Element el, String qname, String fragment, boolean removeExisting) throws Exception {
+    public void addFragment(String schema, Element el, String qname, String fragment, boolean removeExisting, boolean allowDTD) throws Exception {
         
         MetadataSchema mdSchema = scm.getSchema(schema);
         String parentName = getParentNameFromChild(el);
@@ -328,7 +328,7 @@ public class EditLib {
             Log.debug(Geonet.EDITORADDELEMENT, "Add XML fragment for element name:" + qname + ", parent: " + parentName);
         
         try {
-            fragElt = Xml.loadString(fragment, false);
+            fragElt = Xml.loadString(fragment, false, allowDTD);
         }
         catch (JDOMException e) {
             Log.error(Geonet.EDITORADDELEMENT, "EditLib : Error parsing XML fragment " + fragment);

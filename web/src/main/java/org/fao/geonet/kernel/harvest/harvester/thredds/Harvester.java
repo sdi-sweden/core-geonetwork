@@ -47,6 +47,7 @@ import org.fao.geonet.kernel.harvest.harvester.fragment.FragmentHarvester;
 import org.fao.geonet.kernel.harvest.harvester.fragment.FragmentHarvester.FragmentParams;
 import org.fao.geonet.kernel.harvest.harvester.fragment.FragmentHarvester.HarvestSummary;
 import org.fao.geonet.kernel.setting.SettingInfo;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.util.ISODate;
 import org.fao.geonet.util.Sha1Encoder;
@@ -193,6 +194,10 @@ class Harvester extends BaseAligner
 		GeonetContext gc = (GeonetContext) context.getHandlerContext (Geonet.CONTEXT_NAME);
 		dataMan = gc.getDataManager ();
 		schemaMan = gc.getSchemamanager ();
+
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+        this.allowDTD = allowDTD;
 
 		SettingInfo si = new SettingInfo(context);
 		String siteUrl = si.getSiteUrl() + context.getBaseUrl();
@@ -642,7 +647,7 @@ class Harvester extends BaseAligner
 			if (!ds.hasNestedDatasets()) {
 				NetcdfDataset ncD = NetcdfDataset.openDataset("thredds:"+ds.getCatalogUrl());
 				NcMLWriter ncmlWriter = new NcMLWriter();
-				Element ncml = Xml.loadString(ncmlWriter.writeXML(ncD),false);
+				Element ncml = Xml.loadString(ncmlWriter.writeXML(ncD),false, allowDTD);
 				dsMetadata.addContent(ncml);
 			}
 
@@ -692,7 +697,7 @@ class Harvester extends BaseAligner
 	private Element getDatasetSubset(InvDataset ds) throws Exception {
 		String datasetSubsetUrl = getSubsetUrl(ds);
 		
-		return Xml.loadFile(new URL(datasetSubsetUrl));
+		return Xml.loadFile(new URL(datasetSubsetUrl), allowDTD);
 	}
 
 	//---------------------------------------------------------------------------
@@ -1397,7 +1402,8 @@ class Harvester extends BaseAligner
 	private String	 			 metadataGetService;
 	private Map<String,ThreddsService> services = new HashMap();
 	private InvCatalogImpl catalog;
-	
+	private boolean allowDTD;
+
 	private FragmentHarvester atomicFragmentHarvester;
 	private FragmentHarvester collectionFragmentHarvester;
 

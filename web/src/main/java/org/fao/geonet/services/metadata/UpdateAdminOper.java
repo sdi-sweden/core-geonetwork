@@ -39,6 +39,7 @@ import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.MdInfo;
 import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.fao.geonet.services.Utils;
+import org.fao.geonet.util.CSRFUtil;
 import org.jdom.Element;
 
 import java.util.List;
@@ -123,7 +124,7 @@ public class UpdateAdminOper extends NotInReadOnlyModeService {
 
 			String name  = el.getName();
 
-			if (name.startsWith("_"))
+            if (name.startsWith("_") && !name.equals(CSRFUtil.TOKEN_PARAMETER_NAME))
 			{
 				StringTokenizer st = new StringTokenizer(name, "_");
 

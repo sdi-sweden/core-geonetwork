@@ -43,7 +43,7 @@ public class ConfigurationOveridesTest {
     }
     @Test //@Ignore
     public void updateLoggingConfig() throws JDOMException, IOException {
-        final Element overrides = Xml.loadFile(classLoader.getResource("correct-webapp/WEB-INF/overrides-config.xml"));
+        final Element overrides = Xml.loadFile(classLoader.getResource("correct-webapp/WEB-INF/overrides-config.xml"), false);
 
         ConfigurationOverrides.DEFAULT.doUpdateLogging(overrides, loader);
         assertEquals(Level.DEBUG, org.apache.log4j.Logger.getRootLogger().getLevel());
@@ -60,8 +60,8 @@ public class ConfigurationOveridesTest {
     }
     @Test
     public void updateConfig() throws JDOMException, IOException {
-        Element config = Xml.loadFile(classLoader.getResource("test-config.xml"));
-        Element config2 = (Element) Xml.loadFile(classLoader.getResource("test-config.xml")).clone();
+        Element config = Xml.loadFile(classLoader.getResource("test-config.xml"), false);
+        Element config2 = (Element) Xml.loadFile(classLoader.getResource("test-config.xml"), false).clone();
 
         ConfigurationOverrides.DEFAULT.updateWithOverrides("config.xml", null, appPath, config);
         ConfigurationOverrides.DEFAULT.updateWithOverrides("config2.xml", null, appPath, config2);
@@ -158,7 +158,7 @@ public class ConfigurationOveridesTest {
 
     @Test //@Ignore
     public void noUpdateConfig() throws JDOMException, IOException {
-        Element config = Xml.loadFile(classLoader.getResource("test-config.xml"));
+        Element config = Xml.loadFile(classLoader.getResource("test-config.xml"), false);
         Element unchanged = (Element) config.clone();
         ConfigurationOverrides.DEFAULT.updateWithOverrides("config.xml", null, falseAppPath, config);
 

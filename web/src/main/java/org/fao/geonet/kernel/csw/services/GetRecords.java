@@ -354,7 +354,7 @@ public class GetRecords extends AbstractOperation implements CatalogService {
             }
             else {
                 try {
-                    constr.addContent(Xml.loadString(constraint, false));
+                    constr.addContent(Xml.loadString(constraint, false, false));
                 }
                 catch (Exception e) {
                     e.printStackTrace();

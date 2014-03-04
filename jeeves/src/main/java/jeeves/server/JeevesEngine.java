@@ -298,7 +298,7 @@ public class JeevesEngine
 
 		info("Loading : " + file);
 
-		Element configRoot = Xml.loadFile(file);
+		Element configRoot = Xml.loadFile(file, false);
 
         ConfigurationOverrides.DEFAULT.updateWithOverrides(file, servletContext, appPath, configRoot);
 

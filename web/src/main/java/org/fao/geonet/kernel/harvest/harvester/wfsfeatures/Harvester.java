@@ -42,6 +42,7 @@ import org.fao.geonet.kernel.harvest.harvester.fragment.FragmentHarvester;
 import org.fao.geonet.kernel.harvest.harvester.fragment.FragmentHarvester.FragmentParams;
 import org.fao.geonet.kernel.harvest.harvester.fragment.FragmentHarvester.HarvestSummary;
 import org.fao.geonet.kernel.setting.SettingInfo;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -137,14 +138,18 @@ class Harvester
 		this.params = params;
 
 		result = new WfsFeaturesResult ();
-		
-		GeonetContext gc = (GeonetContext) context.getHandlerContext (Geonet.CONTEXT_NAME);
+
+        GeonetContext gc = (GeonetContext) context.getHandlerContext (Geonet.CONTEXT_NAME);
 		dataMan = gc.getDataManager ();
 		schemaMan = gc.getSchemamanager ();
 		SettingInfo si = new SettingInfo(context);
 		String siteUrl = si.getSiteUrl() + context.getBaseUrl();
 		metadataGetService = siteUrl + "/srv/en/xml.metadata.get";
 		ssParams.put("siteUrl", siteUrl);
+
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+        this.allowDTD = allowDTD;
 	}
 
 	//---------------------------------------------------------------------------
@@ -201,7 +206,7 @@ class Harvester
 		
 		log.info("Parsing query :\n" + params.query);
 		try {
-			wfsQuery = Xml.loadString(params.query, false); 
+			wfsQuery = Xml.loadString(params.query, false, allowDTD);
 		} catch (JDOMException e) {
 			e.printStackTrace();
 			throw new BadParameterEx("GetFeature Query failed to parse\n", params.query);
@@ -229,7 +234,7 @@ class Harvester
             JDOMException, MalformedURLException, BadXmlResponseEx, Exception {
 
 		//--- post the query to the remote site
-	    Element xml = Xml.loadFile(new URL(params.url), xmlQuery);
+	    Element xml = Xml.loadFile(new URL(params.url), xmlQuery, allowDTD);
 	    
 	    if (xml == null) {
 	    	throw new BadXmlResponseEx("No response or problem getting response from "+params.url+":\n"+Xml.getString(xmlQuery));
@@ -376,6 +381,7 @@ class Harvester
 	private String	 		metadataGetService;
 	private String	 		 stylesheetDirectory;
 	private Map<String,String> ssParams = new HashMap<String,String>();
+    private boolean allowDTD;
 }
 
 //=============================================================================

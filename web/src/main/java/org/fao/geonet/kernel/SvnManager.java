@@ -276,7 +276,7 @@ public class SvnManager {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     repo.getFile(filePath, -1, new SVNProperties(), baos);
 
-    Element rec = Xml.loadString(baos.toString(), false);
+    Element rec = Xml.loadString(baos.toString(), false, false);
     return (Element) rec.detach();
   }
 

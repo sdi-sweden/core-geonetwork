@@ -32,6 +32,7 @@ import org.fao.geonet.kernel.oaipmh.Lib;
 import org.fao.geonet.kernel.oaipmh.OaiPmhService;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.SchemaManager;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.oaipmh.OaiPmh;
 import org.fao.oaipmh.exceptions.CannotDisseminateFormatException;
 import org.fao.oaipmh.exceptions.IdDoesNotExistException;
@@ -101,7 +102,10 @@ public class GetRecord implements OaiPmhService
 		String changeDate = rec.getChildText("changedate");
 		String data       = rec.getChildText("data");
 
-		Element md = Xml.loadString(data, false);
+        SettingManager settingManager = gc.getSettingManager();
+        boolean allowDTD = settingManager.getValueAsBool("/system/dtd/enable");
+
+		Element md = Xml.loadString(data, false, allowDTD);
 
 		//--- try to disseminate format
 

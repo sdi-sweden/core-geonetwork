@@ -117,7 +117,8 @@
 	<cswMetadataPublic>Inserted metadata is public</cswMetadataPublic>
 
 	<clickablehyperlinks>التشعبية القابلة للنقر عليها</clickablehyperlinks>
-	
+
+  <dtd>Allow DTDs</dtd>
 	<localrating>تصنيف المحلية</localrating>
 	<autofixing>التلقائي إصلاحات</autofixing>
 
@@ -287,7 +288,12 @@
 			إذا كان تعيين ، سوف يعرض وصلات الشبكة الأرضية للنقر في الفوقية.
 		</tip>
 
-		<!-- local rating -->
+    <!-- dtd -->
+    <tip id="dtd.enable">
+      If set, GeoNetwork allows insertion of metadata that contains a DTD. Set this to false for increased security.
+    </tip>
+
+    <!-- local rating -->
 		<tip id="localrating.enable">
 			إذا كان تعيين وسوف الشبكة الأرضية للمستخدم حساب التصنيفات الفوقية من هذه العقدة فقط (وليس توزيعها بين العقدتين الشبكة الأرضية الأخرى).
 		</tip>

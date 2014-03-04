@@ -120,9 +120,9 @@ class EditUtils {
      * @param validate
      * @throws Exception
      */
-	public void updateContent(Element params, boolean validate) throws Exception {
-		 updateContent(params, validate, false);
-	}
+	/*public void updateContent(Element params, boolean validate, boolean allowDTD) throws Exception {
+		 updateContent(params, validate, false, allowDTD);
+	} */
 
     /**
      * TODO javadoc.
@@ -132,7 +132,7 @@ class EditUtils {
      * @param embedded
      * @throws Exception
      */
-	public void updateContent(Element params, boolean validate, boolean embedded) throws Exception {
+	public void updateContent(Element params, boolean validate, boolean embedded, boolean allowDTD) throws Exception {
 		Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
 		String id      = Util.getParam(params, Params.ID);
 		String version = Util.getParam(params, Params.VERSION);
@@ -167,13 +167,13 @@ class EditUtils {
         boolean updateDateStamp = !minor.equals("true");
         String changeDate = null;
 		if (embedded) {
-            Element updatedMetada = new AjaxEditUtils(context).applyChangesEmbedded(dbms, id, htChanges, version);
+            Element updatedMetada = new AjaxEditUtils(context).applyChangesEmbedded(dbms, id, htChanges, version, allowDTD);
             if(updatedMetada != null) {
                 result = dataManager.updateMetadata(context, dbms, id, updatedMetada, false, ufo, index, context.getLanguage(), changeDate, updateDateStamp);
             }
    		}
         else {
-            Element updatedMetada = applyChanges(dbms, id, htChanges, version);
+            Element updatedMetada = applyChanges(dbms, id, htChanges, version, allowDTD);
             if(updatedMetada != null) {
 			    result = dataManager.updateMetadata(context, dbms, id, updatedMetada, validate, ufo, index, context.getLanguage(), changeDate, updateDateStamp);
             }
@@ -193,7 +193,7 @@ class EditUtils {
      * @return
      * @throws Exception
      */
-    private Element applyChanges(Dbms dbms, String id, Hashtable changes, String currVersion) throws Exception {
+    private Element applyChanges(Dbms dbms, String id, Hashtable changes, String currVersion, boolean allowDTD) throws Exception {
         Lib.resource.checkEditPrivilege(context, id);
         Element md = xmlSerializer.select(dbms, "Metadata", id);
 
@@ -264,7 +264,7 @@ class EditUtils {
                     Log.debug(Geonet.EDITOR, "replacing XML content");
 				el.removeContent();
 				val = addNamespaceToFragment(val);
-				el.addContent(Xml.loadString(val, false));
+				el.addContent(Xml.loadString(val, false, allowDTD));
             }
 			else {
 				List content = el.getContent();
@@ -366,8 +366,8 @@ class EditUtils {
      * @param params
      * @throws Exception
      */
-	public void updateContent(Element params) throws Exception {
-		updateContent(params, false);
+	public void updateContent(Element params, boolean allowDTD) throws Exception {
+		updateContent(params, false, false, allowDTD);
 	}
 
     /**

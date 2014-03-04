@@ -210,7 +210,15 @@ public final class ServiceRequestFactory
 		if (pos == -1)
 			return null;
 
-		return url.substring(0, pos);
+        // Check of length for language to avoid injection of XSS code
+        // TODO: Check from a list of valid values instead
+        String lang = url.substring(0, pos);
+
+        if (lang.length() != 3) {
+            return null;
+        } else {
+            return lang;
+        }
 	}
 
 	//---------------------------------------------------------------------------
@@ -238,7 +246,7 @@ public final class ServiceRequestFactory
 	private static Element extractXmlParameters(HttpServletRequest req)
 																throws IOException, JDOMException
 	{
-		return Xml.loadStream(req.getInputStream());
+		return Xml.loadStream(req.getInputStream(), false);
 	}
 
 	//---------------------------------------------------------------------------

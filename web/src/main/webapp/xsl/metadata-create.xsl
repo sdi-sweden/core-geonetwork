@@ -47,6 +47,7 @@
 	
 	<xsl:template name="template-form">
 		<form id="createform" name="createform" accept-charset="UTF-8" action="metadata.create" method="post">
+      <input type="hidden" name="_tk" value="{/root/gui/_tk}"/>
 			<table class="text-aligned-left">
 				<tr>
 					<th class="padded"><xsl:value-of select="/root/gui/strings/template"/></th>

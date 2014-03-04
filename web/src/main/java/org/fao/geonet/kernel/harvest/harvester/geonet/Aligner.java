@@ -79,6 +79,10 @@ public class Aligner
 		dataMan = gc.getDataManager();
 		result  = new GeonetResult();
 
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+        this.allowDTD = allowDTD;
+
 		//--- save remote categories and groups into hashmaps for a fast access
 
 		List list = remoteInfo.getChild("groups").getChildren("group");
@@ -164,12 +168,13 @@ public class Aligner
 				GeonetContext  gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 				SettingManager settingManager = gc.getSettingManager();
 				boolean localRating = settingManager.getValueAsBool("system/localrating/enable", false);
-				
+                boolean allowDTD = settingManager.getValueAsBool("/system/dtd/enable");
+
 				if (id == null)	{
-					addMetadata(ri, localRating);
+					addMetadata(ri, localRating, allowDTD);
 				}
 				else {
-					updateMetadata(ri, id, localRating);
+					updateMetadata(ri, id, localRating, allowDTD);
 				}
 			}
 		}
@@ -208,7 +213,7 @@ public class Aligner
 	//---
 	//--------------------------------------------------------------------------
 
-	private void addMetadata(final RecordInfo ri, final boolean localRating) throws Exception
+	private void addMetadata(final RecordInfo ri, final boolean localRating, final boolean allowDTD) throws Exception
 	{
 		final String  id[] = { null };
 		final Element md[] = { null };
@@ -221,20 +226,20 @@ public class Aligner
 		{
 			MEFLib.visit(mefFile, new MEFVisitor(), new IMEFVisitor()
 			{
-				public void handleMetadata(Element mdata, int index) throws Exception
+				public void handleMetadata(Element mdata, int index, boolean allowDTD) throws Exception
 				{
 					md[index] = mdata;
 				}
 
 				//--------------------------------------------------------------------
 				
-				public void handleMetadataFiles(File[] files, Element info, int index) throws Exception {}
+				public void handleMetadataFiles(File[] files, Element info, int index, boolean allowDTD) throws Exception {}
 				
 				//--------------------------------------------------------------------
 
 				public void handleInfo(Element info, int index) throws Exception
 				{
-					id[index] = addMetadata(ri, md[index], info, localRating);
+					id[index] = addMetadata(ri, md[index], info, localRating, allowDTD);
 				}
 
 				//--------------------------------------------------------------------
@@ -269,7 +274,7 @@ public class Aligner
 	                    outFile.setLastModified(new ISODate(changeDate).getSeconds() * 1000);
 				    }
 				}
-			});
+			}, allowDTD);
 		}
 		catch(Exception e)
 		{
@@ -287,7 +292,7 @@ public class Aligner
 
 	//--------------------------------------------------------------------------
 
-	private String addMetadata(RecordInfo ri, Element md, Element info, boolean localRating) throws Exception
+	private String addMetadata(RecordInfo ri, Element md, Element info, boolean localRating, boolean allowDTD) throws Exception
 	{
 		Element general = info.getChild("general");
 
@@ -505,7 +510,7 @@ public class Aligner
 	//---
 	//--------------------------------------------------------------------------
 
-	private void updateMetadata(final RecordInfo ri, final String id, final boolean localRating) throws Exception
+	private void updateMetadata(final RecordInfo ri, final String id, final boolean localRating, final boolean allowDTD) throws Exception
 	{
 		final Element md[]     = { null };
 		final Element publicFiles[] = { null };
@@ -521,21 +526,21 @@ public class Aligner
 			{
 				MEFLib.visit(mefFile, new MEFVisitor(), new IMEFVisitor()
 				{
-					public void handleMetadata(Element mdata, int index) throws Exception
+					public void handleMetadata(Element mdata, int index, boolean allowDTD) throws Exception
 					{
 						md[index] = mdata;
 					}
 
 					//-----------------------------------------------------------------
 					
-					public void handleMetadataFiles(File[] files, Element info, int index) throws Exception
+					public void handleMetadataFiles(File[] files, Element info, int index, boolean allowDTD) throws Exception
 					{
 						//md[index] = mdata;
 					}
 					
 					public void handleInfo(Element info, int index) throws Exception
 					{
-						updateMetadata(ri, id, md[index], info, localRating);
+						updateMetadata(ri, id, md[index], info, localRating, allowDTD);
 						publicFiles[index] = info.getChild("public");
 						privateFiles[index] = info.getChild("private");
 					}
@@ -558,7 +563,7 @@ public class Aligner
 	                       updateFile(id, file, "private", changeDate, is, privateFiles[index]);
 					}
 					
-				});
+				}, allowDTD);
 			}
 			catch(Exception e)
 			{
@@ -574,7 +579,7 @@ public class Aligner
 
 	//--------------------------------------------------------------------------
 
-	private void updateMetadata(RecordInfo ri, String id, Element md, Element info, boolean localRating) throws Exception
+	private void updateMetadata(RecordInfo ri, String id, Element md, Element info, boolean localRating, boolean allowDTD) throws Exception
 	{
 		String date = localUuids.getChangeDate(ri.uuid);
 
@@ -804,6 +809,8 @@ public class Aligner
 	private HashMap<String, String> processParams = new HashMap<String, String>();
 	
 	private HashMap<String, HashMap<String, String>> hmRemoteGroups = new HashMap<String, HashMap<String, String>>();
+
+    private boolean allowDTD;
 }
 
 //=============================================================================

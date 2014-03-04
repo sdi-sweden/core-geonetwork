@@ -62,13 +62,13 @@ class WAFRemoteFile implements RemoteFile {
 	//---
 	//---------------------------------------------------------------------------
 
-	public Element getMetadata(SchemaManager  schemaMan) throws Exception {
+	public Element getMetadata(SchemaManager  schemaMan, boolean allowDTD) throws Exception {
 		try {	
 			String type = WAFRetriever.getFileType(this.path);
 			if(type.equals(WAFRetriever.type_GetCapabilities))
-				return getMdFromService(path, schemaMan);
+				return getMdFromService(path, schemaMan, allowDTD);
 			else if(type.equals(WAFRetriever.type_xml))
-				return Xml.loadFile(new URL(path));		
+				return Xml.loadFile(new URL(path), allowDTD);
 			else 
 				return null;
 		}
@@ -85,14 +85,14 @@ class WAFRemoteFile implements RemoteFile {
 	//---
 	//---------------------------------------------------------------------------	
 	
-	private Element getMdFromService(String url, SchemaManager  schemaMan) throws Exception
+	private Element getMdFromService(String url, SchemaManager  schemaMan, boolean allowDTD) throws Exception
 	{
 		Element el = null;
 		String styleSheet = getStyleSheet(url, schemaMan);
 		if(styleSheet == null)
 			return null;
         try {
-			Element xml = Xml.loadFile(new URL(url));
+			Element xml = Xml.loadFile(new URL(url), allowDTD);
 			
 			// md5 the full capabilities URL
 			String uuid = Sha1Encoder.encodeString (url); // is the service identifier

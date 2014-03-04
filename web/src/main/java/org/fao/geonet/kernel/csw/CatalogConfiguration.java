@@ -72,7 +72,7 @@ public class CatalogConfiguration {
 
 		Log.info(Geonet.CSW, "Loading : " + configFile);
 
-		Element configRoot = Xml.loadFile(configFile);
+		Element configRoot = Xml.loadFile(configFile, false);
 
 		List<Element> operationsList = configRoot.getChildren(Csw.ConfigFile.Child.OPERATIONS);
 

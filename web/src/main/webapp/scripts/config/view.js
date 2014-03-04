@@ -223,6 +223,7 @@ ConfigView.prototype.setData = function(data)
 	
 	$('clickablehyperlinks.enable').checked = data['CLICKABLE_HYPERLINKS'] == 'true';
 
+    $('dtd.enable').checked = data['DTD'] == 'true';
 	$('localrating.enable').checked = data['LOCAL_RATING'] == 'true';
 	$('autofixing.enable').checked = data['AUTO_FIXING'] == 'true';
 
@@ -337,7 +338,9 @@ ConfigView.prototype.getData = function()
 		INDEXOPTIMIZER_INTERVAL_MIN:  $('indexoptimizer.interval.min') .value,
 
 		CLICKABLE_HYPERLINKS : $('clickablehyperlinks.enable').checked,
-		
+
+        DTD : $('dtd.enable').checked,
+
 		LOCAL_RATING : $('localrating.enable').checked,
 		AUTO_FIXING : $('autofixing.enable').checked,
 
@@ -375,8 +378,9 @@ ConfigView.prototype.getData = function()
         SHIB_ATTRIB_GROUP     : $('shib.attrib.group').value,
         SHIB_DEF_GROUP    : $F('shib.defGroup'),
 
-		USERSELFREGISTRATION_ENABLE : $('userSelfRegistration.enable').checked
+		USERSELFREGISTRATION_ENABLE : $('userSelfRegistration.enable').checked,
 
+        TOKEN     : $('_tk').value
 	}
 	
 	return data;

@@ -133,7 +133,7 @@
 		
 						<div id="oAcOsEle" name="oAcOsEle" class="oAcEle" style="display:none;" onClick="oActions('oAcOs');">
 						<xsl:if test="not($readonly) and java:isAccessibleService('metadata.batch.delete')">
-							<button onclick="batchOperation('metadata.batch.delete','{/root/gui/strings/batchDeleteTitle}',600,
+							<button onclick="batchOperation('metadata.batch.delete?_tk={/root/gui/_tk}','{/root/gui/strings/batchDeleteTitle}',600,
 							    replaceStringParams('{/root/gui/strings/confirmBatchDelete}',[$('nbselected').innerHTML]))">
 								<xsl:value-of select="/root/gui/strings/delete"/>
 							</button>

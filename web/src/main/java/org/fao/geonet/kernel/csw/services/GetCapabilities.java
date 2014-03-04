@@ -110,7 +110,7 @@ public class GetCapabilities extends AbstractOperation implements CatalogService
 
 		try
 		{
-			Element capabilities = Xml.loadFile(file);
+			Element capabilities = Xml.loadFile(file, false);
             ServletContext servletContext = null;
             if(context.getServlet() != null) {
                 servletContext = context.getServlet().getServletContext();

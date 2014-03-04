@@ -563,7 +563,7 @@ public class ConfigurationOverrides {
 		File webxmlFile = new File(webInf,"web.xml");
         String resource = null;
         if(webxmlFile.exists()) {
-            Element webXML = Xml.loadFile(webxmlFile);
+            Element webXML = Xml.loadFile(webxmlFile, false);
             Namespace namespace = webXML.getNamespace();
             String webappName = webXML.getChildTextTrim("display-name", namespace);
 
@@ -585,7 +585,7 @@ public class ConfigurationOverrides {
     @SuppressWarnings("unchecked")
 	private String lookupOverrideParamFromConfigFile(URL url) throws IOException, JDOMException {
     	try {
-			Element config = Xml.loadFile(url);
+			Element config = Xml.loadFile(url, false);
 			StringBuilder builder = new StringBuilder();
 			for(Element elem : (List<Element>)config.getChildren("override")) {
 				if(builder.length() > 0) {
@@ -685,7 +685,7 @@ public class ConfigurationOverrides {
                     if (in != null) {
                         try {
                             try {
-                                Element element = Xml.loadStream(in);
+                                Element element = Xml.loadStream(in, false);
                                 Element loaded = resolveImports(element, string);
                                 if (loadedResource == null) {
                                     loadedResource = loaded;
@@ -887,7 +887,7 @@ public class ConfigurationOverrides {
         String appPath = context.getContextPath();
         Element elem = null;
         try {
-            elem = Xml.loadFile(context.getRealPath(servletRelativePath));
+            elem = Xml.loadFile(context.getRealPath(servletRelativePath), false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -908,7 +908,7 @@ public class ConfigurationOverrides {
      * and the specifics for a particular platform can be configured using overrides
      * 
      * @param configFilePath The path to the files to be loaded and overriden.  IE /WEB-INF/server.prop
-     * @param contex the servlet context that is loaded (maybe null.  If null appPath is used to resolve configuration files like: /WEB-INF/configuration-overrides.xml
+     * @param context the servlet context that is loaded (maybe null.  If null appPath is used to resolve configuration files like: /WEB-INF/configuration-overrides.xml
      * @param appPath The path to the webapplication root.  If servlet is null (and therefore getResource cannot be used, this path is used to file files)
      * @param reader a buffered reader opened to the file to be loaded.
      * 

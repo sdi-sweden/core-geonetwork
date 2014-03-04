@@ -118,6 +118,7 @@
 
 	<clickablehyperlinks>Aktywne hyperlinki</clickablehyperlinks>
 
+  <dtd>Allow DTDs</dtd>
 	<localrating>Rating lokalny</localrating>
 	<autofixing>Automatyczne poprawki</autofixing>
 
@@ -305,6 +306,11 @@
 		<tip id="clickablehyperlinks.enable">
 			Jeśli ustawione GeoNetwork uaktywni hyperlinki w metadanych.
 		</tip>
+
+    <!-- dtd -->
+    <tip id="dtd.enable">
+      If set, GeoNetwork allows insertion of metadata that contains a DTD. Set this to false for increased security.
+    </tip>
 
 		<!-- local rating -->
 		<tip id="localrating.enable">

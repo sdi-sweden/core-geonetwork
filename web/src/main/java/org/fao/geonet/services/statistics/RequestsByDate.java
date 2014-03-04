@@ -384,7 +384,7 @@ public class RequestsByDate extends NotInReadOnlyModeService{
 
         if ( f.exists() ) {
             try {
-                xmlDoc = Xml.loadFile(f);
+                xmlDoc = Xml.loadFile(f, false);
             } catch (Exception ex) {
                 if(Log.isDebugEnabled(Geonet.SEARCH_LOGGER))
                     Log.debug(Geonet.SEARCH_LOGGER,"Cannot load file: " + filePath + ": " + ex.getMessage());

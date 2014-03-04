@@ -319,7 +319,7 @@ public class LuceneConfig {
 	private void load(ServletContext servletContext, String luceneConfigXmlFile) {
 		try {
 			luceneConfig = Xml.loadStream(new FileInputStream(
-					this.configurationFile));
+					this.configurationFile), false);
 			if (servletContext != null) {
 				ConfigurationOverrides.DEFAULT.updateWithOverrides(luceneConfigXmlFile, servletContext, appPath, luceneConfig);
 			}
@@ -570,7 +570,7 @@ public class LuceneConfig {
 			String taxonomyConfigFile) {
 		try {
 			Element taxonomyConfig = Xml.loadStream(new FileInputStream(
-					this.taxonomyConfigurationFile));
+					this.taxonomyConfigurationFile), false);
 			if (servletContext != null) {
 				ConfigurationOverrides.DEFAULT.updateWithOverrides(taxonomyConfigFile, servletContext, appPath, taxonomyConfig);
 			}
@@ -595,8 +595,7 @@ public class LuceneConfig {
 
     /**
      *
-     * @param summaryConfig
-     * @param resultType
+     * @param resultTypeConfig
      * @return
      * @throws Exception
      */

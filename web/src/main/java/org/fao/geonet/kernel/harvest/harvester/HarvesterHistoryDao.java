@@ -165,7 +165,7 @@ public class HarvesterHistoryDao {
 			Element info = record.getChild("info");
 			Element xml = null;
 			try {
-				xml = Xml.loadString(info.getValue(), false);
+				xml = Xml.loadString(info.getValue(), false, false);
 			} catch (Exception e) {
 				xml = new Element("error").setText("Invalid XML harvester result: "+e.getMessage());	
 				e.printStackTrace();
@@ -175,7 +175,7 @@ public class HarvesterHistoryDao {
 
 			Element params = record.getChild("params");
 			try {
-				xml = Xml.loadString(params.getValue(), false);
+				xml = Xml.loadString(params.getValue(), false, false);
 			} catch (Exception e) {
 				xml = new Element("error").setText("Invalid XML harvester params: "+e.getMessage());	
 				e.printStackTrace();

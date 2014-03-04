@@ -118,6 +118,7 @@
 
 	<clickablehyperlinks>Clickable hyperlinks</clickablehyperlinks>
 
+  <dtd>Allow DTDs</dtd>
 	<localrating>Local Rating</localrating>
 	<autofixing>Automatic Fixes</autofixing>
 
@@ -292,6 +293,11 @@
 		<tip id="clickablehyperlinks.enable">
 			If set, GeoNetwork will display clickable hyperlinks in the metadata.
 		</tip>
+
+    <!-- dtd -->
+    <tip id="dtd.enable">
+      If set, GeoNetwork allows insertion of metadata that contains a DTD. Set this to false for increased security.
+    </tip>
 
 		<!-- local rating -->
 		<tip id="localrating.enable">

@@ -351,7 +351,7 @@ public class MetadataSchema
                 try {
                     schematronXsl = new FileOutputStream(schematronXslFilePath);
                     Element schematronRule = Xml.loadFile(schemaSchematronDir 
-                            + File.separator + rule);
+                            + File.separator + rule, false);
                     Xml.transform(schematronRule, schematronCompilationFile, schematronXsl);
                 } catch (FileNotFoundException e) {
                     Log.error(Geonet.SCHEMA_MANAGER, "     Schematron rule file not found " + schematronXslFilePath 

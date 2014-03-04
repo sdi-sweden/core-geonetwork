@@ -31,11 +31,11 @@ import jeeves.constants.Jeeves;
 import jeeves.exceptions.BadInputEx;
 import jeeves.exceptions.BadParameterEx;
 import jeeves.exceptions.OperationAbortedEx;
-import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 
+import org.fao.geonet.services.BaseSecureService;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.setting.SettingInfo;
@@ -49,7 +49,7 @@ import org.jdom.Element;
  * TODO javadoc.
  * 
  */
-public class Set implements Service
+public class Set extends BaseSecureService
 {
 	//--------------------------------------------------------------------------
 	//---
@@ -73,7 +73,7 @@ public class Set implements Service
      * @return
      * @throws Exception
      */
-	public Element exec(Element params, ServiceContext context) throws Exception
+    public Element doExec(Element params, ServiceContext context) throws Exception
 	{
 		GeonetContext  gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 		SettingManager sm = gc.getSettingManager();
@@ -175,8 +175,10 @@ public class Set implements Service
         new ConfigEntry(ConfigEntry.Type.STRING, false, "csw/metadataPublic",                          "system/csw/metadataPublic"),
 
 		new ConfigEntry(ConfigEntry.Type.BOOL,   true,  "clickablehyperlinks/enable", "system/clickablehyperlinks/enable"),
-		
-		new ConfigEntry(ConfigEntry.Type.BOOL,   true,  "localrating/enable", "system/localrating/enable"),
+
+        new ConfigEntry(ConfigEntry.Type.BOOL,   true,  "dtd/enable", "system/dtd/enable"),
+
+        new ConfigEntry(ConfigEntry.Type.BOOL,   true,  "localrating/enable", "system/localrating/enable"),
         new ConfigEntry(ConfigEntry.Type.BOOL,   true,  "autofixing/enable", "system/autofixing/enable"),
         new ConfigEntry(ConfigEntry.Type.BOOL,   true,  "inspire/enable", "system/inspire/enable"),
         new ConfigEntry(ConfigEntry.Type.BOOL,   true,  "inspire/enableSearchPanel", "system/inspire/enableSearchPanel"),

@@ -35,6 +35,7 @@
 			</class>
 
 			<output sheet="metadata-show.xsl">
+        <call name="_tk" class="jeeves.services.GetSecureToken" />
 				<call name="currTab"  class=".guiservices.util.GetCurrentMDTab"/>
 				<call name="position" class=".guiservices.util.GetPositionMD"/>
 				<call name="relation" class =".guiservices.metadata.GetRelated"/>
@@ -333,6 +334,7 @@
 			<class name=".services.metadata.PrepareBatchNewOwner"/>
 
 			<output sheet="metadata-batchownership.xsl">
+        <call name="_tk" class="jeeves.services.GetSecureToken" />
 				<xml name="info" file="xml/metadata-batchNewOwner.xml" />
 			</output>
 		</service>
@@ -360,7 +362,9 @@
 		<service name="metadata.batch.category.form">
 			<class name=".services.metadata.PrepareBatchUpdateCategories"/>
 
-			<output sheet="metadata-category.xsl"/>
+			<output sheet="metadata-category.xsl">
+        <call name="_tk" class="jeeves.services.GetSecureToken" />
+			</output>
 		</service>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -378,7 +382,9 @@
 		<service name="metadata.batch.admin.form">
 			<class name=".services.metadata.PrepareBatchUpdatePrivileges"/>
 			
-			<output sheet="metadata-admin.xsl"/>
+			<output sheet="metadata-admin.xsl">
+        <call name="_tk" class="jeeves.services.GetSecureToken" />
+			</output>
 		</service>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -434,6 +440,7 @@
 
 		<service name="metadata.create.form">
 			<output sheet="metadata-create.xsl">
+        <call name="_tk" class="jeeves.services.GetSecureToken" />
 				<call name="groups"    class=".guiservices.groups.GetMine"/>
 				<call name="templates" class=".guiservices.templates.Get"/>
 				<xml name="create" file="xml/metadata-create.xml" />
@@ -452,6 +459,7 @@
 
 		<service name="metadata.duplicate.form">
 			<output sheet="metadata-duplicate.xsl">
+        <call name="_tk" class="jeeves.services.GetSecureToken" />
 				<call name="groups" class=".guiservices.groups.GetMine"/>
 				<xml  name="create" file ="xml/metadata-create.xml" />
 			</output>
@@ -501,7 +509,9 @@
 		<service name="metadata.admin.form">
 			<class name=".services.metadata.GetAdminOper"/>
 
-			<output sheet="metadata-admin.xsl"/>
+			<output sheet="metadata-admin.xsl">
+        <call name="_tk" class="jeeves.services.GetSecureToken" />
+			</output>
 		</service>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -531,7 +541,9 @@
 		<service name="metadata.category.form">
 			<class name=".services.metadata.GetCategories"/>
 
-			<output sheet="metadata-category.xsl"/>
+			<output sheet="metadata-category.xsl">
+        <call name="_tk" class="jeeves.services.GetSecureToken" />
+			</output>
 		</service>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -550,6 +562,7 @@
 				</call>
 				<call name="categories"        class=".services.category.List"/>
 				<call name="importStyleSheets" class=".guiservices.util.GetImportXSLs"/>
+        <call name="_tk" class="jeeves.services.GetSecureToken" />
 			</output>
 		</service>
 
@@ -560,6 +573,7 @@
 				<call name="groups"            class=".guiservices.groups.GetMine"/>
 				<call name="categories"        class=".services.category.List"/>
 				<call name="importStyleSheets" class=".guiservices.util.GetImportXSLs"/>
+        <call name="_tk" class="jeeves.services.GetSecureToken" />
 			</output>
 		</service>
 
@@ -627,7 +641,9 @@
 		<service name="metadata.thumbnail.set">
 			<class name=".services.thumbnail.Set"/>
 
-			<output forward="metadata.thumbnail.form"/>
+			<output forward="metadata.thumbnail.form">
+        <xml name="thumbnail" file="xml/metadata-thumbnail.xml" />
+			</output>
 		</service>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -635,7 +651,9 @@
 		<service name="metadata.thumbnail.unset">
 			<class name=".services.thumbnail.Unset"/>
 
-			<output forward="metadata.thumbnail.form"/>
+			<output forward="metadata.thumbnail.form">
+        <xml name="thumbnail" file="xml/metadata-thumbnail.xml" />
+			</output>
 		</service>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -644,6 +662,7 @@
 
 		<service name="transfer.ownership">
 			<output sheet="ownership/transfer-ownership.xsl">
+        <call name="_tk" class="jeeves.services.GetSecureToken" />
 				<xml name="ownership" file="xml/transfer-ownership.xml" />
 			</output>
 		</service>

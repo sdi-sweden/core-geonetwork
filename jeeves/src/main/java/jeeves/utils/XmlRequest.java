@@ -349,7 +349,7 @@ public class XmlRequest
 			    client.executeMethod(httpMethod);
 			    data = httpMethod.getResponseBody();
 			}
-			return Xml.loadStream(new ByteArrayInputStream(data));
+			return Xml.loadStream(new ByteArrayInputStream(data), false);
 		}
 
 		catch(JDOMException e)

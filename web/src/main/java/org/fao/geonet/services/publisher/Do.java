@@ -40,6 +40,7 @@ import jeeves.utils.Xml;
 
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -151,7 +152,9 @@ public class Do implements Service {
     			+ ":" + gc.getSettingManager().getValue("system/server/port")
     			+ context.getBaseUrl()
     			+ "/srv/" + context.getLanguage() + "/";
-    	
+
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
     	
     	ACTION action = ACTION.valueOf(Util.getParam(params, "action"));
     	if (action.equals(ACTION.LIST)) {
@@ -197,16 +200,16 @@ public class Do implements Service {
     			String db = dbInfo[0]; 
     			String table = dbInfo[1]; 
     			
-    			return publishDbTable(action, gs, "postgis", host, port, user, password, db, table, "postgis", g.getNamespaceUrl(), metadataUuid, metadataTitle, metadataAbstract);
+    			return publishDbTable(action, gs, "postgis", host, port, user, password, db, table, "postgis", g.getNamespaceUrl(), metadataUuid, metadataTitle, metadataAbstract, allowDTD);
     		} else {
     		    if (file.startsWith("file://") || file.startsWith("http://")) {
-    		        return addExternalFile(action, gs, file, metadataUuid, metadataTitle, metadataAbstract);
+    		        return addExternalFile(action, gs, file, metadataUuid, metadataTitle, metadataAbstract, allowDTD);
     		    } else {
     		        // Get ZIP file from data directory
                     File dir = new File(Lib.resource
                             .getDir(context, access, metadataId));
                     File f = new File(dir, file);
-                    return addZipFile(action, gs, f, file, metadataUuid, metadataTitle, metadataAbstract);
+                    return addZipFile(action, gs, f, file, metadataUuid, metadataTitle, metadataAbstract, allowDTD);
     		    }
     		}
     	}
@@ -214,7 +217,12 @@ public class Do implements Service {
     }
 
     private void loadConfiguration(String geoserverConfigFile, ServiceContext context) throws IOException, JDOMException {
-        geoserverConfig = Xml.loadFile(geoserverConfigFile);
+
+        GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+
+        geoserverConfig = Xml.loadFile(geoserverConfigFile, allowDTD);
         ServletContext servletContext = null;
         if(context.getServlet() != null) {
             servletContext = context.getServlet().getServletContext();
@@ -289,7 +297,8 @@ public class Do implements Service {
 	 */
 	private Element publishDbTable(ACTION action, GeoServerRest g, String string,
 			String host, String port, String user, String password, String db,
-			String table, String dbType, String ns, String metadataUuid, String metadataTitle, String metadataAbstract) {
+			String table, String dbType, String ns, String metadataUuid,
+            String metadataTitle, String metadataAbstract, boolean allowDTD) {
 		try {
 			if (action.equals(ACTION.CREATE) || action.equals(ACTION.UPDATE)) {
 				String report = "";
@@ -320,7 +329,7 @@ public class Do implements Service {
 			}
 			
 			if (g.getLayer(table)) {
-				setReport(Xml.loadString(g.getResponse(), false));
+				setReport(Xml.loadString(g.getResponse(), false, allowDTD));
 				return report(SUCCESS, DB, getReport());
 			} else {
 				setErrorCode(g.getStatus() + "");
@@ -336,17 +345,15 @@ public class Do implements Service {
 	/**
 	 * Analyze ZIP file content and if valid, push the data
 	 * to GeoServer.
-	 * 
-	 * @param context
+	 *
 	 * @param action
-	 * @param metadataId
 	 * @param gs
 	 * @param file
-	 * @param access
 	 * @return
 	 * @throws IOException
 	 */
-	private Element addZipFile(Do.ACTION action, GeoServerRest gs, File f, String file, String metadataUuid, String metadataTitle, String metadataAbstract)
+	private Element addZipFile(Do.ACTION action, GeoServerRest gs, File f, String file, String metadataUuid,
+                               String metadataTitle, String metadataAbstract, boolean allowDTD)
 			throws IOException {
 		if (f == null) {
 			return report(EXCEPTION, null,
@@ -362,7 +369,7 @@ public class Do implements Service {
 		try {
 			vectorLayers = gf.getVectorLayers(true);
 			if (vectorLayers.size() > 0) {
-				if (publishVector(f, gs, action, metadataUuid, metadataTitle, metadataAbstract)) {
+				if (publishVector(f, gs, action, metadataUuid, metadataTitle, metadataAbstract, allowDTD)) {
 					return report(SUCCESS, VECTOR, getReport());
 				} else {
 					return report(EXCEPTION, VECTOR, getErrorCode());
@@ -375,7 +382,7 @@ public class Do implements Service {
 		try {
 			rasterLayers = gf.getRasterLayers();
 			if (rasterLayers.size() > 0) {
-				if (publishRaster(f, gs, action, metadataUuid, metadataTitle, metadataAbstract)) {
+				if (publishRaster(f, gs, action, metadataUuid, metadataTitle, metadataAbstract, allowDTD)) {
 					return report(SUCCESS, RASTER, getReport());
 				} else {
 					return report(EXCEPTION, RASTER, getErrorCode());
@@ -393,10 +400,11 @@ public class Do implements Service {
 		return null;
 	}
 
-	private Element addExternalFile(Do.ACTION action, GeoServerRest gs, String file, String metadataUuid, String metadataTitle, String metadataAbstract)
+	private Element addExternalFile(Do.ACTION action, GeoServerRest gs, String file, String metadataUuid,
+                                    String metadataTitle, String metadataAbstract, boolean allowDTD)
             throws IOException {
 	    // TODO vector or raster file ? Currently GeoServer does not support RASTER for external
-	    if (publishExternal(file, gs, action, metadataUuid, metadataTitle, metadataAbstract)) {
+	    if (publishExternal(file, gs, action, metadataUuid, metadataTitle, metadataAbstract, allowDTD)) {
             return report(SUCCESS, VECTOR, getReport());
         } else {
             return report(EXCEPTION, VECTOR, getErrorCode());
@@ -419,7 +427,8 @@ public class Do implements Service {
 		return report;
 	}
 
-	private boolean publishVector(File f, GeoServerRest g, ACTION action, String metadataUuid, String metadataTitle, String metadataAbstract) {
+	private boolean publishVector(File f, GeoServerRest g, ACTION action, String metadataUuid,
+                                  String metadataTitle, String metadataAbstract, boolean allowDTD) {
 
 		String ds = f.getName();
 		String dsName = ds.substring(0, ds.lastIndexOf("."));
@@ -445,7 +454,7 @@ public class Do implements Service {
 				}
 			}
 			if (g.getLayer(dsName)) {
-				setReport(Xml.loadString(g.getResponse(), false));
+				setReport(Xml.loadString(g.getResponse(), false, allowDTD));
 			} else {
 				setErrorCode(g.getStatus() + "");
 				return false;
@@ -459,7 +468,8 @@ public class Do implements Service {
 		return false;
 	}
 
-	private boolean publishExternal(String file, GeoServerRest g, ACTION action, String metadataUuid, String metadataTitle, String metadataAbstract) {
+	private boolean publishExternal(String file, GeoServerRest g, ACTION action, String metadataUuid,
+                                    String metadataTitle, String metadataAbstract, boolean allowDTD) {
 
         String dsName = file.substring(file.lastIndexOf("/") + 1, file.lastIndexOf("."));
         boolean isRaster = GeoFile.fileIsRASTER(file);
@@ -495,7 +505,7 @@ public class Do implements Service {
                 }
             }
             if (g.getLayer(dsName)) {
-                setReport(Xml.loadString(g.getResponse(), false));
+                setReport(Xml.loadString(g.getResponse(), false, allowDTD));
             } else {
                 setErrorCode(g.getStatus() + "");
                 return false;
@@ -508,7 +518,8 @@ public class Do implements Service {
         }
         return false;
     }
-	private boolean publishRaster(File f, GeoServerRest g, ACTION action, String metadataUuid, String metadataTitle, String metadataAbstract) {
+	private boolean publishRaster(File f, GeoServerRest g, ACTION action, String metadataUuid,
+                                  String metadataTitle, String metadataAbstract, boolean allowDTD) {
 		String cs = f.getName();
 		String csName = cs.substring(0, cs.lastIndexOf("."));
 		try {
@@ -531,7 +542,7 @@ public class Do implements Service {
 				}
 			}
 			if (g.getLayer(csName)) {
-				setReport(Xml.loadString(g.getResponse(), false));
+				setReport(Xml.loadString(g.getResponse(), false, allowDTD));
 			} else {
 				setErrorCode(g.getStatus() + "");
 				return false;

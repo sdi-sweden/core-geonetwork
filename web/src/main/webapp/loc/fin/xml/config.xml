@@ -118,6 +118,7 @@
 
 	<clickablehyperlinks>Linkkejä voi klikata</clickablehyperlinks>
 
+  <dtd>Allow DTDs</dtd>
 	<localrating>Arvostelu on mahdollista.</localrating>
 	<autofixing>Automatic Fixes</autofixing>
 
@@ -265,6 +266,11 @@
 		<tip id="clickablehyperlinks.enable">
 			Jos otettu käyttöön, Paikkatietohakemiston metatietoihin tallennetut www-osoitteet näytetään linkkeinä.
 		</tip>
+
+    <!-- dtd -->
+    <tip id="dtd.enable">
+      If set, GeoNetwork allows insertion of metadata that contains a DTD. Set this to false for increased security.
+    </tip>
 
 		<!-- local rating -->
 		<tip id="localrating.enable">

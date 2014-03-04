@@ -638,7 +638,7 @@ public class Thesaurus {
 				this.version = "unknown"; // not really acceptable!
 
         try {
-            Element thesaurusEl = Xml.loadFile(thesaurusFile);
+            Element thesaurusEl = Xml.loadFile(thesaurusFile, false);
 
             List<Namespace> theNSs = new ArrayList<Namespace>();
             Namespace rdfNamespace = Namespace.getNamespace("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");

@@ -10,6 +10,7 @@
 		<script type="text/javascript" language="JavaScript">
 			function delete1(url)
 			{
+        url = url + '&amp;_tk=<xsl:value-of select="/root/gui/_tk" />';
 				if(confirm("<xsl:value-of select="/root/gui/strings/deleteGroup"/>"))
 					load(url);
 			}

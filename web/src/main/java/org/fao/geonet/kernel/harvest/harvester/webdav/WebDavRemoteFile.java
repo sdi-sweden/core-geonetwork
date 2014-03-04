@@ -57,10 +57,10 @@ class WebDavRemoteFile implements RemoteFile {
 
 	//---------------------------------------------------------------------------
 
-	public Element getMetadata(SchemaManager  schemaMan) throws Exception {
+	public Element getMetadata(SchemaManager  schemaMan, boolean allowDTD) throws Exception {
 		try {
 			wr.setPath(path);
-            return Xml.loadStream(wr.getMethodData());
+            return Xml.loadStream(wr.getMethodData(), allowDTD);
 		}
 		catch (HttpException x) {
 			throw new Exception("HTTPException : " + x.getMessage());

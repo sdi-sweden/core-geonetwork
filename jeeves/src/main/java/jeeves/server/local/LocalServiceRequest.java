@@ -92,7 +92,7 @@ public class LocalServiceRequest extends ServiceRequest
 	{
 		String resultString = getResultString();
 		if(resultString.trim().isEmpty()) return null;
-		else return Xml.loadString(resultString, false);
+		else return Xml.loadString(resultString, false, false);
 	}
 
 	//---------------------------------------------------------------------------

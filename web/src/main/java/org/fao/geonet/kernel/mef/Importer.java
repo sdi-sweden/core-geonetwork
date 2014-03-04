@@ -37,6 +37,7 @@ import org.fao.geonet.exceptions.NoSchemaMatchesException;
 import org.fao.geonet.exceptions.UnAuthorizedException;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.search.spatial.Pair;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.util.ISODate;
 import org.fao.oaipmh.exceptions.BadArgumentException;
@@ -89,17 +90,20 @@ public class Importer {
 		else
 			throw new BadArgumentException("Bad file type parameter.");
 
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+
 		// --- import metadata from MEF, Xml, ZIP files
 		MEFLib.visit(mefFile, visitor, new IMEFVisitor() {
 
-			public void handleMetadata(Element metadata, int index)
+			public void handleMetadata(Element metadata, int index, boolean allowDTD)
 					throws Exception {
                 if(Log.isDebugEnabled(Geonet.MEF))
                     Log.debug(Geonet.MEF, "Collecting metadata:\n" + Xml.getString(metadata));
 				md.add(index, metadata);
 			}
 
-			public void handleMetadataFiles(File[] Files, Element info, int index)
+			public void handleMetadataFiles(File[] Files, Element info, int index, boolean allowDTD)
 					throws Exception {
 								String infoSchema = "_none_";
 								if (info != null && info.getContentSize() != 0) {
@@ -124,7 +128,7 @@ public class Importer {
 								Map<String,Pair<String,Element>> mdFiles = new HashMap<String,Pair<String,Element>>();
                 for (File file : Files) {
                     if (file != null && !file.isDirectory()) {
-                        Element metadata = Xml.loadFile(file);
+                        Element metadata = Xml.loadFile(file, allowDTD);
                         try {
                             String metadataSchema = dm.autodetectSchema(metadata, null);
                             // If local node doesn't know metadata
@@ -159,7 +163,7 @@ public class Importer {
 											+ " with info.xml schema (" + infoSchema + ").");
  									}
 									metadataValidForImport = mdInform.two();
-									handleMetadata(metadataValidForImport, index);
+									handleMetadata(metadataValidForImport, index, allowDTD);
 									return;
 								}
 
@@ -171,7 +175,7 @@ public class Importer {
 											+ " with preferred schema (" + preferredSchema + ").");
 									}
 									metadataValidForImport = mdInform.two();
-									handleMetadata(metadataValidForImport, index);
+									handleMetadata(metadataValidForImport, index, allowDTD);
 									return;
 								} 
 
@@ -185,7 +189,7 @@ public class Importer {
                 metadataValidForImport = mdInform.two();
 
 								// Import valid metadata
-								handleMetadata(metadataValidForImport, index);
+								handleMetadata(metadataValidForImport, index, allowDTD);
 			}
 
 			// --------------------------------------------------------------------
@@ -410,7 +414,7 @@ public class Importer {
 						is);
 			}
 
-		});
+		}, allowDTD);
 
 		return id;
 	}

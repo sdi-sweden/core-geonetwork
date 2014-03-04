@@ -37,6 +37,7 @@ import org.fao.geonet.kernel.harvest.harvester.CategoryMapper;
 import org.fao.geonet.kernel.harvest.harvester.GroupMapper;
 import org.fao.geonet.kernel.harvest.harvester.Privileges;
 import org.fao.geonet.kernel.setting.SettingInfo;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
@@ -78,6 +79,10 @@ public class FragmentHarvester extends BaseAligner{
 
 		GeonetContext gc = (GeonetContext) context.getHandlerContext (Geonet.CONTEXT_NAME);
 		dataMan = gc.getDataManager ();
+
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+        this.allowDTD = allowDTD;
 
 		SettingInfo si = new SettingInfo(context);
 		String siteUrl = si.getSiteUrl() + context.getBaseUrl();
@@ -639,7 +644,8 @@ public class FragmentHarvester extends BaseAligner{
 	private CategoryMapper localCateg;
 	private GroupMapper localGroups;
 	private HarvestSummary harvestSummary;
-	
+    private boolean allowDTD;
+
 	static public class FragmentParams {
 		public String url;
 		public String uuid;

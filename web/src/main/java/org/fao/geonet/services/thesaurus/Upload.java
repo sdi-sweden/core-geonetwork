@@ -43,6 +43,7 @@ import org.fao.geonet.constants.Params;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.Thesaurus;
 import org.fao.geonet.kernel.ThesaurusManager;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -187,11 +188,14 @@ public class Upload implements Service {
 		if (extension.equals(".rdf") || extension.equals(".xml")) {
 
             if(Log.isDebugEnabled("Thesaurus")) Log.debug("Thesaurus", "Uploading thesaurus: " + fname);
-			
+            GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
+            SettingManager sm = gc.getSettingManager();
+            boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+
 			// Rename .xml to .rdf for all thesaurus
 			fname = fname.substring(0, extensionIdx) + ".rdf";
 			eTSResult = UploadThesaurus(rdfFile, style, context, fname, type,
-					dir);
+					dir, allowDTD);
 		} else {
             if(Log.isDebugEnabled("Thesaurus"))
                 Log.debug("Thesaurus", "Incorrect extension for thesaurus named: " + fname);
@@ -212,11 +216,11 @@ public class Upload implements Service {
 	 * @throws Exception
 	 */
 	private Element UploadThesaurus(File rdfFile, String style,
-			ServiceContext context, String fname, String type, String dir)
+			ServiceContext context, String fname, String type, String dir, boolean allowDTD)
 			throws Exception {
 
 		Element TS_xml = null;
-		Element xml = Xml.loadFile(rdfFile);
+		Element xml = Xml.loadFile(rdfFile, allowDTD);
 		xml.detach();
 
 		if (!style.equals("_none_")) {

@@ -28,6 +28,7 @@ import jeeves.resources.dbms.Dbms;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.resources.ResourceManager;
 import jeeves.utils.Xml;
+import org.fao.geonet.GeonetContext;
 import org.fao.geonet.arcgis.ArcSDEMetadataAdapter;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.harvest.harvester.AbstractHarvester;
@@ -35,6 +36,7 @@ import org.fao.geonet.kernel.harvest.harvester.AbstractParams;
 import org.fao.geonet.kernel.harvest.harvester.CategoryMapper;
 import org.fao.geonet.kernel.harvest.harvester.GroupMapper;
 import org.fao.geonet.kernel.harvest.harvester.Privileges;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.resources.Resources;
 import org.fao.geonet.util.ISODate;
@@ -175,11 +177,14 @@ public class ArcSDEHarvester extends AbstractHarvester {
 		dbms.commit();		
 		List<String> idsForHarvestingResult = new ArrayList<String>();
 		//-----------------------------------------------------------------------
-		//--- insert/update metadata		
+		//--- insert/update metadata
+        GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
 		for(String metadata : metadataList) {
 			result.total++;
 			// create JDOM element from String-XML
-			Element metadataElement = Xml.loadString(metadata, false);
+			Element metadataElement = Xml.loadString(metadata, false, allowDTD);
 			// transform ESRI output to ISO19115
 			Element iso19115 = Xml.transform(metadataElement, ARC_TO_ISO19115_TRANSFORMER_LOCATION);
 			// transform ISO19115 to ISO19139

@@ -33,8 +33,10 @@ import jeeves.server.context.ServiceContext;
 import jeeves.utils.Util;
 import jeeves.utils.Xml;
 
+import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.Namespace;
@@ -74,13 +76,17 @@ public class Get implements Service {
     public Element exec(Element params, ServiceContext context)
             throws Exception {
         String uuid = Util.getParam(params, Params.UUID);
-        
+
+        GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
+
         // Retrieve template
         Dbms dbms = (Dbms) context.getResourceManager().open (Geonet.Res.MAIN_DB);
         Element rec = dbms.select("SELECT data FROM metadata WHERE isTemplate = 's' AND uuid = ?", uuid);
 
         String xmlData = rec.getChild(Jeeves.Elem.RECORD).getChildText("data");
-        rec = Xml.loadString(xmlData, false);
+        rec = Xml.loadString(xmlData, false, allowDTD);
         Element tpl = (Element) rec.detach();
         
         

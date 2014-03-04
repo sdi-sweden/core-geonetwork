@@ -22,6 +22,7 @@
 				<xsl:variable name="lang" select="/root/gui/language"/>
 
 				<form id="batchnewowner"  name="batchnewownerform" accept-charset="UTF-8" method="POST" action="{/root/gui/locService}/metadata.batch.newowner">
+          <input type="hidden" name="_tk" value="{/root/gui/_tk}"/>
 					<xsl:for-each select="/root/response/ids/*">
 						<input name="_{.}" type="hidden" value="{.}"/>
 					</xsl:for-each>

@@ -152,7 +152,7 @@ public abstract class XmlSerializer {
 			return null;
 
 		String xmlData = record.getChildText("data");
-		Element metadata = Xml.loadString(xmlData, false);
+		Element metadata = Xml.loadString(xmlData, false, true);
 
 		logEmptyWithheld(id, metadata, "XmlSerializer.internalSelect");
 		

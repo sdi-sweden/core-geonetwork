@@ -23,9 +23,9 @@
 
 package org.fao.geonet.services.feedback;
 
-import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
+import org.fao.geonet.services.BaseSecureService;
 import jeeves.utils.Util;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
@@ -39,7 +39,7 @@ import org.jdom.Element;
 /** Stores the feedback from a user into the database and sends an e-mail
   */
 
-public class Insert implements Service
+public class Insert extends BaseSecureService
 {
 	//--------------------------------------------------------------------------
 	//---
@@ -55,7 +55,7 @@ public class Insert implements Service
 	//---
 	//--------------------------------------------------------------------------
 
-	public Element exec(Element params, final ServiceContext context) throws Exception
+	public Element doExec(Element params, final ServiceContext context) throws Exception
 	{
 		GeonetContext  gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 		SettingManager sm = gc.getSettingManager();

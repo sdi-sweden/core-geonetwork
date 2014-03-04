@@ -192,7 +192,7 @@ public class Geonetwork implements ApplicationHandler {
 
 		// --- Check current database and create database if an emty one is found
 		String dbConfigurationFilePath = path + "/WEB-INF/config-db.xml";
-		dbConfiguration = Xml.loadFile(dbConfigurationFilePath);
+		dbConfiguration = Xml.loadFile(dbConfigurationFilePath, false);
         ConfigurationOverrides.DEFAULT.updateWithOverrides(dbConfigurationFilePath, servletContext, path, dbConfiguration);
 
 		Pair<Dbms,Boolean> pair = initDatabase(context);
@@ -235,7 +235,7 @@ public class Geonetwork implements ApplicationHandler {
 		// build Z3950 repositories file first from template
 		URL url = getClass().getClassLoader().getResource(Geonet.File.JZKITCONFIG_TEMPLATE);
 
-		if (Repositories.build(url, context)) {
+		if (Repositories.build(url, context, settingMan)) {
 			logger.info("     Repositories file built from template.");
 
 			try {

@@ -119,7 +119,7 @@ public class ListMetadataFormats implements OaiPmhService
 	private List<MetadataFormat> getConvertFormats(ServiceContext context) throws IOException, JDOMException
 	{
 	
-		Element elem = Xml.loadFile(context.getAppPath() + DEFAULT_PREFIXES_FILE);
+		Element elem = Xml.loadFile(context.getAppPath() + DEFAULT_PREFIXES_FILE, false);
 		if (context.getServlet() != null && context.getServlet().getServletContext() != null) {
 			ConfigurationOverrides.DEFAULT.updateWithOverrides(DEFAULT_PREFIXES_FILE, context.getServlet().getServletContext(), context.getAppPath(), elem);
 		}

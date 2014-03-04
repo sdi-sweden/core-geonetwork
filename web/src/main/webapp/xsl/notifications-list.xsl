@@ -112,6 +112,7 @@
 	-->
 	<xsl:template name="form">
 		<form name="notificationsUpdateForm" accept-charset="UTF-8" action="{/root/gui/locService}/notifications.save" method="post">
+      <input type="hidden" name="_tk" value="{/root/gui/_tk}"/>
 			<input type="submit" style="display: none;" />
 			<div id="this-is-just-to-get-the-content-left-thank-you" style="text-align:left;margin:0 auto 0 auto;">
 				<table id="notifications" style="table-layout: fixed;">

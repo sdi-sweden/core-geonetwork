@@ -118,6 +118,7 @@
 
 	<clickablehyperlinks>可点击链接</clickablehyperlinks>
 
+  <dtd>Allow DTDs</dtd>
 	<localrating>本地的信贷评级</localrating>
 	<autofixing>自动修复</autofixing>
 
@@ -286,6 +287,11 @@
 		<tip id="clickablehyperlinks.enable">
 			如果设置，地理网将显示在数据可点击链接。
 		</tip>
+
+    <!-- dtd -->
+    <tip id="dtd.enable">
+      If set, GeoNetwork allows insertion of metadata that contains a DTD. Set this to false for increased security.
+    </tip>
 
 		<!-- local rating -->
 		<tip id="localrating.enable">

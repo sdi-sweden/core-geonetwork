@@ -44,7 +44,7 @@ public final class CodeListCacheLoader implements Callable<Map<String, String>> 
     @SuppressWarnings("unchecked")
     private void addCodeLists(String codeListName, Map<String, String> codeList, File file) throws IOException, JDOMException {
         if (file.exists()) {
-            Element xmlDoc = Xml.loadFile(file);
+            Element xmlDoc = Xml.loadFile(file, false);
 
             List<Element> codelists = xmlDoc.getChildren("codelist");
             for (Element element : codelists) {

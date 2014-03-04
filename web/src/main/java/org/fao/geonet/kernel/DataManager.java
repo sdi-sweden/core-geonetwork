@@ -662,8 +662,8 @@ public class DataManager {
      * @param doc
      * @throws Exception
      */
-    public void validate(String schema, Document doc) throws Exception {
-        Xml.validate(doc);
+    public void validate(String schema, Document doc, boolean allowDTD) throws Exception {
+        Xml.validate(doc, allowDTD);
     }
 
     /**
@@ -1481,7 +1481,7 @@ public class DataManager {
         int serial = sf.getSerial(dbms, "Metadata");
 
         // Update fixed info for metadata record only, not for subtemplates
-        Element xml = Xml.loadString(data, false);
+        Element xml = Xml.loadString(data, false, false);
         if (!isTemplate.equals("s")) {
             xml = updateFixedInfo(schema, Integer.toString(serial), uuid, xml, parentUuid, DataManager.UpdateDatestamp.yes, dbms, context);
 
@@ -1844,7 +1844,7 @@ public class DataManager {
      * @param lang Language from context
      * @return
      */
-    public boolean doValidate(Dbms dbms, String schema, String id, Document doc, String lang) {
+    public boolean doValidate(Dbms dbms, String schema, String id, Document doc, String lang, boolean allowDTD) {
         HashMap <String, Integer[]> valTypeAndStatus = new HashMap<String, Integer[]>();
         boolean valid = true;
 
@@ -1855,7 +1855,7 @@ public class DataManager {
             // if document has a doctype then validate using that (assuming that the
             // dtd is either mapped locally or will be cached after first validate)
             try {
-                Xml.validate(doc);
+                Xml.validate(doc, allowDTD);
                 Integer[] results = {1, 0, 0};
                 valTypeAndStatus.put("dtd", results);
                 if(Log.isDebugEnabled(Geonet.DATA_MANAGER))

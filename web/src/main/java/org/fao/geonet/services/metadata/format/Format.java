@@ -42,6 +42,7 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.setting.SettingInfo;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.languages.IsoLanguagesMapper;
 import org.fao.geonet.services.metadata.Show;
 import org.jdom.Element;
@@ -59,6 +60,10 @@ public class Format extends AbstractFormatService {
 
     public Element exec(Element params, ServiceContext context) throws Exception {
         ensureInitializedDir(context);
+
+        GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
 
         String xslid = Util.getParam(params, "xsl", null);
         String uuid = Util.getParam(params, Params.UUID, null);
@@ -87,8 +92,7 @@ public class Format extends AbstractFormatService {
         List<SchemaLocalization> localization = getLabels(context, lang);
         
         Element root = new Element("root");
-        
-		GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
+
         String url = new SettingInfo(gc.getSettingManager()).getSiteUrl() + context.getBaseUrl();
 
         root.addContent (new Element("url").setText(url));
@@ -127,7 +131,7 @@ public class Format extends AbstractFormatService {
         
         // verify xsl is a valid file before loading metadata and increasing
         // popularity
-        Xml.loadFile(viewXslFile);
+        Xml.loadFile(viewXslFile, allowDTD);
         Element transformed = Xml.transform(root, viewXslFile.getAbsolutePath());
         Element response = new Element("metadata");
         response.addContent(transformed);
@@ -146,7 +150,7 @@ public class Format extends AbstractFormatService {
         File baseLoc = new File(appPath, "loc");
         File locDir = findLocDir(lang, baseLoc);
         if(locDir.exists()) {
-            return Xml.loadFile(new File(locDir, "xml"+File.separator+"strings.xml"));
+            return Xml.loadFile(new File(locDir, "xml"+File.separator+"strings.xml"), false);
         }
         return new Element("strings");
     }
@@ -163,7 +167,7 @@ public class Format extends AbstractFormatService {
         if(locDir.exists()) {
             Collection<File> files = FileUtils.listFiles(locDir, new String[]{"xml"}, false);
             for (File file : files) {
-                resources.addContent(Xml.loadFile(file));
+                resources.addContent(Xml.loadFile(file, false));
             }
         }
         return resources;
@@ -216,9 +220,9 @@ public class Format extends AbstractFormatService {
         
         private SchemaLocalization(String schema, String schemaLocDir) throws IOException, JDOMException {
             this.schema = schema;
-            this.strings = Xml.loadFile(schemaLocDir+"strings.xml").setName("strings");
-            this.codelists = Xml.loadFile(schemaLocDir+"codelists.xml").setName("codelists");
-            this.labels = Xml.loadFile(schemaLocDir+"labels.xml").setName("labels");
+            this.strings = Xml.loadFile(schemaLocDir+"strings.xml", false).setName("strings");
+            this.codelists = Xml.loadFile(schemaLocDir+"codelists.xml", false).setName("codelists");
+            this.labels = Xml.loadFile(schemaLocDir+"labels.xml", false).setName("labels");
         }
         
     }

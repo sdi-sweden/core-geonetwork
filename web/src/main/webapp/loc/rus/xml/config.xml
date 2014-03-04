@@ -117,6 +117,7 @@
 
 	<clickablehyperlinks>Работающую гиперссылку</clickablehyperlinks>
 
+  <dtd>Allow DTDs</dtd>
 	<localrating>Местные Рейтинг</localrating>
 	<autofixing>Автоматического исправления</autofixing>
 
@@ -282,6 +283,11 @@
 		<tip id="clickablehyperlinks.enable">
 			Если установлено, GeoNetwork покажет работающую гиперссылку в метаданных.
 		</tip>
+
+    <!-- dtd -->
+    <tip id="dtd.enable">
+      If set, GeoNetwork allows insertion of metadata that contains a DTD. Set this to false for increased security.
+    </tip>
 
 		<!-- local rating -->
 		<tip id="localrating.enable">

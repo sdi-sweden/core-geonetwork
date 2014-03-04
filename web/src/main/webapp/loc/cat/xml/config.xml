@@ -118,6 +118,7 @@
 
 	<clickablehyperlinks>Es pot fer clic a hipervincles</clickablehyperlinks>
 
+  <dtd>Allow DTDs</dtd>
 	<localrating>Classificació local</localrating>
 	<autofixing>Correccions automàtiques</autofixing>
 
@@ -323,6 +324,11 @@
 		<tip id="clickablehyperlinks.enable">
 			Si activat, GeoNetwork permetrà fer clic als enllaços de les metadades.
 		</tip>
+
+    <!-- dtd -->
+    <tip id="dtd.enable">
+      If set, GeoNetwork allows insertion of metadata that contains a DTD. Set this to false for increased security.
+    </tip>
 
 		<!-- local rating -->
 		<tip id="localrating.enable">

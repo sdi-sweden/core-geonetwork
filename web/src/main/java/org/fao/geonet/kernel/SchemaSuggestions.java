@@ -45,7 +45,7 @@ public class SchemaSuggestions
 
 	public SchemaSuggestions(String xmlSuggestFile) throws Exception
 	{
-		Element sugg = Xml.loadFile(xmlSuggestFile);
+		Element sugg = Xml.loadFile(xmlSuggestFile, false);
 		// TODO: it could be good to check that suggested elements are 
 		// fine for the element type
 		List list = sugg.getChildren();

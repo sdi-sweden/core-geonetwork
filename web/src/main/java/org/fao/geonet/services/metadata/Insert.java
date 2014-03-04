@@ -37,6 +37,7 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.mef.Importer;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.fao.geonet.util.ISODate;
 import org.jdom.Element;
@@ -74,6 +75,8 @@ public class Insert extends NotInReadOnlyModeService {
 		GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 
 		DataManager dataMan = gc.getDataManager();
+        SettingManager sm = gc.getSettingManager();
+        boolean allowDTD = sm.getValueAsBool("/system/dtd/enable");
 
 		String data       = Util.getParam(params, Params.DATA);
 		String group      = Util.getParam(params, Params.GROUP);
@@ -90,7 +93,7 @@ public class Insert extends NotInReadOnlyModeService {
 		//-----------------------------------------------------------------------
 		//--- add the DTD to the input xml to perform validation
 
-		Element xml = Xml.loadString(data, false);
+		Element xml = Xml.loadString(data, false, allowDTD);
 
         // Apply a stylesheet transformation if requested
         if (!style.equals("_none_"))
