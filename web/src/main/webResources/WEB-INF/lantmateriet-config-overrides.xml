@@ -1,0 +1,69 @@
+<!-- This file is an example of what a configuration overrides file might 
+	look like. It contains most of the common overrides that one might want but 
+	is essentially the defaults in the different config files so it is not needed 
+	See the javadocs of jeeves.server.ConfigurationOverrides for the complete 
+	set of options that can be used in an overrides file The javadocs also explain 
+	how to configure which override file is used in a particular environement. 
+	A original proposal about the overrides are at: http://trac.osgeo.org/geonetwork/wiki/ConfigOverride 
+	The API has changed slightly since it was written but the principals remain 
+	the same -->
+<overrides xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="config-overrides.xsd" xmlns:sec="http://www.springframework.org/schema/security">
+	<!-- an import can be used if many of the overrides are common between your 
+		different configurations -->
+	<import file="/WEB-INF/server-props-overrides.xml" />	
+
+	<file name=".*/WEB-INF/config.xml">
+
+		<replaceText xpath="general/uploadDir">${gn.path}/data/tmp</replaceText>
+		<replaceText xpath="general/maxUploadSize">100</replaceText>
+		<!-- <replaceText xpath="appHandler/luceneDir">${gn.files}/lucene</replaceText> 
+			<replaceText xpath="appHandler/dataDir">${gn.files}/data</replaceText> -->
+
+		<!-- <replaceAtt xpath="appHandler/param[@name='geonetwork.dir']" attName="value" 
+			value="${gn.files}/data"/> -->
+
+		<addXML xpath="appHandler">
+			<param name="geonetwork.dir" value="${gn.path}/data" />
+		</addXML>
+
+		<!-- geonetwork.lucene.dir = {data}/index geonetwork.config.dir = {data}/config 
+			geonetwork.codeList.dir = {data}/config/codelist geonetwork.schema.dir {data}/config/schema_plugins 
+			geonetwork.data.dir {data}/data/metadata_data geonetwork.svn.dir {data}/data/metadata_subversion 
+			geonetwork.resources.dir {data}/data/resources -->
+
+		<replaceXML xpath="resources">
+			<resource enabled="true">
+				<name>main-db</name>
+				<provider>jeeves.resources.dbms.ApacheDBCPool</provider>
+				<config>
+					<user>${db.user}</user>
+					<password>${db.pass}</password>
+					<driver>org.postgresql.Driver</driver>
+					<url>jdbc:postgresql://${db.path}</url>
+					<poolSize>10</poolSize>
+					<validationQuery>SELECT 1</validationQuery>
+				</config>
+			</resource>
+		</replaceXML>
+
+	</file>
+	
+	<file name=".*/WEB-INF/config-metadata.xml">
+		<addXML xpath="services">
+			<service name="metadata.privileges"> 
+				<class name=".services.metadata.GetAdminOper"/> 
+			</service> 
+		</addXML>
+	</file>
+	
+	<spring>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.privileges!?.*" access="hasRole('Administrator')"/>
+	</spring>
+		
+	<logging>
+		<logFile>/WEB-INF/log4j.cfg</logFile>
+		<logFile>/WEB-INF/lantmateriet-log4j.cfg</logFile>
+	</logging>
+
+</overrides>

@@ -40,16 +40,130 @@
         <!--<param-value>Joe</param-value>-->
     <!--</context-param>-->
     <!-- H2 DB starter configuration / remove if you don't use H2 -->
+
+    <!--
     <listener>
       <listener-class>org.h2.server.web.DbStarter</listener-class>
     </listener>
-  
+    -->
+
     <!-- shut down java cache used for xlinks and spatial index -->
     <listener>
         <listener-class>
             org.apache.jcs.utils.servlet.JCSServletContextListener
         </listener-class>
     </listener>
+
+    <!-- ======================= START ADDED BY LM ============================= -->
+
+    <filter>
+        <display-name>SiteminderSessionFilter</display-name>
+        <filter-name>SiteminderSessionFilter</filter-name>
+        <filter-class>org.lmv.geodata.web.siteminder.sessionfilter.SiteminderSessionFilter</filter-class>
+        <init-param>
+            <param-name>siteminderUrl</param-name>
+            <param-value>${sitemindersimulator.url}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>targetUrlParamName</param-name>
+            <param-value>targetUrl</param-value>
+        </init-param>
+        <init-param>
+            <param-name>siteminderCookieName</param-name>
+            <param-value>SMSESSION</param-value>
+        </init-param>
+        <init-param>
+            <param-name>userHeaderName</param-name>
+            <param-value>SM_USER</param-value>
+        </init-param>
+        <init-param>
+            <param-name>rolesHeaderName</param-name>
+            <param-value>SM_ROLES</param-value>
+        </init-param>
+        <init-param>
+            <param-name>groupHeaderName</param-name>
+            <param-value>SM_GROUP</param-value>
+        </init-param>
+        <init-param>
+            <param-name>groupHeaderName</param-name>
+            <param-value>SM_GROUP</param-value>
+        </init-param>
+        <init-param>
+            <param-name>firstnameHeaderName</param-name>
+            <param-value>SM_FIRSTNAME</param-value>
+        </init-param>
+        <init-param>
+            <param-name>surnameHeaderName</param-name>
+            <param-value>SM_SURNAME</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ignorePaths</param-name>
+            <param-value>/srv/eng/csw,/srv/swe/csw</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>SiteminderSessionFilter</filter-name>
+        <url-pattern>${sitemindersimulator.pattern}</url-pattern>
+    </filter-mapping>
+
+       <filter>
+        <display-name>SiteminderRoleFixFilter</display-name>
+        <filter-name>SiteminderRoleFixFilter</filter-name>
+        <filter-class>org.lmv.geodata.web.tomcat.filter.SiteminderRoleFixFilter</filter-class>
+        <init-param>
+            <description></description>
+            <param-name>roleHeaderKey</param-name>
+            <param-value>${siteminder.role}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>profileMappings</param-name>
+            <param-value>geodatase_sysadmin=Administrator,geodatase_admin=UserAdmin,geodatase_publisher=Editor,geodatase_editor=Editor,geodatase_user=Guest</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>SiteminderRoleFixFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <display-name>RedirectFilter</display-name>
+        <filter-name>RedirectFilter</filter-name>
+        <filter-class>org.lmv.geodata.web.tomcat.filter.RedirectFilter</filter-class>
+        <init-param>
+            <description></description>
+            <param-name>redirectUrl</param-name>
+            <param-value>${logout.redirect.url}</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>RedirectFilter</filter-name>
+        <url-pattern>*.geodatase</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>CSWFilter</filter-name>
+        <filter-class>fi.paikkatietohakemisto.geonetwork.servlet.filter.CSW202LogFilter</filter-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>off</param-value>
+        </init-param>
+        <init-param>
+            <param-name>path</param-name>
+            <param-value>/srv/eng/csw,/srv/swe/csw</param-value>
+        </init-param>
+        <init-param>
+            <param-name>logpath</param-name>
+            <param-value>${log.path}</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CSWFilter</filter-name>
+        <servlet-name>gn-servlet</servlet-name>
+    </filter-mapping>
+
+    <!-- ======================= END ADDED BY LM ============================= -->    
+
     <filter>
 		<filter-name>characterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
