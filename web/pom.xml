@@ -481,7 +481,7 @@
                  </resource>
                </resources>
                <filters>
-                 <filter>${basedir}/src/main/filters/${env}.properties</filter>
+                 <filter>${filter-path}/${env}.properties</filter>
                </filters>
                <overwrite>true</overwrite>
              </configuration>
@@ -988,5 +988,6 @@
     <widgets.webapp.resources></widgets.webapp.resources>
     <system.specific.overrides></system.specific.overrides>
     <rootProjectDir>${basedir}/..</rootProjectDir>
+    <filter-path>${basedir}/src/main/filters</filter-path>
   </properties>
 </project>
