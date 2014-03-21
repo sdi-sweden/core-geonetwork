@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import jeeves.exceptions.UserLoginEx;
-import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ProfileManager;
 import jeeves.server.ServiceConfig;
@@ -40,8 +39,7 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.security.GeonetworkUser;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
-import org.fao.geonet.services.NotInReadOnlyModeService;
-import org.fao.geonet.services.NotInReadOnlyModeServiceWithoutCrsf;
+import org.fao.geonet.services.NotInReadOnlyModeServiceWithoutCsrf;
 import org.jdom.Element;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -57,7 +55,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @author James Dempsey <James.Dempsey@csiro.au>
  * @version $Revision: 1629 $
  */
-public class ShibLogin extends NotInReadOnlyModeServiceWithoutCrsf
+public class ShibLogin extends NotInReadOnlyModeServiceWithoutCsrf
 {
 	private static final String VIA_SHIBBOLETH = "Via Shibboleth";
 	private static final String SHIBBOLETH_FLAG = "SHIBBOLETH";

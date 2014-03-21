@@ -11,8 +11,8 @@ import org.jdom.Element;
  * Base class for services that should not run their normal execution path if GeoNetwork is in read-only mode.
  * @author Conny Nilimaa
  */
-public abstract class NotInReadOnlyModeServiceWithoutCrsf extends MailSendingService {
-    private org.apache.commons.logging.Log log = LogFactory.getLog(NotInReadOnlyModeServiceWithoutCrsf.class);
+public abstract class NotInReadOnlyModeServiceWithoutCsrf extends MailSendingService {
+    private org.apache.commons.logging.Log log = LogFactory.getLog(NotInReadOnlyModeServiceWithoutCsrf.class);
 
     @Override
     public void init(String appPath, ServiceConfig params) throws Exception {}
