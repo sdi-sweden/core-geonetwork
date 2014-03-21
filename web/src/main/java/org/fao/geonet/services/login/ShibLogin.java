@@ -41,6 +41,7 @@ import org.fao.geonet.kernel.security.GeonetworkUser;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.services.NotInReadOnlyModeService;
+import org.fao.geonet.services.NotInReadOnlyModeServiceWithoutCrsf;
 import org.jdom.Element;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -56,7 +57,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @author James Dempsey <James.Dempsey@csiro.au>
  * @version $Revision: 1629 $
  */
-public class ShibLogin extends NotInReadOnlyModeService
+public class ShibLogin extends NotInReadOnlyModeServiceWithoutCrsf
 {
 	private static final String VIA_SHIBBOLETH = "Via Shibboleth";
 	private static final String SHIBBOLETH_FLAG = "SHIBBOLETH";
@@ -137,7 +138,7 @@ public class ShibLogin extends NotInReadOnlyModeService
 		Element userEl = (Element) list.get(0);
 	
 		GeonetworkUser user = new GeonetworkUser(context.getProfileManager(), username, userEl);
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities() ) ;
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities() ) ;
 		authentication.setDetails(user);
 
 		if(SecurityContextHolder.getContext() == null) {
@@ -214,9 +215,9 @@ public class ShibLogin extends NotInReadOnlyModeService
                 String count = ((Element) list.get(0)).getChildText("numr");
 
                  if (count.equals("0")) {
-                     query = "INSERT INTO UserGroups(userId, groupId) "+
-                             "VALUES(?,?)";
-                     dbms.execute(query, userId, groupId);
+                     query = "INSERT INTO UserGroups(userId, groupId, profile) "+
+                             "VALUES(?,?,?)";
+                     dbms.execute(query, userId, groupId, profile);
 
                  }
             }
