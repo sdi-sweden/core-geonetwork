@@ -14,7 +14,7 @@ function ConfigModel(strLoader)
 ConfigModel.prototype.getConfig = function(callBack)
 {
 	this.getConfigCB = callBack;
-	
+
 	ker.send('xml.config.get', '<request/>', ker.wrap(this, this.getConfig_OK), true);
 }
 
@@ -71,8 +71,10 @@ ConfigModel.prototype.getConfig_OK = function(node)
 			DOWNLOADSERVICE_SIMPLE         : xml.evalXPath(node, 'downloadservice/simple'),
 			DOWNLOADSERVICE_WITHDISCLAIMER : xml.evalXPath(node, 'downloadservice/withdisclaimer'),
 
-			
+
             CLICKABLE_HYPERLINKS         : xml.evalXPath(node, 'clickablehyperlinks/enable'),
+
+            DTD               : xml.evalXPath(node, 'dtd/enable'),
 
             INSPIRE           : xml.evalXPath(node, 'inspire/enable'),
             INSPIRE_SEARCH_PANEL           : xml.evalXPath(node, 'inspire/enableSearchPanel'),
@@ -84,9 +86,9 @@ ConfigModel.prototype.getConfig_OK = function(node)
             METADATA_DEFAULT_VIEW            : xml.evalXPath(node, 'metadata/defaultView'),
 
             METADATA_PRIVS_USERGROUPONLY     : xml.evalXPath(node, 'metadataprivs/usergrouponly'),
-            
+
             HARVESTER           : xml.evalXPath(node, 'harvester/enableEditing'),
-			LOCAL_RATING      : xml.evalXPath(node, 'localrating/enable'),			
+			LOCAL_RATING      : xml.evalXPath(node, 'localrating/enable'),
             AUTO_FIXING       : xml.evalXPath(node, 'autofixing/enable'),
 			PROXY_USE         : xml.evalXPath(node, 'proxy/use'),
 			PROXY_HOST        : xml.evalXPath(node, 'proxy/host'),
@@ -109,7 +111,7 @@ ConfigModel.prototype.getConfig_OK = function(node)
 
 			USERSELFREGISTRATION_ENABLE : xml.evalXPath(node, 'userSelfRegistration/enable')
 		}
-		
+
 		this.getConfigCB(data);
 	}
 }
@@ -119,9 +121,9 @@ ConfigModel.prototype.getConfig_OK = function(node)
 ConfigModel.prototype.setConfig = function(data, callBack)
 {
 	this.updateCB = callBack;
-	
+
 	var request = str.substitute(ConfigModel.updateTemp, data);
-	
+
 	ker.send('xml.config.set', request, ker.wrap(this, this.setConfig_OK), true);
 }
 
@@ -142,7 +144,7 @@ ConfigModel.prototype.setConfig_OK = function(node)
 //=== Private methods (or, at least, they should be so...)
 //=====================================================================================
 
-ConfigModel.updateTemp = 
+ConfigModel.updateTemp =
 '<config>'+
 '	<site>'+
 '		<siteId>{SITE_ID}</siteId>'+
@@ -212,6 +214,9 @@ ConfigModel.updateTemp =
 '	<clickablehyperlinks>' +
 '		<enable>{CLICKABLE_HYPERLINKS}</enable>'+
 '	</clickablehyperlinks>' +
+'   <dtd>' +
+'		<enable>{DTD}</enable>'+
+'	</dtd>' +
 '	<localrating>' +
 '		<enable>{LOCAL_RATING}</enable>'+
 '	</localrating>' +
