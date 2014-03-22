@@ -215,12 +215,12 @@
 		<service name="metadata.relation">
 			<class name=".guiservices.metadata.GetRelated"/>
 		</service>
-		
+
 	  <service name="xml.relation">
 	    <class name=".guiservices.metadata.GetRelated"/>
 	    <output sheet="metadata/relation.xsl" contentType="text/xml; charset=UTF-8"/>
 	  </service>
-	  
+
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -381,7 +381,7 @@
 
 		<service name="metadata.batch.admin.form">
 			<class name=".services.metadata.PrepareBatchUpdatePrivileges"/>
-			
+
 			<output sheet="metadata-admin.xsl">
         <call name="_tk" class="org.fao.geonet.services.GetSecureToken" />
 			</output>
@@ -396,14 +396,14 @@
 				<xml name="info" file="xml/metadata-batchUpdatePrivileges.xml" />
 			</output>
 		</service>
-		
+
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- Update child -->
-		
+
 		<service name="metadata.batch.children.form">
 			<output sheet="metadata-children.xsl"/>
 		</service>
-		
+
 		<service name="metadata.batch.update.children">
 			<class name=".services.metadata.UpdateChildren"/>
 		</service>
@@ -412,24 +412,24 @@
 
 		<service name="metadata.batch.processing">
 			<class name=".services.metadata.BatchXslProcessing"/>
-			
+
 			<output sheet="metadata-batch-results.xsl">
 				<xml name="info" file="xml/metadata-batchXslProcessing.xml" />
 			</output>
 		</service>
-		
+
 		<service name="metadata.processing">
 			<class name=".services.metadata.XslProcessing"/>
 			<output forward="metadata.edit" />
 		</service>
-		
+
 		<service name="xml.metadata.processing">
 			<class name=".services.metadata.XslProcessing"/>
-			<error sheet="xml-error.xsl" contentType="application/xml; charset=UTF-8"/> 
+			<error sheet="xml-error.xsl" contentType="application/xml; charset=UTF-8"/>
 		</service>
-		
+
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
+
 		<service name="metadata.select">
 			<class name=".services.main.Select">
 				<param name="type" value="metadata" />
@@ -526,7 +526,9 @@
 		<service name="metadata.status.form">
 			<class name=".services.metadata.GetStatus"/>
 
-			<output sheet="metadata-status.xsl"/>
+			<output sheet="metadata-status.xsl">
+				<call name="_tk" class="org.fao.geonet.services.GetSecureToken" />
+			</output>
 		</service>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -599,7 +601,7 @@
 
 		<service name="metadata.schema.add">
 			<class name=".services.schema.Add"/>
-			<error sheet="xml-error.xsl" contentType="application/xml; charset=UTF-8"/> 
+			<error sheet="xml-error.xsl" contentType="application/xml; charset=UTF-8"/>
 		</service>
 
 		<service name="metadata.schema.add.form">
@@ -608,7 +610,7 @@
 
 		<service name="metadata.schema.delete">
 			<class name=".services.schema.Delete"/>
-			<error sheet="xml-error.xsl" contentType="application/xml; charset=UTF-8"/> 
+			<error sheet="xml-error.xsl" contentType="application/xml; charset=UTF-8"/>
 		</service>
 
 		<service name="metadata.schema.delete.form">
@@ -617,7 +619,7 @@
 
 		<service name="metadata.schema.update">
 			<class name=".services.schema.Update"/>
-			<error sheet="xml-error.xsl" contentType="application/xml; charset=UTF-8"/> 
+			<error sheet="xml-error.xsl" contentType="application/xml; charset=UTF-8"/>
 		</service>
 
 		<service name="metadata.schema.update.form">
@@ -692,11 +694,11 @@
 		<service name="xml.metadata.status.set">
 			<class name=".services.metadata.UpdateStatus"/>
 		</service>
-		
+
 		<service name="xml.metadata.status.get">
 			<class name=".services.status.Get"/>
 		</service>
-		
+
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- Rating                                                        -->
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -704,7 +706,7 @@
 		<service name="xml.metadata.rate">
 			<class name=".services.metadata.Rate"/>
 		</service>
-		
+
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- Order templates											   -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -713,15 +715,15 @@
                 <call name="templates" class=".guiservices.templates.Get"/>
 			</output>
         </service>
-		
+
         <service name="metadata.templates.displayorder.save">
 			<class name=".guiservices.templates.SaveDisplayOrder"/>
         </service>
-		
+
 		<service name="metadata.templates.add.default">
 			<class name=".guiservices.templates.AddDefault"/>
 		</service>
-        
+
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- Metadata samples											   -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -829,7 +831,7 @@
             </class>
             <error id="illegal-params" sheet="metadata-error.xsl"/>
         </service>
-        
+
          <service name="metadata.formatter.pdf">
            <class name=".services.metadata.format.Format">
                <param name="user_xsl_dir" value="user_xsl" />
@@ -838,7 +840,7 @@
            <output file="true"/>
            <error id="illegal-params" sheet="metadata-error.xsl"/>
        </service>
-        
+
     </services>
 </geonet>
 
