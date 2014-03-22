@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format">
-	
+
 	<xsl:import href="modal.xsl"/>
 
 	<!--
@@ -12,18 +12,19 @@
 			<xsl:with-param name="content">
 
 				<div id="status" align="center">
+					<input type="hidden" name="_tk" value="{/root/gui/_tk}"/>
 					<xsl:if test="/root/response/statusvalues/*">
-							
+
 							<input name="id" type="hidden" value="{/root/response/id}"/>
 							<table>
 								<tr>
 									<th class="padded" align="center" colspan="2"><xsl:value-of select="/root/gui/strings/status"/></th>
 								</tr>
-		
+
 								<xsl:variable name="lang" select="/root/gui/language"/>
-					
+
 								<!-- loop on all status -->
-		
+
 								<xsl:for-each select="/root/response/statusvalues/status">
 								  <xsl:sort select="label/child::*[name() = $lang]"/>
 									<tr>
@@ -55,7 +56,7 @@
 											</input>
 										</td>
 									</tr>
-								</xsl:for-each>				
+								</xsl:for-each>
 								<tr width="100%">
 									<td align="left">
 										<xsl:value-of select="/root/gui/strings/changeLogMessage"/>
@@ -78,7 +79,7 @@
 								</tr>
 							</table>
 					</xsl:if>
-				</div>          
+				</div>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
