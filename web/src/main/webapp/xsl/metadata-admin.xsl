@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format">
-	
+
 	<xsl:include href="modal.xsl"/>
 
 	<xsl:variable name="profile"  select="/root/gui/session/profile"/>
@@ -13,16 +13,16 @@
 		<xsl:call-template name="formLayout">
 			<xsl:with-param name="title" select="/root/gui/strings/privileges"/>
 			<xsl:with-param name="content">
-			
+
 				<xsl:variable name="lang" select="/root/gui/language"/>
 				<xsl:variable name="groupOwner" select="/root/response/groupOwner"/>
 				<xsl:variable name="isNotReviewer" select="not(/root/response/groups/group[id=$groupOwner and userProfile='Reviewer'])"/>
 				<xsl:variable name="disabled" select="(/root/response/owner='false')"/>
-				
-				
+
+
 				<div id="privileges">
 					<input name="metadataid" id="metadataid" type="hidden" value="{/root/response/id}"/>
-          <input type="hidden" name="_tk" value="{/root/gui/_tk}"/>
+					<input type="hidden" name="_tk" id="_tk" value="{/root/gui/_tk}"/>
 					<table>
 						<tr>
 							<th class="padded"><xsl:value-of select="/root/gui/strings/groups"/></th>
@@ -40,8 +40,8 @@
 							<th width="70"/>
 							<th/>
 						</tr>
-			
-						<!-- 'Internet', 'Intranet' and GUEST groups 
+
+						<!-- 'Internet', 'Intranet' and GUEST groups
 							Disabled if user is not an administrator
 							or if user is not a reviewer of the metadata group.
 						-->
@@ -68,13 +68,13 @@
 							<td class="dots"/>
 							<td class="dots"/>
 						</tr>
-			
+
 						<!-- loop on other groups except -->
 						<xsl:for-each select="/root/response/groups/group">
 							<xsl:sort select="name"/>
-							
+
 							<xsl:variable name="userGroup" select="@userGroup"/>
-							<!-- Display group if it's one of the user groups 
+							<!-- Display group if it's one of the user groups
 							or not a user group but the usergrouponly catalog setting is false
 							-->
 							<xsl:if test="(/root/gui/env/metadataprivs/usergrouponly='false' and $userGroup!='true') or $userGroup='true'">
@@ -90,7 +90,7 @@
 												<xsl:if test="/root/gui/env/metadataprivs/usergrouponly!='true' and $userGroup='true'"><xsl:text> *</xsl:text></xsl:if>
 											</span>
 										</td>
-										
+
 								<!-- loop on all operations leaving editing and notify to last -->
 										<xsl:for-each select="oper">
 											<xsl:if test="id!='2' and id!='3'">
@@ -122,9 +122,9 @@
 												</td>
 											</xsl:if>
 										</xsl:for-each>
-	
+
 										<!-- 'set all' button -->
-	
+
 										<td>
 											<button class="content" onclick="setAll('row.{id}'); return false;">
 												<xsl:if test="$disabled">
@@ -134,9 +134,9 @@
 												<xsl:value-of select="/root/gui/strings/setAll"/>
 											</button>
 										</td>
-	
+
 										<!-- 'clear all' button -->
-	
+
 										<td>
 											<button class="content" onclick="clearAll('row.{id}'); return false;">
 												<xsl:if test="$disabled">
@@ -180,7 +180,7 @@
 		<xsl:param name="disabled" select="($profile != 'Administrator') and ($profile != 'Reviewer') and (/root/response/owner='false')"/>
 
 		<xsl:variable name="groupId"  select="id"/>
-		
+
 		<tr id="row.{id}">
 			<td class="padded">
 				<span>
@@ -190,7 +190,7 @@
 					<xsl:value-of select="label/child::*[name() = $lang]"/>
 				</span>
 			</td>
-			
+
 			<!-- loop on all operations,  edit, notify and admin privileges are hidden-->
 			<xsl:for-each select="oper">
 				<xsl:if test="id!='2' and id!='3'">
