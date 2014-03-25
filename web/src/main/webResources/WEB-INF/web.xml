@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee" 
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-            xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
             version="2.4">
 
     <display-name>geonetwork</display-name>
@@ -12,12 +12,12 @@
 	          jeeves.config.springutil.JeevesApplicationContext
 	      </param-value>
 	</context-param>
-	<!-- comma separated list of classes that implement 
+	<!-- comma separated list of classes that implement
 		 org.springframework.beans.factory.config.BeanFactoryPostProcessor
 
 		 This is an additional method of overriding the spring configuration
 		 besides multiple bean configuration files with overriding beans by using
-		 same id in multiple files. 
+		 same id in multiple files.
 		  -->
 	<context-param>
 		<param-name>applicationContextPostProcessors</param-name>
@@ -162,7 +162,7 @@
         <servlet-name>gn-servlet</servlet-name>
     </filter-mapping>
 
-    <!-- ======================= END ADDED BY LM ============================= -->    
+    <!-- ======================= END ADDED BY LM ============================= -->
 
     <filter>
 		<filter-name>characterEncodingFilter</filter-name>
@@ -179,7 +179,7 @@
 	<listener>
 		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
 	</listener>
-	
+
     <!-- Spring security -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
@@ -189,7 +189,7 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
+
     <!-- url rewrite filter -->
     <filter>
         <filter-name>UrlRewriteFilter</filter-name>
@@ -229,7 +229,7 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
-	
+
     <!-- Resources servlet -->
     <filter>
         <filter-name>resources</filter-name>
@@ -275,34 +275,34 @@
         <filter-name>resources</filter-name>
         <url-pattern>/images/harvesting/*</url-pattern>
     </filter-mapping>
-    
+
     <filter-mapping>
         <filter-name>resources</filter-name>
         <url-pattern>/xml/schemas/*</url-pattern>
     </filter-mapping>
-    
+
     <filter-mapping>
         <filter-name>resources</filter-name>
         <url-pattern>/images/statTmp/*</url-pattern>
     </filter-mapping>
-    
+
     <filter-mapping>
         <filter-name>resources</filter-name>
         <url-pattern>/htmlcache/*</url-pattern>
     </filter-mapping>
-    
+
     <servlet>
         <servlet-name>gn-servlet</servlet-name>
         <servlet-class>jeeves.server.sources.http.JeevesServlet</servlet-class>
-        <!-- Specified what overrides to use if the 
-        	(servlet.getServletContext().getServletContextName()).jeeves.configuration.overrides.file 
+        <!-- Specified what overrides to use if the
+        	(servlet.getServletContext().getServletContextName()).jeeves.configuration.overrides.file
         	system parameter is not specified.
         -->
 		<init-param>
 			<param-name>jeeves.configuration.overrides.file</param-name>
 			<param-value>${system.specific.overrides},${web.xml.main.config.overrides}${web.xml.widget.config.overrides}</param-value>
 		</init-param>
-        
+
         <!--
             Specified what geonetwork data directory to use.
             <init-param>
@@ -316,7 +316,7 @@
     <servlet>
         <servlet-name>HttpProxy</servlet-name>
         <servlet-class>org.geonetwork.http.proxy.HttpProxyServlet</servlet-class>
-        
+
         <!-- List of allowed content types -->
     <init-param>
       <param-name>AllowedContentTypes</param-name>
@@ -391,6 +391,7 @@
     </servlet>
 
     <!-- Print servlet -->
+    <!-- Removed by Lantmäteriet
     <servlet>
         <servlet-name>mapfish.print</servlet-name>
         <servlet-class>org.mapfish.print.servlet.MapPrinterServlet</servlet-class>
@@ -404,6 +405,7 @@
         <servlet-name>mapfish.print</servlet-name>
         <url-pattern>/pdf/*</url-pattern>
     </servlet-mapping>
+    -->
 
     <servlet-mapping>
         <servlet-name>monitor</servlet-name>
@@ -442,7 +444,7 @@
         <servlet-name>wmc</servlet-name>
         <url-pattern>/wmc/*</url-pattern>
     </servlet-mapping>
-    
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

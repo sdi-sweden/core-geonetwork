@@ -3,7 +3,7 @@
 	xmlns:geonet="http://www.fao.org/geonetwork"
 	xmlns:saxon="http://saxon.sf.net/"
 	extension-element-prefixes="saxon"
-	xmlns:exslt="http://exslt.org/common" 
+	xmlns:exslt="http://exslt.org/common"
 	xmlns:java="java:org.fao.geonet.util.XslUtil"
 	exclude-result-prefixes="exslt saxon geonet java">
 
@@ -45,7 +45,7 @@
 		<xsl:param name="schema">
 			<xsl:apply-templates mode="schema" select="."/>
 		</xsl:param>
-		
+
 		<xsl:variable name="briefSchemaCallBack" select="concat($schema,'Brief')"/>
 		<saxon:call-template name="{$briefSchemaCallBack}"/>
 	</xsl:template>
@@ -71,7 +71,7 @@
 						<xsl:otherwise><xsl:value-of select="normalize-space($metadata/title)"/></xsl:otherwise>
 					</xsl:choose>
 				</xsl:with-param>
-				
+
 			</xsl:call-template>
 		</xsl:variable>
 
@@ -91,16 +91,16 @@
 		or (geonet:info/isHarvested = 'n' and geonet:info/edit='true')">
 			&#160;
 			<button class="content" onclick="load('{/root/gui/locService}/metadata.edit?id={$metadata/geonet:info/id}')"><xsl:value-of select="/root/gui/strings/edit"/></button>
-			</xsl:if>			
+			</xsl:if>
 		</xsl:if>
-		
+
 		<!-- delete button -->
 		<xsl:if test="not($readonly) and ((/root/gui/config/harvester/enableEditing = 'true' and geonet:info/isHarvested = 'y' and geonet:info/edit='true')
 		or (geonet:info/isHarvested = 'n' and geonet:info/edit='true'))">
 			&#160;
 			<button class="content" onclick="return doConfirmDelete('{/root/gui/locService}/metadata.delete?id={$metadata/geonet:info/id}&amp;_tk={/root/gui/_tk}', '{/root/gui/strings/confirmDelete}','{$ltitle}','{$metadata/geonet:info/id}', '{/root/gui/strings/deleteConfirmationTitle}')"><xsl:value-of select="/root/gui/strings/delete"/></button>
 		</xsl:if>
-						
+
 		<xsl:if test="not($readonly) and geonet:info/edit='true'">
 			&#160;
 			<!-- =========================  -->
@@ -110,19 +110,19 @@
 				<xsl:value-of select="/root/gui/strings/otherActions"/>
 			</button>
 			<div id="{$buttonBarId}oAcEle{$metadata/geonet:info/id}" class="oAcEle" style="display:none;width:250px" onClick="oActions('{$buttonBarId}oAc',{$metadata/geonet:info/id});">
-				
+
 				<!-- privileges button -->
 				<xsl:if test="java:isAccessibleService('metadata.admin.form')">
 					<xsl:variable name="privileges" select="concat(/root/gui/strings/privileges,': ',$ltitle)"/>
 					<button onclick="doOtherButton('{/root/gui/locService}/metadata.admin.form?id={$metadata/geonet:info/id}','{$privileges}',600)"><xsl:value-of select="/root/gui/strings/privileges"/></button>
 				</xsl:if>
-				
+
 				<!-- categories button -->
 				<xsl:if test="java:isAccessibleService('metadata.category.form') and /root/gui/config/category/admin">
 					<xsl:variable name="categories" select="concat(/root/gui/strings/categories,': ',$ltitle)"/>
 					<button onclick="doOtherButton('{/root/gui/locService}/metadata.category.form?id={$metadata/geonet:info/id}','{$categories}',300)"><xsl:value-of select="/root/gui/strings/categories"/></button>
 				</xsl:if>
-			
+
 				<!-- status button -->
 				<xsl:if test="java:isAccessibleService('metadata.status.form')">
 					<xsl:variable name="statusTitle" select="concat(/root/gui/strings/status,': ',$ltitle)"/>
@@ -139,9 +139,9 @@
 				<xsl:variable name="duplicateChild" select="concat(/root/gui/strings/createChild,': ',$ltitle)"/>
 				<xsl:if test="contains(geonet:info/schema, 'iso19139')">
 				  <button onclick="load('{/root/gui/locService}/metadata.duplicate.form?uuid={$metadata/geonet:info/uuid}&amp;child=y')"><xsl:value-of select="/root/gui/strings/createChild"/></button>
-				</xsl:if>	
+				</xsl:if>
 
-				<!-- Create/Update thesaurus option and extract register elements 
+				<!-- Create/Update thesaurus option and extract register elements
 				     only for iso19135 metadata -->
 				<xsl:if test="contains(geonet:info/schema, 'iso19135')">
 					<xsl:variable name="createThesaurus" select="concat(/root/gui/strings/createThesaurus,': ',$ltitle)"/>
@@ -149,13 +149,13 @@
 
 					<xsl:variable name="extractRegisterItems" select="concat(/root/gui/strings/extractRegisterItems,': ',$ltitle)"/>
 				  <button onclick="doOtherButton('{/root/gui/locService}/metadata.batch.extract.subtemplates?uuid={$metadata/geonet:info/uuid}&amp;xpath=/grg:RE_Register/grg:containedItem/*[gco:isoType%3D&quot;grg:RE_RegisterItem&quot;]|/grg:RE_Register/grg:containedItem/grg:RE_RegisterItem&amp;extractTitle={/root/gui/schemalist/name[text()='iso19135']/@schemaConvertDirectory}extract-title.xsl&amp;category=_none_&amp;doChanges=on','{$extractRegisterItems}',600,150)"><xsl:value-of select="/root/gui/strings/extractRegisterItems"/></button>
-				</xsl:if>	
+				</xsl:if>
 			</div>
 		</xsl:if>
 	</xsl:template>
 
 
-    <!-- Create a div with class name set to extentViewer in 
+    <!-- Create a div with class name set to extentViewer in
         order to generate a new map.  -->
 
     <xsl:template name="showMap">
@@ -166,10 +166,10 @@
         <xsl:param name="targetPolygon"/>
         <xsl:param name="watchedBbox"/>
         <xsl:param name="eltRef"/>
-        <div class="extentViewer" style="width:{/root/gui/config/map/metadata/width}; height:{/root/gui/config/map/metadata/height};" 
-            edit="{$edit}" 
-            target_polygon="{$targetPolygon}" 
-            watched_bbox="{$watchedBbox}" 
+        <div class="extentViewer" style="width:{/root/gui/config/map/metadata/width}; height:{/root/gui/config/map/metadata/height};"
+            edit="{$edit}"
+            target_polygon="{$targetPolygon}"
+            watched_bbox="{$watchedBbox}"
             elt_ref="{$eltRef}"
             mode="{$mode}">
             <div style="display:none;" id="coords_{$eltRef}"><xsl:value-of select="$coords"/></div>
@@ -179,11 +179,11 @@
 	<!-- show metadata export icons eg. in search results or metadata viewer -->
 	<xsl:template name="showMetadataExportIcons">
 		<xsl:param name="forBrief" select="false()"/>
-	
+
 		<xsl:variable name="schema" select="string(geonet:info/schema)"/>
 		<xsl:variable name="mid" select="string(geonet:info/id)"/>
 		<xsl:variable name="url" select="concat(/root/gui/env/server/protocol,'://',/root/gui/env/server/host,':',/root/gui/env/server/port,/root/gui/locService)"/>
-													
+
         <xsl:for-each select="/root/gui/schemalist/name[text()=$schema]/conversions/converter">
 
             <xsl:variable name="name" select="@name"/>
@@ -224,6 +224,7 @@
 		</xsl:for-each>
 
 		<!-- add pdf link -->
+		<!--  Removed by Lantmäteriet
 		<xsl:variable name="pdfUrl" select="concat($url,'/pdf?id=',$mid)"/>
 
 		<xsl:choose>
@@ -242,5 +243,6 @@
     		</a>
 			</xsl:otherwise>
 		</xsl:choose>
+		 -->
 	</xsl:template>
 </xsl:stylesheet>

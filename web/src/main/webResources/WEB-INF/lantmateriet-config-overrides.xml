@@ -65,6 +65,9 @@
 	<spring>
 		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.privileges!?.*" access="hasRole('Administrator')"/>
 		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/xml.metadata.info!?.*" access="hasRole('Administrator')"/>
+
+		<!-- Deny all pdf requests -->
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern=".*pdf.*!?.*" access="denyAll"/>
 	</spring>
 
 	<logging>
