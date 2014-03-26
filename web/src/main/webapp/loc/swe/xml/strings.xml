@@ -17,10 +17,10 @@
 	<pol>Polski</pol> <!-- Do not translate! -->
     <swe>Svenska</swe> <!-- Do not translate! -->
 
-	<otherValue>Other:</otherValue>
-	<warning>Warning</warning>
-	<isAdmin>Is administrator ?</isAdmin>
-	<anyLanguage>Any language</anyLanguage>
+	<otherValue>Annat:</otherValue>
+	<warning>Varning</warning>
+	<isAdmin>Är administratör?</isAdmin>
+	<anyLanguage>Alla språk</anyLanguage>
 	<nodata>Null</nodata>
 	<extractRegisterItems>Extract Register Items</extractRegisterItems>
 	<selectXPath js="true">Enter an XPath to extract XML as a subtemplate eg. /gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty</selectXPath>
@@ -34,48 +34,48 @@
 	<makeChanges>I really want to do this!</makeChanges>
 	<dontMakeChanges>By default, this operation will not make any changes to the database ie. it runs in test mode. Checking this box switches test mode off and changes will be made to the database.</dontMakeChanges>
 
-	<defaultStatusChangeMessage>No information</defaultStatusChangeMessage>
-	<createThesaurus>Create/Update Thesaurus</createThesaurus>
+	<defaultStatusChangeMessage>Ingen information</defaultStatusChangeMessage>
+	<createThesaurus>Skapa/uppdatera Thesaurus</createThesaurus>
 	<thesaurusType>Thesaurus Type</thesaurusType>
-	<changeLogMessage>Change Log Message</changeLogMessage>
+	<changeLogMessage>Ändra loggmeddelande</changeLogMessage>
 	<status>Status</status>
-	<updateStatus>Update status</updateStatus>
+	<updateStatus>Updatera status</updateStatus>
 	<batchUpdateStatusTitle>Batch Update Status Operation</batchUpdateStatusTitle>
 	<startVersion>Start Versioning</startVersion>
 	<batchStartVersionTitle>Batch Start Versioning</batchStartVersionTitle>
 	<editAttributes>Add more details</editAttributes>
-	<subtemplate.admin>Manage directories</subtemplate.admin>
-	<subtemplate.admin.desc>Add/modify/delete directories (eg. contact directories)</subtemplate.admin.desc>
-	<surnameMandatory>Last name/surname is Mandatory</surnameMandatory>
-	<firstnameMandatory>First name is Mandatory</firstnameMandatory>
+	<subtemplate.admin>Hantera kataloger</subtemplate.admin>
+	<subtemplate.admin.desc>Lägg till/ändra/ta bort kataloger (eg. kontaktkataloger)</subtemplate.admin.desc>
+	<surnameMandatory>Efternamn är obligatoriskt</surnameMandatory>
+	<firstnameMandatory>Förnamn är obligatoriskt</firstnameMandatory>
 	<emailMandatory>email address is Mandatory</emailMandatory>
 	<forgottenPassword>Forgot your password?</forgottenPassword>
-	<selectTemplate>Select schemas</selectTemplate>
-	<useStopwords>The Lucene index uses stopwords for these languages:</useStopwords>
-	<rebuildIndexMessage>If you change these values, it is recommended you rebuild the Lucene index.</rebuildIndexMessage>
+	<selectTemplate>Välj scheman</selectTemplate>
+	<useStopwords>Lucene indexet använder stoppord för dessa språk:</useStopwords>
+	<rebuildIndexMessage>Om du ändrar dessa värden rekommenderas du bygga om Lucene indexet.</rebuildIndexMessage>
 	<notificationsDes>Remote updates</notificationsDes>
-	<metadata-templates-samples-add>Add templates and samples</metadata-templates-samples-add>
+	<metadata-templates-samples-add>Lägg till mallar och exempel</metadata-templates-samples-add>
 	<metadata-schema-select>Select a schema to add templates or sample data from</metadata-schema-select>
 	<templatesSamples>Manage templates and sample data</templatesSamples>
-	<simpleSearch>Simple Search</simpleSearch>
-	<advancedSearch>Advanced Search</advancedSearch>
+	<simpleSearch>Enkel sök</simpleSearch>
+	<advancedSearch>Avancerad sök</advancedSearch>
 	<remoteSearch>Remote Search</remoteSearch>
 	<displayRemoteHtml>Display results using HTML from server?</displayRemoteHtml>
 	<noSearchCriteria js="true">Please enter or select some search criteria</noSearchCriteria>
 	<noServer js="true">Please select a server to search</noServer>
-	<anyWith>Any - with one of these words</anyWith>
-	<anyWithExactPhrase>Any - with this exact phrase</anyWithExactPhrase>
-	<anyWithAllWords>Any - with all of these words</anyWithAllWords>
-	<anyWithoutWords>Any - without these words</anyWithoutWords>
+	<anyWith>Någon - med ett av dessa ord</anyWith>
+	<anyWithExactPhrase>Någon - med exakt denna fras</anyWithExactPhrase>
+	<anyWithAllWords>Någon - med alla dessa ord</anyWithAllWords>
+	<anyWithoutWords>Någon - förutom dessa ord</anyWithoutWords>
 	<dataDownload>Data for Download</dataDownload>
-	<addSchema>Add a metadata schema/profile</addSchema>
-	<updateSchema>Update a metadata schema/profile</updateSchema>
-	<deleteSchema>Delete a metadata schema/profile</deleteSchema>
-	<selectSchema>Select a metadata schema/profile</selectSchema>
+	<addSchema>Lägg till metadata schema/profil</addSchema>
+	<updateSchema>Uppdatera metadata schema/profile</updateSchema>
+	<deleteSchema>Ta bort metadata schema/profile</deleteSchema>
+	<selectSchema>Välj metadata schema/profile</selectSchema>
 	<schemaFileName>Path to Schema Zip Archive</schemaFileName>
 	<schemaUrl>URL of Schema Zip Archive</schemaUrl>
 	<schemaUuid>UUID of local metadata record with GeoNetwork Metadata Schema Archive (URL) as online resource</schemaUuid>
-	<add>Add</add>
+	<add>Lägg till</add>
 	<schemaOps>Metadata Schema Operations</schemaOps>
 	<enterSchema>Enter a name for the schema to be added</enterSchema>
 	<selectSchemaOperations>Source of schema zip archive:</selectSchemaOperations>
@@ -174,23 +174,23 @@
 	<datasetFound js="true">Dataset found and added to the map preview.</datasetFound>
 	<checkFailure js="true">Failed to check dataset in remote node.</checkFailure>
 	<addOnlineSource js="true">Add WMS info to online source</addOnlineSource>
-	<statusInformation js="true">Status information.</statusInformation>
-	<mapPreview js="true">Map preview</mapPreview>
+	<statusInformation js="true">Statusinformation.</statusInformation>
+	<mapPreview js="true">Förhandsgranska karta</mapPreview>
 	<selectANode js="true">Select a node ...</selectANode>
 	<publishing js="true">Publishing ...</publishing>
 
-	<logo>Logo configuration</logo>
-	<logoSelectionWindow js="true">Choose a logo</logoSelectionWindow>
-	<chooseLogo>Choose logo</chooseLogo>
-	<orgLogo>Organisation logo</orgLogo>
-	<logoDes>Manage catalogue logo (node and harvesting logo)</logoDes>
-	<logoRegistered js="true">Registered logos</logoRegistered>
-	<logoAdd js="true">Add new logo</logoAdd>
-	<selectedLogo js="true">Selected logo:</selectedLogo>
-	<logoDel js="true">Remove</logoDel>
-	<logoForNode js="true">Use for the catalogue</logoForNode>
-	<logoForNodeFavicon js="true">Use as favorite icon</logoForNodeFavicon>
-	<logoSelect js="true">Select image for logo ...</logoSelect>
+	<logo>Konfigurera logotyp</logo>
+	<logoSelectionWindow js="true">Välj en logotyp</logoSelectionWindow>
+	<chooseLogo>Välj logotyp</chooseLogo>
+	<orgLogo>Organisationslogotyp</orgLogo>
+	<logoDes>Hantera katalog logotyp (nod och skördning)</logoDes>
+	<logoRegistered js="true">Registrerade logotyper</logoRegistered>
+	<logoAdd js="true">Lägg till ny logotyp</logoAdd>
+	<selectedLogo js="true">Vald logotyp:</selectedLogo>
+	<logoDel js="true">Ta bort</logoDel>
+	<logoForNode js="true">Använd för katalogen</logoForNode>
+	<logoForNodeFavicon js="true">Använd som favoritikon</logoForNodeFavicon>
+	<logoSelect js="true">Välj bild för logotyp...</logoSelect>
 	<url>URL</url>
 	<createChild>Create child</createChild>
 	<updateChildren>Update children</updateChildren>
@@ -340,9 +340,9 @@
 	<selectedCRS js="true">Selected coordinate systems</selectedCRS>
 	<foundCRS js="true">Available coordinate systems</foundCRS>
 
-	<about>About</about>
-	<abstract>Abstract</abstract>
-	<accept>Accept</accept>
+	<about>Om</about>
+	<abstract>Sammanfattning</abstract>
+	<accept>OK</accept>
 	<actionOnSelect>actions on selection</actionOnSelect>
 	<add js="true">add</add>
 	<addNewMetadata>Add new metadata</addNewMetadata>
@@ -351,8 +351,8 @@
 	<Administrator>Administrator</Administrator>
 	<agrovocKeyword>Agrovoc Keywords</agrovocKeyword>
 	<all>all</all>
-	<any>- Any -</any>
-	<anytime>Anytime</anytime>
+	<any>- Någon -</any>
+	<anytime>När som helst</anytime>
 	<appSchInfoTab>App. schema</appSchInfoTab>
 
 	<assigned>Assigned</assigned>
@@ -375,10 +375,10 @@
 	<bookmarkPermanent>Permanent link to this description</bookmarkPermanent>
 	<bookmarkStumbleUpon>Bookmark on StumbleUpon</bookmarkStumbleUpon>
 	<bounding>Bounding Coordinates</bounding>
-	<boundingRelation value="encloses">encloses</boundingRelation>
-	<boundingRelation value="equal">is</boundingRelation>
-	<boundingRelation value="fullyOutsideOf">is fully outside of</boundingRelation>
-	<boundingRelation value="overlaps">overlaps</boundingRelation>
+	<boundingRelation value="encloses">omsluter</boundingRelation>
+	<boundingRelation value="equal">är lika</boundingRelation>
+	<boundingRelation value="fullyOutsideOf">är helt utanför</boundingRelation>
+	<boundingRelation value="overlaps">överlappar</boundingRelation>
 	<browse>Browse Graphic</browse>
 	<browsed>Browse Graphic File Description</browsed>
 	<browsen>Browse Graphic File Name</browsen>
@@ -391,7 +391,7 @@
 	<categoryManagement>Category management</categoryManagement>
 	<categoryManDes>Add/modify/delete and show categories</categoryManDes>
 	<categoryNameMandatory>A category name must be filled in.</categoryNameMandatory>
-	<changeDate>Metadata change date</changeDate>
+	<changeDate>Metadata ändringsdatum</changeDate>
 	<checkusername>Check</checkusername>
 	<choose>-Choose-</choose>
 	<chooseFile>Choose the location of the file to upload</chooseFile>
@@ -410,7 +410,7 @@
 	<confirmNewPassword>Confirm new password</confirmNewPassword>
 	<confirmPassword>Confirm password</confirmPassword>
 	<constraintsTab>Constraints</constraintsTab>
-	<contactUs>Contact us</contactUs>
+	<contactUs>Kontakta oss</contactUs>
 	<contains>Contains</contains>
 	<contentInfoTab>Content Info</contentInfoTab>
 	<convert>Convert</convert>
@@ -452,9 +452,9 @@
 	<disclaimer1>Your Disclaimer title</disclaimer1>
 	<disclaimer2>Your Disclaimer text</disclaimer2>
 	<distributionTab>Distribution</distributionTab>
-	<down>down</down>
-	<download>Download</download>
-	<downloadable>Downloadable</downloadable>
+	<down>ner</down>
+	<download>Ladda ner</download>
+	<downloadable>Nedladdningsbar</downloadable>
 	<downloadData>Data for download</downloadData>
 	<downloadEmail>Download Email</downloadEmail>
 	<downloadSelect>Download?</downloadSelect>
@@ -475,12 +475,12 @@
 	<durationSeconds>second(s)</durationSeconds>
 	<durationSign>Negative duration</durationSign>
 	<durationYears>year(s)</durationYears>
-	<dynamic>Interactive</dynamic>
-	<eastbc>East Bounding Coordinate</eastbc>
+	<dynamic>Interaktiv</dynamic>
+	<eastbc>Östlig begränsningskoordinat</eastbc>
 	<edit>Edit</edit>
 	<Editor>Editor</Editor>
-	<email>Email</email>
-	<emailAddressInvalid js="true">Email address is invalid</emailAddressInvalid>
+	<email>E-post</email>
+	<emailAddressInvalid js="true">Ogiltig e-postadress</emailAddressInvalid>
 	<enclosing>Including</enclosing>
 	<enclosingCoordinate>Enclosing coordinates </enclosingCoordinate>
 	<enddate>Ending Date</enddate>
@@ -491,67 +491,67 @@
 	<extensionInfoTab>Ext. Info</extensionInfoTab>
 	<extent>Extent</extent>
 	<featuredMap>Featured map</featuredMap>
-	<feedback>Feedback</feedback>
-	<feedbackCardTitle>Feedback and Comments</feedbackCardTitle>
-	<feedbackComments>Feedback / comments</feedbackComments>
+	<feedback>Återkoppling</feedback>
+	<feedbackCardTitle>Återkoppling och kommentarer</feedbackCardTitle>
+	<feedbackComments>Återkoppling / kommentarer</feedbackComments>
 	<feedbackRequest>Please provide your details before downloading</feedbackRequest>
 
 
-	<file>File</file>
-	<fileType>File type:</fileType>
-	<fileUploadSuccessful>File Upload Successful</fileUploadSuccessful>
-	<firstName>First Name</firstName>
-	<firstNameMandatory js="true">The First Name field is mandatory</firstNameMandatory>
-	<foundWords>Number of terms found:</foundWords>
-	<freeKeyword>Free Keywords</freeKeyword>
-	<from>From</from>
-	<fromDateSelector>Select FROM date</fromDateSelector>
-	<fuzzy>Search accuracy</fuzzy>
-	<fuzzyImprecise>Imprecise</fuzzyImprecise>
-	<fuzzyPrecise>Precise</fuzzyPrecise>
-	<fuzzySearch>Set the precision of the search (from exact term search to fuzzy search).</fuzzySearch>
-	<general>General</general>
-	<generalInfo>General information</generalInfo>
-	<generateUUID>Generate UUID for inserted metadata</generateUUID>
-	<georss>Open a GeoRSS feed</georss>
-	<group>Group</group>
-	<usergroups>User groups</usergroups>
+	<file>Fil</file>
+	<fileType>Filtyp:</fileType>
+	<fileUploadSuccessful>Lyckad filuppladdning</fileUploadSuccessful>
+	<firstName>Förnamn</firstName>
+	<firstNameMandatory js="true">Fältet Förnamn är obligatoriskt</firstNameMandatory>
+	<foundWords>Antal termer funna:</foundWords>
+	<freeKeyword>Sökord</freeKeyword>
+	<from>Från</from>
+	<fromDateSelector>Välj FRÅN datum</fromDateSelector>
+	<fuzzy>Söknoggrannhet</fuzzy>
+	<fuzzyImprecise>Luddig</fuzzyImprecise>
+	<fuzzyPrecise>Exakt</fuzzyPrecise>
+	<fuzzySearch>Ställ in noggrannheten på sökningen (från exakt till luddig).</fuzzySearch>
+    <general>Allmänt</general>
+    <generalInfo>Allmän information</generalInfo>
+    <generateUUID>Generera UUID för infogade metadata</generateUUID>
+	<georss>Öppna ett GeoRSS-flöde</georss>
+	<group>Grupp</group>
+	<usergroups>Användargrupper</usergroups>
 	<choice>Choice</choice>
 	<sequence>Sequence</sequence>
-	<groupManagement>Group management</groupManagement>
-	<groupManDes>Add/modify/delete and show groups</groupManDes>
-	<groups>Groups</groups>
-	<harvestingManagement>Harvesting management</harvestingManagement>
-	<harvestingManDes>Add/modify/delete/start/stop harvesting tasks</harvestingManDes>
-	<help>Help</help>
-	<helpLinkTooltip js="true">Help</helpLinkTooltip>
-	<helpComplete>Complete help</helpComplete>
-	<helperList>Suggestions:</helperList>
-	<hideAdvancedOptions>Hide advanced options</hideAdvancedOptions>
-	<highlights>Highlights</highlights>
-	<hitsPerPage>Hits per page</hitsPerPage>
+    <groupManagement>Grupphantering</groupManagement>
+    <groupManDes>Lägg till/ändra/radera och visa grupper</groupManDes>
+    <groups>Grupper</groups>
+    <harvestingManagement>Skördesförvaltning</harvestingManagement>
+    <harvestingManDes>Lägg till ändra/ta bort/starta/stoppa skördning</harvestingManDes>
+	<help>Hjälp</help>
+	<helpLinkTooltip js="true">Hjälp</helpLinkTooltip>
+    <helpComplete>Komplett hjälp</helpComplete>
+    <helperList>Förslag:</helperList>
+    <hideAdvancedOptions>Göm avancerad sökning</hideAdvancedOptions>
+    <highlights>Höjdpunkter</highlights>
+    <hitsPerPage>Träffar per sida</hitsPerPage>
 	<hitsPerPageChoice value="10">10</hitsPerPageChoice>
 	<hitsPerPageChoice value="100">100</hitsPerPageChoice>
 	<hitsPerPageChoice value="20">20</hitsPerPageChoice>
 	<hitsPerPageChoice value="50">50</hitsPerPageChoice>
-	<home>Home</home>
-	<i18n>Test i18n</i18n>
-	<i18nDesc>This service should help GeoNetwork opensource developers to have up to date localized files for the GUI.</i18nDesc>
-	<identificationTab>Identification</identificationTab>
+    <home>Hem</home>
+    <i18n>Test i18n</i18n>
+    <i18nDesc>Denna tjänst hjälper admistratörer att hantera uppdaterade lokaliseringsfiler.</i18nDesc>
+	<identificationTab>Identifiering</identificationTab>
 	<identifier>Identifier</identifier>
-	<imAreaInterest>Select an Area Of Interest</imAreaInterest>
-	<imPan>Pan</imPan>
-	<import>Import</import>
-	<imZoomFull>Zoom to full map extent</imZoomFull>
-	<imZoomIn>Zoom in</imZoomIn>
-	<imZoomOut>Zoom out</imZoomOut>
-	<imZoomToLayer>Zoom to selected layer extent</imZoomToLayer>
+	<imAreaInterest>Välj ett intresseområde</imAreaInterest>
+	<imPan>Panorera</imPan>
+	<import>Importera</import>
+	<imZoomFull>Zooma till hela kartans utsträckning</imZoomFull>
+	<imZoomIn>Zooma in</imZoomIn>
+	<imZoomOut>Zooma ut</imZoomOut>
+	<imZoomToLayer>Zooma till valda lagers utsträckning</imZoomToLayer>
 	<infoTitle>Info</infoTitle>
-	<insert>Insert</insert>
-	<insertFileMode js="true">File Upload</insertFileMode>
-	<insertMode>Insert mode:</insertMode>
-	<insertPasteMode>Copy/Paste</insertPasteMode>
-	<interactiveMap>Interactive Map</interactiveMap>
+	<insert>Infoga</insert>
+	<insertFileMode js="true">Filuppladdning</insertFileMode>
+	<insertMode>Infogningsläge:</insertMode>
+	<insertPasteMode>Kopiera/Klistra in</insertPasteMode>
+	<interactiveMap>Interaktiv karta</interactiveMap>
 	<interMapInfo><h1>Info in interactive maps</h1><p>You can find interactive maps by searching in GeoNetwork for digital data with an interactive map, or directly connet to a pre-configured map server. </p><p> Supported map servers are <a href="http://www.opengeospatial.org" class="sm" target="_blank">Open GeoSpatial® Consortium</a> compliant WMS Map Servers and <a href="http://www.esri.com" class="sm" target="_blank">ESRI® ArcIMS</a>.</p></interMapInfo>
 	<intermapSearch>Geographic search</intermapSearch>
 	<isoAll>ISO All</isoAll>
@@ -559,9 +559,9 @@
 	<isoMinimum>ISO Minimum</isoMinimum>
 
 	<keyword>keyword</keyword>
-	<keywords js="true">Keywords</keywords>
+	<keywords js="true">Nyckelord</keywords>
 	<keywordshelp>Select multiple keywords by holding the Ctrl-key when selecting with the mouse</keywordshelp>
-	<kind>Kind</kind>
+	<kind>Typ</kind>
 	<kindChoice value="company">Private company</kindChoice>
 	<kindChoice value="consultant">Independent consultant</kindChoice>
 	<kindChoice value="gov">Government</kindChoice>
@@ -570,41 +570,41 @@
 	<kindChoice value="other">Other</kindChoice>
 	<kindChoice value="uni">University/research centre</kindChoice>
 
-	<label>Label</label>
-	<language>en</language>
-	<large_thumbnail>Click to see a large preview image</large_thumbnail>
-	<lastNameMandatory js="true">The Last Name field is mandatory</lastNameMandatory>
-	<latitude>Latitude (between -90 and 90) in degrees</latitude>
+    <label>Etikett</label>
+    <language>sv</language>
+    <large_thumbnail>Klicka för att se en stor förhandsvisning</large_thumbnail>
+    <lastNameMandatory js = "true">Fältet Efternamn är obligatoriskt</lastNameMandatory>
+    <latitude>Latitud (mellan -90 och 90) i grader</latitude>
 	<latMax>lat (max)</latMax>
 	<latMin>lat (min)</latMin>
 	<legend>Legend</legend>
-	<link>Link</link>
-	<links>Links</links>
-	<loading>Loading ...</loading>
+	<link>Länk</link>
+	<links>Länkar</links>
+	<loading>Laddar ...</loading>
 	<local>Local search</local>
 	<localiz>Localization</localiz>
 	<localizationHelp>Important! This form allows you to add a Key value to the database. The key can not have spaces.<br/> After adding your key values, use the "Localization" form in the Administration panel to provide the actual name you want to be displayed on the website for the different languages.</localizationHelp>
 	<localizDes>Allows to change localized entities, like groups, categories etc...</localizDes>
-	<localType>Local</localType>
-	<location>Where?</location>
+	<localType>Lokala</localType>
+	<location>Var?</location>
 	<login>Login</login>
 	<loginCardTitle>Login / Signup</loginCardTitle>
-	<loginwarning>Only required for site administration</loginwarning>
-	<loginfailure>Login failed.  Incorrect username or password</loginfailure>
-	<logout>Logout</logout>
-	<logoutDes>Performs a logout</logoutDes>
-	<longitude>Longitude (between -180 and 180) in degrees</longitude>
-	<longMax>long (max)</longMax>
-	<longMin>long (min)</longMin>
-	<mainpageTitle>Find Interactive Maps, GIS datasets, Satellite Imagery and Related Applications</mainpageTitle>
-	<maintenanceTab>Maintenance</maintenanceTab>
+	<loginwarning>Endast för webbplatsadministration</loginwarning>
+	<loginfailure>Inloggning misslyckades. Felaktigt användarnamn eller lösenord</loginfailure>
+    <logout>Logga ut</logout>
+    <logoutDes>Utför en utloggning</logoutDes>
+    <longitude>Longitud (mellan -180 och 180) i grader</longitude>
+    <longMax>lon (max)</longMax>
+    <longMin>lon (min)</longMin>
+    <mainpageTitle>Sök efter interaktiva kartor, datamängder, satellitbilder och relaterade tillämpningar</mainpageTitle>
+    <maintenanceTab>Underhåll</maintenanceTab>
 	<management>Management</management>
-	<mandatory>Mandatory</mandatory>
-	<mandatoryIf>Mandatory if</mandatoryIf>
-	<mapType>Map type</mapType>
-	<mapViewerClose>Close Map Viewer</mapViewerClose>
-	<mapViewerLoading>Loading Map Viewer...</mapViewerLoading>
-	<mapViewerOpen>Open Map Viewer</mapViewerOpen>
+	<mandatory>Obligatorisk</mandatory>
+	<mandatoryIf>Obligatorisk om</mandatoryIf>
+	<mapType>Karttyp</mapType>
+	<mapViewerClose>Stäng kartvisare</mapViewerClose>
+	<mapViewerLoading>Laddar kartvisare...</mapViewerLoading>
+	<mapViewerOpen>Öppna kartvisare</mapViewerOpen>
 	<batchActions>Batch actions:</batchActions>
 	<batchDeleteTitle>Batch Delete Operation</batchDeleteTitle>
 	<batchNewOwnerTitle>Batch New Owner Operation</batchNewOwnerTitle>
@@ -613,164 +613,164 @@
 
 	<max>Maximum</max>
 	<mdRating>Data Rating</mdRating>
-	<mdUpdateError>Update error</mdUpdateError>
-	<mefFile>MEF file</mefFile>
-	<message>The username or the password is wrong.<br/>Press the 'back' button and try again.</message>
-	<messageChanged>The metadata has been changed by another user. Please retry.</messageChanged>
-	<messageDownload>Thanks for your interest. Click on the download button to retrieve the data</messageDownload>
-	<messageLargeFile>The file is too large</messageLargeFile>
-	<messageMdUpdateError>Sorry, an error occurred while updating metadata.</messageMdUpdateError>
-	<messageNoPrivileges>You don't have the privileges to do this.</messageNoPrivileges>
-	<messageNotPerformed>The requested operation could not be performed.</messageNotPerformed>
-	<metadata.admin.index.desc>Rebuild Lucene index</metadata.admin.index.desc>
-	<metadata.admin.index.failed js="true">Index operation failed.</metadata.admin.index.failed>
-	<metadata.admin.index.success js="true">Index operation was started successfully.</metadata.admin.index.success>
-	<metadata.admin.index.wait js="true">Index operation already in progress please wait.</metadata.admin.index.wait>
-	<metadata.admin.index.optimize.desc>Optimize Lucene index</metadata.admin.index.optimize.desc>
+	<mdUpdateError>Uppdateringsfel</mdUpdateError>
+	<mefFile>MEF fil</mefFile>
+	<message>Användarnamnet eller lösenordet är fel.<br/>Klicka på 'tillbaka' och prova igen.</message>
+	<messageChanged>Metadatat har ändrats av någon annan. Prova igen.</messageChanged>
+	<messageDownload>Tack för ditt intresse. Klicka på nedladdningsknappen för att hämta data</messageDownload>
+	<messageLargeFile>Filen är för stor</messageLargeFile>
+	<messageMdUpdateError>Tyvärr, ett fel uppstod vid uppdatering av metadata.</messageMdUpdateError>
+	<messageNoPrivileges>Du har inte rätt rättigheter för att göra detta.</messageNoPrivileges>
+	<messageNotPerformed>Den valda åtgärden kunde inte utföras.</messageNotPerformed>
+	<metadata.admin.index.desc>Bygg om Lucene index</metadata.admin.index.desc>
+	<metadata.admin.index.failed js="true">Indexeringen misslyckades.</metadata.admin.index.failed>
+	<metadata.admin.index.success js="true">Indexeringen startades.</metadata.admin.index.success>
+	<metadata.admin.index.wait js="true">Indexeringen redan startad, var god vänta.</metadata.admin.index.wait>
+	<metadata.admin.index.optimize.desc>Optimera Lucene index</metadata.admin.index.optimize.desc>
 	<metadata.admin.index.rebuildxlinks.desc>Clear XLink Cache and Rebuild Index of Records with XLinks</metadata.admin.index.rebuildxlinks.desc>
 
-	<lucene.config.reload>Reload Lucene configuration</lucene.config.reload>
-	<reload>Reload</reload>
-	<rebuildxlinks>Rebuild XLinks</rebuildxlinks>
-	<doYouReallyWantToDoThis js="true">This operation may take some time on large catalogs and should not be done during peak usage. Continue?</doYouReallyWantToDoThis>
-	<optimize>Optimize</optimize>
+	<lucene.config.reload>Ladda om Lucene konfiguration</lucene.config.reload>
+	<reload>Ladda om</reload>
+	<rebuildxlinks>Bygg om XLinks</rebuildxlinks>
+	<doYouReallyWantToDoThis js="true">Denna åtgärden kan ta lång tid på stora kataloger och bör inte användas vid hög belastning. Fortsätt?</doYouReallyWantToDoThis>
+	<optimize>Optimera</optimize>
 	<metadata.admin.index>Index manager</metadata.admin.index>
-	<metadata-samples>Sample metadata</metadata-samples>
-	<metadata-samples-add>Add sample metadata</metadata-samples-add>
-	<metadata-samples-add-failed>Failed to add sample metadata.</metadata-samples-add-failed>
-	<metadata-samples-add-success>Sample metadata added.</metadata-samples-add-success>
-	<metadata-template-add-success>Metadata template added.</metadata-template-add-success>
-	<metadata-template-order>Sort templates</metadata-template-order>
-	<metadata-template-order-desc>Sort your templates</metadata-template-order-desc>
-	<metadata-template-add-default>Add templates</metadata-template-add-default>
+	<metadata-samples>Metadataexempel</metadata-samples>
+	<metadata-samples-add>Lägg till metadataexempel</metadata-samples-add>
+	<metadata-samples-add-failed>Misslyckades att lägga in metadataexempel.</metadata-samples-add-failed>
+	<metadata-samples-add-success>Metadataexempel inlagd.</metadata-samples-add-success>
+	<metadata-template-add-success>Metadatamall inlagd.</metadata-template-add-success>
+	<metadata-template-order>Sortera mallar</metadata-template-order>
+	<metadata-template-order-desc>Sortera dina mallar</metadata-template-order-desc>
+	<metadata-template-add-default>Lägg till mall</metadata-template-add-default>
 
 	<metadata>Metadata</metadata>
-	<metadataAdded>Metadata added with ID:</metadataAdded>
-	<metadataDeleted>Metadata deleted with ID:</metadataDeleted>
-	<metadataInsertResults>Results of Metadata Import</metadataInsertResults>
+	<metadataAdded>Metadata inlagt med ID:</metadataAdded>
+	<metadataDeleted>Metadata borttaget med ID:</metadataDeleted>
+	<metadataInsertResults>Resultat av Metadata Import</metadataInsertResults>
 	<metadataJSForm>Metadata from JS Form</metadataJSForm>
 	<failOnError>Fail on error</failOnError>
-	<metadataRecordsProcessed>Total number of metadata records processed:</metadataRecordsProcessed>
-	<metadataRecordsAdded>Total number of metadata records added:</metadataRecordsAdded>
+	<metadataRecordsProcessed>Totalt antal metadataposter hanterat:</metadataRecordsProcessed>
+	<metadataRecordsAdded>Totalt antal metadataposter inlagda:</metadataRecordsAdded>
 	<min>Minimum</min>
 	<minor>Minor edit</minor>
-	<missing>MISSING or EMPTY</missing>
-	<missingSeeTab>MISSING - See the following group tab in sidebar: </missingSeeTab>
-	<more>more</more>
-	<moreinfo>For more information you can contact us via email at </moreinfo>
-	<name>Name</name>
-	<newCategory>Add a new category</newCategory>
-	<newGroup>Add a new group</newGroup>
-	<newMdDes>Adds a new metadata into geonetwork copying it from a template</newMdDes>
-	<newMdInsert>New metadata inserted:</newMdInsert>
-	<newMetadata>New metadata</newMetadata>
-	<newOwner>New Owner</newOwner>
-	<newPassword>New Password</newPassword>
-	<newUser>Add a new user</newUser>
-	<next>Next</next>
-	<noCategory>No category available.</noCategory>
-	<noHelp>Sorry, no help available</noHelp>
-	<noInfo>Sorry, no info available</noInfo>
-	<noLogin>You are not logged in</noLogin>
-	<none>none</none>
-	<noOwnerRights>Privileges/Categories Locked: You do NOT have ownership rights</noOwnerRights>
-	<northbc>North Bounding Coordinate</northbc>
-	<noSelectedMd>No selection, select one metadata first.</noSelectedMd>
-	<noTemplatesAvailable>No templates available, import metadata first.</noTemplatesAvailable>
-	<notfound>Not found</notfound>
-	<nothing>No action on import</nothing>
-	<online>Interactive map</online>
+	<missing>SAKNAS eller TOM</missing>
+	<missingSeeTab>SAKNAS - Se följande gruppfliken i sidoraden: </missingSeeTab>
+    <more>mer</more>
+    <moreinfo>För mer information kan du kontakta oss via e-post på</moreinfo>
+    <name>Namn</name>
+    <newCategory>Lägg till en ny kategori</newCategory>
+    <newGroup>Lägg till en ny grupp</newGroup>
+	<newMdDes>Lägger till nytt metadata i Geonetwork genom att kopiera den från en mall</newMdDes>
+	<newMdInsert>Nytt metadata infogad:</newMdInsert>
+    <newMetadata>Nya metadata</newMetadata>
+    <newOwner>Ny ägare</newOwner>
+    <newPassword>Nytt lösenord</newPassword>
+    <newUser>Lägg till en ny användare</newUser>
+	<next>Nästa</next>
+	<noCategory>Ingen kategori tillgänglig.</noCategory>
+	<noHelp>Tyvärr, ingen hjälp tillgänglig</noHelp>
+	<noInfo>Tyvärr, ingen info tillgänglig</noInfo>
+	<noLogin>Du är inte inloggad</noLogin>
+	<none>ingen</none>
+	<noOwnerRights>Privilegier/Kategorier Låst: Du har INTE äganderätt</noOwnerRights>
+	<northbc>Nordlig begränsningskoordinat</northbc>
+	<noSelectedMd>Inget valt, välj ett metadata först.</noSelectedMd>
+	<noTemplatesAvailable>Inga malla tillgängliga, importera metadata först.</noTemplatesAvailable>
+    <notfound>Hittades inte</notfound>
+    <nothing>Ingen åtgärd vid import</nothing>
+    <online>Interaktiv karta</online>
 	<onlink>Online Linkage</onlink>
 	<opensearch>GeoNetwork opensearch service allow search to be made into the metadata catalog.</opensearch>
-	<operation>Operation</operation>
-	<options>Options</options>
-	<organisation>Organisation / department</organisation>
+    <operation>Operation</operation>
+    <options>Alternativ</options>
+    <organisation>Organisation / avdelning</organisation>
 	<output>Output</output>
-	<outputType id="full">Full</outputType>
-	<outputType id="text">Text only</outputType>
-	<overwrite>Overwrite metadata with same UUID</overwrite>
-	<overwriteFile>Overwrite?</overwriteFile>
-	<owner>Owner</owner>
-	<ownerRights>Delete/Privileges/Categories Unlocked: You have ownership rights</ownerRights>
+    <outputType id = "full">Full</outputType>
+    <outputType id = "text">Endast text</outputType>
+    <overwrite>Skriv över metadata med samma UUID</overwrite>
+    <overwriteFile>Skriv över?</overwriteFile>
+    <owner>Ägare</owner>
+	<ownerRights>Radera/Privilegier/Kategorier Olåst: Du har äganderätt</ownerRights>
 
 	<paper>Hard copy</paper>
-	<partial>Partially overlapping</partial>
+	<partial>Delvis överlappande</partial>
 	<partialCooordinate>Partial coordinates </partialCooordinate>
-	<password>Password</password>
-	<passwordDoNotMatch>You did not enter the same new password twice. Please re-enter your password.</passwordDoNotMatch>
-	<passwordEntry>Please enter your password twice.</passwordEntry>
-	<passwordLength>Your password must be at least " + minLength + " characters long. Try again.</passwordLength>
-	<passwordOldRequired>Your old password is mandatory</passwordOldRequired>
-	<passwordSpace>Sorry, spaces are not allowed in password.</passwordSpace>
-	<persInfo>Personal info</persInfo>
-	<usersAndGroups>Users and groups</usersAndGroups>
-	<classification>Thesauri and classification systems</classification>
-	<catalogueConfiguration>Catalogue settings</catalogueConfiguration>
-	<indexConfiguration>Index settings</indexConfiguration>
-	<io>Import, export &amp; harvesting</io>
-	<placeKeyword>Place Keywords</placeKeyword>
-	<porCatInfoTab>Catalog</porCatInfoTab>
-	<poweredBy>Powered by </poweredBy>
-	<previous>Previous</previous>
-	<privileges>Privileges</privileges>
-	<profile>Profile</profile>
-	<profileChoice value="Administrator">Administrator</profileChoice>
-	<profileChoice value="Editor">Editor</profileChoice>
-	<profileChoice value="RegisteredUser">Registered user</profileChoice>
-	<profileChoice value="Reviewer">Content reviewer</profileChoice>
-	<profileChoice value="UserAdmin">User administrator</profileChoice>
+	<password>Lösenord</password>
+	<passwordDoNotMatch>Du skrev inte in samma nya lösenord två gånger. Skriv in ditt lösenord igen.</passwordDoNotMatch>
+	<passwordEntry>Ange ditt lösenord två gånger.</passwordEntry>
+	<passwordLength>Ditt lösenord måste vara minst "+ minLength +" tecken. Försök igen.</passwordLength>
+	<passwordOldRequired>Ditt gamla lösenord är obligatoriskt</passwordOldRequired>
+	<passwordSpace>Tyvärr är mellanslag inte tillåtna i lösenord.</passwordSpace>
+	<persInfo>Personlig info</persInfo>
+	<usersAndGroups>Användare och grupper</usersAndGroups>
+	<classification>Thesauri och klassificeringssytem</classification>
+	<catalogueConfiguration>Kataloginställningar</catalogueConfiguration>
+	<indexConfiguration>Index inställningar</indexConfiguration>
+	<io>Import, export &amp; skördning</io>
+    <placeKeyword>Placera Sökord</placeKeyword>
+    <porCatInfoTab>Katalog</porCatInfoTab>
+    <poweredBy>Drivs av</poweredBy>
+    <previous>Föregående</previous>
+    <privileges>Privilegier</privileges>
+	<profile>Profil</profile>
+	<profileChoice value="Administrator">Administratör</profileChoice>
+	<profileChoice value="Editor">Redaktör</profileChoice>
+	<profileChoice value="RegisteredUser">Registrerade användare</profileChoice>
+	<profileChoice value="Reviewer">Innehållsgranskare</profileChoice>
+	<profileChoice value="UserAdmin">Användaradministratör</profileChoice>
 	<profileChoice value="Monitor">System Monitor</profileChoice>
 	<progress>Progress</progress>
-	<progressChoice value="complete">complete</progressChoice>
-	<progressChoice value="in-work">in work</progressChoice>
-	<progressChoice value="planned">planned</progressChoice>
+	<progressChoice value = "complete">komplett</progressChoice>
+    <progressChoice value = "in-work">i arbete</progressChoice>
+    <progressChoice value = "planned">planerade</progressChoice>
 	<progressChoice/>
 	<protocol>Protocol</protocol>
-	<pubdate>Publication Date</pubdate>
-	<publicationDate>Publication date</publicationDate>
+	<pubdate>Publiceringsdatum</pubdate>
+	<publicationDate>Publiceringsdatum</publicationDate>
 	<publisher>Publisher</publisher>
-	<purpose>Purpose</purpose>
-	<rateIt>Rate It</rateIt>
-	<ratingMsg>Press a button to rate. It may take some time for new ratings to become visible.</ratingMsg>
+	<purpose>Syfte</purpose>
+	<rateIt>Rösta</rateIt>
+	<ratingMsg>Klicka på en knapp för att betygsätta. Det kan ta lite tid för nya betyg för att bli synliga.</ratingMsg>
 	<rawMetadata>Raw Metadata Insert</rawMetadata>
-	<rebuild>Rebuild</rebuild>
-	<recentAdditions>Recent Changes</recentAdditions>
+	<rebuild>Bygg om</rebuild>
+	<recentAdditions>Senaste ändringarna</recentAdditions>
 	<refSysTab>Ref. system</refSysTab>
 	<region>Region</region>
-	<register>Register</register>
-	<registerChoose>I want to </registerChoose>
+	<register>Registrera</register>
+	<registerChoose>Jag vill </registerChoose>
 	<RegisteredUser>Registered user</RegisteredUser>
 	<registerTitle>Self-Registration Form</registerTitle>
 	<registrationDetails>Key registration details entered: </registrationDetails>
 	<remote>Remote search</remote>
 	<remoteType>Remote</remoteType>
-	<remove>remove</remove>
+	<remove>ta bort</remove>
 	<res>results</res>
-	<reset>Reset</reset>
-	<resetFeedbackForm>Reset the feedback form</resetFeedbackForm>
-	<resetPassword>Reset Password</resetPassword>
-	<resetSearch>Reset the search form</resetSearch>
-	<ress>result</ress>
-	<restrictTo>Restrict to</restrictTo>
-	<result>Last results</result>
-	<searchResult>Search results</searchResult>
-	<resources>Resources</resources>
+	<reset>Återställ</reset>
+	<resetFeedbackForm>Återställ återkopplingsformulär</resetFeedbackForm>
+	<resetPassword>Återställ lösenord</resetPassword>
+	<resetSearch>Återställ sökformuläret</resetSearch>
+	<ress>resultat</ress>
+	<restrictTo>Begränsa till</restrictTo>
+	<result>Senaste resultatet</result>
+	<searchResult>Sökresultat</searchResult>
+	<resources>Resurser</resources>
 	<visualizationService>Visualization service URL (WMS)</visualizationService>
-	<resultsCoordinate>Results matching the coordinate search </resultsCoordinate>
-	<resultsFreeText>Results matching the Free Text Word </resultsFreeText>
-	<resultsMatching>Aggregated results matching search criteria :</resultsMatching>
+	<resultsCoordinate>Resultat som matchar koordinatsökningen </resultsCoordinate>
+	<resultsFreeText>Result som matchar fritext ord </resultsFreeText>
+	<resultsMatching>Sammanställda resultat som matchar sökkriterier :</resultsMatching>
 	<Reviewer>Content reviewer</Reviewer>
-	<rss>Open RSS feed</rss>
-	<rtitle>Title</rtitle>
-	<save>Save</save>
-	<saveAndClose>Save and close</saveAndClose>
-	<saveAndValidate>Check</saveAndValidate>
+	<rss>Öppna RSS-flöde</rss>
+	<rtitle>Titel</rtitle>
+	<save>Spara</save>
+	<saveAndClose>Spara och stäng</saveAndClose>
+	<saveAndValidate>Kontrollera</saveAndValidate>
 	<savepdf>Save search results as pdf</savepdf>
 	<printSelection>Print to PDF</printSelection>
 	<schema>Schema</schema>
-	<schematronError>Schematron Error</schematronError>
-	<search>Search</search>
-	<searchAllText>What?</searchAllText>
+	<schematronError>Schematronfel</schematronError>
+	<search>Sök</search>
+	<searchAllText>Vad?</searchAllText>
 	<searchBox>Search for Data and Information</searchBox>
 	<searchIndex>Search index</searchIndex>
 	<searching js="true">...Searching for Metadata...</searching>
@@ -778,270 +778,296 @@
 	<searchPageDes>Jumps to the metadata search page</searchPageDes>
 	<searchTemplates>Search for templates</searchTemplates>
 	<searchText>What?</searchText>
-	<searchUnused>Search for unused or empty metadata</searchUnused>
-	<searchUnusedTitle>Search for unused</searchUnusedTitle>
-	<select>Select : </select>
-	<selectAll>Select all metadata</selectAll>
-	<selectAllNotPossible>Too many hits! Must be less than </selectAllNotPossible>
-	<selected> selected</selected>
-	<selectedOnly>Display selected only</selectedOnly>
-	<selection>Selection</selection>
-	<selectNone>Unselect metadata selected</selectNone>
+	<searchUnused>Sök efter oanvända eller tomma metadata</searchUnused>
+	<searchUnusedTitle>Sök efter oanvända</searchUnusedTitle>
+	<select>Välj : </select>
+	<selectAll>Välj alla metadata</selectAll>
+	<selectAllNotPossible>För många träffar! Måste vara färre än </selectAllNotPossible>
+	<selected> valda</selected>
+	<selectedOnly>Visa endast valda</selectedOnly>
+	<selection>Urval</selection>
+	<selectNone>Avmarkera valda metadata</selectNone>
 	<server>Server</server>
-	<setAll>Set All</setAll>
-	<setOnSave>Value will be set when record is saved</setOnSave>
-	<shibLogin>Shib Login</shibLogin>
+	<setAll>Ställ in alla</setAll>
+	<setOnSave>Värdet sätts när posten sparas</setOnSave>
+	<shibLogin>Shib Logga in</shibLogin>
 	<show>Metadata</show>
-	<showFileDownloadSummary>Show File Download Chooser</showFileDownloadSummary>
-	<simple>Simple search</simple>
-	<simpleTab>Default view</simpleTab>
-	<simpleTabEditor>Default editor</simpleTabEditor>
-	<singleFile>Single File (XML, SLD, WMC...)</singleFile>
-	<site>Site</site>
-	<siteId>Site ID</siteId>
-	<sizeBytes>Size (bytes)</sizeBytes>
+	<showFileDownloadSummary>Visa filnedladdningsväljaren</showFileDownloadSummary>
+    <simple>Enkel sökning</simple>
+    <simpleTab>Standardvy</simpleTab>
+    <simpleTabEditor>Standardredigerare</simpleTabEditor>
+	<singleFile>Enskild fil (XML, SLD, WMC...)</singleFile>
+    <site>Site</site>
+    <siteId>Site ID</siteId>
+    <sizeBytes>Storlek (bytes)</sizeBytes>
 
-	<sortBy>Sort by</sortBy>
-	<sortByType id="changeDate">Change date</sortByType>
-	<sortByType id="popularity">Popularity</sortByType>
-	<sortByType id="rating">Rating</sortByType>
-	<sortByType id="relevance">Relevance</sortByType>
-	<sortByType id="title">Title</sortByType>
+    <sortBy>Sortera efter</sortBy>
+    <sortByType id = "changeDate">Ändra datum</sortByType>
+    <sortByType id = "popularity">Popularitet</sortByType>
+    <sortByType id = "rating">Betyg</sortByType>
+    <sortByType id = "relevance">Relevans</sortByType>
+    <sortByType id = "title">Titel</sortByType>
 
-	<southbc>South Bounding Coordinate</southbc>
-	<spacesNot js="true">Spaces in this field are not allowed</spacesNot>
-	<spatial2Tab>Spat. Repr.</spatial2Tab>
-	<spatialTab>Spat. Info</spatialTab>
-	<startsWith>Start with</startsWith>
-	<state>State</state>
-	<styleSheet>StyleSheet</styleSheet>
-	<submit>Submit</submit>
-	<subtemplate>Subtemplate</subtemplate>
-	<subtemplateTitle>subtemplate title</subtemplateTitle>
-	<summaryTab>Summary</summaryTab>
-	<surName>Last Name</surName>
-	<systemConfig>System configuration</systemConfig>
-	<systemConfigDes>Allows to change some system's parameters</systemConfigDes>
-	<systemInfo>System information</systemInfo>
-	<systemInfoDes>Shows advanced information about catalogue, index, Java, operating system</systemInfoDes>
-	<template>Template</template>
+	<southbc>Södra begränsningskoordinaten</southbc>
+	<spacesNot js="true">Det är inte tillåtet med mellanslag i detta fältet</spacesNot>
+    <spatialTab>Rumslig. Repr</spatialTab>
+    <startsWith>Börja med</startsWith>
+    <state>Staten</state>
+    <styleSheet>Stilmall</styleSheet>
+    <submit>Skicka in</submit>
+    <subtemplate>Subtemplate</subtemplate>
+    <subtemplateTitle>subtemplate titel</subtemplateTitle>
+    <summaryTab>Sammanfattning</summaryTab>
+    <surName>Efternamn</surName>
+    <systemConfig>Systemkonfiguration</systemConfig>
+    <systemConfigDes>Gör det möjligt att ändra några systemets parametrar</systemConfigDes>
+	<systemInfo>Systeminformation</systemInfo>
+	<systemInfoDes>Visa avancerad information om katalog, index, Java, operativsystem</systemInfoDes>
+	<template>Mall</template>
 	<Term>Term</Term>
-	<thanks>Thank you for your effort. The GeoNetwork</thanks>
-	<theme>ISO topic category</theme>
+	<thanks>Tack för din insats. The GeoNetwork</thanks>
+	<theme>ISO ämneskategori</theme>
 
-	<thumbnails>Thumbnails</thumbnails>
-	<timeout>Timeout</timeout>
-	<timeoutChoice value="10">after 10 seconds</timeoutChoice>
-	<timeoutChoice value="20">after 20 seconds</timeoutChoice>
-	<timeoutChoice value="30">after 30 seconds</timeoutChoice>
-	<title>GeoNetwork - The portal to spatial data and information</title>
-	<to>To</to>
-	<toDateSelector>Select TO date</toDateSelector>
-	<tools>Tools</tools>
-	<topic>Topic</topic>
+    <thumbnails>Miniatyrer</thumbnails>
+    <timeout>Timeout</timeout>
+    <timeoutChoice value = "10">efter 10 sekunder</timeoutChoice>
+    <timeoutChoice value = "20">efter 20 sekunder</timeoutChoice>
+    <timeoutChoice value = "30">efter 30 sekunder</timeoutChoice>
+    <title>Geonetwork - Portalen till rumsliga data och information</title>
+	<to>Till</to>
+	<toDateSelector>Välj TILL datum</toDateSelector>
+	<tools>Verktyg</tools>
+    <topic>Ämne</topic>
 
-	<transferOwnership>Transfer ownership</transferOwnership>
-	<transferOwnershipDes>Transfer metadata ownership to another user</transferOwnershipDes>
-	<type>Type</type>
-	<up>up</up>
-	<update>Update</update>
-	<updateCategories>Update categories</updateCategories>
-	<updateCategory>Update category</updateCategory>
-	<updateGroup>Update group</updateGroup>
-	<updatePrivileges>Update privileges</updatePrivileges>
-	<updateUserAccount>Update User Account </updateUserAccount>
-	<upload js="true">Upload </upload>
+	<transferOwnership>Överför äganderätt</transferOwnership>
+    <transferOwnershipDes>Överför äganderätten till metadata till en annan användare</transferOwnershipDes>
+    <type>Typ</type>
+    <up>upp</up>
+    <update>Uppdatera</update>
+    <updateCategories>Uppdatera kategorier</updateCategories>
+    <updateCategory>Uppdatera kategori</updateCategory>
+    <updateGroup>Uppdatera grupp</updateGroup>
+    <updatePrivileges>Uppdatera privilegier</updatePrivileges>
+    <updateUserAccount>Uppdatera användarkonto</updateUserAccount>
+	<upload js="true">Ladda upp</upload>
 	<user>User</user>
-	<UserAdmin>User administrator</UserAdmin>
-	<userAtLeastOneGroup js="true">Please, select at least one group.</userAtLeastOneGroup>
-	<userDefined>- User defined -</userDefined>
-	<userInfo>Change user information</userInfo>
-	<userInfoDes>Allow current user to change user information</userInfoDes>
-	<userManagement>User management</userManagement>
-	<userManDes>Add/modify/delete and show users</userManDes>
-	<username>Username</username>
-	<usernameMandatory>The username field is mandatory.</usernameMandatory>
-	<userPw>Change password</userPw>
-	<userPwDes>Allow current user to change password</userPwDes>
-	<uuidAction>Import actions:</uuidAction>
-	<validate>Validate</validate>
-	<assign>Assign to current catalog</assign>
-	<validityBegins>Validity begins</validityBegins>
-	<validityEnds>and ends</validityEnds>
-	<view>View</view>
-	<viewInGE>View in Google Earth</viewInGE>
-	<waitGetCap js="true">Loading server layers, please wait...</waitGetCap>
-	<westbc>West Bounding Coordinate</westbc>
-	<what>What?</what>
-	<when>When?</when>
-	<where>Where?</where>
-	<winInfo1>This window will show GeoNetwork resources. This window may be hidden at times depending on how your browser manages windows. In this case, you will have to manually bring the window to the foreground when necessary.</winInfo1>
-	<winInfo2>Throughout the Help (?) icon give you access to explanations. When you activate this icon, it's output will be displayed in this Resource Window.</winInfo2>
-	<wwwlink>Web link</wwwlink>
-	<xmlInsert>Import metadata record in XML or MEF format</xmlInsert>
-	<xmlInsertTitle>Metadata insert</xmlInsertTitle>
-	<xmlTab>XML view</xmlTab>
-	<inspireTab>INSPIRE view</inspireTab>
+	<UserAdmin>Användaradministratör</UserAdmin>
+	<userAtLeastOneGroup js = "true">Vänligen, välj minst en grupp.</userAtLeastOneGroup>
+    <userDefined>- Användardefinierad -</userDefined>
+    <userInfo>Ändra användarinformation</userInfo>
+    <userInfoDes>Låt nuvarande användaren ändra användarinformation</userInfoDes>
+    <userManagement>Användarhantering</userManagement>
+    <userManDes>Lägg till / ändra / radera och visa användarna</userManDes>
+    <username>Användarnamn</username>
+    <usernameMandatory>Fältet är obligatoriskt.</usernameMandatory>
+    <userPw>Ändra lösenord</userPw>
+    <userPwDes>Låt nuvarande användare att byta lösenord</userPwDes>
+    <uuidAction>Import åtgärder:</uuidAction>
+    <validate>Validate</validate>
+    <validityBegins>Giltighet börjar</validityBegins>
+    <validityEnds>och slutar</validityEnds>
+    <view>Visa</view>
+    <viewInGE>Visa i Google Earth</viewInGE>
+    <waitGetCap js = "true">Laddar server lager, vänta ...</waitGetCap>
+	<westbc>Västra begränsningskoordinaten</westbc>
+    <what>Vad?</what>
+    <when>När?</when>
+    <where>Var?</where>
+    <winInfo1>Detta fönster kommer att visa geonetwork resurser. Detta fönster kan vara dold ibland beroende på hur din webbläsare hanterar fönster. I detta fall måste du manuellt föra fönstret till förgrunden när det behövs</winInfo1>
+    <winInfo2>Under hela Help (?) Ikon ger dig tillgång till förklaringar. När du aktiverar denna ikon, kommer det att produktion ska visas i denna webbplats fönstret.</winInfo2>
+    <wwwlink>Webblänk</wwwlink>
+    <xmlInsert>Importera metadatapost i XML-eller MEF-format</xmlInsert>
+	<xmlInsertTitle>Importera metadata</xmlInsertTitle>
+	<xmlTab>XML vy</xmlTab>
+	<inspireTab>INSPIRE vy</inspireTab>
 	<inspireSection>
-		<identification>
-			<title>Identification</title>
-			<help>
-				<div>
-				The following metadata elements shall be provided:
-				<ul>
-					<li>Resource title:
-				This a characteristic, and often-unique, name by which the resource is known. The value domain of this metadata element is free text.</li>
-					<li>Resource abstract:
-						This is a brief narrative summary of the content of the resource. The value domain of this metadata element is free text.</li>
-					<li>Resource type:
-						This is the type of resource being described by the metadata. The value domain of this metadata element is defined in Part D.1.</li>
-					<li>Resource locator:
-						The resource locator defines the link(s) to the resource and/or the link to additional information about the resource. The value domain of this metadata element is a character string, commonly expressed as Uniform Resource Locator (URL).</li>
-					<li>Unique resource identifier:
-						A value uniquely identifying the resource. The value domain of this metadata element is a mandatory character string code, generally assigned by the data owner, and a character string namespace uniquely identifying the context of the identifier code (for example, the data owner).	</li>
-					<li>Coupled resource:
-						If the resource is a spatial data service, this metadata element identifies, where relevant, the target spatial data set(s) of the service through their Unique Resource Identifiers (URI). The value domain of this metadata element is a mandatory character string code, generally assigned by the data owner, and a character string namespace uniquely identifying the context of the identifier code (for example, the data owner).</li>
-					<li>Resource language:
-						The language(s) used within the resource. The value domain of this metadata element is limited to the languages defined in ISO 639-2.</li>
-				</ul>
-				</div>
-			</help>
-		</identification>
-		<classification>
-			<title>Classification of spatial data and services</title>
-			<help>
-				<div>
-					<ul>
-						<li>Topic category:
-						The topic category is a high-level classification scheme to assist in the grouping and topic-based search of available spatial data resources. The value domain of this metadata element is defined in Part D.2.</li>
-						<li>
-							Spatial data service type:
-							This is a classification to assist in the search of available spatial data services. A specific service shall be categorised in only one category. The value domain of this metadata element is defined in Part D.3.
-						</li>
-					</ul>
-				</div>
-			</help>
-		</classification>
-		<keywords>
-			<title>Keywords &amp; INSPIRE themes</title>
-			<help>
-				<div>
-					According to the INSPIRE Implementing Rule for Metadata, if a resource is a spatial data set or spatial data set series, at least one keyword shall be provided from the General Environmental Multi-lingual Thesaurus (GEMET) describing the relevant spatial data theme as defined in Annex I, II or III to Directive 2007/2/EC.
-					<br/>
-					The titles and definitions of all 34 INSPIRE Spatial Data Themes have now been integrated into the General Environmental Multi-lingual Thesaurus (GEMET) in the 23 official Community languages: http://www.eionet.europa.eu/gemet/inspire_themes.
-					<br/>
-					Note that, in addition to the INSPIRE Spatial Data Theme, also other keywords might be added. These may be described as a free text or may originate from any Controlled Vocabulary. If they originate from a Controlled Vocabulary (Thesaurus, Ontology), the citation of the originating Controlled Vocabulary shall be provided, as described below.
-				</div>
-			</help>
-		</keywords>
-		<geoloc>
-			<title>Geographic location</title>
-			<help>
-				<div>
-					The requirement for geographic location referred to in Article 11(2)(e) of Directive 2007/2/EC shall be expressed with the metadata element geographic bounding box.
-					This is the extent of the resource in the geographic space, given as a bounding box. The bounding box shall be expressed with westbound and eastbound longitudes, and southbound and northbound latitudes in decimal degrees, with a precision of at least 2 decimals.
-				</div>
-			</help>
-		</geoloc>
-		<temporal>
-			<title>Temporal reference</title>
-			<help>
-				<div>
-					This metadata element addresses the requirement to have information on the temporal dimension of the data as referred to in Article 8(2)(d) of Directive 2007/2/EC . At least one of the metadata elements referred to in points 5.1 to 5.4 shall be provided. The value domain of the metadata elements referred to in points 5.1 to 5.4 is a set of dates. Each date shall refer to a temporal reference system and shall be expressed in a form compatible with that system. The default reference system shall be the Gregorian calendar, with dates expressed in accordance with ISO 8601.
-					<br/>
-					The temporal extent defines the time period covered by the content of the resource.
+	   <identification>
+            <title>Identifiering</title>
+            <help>
+                <div>
+                    Följande metadataelement ska tillhandahållas:
+                    <ul>
+                        <li>
+                            Resurs titel:
+                            Detta är en karaktäristisk, och ofta unik, namn som resursen är känd. Värdedomänen för detta metadataelement är fri text.
+                        </li>
+                        <li>
+                            Resurs abstrakt:
+                            Detta är en kortfattad beskrivande sammanfattning av resursens innehåll. Värdedomänen för detta metadataelement är fri text.
+                        </li>
+                        <li>
+                            Medel:
+                            Detta är den typ av resurs som beskrivs av metadata. Värdedomänen för detta metadataelement definieras i del D.1.
+                        </li>
+                        <li>
+                            Resource locator:
+                            The resource locator defines the link(s) to the resource and/or the link to additional information about the resource. The value domain of this metadata element is a character string, commonly expressed as Uniform Resource Locator (URL).
+                        </li>
+                        <li>
+                            Unik resurs-ID:
+                            Ett värde unikt identifiera resursen. Värdedomänen för detta metadataelement är en obligatorisk teckensträng kod, i allmänhet tilldelad av den som äger uppgifterna, och en namnrymd för teckensträngen som unikt identifierar samband med identifierare kod (till exempel data ägare).
+                        </li>
+                        <li>
+                            Kopplade resurs:
+                            Om resursen är en rumslig datatjänst identifierar detta metadataelement, i förekommande fall, avsedd rumslig datamängd (er) för tjänsten genom sin unika resurs Identifiers (URI). Värdedomänen för detta metadataelement är en obligatorisk teckensträng kod, i allmänhet tilldelad av den som äger uppgifterna, och en namnrymd för teckensträngen som unikt identifierar samband med identifierare kod (till exempel data ägare).
+                        </li>
+                        <li>
+                            Resurs språk:
+                            Språket (s) som används i resursen. Värdedomänen för detta metadataelement är begränsat till de språk som anges i ISO 639-2.
+                        </li>
+                    </ul>
+                </div>
+            </help>
+        </identification>
+        <classification>
+            <title>Klassificering av rumsliga data och datatjänster</title>
+            <help>
+                <div>
+                    <ul>
+                        <li>
+                            Ämneområde:
+                            Ämnesområde är ett grovt klassificeringssystem för att underlätta gruppering och ämnesbaserade sökningar av tillgängliga rumsliga dataresurser. Värdedomänen för detta metadataelement definieras i del D.2.
+                        </li>
+                        <li>
+                            Typ av rumslig datatjänst:
+                            Detta är en klassificering avsedd att underlätta sökningar av tillgängliga rumsliga datatjänster. En särskild tjänst skall kategoriseras i endast en kategori. Värdedomänen för detta metadataelement definieras i del D.3.
+                        </li>
+                    </ul>
+                </div>
+            </help>
+        </classification>
+        <keywords>
+            <title>Beskrivande nyckelord</title>
+            <help>
+                <div>
+                    Enligt Inspire genomförandebestämmelse för Metadata, om en resurs är en rumslig datamängd eller en rumslig datamängdsserie minst ett nyckelord anges från den allmänna miljön Flerspråkigt Thesaurus (Gemet) beskriva det relevanta rumsliga datatemat såsom det definieras i Bilaga I, II eller III till direktiv 2007/2/EG.
+                    " Yc="
 
-					This time period may be expressed as any of the following:
-					<ul>
-						<li>an individual date</li>
-						<li>an interval of dates expressed through the starting date and end date of the interval</li>
-						<li>a mix of individual dates and intervals of dates</li>
-					</ul>
-				</div>
-			</help>
-		</temporal>
-		<quality>
-			<title>Quality and validity</title>
-			<help>
-				<div> The requirements referred to in Article 5(2) and Article 11(2) of Directive 2007/2/EC relating to the quality and validity of spatial data shall be addressed by the following metadata elements:
-					<ul>
-						<li>Lineage:
-						This is a statement on process history and/or overall quality of the spatial data set. Where appropriate it may include a statement whether the data set has been validated or quality assured, whether it is the official version (if multiple versions exist), and whether it has legal validity. The value domain of this metadata element is free text.</li>
-						<li>
-							Spatial resolution:
+                    "
+                    <br/>
+                    Rubriker och definitioner av alla 34 Inspire teman för rumsliga data har nu integrerats i den allmänna miljön Flerspråkigt Thesaurus (Gemet) på de 23 officiella EU-språk: http://www.eionet.europa.eu/gemet/inspire_themes.
+                    " Yc="
 
-							Spatial resolution refers to the level of detail of the data set. It shall be expressed as a set of zero to many resolution distances (typically for gridded data and imagery-derived products) or equivalent scales (typically for maps or map-derived products). An equivalent scale is generally expressed as an integer value expressing the scale denominator. A resolution distance shall be expressed as a numerical value associated with a unit of length.
-						</li>
-					</ul>
-				</div>
-			</help>
-		</quality>
+                    "
+                    <br/>
+                    Observera att, utöver Inspire teman för rumsliga data, kan också andra sökord läggas till. Dessa kan beskrivas som en fri text eller kan härröra från samtliga kontrollerade ordlistan. Om de kommer från en kontrollerad ordlista (tesaurus, ontologi), angivande av den ursprungliga kontrollerade vokabulären skall tillhandahållas, som beskrivs nedan.
+                </div>
+            </help>
+        </keywords>
+        <geoloc>
+            <title>Geografisk plats</title>
+            <help>
+                <div>
+                    Kravet på geografiskt läge som avses i artikel 11 (2) (e) i direktiv 2007/2/EG ska anges med metadataelementet geografisk omskrivande rektangel.
+                    Detta är omfattningen av resursens geografiska utbredning, angiven som en omskrivande rektangel. Den omskrivande rektangeln ska anges med västlig och ostlig longitud och sydlig och nordlig latitud i decimalgrader, med en precision på minst 2 decimaler.
+                </div>
+            </help>
+        </geoloc>
+        <temporal>
+            <title>Tidsreferens</title>
+            <help>
+                <div>
+                    Detta metadataelement adresser kravet på information om tidsdimensionen för de uppgifter som avses i artikel 8 (2) (d) i direktiv 2007/2/EG. Minst en av de metadataelement som avses i punkterna 5.1 till 5.4 skall tillhandahållas. Värdedomänen för de metadataelement som avses i punkterna 5.1 till 5.4 är en uppsättning datum. Varje datum ska hänvisa till ett tidsreferenssystem och ska uttryckas i en form som är kompatibel med detta system. Det Standardreferenssystemet ska vara den gregorianska kalendern och datumen ska anges i enlighet med ISO 8601.
+                    <br/>
+                    Den temporala utsträckningen avser den tidsperiod som omfattas av resursens innehåll.
+
+
+                    Denna tidsperiod kan uttryckas som något av följande:
+                    <ul>
+                        <li>ett enskilt datum</li>
+                        <li>ett intervall datumintervall uttryckt med startdatum och slutdatum för intervallet</li>
+                        <li>en blandning av enskilda datum och datumintervall</li>
+                    </ul>
+                </div>
+            </help>
+        </temporal>
+        <quality>
+            <title>Kvalitet och giltighet</title>
+            <help>
+                <div>
+                    De krav som avses i artikel 5 (2) och artikel 11 (2) i direktiv 2007/2/EG om kvaliteten och giltighet hos rumsliga data skall tas upp av följande metadataelement:
+                    <ul>
+                        <li>
+                            Lineage:
+                            This is a statement on process history and/or overall quality of the spatial data set. Where appropriate it may include a statement whether the data set has been validated or quality assured, whether it is the official version (if multiple versions exist), and whether it has legal validity. The value domain of this metadata element is free text.
+                        </li>
+                        <li>
+                            Spatial upplösning:
+
+
+                            Rumsliga upplösningen hänvisar till detaljnivå av datamängden. Det skall uttryckas som en uppsättning noll till flera uppgifter om avstånd (typiskt för data i rutnätsystem och bildspråk-produkter), eller skala (typiskt för kartor eller map-produkter). En skala uttrycks i allmänhet som ett heltalsvärde som anger skalfaktorn. Ett avstånd skall uttryckas som ett numeriskt värde i samband med en längdenhet.
+                        </li>
+                    </ul>
+                </div>
+            </help>
+        </quality>
 		<conformity>
-			<title>Conformity</title>
-			<help>
-				<div>
-					The requirements referred to in Article 5(2)(a) and Article 11(2)(d) of Directive 2007/2/EC relating to the conformity, and the degree of conformity, with implementing rules adopted under Article 7(1) of Directive 2007/2/EC shall be addressed by the following metadata elements:
-					<ul>
-						<li>Specification:
-							This is a citation of the implementing rules adopted under Article 7(1) of Directive 2007/2/EC or other specification to which a particular resource conforms. A resource may conform to more than one implementing rules adopted under Article 7(1) of Directive 2007/2/EC or other specification.
-							This citation shall include at least the title and a reference date (date of publication, date of last revision or of creation) of the implementing rules adopted under Article 7(1) of Directive 2007/2/EC or of the specification.
-						</li>
-						<li>
-							Degree:
-							This is the degree of conformity of the resource to the implementing rules adopted under Article 7(1) of Directive 2007/2/EC or other specification. The value domain of this metadata element is defined in Part D.
-						</li>
-					</ul>
-				</div>
-			</help>
-		</conformity>
+            <title>Specifikationsuppfyllelse</title>
+            <help>
+                <div>
+                    De krav som avses i artikel 5 (2) (a) och artikel 11 (2) (d) i direktiv 2007/2/EG om överensstämmelse, och graden av överensstämmelse med genomförandebestämmelserna enligt artikel 7 (1) direktiv 2007/2/EG ska uppfyllas genom följande metadataelement:
+                    <ul>
+                        <li>
+                            Specifikation:
+                            Detta är en hänvisning till genomförandebestämmelserna som antas enligt artikel 7 (1) i direktiv 2007/2/EG eller någon annan specifikation för en viss resurs. En resurs kan uppfylla mer än ett tillämpningsföreskrifter som antagits enligt artikel 7 (1) i direktiv 2007/2/EG eller någon annan specifikation.
+                            Denna hänvisning ska inbegripa åtminstone beteckningen och ett referensdatum (publiceringsdatum, datum för senaste revidering eller för skapande) för genomförandebestämmelserna enligt artikel 7 (1) i direktiv 2007/2/EG eller av specifikationen.
+                        </li>
+                        <li>
+                            Grad:
+                            Detta är den grad av överensstämmelse av resursen till de tillämpningsföreskrifter som antagits enligt artikel 7 (1) i direktiv 2007/2/EG eller någon annan specifikation. Värdedomänen för detta metadataelement definieras i del D.
+                        </li>
+                    </ul>
+                </div>
+            </help>
+        </conformity>
 		<constraint>
-			<title>Constraint related to access and use </title>
-			<help>
-				<div>
-					A constraint related to access and use shall be either or both of the following:
-					<ul>
-						<li>
-							Conditions applying to access and use:
-							This metadata element defines the conditions for access and use of spatial data sets and services, and where applicable, corresponding fees as required by Article 5(2)(b) and Article 11(2)(f) of Directive 2007/2/EC. The value domain of this metadata element is free text. The element must have values.
+            <title>Restriktioner</title>
+            <help>
+                <div>
+                    En begränsning av åtkomst och användning ska vara någon eller båda av följande:
+                    <ul>
+                        <li>
+                            Villkor för tillgång och användning:
+                            Det här metadataelementet definierar villkoren för tillgång och utnyttjande av rumsliga dataset och datatjänster och i förekommande fall motsvarande avgifter i enlighet med artikel 5 (2) (b) och artikel 11 (2) (f) i direktiv 2007/2/EG . Värdedomänen för detta metadataelement är fri text. Elementet måste ha värden.
 
-							If no conditions apply to the access and use of the resource, "no conditions apply" shall be used. If conditions are unknown, "conditions unknown" shall be used. This element shall also provide information on any fees necessary to access and use the resource, if applicable, or refer to a Uniform Resource Locator (URL) where information on fees is available.
-						</li>
-						<li>
-							Limitations on public access:
-							When Member States limit public access to spatial data sets and spatial data services under Article 13 of Directive 2007/2/EC, this metadata element shall provide information on the limitations and the reasons for them. If there are no limitations on public access, this metadata element shall indicate that fact. The value domain of this metadata element is free text.
-						</li>
-					</ul>
-				</div>
-			</help>
-		</constraint>
+                            Om några villkor gällande åtkomst och användning av resursen ska "inga tillämpliga villkor" användas. Om villkoren inte är kända ska "villkor okända" användas. Det här elementet ska även innehålla information om eventuella avgifter för åtkomst och användning av resurser, om tillämpligt, eller hänvisa till en Uniform Resource Locator (URL) där information om avgifter ges.
+                        </li>
+                        <li>
+                            Begränsningar av offentlig åtkomst:
+                            När medlemsstaterna begränsa allmänhetens tillgång till rumsliga datamängder och rumsliga datatjänster enligt artikel 13 i direktiv 2007/2/EG ska detta metadataelement ge information om dessa begränsningar och skälen till dem. Om det inte finns några begränsningar av den offentliga åtkomsten ska metadataelementet indikera detta. Värdedomänen för detta metadataelement är fri text.
+                        </li>
+                    </ul>
+                </div>
+            </help>
+        </constraint>
 		<org>
-			<title>Organisations responsible for the establishment, management, maintenance and distribution</title>
-			<help>
-				<div>
-					For the purposes of Article 5(2)(d) and Article 11(2)(g) of Directive 2007/2/EC, the following two metadata elements shall be provided:
-					<ul>
-						<li>
-							Responsible party:
-							This is the description of the organisation responsible for the establishment, management, maintenance and distribution of the resource. This description shall include:
-							(the name of the organisation as free text, a contact e-mail address as a character string.)
-						</li>
-						<li>
-							Responsible party role:
-							This is the role of the responsible organisation. The value domain of this metadata element is defined in Part D.6.
-						</li>
-					</ul>
-				</div>
-			</help>
-		</org>
+            <title>Organisationer som har ansvar för bland annat att upprätta, förvalta, underhålla resursen</title>
+            <help>
+                <div>
+                    För tillämpningen av artikel 5 (2) (d) och artikel 11 (2) (g) i direktiv 2007/2/EG ska följande två metadataelement tillhandahållas:
+                    <ul>
+                        <li>
+                            Ansvarig instans:
+                            Detta är beskrivningen av den organisation som ansvarar för upprättande, hantering, underhåll och distribution av resursen. Denna beskrivning skall innehålla följande:
+                            (Namnet på organisationen som fri text, en e-postadress som teckensträng.)
+                        </li>
+                        <li>
+                            Ansvarig parts roll:
+                            Detta är den roll som den ansvariga organisationen. Värdedomänen för detta metadataelement definieras i del D.6
+                        </li>
+                    </ul>
+                </div>
+            </help>
+        </org>
 		<metadata>
-			<title>Metadata</title>
-			<help>For the purposes of Article 5(1) of Directive 2007/2/EC.</help>
-		</metadata>
+            <title>Metadata</title>
+            <help>För tillämpningen av artikel 5 (1) i direktiv 2007/2/EG.</help>
+        </metadata>
 	</inspireSection>
-	<inspireAddConformity>Add INSPIRE conformity section</inspireAddConformity>
-	<xsdError>XSD Validation Error</xsdError>
-	<yourRegistration js="true">Your registration...</yourRegistration>
-	<zip>Zip</zip>
+	<inspireAddConformity>Lägg till specifikationsuppfyllse</inspireAddConformity>
+    <xsdError>XSD Fel på utvärdering</xsdError>
+    <yourRegistration js = "true">Din registrering ...</yourRegistration>
+    <zip>Zip</zip>
 
 	<header_meta>
 		<meta name="keywords" content="GeoNetwork opensource metadata ISO19115 ISO19139 ISO GIS remote sensing data shapefiles spatial data satellite images map maps interactive opengis geospatial CSW reference implementation mapping 19115 19139 geographic z39.50 catalog clearinghouse coverages grid raster data opensource open source network"/>
@@ -1059,22 +1085,22 @@
 		<meta name="DC.coverage" content="Global"/>
 	</header_meta>
 	<mainpage1>
-		<h1>GeoNetwork's purpose is:</h1>
-		<ul>
-			<li>To improve access to and integrated use of spatial data and information</li>
-			<li>To support decision making</li>
-			<li>To promote multidisciplinary approaches to sustainable development</li>
-			<li>To enhance understanding of the benefits of geographic information</li>
-		</ul>
-	</mainpage1>
-	<mainpage2>
-		<p>
-		GeoNetwork opensource allows to easily share geographically referenced thematic
-		information between different organizations. For more information please contact
-		</p>
-	</mainpage2>
-	<mainhelp1> How to search... </mainhelp1>
-	<mainhelp2> Hide help... </mainhelp2>
+        <h1>Geonetwork's syfte är:</h1>
+        <ul>
+            <li>Att förbättra tillgången till och integrerad användning av geografisk data och information</li>
+            <li>Som stöd för beslutsfattandet</li>
+            <li>Att främja tvärvetenskapliga metoder för en hållbar utveckling</li>
+            <li>Att öka förståelsen av fördelarna med geografisk information</li>
+        </ul>
+    </mainpage1>
+    <mainpage2>
+        <p>
+            Geonetwork opensource gör det möjligt att enkelt dela geografiskt refererade tematiska
+            information mellan olika organisationer. För mer information kontakta
+        </p>
+    </mainpage2>
+	<mainhelp1>Hur man söker...</mainhelp1>
+    <mainhelp2>Dölj hjälp...</mainhelp2>
 	<mainhelp3>
 		<p>
 			<font size="-2"> You can search using one of the provided options, or a combination of them.<br/> Only results matching all criteria will be displayed. </font>
@@ -1102,46 +1128,46 @@
 		</p>
 	</mainhelp3>
 	<savexml>
-		<dc>Save Dublin Core metadata as XML</dc>
-		<fgdc>Save FGDC metadata as XML</fgdc>
-		<iso19115Esri>Save ISO19115 metadata in XML for ESRI ArcCatalog</iso19115Esri>
-		<iso19139>Save ISO19115/19139 metadata as XML</iso19139>
-		<iso19139fra>Save ISO19115/19139 Fra metadata as XML</iso19139fra>
+		<dc>Spara Dublin Core metadata som XML</dc>
+		<fgdc>Spara FGDC metadata som XML</fgdc>
+        <iso19115Esri>Spara ISO19115 metadata i XML för ESRI ArcCatalog</iso19115Esri>
+        <iso19139>Spara ISO19115/19139 metadata som XML</iso19139>
+        <iso19139fra>Spara ISO19115/19139 Fra metadata som XML</iso19139fra>
 	</savexml>
 	<thesaurus>
-		<load>Load from GeoNetwork thesaurus repository</load>
-		<addelement>Add element</addelement>
-		<admin>Manage thesaurus</admin>
-		<broader>Broader Term</broader>
-		<category>Thesaurus category</category>
-		<consultation>View thesaurus</consultation>
-		<delete>Delete thesaurus</delete>
-		<deleteelement>Delete element</deleteelement>
-		<download>Download thesaurus</download>
-		<edit>Edit thesaurus</edit>
-		<editelement>Edit element</editelement>
-		<edition>Edit thesaurus</edition>
-		<en>in</en>
-		<foundKeyWords>Number of terms found</foundKeyWords>
-		<foundKeyWordsLimit>Maximum number of terms found</foundKeyWordsLimit>
-		<keywordConfirm>Confirm keyword suppression</keywordConfirm>
-		<keywordDescription>Keyword definition:</keywordDescription>
-		<management>Manage thesauri</management>
-		<manDes>Add/modify/delete and show thesauri</manDes>
-		<narrower>Narrower Term</narrower>
-		<related>Related Term</related>
-		<thesaurus>Thesaurus</thesaurus>
-		<unknown>Unknown thesaurus</unknown>
-		<update>Update thesaurus</update>
-		<updateelement>Update element</updateelement>
-		<upload>Upload thesaurus</upload>
+		<load>Ladda från GeoNetwork thesaurus repository</load>
+		<addelement>Lägg till element</addelement>
+        <admin>Hantera thesaurus</admin>
+        <broader>Vidare begrepp</broader>
+        <category>Thesaurus kategori</category>
+        <consultation>Visa thesaurus</consultation>
+        <delete>Ta bort thesaurus</delete>
+        <deleteelement>Ta bort element</deleteelement>
+        <download>Hämta thesaurus</download>
+        <edit>Redigera thesaurus</edit>
+        <editelement>Redigera element</editelement>
+        <edition>Redigera thesaurus</edition>
+        <en>in</en>
+        <foundKeyWords>Antal termer som finns</foundKeyWords>
+        <foundKeyWordsLimit>Maximalt antal termer som finns</foundKeyWordsLimit>
+        <keywordConfirm>Bekräfta sökord dämpning</keywordConfirm>
+        <keywordDescription>Nyckelord definition:</keywordDescription>
+        <management>Hantera tesaurusar</management>
+        <manDes>Lägg till / ändra / radera och visa tesaurusar</manDes>
+        <narrower>Snävare termen</narrower>
+        <related>Relaterad term</related>
+        <thesaurus>Thesaurus</thesaurus>
+        <unknown>Okänd thesaurus</unknown>
+        <update>Uppdatera thesaurus</update>
+        <updateelement>Uppdatera element</updateelement>
+        <upload>Ladda upp thesaurus</upload>
 	</thesaurus>
 	<searchhelp>
-		<searchAllText>Enter free text here</searchAllText>
-		<rtitle>Enter title here</rtitle>
-		<abstract>Enter abstract here</abstract>
-		<keywords>Pick keywords from existing metadata records</keywords>
-		<thesaurus>Pick keywords from thesauri</thesaurus>
+		<searchAllText>Skriv fri text här</searchAllText>
+        <rtitle>Skriv titel här</rtitle>
+        <abstract>Ange abstrakt här</abstract>
+        <keywords>Välj sökord från befintliga metadata</keywords>
+        <thesaurus>Välj sökord från tesaurusar</thesaurus>
 	</searchhelp>
 
 	<inspire>
@@ -1322,36 +1348,36 @@
         </annex3>
     </inspire>
 
-	<selectMetadataFileAlert>You must select a metadata file to insert</selectMetadataFileAlert>
-	<showMoreSearchFields>Show/Hide more search fields</showMoreSearchFields>
-	<searchEitherOfTheWords>Either of the words</searchEitherOfTheWords>
-	<searchExactPhrase>Exact phrase</searchExactPhrase>
-	<searchAllWords>All of the words</searchAllWords>
-	<searchWithoutWords>Without the words</searchWithoutWords>
+	<selectMetadataFileAlert>Du måste välja en metadatafil att infoga</selectMetadataFileAlert>
+	<showMoreSearchFields>Visa/Dölj fler sökfält</showMoreSearchFields>
+	<searchEitherOfTheWords>Antingen av ordenEither of the words</searchEitherOfTheWords>
+	<searchExactPhrase>Exakt fras</searchExactPhrase>
+	<searchAllWords>Samtliga ord</searchAllWords>
+	<searchWithoutWords>Utan dessa ord</searchWithoutWords>
 
-	<showMap>Show map</showMap>
-	<mapViewer>Map viewer</mapViewer>
+	<showMap>Visa karta</showMap>
+	<mapViewer>Kartvisare</mapViewer>
 
-	<uuid>Unique identifier</uuid>
+	<uuid>Unik identifierare</uuid>
 	<quickSearch>Quick search links</quickSearch>
-	<mymetadata>My metadata</mymetadata>
+	<mymetadata>Mitt metadata</mymetadata>
 	<catalogueRecords>Catalogue metadata</catalogueRecords>
-	<harvestedRecords>Harvested metadata</harvestedRecords>
+	<harvestedRecords>Skördat metadata</harvestedRecords>
 	<catalogueTemplates>Catalogue templates</catalogueTemplates>
-	<addremove>Add/Remove</addremove>
-	<enabled>Enabled</enabled>
+	<addremove>Lägg till/Ta bort</addremove>
+	<enabled>Aktiverad</enabled>
 	<notifications>Notification to remote targets</notifications>
 
 	<cswServer>CSW server configuration</cswServer>
 	<cswServerDes>Define CSW settings (title, access contraints, ...)</cswServerDes>
 	<cswServerConfig>CSW Server configuration</cswServerConfig>
-	<cswServerEnable>Enable</cswServerEnable>
-	<cswServerMetadataPublic>Inserted metadata is public (Transaction)</cswServerMetadataPublic>
-	<cswServerTitle>Title</cswServerTitle>
-	<cswServerAbstract>Abstract</cswServerAbstract>
-	<cswServerFees>Fees</cswServerFees>
-	<cswServerAccessConstraints>Access constraints</cswServerAccessConstraints>
-	<cswServerContact>Contact</cswServerContact>
+	<cswServerEnable>Aktivera</cswServerEnable>
+	<cswServerMetadataPublic>Insatt metadata är publikt (via Transaction)</cswServerMetadataPublic>
+	<cswServerTitle>Titel</cswServerTitle>
+	<cswServerAbstract>Sammanfattning</cswServerAbstract>
+	<cswServerFees>Avgifter</cswServerFees>
+	<cswServerAccessConstraints>Åtkomstsbegränsningar</cswServerAccessConstraints>
+	<cswServerContact>Kontakt</cswServerContact>
 
 	<virtualcswServer>Configure virtual CSW access point</virtualcswServer>
 	<virtualcswServerDes>Configuration of virtual CSW servers</virtualcswServerDes>
@@ -1372,14 +1398,14 @@
 	<virtualcswUpdateService>Update a CSW virtual server</virtualcswUpdateService>
 
 	<virtualcswAny>Free text</virtualcswAny>
-	<virtualcswTitle>Title</virtualcswTitle>
-	<virtualcswAbstract>Abstract</virtualcswAbstract>
-	<virtualcswKeywords>Keyword</virtualcswKeywords>
+	<virtualcswTitle>Titel</virtualcswTitle>
+	<virtualcswAbstract>Sammanfattning</virtualcswAbstract>
+	<virtualcswKeywords>Nyckelord</virtualcswKeywords>
 	<virtualcswDenominator>Denominator</virtualcswDenominator>
-	<virtualcswCatalog>Catalog</virtualcswCatalog>
-	<virtualcswGroup>Group</virtualcswGroup>
-	<virtualcswCategory>Category</virtualcswCategory>
-	<virtualcswType>Resource type</virtualcswType>
+	<virtualcswCatalog>Katalog</virtualcswCatalog>
+	<virtualcswGroup>Grupp</virtualcswGroup>
+	<virtualcswCategory>Kategori</virtualcswCategory>
+	<virtualcswType>Resurstyp</virtualcswType>
 
 	<customize-elementset>Customize element set</customize-elementset>
 	<csw-server-disabled>CSW server is disabled.</csw-server-disabled>
@@ -1387,19 +1413,19 @@
 	<custom-elementset-revert>To revert to the default ElementSetName=FULL responses, delete all elements from this list.</custom-elementset-revert>
 	<custom-elementset-add>Add element</custom-elementset-add>
 
-	<wmslayers>WMS layers</wmslayers>
+	<wmslayers>WMS lager</wmslayers>
 	<formatter.admin>Metadata Formatter Admin</formatter.admin>
 	<formatter.admin.des>Administration UI for metadata formatting bundlers</formatter.admin.des>
 	<monitor>Monitor</monitor>
 	<concealed>Concealed</concealed>
-	<serviceNotAllowed>You do not have the correct permissions to access the following service {1}</serviceNotAllowed>
+	<serviceNotAllowed>Du har inte rätt rättigheter för att komma åt tjänsten: {1}</serviceNotAllowed>
 
-	<advancedOptions.show>show advanced options</advancedOptions.show>
-	<advancedOptions.hide>hide advanced options</advancedOptions.hide>
-	<latestDatasets>Latest</latestDatasets>
-	<popularDatasets>Popular</popularDatasets>
+	<advancedOptions.show>visa avancerade alternativ</advancedOptions.show>
+	<advancedOptions.hide>dölj avancerade alternativ</advancedOptions.hide>
+	<latestDatasets>Senaste</latestDatasets>
+	<popularDatasets>Populär</popularDatasets>
 	<filter>Filter</filter>
-	<welcome.text>Welcome to GeoNetwork</welcome.text>
+	<welcome.text>Välkommen till GeoNetwork</welcome.text>
 	<tag_label>Tags</tag_label>
-	<map_label>Map</map_label>
+	<map_label>Karta</map_label>
 </strings>

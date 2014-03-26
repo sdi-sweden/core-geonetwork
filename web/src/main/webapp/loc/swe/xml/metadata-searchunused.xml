@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <strings>
-	<maxTimeMsg>Please, specify the maximum time difference between the metadata creation and its last modification</maxTimeMsg>
-	<maxDiff>Max difference</maxDiff>
-	
+	<maxTimeMsg>Ange maximal skillnad mellna skapande och senaste ändring av metadatat</maxTimeMsg>
+	<maxDiff>MAx skillnad</maxDiff>
+
 	<diffList>
-		<item id="5"   >5 minutes</item>
-		<item id="30"  >30 minutes</item>
-		<item id="1440">1 Day</item>
+		<item id="5"   >5 minuter</item>
+		<item id="30"  >30 minuter</item>
+		<item id="1440">1 dag</item>
 	</diffList>
-	
-	<search>Search</search>
+
+	<search>Sök</search>
 </strings>

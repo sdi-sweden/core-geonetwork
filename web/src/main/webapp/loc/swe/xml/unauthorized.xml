@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <strings>
-	<heading>Error</heading>
-	<message>You are not authorized to do this.</message>
-	<button>Back</button>
+	<heading>Fel</heading>
+	<message>Du har inte behörighet att göra detta.</message>
+	<button>Tillbaka</button>
 </strings>

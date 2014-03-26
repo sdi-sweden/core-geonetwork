@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <strings>
-	<delUserConf>Delete user from database ?</delUserConf>
-    <delUserCsw>This user is your CSW ISO Profile contact, do you want to continue?</delUserCsw>
+	<delUserConf>Ta bort användaren från databasen?</delUserConf>
+    <delUserCsw>Detta är din CSW ISO Profil kontakt, vill du fortsätta?</delUserCsw>
 </strings>

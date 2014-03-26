@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <strings>
-	<title>Metadata creation</title>
-	<message>Please, specify the group to assign to the duplicated metadata</message>
+	<title>Skapa metadata</title>
+	<message>Ange gruppen som ska tilldelas det duplicerade metadatat</message>
 
-	<button>Create</button>
+	<button>Skapa</button>
 </strings>

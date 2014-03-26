@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <strings>
-	<heading>Size Error</heading>
-	<message>The file is too large</message>
-	<button>Back</button>
+	<heading>Storleksfel</heading>
+	<message>Filen är för stor</message>
+	<button>Tillbaka</button>
 </strings>

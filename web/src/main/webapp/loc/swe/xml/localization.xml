@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <strings>
-	<entity>Entity</entity>
-	
+	<entity>Entitet</entity>
+
 	<entityType>
-		<type id="groups">Groups</type>
-		<type id="categories">Categories</type>
-		<type id="operations">Operations</type>
-		<type id="regions">Regions</type>
+		<type id="groups">Grupper</type>
+		<type id="categories">Kategorier</type>
+		<type id="operations">Operationer</type>
+		<type id="regions">Regioner</type>
 	</entityType>
-	
-	<srcLang>Source language</srcLang>
-	<desLang>Target language</desLang>
-	
+
+	<srcLang>Källspråk</srcLang>
+	<desLang>Målspråk</desLang>
+
 			<!-- Buttons -->
-	
-	<save>Save</save>
-	<refresh>Refresh</refresh>
-	
+
+	<save>Spara</save>
+	<refresh>Ladda om</refresh>
+
 	<!-- validator messages -->
-	
+
 	<validator>
 		<length>
-			<cannotBeEmpty>The localized text cannot be empty</cannotBeEmpty>
-			<invalidMaxSize>The localized text must be maximum {VALUE} character(s) long</invalidMaxSize>
-		</length>		
+			<cannotBeEmpty>Texten kan inte vara tom</cannotBeEmpty>
+			<invalidMaxSize>Texten får vara maximalt {VALUE} tecken lång</invalidMaxSize>
+		</length>
 	</validator>
-	
+
 	<!-- display messages -->
-	
-	<cannotGetList>Cannot get the entity list</cannotGetList>
-	<cannotSave>An error raised while saving information</cannotSave>
-	
+
+	<cannotGetList>Kan inte hämta entitetslistan</cannotGetList>
+	<cannotSave>Det blev fel när informationen skulle sparas</cannotSave>
+
 	<!-- tooltips -->
-	
+
 	<tips>
 	</tips>
-	
+
 </strings>
 

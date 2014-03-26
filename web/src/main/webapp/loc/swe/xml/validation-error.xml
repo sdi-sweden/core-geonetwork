@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <strings>
-	<heading>Validation Error</heading>
-	<message>Metadata is not valid.</message>
+	<heading>Valideringsfel</heading>
+	<message>Metadata är inte giltigt.</message>
 </strings>
 
