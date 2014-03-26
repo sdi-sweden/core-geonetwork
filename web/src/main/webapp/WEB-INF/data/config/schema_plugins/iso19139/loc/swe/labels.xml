@@ -1,0 +1,2713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<labels xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gts="http://www.isotc211.org/2005/gts"
+    xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml"
+    xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+	<element name="gmd:MD_ScopeCode">
+		<label>Scope code</label>
+		<description>Class of information to which the referencing entity applies</description>
+	</element>
+	<element name="code" id="207.0" context="gmd:MD_Identifier">
+        <label>Identifieringskod</label>
+        <description>alfanumeriskt värde som indentifierar en förekomst I
+			en namnrymd</description>
+		<help>alphanumeric value identifying an instance in the namespace</help>
+	</element>
+	<element name="code">
+		<label>System code</label>
+		<description>Code. i.e. EPSG code.</description>
+	</element>
+	<element name="code" id="547.0" context="gmd:MD_CodeValue">
+		<label>Code</label>
+		<description>Value code</description>
+		<help>Value code (i.e. numeric)</help>
+	</element>
+	<element name="codeSpace" id="208.1">
+        <label>Namnrymd</label>
+        <description>namn eller identifierare för person eller organisation
+		som är ansvarig för namnrymden</description>
+	</element>
+	<element name="gco:Date" id="364.0" context="gmd:CI_Citation">
+        <label>Datum för utgåva</label>
+        <description>datum för versionen</description>
+	</element>
+	<element name="gco:Date" id="393.0">
+        <label>Händelsedatum</label>
+        <description>Händelse samt det datum då den inträffade</description>
+		<help>reference date and event used to describe it</help>
+		<_condition>Use obligation/condition from referencing object</_condition>
+	</element>
+	<element name="gco:DateTime" id="64.0" context="gmd:MD_Usage">
+        <description>datum och tid för den första användningen av resursen</description>
+        <label>Tidpunkt</label>
+		<help>date and time of the first use or range of uses of the resource and/or resource
+            series</help>
+	</element>
+	<element name="gco:DateTime" id="300.0" context="gmd:MD_StandardOrderProcess">
+        <description>datum och tid när resursen kommer att vara tillgänglig</description>
+        <label>Tidpunkt</label>
+		<help>date and time when theresource will be available</help>
+	</element>
+    <!--<element name="gmd:dateTime">
+        <label>DateTime</label>
+        <description>Date and time or range of date and time on or over which the process step
+            occurred (YYYY-MM-DDThh:mm:ss)</description>
+    </element>-->
+	<element name="gco:Measure" id="100.0" context="gmd:DQ_Element">
+        <label>Måttbenämning</label>
+        <description>benämning på kvantitativt mått på kvalitet hos
+		geogafiska data</description>
+	</element>
+	<element name="gco:Measure" id="357.0" context="gmd:EX_VerticalExtent">
+		<label>Unit of Measure</label>
+		<description>Vertical units used for vertical extent information Examples: metres, feet,
+            millimetres, hectopascals</description>
+		<_condition>M</_condition>
+	</element>
+	<element name="gmd:CI_Address" id="380.0">
+        <label>Adress</label>
+        <description>adress till ansvarig person eller organisation</description>
+		<_condition>Use obligation/condition from referencing object</_condition>
+	</element>
+	<element name="gmd:CI_Citation" id="359.0">
+        <label>Referens</label>
+        <description>standardiserad referens till resursen (även person eller
+		organisation, se 206)</description>
+		<_condition>Use obligation/condition from referencing object</_condition>
+	</element>
+	<element name="gmd:CI_Contact" id="387.0">
+        <label>Kontaktinformation</label>
+        <description>information som behövs för att erhålla kontakt med
+		ansvarig person eller organisation</description>
+		<_condition>Use obligation/condition from referencing object</_condition>
+	</element>
+	<element name="gmd:CI_Date" id="393.0">
+        <label>Händelsedatum</label>
+        <description>Händelse samt det datum då den inträffade</description>
+		<_condition>Use obligation/condition from referencing object</_condition>
+	</element>
+	<element name="gmd:CI_OnlineResource" id="396.0">
+        <label>Onlinekälla</label>
+        <description>information om källor som kan nås via
+		kommunikationsnätverk, t.ex. internet
+		ANM. Källor inkluderar bl.a. datamängder,
+		specifikationer, profiler av metadata samt
+		metadatautökningar.</description>
+		<_condition>Use obligation/condition from referencing object</_condition>
+	</element>
+	<element name="gmd:CI_ResponsibleParty" id="374.0">
+        <label>Ansvarig part</label>
+        <description>identifiering av, samt kontaktinformation till, personer
+		och organisationer med ansvar för resursen</description>
+		<_condition>Use obligation/condition from referencing object</_condition>
+	</element>
+	<element name="gmd:CI_Series" id="403.0">
+        <label>Serie</label>
+        <description>information om datamängdsserie eller aggregat som
+		datamängden är en del av</description>
+		<_condition>Use obligation/condition from referencing object</_condition>
+	</element>
+	<element name="gmd:CI_Telephone" id="407.0">
+        <label>Telefonnummer</label>
+        <description>telefonnummer där ansvarig person eller organisation
+		kan kontaktas</description>
+		<_condition>Use obligation/condition from referencing object</_condition>
+	</element>
+	<element name="gmd:DQ_AbsoluteExternalPositionalAccuracy" id="117.0">
+        <label>Absolut lägesnoggrannhet</label>
+        <description>lägesnoggrannhet i förhållande till övergripande
+		system</description>
+	</element>
+	<element name="gmd:DQ_AccuracyOfATimeMeasurement" id="121.0">
+        <label>Tidsnoggrannhet</label>
+        <description>noggrannhet för en tidsangivelse</description>
+	</element>
+	<element name="gmd:DQ_CompletenessCommission" id="109.0">
+        <label>Fullständighet - övertalighet</label>
+        <description>för många förekomster av en viss typ</description>
+	</element>
+	<element name="gmd:DQ_CompletenessOmission" id="110.0">
+        <label>Fullständighet - brist</label>
+        <description>för få förekomster av en viss typ</description>
+	</element>
+	<element name="gmd:DQ_ConceptualConsistency" id="112.0">
+        <label>Konceptuell konsistens</label>
+        <description>grad av överensstämmelse med applikationsschemat</description>
+	</element>
+	<element name="gmd:DQ_ConformanceResult" id="129.0">
+        <label>Specifikationsuppfyllelse</label>
+        <description>resultat av jämförelse av värde eller mängd av värden
+		från en kvalitetsutvärdering mot en specificerad
+		kravnivå</description>
+	</element>
+	<element name="gmd:DQ_DataQuality" id="78.0">
+        <label>Datakvalitet</label>
+        <description>kvalitetsinformation för specificerade data
+		ANM. Informationen avser hela den datamängd för
+		vilken kvalitet skall rapporteras eller del av denna ända
+		ner till en enskild förekomst.</description>
+	</element>
+	<element name="gmd:DQ_DomainConsistency" id="113.0">
+        <label>Domänkonsistens</label>
+        <description>grad av överensstämmelse med värdedomän</description>
+	</element>
+	<element name="gmd:DQ_FormatConsistency" id="114.0">
+        <label>Formatkonsistens</label>
+        <description>grad av överensstämmelse med fastställd
+		lagringsstruktur</description>
+	</element>
+	<element name="gmd:DQ_GriddedDataPositionalAccuracy" id="118.0">
+        <label>Lägesnoggrannhet hos
+		rasterdata</label>
+        <description>lägesnoggrannhet hos rasterdata</description>
+	</element>
+	<element name="gmd:DQ_NonQuantitativeAttributeAccuracy" id="126.0">
+        <label>Tematisk noggrannhet
+		kvalitativa attribut</label>
+        <description>noggrannhet för kvalitativa attribut</description>
+	</element>
+	<element name="gmd:DQ_QuantitativeAttributeAccuracy" id="127.0">
+        <label>Tematisk noggrannhet
+		kvantitativa attribut</label>
+        <description>noggrannhet för kvantitativta attribut</description>
+	</element>
+	<element name="gmd:DQ_QuantitativeResult" id="133.0">
+        <label>Kvantitativt resultat</label>
+        <description>Kvantitativt resultat</description>
+	</element>
+	<element name="gmd:DQ_RelativeInternalPositionalAccuracy" id="119.0">
+        <label>Relativ lägesnoggrannhet</label>
+        <description>noggrannhet i förhållande till närliggande objekt av
+samma dignitet</description>
+	</element>
+	<element name="gmd:DQ_Scope" id="138.0">
+        <label>Omfattning</label>
+        <description>avgränsning av den datamängd för vilken en
+		kvalitetsrapportering är gjord</description>
+		<help>extent of characteristic(s) of the data for which quality information is
+            reported</help>
+	</element>
+	<element name="gmd:DQ_TemporalConsistency" id="122.0">
+        <label>Temporal konsistens</label>
+        <description>grad av korrekthet i tidsordningsföljd</description>
+	</element>
+	<element name="gmd:DQ_TemporalValidity" id="123.0">
+        <label>Temporal validitet</label>
+        <description>grad av korrekthet hos värden för tidsangivelser</description>
+	</element>
+	<element name="gmd:DQ_ThematicClassificationCorrectness" id="125.0">
+        <label>Klassificeringsnoggrannhet</label>
+        <description>grad av korrekthet för företeelsers klassificering</description>
+	</element>
+	<element name="gmd:DQ_TopologicalConsistency" id="115.0">
+        <label>Topologisk konsistens</label>
+        <description>grad av korrekthet i de topologiska egenskaperna</description>
+	</element>
+	<element name="gmd:EX_BoundingPolygon" id="341.0">
+        <label>Omskrivande polygon</label>
+        <description>begränsningslinje som omsluter resursen som
+		definieras via en mängd punkter där sista punkten har
+		samma koordinater som första punkten</description>
+	</element>
+	<element name="gmd:EX_Extent" id="334.0">
+        <label>Utsträckning</label>
+		<description>Information about spatial, vertical, and temporal extent</description>
+        <label>Utsträckning</label>
+        <description>information om horisontal, vertikal och temporal
+		utsträckning</description>
+	</element>
+	<element name="gmd:EX_GeographicBoundingBox" id="343.0">
+        <label>Omskrivande rektangel</label>
+        <description>geografisk position (omskriven rektangel) för
+	datamängden
+	ANM. Detta är endast en approximation. Rumsligt
+	referenssystem för denna behövs därför ej.</description>
+	</element>
+	<element name="gmd:EX_GeographicDescription" id="348.0">
+        <label>Referens till geografiskt
+		område</label>
+        <description>beskrivning av geografisk utsträckning m.h.a.
+		identifierare</description>
+	</element>
+	<element name="gmd:EX_SpatialTemporalExtent" id="352.0">
+        <label>Geografisk utsträckning
+		för tidsperiod</label>
+        <description>utsträckning med avseende på datum/tid samt
+		geografisk utsträckning</description>
+	</element>
+	<element name="gmd:EX_TemporalExtent" id="350.0">
+        <label>Temporal utsträckning</label>
+        <description>temporal utsträckning för innehållet i resursen</description>
+	</element>
+	<element name="gmd:EX_VerticalExtent" id="354.0">
+        <label>Vertikal utsträckning</label>
+        <description>vertikal utsträckning inom det område som
+		representeras av resursen	</description>
+	</element>
+	<element name="gmd:ISBN" id="372.0">
+		<label>ISBN</label>
+        <description>internationellt standardnummer för böcker</description>
+	</element>
+	<element name="gmd:ISSN" id="373.0">
+		<label>ISSN</label>
+        <description>internationellt standardserienummer</description>
+	</element>
+	<element name="gmd:LI_Lineage" id="82.0">
+        <label>Tillkomsthistorik</label>
+        <description>information om ursprungsdata och bearbetningar eller
+		information om bristande kännedom om tillkomsten</description>
+	</element>
+	<element name="gmd:LI_ProcessStep" id="86.0">
+        <label>Bearbetningssteg</label>
+        <description>information om ett bearbetningssteg</description>
+		<help>information about an event or transformation in the life of a dataset including the
+            process used to maintain the dataset</help>
+	</element>
+	<element name="gmd:LI_Source" id="92.0">
+        <label>Ursprungsdata</label>
+        <description>information om datamängd som utnyttjats vid
+		framställning av resurs</description>
+	</element>
+	<element name="gmd:MD_AggregateInformation" id="66.1">
+        <label>Resurs i aggregat</label>
+        <description>information om resurs och hur den ingår i ett aggregat</description>
+	</element>
+	<element name="gmd:MD_ApplicationSchemaInformation" id="320.0">
+        <description>information om det applikationsschema som använts i
+		resursen</description>
+        <label>Applikationsschema</label>
+	</element>
+	<element name="gmd:MD_Band" id="259.0">
+        <label>Bandbredd</label>
+        <description>våglängdsområde i det elektromagnetiska spektrumet
+		(band)</description>
+		<help>range of wavelengths in the electromagnetic spectrum</help>
+	</element>
+	<element name="gmd:MD_BrowseGraphic" id="48.0">
+        <description>grafisk illustration av resursen, inklusive
+		teckenförklaring</description>
+        <label>Exempelbild</label>
+	</element>
+	<element name="gmd:MD_Constraints" id="67.0">
+        <label>Restriktioner</label>
+        <description>begränsningar av tillgång till och användning av resurs
+		eller metadata</description>
+	</element>
+	<element name="gmd:MD_CoverageDescription" id="239.0">
+        <label>Rasterdatacell</label>
+        <description>information om innehållet i en rasterdatacell</description>
+	</element>
+	<element name="gmd:MD_DataIdentification" id="36.0">
+        <label>Beskrivning av resurs</label>
+        <description>information som är nödvändig för att beskriva en
+	resurs</description>
+	</element>
+	<element name="gmd:MD_DigitalTransferOptions" id="274.0">
+        <label>Överföringsalternativ</label>
+        <description>metod med vilken resursen tillhandahålls av
+		distributören</description>
+	</element>
+	<element name="gmd:MD_Dimension" id="179.0">
+        <label>Egenskaper hos axlar</label>
+        <description>information som beskriver egenskaper hos axlar</description>
+	</element>
+	<element name="gmd:MD_Distribution" id="270.0">
+        <label>Tillhandahållande</label>
+        <description>information om distributör och alternativ för
+		tillhandahållande av resursen</description>
+	</element>
+	<element name="gmd:MD_Distributor" id="279.0">
+        <label>Datadistributör</label>
+        <description>information om datadistributör</description>
+	</element>
+	<element name="gmd:MD_ExtendedElementInformation" id="306.0">
+        <description>metadataelement som saknas i SS-EN ISO 19115
+		men som är nödvändigt för att beskriva geografiska
+		data</description>
+        <label>Tillagt metadataelement</label>
+	</element>
+	<element name="gmd:MD_FeatureCatalogueDescription" id="233.0">
+        <label>Beskrivning av
+		objekttypskatalog eller
+		applikationsschema</label>
+        <description>information som identifierar objektkatalogen eller
+		applikationsschema som används</description>
+	</element>
+	<element name="gmd:MD_Format" id="284.0">
+		<label>Format</label>
+        <description>beskrivning av formatet som resursen kan
+		tillhandahållas på</description>
+	</element>
+	<element name="gmd:MD_GeometricObjects" id="183.0">
+        <label>Geometrier</label>
+        <description>geometriska grundelement eller komplex (kurva, punkt,
+		etc.) som används i datamängden, samt antal
+		förekomster av vardera</description>
+	</element>
+	<element name="gmd:MD_Georectified" id="162.0">
+        <label>Geografiskt rektifierat</label>
+        <description>rutnät där varje cell är placerad i ett koordinatsystem,
+		så att varje cell i rutnätet kan placeras geografiskt,
+		givet dess position i rutnätet, rutnätets origo, cellstorlek
+		och rutnätets orientering.</description>
+	</element>
+	<element name="gmd:MD_Georeferenceable" id="170.0">
+        <label>Geografiskt refererbar</label>
+        <description>rasterdata där cellerna är oregelbundet fördelade, där
+		cellernas markkoordinater kan bestämmas av
+		information som medföljder datamängden, men inte
+		enbart av rutnätsstrukturen</description>
+	</element>
+	<element name="gmd:MD_GridSpatialRepresentation" id="157.0">
+        <label>Rasterrepresentation</label>
+        <description>information om rasterbaserade data i datamängden</description>
+	</element>
+	<element name="gmd:MD_Identifier" id="205.0">
+        <label>Identifierare</label>
+        <description>värde som unikt identifierar ett objekt inom en
+		namnrymd</description>
+	</element>
+	<element name="gmd:MD_ImageDescription" id="243.0">
+        <label>Bildlämplighet</label>
+        <description>information om en bilds lämplighet för användning</description>
+	</element>
+	<element name="gmd:MD_Keywords" id="52.0">
+        <label>Nyckelord</label>
+        <description>nyckelord, nyckelordstyper och formaliserade källor</description>
+	</element>
+	<element name="gmd:MD_LegalConstraints" id="69.0">
+        <label>Rättsliga restriktioner</label>
+        <description>restriktioner och rättsliga förutsättningar för åtkomst
+		och nyttjande av resursen (eller metadata)</description>
+	</element>
+	<element name="gmd:MD_MaintenanceInformation" id="142.0">
+        <label>Underhåll</label>
+        <description>information om omfattning och frekvens för underhåll</description>
+	</element>
+	<element name="gmd:MD_Medium" id="291.0">
+		<label>Medium</label>
+        <description>information om lagringsmedium som resursen kan
+	distribueras på</description>
+	</element>
+	<element name="gmd:MD_Metadata" id="1.0">
+		<label>Metadata</label>
+        <description>sammanhållande klass för beskrivning av en
+	metadatamängd</description>
+	</element>
+	<element name="gmd:MD_MetadataExtensionInformation" id="303.0">
+        <description>information som beskriver utökning av metadata (i
+	förhållande till SS-EN ISO 19115)</description>
+        <label>Utökningar av
+		metadata</label>
+        <description>information som beskriver utökning av metadata (i
+		förhållande till SS-EN ISO 19115)</description>
+	</element>
+	<element name="gmd:MD_PortrayalCatalogueReference" id="268.0">
+        <label>Presentationsregler</label>
+        <description>information som identifierar den katalog med
+presentationsregler som används</description>
+        <label>Presentationsregler</label>
+	</element>
+	<element name="gmd:MD_RangeDimension" id="256.0">
+        <label>Intervall för mätvärden</label>
+        <description>information om mätvärdenas utsträckning i varje
+		enskild dimension</description>
+	</element>
+	<element name="gmd:MD_ReferenceSystem" id="186.0">
+        <label>Referenssystem</label>
+        <description>information om det referenssystem som används</description>
+		<help>information about the reference system</help>
+	</element>
+	<element name="gmd:MD_RepresentativeFraction" id="56.0">
+        <label>Skalfaktor</label>
+        <description>information om använd skalfaktor</description>
+	</element>
+	<element name="gmd:MD_Resolution" id="59.0">
+        <label>Upplösning</label>
+        <description>detaljeringsgrad uttryckt som skala eller avstånd</description>
+	</element>
+	<element name="gmd:MD_ScopeDescription" id="149.0">
+        <label>Omfattning</label>
+        <description>beskrivning av omfattningen
+		ANM. Omfatting kan avse t.ex. information om
+		datakvalitet och underhåll.</description>
+		<condition>Either attributes, features, featureInstances, attributeInstnaces, dataset or other must be provided</condition>
+	</element>
+	<element name="gmd:MD_SecurityConstraints" id="73.0">
+        <label>Säkerhetsrestriktioner</label>
+        <description>restriktioner i handhavande som är pålagda resursen
+		eller metadata med hänsyn till lagar och förordningar,
+		nationell säkerhet eller andra liknande
+		säkerhetsaspekter</description>
+	</element>
+	<element name="gmd:MD_ServiceIdentification" id="47.0">
+        <label>Beskrivning av tjänst</label>
+        <description>information som beskriver de tjänster som en
+		leverantör tillhandahåller genom ett antal definierade
+		gränssnitt</description>
+	</element>
+	<element name="gmd:MD_StandardOrderProcess" id="298.0">
+        <label>Beställning</label>
+        <description>sätt på vilka resursen kan erhållas inklusive
+		instruktioner och prisuppgifter</description>
+	</element>
+	<element name="gmd:MD_Usage" id="62.0">
+        <label>Faktisk användning</label>
+        <description>översiktlig beskrivning av resursens faktiska
+		användning</description>
+	</element>
+	<element name="gmd:MD_VectorSpatialRepresentation" id="176.0">
+        <label>Vektorrepresentation</label>
+        <description>information om vektorbaserade objekt i datamängden</description>
+	</element>
+	<element name="gmd:PT_FreeText" id="601.0">
+		<label>Free text</label>
+		<description>Description of a multi-language free text metadata element</description>
+	</element>
+	<element name="gmd:RS_Identifier" id="208.0">
+        <description>identifierare för ett referenssystem</description>
+        <label>Identifierare för
+		referenssystem</label>
+	</element>
+	<element name="gmd:URL" id="608.0">
+		<label>URL</label>
+		<description>URL</description>
+	</element>
+	<element name="gmd:abstract" id="25.0">
+        <label>Sammanfattning</label>
+        <description>sammanfattning av innehållet i resursen</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:accessConstraints" id="70.0">
+        <label>Åtkomstrestriktioner</label>
+        <description>åtkomstrestriktioner för att skydda känslig information
+		eller immateriella rättigheter</description>
+	</element>
+	<element name="gmd:address" id="525.0" context="gmd:CI_ResponsibleParty">
+		<label>Address</label>
+		<description>Address of the responsible party</description>
+	</element>
+	<element name="gmd:address" id="389.0">
+        <label>Adress</label>
+        <description>fysisk adress och e-postadress där ansvarig person
+		eller organisation kan kontaktas</description>
+	</element>
+	<element name="gmd:administrativeArea" id="383.0">
+        <label>Administrativ region</label>
+        <description>administrativ region
+		ANM. Används normalt inte i Sverige, endast för
+		internationella adresser.</description>
+	</element>
+	<element name="gmd:aggregateDataSetIdentifier" id="66.3">
+        <label>Identifierare</label>
+        <description>identifierare för resursen</description>
+	</element>
+	<element name="gmd:aggregateDataSetName" id="66.2">
+        <label>Resurs</label>
+        <description>referens till resursen</description>
+		<_condition>C / if aggregateDataSetIdentifier not documented?</_condition>
+	</element>
+	<element name="gmd:aggregationInfo" id="35.1">
+        <label>Relaterad resurs</label>
+        <description>information om resurs och hur den ingår i ett aggregat</description>
+	</element>
+	<element name="gmd:alternateTitle" id="361.0">
+        <label>Alternativ titel</label>
+        <description>kortnamn eller namn i annat språk som resursen är
+		känd under
+		Ex. "DCW" som ett alternativ till "Digital Chart of the
+		World”.</description>
+	</element>
+	<element name="gmd:amendmentNumber" id="287.0">
+        <label>Revision</label>
+        <description>revisionsnummer till versionen av formatet</description>
+	</element>
+	<element name="gmd:applicationProfile" id="399.0">
+        <label>Applikation</label>
+        <description>namn på en applikationsprofil som kan användas med
+	onlinekällan</description>
+	</element>
+	<element name="gmd:applicationSchemaInfo" id="21.0">
+        <label>Applikationsschema</label>
+        <description>applikationsschema för datamängden</description>
+	</element>
+	<element name="gmd:associationType" id="66.4">
+        <label>Relation</label>
+        <description>beskrivning av hur resursen ingår i aggregatet</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:attributeDescription" id="240.0">
+        <label>Egenskap</label>
+        <description>beskrivning av det attribut för vilket det uppmätta
+		värdet gäller</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:attributeInstances" id="153.0">
+        <label>Attribut</label>
+        <description>de enskilda attribut som informationen gäller för
+		Ex. Attributet ”bredd” på ett objekt i en datamängd</description>
+		<condition />
+	</element>
+	<element name="gmd:attributes" id="150.0">
+        <label>Attributtyper</label>
+        <description>de attributtyper som informationen gäller för
+		Ex. Alla attribut av typen ”bredd” i en datamängd.</description>
+		<condition />
+	</element>
+	<element name="gmd:authority" id="206.0">
+        <label>Namnrymd</label>
+        <description>namnrymd för identifieraren</description>
+	</element>
+	<element name="gmd:axisDimensionProperties" id="159.0">
+        <label>Axlarnas egenskaper</label>
+        <description>information om egenskaper hos de rumsliga eller
+		temporala axlarna</description>
+		<_condition>M</_condition>
+	</element>
+	<element name="gmd:bitsPerValue" id="264.0">
+        <label>Radiometrisk
+		upplösning</label>
+        <description>antalet signifikanta bitar i det okomprimerade
+		mätvärdet för varje i pixel i varje band</description>
+    </element>
+    <element name="gmd:cameraCalibrationInformationAvailability" id="253.0">
+        <label>Kamerakalibreringsinformation</label>
+        <description>indikation om huruvida konstanter för
+		kamerakorrektioner som utförts finns tillgängliga</description>
+	</element>
+	<element name="gmd:cellGeometry" id="160.0">
+        <label>Cellgeometri</label>
+        <description>huruvida rasterdata representerar punkter eller celler</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:centerPoint" id="166.0">
+        <label>Centrumkoordinat</label>
+        <description>markkoordinat för centrumpunkten i rasterdata</description>
+	</element>
+	<element name="gmd:characterSet" id="4.0" context="gmd:MD_Metadata">
+        <label>Teckenuppsättning i
+		metadata</label>
+        <description>standard för den teckenrepresentation som används i
+		metadatamängden</description>
+		<condition>conditional</condition>
+		<_condition>conditional / ISO/IEC 10646-1 not used and not defined by encoding?</_condition>
+	</element>
+	<element name="gmd:characterSet" id="40.0" context="gmd:MD_DataIdentification">
+        <label>Teckenuppsättning i
+		resurs</label>
+        <description>fullständigt namn på teckenuppsättningen som
+		används i resursen</description>
+		<_condition>Conditional / ISO 10646-1 not used?</_condition>
+	</element>
+	<element name="gmd:characterSet" id="4.0">
+         <label>Teckenuppsättning i
+		metadata</label>
+        <description>standard för den teckenrepresentation som används i
+		metadatamängden</description>
+		<condition>conditional</condition>
+
+	</element>
+	<element name="gmd:checkPointAvailability" id="163.0">
+        <description>ihuruvida kontrollpunkter för noggrannhetskontroll finns
+		tillgängliga</description>
+		<condition>mandatory</condition>
+        <label>Kontrollpunkter</label>
+	</element>
+	<element name="gmd:checkPointDescription" id="164.0">
+        <description>beskrivning av de kontrollpunkter som använts vid
+		kontroll av noggranhet</description>
+		<condition>conditional</condition>
+        <label>Beskrivning av
+		kontrollpunkter</label>
+	</element>
+	<element name="gmd:citation" id="24.0" context="gmd:MD_Identification">
+        <label>Hänvisning</label>
+        <description>standardiserad referens till resursen (även person eller
+		organisation)</description>
+	</element>
+	<element name="gmd:citation" id="576.0" context="gmd:MD_Authority">
+		<label>Citation</label>
+		<description>Citation which belongs to the authority</description>
+	</element>
+	<element name="gmd:citation" id="581.0" context="gmd:MD_Thesaurus">
+		<label>Citation</label>
+		<description>Citation of the thesaurus</description>
+	</element>
+	<element name="gmd:citation" id="581.0">
+		<label>Citation</label>
+		<description>Citation data for the resource(s)</description>
+	</element>
+	<element name="gmd:citedResponsibleParty" id="367.0">
+        <label>Ansvarig</label>
+        <description>namn och roll för individer eller organisationer som är
+		ansvariga för resursen</description>
+	</element>
+	<element name="gmd:city" id="382.0">
+        <label>Postort</label>
+        <description>ortnamn för postadressering</description>
+	</element>
+	<element name="gmd:classification" id="74.0">
+		<condition>mandatory</condition>
+        <label>Skyddsklass</label>
+        <description>anger det skyddsbehov som finns för handhavande av
+		resurs eller metadata</description>
+	</element>
+	<element name="gmd:classificationSystem" id="76.0">
+        <label>Skyddsklassningssystem</label>
+        <description> namn på skyddsklassningssystem som tillämpas på
+		resurs eller metadata</description>
+        <label>Skyddsklassningssystem</label>
+	</element>
+	<element name="gmd:cloudCoverPercentage" id="248.0">
+        <label>Molnighet</label>
+        <description>procent av datamängdens geografiska utsträckning
+		som är täckt av moln</description>
+	</element>
+	<element name="gmd:code" id="207.0" context="gmd:MD_Identifier">
+        <label>Identifieringskod</label>
+        <description>identifierare för resursen</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:code" id="547.0" context="gmd:MD_CodeValue">
+		<description>Value code</description>
+		<help>Value code (i.e. numeric)</help>
+	</element>
+	<element name="gmd:codeSpace" id="208.1">
+        <label>Ansvarig</label>
+        <description>namn eller identifierare för person eller organisation
+		som är ansvarig för namnrymden</description>
+		<helper>
+			<option value="EPSG">EPSG</option>
+		</helper>
+	</element>
+	<element name="gmd:collectiveTitle" id="371.0">
+        <label>Samlingstitel</label>
+        <description>gemensam titel för en serie
+		ANM. titeln idetifierar element i en serie kollektivt,
+		kombinerad med information om vilka utgåvor som är
+		tillgängliga hos den angivna källan.</description>
+		<help>This field is used to name the Basic Geodata as defined in the GeoIV Annex I, as it is possible that there are more than 1 "physical" datasets assigned to 1 legal entry. E.g.: Entry no. 47 "Geophysikalisches Kartenwerk" consists of 3 datasets "Geophysikalische Karten 1:500000", "Geophysikalische Spezialkarten" and "Gravimetrischer Atlas 1:100000"</help>
+	</element>
+	<element name="gmd:complianceCode" id="234.0">
+        <label>Uppfyller ISO 19110</label>
+        <description>uppgift som anger om den citerade
+		objekttypskatalogen uppfyller ISO 19110 eller ej</description>
+	</element>
+	<element name="gmd:compressionGenerationQuantity" id="250.0">
+        <label>Antal komprimeringar</label>
+        <description>antalet kvalitetsförsämrade komprimeringar av bilden
+		som genomförts</description>
+	</element>
+	<element name="gmd:condition" id="312.0">
+        <label>Villkor</label>
+        <description>villkor som gör att metadataelementet blir obligatoriskt</description>
+	</element>
+	<element name="gmd:constraintLanguage" id="323.0">
+        <label>Regelspråk</label>
+        <description>formellt språk som använts i applikationsschemat
+		Ex. OCL</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:contact" id="8.0" context="gmd:MD_Metadata">
+		<condition>mandatory</condition>
+        <label>Metadatakontakt</label>
+        <description>ansvarig för metadatamängden</description>
+	</element>
+	<element name="gmd:contact" id="148.1" context="gmd:MD_MaintenanceInformation">
+        <label>Ansvarig</label>
+        <description>identifiering av och kontaktinformation för personer och
+		organisationer som är ansvariga för underhåll av
+		resursen</description>
+	</element>
+	<element name="gmd:contact" id="8.0">
+		<condition>mandatory</condition>
+        <label>Metadatakontakt</label>
+        <description>ansvarig för metadatamängden</description>
+	</element>
+	<element name="gmd:contactInfo" id="378.0">
+        <description>kontaktinformation till ansvarig person och/eller
+organisation</description>
+        <label>Kontaktinformation</label>
+	</element>
+	<element name="gmd:contactInstructions" id="392.0">
+        <label>Kontaktinstruktioner</label>
+        <description>ytterligare instruktioner om hur eller när ansvarig
+		person eller organisation kan kontaktas</description>
+	</element>
+	<element name="gmd:contentInfo" id="16.0">
+        <description>information om objekttypskataloger, bilddata eller
+		andra beskrivningar som finns om resursen</description>
+        <label>Innehållsbeskrivning</label>
+	</element>
+	<element name="gmd:contentType" id="241.0">
+        <label>Typ av innehåll</label>
+        <description>typ av värde som cellen representerar</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:controlPointAvailability" id="171.0">
+        <description>huruvida stödpunkter existerar</description>
+		<condition>mandatory</condition>
+        <label>Stödpunkter</label>
+	</element>
+	<element name="gmd:cornerPoints" id="165.0">
+        <label>Hörnkoordinater</label>
+        <description>markkoordinater för hörnpunkterna i en
+		rasterdatamängd
+		ANM. Det finns fyra hörnpunkter i en georefererad
+		rasterdatamängd. Minst 2 hörnpunkter i en diagonal
+		krävs. Den första hörnet motsvarar rastrets origo.</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:country" id="612.0">
+		<label>Country</label>
+		<description>Country of the physical address</description>
+	</element>
+	<element name="gmd:country" id="508.0" context="gmd:MD_Legislation">
+		<label>Country</label>
+		<description>Country in which the law was issued</description>
+	</element>
+	<element name="gmd:country" id="605.0" context="PT_Group">
+		<label>Country</label>
+		<description>Country of language used for documenting a plain text</description>
+	</element>
+	<element name="gmd:credit" id="27.0">
+        <label>Bidragande aktörer</label>
+        <description>omnämnande av aktörer som bidragit till att framställa
+		resursen</description>
+	</element>
+	<element name="gmd:dataQualityInfo" id="18.0">
+        <label>Kvalitetsuppgifter</label>
+        <description>information om övergripande uppskattning av
+resursens kvalitet</description>
+
+	</element>
+	<element name="gmd:dataSetURI" id="11.1">
+        <label>Resurs-URI</label>
+        <description>Uniformed Resource Identifier (URI) för resursen som
+metadatamängden avser</description>
+		<help>Uniformed Resource Identifier (URI) of the dataset to which the metadata applies. This
+            link refers direct to the machine-readable dataset.</help>
+	</element>
+	<element name="gmd:dataType" id="313.0">
+        <label>Datatyp</label>
+        <description>kod som identifierar vilken datatyp metadataelementet
+	har</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:dataset" id="154.0">
+        <description>den datamängd som informationen gäller för</description>
+		<condition />
+        <label>Datamängd</label>
+	</element>
+	<element name="gmd:date" id="570.0">
+        <label>Datum</label>
+        <description>datumangivelse för en händelse (produktion,publicering,revidering) (ÅÅÅÅ-MM-DD)</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:date" id="570.0" context="gmd:MD_Revision">
+		<label>Date of last update</label>
+		<description>Date of last update</description>
+	</element>
+	<element name="gmd:date" id="144.0" context="gmd:MD_MaintenanceInformation">
+        <label>Planerat
+		revisionsdatum</label>
+        <description>planerat datum för nästa revision</description>
+	</element>
+	<element name="gmd:date" id="362.0" context="gmd:CI_Citation">
+		<condition>mandatory</condition>
+        <label>Datum</label>
+        <description>händelse angiven med datum för resursen</description>
+		<_condition>M</_condition>
+	</element>
+	<element name="gmd:date" id="394.0" context="gmd:CI_Date">
+		<condition>mandatory</condition>
+        <label>Datum</label>
+        <description>datumangivelse</description>
+		<_condition>M</_condition>
+	</element>
+	<element name="gmd:dateOfNextUpdate" id="144.0">
+        <label>Planerat
+		revisionsdatum</label>
+        <description>planerat datum för nästa revision</description>
+	</element>
+	<element name="gmd:dateStamp" id="9.0">
+        <label>Datum för metadata</label>
+        <description>datum då metadatamängden skapats, registrerats eller
+		reviderats</description>
+		<condition>mandatory</condition>
+	</element>
+    <!--<element name="gmd:dateTime" id="89.0">
+        <label>Tidpunkt</label>
+        <description>datum och tidpunkt eller tidsintervall för
+		bearbetningens genomförande</description>
+    </element>-->
+	<element name="gmd:dateTime" id="89.0" context="LI_ProcessStep">
+        <description>datum och tidpunkt eller tidsintervall för
+bearbetningens genomförande</description>
+        <label>Tidpunkt</label>
+        <description>datum och tidpunkt eller tidsintervall för
+bearbetningens genomförande</description>
+	</element>
+	<element name="gmd:dateTime" id="106.0" context="gmd:DQ_Element">
+        <label>Datum</label>
+        <description>datum eller tidsintervall för genomförande av
+		kvalitetsutvärdering</description>
+	</element>
+	<element name="gmd:dateType" id="395.0">
+        <label>Händelse</label>
+        <description>händelse som datumangivelsen avser</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:definition" id="310.0">
+		<label>Definition</label>
+        <description>definition av metadataelementet</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:deliveryPoint" id="381.0">
+        <label>Postadress</label>
+        <description>postadress enligt SS 613401</description>
+	</element>
+	<element name="gmd:denominator" id="57.0">
+        <label>Skalfaktor</label>
+        <description>tal använt som multiplikator vid skalförändring
+		ANM. exempelvis anges 20000 för en datamängd
+		producerad för skala 1:20000.</description>
+		<condition>add either a denominator or a distance</condition>
+		<helper>
+		<option value="5000">1:5 000</option>
+		<option value="10000">1:10 000</option>
+		<option value="25000">1:25 000</option>
+		<option value="50000">1:50 000</option>
+		<option value="100000">1:100 000</option>
+		<option value="200000">1:200 000</option>
+		<option value="300000">1:300 000</option>
+		<option value="500000">1:500 000</option>
+		<option value="1000000">1:1 000 000</option>
+		</helper>
+
+	</element>
+	<element name="gmd:density" id="293.0">
+        <label>Lagringstäthet</label>
+        <description>lagringstäthet för data</description>
+	</element>
+	<element name="gmd:densityUnits" id="294.0">
+        <label>Enhet för lagringstäthet</label>
+        <description>enhet för den angivna lagringstätheten</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:description" id="561.0">
+		<label>Description</label>
+		<description>Description of the event, including related parameters or
+            tolerances</description>
+	</element>
+	<element name="gmd:description" id="561.0" context="gmd:MD_AbstractClass">
+		<label>Description</label>
+		<description>Description</description>
+	</element>
+	<element name="gmd:description" id="87.0" context="LI_ProcessStep">
+		<condition>mandatory</condition>
+        <label>Beskrivning</label>
+        <description>beskrivning av bearbetningssteget samt relaterade
+		parametrar eller toleranser</description>
+	</element>
+	<element name="gmd:description" id="93.0" context="LI_Source">
+        <label>Beskrivning</label>
+        <description>detaljerad beskrivning av ursprungsdatamängd, t.ex.
+		det geografiska område den omfattar</description>
+		<_condition>Conditional / sourceExtent not provided?</_condition>
+	</element>
+	<element name="gmd:description" id="335.0" context="gmd:EX_Extent">
+        <label>Textbeskrivning av
+		utsträckning</label>
+        <description>textbeskrivning av rumslig och temporal utsträckning
+		för angiven resurs</description>
+		<_condition>Conditional / geographicElement and temporalElement and verticalElement not
+            documented?</_condition>
+	</element>
+	<element name="gmd:description" id="401.0" context="gmd:CI_OnlineResource">
+        <label>Beskrivning av
+webbplats</label>
+        <description>detaljerad beskrivning om vad online-resursen kan
+göra</description>
+	</element>
+	<element name="gmd:description" id="541.0" context="gmd:MD_CodeDomain">
+		<label>Description</label>
+		<description>Description of the code domain</description>
+	</element>
+	<element name="gmd:description" id="549.0" context="gmd:MD_CodeValue">
+		<label>Value description</label>
+		<description>Description of the value</description>
+	</element>
+	<element name="gmd:description" id="552.0" context="gmd:MD_Attribute">
+		<label>Description</label>
+		<description>Attribute description</description>
+	</element>
+	<element name="gmd:description" id="557.0" context="gmd:MD_Role">
+		<label>Description</label>
+		<description>Role description</description>
+	</element>
+	<element name="gmd:descriptiveKeywords" id="33.0">
+        <label>Beskrivande nyckelord</label>
+        <description>nyckelord som beskriver ämnesområde eller liknande
+		för resursen</description>
+	</element>
+	<element name="gmd:descriptor" id="258.0">
+        <label>Beskrivning</label>
+        <description>beskrivning av spännvidden för en cells mätvärde</description>
+	</element>
+	<element name="gmd:dimension" id="242.0">
+		<label>Dimension</label>
+        <description>information om uppmätta värden för celldimensioner</description>
+	</element>
+	<element name="gmd:dimensionName" id="180.0">
+        <label>Axel</label>
+        <description>namn på axeln</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:dimensionSize" id="181.0">
+        <label>Antal pixlar längs axeln</label>
+        <description>antal pixlar längs med axeln</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:distance" id="61.0">
+        <label>Avstånd mellan
+observationer</label>
+        <description>avstånd mellan observationspunkter i terrängen</description>
+		<condition>Provide a distance if no equivalent Scale is documented</condition>
+    <helper>
+		<option value="0.10">10 cm</option>
+		<option value="0.25">25 cm</option>
+		<option value="0.50">50 cm</option>
+		<option value="1">1 m</option>
+		<option value="30">30 m</option>
+		<option value="100">100 m</option>
+		</helper>
+	</element>
+	<element name="gmd:distributionFormat" id="271.0">
+        <label>Distributionsformat</label>
+		<condition>mandatory</condition>
+        <description>information om format som data distribueras i</description>
+	</element>
+	<element name="gmd:distributionInfo" id="17.0">
+        <description>information om hur och av vem man får tillgång till
+resursen</description>
+        <label>Tillhandahållande</label>
+	</element>
+	<element name="gmd:distributionOrderProcess" id="281.0">
+        <label>Beställning</label>
+        <description>information om hur resursen kan erhållas samt
+relaterad instruktion och prisuppgifter</description>
+	</element>
+	<element name="gmd:distributor" id="272.0">
+        <label>Datadistributör</label>
+        <description>information om datadistributören
+ANM. Listan behöver inte vara fullständig.</description>
+	</element>
+	<element name="gmd:distributorContact" id="280.0">
+        <label>Kontakt</label>
+        <description>kontaktinformation till distributören som tillhandahåller
+resursen</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:distributorFormat" id="282.0">
+        <label>Format</label>
+        <description>information om format som kan tillhandahållas av
+distributören</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:distributorTransferOptions" id="283.0">
+        <label>Överföringsalternativ</label>
+        <description>information om de metoder med vilka resursen
+		tillhandahålls av distributören</description>
+	</element>
+	<element name="gmd:domainCode" id="309.0">
+        <label>Domänkod</label>
+        <description>tresiffrig kod som är tilldelat metadataelementet
+ANM. Koden skall vara unik inom denna specifika
+profil.</description>
+		<_condition>Conditional / is dataType ?codelistElement??</_condition>
+	</element>
+	<element name="gmd:domainOfValidity" id="197.0">
+        <label>Giltighet</label>
+        <description>inom vilka gränser referenssystemet är giltigt</description>
+	</element>
+	<element name="gmd:domainValue" id="315.0">
+        <label>Domänvärden</label>
+        <description>giltiga värden som metadataelementet kan anta</description>
+		<_condition>Conditonal / dataType not 'codelist', 'enumeration' or
+            'codelistElement'</_condition>
+	</element>
+	<element name="gmd:eastBoundLongitude" id="345.0">
+        <label>Östligaste longitud</label>
+        <description>ostligaste koordinaten i den omskrivna rektangeln
+angiven som longitud i decimalgrader</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:edition" id="363.0">
+        <label>Utgåva</label>
+        <description>version för resursen</description>
+	</element>
+	<element name="gmd:editionDate" id="364.0">
+        <label>Datum för utgåva</label>
+        <description>Datum för utgåva</description>
+	</element>
+	<element name="gmd:electronicMailAddress" id="386.0">
+        <label>E-post</label>
+        <description>e-postadress</description>
+	</element>
+	<element name="gmd:environmentDescription" id="44.0">
+        <label>Systemmiljö</label>
+        <description>beskrivning av resursen i producentens datamiljö
+ANM. Inkluderar t.ex. information om programvara,
+operativsystem, filnamn.</description>
+	</element>
+	<element name="gmd:equivalentScale" id="60.0">
+        <label>Skala</label>
+        <description>detaljeringsgrad, uttryck som den skala en
+		motsvarande tryckt karta skulle ha</description>
+		<_condition>Conditional / distance not documented?</_condition>
+	</element>
+	<element name="gmd:errorStatistic" id="136.0">
+        <label>Statistisk metod</label>
+        <description>statistisk metod som använts för att bestämma värdet</description>
+	</element>
+	<element name="gmd:evaluationMethodDescription" id="104.0">
+        <label>Beskrivning</label>
+        <description>beskrivning av använd utvärderingsmetod</description>
+	</element>
+	<element name="gmd:evaluationMethodType" id="103.0">
+        <label>Utvärderingsmetod</label>
+        <description>metod som använts för att bestämma kvaliten hos en
+resurs</description>
+	</element>
+	<element name="gmd:evaluationProcedure" id="105.0">
+        <label>Utvärderingsprocedur</label>
+        <description>referens till beskrivning av den procedur som använts
+vid kvalitetsutvärderingen</description>
+	</element>
+	<element name="gmd:explanation" id="131.0">
+        <label>Beskrivning</label>
+        <description>beskrivning av vad kravet från
+dataproduktspecifikationen eller användare innebär</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:extendedElementInformation" id="305.0">
+        <label>Tillagt
+metadataelement</label>
+        <description>information om metadataelement som saknas i
+SS-EN ISO 19115 men som är nödvändiga för att
+beskriva geografiska data</description>
+	</element>
+	<element name="gmd:extensionOnLineResource" id="304.0">
+        <label>Onlineåtkomst</label>
+        <description>information om onlinekälla innehållande namn på den
+nya profilen samt inkluderande alla utökade element</description>
+	</element>
+	<element name="gmd:extent" id="45.0" context="gmd:MD_DataIdentification">
+        <label>Utsträckning</label>
+        <description>information om resursens horisontella, vertikala och
+temporala usträckning</description>
+		<_condition>Conditional / if hierarchyLevel equals "dataset"? Either
+            extent.geographicElement.EX_GeographicBoundingBox or
+            extent.geographicElement.EX_GeographicDescription is required</_condition>
+	</element>
+	<element name="gmd:extent" id="140.0" context="gmd:DQ_Scope">
+        <label>Utsträckning</label>
+        <description>information om rumslig och temporal utsträckning för
+de data som kvalitetsrapporteringen omfattar</description>
+	</element>
+	<element name="gmd:extent" id="351.0" context="gmd:EX_TemporalExtent">
+        <label>Tidsperiod</label>
+        <description>datum och tid för innehållet i resursen</description>
+		<_condition>mandatory</_condition>
+	</element>
+	<element name="gmd:extentTypeCode" id="340.0">
+        <label>Inkluderingskod</label>
+        <description>indikerar huruvida den omskrivande polygonen
+omfattar ett område som innehåller data eller ett
+område där data saknas</description>
+	</element>
+	<element name="gmd:facsimile" id="409.0">
+        <label>Telefax</label>
+        <description>telefonnummer till fax hos ansvarig person eller
+organisation</description>
+	</element>
+	<element name="gmd:featureCatalogueCitation" id="238.0">
+        <label>Hänvisning</label>
+        <description>fullständig bibliografisk referens till en eller flera
+externa objekttypskataloger</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:featureInstances" id="152.0">
+        <label>Objekt</label>
+        <description>de enskilda objekt som informationen gäller för
+Ex. En specifik bro i en datamängd</description>
+		<condition />
+	</element>
+	<element name="gmd:featureTypes" id="237.0">
+        <label>Objekttyper</label>
+        <description>delmängd innehållande objekttyper från citerad
+objekttypskatalog som förekommer i resursen</description>
+	</element>
+	<element name="gmd:features" id="151.0">
+        <label>Objekttyper</label>
+        <description>de objekttyper som informationen gäller för
+Ex. Alla vägar och broar i en datamängd.</description>
+		<condition />
+	</element>
+	<element name="gmd:fees" id="299.0">
+        <label>Avgifter</label>
+        <description>avgifter och villkor för att erhålla resursen
+ANM. Inkludera monetära enheter (i enlighet med
+ISO 4217)</description>
+	</element>
+	<element name="gmd:fileDecompressionTechnique" id="289.0">
+        <label>Komprimering</label>
+        <description>rekommenderade algoritmer, processer, funktioner
+eller program som kan användas för att läsa
+komprimerade data</description>
+	</element>
+	<element name="gmd:fileDescription" id="50.0">
+        <label>Bildtext</label>
+        <description>text som beskriver illustrationen</description>
+	</element>
+	<element name="gmd:fileIdentifier" id="2.0">
+        <label>Identifierare för
+metadatamängd</label>
+        <description>unik identifierare för metadatamängden</description>
+	</element>
+	<element name="gmd:fileName" id="49.0">
+        <label>Filnamn</label>
+        <description>namn på fil som innehåller en grafisk illustration</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:fileType" id="51.0">
+        <label>Bildformat</label>
+        <description>format för filen med den grafiska illustrationen
+Ex. CGM, EPS, GIF, JPEG, PBM, PS, TIFF, XWD.</description>
+		<help>format in which the illustration is encoded Examples: CGM, EPS, GIF, JPEG, PBM, PS,
+            TIFF, XWD</help>
+	</element>
+	<element name="gmd:filmDistortionInformationAvailability" id="254.0">
+        <label>Linsdistorsionsinformation</label>
+        <description>indikation om huruvida krympningsinformation
+(förvrängningsinformation) är tillgänglig</description>
+	</element>
+	<element name="gmd:formatDistributor" id="290.0">
+        <label>Datadistributör</label>
+        <description>ger information om distributörer som stödjer formatet</description>
+	</element>
+	<element name="gmd:function" id="402.0">
+        <label>Funktion hos webbplats</label>
+        <description>kod för operation som kan utföras på online-resursen</description>
+	</element>
+	<element name="gmd:geographicElement" id="336.0">
+        <label>Geografisk utsträckning</label>
+        <description>information om geografisk utsträckning</description>
+		<_condition>Conditional / description and temporalElement and verticalElement not
+            documented?</_condition>
+	</element>
+	<element name="gmd:geographicIdentifier" id="349.0">
+        <label>Identifierare för
+geografiskt område</label>
+        <description>identifierare som använts för att representera ett
+geografiskt område</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:geometricObjectCount" id="185.0">
+        <label>Antal</label>
+        <description>totalt antal förekomster i datamängden</description>
+	</element>
+	<element name="gmd:geometricObjectType" id="184.0">
+        <label>Geometrityp</label>
+        <description>typ av geometri (punkt, linje, etc.) som används i
+datamängden</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:geometricObjects" id="178.0">
+        <label>Geometriska objekt</label>
+        <description>uppgifter om de geometriska objekt som används i
+datamängden</description>
+	</element>
+	<element name="gmd:georeferencedParameters" id="174.0">
+        <label>Parametrar för
+georeferens</label>
+        <description>beskrivning av de termer som behövs för att
+georeferera rasterdata</description>
+	</element>
+	<element name="gmd:graphicOverview" id="31.0">
+        <label>Exempelbild</label>
+        <description>grafisk illustration av resursen, bör inkludera en
+teckenförklaring för grafiken
+ANM. Ofta en förenklad kartbild.</description>
+	</element>
+	<element name="gmd:graphicsFile" id="325.0">
+        <label>Grafikfil</label>
+        <description>grafikfil som innehåller det fullständiga
+applikationsschemat</description>
+	</element>
+	<element name="gmd:handlingDescription" id="77.0">
+        <label>Kompletterande
+beskrivning</label>
+        <description>ytterligare information om det skyddsbehov som gäller
+för handhavande av resurs eller metadata i den
+angivna skyddsklassen</description>
+	</element>
+	<element name="gmd:hierarchyLevel" id="6.0">
+        <label>Hierarkisk nivå</label>
+        <description>hierarkisk nivå för den resurs som metadatamängden
+beskriver
+Ex. datamängd, datamängdserie, tjänst, …</description>
+	</element>
+	<element name="gmd:hierarchyLevelName" id="7.0">
+        <label>Beskrivning av
+hierarkisk nivå</label>
+        <description>beskrivning av den angivna hierarkiska nivån (6)</description>
+		<_condition>Conditional / hierarchyLevel is not equal to "dataset"?</_condition>
+	</element>
+	<element name="gmd:hoursOfService" id="391.0">
+        <label>Betjäningstider</label>
+        <description>tidsperiod (inklusive tidszon) då ansvarig person eller
+organisation kan kontaktas</description>
+        <label>Hours of Service</label>
+	</element>
+	<element name="gmd:identificationInfo" id="15.0">
+        <label>Resursbeskrivning</label>
+        <description>grundläggande information om resurserna som
+metadatamängden avser</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:identifier" id="573.0">
+		<label>Identifier</label>
+		<description>Unique identifier for the resource. EXAMPLE: Universal Product Code (UPC),
+            National Stock Number (NSN)</description>
+	</element>
+	<element name="gmd:identifier" id="573.0" context="gmd:CI_Citation">
+        <label>Identifierare för resursen</label>
+        <description>Identifierare för resursen</description>
+	</element>
+	<element name="gmd:identifier" id="575.0" context="gmd:MD_Authority">
+		<label>Identifier</label>
+		<description>Identifier which belongs to the authority</description>
+	</element>
+	<element name="gmd:illuminationAzimuthAngle" id="245.0">
+        <label>Solazimut</label>
+        <description>solazimut i centrum av bilden mätt i grader utgående
+från norr vid tidpunkten då bilden togs</description>
+	</element>
+	<element name="gmd:illuminationElevationAngle" id="244.0">
+        <label>Solhöjd</label>
+        <description>solhöjd i centrum av bilden, mätt i grader</description>
+	</element>
+	<element name="gmd:imageQualityCode" id="247.0">
+        <label>Bildkvalitet</label>
+        <description>kod som specificerar bildens kvalitet</description>
+		<help>specifies the image quality</help>
+	</element>
+	<element name="gmd:imagingCondition" id="246.0">
+        <label>Bildförhållanden</label>
+        <description>förhållanden som har påverkat bilden</description>
+	</element>
+	<element name="gmd:includedWithDataset" id="236.0">
+        <label>Inkluderad i resursen</label>
+        <description>indikation om objekttypskatalogen är inkluderad i
+resursen</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:individualName" id="375.0">
+        <label>Person</label>
+        <description>namn på person ansvarig för resursen
+ANM. Efternamn, förnamn och eventuellt titel ska
+anges separerade av en avgränsare.</description>
+		<_condition>Conditional / organisationName and positionName not documented?</_condition>
+	</element>
+	<element name="gmd:initiativeType" id="66.5">
+        <label>Initiativ</label>
+        <description>typ av initiativ under vilken resursen framställdes</description>
+	</element>
+	<element name="gmd:issueIdentification" id="405.0">
+        <label>Identifierare</label>
+        <description>information som identifierar utgåvan av
+datamängdsserien</description>
+	</element>
+	<element name="gmd:keyword" id="53.0">
+        <label>Nyckelord</label>
+        <description>allmänord, formaliserade ord eller fraser som beskriver
+resursen</description>
+	</element>
+	<element name="gmd:language" context="gmd:MD_Metadata" id="3.0">
+        <label>Språk i metadata</label>
+        <description>det språk som används i metadatamängden</description>
+		<condition>conditional</condition>
+	</element>
+    <element name="gmd:language" context="gmd:MD_DataIdentification" id="39.0">
+        <label>Språk i resurs</label>
+        <description>språk som används i resursen</description>
+        <help>språk som används i resursen</help>
+		<_condition>Mandatory</_condition>
+	</element>
+    <element name="gmd:language" context="gmd:MD_FeatureCatalogueDescription" id="235.0">
+        <label>Språk</label>
+        <description>språk som används i objekttypskatalogen</description>
+	</element>
+	<element name="gmd:lensDistortionInformationAvailability" id="255.0">
+        <label>Linsdistorsionsinformation</label>
+        <description>indikation om huruvida objektivets felteckning är
+tillgänglig</description>
+	</element>
+	<element name="gmd:level" id="139.0">
+        <label>Hierarkisk nivå</label>
+        <description>hierarkisk nivå för de data som kvalitetsrapporteringen
+	omfattar</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:levelDescription" id="141.0">
+        <label>Beskrivning</label>
+        <description>detaljerad beskrivning av den hierarkiska nivå som
+kvalitetsrapporteringen omfattar</description>
+		<_condition>Conditional / level not equal 'dataset' or 'series'?</_condition>
+	</element>
+	<element name="gmd:lineage" id="81.0">
+        <label>Tillkomsthistorik</label>
+        <description>icke-kvantitativ kvalitetsinformation om tillkomsthistorik
+för de data som specificerats under omfattning (79)</description>
+		<_condition>Conditional / report not provided?</_condition>
+	</element>
+	<element name="gmd:linkage" id="397.0">
+        <label>Webbadress</label>
+        <description>adress för onlinekälla definierat via en URL (Uniform
+Resource Locator) eller liknande adresseringsschema</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:maintenanceAndUpdateFrequency" id="143.0">
+        <label>Underhållsfrekvens</label>
+        <description>frekvens för underhåll (ändringar och tillägg) efter att
+resursen blivit färdigställd</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:maintenanceNote" id="148.0">
+        <label>Anmärkning</label>
+        <description>information om specifika krav för underhåll av resursen</description>
+	</element>
+	<element name="gmd:maxValue" id="260.0">
+        <label>Maximivärde</label>
+        <description>längsta våglängd som sensorn kan registrera inom ett
+angivet band</description>
+	</element>
+	<element name="gmd:maximumValue" id="356.0">
+        <label>Högsta höjd</label>
+        <description>högsta vertikala värdet</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:measureDescription" id="102.0">
+        <label>Måttsbeskrivning</label>
+        <description>beskrivning av kvalitetsmåttet
+ANM. Beskrivningen skall inkludera nödvändiga
+formler och illustrationer.</description>
+	</element>
+	<element name="gmd:measureIdentification" id="101.0">
+        <label>Måttidentifierare</label>
+        <description>språkligt oberoende sekvens av tecken som unikt och
+permanent identifierar ett kvalitetsmått</description>
+	</element>
+	<element name="gmd:mediumFormat" id="296.0">
+        <label>Skrivmetod</label>
+        <description>metod som används för att skriva till lagringsmediet</description>
+	</element>
+	<element name="gmd:mediumNote" id="297.0">
+        <label>Begränsningar</label>
+        <description>beskrivning av andra begränsningar eller
+förutsättningar för att använda lagringsmediet</description>
+	</element>
+	<element name="gmd:metadataConstraints" id="20.0" context="gmd:MD_Metadata">
+        <label>Metadatarestriktioner</label>
+        <description>information som anger begränsningar av åtkomst och
+nyttjande av metadatamängden</description>
+	</element>
+	<element name="gmd:metadataConstraints">
+		<label>Metadata constraints</label>
+		<description>Provides restrictions on the access and use of data</description>
+	</element>
+	<element name="gmd:metadataExtensionInfo" id="14.0">
+        <description>information om tillägg som gjorts till SS-EN ISO 19115</description>
+        <label>Metadatatillägg</label>
+	</element>
+	<element name="gmd:metadataMaintenance" id="22.0">
+        <label>Metadataunderhåll</label>
+        <description>information om hur underhåll av metadata utförs, t ex
+intervall och omfattning av uppdateringar</description>
+	</element>
+	<element name="gmd:metadataStandardName" id="10.0">
+        <label>Metadatastandard</label>
+        <description>namn på den standard som metadatamängden följer
+inklusive namn på eventuell profil
+Ex. SS-EN ISO 19115.</description>
+	</element>
+	<element name="gmd:metadataStandardVersion" id="11.0">
+        <label>Version av metadatastandard</label>
+        <description>version av använd metadatastandard (10)</description>
+	</element>
+	<element name="gmd:minValue" id="261.0">
+        <label>Minimivärde</label>
+        <description>kortaste våglängd som sensorn kan registrera inom ett
+angivet band</description>
+	</element>
+	<element name="gmd:minimumValue" id="355.0">
+        <label>Lägsta höjd</label>
+        <description>lägsta vertikala värdet</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:name" context="gmd:MD_AbstractClass" id="560.0">
+		<label>Name</label>
+		<description>Name</description>
+	</element>
+	<element name="gmd:name" context="gmd:MD_Medium" id="292.0">
+        <label>Medium</label>
+        <description>typ av medium som resursen kan distribueras på</description>
+	</element>
+	<element name="gmd:name" context="gmd:RS_ReferenceSystem" id="196.0">
+        <label>Namn</label>
+        <description>namn på referenssystem</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:name" context="gmd:MD_Format" id="285.0">
+        <label>Beteckning</label>
+        <description>beteckning på formatet</description>
+		<help>name of the data transfer format(s)</help>
+		<condition>mandatory</condition>
+	</element>
+    <element name="gmd:name" context="gmd:MD_ExtendedElementInformation" id="307.0">
+        <label>Namn</label>
+        <description>namn på metadataelementet</description>
+		<condition>mandatory</condition>
+	</element>
+    <element name="gmd:name" context="gmd:MD_ApplicationSchemaInformation" id="321.0">
+        <label>Beteckning</label>
+        <description>namn på det applikationsschema som använts</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:name" context="gmd:CI_OnlineResource" id="400.0">
+        <label>Namn på webbplats</label>
+        <description>namnet på online-resursen</description>
+	</element>
+	<element name="gmd:name" context="gmd:CI_Series" id="404.0">
+        <label>Namn</label>
+        <description>namn på den datamängdsserie eller aggregat som
+datamängden är en del av</description>
+	</element>
+	<element name="gmd:name" context="gmd:MD_CodeDomain" id="537.0">
+		<label>Name</label>
+		<description>Name of the code domain</description>
+	</element>
+	<element name="gmd:name" context="gmd:MD_CodeValue" id="546.0">
+		<label>Name</label>
+		<description>Value name</description>
+	</element>
+	<element name="gmd:name" context="gmd:MD_Attribute" id="551.0">
+		<label>Name</label>
+		<description>Attribute name</description>
+	</element>
+	<element name="gmd:name" context="gmd:MD_Role" id="556.0">
+		<label>Name</label>
+		<description>Role name</description>
+	</element>
+	<element name="gmd:name">
+		<label>Name</label>
+        <description>-</description>
+	</element>
+	<element name="gmd:nameOfMeasure" id="100.0">
+        <label>Måttbenämning</label>
+        <description>benämning på kvantitativt mått på kvalitet hos
+geogafiska data</description>
+	</element>
+	<element name="gmd:northBoundLatitude" id="347.0">
+        <label>Nordligaste latitud</label>
+        <description>nordligaste koordinaten i den omskrivna rektangeln
+angiven som latitud i decimalgrader</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:numberOfDimensions" id="158.0">
+        <label>Antal dimensioner</label>
+        <description>antal oberoende rumsliga och temporala axlar</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:obligation" id="311.0">
+        <label>Krav</label>
+        <description>krav på metadataelementförekomst</description>
+	</element>
+	<element name="gmd:offLine" id="278.0">
+        <label>Distributionsmedium</label>
+        <description>information om distributionsmedium som kan
+användas för att få tillgång till resursen</description>
+	</element>
+	<element name="gmd:offset" id="267.0">
+		<label>Offset</label>
+        <description>det fysiska värde som motsvarar cellvärdet noll (0)</description>
+	</element>
+	<element name="gmd:onLine" id="277.0">
+        <label>Online-källa</label>
+        <description>referens till onlinekälla som kan användas för att få
+tillgång till resursen</description>
+	</element>
+	<element name="gmd:onlineResource" id="390.0">
+		<help>Define URL to access the website</help>
+        <label>Onlinekälla</label>
+        <description>onlinekälla som kan användas för att kontakta ansvarig
+person eller organisation</description>
+	</element>
+	<element name="gmd:orderingInstructions" id="301.0">
+        <label>Anvisningar</label>
+        <description>generella anvisningar, villkor och tjänster som
+tillhandahålls av distributören</description>
+	</element>
+	<element name="gmd:organisationName" id="376.0">
+        <label>Organisation</label>
+        <description>namn på ansvarig organisation</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:orientationParameterAvailability" id="172.0">
+        <label>Orienteringsparametrar</label>
+        <description>huruvida orienteringsparametrarna är tillgängliga</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:orientationParameterDescription" id="173.0">
+        <label>Beskrivning av
+orienteringsparametrar</label>
+        <description>beskrivning av sensorns orienteringsparametrar</description>
+	</element>
+	<element name="gmd:other" id="155.0">
+        <label>Övrigt</label>
+        <description>informationsklass som inte faller inom någon annan
+kategori (150-154)</description>
+		<condition />
+	</element>
+	<element name="gmd:otherCitationDetails" id="370.0">
+        <label>Övrig
+referensinformation</label>
+        <description>annan information som är nödvändig för att göra
+referensen fullständig och som inte kan beskrivas på
+annat ställe</description>
+	</element>
+	<element name="gmd:otherConstraints" id="72.0">
+        <label>Övriga restriktioner</label>
+        <description>andra restriktioner och rättsliga förutsättningar för
+åtkomst och nyttjande av resursen (eller metadata)</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:page" id="406.0">
+        <label>Sidnummer</label>
+        <description>uppgifter om på vilka sidor i publikationen som
+artikeln/delen var publicerad</description>
+	</element>
+	<element name="gmd:parameterCitation" id="175.0">
+        <label>Hänvisning till
+parametrar för
+georeferens</label>
+        <description>referens till information om parametrarna som behövs
+för att georeferera rasterdata</description>
+	</element>
+	<element name="gmd:parentEntity" id="316.0">
+        <label>Klass</label>
+        <description>namn på klass som metadataelementet tillhör
+ANM. Denna klass kan vara en existerande klass
+från ISO19115 eller ett tillagt metadataelement som
+ingår i den nya profilen.</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:parentIdentifier" id="5.0">
+        <label>Identifierare för
+överordnade metadata</label>
+        <description>unik identifierare för den metadatamängd som den
+aktuella metadatamängden är en delmängd av</description>
+	</element>
+	<element name="gmd:pass" id="132.0">
+        <label>Överensstämmelse</label>
+        <description>utfall av jämförelse mellan kvalitetsutvärdering och de
+specificerade kraven</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:peakResponse" id="263.0">
+        <label>Karaktäristisk våglängd</label>
+        <description>våglängd där sensorn är som mest känslig</description>
+    </element>
+    <element name="gmd:phone" id="388.0">
+        <label>Telefonnummer</label>
+        <description>telefonnummer där ansvarig person eller organisation
+kan kontaktas</description>
+    </element>
+    <element name="gmd:phone" id="407.0">
+        <label>Telefonnummer</label>
+        <description>telefonnummer där ansvarig person eller organisation
+kan kontaktas</description>
+	</element>
+	<element name="gmd:phone" id="526.0">
+		<label>Phone</label>
+		<description>Telephone numbers at which the organization or individual may be
+            contacted</description>
+	</element>
+	<element name="gmd:plannedAvailableDateTime" id="300.0">
+        <label>Tidpunkt</label>
+        <description>datum och tid när resursen kommer att vara tillgänglig</description>
+	</element>
+	<element name="gmd:pointInPixel" id="167.0">
+        <label>Pixelposition</label>
+        <description>den position (angivet som hörn eller mittpunkt) inom en
+pixel som motsvarar dess läge i terrängen</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:pointOfContact" id="29.0">
+        <label>Resurskontakt</label>
+        <description>identifiering av, samt kontaktinformation till, de
+personer och organisationer som har en funktion i
+förhållande till resursen</description>
+	</element>
+	<element name="gmd:polygon" id="342.0">
+		<label>Polygon</label>
+        <description>mängd av punkter som definierar en begränsande
+polygon</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:portrayalCatalogueCitation" id="269.0">
+        <label>Referens</label>
+        <description>referens till åberopad katalog med presentationsregler</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:portrayalCatalogueInfo" id="19.0">
+        <label>Presentationsregler</label>
+        <description>referens till katalog innehållande regler för hur
+resurserna återges i en kartografisk presentation</description>
+	</element>
+	<element name="gmd:positionName" id="377.0">
+        <label>Position inom
+organisation</label>
+        <description>den ansvarige personens position inom organisationen</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:postalCode" id="384.0">
+        <label>Postnummer</label>
+        <description>postnummer eller liknande beteckning för sortering av
+post</description>
+	</element>
+	<element name="gmd:presentationForm" id="368.0">
+        <label>Presentationsform</label>
+        <description>form som den refererade resursen presenteras i</description>
+	</element>
+	<element name="gmd:processStep" id="84.0">
+        <label>Bearbetningssteg</label>
+        <description>information om utförda bearbetningssteg för
+datamängden
+Ex. Transformationer och omklassificeringar.</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:processingLevelCode" id="249.0">
+        <label>Bearbetningsnivå</label>
+        <description>identifierare från bildleverantör som identifierar nivån
+av radiometrisk och geometrisk bearbetning som har
+skett</description>
+	</element>
+	<element name="gmd:processor" id="90.0">
+        <label>Utförare</label>
+        <description>identifiering av organisation(er) och person(er) som
+varit delaktiga i bearbetningen</description>
+	</element>
+	<element name="gmd:protocol" id="398.0">
+        <label>Protokoll</label>
+        <description>det protokoll för uppkoppling som skall användas</description>
+	</element>
+	<element name="gmd:purpose" id="26.0">
+        <label>Syfte</label>
+        <description>sammanfattning av den ursprungliga avsikten med att
+framställa resursen</description>
+	</element>
+	<element name="gmd:radiometricCalibrationDataAvailability" id="252.0">
+        <label>Radiometrisk
+kalibreringsdata</label>
+        <description>indikation om huruvida data för radiometrisk kalibrering
+finns tillgängliga</description>
+	</element>
+	<element name="gmd:rationale" id="88.0">
+        <label>Förklaring</label>
+        <description>anledning till eller avsikt med bearbetningssteget</description>
+	</element>
+    <element name="gmd:rationale" id="318.0" context="gmd:MD_ExtendedElementInformation">
+        <label>Syfte</label>
+        <description>orsak till att metadataelementet har lagts till</description>
+	</element>
+	<element name="gmd:referenceSystemIdentifier" id="187.0">
+        <label>Identifierare för
+referenssystem</label>
+        <description>namn som identifierar referenssystem</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:referenceSystemInfo" id="13.0">
+        <label>Referenssystem</label>
+        <description>beskrivning av de rumsliga och temporala
+referenssystem som används i resursen</description>
+	</element>
+	<element name="gmd:report" id="80.0">
+        <label>Kvantitativ
+kvalitetsinformation</label>
+        <description>kvantitativ kvalitetsrapport för de data som
+specificerats under omfattning (79)</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:resolution" id="182.0">
+        <label>Upplösning</label>
+        <description>rasterdatamängdens möjlighet att återge detaljer</description>
+	</element>
+	<element name="gmd:resourceConstraints" id="35.0">
+        <label>Resursrestriktioner</label>
+        <description>begränsningar av åtkomst och nyttjande av resursen</description>
+	</element>
+	<element name="gmd:resourceFormat" id="32.0">
+        <label>Lagringsformat</label>
+        <description>resursens lagringsformat</description>
+	</element>
+	<element name="gmd:resourceMaintenance" id="30.0">
+        <label>Ajourhållning</label>
+        <description>information om hur underhåll av resursen utförs, t.ex.
+intervall och omfattning</description>
+	</element>
+	<element name="gmd:resourceSpecificUsage" id="34.0">
+        <label>Användning</label>
+        <description>information om hur resursen nyttjas eller har nyttjats av
+olika användare</description>
+	</element>
+	<element name="gmd:result" id="107.0">
+        <label>Resultat</label>
+        <description>värde eller mängd av värden som erhållits för ett
+kvalitetsmått eller resultat av jämförelse av detta
+(dessa) mot en specificerad kravnivå</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:role" id="566.0" context="gmd:MD_Association">
+		<label>Role</label>
+		<description>Reference to the ends (roles) of a concrete association</description>
+	</element>
+	<element name="gmd:role" id="379.0">
+        <label>Ansvarsområde</label>
+        <description>ansvarsområde som hanteras av den ansvarige
+personen och/eller organisationen</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:rule" id="317.0">
+        <label>Roll</label>
+        <description>text som anger hur metadataelementet förhåller sig till
+andra existerande metadataelement eller klasser</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:scaleDenominator" id="94.0">
+        <label>Skalfaktor</label>
+        <description>skalfaktor för ursprungsdata</description>
+	</element>
+	<element name="gmd:scaleFactor" id="266.0">
+        <label>Skalfaktor</label>
+        <description>skalfaktor som har använts för cellvärden</description>
+	</element>
+	<element name="gmd:schemaAscii" id="324.0">
+        <description>namn på den ascii-fil som innehåller det fullständiga
+applikationsschemat</description>
+        <label>Textfil</label>
+        <description>namn på den ascii-fil som innehåller det fullständiga
+applikationsschemat</description>
+	</element>
+	<element name="gmd:schemaLanguage" id="322.0">
+        <label>Schemaspråk</label>
+        <description>identifiering av vilket modellspråk som använts i
+schemat
+Ex. UML, Express</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:scope" id="79.0">
+        <label>Omfattning</label>
+        <description>de data som kvalitetsrappporteringen avser</description>
+	</element>
+	<element name="gmd:sequenceIdentifier" id="257.0">
+        <label>Identifierare</label>
+        <description>nummer som unikt identifierar de olika banden för vilka
+en sensor är känslig
+Ex. Landsat 7 har 7 band med bandidentiteter från 1
+till 7.</description>
+    </element>
+    <element name="gmd:series" id="369.0">
+        <label>Serie</label>
+        <description>information om de datamängdsserier eller aggregat
+som datamängden är en del av</description>
+	</element>
+	<element name="gmd:series" id="369.0">
+		<label>Series</label>
+		<description>Information about the series, or aggregate dataset, of which the dataset is a
+            part</description>
+	</element>
+	<element name="gmd:shortName" id="308.0">
+        <label>Kortnamn</label>
+        <description>kortnamn på metadataelementet som är lämpligt att
+använda för implementering i t.ex. programkod eller
+XML</description>
+	</element>
+	<element name="gmd:softwareDevelopmentFile" id="326.0">
+        <label>Schemafil</label>
+        <description>fil som innehåller det fullständiga applikationsschemat
+och som används i ett specifikt utvecklingverktyg</description>
+	</element>
+	<element name="gmd:softwareDevelopmentFileFormat" id="327.0">
+        <label>Schemafilformat</label>
+        <description>filformat som använts för applikationsschemat i ett
+specifikt utvecklingsverktyg (326)</description>
+	</element>
+	<element name="gmd:source" id="85.0">
+        <label>Ursprungsdata</label>
+        <description>information om ursprungsdata</description>
+		<condition>mandatory</condition>
+	</element>
+    <element name="gmd:source" id="319.0" context="gmd:MD_ExtendedElementInformation">
+		<condition>mandatory</condition>
+        <label>Ansvarig</label>
+        <description>namn på person eller organisation som lagt till
+metadataelementet</description>
+	</element>
+	<element name="gmd:sourceCitation" id="96.0">
+        <label>Hänvisning</label>
+        <description>rekommenderad referens till ursprungsdata</description>
+	</element>
+	<element name="gmd:sourceExtent" id="97.0">
+        <label>Utsträckning</label>
+        <description>information om ursprungsdatas rumsliga och
+temporala utsträcknng</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:sourceReferenceSystem" id="95.0">
+        <label>Referenssystem</label>
+        <description>rumsligt referenssystem för ursprungsdata</description>
+	</element>
+	<element name="gmd:sourceStep" id="98.0">
+        <label>Bearbetningssteg</label>
+        <description>beskrivning av bearbetningsstegen vid produktion av
+ursprungsdata</description>
+	</element>
+	<element name="gmd:southBoundLatitude" id="346.0">
+        <label>Sydligaste latitud</label>
+        <description>sydligaste koordinaten i den omskrivna rektangeln
+angiven som latitud i decimalgrader</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:spatialExtent" id="353.0">
+        <label>Geografisk utsträckning
+för tidsperiod</label>
+        <description>Den geografiska komponenten av utsträckningen</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:spatialRepresentationInfo" id="12.0">
+        <label>Rumslig representation</label>
+        <description>beskrivning av hur rumslig information är digitalt
+representerad i resursen</description>
+	</element>
+	<element name="gmd:spatialRepresentationType" id="37.0">
+        <label>Metod för rumslig
+representation</label>
+        <description>metod för att rumsligt representera geografisk
+information
+Ex. Vektor, Raster, Tabell.</description>
+	</element>
+	<element name="gmd:spatialResolution" id="38.0">
+        <label>Rumslig upplösning</label>
+        <description>faktor som ger en övergripande förståelse av
+detaljeringsgraden på rumsliga data i datamängden</description>
+	</element>
+	<element name="gmd:specificUsage" id="63.0">
+        <label>Beskrivning</label>
+        <description>textbeskrivning av hur resursen används eller har
+använts</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:specification" id="130.0" context="gmd:DQ_ConformanceResult">
+		<condition>mandatory</condition>
+        <label>Specifikation</label>
+        <description>referens till dataproduktspecifikation, eller
+användarkrav, som används vid utvärdering av
+datakvalitet</description>
+	</element>
+	<element name="gmd:specification" id="288.0" context="gmd:MD_Format">
+        <label>Specifikation</label>
+        <description>beteckning på en delmängd, profil eller
+produktspecifikation för formatet</description>
+	</element>
+	<element name="gmd:specification">
+		<label>Specification</label>
+	</element>
+	<element name="gmd:statement" id="83.0">
+        <label>Redogörelse</label>
+        <description>allmän beskrivning av producentens kännedom om en
+datamängds tillkomsthistorik</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:status" id="28.0">
+		<label>Status</label>
+        <description>aktuell status på resursen
+Ex. “under produktion” eller ”planerad”.</description>
+	</element>
+	<element name="gmd:supplementalInformation" id="46.0">
+        <label>Kompletterande
+information</label>
+        <description>kompletterande information om resursen</description>
+	</element>
+	<element name="gmd:temporalElement" id="337.0">
+        <label>Temporal utsträckning</label>
+        <description>information om temporal utsträckning</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:textGroup" id="602.0">
+		<label>TextGroup</label>
+		<description>TextGroup</description>
+	</element>
+	<element name="gmd:thesaurusName" id="55.0">
+        <label>Nyckelordslexikon</label>
+        <description>hänvisning till nyckelordslexikon</description>
+	</element>
+	<element name="gmd:title" id="360.0">
+        <label>Titel</label>
+        <description>namn som resursen är känd under</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:title" id="507.0" context="gmd:MD_Legislation">
+		<label>Title</label>
+		<description>Reference to legal title</description>
+	</element>
+	<element name="gmd:toneGradation" id="265.0">
+        <label>Antal enskilda värden</label>
+        <description>antal enskilda numeriska värden i rasterdata
+Ex. antal gråtoner i en rasterbild</description>
+	</element>
+	<element name="gmd:topicCategory" id="41.0">
+        <label>Ämneskategori</label>
+        <description>ämneskategori(er) som beskriver huvudsakligt innehåll
+i resursen</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:MD_TopicCategoryCode">
+        <label>Ämnesområde</label>
+        <description>ämnesområde(n) som beskriver huvudsakligt innehåll i resursen</description>
+	</element>
+	<element name="gmd:topologyLevel" id="177.0">
+        <label>Topologi</label>
+        <description>kod som anger grad av komplexitet i de rumsliga
+relationerna</description>
+	</element>
+	<element name="gmd:transferOptions" id="273.0">
+        <label>Överföringsalternativ</label>
+        <description>information om metoder med vilka resursen
+tillhandahålls av distributören</description>
+	</element>
+	<element name="gmd:transferSize" id="276.0">
+        <label>Volym</label>
+        <description>uppskattad storlek på överförbar datamängd uttryckt i
+Mbyte</description>
+	</element>
+	<element name="gmd:transformationDimensionDescription" id="168.0">
+        <label>Beskrivning av
+transformationen</label>
+        <description>beskrivning av den tillämpade transformationen</description>
+	</element>
+	<element name="gmd:transformationDimensionMapping" id="169.0">
+        <label>Rumsliga dimensioner</label>
+        <description>beskrivning av vilka axlar i rasterdata som är de
+rumsliga axlarna
+ANM. Eftersom flera dimensioner kan anges måste de
+dimensioner som relaterar till kartkoordinater anges.</description>
+	</element>
+	<element name="gmd:transformationParameterAvailability" id="161.0">
+        <label>Transformationsparametrar</label>
+		<condition>mandatory</condition>
+        <description>huruvida parametrar för transformation mellan
+rasterkoordinater och geografiska eller kartkoordinater
+är tillgängliga</description>
+	</element>
+	<element name="gmd:triangulationIndicator" id="251.0">
+        <label>Triangulering gjord</label>
+        <description>indikation om huruvida triangulering har skett på bilden</description>
+	</element>
+	<element name="gmd:turnaround" id="302.0">
+        <label>Leveranstid</label>
+        <description>normal leveranstid för en order</description>
+	</element>
+	<element name="gmd:type" id="54.0">
+        <label>Typ av nyckelord</label>
+        <description>gruppering av liknande nyckelord</description>
+	</element>
+	<element name="gmd:type" id="540.0" context="gmd:MD_CodeDomain">
+		<label>Type</label>
+		<description>Datatype of the code domain</description>
+	</element>
+	<element name="gmd:type" id="543.0" context="gmd:MD_Type">
+		<label>Type definition</label>
+		<description>Data type definition</description>
+		<help>Data type definition, formal of informal (i.e. Text12, Line)</help>
+	</element>
+	<element name="gmd:units" id="262.0">
+        <label>Enhet</label>
+        <description>enhet som sensorns våglängder uttrycks i</description>
+	</element>
+	<element name="gmd:unitsOfDistribution" id="275.0">
+        <label>Indelningsalternativ</label>
+        <description>indelningar i vilka data tillhandahålls
+Ex. blad, lager och geografiska områden</description>
+	</element>
+	<element name="gmd:updateScope" id="146.0">
+        <label>Uppdateringsnivå</label>
+        <description>omfattning av de data som berörs av angivet underhåll</description>
+	</element>
+	<element name="gmd:updateScopeDescription" id="147.0">
+        <label>Beskrivning av
+omfattning</label>
+        <description>ytterligare beskrivning av omfattningen av data som
+berörs av underhållet/uppdateringen</description>
+	</element>
+	<element name="gmd:usageDateTime" id="64.0">
+        <label>Tidpunkt</label>
+        <description>datum och tid för den första användningen av resursen</description>
+	</element>
+	<element name="gmd:useConstraints" id="71.0">
+        <label>Nyttjanderestriktioner</label>
+        <description>nyttjanderestriktioner för att skydda känslig information
+eller immateriella rättigheter</description>
+	</element>
+	<element name="gmd:useLimitation" id="68.0">
+        <label>Användbarhetsbegränsningar</label>
+        <description>Begränsningarna kan utgöras av villkor som är förknippade med användandet (från Inspire). Även avrådda användningsområden kan anges</description>
+	</element>
+	<element name="gmd:userContactInfo" id="66.0">
+        <label>Användare</label>
+        <description>kontaktinformation till personer och organisationer som
+använt resursen</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:userDefinedMaintenanceFrequency" id="145.0">
+        <label>Egendefinierad
+underhållsfrekvens</label>
+        <description>egendefinierad underhållsfrekvens</description>
+	</element>
+	<element name="gmd:userDeterminedLimitations" id="65.0">
+        <label>Olämpliga
+användningsområden</label>
+        <description>användningsområden där resursen enligt användare
+inte är lämplig att användas</description>
+	</element>
+	<element name="gmd:userNote" id="75.0">
+        <label>Kommentar</label>
+        <description>förklaring till skyddsgrad och tillämpningen av
+densamma</description>
+		<label>User note</label>
+	</element>
+	<element name="gmd:value" id="137.0" context="gmd:DQ_QuantitativeResult">
+		<condition>mandatory</condition>
+        <label>Värde</label>
+        <description>kvantitativa värden erhållna vid kvalitetsutvärdering</description>
+	</element>
+	<element name="gmd:value">
+		<label>Value</label>
+		<description />
+	</element>
+	<element name="gmd:value" id="544.0" context="gmd:MD_Type">
+		<label>Value</label>
+		<description>Data type value</description>
+	</element>
+	<element name="gmd:valueType" id="134.0">
+        <label>Värdetyp</label>
+        <description>värdetyp för rapportering av kvantitativ datakvalitet</description>
+	</element>
+	<element name="gmd:valueUnit" id="135.0">
+        <label>Värdeenhet</label>
+        <description>värdeenhet för rapportering av kvantitativ datakvalitet</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:version" id="208.2" context="gmd:RS_Identifier">
+		<label>Version</label>
+        <description>versionsidentifierare för namnrymden</description>
+	</element>
+	<element name="gmd:version" id="286.0">
+		<label>Version</label>
+        <description>version på formatet (datum, nummer, etc.)</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gmd:verticalElement" id="338.0">
+        <label>Vertikal utsträckning</label>
+        <description>information om vertikal utsträckning</description>
+		<condition>conditional</condition>
+	</element>
+	<element name="gmd:voice" id="408.0">
+        <label>Telefon</label>
+        <description>telefonnummer där man kan få tala med ansvarig
+person eller annan inom ansvarig organisation</description>
+	</element>
+	<element name="gmd:volumes" id="295.0">
+        <label>Antal enheter</label>
+        <description>antal enheter av mediet som ingår i leveransen</description>
+	</element>
+	<element name="gmd:westBoundLongitude" id="344.0">
+        <label>Västligaste longitud</label>
+        <description>västligaste koordinaten i den omskrivna rektangeln
+angiven som longitud i decimalgrader</description>
+		<condition>mandatory</condition>
+	</element>
+	<element name="gml:beginPosition">
+        <label>Start datum</label>
+        <description>Formaterad som ex 2011-09-12T15:00:00 (YYYY-MM-DDTHH:mm:ss)</description>
+	</element>
+
+	<element name="gml:endPosition">
+        <label>Slut datum</label>
+        <description>Formaterad som ex 2011-09-12T15:00:00 (YYYY-MM-DDTHH:mm:ss)</description>
+	</element>
+
+	<element name="gml:relatedTime">
+		<label>Related time</label>
+		<description>Defines the relation of a given time to the object.</description>
+	</element>
+
+	<element name="gml:coordinates">
+		<label>Coordinates</label>
+		<description>Used to record an array of tuples or coordinates.</description>
+	</element>
+
+	<element name="gml:Polygon">
+		<label>Polygon</label>
+		<description>A gml:Polygon is a special surface that is defined by a single surface patch.
+            The boundary of this patch is coplanar and the polygon uses planar interpolation in its
+            interior.</description>
+	</element>
+
+	<element name="gml:Point">
+		<label>Point</label>
+		<description>A gml:Point is defined by a single coordinate tuple.</description>
+		<example>74. -37.</example>
+	</element>
+
+	<element name="gml:LineString">
+		<label>Line</label>
+		<description>A gml:LineString is a special curve that consists of a single segment with
+            linear interpolation. It is defined by two or more coordinate tuples, with linear
+            interpolation between them.</description>
+	</element>
+
+	<element name="gml:LinearRing">
+		<label>Linear ring</label>
+		<description>A gml:LinearRing is defined by four or more coordinate tuples, with linear
+            interpolation between them; the first and last coordinates shall be
+            coincident.</description>
+	</element>
+
+	<element name="gml:exterior">
+		<label>Outer boundary</label>
+		<description>The outer boundary of a solid.</description>
+	</element>
+
+	<element name="gml:interior">
+		<label>Inner boundary</label>
+		<description>The inner boundary of a solid</description>
+	</element>
+
+
+	<element name="gml:begin">
+		<label>Begin</label>
+		<description />
+	</element>
+	<element name="gml:end">
+		<label>End</label>
+		<description />
+	</element>
+	<element name="gml:duration">
+		<label>Duration</label>
+        <description/>
+	</element>
+	<element name="gml:timeInterval">
+		<label>Time interval</label>
+        <description/>
+	</element>
+	<element name="gml:TimeInstant">
+		<label>Time instant</label>
+		<description />
+	</element>
+	<element name="gml:TimePosition">
+		<label>Time position</label>
+		<description />
+	</element>
+	<element name="gml:TimePeriod">
+		<label>Time period</label>
+		<description />
+	</element>
+	<element name="gml:TimeNode">
+		<label>Time node</label>
+		<description />
+	</element>
+	<element name="gml:TimeEdge">
+		<label>Time edge</label>
+		<description />
+	</element>
+	<element name="gml:ProjectedCRS">
+		<label>Projected CRS</label>
+		<description />
+	</element>
+       <element name="gml:id" id="191.0" context="gmd:EX_TemporalExtent">
+        <label>Temporalt referenssystem</label>
+        <description>Temporalt referenssystem</description>
+        <help>Identifierare för temporalt referenssystem</help>
+	</element>
+
+    
+	<element name="gml:id" id="191.0" context="gmd:MD_CRS">
+		<label>Ellipsoid</label>
+		<description>Identity of the ellipsoid used</description>
+		<help>identity of the ellipsoid used</help>
+	</element>
+	<element name="id" id="191.0">
+		<label>Identifier</label>
+		<description>Unique identifier</description>
+	</element>
+
+	<element name="srv:SV_ServiceIdentification">
+		<label>Service Identification (19119)</label>
+		<description>ISO 19119-2005 Service Identification</description>
+	</element>
+	<element name="srv:SV_ParameterDirection">
+		<label>Parameter direction</label>
+	</element>
+	<element name="srv:serviceType"><!-- readonly="true" -->
+        <label>Typ av tjänst</label>
+        <description>Typ av tjänst. </description>
+		<helper>
+            <option value="view">Visningsjänst (view)</option>
+            <option value="download">Nedladdningssjänst (download)</option>
+            <option value="transformation">Omvandlingssjänst (transformation))</option>
+            <option value="invoke">Tjänst för förbindelse med datatjänster (invoke)</option>
+            <option value="other">Andra tjänster (other)</option>
+            <!-- INSPIRE Service type defined in MD IR / 1.3.1 Spatial data service type
+            <option value="discovery">Discovery Service (discovery)</option>
+            <option value="view">View Service (view)</option>
+            <option value="download">Download Service (download)</option>
+            <option value="transformation">Transformation Service (transformation)</option>
+            <option value="other">Other Services (other)</option> --> 
+		</helper>
+	</element>
+	<element name="srv:serviceTypeVersion">
+        <label>Tjänsteversion</label>
+        <description>Version av angiven tjänst</description>
+	</element>
+	<element name="srv:accessProperties">
+		<label>Access Properties</label>
+		<description>Information about the availability of the service eg. fees, availability,
+            oredering instructions</description>
+	</element>
+	<element name="srv:restrictions">
+		<label>Restrictions</label>
+		<description>Legal and security constraints on accessing the service and distributing data
+            generated by the service</description>
+	</element>
+	<element name="srv:containsOperations">
+        <label>Stödjer operationer</label>
+        <description>Ger information om operationer som tjänsten omfattar</description>
+	</element>
+	<element name="srv:operatesOn">
+        <label>Kopplad resurs</label>
+        <description>Ger information om datamängder som tjänsten verkar på</description>
+	</element>
+	<element name="srv:operationName">
+        <label>Funktionsnamn</label>
+        <description>Unik identifierare för denna funktion</description>
+	</element>
+	<element name="srv:SV_OperationMetadata">
+        <label>Funktion (eng operation)</label>
+        <description>Metadata för funktion</description>
+	</element>
+	<element name="srv:DCP">
+        <label>Distribuerad datorplattform (DCP)</label>
+        <description>Distribuerad dator plattform som funktionerna är implementerade på</description>
+	</element>
+	<element name="srv:operationDescription">
+        <label>Funktionsbeskrivning</label>
+        <description>Text som beskriver syftet med funktionen (eng operation) och resultat av denna funktion</description>
+	</element>
+	<element name="srv:invocationName">
+		<label>Invocation Name</label>
+        <description>Namn som används för att åberopda detta gränsnitt för denna specifika DCP. Namnet är gemensat för alla DCPs</description>
+	</element>
+	<element name="srv:parameters">
+        <label>Parametrar</label>
+        <description>De parametrar som detta gränsnitt kräver</description>
+	</element>
+	<element name="srv:SV_Parameter">
+		<label>Parameter</label>
+		<description>The parameters that are required for this interface</description>
+	</element>
+	<element name="srv:direction">
+		<label>Direction</label>
+	</element>
+	<element name="srv:valueType">
+		<label>Value type</label>
+	</element>
+	<element name="srv:connectPoint">
+		<label>Connect Point</label>
+		<description>Handle for accessing the service interface</description>
+	</element>
+	<element name="srv:dependsOn">
+		<label>Depends On</label>
+		<description>List of operations that must be completed immediately before current operation
+            is invoked, structured as a list for capturing alternate predecessor paths and sets for
+            capturing parallel predecessor paths</description>
+	</element>
+	<element name="srv:providerName">
+		<label>Provider Name</label>
+		<description>A unique identifier for this organization</description>
+	</element>
+	<element name="srv:serviceContact">
+		<label>Service Contact</label>
+		<description>Information for contacting the service provider</description>
+	</element>
+	<element name="srv:name">
+		<label>Name</label>
+		<description>The name, as used by the service for this chain or paramater</description>
+	</element>
+	<element name="srv:description">
+		<label>Description</label>
+		<description>Narrative explanation of the services in the chain and resulting output or role
+            of the parameter</description>
+	</element>
+	<element name="srv:optionality">
+		<label>Optionality</label>
+		<description>Indication if the parameter is required</description>
+	</element>
+	<element name="srv:repeatability">
+		<label>Repeatability</label>
+		<description>Indication if more than one value of the parameter may be
+            provided</description>
+	</element>
+	<element name="srv:coupledResource">
+		<label>Coupled Resource</label>
+		<description>Details of services coupled with this one</description>
+		<inspireInfo>Optional in INSPIRE</inspireInfo>
+	</element>
+	<element name="srv:SV_CoupledResource">
+		<label>Coupled Resource</label>
+		<description>Details of services coupled with this one</description>
+	</element>
+	<element name="srv:identifier">
+		<label>Identifier</label>
+		<description>Identifier of resource to which the operation applies</description>
+	</element>
+	<element name="srv:couplingType">
+        <label>Kopplingstyp</label>
+        <description>Typ av koppling mellan resurser</description>
+	</element>
+	<element name="srv:extent">
+		<label>Extent</label>
+		<description>Geographic/Temporal Extent of Service</description>
+	</element>
+	<element name="srv:keywords">
+		<label>Keywords</label>
+		<description>Keywords describing service</description>
+	</element>
+	<element name="gmd:locale">
+		<label>Other language</label>
+		<description>Use this section to define other metadata language (multilingual metadata).</description>
+	</element>
+	<element name="gmd:describes">
+		<label>Describes</label>
+		<description>Describes</description>
+	</element>
+	<element name="gmd:propertyType">
+		<label>PropertyType</label>
+		<description>PropertyType</description>
+	</element>
+	<element name="gmd:PT_Locale">
+		<label>Locale</label>
+		<description>Locale</description>
+	</element>
+	<element name="gmd:PT_LocaleContainer">
+		<label>PT_LocaleContainer</label>
+		<description>PT_LocaleContainer</description>
+	</element>
+	<element name="gmd:featureType">
+		<label>Feature type</label>
+		<description>Subset of feature types from cited feature catalogue occurring in
+            data</description>
+	</element>
+    <element name="gmd:featureTypes">
+        <label>Feature types</label>
+        <description>Subset of feature types from cited feature catalogue occurring in
+            data</description>
+    </element>
+	<element name="gmd:featureAttribute">
+		<label>Feature attribute</label>
+		<description />
+	</element>
+	<element name="gmd:DS_Association">
+		<label>DS_Association</label>
+		<description>DS_Association</description>
+	</element>
+	<element name="gmd:DS_DataSet">
+		<label>DS_DataSet</label>
+		<description>DS_DataSet</description>
+	</element>
+	<element name="gmd:DS_Initiative">
+		<label>DS_Initiative</label>
+		<description>DS_Initiative</description>
+	</element>
+	<element name="gmd:DS_OtherAggregate">
+		<label>DS_OtherAggregate</label>
+		<description>DS_OtherAggregate</description>
+	</element>
+	<element name="gmd:DS_Platform">
+		<label>DS_Platform</label>
+		<description>DS_Platform</description>
+	</element>
+	<element name="gmd:DS_ProductionSeries">
+		<label>DS_ProductionSeries</label>
+		<description>DS_ProductionSeries</description>
+	</element>
+	<element name="gmd:DS_Sensor">
+		<label>DS_Sensor</label>
+		<description>DS_Sensor</description>
+	</element>
+	<element name="gmd:DS_Series">
+		<label>DS_Series</label>
+		<description>DS_Series</description>
+	</element>
+	<element name="gmd:DS_StereoMate">
+		<label>DS_StereoMate</label>
+		<description>DS_StereoMate</description>
+	</element>
+	<element name="gmd:languageCode">
+		<label>Language</label>
+		<description>Language code</description>
+	</element>
+	<element name="gmd:characterEncoding">
+		<label>Character encoding</label>
+		<description>CharacterEncoding</description>
+	</element>
+	<element name="uuidref">
+		<label>Metadata uuid</label>
+		<description>Unique identifier</description>
+	</element>
+	<element name="uom">
+		<label>Units of measure</label>
+		<description />
+		<helper>
+			<option value="m">meters</option>
+		</helper>
+	</element>
+	<element name="gco:Record">
+		<label>Record</label>
+		<description />
+	</element>
+	<element name="gco:Binary">
+		<label>Binary</label>
+		<description />
+	</element>
+	<element name="gco:MemberName">
+		<label>Member name</label>
+		<description />
+	</element>
+	<element name="gco:aName">
+        <label>Namn</label>
+		<description />
+	</element>
+	<element name="gco:aName" context="gco:TypeName">
+		<label>Type name</label>
+		<description />
+		<helper>
+			<option value="BOOLEAN">BOOLEAN</option>
+			<option vaue="BYTE">BYTE</option>
+			<option value="CHARACTER">CHARACTER</option>
+			<option value="DATE">DATE</option>
+			<option value="DATETIME">DATETIME</option>
+			<option value="DOUBLE">DOUBLE</option>
+			<option value="FLOAT">FLOAT</option>
+			<option value="INTEGER">INTEGER</option>
+			<option value="NUMERIC">NUMERIC</option>
+			<option value="REAL">REAL</option>
+			<option value="SERIAL">SERIAL</option>
+			<option value="VARCHAR">VARCHAR</option>
+			<option value="TEXT">TEXT</option>
+		</helper>
+	</element>
+	<element name="gco:attributeType">
+		<label>Attribute type</label>
+		<description />
+	</element>
+	<element name="gco:TypeName">
+		<label>Type name</label>
+		<description />
+	</element>
+	<element name="gco:LocalName">
+		<label>Local name</label>
+		<description />
+	</element>
+	<element name="gco:ScopedName">
+		<label>Scoped name</label>
+		<description />
+	</element>
+	<element name="gmd:has">
+		<label>Has</label>
+		<description>Has</description>
+	</element>
+	<element name="gmd:MD_PixelOrientationCode">
+		<label>Pixel orientation code</label>
+		<description>Point in a pixel corresponding to the Earth location of the pixel</description>
+	</element>
+	<element name="gmd:MD_ObligationCode">
+		<label>Obligation code</label>
+		<description>Obligation of the element or entity</description>
+	</element>
+	<element name="gmd:maximumOccurrence">
+		<label>Maximum occurrence</label>
+		<description>Maximum occurrence of the extended element</description>
+	</element>
+	<element name="gco:localName">
+        <label>Namn</label>
+		<description />
+	</element>
+	<element name="gmd:composedOf">
+		<label>ComposedOf</label>
+		<description>ComposedOf</description>
+	</element>
+	<element name="gmd:partOf">
+		<label>PartOf</label>
+		<description>PartOf</description>
+	</element>
+	<element name="gmd:seriesMetadata">
+		<label>SeriesMetadata</label>
+		<description>SeriesMetadata</description>
+	</element>
+	<element name="gmd:subset">
+		<label>Subset</label>
+		<description>Subset</description>
+	</element>
+	<element name="gmd:superset">
+		<label>Superset</label>
+		<description>Superset</description>
+	</element>
+	<element name="gmd:CI_RoleCode">
+		<label>Role code</label>
+		<description />
+	</element>
+	<element name="gts:TM_PeriodDuration">
+		<label>Period duration</label>
+		<description>
+            The duration data type is used to specify a time interval.
+            
+            The time interval is specified in the following form "PnYnMnDTnHnMnS" where:
+            
+            * P indicates the period (required)
+            * nY indicates the number of years
+            * nM indicates the number of months
+            * nD indicates the number of days
+            * T indicates the start of a time section (required if you are going to specify hours, minutes, or seconds)
+            * nH indicates the number of hours
+            * nM indicates the number of minutes
+            * nS indicates the number of seconds            
+        </description>
+    </element>
+    <element name="gco:CharacterString">
+        <label>Text</label>
+        <description/>
+    </element>
+    <element name="gco:nilReason">
+        <label>Nil reason attribute</label>
+        <description/>
+    </element>
+    <element name="srv:DCPList">
+        <label>Distributed Computing Platforms list</label>
+    </element>
+    <element name="gmd:verticalCRS">
+        <label>Vertical CRS</label>
+        <description>Provides information about the origin from which the maximum and minimum elevation values are measured</description>
+    </element>
+    <element name="gmx:FileName">
+        <label>File name</label>
+        <description>File name and source URL.</description>
+    </element>
+    <element name="src">
+        <label>Source URL</label>
+        <description>URL of the document.</description>
+    </element>
+	<element name="gmx:Anchor">
+				<label>Anchor</label>
+				<description>Supports hyper-linking capabilities and ensures a web-like implementation of CharacterStrings</description>
+		</element>
+		<element name="xlink:href">
+			<label>Link href</label>
+			<description>Supplies the data that allows an XLink application to find a remote resource (or resource fragment) [W3C XLINK]</description>
+		</element>
+  	<!-- ==================================================== -->
+    <element name="hidden-elements">
+        <label>Hidden Elements</label>
+        <description>Child elements and attributes have been hidden because you do no have access to view those elements</description>
+    </element>
+    <!-- ==================================================== -->
+    <element name="gmx:name"> 
+        <label>Name</label> 
+        <description>Feature catalogue name</description> 
+    </element> 
+    <element name="gmx:scope"> 
+        <label>Scope</label> 
+        <description>Scope definition</description> 
+    </element> 
+    <element name="gmx:versionNumber"> 
+        <label>Version</label> 
+        <description>Catalogue version</description> 
+    </element> 
+    <element name="gmx:versionDate"> 
+        <label>Date</label> 
+        <description>Catalogue date</description> 
+    </element> 
+    <element name="gmx:fieldOfApplication"> 
+        <label>Field of application</label> 
+        <description>Field of application</description> 
+    </element>
+    <element name="gml:axis">
+        <label>Axis</label>
+    </element>
+    <element name="gml:axisAbbrev">
+        <label>Axis abbreviation</label>
+    </element>
+    <element name="gml:axisDirection">
+        <label>Axis direction</label>
+    </element>
+    <element name="gml:maximumValue">
+        <label>Maximum value</label>
+    </element>
+    <element name="gml:minimumValue">
+        <label>Minimum value</label>
+    </element>
+    <element name="gml:scope">
+        <label>Scope</label>
+    </element>
+    <element name="gml:VerticalCRS">
+        <label>Vertical CRS</label>
+    </element>
+    <element name="gml:remarks">
+        <label>Remarks</label>
+    </element>
+    <element name="gml:domainOfValidity">
+        <label>Domain of validity</label>
+    </element>
+    <element name="gml:verticalCS">
+        <label>Vertical CS</label>
+    </element>
+    <element name="gml:VerticalCS">
+        <label>Vertical CS</label>
+    </element>
+    <element name="gml:CoordinateSystemAxis">
+        <label>Coordinate system axis</label>
+    </element>
+    <element name="gml:rangeMeaning">
+        <label>Range meaning</label>
+    </element>
+    <element name="gml:verticalDatum">
+        <label>Vertical datum</label>
+    </element>
+    <element name="gml:VerticalDatum">
+        <label>Vertical datum</label>
+    </element>
+    <element name="gml:realizationEpoch">
+        <label>Realization epoch</label>
+    </element>
+</labels>
