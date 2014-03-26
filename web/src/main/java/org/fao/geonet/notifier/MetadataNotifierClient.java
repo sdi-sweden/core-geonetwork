@@ -42,7 +42,7 @@ import ucar.nc2.util.net.EasySSLProtocolSocketFactory;
 
 /**
  * Metadata notifier client to manage the communication with notification servlet.
- *  
+ *
  */
 public class MetadataNotifierClient {
     /**
@@ -64,6 +64,7 @@ public class MetadataNotifierClient {
 
 		// Provide custom retry handler is necessary
 		method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler(3, false));
+		method.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, "UTF-8");
 
         NameValuePair[] data = {
           new NameValuePair("action", "update"),
@@ -81,16 +82,16 @@ public class MetadataNotifierClient {
             client = new HttpClient();
 
             if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password)) {
-                System.out.println("webUpdate: SET USER");
+                //System.out.println("webUpdate: SET USER");
                 client.getState().setCredentials(
                                AuthScope.ANY,
                                new UsernamePasswordCredentials(username, password)
                                );
 
                 method.setDoAuthentication( true );
-            }         
+            }
 
-            System.out.println("settingMan: " + (gc.getSettingManager() != null));
+            //System.out.println("settingMan: " + (gc.getSettingManager() != null));
             if (gc.getSettingManager() != null) Lib.net.setupProxy(gc.getSettingManager(), client);
 
 
@@ -114,7 +115,7 @@ public class MetadataNotifierClient {
 			throw new MetadataNotifierClientException(e);
 		} finally {
 			// Release the connection.
-			method.releaseConnection(); 
+			method.releaseConnection();
             client = null;
 		}
 	}
@@ -147,9 +148,9 @@ public class MetadataNotifierClient {
                                AuthScope.ANY,
                                new UsernamePasswordCredentials(username, password)
                                );
-                method.setDoAuthentication( true ); 
+                method.setDoAuthentication( true );
             }
-            
+
             if (gc.getSettingManager() != null) Lib.net.setupProxy(gc.getSettingManager(), client);
 
             NameValuePair[] data = {

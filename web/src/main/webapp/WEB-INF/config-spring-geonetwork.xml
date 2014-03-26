@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<import resource="config-security.xml"/>
-	
+
 	<util:set id="languages">
 		<value>ara</value>
 		<value>cat</value>
@@ -22,12 +22,18 @@
 		<value>rus</value>
 		<value>spa</value>
 		<value>tur</value>
+		<value>swe</value>
 	</util:set>
+	<bean id="RegionsDAO" class="org.fao.geonet.services.region.DbRegionsDAO">
+		<property name="cacheAllRegionsInMemory" value="true"/>
+	</bean>
+	<!--
 	<bean id="RegionsDAO" class="org.fao.geonet.services.region.ThesaurusBasedRegionsDAO">
 		<constructor-arg ref="languages"></constructor-arg>
 		<property name="cacheAllRegionsInMemory" value="true"/>
 		<property name="thesaurusName" value="external.place.regions"/>
 	</bean>
+	 -->
 	<!--<bean id="MetadataRegionsDAO" class="org.fao.geonet.services.region.MetadataRegionDAO">
 		<property name="cacheAllRegionsInMemory" value="false"/>
 	</bean>-->

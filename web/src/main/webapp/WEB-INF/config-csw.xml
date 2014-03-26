@@ -207,9 +207,13 @@
                     <xpath schema="iso19139" path="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/gco:CharacterString"/>
                 </parameter>
 
-                <parameter name="ResponsiblePartyRole" field="responsiblePartyRole"
-                    type="AdditionalQueryables" />
-                
+				<parameter name="InspireKw" field="inspireKw" type="AdditionalQueryables">
+                    <xpath schema="iso19139" path="*/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString"/>
+                </parameter>
+
+                <parameter name="ResponsiblePartyRole" field="responsiblePartyRole" type="AdditionalQueryables" />
+
+
 				<!-- - - - - - - - - - - - - - - - - - - - - - -->
 				<!-- Other additional queryable properties   -->
 				<!-- - - - - - - - - - - - - - - - - - - - - - -->

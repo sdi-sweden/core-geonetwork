@@ -62,31 +62,31 @@
 	</default>
 
 	<!-- ====================================================================== -->
-	<!-- 
+	<!--
 		The resources section defines the database to be used by GeoNetwork.
 
 		Update the enabled attribute to true to use a connection.
 		Only one resource can be enabled at a time, the others must be disabled.
 
 		GeoNetwork uses Apache Commons Database Connection Pooling (DBCP) code.
-		You can specify a JNDI datasource and place the DBCP config params in the 
-		container context.xml (eg. for tomcat this is conf/context.xml) or 
-		you can config a subset of the DBCP parameters explicitly for h2, mckoi, 
+		You can specify a JNDI datasource and place the DBCP config params in the
+		container context.xml (eg. for tomcat this is conf/context.xml) or
+		you can config a subset of the DBCP parameters explicitly for h2, mckoi,
 		oracle, postgres/gis, db2 and sql-server as follows:
 
 		maxActive - pool size/maximum number of active connections (default 10)
-		maxIdle   - pool size/maximum number of idle connections 
+		maxIdle   - pool size/maximum number of idle connections
 		            (default maxActive)
 		minIdle   - pool size/minimum number of idle connections (default 0)
 		maxWait   - number of milliseconds to wait for a connection to become
 		            available (default 200)
-		validationQuery - optional, sql statement for verifying a connection, 
-								the statement must return a least one row, empty 
+		validationQuery - optional, sql statement for verifying a connection,
+								the statement must return a least one row, empty
 								result sets may cause problems
-		timeBetweenEvictionRunsMillis - time between eviction runs 
+		timeBetweenEvictionRunsMillis - time between eviction runs
 								(default -1 which means the next three params are ignored)
 		testWhileIdle - test connections when idle (default false)
-		minEvictableIdleTimeMillis - idle time before connection can be evicted 
+		minEvictableIdleTimeMillis - idle time before connection can be evicted
 								(default 30 x 60 x 1000 millisecs)
 		numTestsPerEvictionRun - number of connections tested per eviction run
 								(default 3)
@@ -102,15 +102,15 @@
 		initialSize - maxActive
 
 		Note: Some firewalls kill idle connections to databases after say
-		1 hour (= 3600 secs) 
-		to keep idle connections alive by testing them with 'select 1', 
+		1 hour (= 3600 secs)
+		to keep idle connections alive by testing them with 'select 1',
 		set minEvictableIdleTimeMillis to something less than timeout
-		interval (eg. 2 mins = 120 secs = 120000 millisecs), 
-		set testWhileIdle to true and 
+		interval (eg. 2 mins = 120 secs = 120000 millisecs),
+		set testWhileIdle to true and
 		set timeBetweenEvictionRunsMillis and numTestsPerEvictionRun
 		high enough to visit connections frequently
 		eg 15 mins = 900 secs = 900000 millisecs and 4 connections per test
-			
+
 			eg.
 
 				<testWhileIdle>true</testWhileIdle>
@@ -118,21 +118,21 @@
 				<timeBetweenEvictionRunsMillis>900000</timeBetweenEvictionRunsMillis>
 				<numTestsPerEvictionRun>4</numTestsPerEvictionRun>
 
-					!!!!!!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!!!!!! 
-					
+					!!!!!!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!!!!!!
+
 		When changing the resource to use, you could point to an old version of
 		a GeoNetwork database instance (eg. 2.4.3).
 		In such a case, GeoNetwork will try to migrate the database on startup
 		to the current version (eg. 2.5.0). This will only occur if a migration
 		script is found. Migration scripts are located in WEB-INF/classes/setup/sql/migrate
 		folder. Migration to 2.4.3 to 2.5.0 will be in WEB-INF/classes/setup/sql/migrate/2.4.3-to-2.5.0.
-		
+
 		During the migration process only the database will be migrated. Catalogue
 		administrator still need to migrate logos, data, thesaurus.
-		
+
 		Using an old database with a new instance is not recommended (check the log
 		on startup which display webapp version and database version).
-		
+
 					!!!!!!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!!!!!!
 	-->
 
@@ -144,7 +144,7 @@
 	      <user>admin</user>
 	      <password>gnos</password>
 	      <driver>org.h2.Driver</driver>
-	      <url>jdbc:h2:geonetwork;LOCK_TIMEOUT=20000;DB_CLOSE_ON_EXIT=FALSE;MVCC=TRUE</url>
+	      <url>jdbc:h2:file:C:/Temp/geonetwork;LOCK_TIMEOUT=20000;DB_CLOSE_ON_EXIT=FALSE;MVCC=TRUE</url>
 	      <poolSize>33</poolSize>
 	      <validationQuery>SELECT 1</validationQuery>
 	    </config>
@@ -153,9 +153,9 @@
 	    H2 database  http://www.h2database.com/
 	    When GeoNetwork don't use H2 database, the listener DBStarter
 	    section could be turned off (see web.xml).
-	    
+
 	    Database is created according to jdbc url.
-	    
+
 	    It may be relevant to turn on MVCC mode
 	    http://www.h2database.com/html/advanced.html#mvcc
 	    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -171,7 +171,7 @@
 	      <validationQuery>SELECT 1</validationQuery>
 	    </config>
 	  </resource>
-	  
+
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- JNDI through container -->
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -271,7 +271,7 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- postgresql -->
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
+
 		<resource enabled="false">
 			<name>main-db</name>
 			<provider>jeeves.resources.dbms.ApacheDBCPool</provider>
@@ -285,12 +285,12 @@
 					jdbc:postgresql:database
 					jdbc:postgresql://host/database
 					jdbc:postgresql://host:port/database
-					
+
 					or if you are using postgis and want the spatial index loaded
 					into postgis
 
 					jdbc:postgresql_postGIS://host:port/database
-					
+
 				-->
 				<url>jdbc:postgresql://localhost:5432/geonetwork</url>
 				<poolSize>10</poolSize>
@@ -333,7 +333,7 @@
 			xml files. For example, export produce one file for
 			iso19139 and on file for the ISO profil (eg. fra, che).
 
-			Recommanded value is iso19139 if user is not 
+			Recommanded value is iso19139 if user is not
 			interested for having metadata in a specific
 			ISO profil.
 		-->
@@ -355,10 +355,10 @@
 			Set to 1 forces the spatialIndexWriter to commit after each spatial
 			feature is written. Set to a large number and commits are delayed until
 			that number of spatial features is written (this should be faster than
-			committing after each write). Be aware that setting this 
-			number to anything other than 1 can cause problems with indexing 
+			committing after each write). Be aware that setting this
+			number to anything other than 1 can cause problems with indexing
 			if the connection to the database is closed whilst GeoNetwork is running
-			(eg. if the db admin shuts the database for maintenance reasons). 
+			(eg. if the db admin shuts the database for maintenance reasons).
 		-->
 		<param name="maxWritesInTransaction" value="1" />
 
@@ -366,11 +366,11 @@
         <param name="DBHeartBeatEnabled" value="false"/>
         <param name="DBHeartBeatInitialDelaySeconds" value="20"/>
         <param name="DBHeartBeatFixedDelaySeconds" value="20"/>
-		
+
 		<!-- Define if the schema catalog should be updated on startup.
 		Default is true. -->
 		<param name="createOrUpdateSchemaCatalog" value="true"/>
-		
+
 		<!-- Define the class to use when metadata status change
 		-->
         <param name="statusActionsClass" value="org.fao.geonet.services.metadata.DefaultStatusActions"/>
@@ -424,7 +424,7 @@
 		</service>
 		<service name="service-not-allowed">
 			<output sheet="service-not-allowed.xsl">
-				
+
 			</output>
 		</service>
 
@@ -636,7 +636,7 @@
 
 		<service name="xml.region.get">
 			<class name=".services.region.Get" />
-			
+
 			<error id="region-not-found" sheet="error-embedded.xsl" statusCode="404">
 				<xml name="error" file="xml/file-not-found-error.xml" />
 			</error>
@@ -653,8 +653,8 @@
 		<service name="region.getmap.png">
 			<class name=".services.region.GetMap" >
 				 <param name="format" value="png"/>
-				 <!-- named backgrounds allow the background parameter to be a simple key 
-				 	  and the complete URL will be looked up from this list of named backgrounds 
+				 <!-- named backgrounds allow the background parameter to be a simple key
+				 	  and the complete URL will be looked up from this list of named backgrounds
 				 	  The name of the child elements is the key and the text is the url -->
 				 <param name="namedBackgrounds">
 				 	<!-- <geocat>http://wms.geo.admin.ch/?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.0&amp;LAYERS=ch.swisstopo.pixelkarte-farbe-pk1000.noscale&amp;STYLES=default&amp;SRS={srs}&amp;BBOX={minx},{miny},{maxx},{maxy}&amp;WIDTH={width}&amp;HEIGHT={height}&amp;FORMAT=image/png</geocat> -->
@@ -670,9 +670,9 @@
 			<class name=".services.region.GetGeom">
 				<param name="format" value="WKT"/>
 			</class>
-			
+
 			<output sheet="extracttext.xsl" contentType="text/plain; charset=utf-8"/>
-			
+
 			<error id="region-not-found" sheet="error-embedded.xsl" statusCode="404">
 				<xml name="error" file="xml/file-not-found-error.xml" />
 			</error>
@@ -682,7 +682,7 @@
 			<class name=".services.region.GetGeom">
 				<param name="format" value="GML3"/>
 			</class>
-			
+
 			<error id="region-not-found" sheet="error-embedded.xsl" statusCode="404">
 				<xml name="error" file="xml/file-not-found-error.xml" />
 			</error>
@@ -1328,13 +1328,13 @@
         <call name="_tk" class="org.fao.geonet.services.GetSecureToken" />
 			</output>
 		</service>
-		
+
 		<service name="virtualcsw.config">
 			<output sheet="csw/config-virtualcsw.xsl">
 				<call name="services" class=".guiservices.csw.virtual.List"/>
 			</output>
 		</service>
-		
+
 		<service name="virtualcsw.config.get">
 			<output sheet="csw/virtualcsw-new.xsl">
 				<call name="services" class=".guiservices.csw.virtual.Get"/>
@@ -1343,13 +1343,13 @@
                 <call name="sources" class=".guiservices.util.Sources" />
 			</output>
 		</service>
-		
+
 		<service name="virtualcsw.config.update">
 			<class name=".guiservices.csw.virtual.Update" />
 			<output forward="virtualcsw.config" />
 		</service>
-		
-		
+
+
 		<service name="virtualcsw.config.edit">
 			<output sheet="csw/virtualcsw-update.xsl">
 				<call name="services" class=".guiservices.csw.virtual.Get"/>
@@ -1357,13 +1357,13 @@
                 <call name="categories" class=".services.category.List" />
                 <call name="sources" class=".guiservices.util.Sources" />
 			</output>
-		</service>		
-		
+		</service>
+
 		<service name="virtualcsw.config.delete">
 			<class name=".guiservices.csw.virtual.Delete"/>
 			<output forward="virtualcsw.config" />
 		</service>
-		
+
 		<service name="csw.config.set">
 			<class name=".guiservices.csw.Set" />
 
@@ -1511,8 +1511,8 @@
 		<service name="isolanguages">
 			<class name="org.fao.geonet.guiservices.isolanguages.Get" />
 		</service>
-		
-		
+
+
         <!-- HTML5UI -->
         <service name="search">
             <class name=".services.main.Home" />

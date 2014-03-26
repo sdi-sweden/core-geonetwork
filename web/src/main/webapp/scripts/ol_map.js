@@ -30,7 +30,7 @@ GeoNetwork.app = function() {    // private vars:
     var toolbar, toctoolbar, tocbbar, viewport;
 
     var tree, legendPanel, mapLateralPanel;
-    
+
     var featureinfo;
 
     var activeNode;
@@ -45,7 +45,7 @@ GeoNetwork.app = function() {    // private vars:
     // private functions
 
     /**
-     * Creates the OL Map 
+     * Creates the OL Map
      *
      */
     var createMap = function(mapOptions, scales) {
@@ -62,7 +62,7 @@ GeoNetwork.app = function() {    // private vars:
     };
 
     /**
-     * Adds a layer to the map 
+     * Adds a layer to the map
      *
      */
     var createWmsLayer = function(name, url, params, options) {
@@ -85,7 +85,7 @@ GeoNetwork.app = function() {    // private vars:
         map.addControl(new OpenLayers.Control.LoadingPanel());
         //map.addControl(new OpenLayers.Control.ScaleBar());
     };
-    
+
     // the layer node's radio button with its radiochange event can be used
     // to set an active layer.
     var registerRadio = function(node){
@@ -227,9 +227,9 @@ GeoNetwork.app = function() {    // private vars:
         metadataLayerHandler(node);
     };
 
-    
+
     /**
-     * Updates the TOC toolbar buttons depending on TOC layer selected 
+     * Updates the TOC toolbar buttons depending on TOC layer selected
      *
      */
     var refreshTocToolbar = function(node) {
@@ -267,17 +267,17 @@ GeoNetwork.app = function() {    // private vars:
             Ext.getCmp("tbWmsTimeButton").disable();
             Ext.getCmp("tbStylesButton").disable();
             Ext.getCmp("tbOpacityButton").disable();
-            Ext.getCmp("tbMetadataButton").disable(); 
+            Ext.getCmp("tbMetadataButton").disable();
             Ext.getCmp("btnZoomToExtent").disable();
         }
     };
-	
+
     /**
      * Creates the map viewer toolbars
      */
     var createToolbars = function() {
         toctoolbar = [];
-        
+
         // Layer TOC toolbar
         var action = new GeoExt.Action({
             handler: function() {
@@ -288,7 +288,7 @@ GeoNetwork.app = function() {    // private vars:
         });
 
         toctoolbar.push(action);
-        
+
         action = new GeoExt.Action({
             id: "tbRemoveButton",
             handler: function() {
@@ -297,11 +297,11 @@ GeoNetwork.app = function() {    // private vars:
             iconCls: 'deleteLayer',
             tooltip: "Remove layer"
         });
-        
+
         toctoolbar.push(action);
 
-        toctoolbar.push("-");	
-        
+        toctoolbar.push("-");
+
         action = new GeoExt.Action({
             id: "tbOpacityButton",
             handler: function() {
@@ -310,8 +310,8 @@ GeoNetwork.app = function() {    // private vars:
             iconCls: 'layerOpacity',
             tooltip: "Layer opacity"
         });
-        
-        toctoolbar.push(action);	
+
+        toctoolbar.push(action);
 
         action = new GeoExt.Action({
             id: "tbStylesButton",
@@ -321,11 +321,11 @@ GeoNetwork.app = function() {    // private vars:
             iconCls: 'layerStyles',
             tooltip: "Layer styles"
         });
-        
+
         toctoolbar.push(action);
 
         toctoolbar.push("-");
-        
+
         action = new GeoExt.Action({
             id: "tbMetadataButton",
             handler: function() {
@@ -334,11 +334,11 @@ GeoNetwork.app = function() {    // private vars:
             iconCls: 'wmsInfo',
             tooltip: "WMS Information"
         });
-        
+
         toctoolbar.push(action);
 
         toctoolbar.push("-");
-        
+
         action = new GeoExt.Action({
             id: "tbWmsTimeButton",
             handler: function() {
@@ -347,13 +347,13 @@ GeoNetwork.app = function() {    // private vars:
             iconCls: 'wmsTime',
             tooltip: "WMS Time"
         });
-        
+
         toctoolbar.push(action);
 
 
         // Main toolbar
         toolbar = [];
-   
+
         action = new GeoExt.Action({
             control: new OpenLayers.Control.ZoomToMaxExtent(),
             map: map,
@@ -409,9 +409,9 @@ GeoNetwork.app = function() {    // private vars:
         });
 
         toolbar.push(action);
-        
+
         toolbar.push("-");
-        
+
         action = new GeoExt.Action({
             control: new OpenLayers.Control.ZoomBox(),
             map: map,
@@ -450,7 +450,7 @@ GeoNetwork.app = function() {    // private vars:
         });
 
         toolbar.push(action);
-        
+
         toolbar.push("-");
 
         featureinfo = new OpenLayers.Control.WMSGetFeatureInfo({drillDown: true, infoFormat: 'application/vnd.ogc.gml'});
@@ -503,9 +503,9 @@ GeoNetwork.app = function() {    // private vars:
             iconCls: 'query',
             tooltip: {title: OpenLayers.i18n('featureInfoTooltipTitle'), text: OpenLayers.i18n('featureInfoTooltipText') }
         });
-        
+
         toolbar.push(action);
-        
+
         toolbar.push("-");
 
         // Navigation history - two "button" controls
@@ -529,7 +529,7 @@ GeoNetwork.app = function() {    // private vars:
         toolbar.push(action);
 
         toolbar.push("-");
-        
+
         action = new GeoExt.Action({
             iconCls: 'savewmc',
             tooltip: {title: OpenLayers.i18n("savewmcTooltipTitle"), text: OpenLayers.i18n("savewmcTooltipText")},
@@ -539,7 +539,7 @@ GeoNetwork.app = function() {    // private vars:
         });
 
         toolbar.push(action);
-        
+
         action = new GeoExt.Action({
             iconCls: 'loadwmc',
             tooltip: {title: OpenLayers.i18n("loadwmcTooltipTitle"), text: OpenLayers.i18n("loadwmcTooltipText")},
@@ -551,7 +551,7 @@ GeoNetwork.app = function() {    // private vars:
         toolbar.push(action);
 
         toolbar.push("-");
-
+/*
         var printItem = new Geonetwork.print.PrintAction({
                 map: map,
                 text: "",
@@ -567,11 +567,11 @@ GeoNetwork.app = function() {    // private vars:
                     //printCommand.spec.mapTitle = "PrintControl";
                 }
             });
-            
+
         toolbar.push(printItem);
-        
+*/
         toolbar.push("-");
-        
+
         // create split button for measure controls
 
         var measureSplit = new Ext.SplitButton({
@@ -633,7 +633,7 @@ GeoNetwork.app = function() {    // private vars:
                 ]
             })
         });
-        
+
         measureSplit.menu.items.each(function(item, index) {
             item.on({checkchange: function(item, checked) {
                 measureSplit.toggle(checked);
@@ -643,23 +643,23 @@ GeoNetwork.app = function() {    // private vars:
                 }
             }});
         });
-        
+
         toolbar.push(measureSplit);
 
         toolbar.push('->');
-        
+
         var projPanel = new Ext.Panel({
             layout: 'fit',
             border: false,
             cls: 'projchooser',
             items: [{xtype: 'gn_projectionselector', projections: GeoNetwork.ProjectionList, fieldLabel: OpenLayers.i18n("projectionTitle"), map: map}]
         });
-        toolbar.push(projPanel);	
+        toolbar.push(projPanel);
     };
 
     /**
      * Map overlay with scale image and scale selector
-     * 
+     *
      */
     var createMapOverlay = function() {
         var scaleLinePanel = new Ext.Panel({
@@ -760,12 +760,12 @@ GeoNetwork.app = function() {    // private vars:
 
         return mapOverlay;
     };
-        
+
     /**
      * Measure control
-     * 
+     *
      */
-    var createMeasureControl = function(handlerType, title) {         
+    var createMeasureControl = function(handlerType, title) {
         var styleMap = new OpenLayers.StyleMap({
             "default": new OpenLayers.Style(null, {
                 rules: [new OpenLayers.Rule({
@@ -800,31 +800,31 @@ GeoNetwork.app = function() {    // private vars:
         var cleanup = function() {
             if (measureToolTip) {
                 measureToolTip.destroy();
-            }   
+            }
         };
 
         var makeString = function(metricData) {
             var metric = metricData.measure;
             var metricUnit = metricData.units;
-           
+
             measureControl.displaySystem = "english";
-           
+
             var englishData = metricData.geometry.CLASS_NAME.indexOf("LineString") > -1 ?
             measureControl.getBestLength(metricData.geometry) :
             measureControl.getBestArea(metricData.geometry);
 
             var english = englishData[0];
             var englishUnit = englishData[1];
-           
+
             measureControl.displaySystem = "metric";
             var dim = metricData.order == 2 ?
             '<sup>2</sup>' :
             '';
-           
+
             return metric.toFixed(2) + " " + metricUnit + dim + "<br>" +
                 english.toFixed(2) + " " + englishUnit + dim;
         };
-       
+
         var measureToolTip;
         var measureControl = new OpenLayers.Control.Measure(handlerType, {
             persist: true,
@@ -850,7 +850,7 @@ GeoNetwork.app = function() {    // private vars:
                     }
                 },
                 measure: function(event) {
-                    cleanup();                   
+                    cleanup();
                     measureToolTip = new Ext.ToolTip({
                         target: Ext.getBody(),
                         html: makeString(event),
@@ -876,13 +876,13 @@ GeoNetwork.app = function() {    // private vars:
         return measureControl;
     }
 
-    
+
     /**
      * Creates the layers tree control
      *
      */
     var createTree = function() {
-    
+
         // using OpenLayers.Format.JSON to create a nice formatted string of the
         // configuration for editing it in the UI
         var treeConfig = new OpenLayers.Format.JSON().write([{
@@ -916,7 +916,7 @@ GeoNetwork.app = function() {    // private vars:
                 // provide an initial set of layer nodes. We use the treeConfig
                 // from above, that we created with OpenLayers.Format.JSON.write.
                 children: Ext.decode(treeConfig)
-            },          
+            },
             listeners:{
                 contextmenu:function(node,e){
                     if ((node.attributes.nodeType != "gx_overlaylayercontainer") &&
@@ -933,7 +933,7 @@ GeoNetwork.app = function() {    // private vars:
                         }
 
                         c.items.get("addMenu").hide();
-                        
+
                         var layer = node.attributes.layer;
 
                         if (layer && layer.dimensions && layer.dimensions.time) {
@@ -951,19 +951,19 @@ GeoNetwork.app = function() {    // private vars:
                         c.contextNode=node;
                         c.showAt(e.getXY());
                     } else {
-                    
+
                         if (node.attributes.nodeType == "gx_overlaylayercontainer") {
-                        
+
                             node.select();
                             var c=node.getOwnerTree().contextMenu;
-                            
+
                             c.items.get("addMenu").show();
                             c.items.get("removeMenu").hide();
                             c.items.get("opacityMenu").hide();
                             c.items.get("wmsTimeMenu").hide();
-                            c.items.get("stylesMenu").hide();			
+                            c.items.get("stylesMenu").hide();
                             c.items.get("metadataMenu").hide();
-            
+
                             c.contextNode=node;
                             c.showAt(e.getXY());
                         }
@@ -1009,7 +1009,7 @@ GeoNetwork.app = function() {    // private vars:
             rootVisible: false,
             lines: false,
             border: false,
-            region: 'center'			
+            region: 'center'
         });
 
     }
@@ -1040,20 +1040,21 @@ GeoNetwork.app = function() {    // private vars:
      *
      */
     var createViewport = function() {
-        createToolbars();         
+        createToolbars();
         createTree();
         createLegendPanel();
 
         var mapOverlay = createMapOverlay();
-       
+
         // Accordion panel with layer tree and advanced print config
         var accordion = new Ext.Panel({
             region: 'center',
             border: false,
             layout: 'accordion',
-            deferredRender:false, 
+            deferredRender:false,
             items: [
-                tree,
+                tree
+                /*,
                 {
                     xtype: 'print-simple',
                     title: OpenLayers.i18n("mf.print.print"),
@@ -1063,7 +1064,7 @@ GeoNetwork.app = function() {    // private vars:
                         defaults: {
                             width: 100,
                             listWidth: 100
-                        }/*,
+                        } *,
                          items: [
                          {
                          xtype: 'textfield',
@@ -1078,15 +1079,15 @@ GeoNetwork.app = function() {    // private vars:
                          height: 100,
                          value: 'Some comments'
                          }
-                         ] */
+                         ] *
                     },
                     border: false,
                     map: map,
                     configUrl: printConfigUrl
-                }
+                }*/
             ]
         });
-       
+
         var mapPanel = new GeoExt.MapPanel({
 		 	id: 'mappanel',
             border:false,
@@ -1120,11 +1121,11 @@ GeoNetwork.app = function() {    // private vars:
                     frame: false,
                     border: false,
                     margins: '0 0 0 0',
-                    items: [mapPanel]                  
+                    items: [mapPanel]
                 }
             ]
         });
-        
+
 
         Ext.getCmp("toctree").on({
             "insert": registerRadio,
@@ -1145,7 +1146,7 @@ GeoNetwork.app = function() {    // private vars:
 
         var rootNode = Ext.getCmp("toctree").getRootNode();
         addRadioNodesListeners(rootNode);
-        
+
         Ext.getCmp("toctree").on("nodedragover", function(evt) {
             // Only allow to move layers in the gx_overlaylayercontainer (user layers)
             if ((evt.dropNode.parentNode.attributes.nodeType == "gx_baselayercontainer") ||  // restrict move baselayers
@@ -1154,8 +1155,8 @@ GeoNetwork.app = function() {    // private vars:
                 (evt.target.parentNode == evt.tree.root))  {                                 // restrict move layers to outside of layercontainers
                  evt.cancel=true;
             }
-        }); 
-        
+        });
+
         refreshTocToolbar(activeNode);
     };
 
@@ -1166,19 +1167,19 @@ GeoNetwork.app = function() {    // private vars:
             Ext.QuickTips.init();
 
             createMap(mapOptions, fixedScales);
-            
+
             //createDummyBaseLayer(mapOptions.maxExtent);
 
            // default layers in the map
-            for (var i=0; i<layers.length; i++) {                
+            for (var i=0; i<layers.length; i++) {
                 createWmsLayer(layers[i][0],layers[i][1],layers[i][2],layers[i][3]);
-            }       
-                       
+            }
+
             // Fix for the toctree to get the correct mappanel (i
             /*GeoExt.MapPanel.guess = function() {
                 return Ext.getCmp('mappanel');
             };*/
-            
+
             createViewport();
 
             addMapControls();
@@ -1214,7 +1215,7 @@ GeoNetwork.app = function() {    // private vars:
             addRadioNodesListeners(rootNode);
 
             refreshTocToolbar(activeNode);
-            
+
             Ext.getCmp("toctree").on("nodedragover", function(evt) {
                 // Only allow to move layers in the gx_overlaylayercontainer (user layers)
                 if ((evt.dropNode.parentNode.attributes.nodeType == "gx_baselayercontainer") ||  // restrict move baselayers
@@ -1223,20 +1224,20 @@ GeoNetwork.app = function() {    // private vars:
                     (evt.target.parentNode == evt.tree.root))  {                                 // restrict move layers to outside of layercontainers
                      evt.cancel=true;
                 }
-            });            
-            
+            });
+
             map.events.register('moveend', map, function (e) {
                 GeoNetwork.MapStateManager.stoteMapExtextState(map);
             });
-            
+
             map.events.register('addlayer', map, function (layer) {
                 GeoNetwork.MapStateManager.storeMapLayersState(map);
             });
-            
+
             map.events.register('removelayer', map, function (layer) {
                 GeoNetwork.MapStateManager.storeMapLayersState(map);
             });
-            
+
             map.events.register('changelayer', map, function (layer) {
                 GeoNetwork.MapStateManager.storeMapLayersState(map);
             });
@@ -1270,14 +1271,14 @@ GeoNetwork.app = function() {    // private vars:
         getViewport: function() {
             return viewport;
         },
-        
+
         refreshViewport: function() {
             // IE shows the west panel hidden when the map is shown after a window resize
             Ext.get("west_panel").setWidth(westPanelWidth);
 
             viewport.doLayout();
         },
-        
+
         getMap: function() {
             return map;
         }

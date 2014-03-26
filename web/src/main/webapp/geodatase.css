@@ -1,0 +1,8 @@
+td.banner{
+    background-image: none;
+}
+
+td.banner img{
+    margin: 5px;
+    height: 45px;
+}

@@ -8,26 +8,26 @@
 	<xsl:include href="metadata.xsl"/>
 	<xsl:include href="searchform_simple_template.xsl"/>
 	<xsl:include href="searchform_advanced.xsl"/>
-	
+
 	<xsl:template mode="css" match="/">
 		<xsl:call-template name="geoCssHeader"/>
 		<xsl:call-template name="ext-ux-css"/>
 	</xsl:template>
-	
+
 	<!--
 		additional scripts
 	-->
 	<xsl:template mode="script" match="/">
-	
+
 		<xsl:call-template name="geoHeader"/>
 
 		<!-- Required by keyword selection panel -->
 		<xsl:if test="/root/gui/config/search/keyword-selection-panel">
 			<xsl:call-template name="ext-ux"/>
 		</xsl:if>
-		
+
 		<xsl:choose>
-			<xsl:when test="/root/request/debug">         	
+			<xsl:when test="/root/request/debug">
 				<script type="text/javascript" src="{/root/gui/url}/scripts/gn_search.js"/><xsl:text>&#10;</xsl:text>
 
 				<!--link rel="stylesheet" type="text/css" href="{/root/gui/url}/scripts/ext/resources/css/ext-all.css" />
@@ -57,6 +57,7 @@
 				<script type="text/javascript" src="{/root/gui/url}/scripts/map/lang/it.js"/><xsl:text>&#10;</xsl:text>
 				<script type="text/javascript" src="{/root/gui/url}/scripts/map/lang/ca.js"/><xsl:text>&#10;</xsl:text>
 				<script type="text/javascript" src="{/root/gui/url}/scripts/map/lang/tr.js"/><xsl:text>&#10;</xsl:text>
+				<script type="text/javascript" src="{/root/gui/url}/scripts/map/lang/sv-SE.js"/><xsl:text>&#10;</xsl:text>
 
 				<script type="text/javascript" src="{/root/gui/url}/scripts/map/Ext.ux/form/DateTime.js"/><xsl:text>&#10;</xsl:text>
 
@@ -86,7 +87,7 @@
 				<script type="text/javascript" src="{/root/gui/url}/scripts/map/windows/WmsLayerMetadata.js"/><xsl:text>&#10;</xsl:text>
 				<script type="text/javascript" src="{/root/gui/url}/scripts/map/windows/Disclaimer.js"/><xsl:text>&#10;</xsl:text>
 
-				<script type="text/javascript" src="{/root/gui/url}/scripts/ol_settings.js"/><xsl:text>&#10;</xsl:text>	
+				<script type="text/javascript" src="{/root/gui/url}/scripts/ol_settings.js"/><xsl:text>&#10;</xsl:text>
 				<script type="text/javascript" src="{/root/gui/url}/scripts/ol_minimap.js"/><xsl:text>&#10;</xsl:text>
 				<script type="text/javascript" src="{/root/gui/url}/scripts/ol_map.js"/><xsl:text>&#10;</xsl:text>
 
@@ -96,7 +97,7 @@
 				<script type="text/javascript" src="{/root/gui/url}/scripts/editor/metadata-show.js"/><xsl:text>&#10;</xsl:text>
 				<script type="text/javascript" src="{/root/gui/url}/scripts/editor/metadata-editor.js"/><xsl:text>&#10;</xsl:text>
 			</xsl:when>
-			<xsl:otherwise>             
+			<xsl:otherwise>
 				<script type="text/javascript" src="{/root/gui/url}/scripts/lib/gn.search.js"/><xsl:text>&#10;</xsl:text>
 
 				<!-- Editor JS is still required here at least for batch operation -->
@@ -155,7 +156,7 @@
 					collapsible:true,
 					border:false
 				});
-				
+
 				var recent = new Ext.Panel({
 					region: 'south',
 					layout:'fit',
@@ -164,7 +165,7 @@
 					bodyStyle: 'padding-left:15px',
 					autoHeight: true,
 					collapsible:true,
-					border:false	
+					border:false
 				});
 
 				var searchTabs = new Ext.TabPanel({
@@ -196,12 +197,12 @@
 									contentEl: 'remote_search_pnl'
 								}
 							</xsl:if>
-								
+
 							]
 				});
 
 				searchTabs.on('tabchange', function() {
-					GNCookie.set('search',{searchTab: this.getActiveTab().itemId}); 
+					GNCookie.set('search',{searchTab: this.getActiveTab().itemId});
 				});
 
 				var viewport = new Ext.Panel({
@@ -224,12 +225,12 @@
 							border:false,
 							layoutConfig:{
 							animate:true
-						}, 
+						},
 						items:[
-							{region:'center',   
+							{region:'center',
 							border:false,
 							layout: 'border',
-							items: 
+							items:
 								[{region:'west',
 								xtype: 'panel',
 								layout: 'fit',
@@ -243,9 +244,9 @@
 								split: 'true',
 								useSplitTips:true,
 								collapsibleSplitTip: 'Drag to rezise the search panel. Double click to show/hide it',
-								items: [searchTabs] 
+								items: [searchTabs]
 								},
-								{region:'center', 
+								{region:'center',
 								id: 'main-viewport',
 								border:false,
 								layout: 'border',
@@ -266,9 +267,9 @@
 											expand: expandMap
 											},
 									items: [mapViewport]
-									
+
 									},
-									{region:'center', 
+									{region:'center',
 									contentEl :'content',
 									border:false,
 									autoScroll: true
@@ -348,17 +349,17 @@
 				var layers = [];
 
 				<xsl:for-each select="/root/gui/config/mapViewer/layers/layer">
-					layers.push(["<xsl:value-of select='@tocName'/>","<xsl:value-of select='@server'/>",<xsl:value-of select='@params'/>, <xsl:value-of select='@options'/>]);                           
+					layers.push(["<xsl:value-of select='@tocName'/>","<xsl:value-of select='@server'/>",<xsl:value-of select='@params'/>, <xsl:value-of select='@options'/>]);
 				</xsl:for-each>
 
 				// Init projection list
 				<xsl:for-each select="/root/gui/config/mapViewer/proj/crs">
-				GeoNetwork.ProjectionList.push(["<xsl:value-of select='@code'/>","<xsl:value-of select='@name'/>"]);                
+				GeoNetwork.ProjectionList.push(["<xsl:value-of select='@code'/>","<xsl:value-of select='@name'/>"]);
 				</xsl:for-each>
 
 				// Init WMS server list
 				<xsl:for-each select="/root/gui/config/mapViewer/servers/server">
-				GeoNetwork.WMSList.push(["<xsl:value-of select='@name'/>","<xsl:value-of select='@url'/>"]);                
+				GeoNetwork.WMSList.push(["<xsl:value-of select='@name'/>","<xsl:value-of select='@url'/>"]);
 				</xsl:for-each>
 
  				var scales = <xsl:value-of select='/root/gui/config/mapViewer/scales/@values'/>;
@@ -408,17 +409,17 @@
                 GeoNetwork.CatalogueInterface.init(GeoNetwork.mapViewer.getMap());
                 GeoNetwork.MapStateManager.applyMapState(GeoNetwork.mapViewer.getMap());
             }
-            
+
 			function collapseMap(pnl) {
 				Ext.getCmp('main-viewport').layout.north.getCollapsedEl().titleEl.dom.innerHTML = '<xsl:value-of select="/root/gui/strings/showMap"/>';
 			}
-			
+
 			function expandMap(pnl) {
 				Ext.getCmp('main-viewport').layout.north.getCollapsedEl().titleEl.dom.innerHTML = '<xsl:value-of select="/root/gui/strings/mapViewer"/>';
 			}
 
-			
-			
+
+
 		</script>
 	</xsl:template>
 
@@ -430,13 +431,13 @@
 		<div id="content" >
 			<xsl:call-template name="pageContent"/>
 		</div>
-		
+
 		<!-- Map panel -->
-		<div id="map_container" style="overflow:hidden; clear: both;">	
+		<div id="map_container" style="overflow:hidden; clear: both;">
 			<div id="form_wmc" style="display:none"></div>
 			<div id="ol_map"></div>
 		</div>
-		
+
 		<!-- Search forms -->
 		<div id="search_tabs">
 			<div id="simple_search_pnl" class="x-hide-display" title="{/root/gui/strings/simpleSearch}">
@@ -461,7 +462,7 @@
 		<div id="latest_updates">
 			<xsl:call-template name="latestUpdates"/>
 		</div>
-	</xsl:template>	
+	</xsl:template>
 
 	<!--
 	page content - search results etc
@@ -470,11 +471,11 @@
 		<h1 class="padded-content" style="margin-bottom: 0px">
 			<xsl:value-of select="/root/gui/strings/mainpageTitle"/>
 		</h1>
-		
+
 		<xsl:comment>MAIN CONTENT</xsl:comment>
 		<div class="geosearchmain">
 			<h1 id="loadingMD" style="text-align: center; display: none; width:100%"> <img src="{/root/gui/url}/images/loading.gif" width="20" height="21" /><xsl:value-of select="/root/gui/strings/searching"/></h1>
-								
+
 			<!-- This DIV contains a first-time message that will be removed when the first search will be run -->
 			<div id="resultList">
 				<div class="padded-content">
@@ -485,7 +486,7 @@
 						<xsl:value-of select="/root/gui/env/feedback/email"/>
 					</a>
 				</div>
-				
+
 				<xsl:if test="/root/gui/featured/*">
 					<div style="padding: 10px;">
 							<xsl:comment>Featured Map</xsl:comment>
@@ -497,7 +498,7 @@
 	</xsl:template>
 
 	<!--
-	loading indicator	
+	loading indicator
 	-->
 	<xsl:template mode="loading" match="/" priority="2">
 		<div id="loading">
@@ -522,8 +523,8 @@
 					<xsl:variable name="metadata" select="exslt:node-set($md)/*[1]"/>
 					<tr>
 						<td>
-							
-								<div class="arrow" onClick="gn_showSingleMetadata('{geonet:info/id}');" 
+
+								<div class="arrow" onClick="gn_showSingleMetadata('{geonet:info/id}');"
 				style="cursor:hand;cursor:pointer">
 									<h2><xsl:value-of select="$metadata/title"/></h2>
 								</div>
@@ -532,7 +533,7 @@
 							<xsl:choose>
 								<xsl:when test="string-length($abstract) &gt; $maxAbstract">
 									<xsl:value-of select="substring($abstract, 0, $maxAbstract)"/>
-										<div class="arrow" onClick="gn_showSingleMetadata('{geonet:info/id}');" 
+										<div class="arrow" onClick="gn_showSingleMetadata('{geonet:info/id}');"
 				style="cursor:hand;cursor:pointer">...<xsl:value-of select="/root/gui/strings/more"/>...</div>
 								</xsl:when>
 								<xsl:otherwise>
@@ -558,7 +559,7 @@
 		<xsl:if test="/root/gui/latestUpdated/*">
 			<div class="geosearchfields">
 				<h1 align="left">
-					<!--xsl:value-of select="/root/gui/strings/recentAdditions"/--> &#160;&#160;&#160; 
+					<!--xsl:value-of select="/root/gui/strings/recentAdditions"/--> &#160;&#160;&#160;
 					<a href="{/root/gui/locService}/rss.latest?georss=simplepoint" target="_blank">
 						<img style="cursor:hand;cursor:pointer" src="{/root/gui/url}/images/georss.png"
 							alt="GeoRSS-GML" title="{/root/gui/strings/georss}" align="top"/>

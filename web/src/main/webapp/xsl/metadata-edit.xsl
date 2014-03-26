@@ -7,7 +7,7 @@
 	exclude-result-prefixes="geonet saxon java">
 
 	<!--
-	edit metadata form 
+	edit metadata form
 	-->
 	<xsl:include href="edit.xsl"/>
 	<xsl:include href="metadata.xsl"/>
@@ -16,16 +16,16 @@
 		<xsl:call-template name="geoCssHeader"/>
 		<xsl:call-template name="ext-ux-css"/>
 	</xsl:template>
-	
+
 
 	<!--
 	additional scripts
 	-->
 	<!-- needs priority to succeed over match="/"  in main.xsl -->
 	<xsl:template mode="script" match="/" priority="20">
-		
+
 		<xsl:call-template name="geoHeader"/>
-		
+
 		<xsl:choose>
             <xsl:when test="/root/request/debug">
 	    		<script type="text/javascript" src="{/root/gui/url}/scripts/editor/metadata-editor.js"></script>
@@ -35,7 +35,7 @@
 				<script type="text/javascript" src="{/root/gui/url}/scripts/lib/gn.editor.js"></script>
             </xsl:otherwise>
         </xsl:choose>
-	
+
 		<xsl:call-template name="edit-header"/>
 
         <xsl:variable name="twoCharLangCode" select="java:twoCharLangCode(/root/gui/language)" />
@@ -49,7 +49,7 @@
 					window.scroll(0,<xsl:value-of select="/root/gui/position"/>);
 					document.mainForm.position.value = -1; // reset
 				}
-				timeId = setTimeout('scrollIt()',1000);	
+				timeId = setTimeout('scrollIt()',1000);
 			</xsl:if>
 			function removeJustCreated() {
 				var justCreated = $('just-created');
@@ -58,18 +58,18 @@
 				}
 			}
 		</script>
-		
-		
+
+
 		<!-- =================================
 				Google translation API demo (Load the API in version 1).
 		================================= -->
-		<xsl:if test="/root/gui/config/editor-google-translate = 1">			
+		<xsl:if test="/root/gui/config/editor-google-translate = 1">
 			<script type="text/javascript" src="http://www.google.com/jsapi"/>
 			<script type="text/javascript">
 				google.load("language", "1");
 			</script>
 		</xsl:if>
-	
+
 		<!-- for each editable plugin schema, add the javascript needed to
 		     run any editor functions -->
 		<xsl:for-each select="/root/gui/schemalist/name[@plugin='true' and @edit='true']">
@@ -77,7 +77,7 @@
 			<saxon:call-template name="{concat($schemaName,'-javascript')}"/>
 		</xsl:for-each>
 	</xsl:template>
-	
+
 	<!--
 	page content
 	-->
@@ -108,14 +108,14 @@
                                 <input id="just-created" class="md" type="hidden" name="just-created" value="true"/>
                             </xsl:if>
 							<input class="md" type="hidden" name="position" value="-1"/>
-							<!-- showvalidationerrors is only set to true when 'Check' is 
+							<!-- showvalidationerrors is only set to true when 'Check' is
 							     pressed - default is false -->
-							<input class="md" type="hidden" name="showvalidationerrors" value="{/root/request/showvalidationerrors}"/> 
+							<input class="md" type="hidden" name="showvalidationerrors" value="{/root/request/showvalidationerrors}"/>
 							<input class="md" type="hidden" name="currTab" value="{/root/gui/currTab}"/>
 
 							<!-- Hidden div to contains extra elements like when posting multiple keywords. -->
 							<div id="hiddenFormElements" style="display:none;"/>
-							
+
 							<table width="100%">
 								<tr><td class="padded-content" height="100%" align="center" valign="top">
 									<xsl:call-template name="editButtons"/>
@@ -146,44 +146,46 @@
 								</td></tr>
 							</table>
 						</form>
-						
+
 						<div id="validationReport" class="content" style="display:none;"/>
 						<div id="shortcutHelp" class="content" style="display:none;">
 							<xsl:copy-of select="/root/gui/strings/helpShortcutsEditor"/>
 						</div>
-						
+
 					</td>
 				</tr>
 			</xsl:for-each>
 			<tr><td class="blue-content" colspan="3"/></tr>
 		</table>
 	</xsl:template>
-	
+
 	<xsl:template name="editButtons">
 		<xsl:param name="top" select="true()"/>
-		
+
 		<!-- reset button -->
 		<button class="content" id="btnReset" onclick="doSaveAction('metadata.update.forget')" type="button"><xsl:value-of select="/root/gui/strings/reset"/></button>
-		
+
 		<!-- save button -->
 		&#160;
 		<button class="content" id="btnSave" onclick="removeJustCreated();doSaveAction('metadata.update')" type="button">
 			<xsl:value-of select="/root/gui/strings/save"/>
 		</button>
-		
+
 		<!-- save and close button -->
 		&#160;
 		<button class="content" id="btnSaveAndClose" onclick="removeJustCreated();doSaveAction('metadata.update.finish')" type="button">
 			<xsl:value-of select="/root/gui/strings/saveAndClose"/>
 		</button>
-		
+
 		<!-- save and validate button -->
 		&#160;
+		<!-- Removed by Lantmäteriet
 		<button class="content" id="btnValidate" onclick="removeJustCreated();doSaveAction('metadata.update','metadata.validate');return false;" type="button">
 			<xsl:value-of select="/root/gui/strings/saveAndValidate"/>
 		</button>
-		
-		&#160;	
+		 -->
+
+		&#160;
         <!-- =========================  -->
         <!-- Add other actions list     -->
 		<a id="oAc{geonet:info/id}{$top}" name="oAc{geonet:info/id}{$top}" class="button content" onclick="oActions('oAc','{geonet:info/id}{$top}');" title="{/root/gui/strings/otherActions}">
@@ -191,17 +193,17 @@
             <xsl:value-of select="/root/gui/strings/otherActions"/>
         </a>
 		<div id="oAcEle{geonet:info/id}{$top}" class="oAcEle" style="display:none;width:350px" onClick="oActions('oAc','{geonet:info/id}{$top}');">
-			
+
 			<!-- thumbnails -->
 			<xsl:if test="string(geonet:info/schema)='fgdc-std' or string(geonet:info/schema)='iso19115' or starts-with(string(geonet:info/schema),'iso19139')"> <!-- FIXME: should be more general -->
 				<button class="content" id="btnThumbnails" onclick="doAction('{/root/gui/locService}/metadata.thumbnail.form')" type="button">
 					<img class="icon" src="../../images/photo.png"/><xsl:value-of select="/root/gui/strings/thumbnails"/>
 				</button>
 			</xsl:if>
-		
+
 			<xsl:if test="starts-with(string(geonet:info/schema),'iso19139') and /root/gui/config/editor-actions/compute-extent-from-keyword">
 				<!-- TODO : check that keywords are available in current metadata -->
-				<button class="content" id="btnComputeExtent" onclick="computeExtentFromKeywords(1);" type="button" 
+				<button class="content" id="btnComputeExtent" onclick="computeExtentFromKeywords(1);" type="button"
 					alt="{/root/gui/strings/computeExtentFromKeywordsHelp}"
 					title="{/root/gui/strings/computeExtentFromKeywordsHelp}">
 					<img class="icon" src="../../images/extent.png"/><xsl:value-of select="/root/gui/strings/computeExtentFromKeywordsReplace"/>
@@ -213,7 +215,7 @@
 				</button>
 			</xsl:if>
 		</div>
-		
+
 		<!-- cancel button -->
 		&#160;
         <xsl:choose>
@@ -235,12 +237,12 @@
 	    </xsl:if>
 	  </input>
         <label for="minorEdit"><xsl:value-of select="/root/gui/strings/minor"/></label>
-		
-		
+
+
 	</xsl:template>
-	
+
 	<xsl:template name="templateChoice">
-		
+
 		<b><xsl:value-of select="/root/gui/strings/type"/></b>
 		<xsl:text>&#160;</xsl:text>
 		<select class="content" name="template" size="1">
@@ -270,7 +272,7 @@
 		<xsl:text>&#160;</xsl:text>
 		<input class="content" type="text" name="title" value="{geonet:info/title}"/>
 -->
-		
+
 	</xsl:template>
 
 </xsl:stylesheet>

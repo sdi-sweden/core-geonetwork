@@ -27,10 +27,10 @@
             <!-- title -->
             <tr class="banner">
                 <td class="banner">
-                    <img src="{/root/gui/url}/images/header-left.jpg" alt="World picture" align="top" />
+					<img src="{/root/gui/url}/images/geodatase.gif" alt="Geodata.se logo" align="top" />
                 </td>
                 <td align="right" class="banner">
-                    <img src="{/root/gui/url}/images/header-right.gif" alt="GeoNetwork opensource logo" align="top" />
+                    <!-- img src="{/root/gui/url}/images/header-right.gif" alt="GeoNetwork opensource logo" align="top" / -->
                 </td>
             </tr>
 
@@ -64,7 +64,7 @@
                             <a class="banner" onclick="doBannerButton('{/root/gui/locService}/feedback','{/root/gui/strings/contactUs}','{$modal}',600)" href="javascript:void(0);"><xsl:value-of select="/root/gui/strings/contactUs"/></a>
                         </xsl:otherwise>
                     </xsl:choose>
-                    |
+<!--                 |
                     <xsl:choose>
                         <xsl:when test="/root/gui/reqService='links'">
                             <font class="banner-active"><xsl:value-of select="/root/gui/strings/links"/></font>
@@ -73,6 +73,7 @@
                             <a class="banner" onclick="doBannerButton('{/root/gui/locService}/links','{/root/gui/strings/links}','{$modal}',600)" href="javascript:void(0);"><xsl:value-of select="/root/gui/strings/links"/></a>
                         </xsl:otherwise>
                     </xsl:choose>
+-->
                     <xsl:if test="string(/root/gui/session/userId)='' and
 											string(/root/gui/env/userSelfRegistration/enable)='true'">
 
@@ -94,8 +95,8 @@
                             <a class="banner" onclick="doBannerButton('{/root/gui/locService}/about','{/root/gui/strings/about}','{$modal}',800)" href="javascript:void(0);"><xsl:value-of select="/root/gui/strings/about"/></a>
                         </xsl:otherwise>
                     </xsl:choose>
-                    |
-                    <!-- Help section to be displayed according to GUI language -->
+<!--                |
+                    <!- Help section to be displayed according to GUI language ->
                     <xsl:choose>
                         <xsl:when test="java:file-exists(concat(resolve-uri('../', replace(static-base-uri(), 'file:', '')), 'docs/', /root/gui/language, '/users/index.html'))">
                             <a class="banner" href="{/root/gui/url}/docs/{/root/gui/language}/users" target="_blank"><xsl:value-of select="/root/gui/strings/help"/></a>
@@ -104,6 +105,7 @@
                             <a class="banner" href="{/root/gui/url}/docs/eng/users" target="_blank"><xsl:value-of select="/root/gui/strings/help"/></a>
                         </xsl:otherwise>
                     </xsl:choose>
+-->
                     |
                 </td>
                 <td align="right" class="banner-menu" width="590px">
@@ -191,12 +193,14 @@
                                             </a>
                                             |
                                         </xsl:if>
+
                                         <input type="submit" style="display: none;" />
                                         <xsl:value-of select="/root/gui/strings/username"/>
                                         <input class="banner" type="text" id="username" name="username" size="10" onkeypress="return entSub('login')"/>
                                         <xsl:value-of select="/root/gui/strings/password"/>
                                         <input class="banner" type="password" id="password" name="password" size="10" onkeypress="return entSub('login')"/>
                                         <button class="banner" onclick="goSubmit('login')"><xsl:value-of select="/root/gui/strings/login"/></button>
+
                                     </form>
                                 </xsl:otherwise>
                             </xsl:choose>

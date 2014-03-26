@@ -13,6 +13,12 @@
 		different configurations -->
 	<import file="/WEB-INF/server-props-overrides.xml" />
 
+    <file name=".*/WEB-INF/config-db.xml">
+        <addXML xpath="data">
+			<file path="WEB-INF/classes/setup/sql/data" filePrefix="settings-swe-"/>
+		</addXML>
+    </file>
+
 	<file name=".*/WEB-INF/config.xml">
 
 		<replaceText xpath="general/uploadDir">${gn.path}/data/tmp</replaceText>
@@ -60,14 +66,72 @@
 				<class name=".services.metadata.Info"/>
 			</service>
 		</addXML>
+		<addXML xpath="services">
+			<service name="logout.geodatase">
+			</service>
+		</addXML>
+	</file>
+
+	<file name=".*/WEB-INF/config-gui.xml">
+	    <replaceXML xpath="languages">
+			<eng/>
+			<swe/>
+		</replaceXML>
+
+		<replaceXML xpath="map/proj">
+			<crs code="EPSG:4326" default="0" edit="0"/><!-- WGS84 is mandatory because ISO store it by default in LatLong-->
+            <crs code="EPSG:3006" default="1" edit="0" def="+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs" />
+		</replaceXML>
+
+		<replaceText xpath="map/osm_map">false</replaceText>
+
+
+       <removeXML xpath="mapSearch" />
+       <removeXML xpath="mapViewer" />
+
+       <addXML xpath="">
+			<mapSearch options="{projection: 'EPSG:3006', maxExtent: new OpenLayers.Bounds(200000,6100000,1000000,7700000), maxResolution:16000.00001, units: 'm', restrictedExtent: new OpenLayers.Bounds(200000,6100000,1000000,7700000)}" >
+              <layers>
+                 <layer server="${context.path}${bgproxy.urlpattern}"
+                   tocName="Topografisk webbkarta"
+                   params="{layers: 'topowebbkartan', format: 'image/png', EXCEPTIONS:'application/vnd.ogc.se_xml'}"
+                   options="{isBaseLayer: true, singleTile: true}" />
+              </layers>
+            </mapSearch>
+	   </addXML>
+
+		<addXML xpath="">
+			<mapViewer options="{projection: 'EPSG:3006', size: new OpenLayers.Size({w:200, h:400}), maxExtent: new OpenLayers.Bounds(200000,6100000,1000000,7700000), units: 'm', restrictedExtent: new OpenLayers.Bounds(200000,6100000,1000000,7700000)}" >
+		        <layers>
+		          <layer server="${context.path}${bgproxy.urlpattern}"
+		            tocName="Topografisk webbkarta"
+		            params="{layers: 'topowebbkartan', format: 'image/png', EXCEPTIONS:'application/vnd.ogc.se_xml'}"
+		            options="{singleTile: true, isBaseLayer: true, noLegend: true, resolutions:[4480.20927,4340.202731,4200.196191,2800.130794,1400.065397,840.0392382,280.0130794,210.0098096,140.0065397,70.00326985,28.00130794,14.00065397,7.000326985,2.800130794,1.400065397], maxResolution:4200.196191}" />
+		        </layers>
+		        <scales values="[]" />
+
+		        <proj>
+		            <crs code="EPSG:3006" default="1" def="+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs" name="SWEREF99 TM" />
+		        </proj>
+		        <servers>
+		        </servers>
+		    </mapViewer>
+		</addXML>
 	</file>
 
 	<spring>
 		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.privileges!?.*" access="hasRole('Administrator')"/>
 		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/xml.metadata.info!?.*" access="hasRole('Administrator')"/>
+        <addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/login.form!?.*" access="denyAll"/>
 
 		<!-- Deny all pdf requests -->
 		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern=".*pdf.*!?.*" access="denyAll"/>
+
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/user.pwedit!?.*" access="denyAll"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/user.pwupdate!?.*" access="denyAll"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/user.infoedit!?.*" access="denyAll"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/user.infoupdate!?.*" access="denyAll"/>
+
 	</spring>
 
 	<logging>

@@ -56,6 +56,16 @@
 
     <!-- ======================= START ADDED BY LM ============================= -->
 
+    <context-param>
+        <description>Full path to OWASP ESAPI security configuration file.</description>
+        <param-name>application.config.owasp.security.configuration</param-name>
+        <param-value>/WEB-INF/ESAPI.properties</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.lmv.geodata.geonetwork.app.config.support.ApplicationConfigContextListener</listener-class>
+    </listener>
+
     <filter>
         <display-name>SiteminderSessionFilter</display-name>
         <filter-name>SiteminderSessionFilter</filter-name>
@@ -312,12 +322,46 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <!-- Added by Lantmäteriet
+         Facade proxy for LM Topowebbfast WMS -->
+    <servlet>
+        <display-name>LM Authentication Wms Proxy</display-name>
+        <servlet-name>LMAuthProxy</servlet-name>
+        <servlet-class>org.lmv.geodata.common.server.servlet.proxy.BasicAuthProxy</servlet-class>
+        <init-param>
+            <param-name>proxyEndpoint</param-name>
+            <param-value>${bgproxy.endpoint}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>connectTimeout</param-name>
+            <param-value>10</param-value>
+        </init-param>
+        <init-param>
+            <param-name>readTimeout</param-name>
+            <param-value>45</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyEndpointParamEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>userName</param-name>
+            <param-value>${bgproxy.user}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>pwd</param-name>
+            <param-value>${bgproxy.pwd}</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
         <!-- Servlet proxy -->
+        <!--  Removed by Lantmäteriet
     <servlet>
         <servlet-name>HttpProxy</servlet-name>
         <servlet-class>org.geonetwork.http.proxy.HttpProxyServlet</servlet-class>
 
-        <!-- List of allowed content types -->
+        <!- List of allowed content types ->
     <init-param>
       <param-name>AllowedContentTypes</param-name>
       <param-value>
@@ -336,13 +380,13 @@
       </param-value>
     </init-param>
 
-    <!-- List of host alloed to be accesed by the proxy: If not specified or empty, any hosts is allowed -->
+    <!- List of host alloed to be accesed by the proxy: If not specified or empty, any hosts is allowed ->
     <init-param>
         <param-name>AllowedHosts</param-name>
         <param-value />
     </init-param>
 
-    <!-- Default proxy url if none is provided -->
+    <!- Default proxy url if none is provided ->
     <init-param>
         <param-name>DefaultProxyUrl</param-name>
         <param-value>http://www.openlayers.org</param-value>
@@ -350,6 +394,7 @@
 
     <load-on-startup>0</load-on-startup>
     </servlet>
+    -->
 
     <!-- Convenience servlet for linking to various webapps for accessing monitoring data
         Contains 4 sub mappings:
@@ -390,6 +435,12 @@
         </init-param>
     </servlet>
 
+    <!-- Added by Lantmäteriet -->
+    <servlet-mapping>
+        <servlet-name>LMAuthProxy</servlet-name>
+        <url-pattern>${bgproxy.urlpattern}</url-pattern>
+    </servlet-mapping>
+
     <!-- Print servlet -->
     <!-- Removed by Lantmäteriet
     <servlet>
@@ -424,10 +475,12 @@
         <url-pattern>/expensivehealthcheck</url-pattern>
     </servlet-mapping>
 
+    <!-- Removed by Lantmäteriet
     <servlet-mapping>
         <servlet-name>HttpProxy</servlet-name>
         <url-pattern>/proxy</url-pattern>
     </servlet-mapping>
+    -->
 
     <servlet-mapping>
         <servlet-name>gn-servlet</servlet-name>
@@ -435,6 +488,7 @@
     </servlet-mapping>
 
     <!-- Web map context servlet -->
+    <!--  Removed by Lantmäteriet
     <servlet>
         <servlet-name>wmc</servlet-name>
         <servlet-class>org.geonetwork.map.wmc.WmcServlet</servlet-class>
@@ -444,6 +498,7 @@
         <servlet-name>wmc</servlet-name>
         <url-pattern>/wmc/*</url-pattern>
     </servlet-mapping>
+    -->
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
@@ -453,4 +508,42 @@
         <!-- 3 hours -->
         <session-timeout>180</session-timeout>
     </session-config>
+
+    <!-- Error handler/page for some error codes. -->
+    <!--  404 Not Found -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/exceptionHandler.jsp</location>
+    </error-page>
+    <!--  403 Permission Denied  -->
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error/exceptionHandler.jsp</location>
+    </error-page>
+    <!-- 400 Bad Request (e.g. missing required argument) -->
+    <error-page>
+        <error-code>400</error-code>
+        <location>/error/exceptionHandler.jsp</location>
+    </error-page>
+    <!-- 502 Bad Gateway (e.g. when error occurs during proxying)  -->
+    <error-page>
+        <error-code>502</error-code>
+        <location>/error/exceptionHandler.jsp</location>
+    </error-page>
+    <!-- 504 Gateway Timeout (e.g. when timeout error occurs during proxying)  -->
+    <error-page>
+        <error-code>504</error-code>
+        <location>/error/exceptionHandler.jsp</location>
+    </error-page>
+    <!-- 500 Internal Server error  -->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/exceptionHandler.jsp</location>
+    </error-page>
+    <!-- Unhandled excecptions  -->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error/exceptionHandler.jsp</location>
+    </error-page>
+
 </web-app>

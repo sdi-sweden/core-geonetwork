@@ -40,6 +40,8 @@ function getOpenlayersLangCode() {
             break;
         case"chi":a="cn";
             break;
+        case"swe":a="sv-SE";
+            break;
         default:a="en"
     }
 

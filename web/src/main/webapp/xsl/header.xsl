@@ -24,7 +24,7 @@
 		<xsl:copy-of select="/root/gui/strings/header_meta/meta"/>
 		<META HTTP-EQUIV="Pragma"  CONTENT="no-cache"/>
 		<META HTTP-EQUIV="Expires" CONTENT="-1"/>
-		
+
 		<script language="JavaScript" type="text/javascript">
 			var Env = new Object();
 
@@ -91,17 +91,18 @@
 		<!-- stylesheet -->
 		<link rel="stylesheet" type="text/css" href="{/root/gui/url}/geonetwork.css"/>
 		<link rel="stylesheet" type="text/css" href="{/root/gui/url}/modalbox.css"/>
+		<link rel="stylesheet" type="text/css" href="{/root/gui/url}/geodatase.css"/>
 		<xsl:apply-templates mode="css" select="/"/>
 
 		<!-- JS -->
 		<xsl:call-template name="jsHeader"/>
-		
+
 	</xsl:template>
-	
+
 	<!--
 		All element from localisation files having an attribute named js
-		(eg. <key js="true">value</key>) is added to a global JS table. 
-		The content of the value could be accessed in JS using the translate 
+		(eg. <key js="true">value</key>) is added to a global JS table.
+		The content of the value could be accessed in JS using the translate
 		function (ie. translate('key');).
 	-->
 	<xsl:template match="*" mode="js-translations">

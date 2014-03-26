@@ -67,6 +67,7 @@
 
 
         <!-- validate -->
+        <!-- Removed by Lantmäteriet
         <tr id="gn.validate">
             <th class="padded">
                 <label for="validate">
@@ -77,6 +78,7 @@
                 <input class="content" type="checkbox" name="validate" id="validate"/>
             </td>
         </tr>
+        -->
 
         <!-- Assign to current catalog -->
         <tr id="gn.assign">
@@ -89,7 +91,7 @@
                 <input class="content" type="checkbox" name="assign" id="assign"/>
             </td>
         </tr>
-        
+
         <tr id="gn.type">
             <th class="padded">
                 <label for="isTemplate">
@@ -104,7 +106,7 @@
                 </select>
             </td>
         </tr>
-        
+
 
         <!-- groups -->
         <tr id="gn.groups">
@@ -125,7 +127,7 @@
 
 
 
-        <!-- categories 
+        <!-- categories
         Some users are not using categories, so hide the list and
         set default value to _none_ if no categories available.
         -->

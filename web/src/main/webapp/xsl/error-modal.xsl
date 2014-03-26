@@ -6,7 +6,7 @@
 		<div id="error">
 			<h2><xsl:value-of select="/root/gui/error/heading"/></h2>
 			<p><xsl:value-of select="/root/gui/error/message"/></p>
-			<p><xsl:value-of select="/root/error/class"/> : <xsl:value-of select="/root/error/message"/></p>
+			<!-- Removed by Lantmäteriet: Error details -->
 		</div>
 	</xsl:template>
 </xsl:stylesheet>
