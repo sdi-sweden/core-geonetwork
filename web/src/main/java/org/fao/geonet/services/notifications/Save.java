@@ -41,7 +41,7 @@ import org.fao.geonet.services.notifications.domain.NotificationTarget;
 import org.jdom.Element;
 
 /**
- * 
+ *
  * Service that persists notification targets.
  *
  * @author heikki doeleman
@@ -90,9 +90,9 @@ public class Save extends NotInReadOnlyModeService {
      * disabled (checkbox off in form is not submitted).
      *
      * 5. EXAMPLE
-     * 
+     *
      * As an example:
-     * 
+     *
      * <request>
      *      <name-1287189222038>QQQ</name-1287189222038>
      *      <id-3>3</id-3>
@@ -121,11 +121,20 @@ public class Save extends NotInReadOnlyModeService {
      * @throws Exception
      */
 	public Element serviceSpecificExec(Element params, ServiceContext context) throws Exception {
-        System.out.println("notifications save:\n"+ Xml.getString(params));
+        //System.out.println("notifications save:\n"+ Xml.getString(params));
         Map<String, NotificationTarget> notificationTargets = new HashMap<String, NotificationTarget>();
         List<Element> parameters = params.getChildren();
         for(Element parameter : parameters) {
-            String identifier = parameter.getName().substring(parameter.getName().lastIndexOf('-') + 1);
+
+            String parameterName = parameter.getName();
+
+            int splitIdx = parameterName.lastIndexOf('-');
+
+            if( splitIdx == -1){
+                continue;
+            }
+
+            String identifier = parameterName.substring(splitIdx + 1);
             if(notificationTargets.containsKey(identifier)) {
                 NotificationTarget notificationTarget = notificationTargets.get(identifier);
                 notificationTarget = parameterToNotificationTarget(parameter, notificationTarget);
@@ -174,7 +183,7 @@ public class Save extends NotInReadOnlyModeService {
 
     /**
      * TODO javadoc
-     * 
+     *
      * @param parameter
      * @param notificationTarget
      * @return
