@@ -29,6 +29,13 @@
 
   <!-- FIXME set common dependencies to the root pom.xml  -->
   <dependencies>
+
+    <dependency>
+        <groupId>org.lmv.geodata</groupId>
+        <artifactId>geodata-common-server</artifactId>
+        <version>3.4.0</version>
+    </dependency>
+
 	  <dependency>
       	<groupId>net.sf.ehcache</groupId>
       	<artifactId>ehcache-core</artifactId>
