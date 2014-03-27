@@ -28,11 +28,13 @@ import jeeves.interfaces.Logger;
 import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
+
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.csw.services.Harvest;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.services.NotInReadOnlyModeService;
+import org.fao.geonet.services.NotInReadOnlyModeServiceWithoutCsrf;
 import org.jdom.Element;
 
 import java.util.List;
@@ -40,7 +42,7 @@ import java.util.List;
 /**
  * Accepts CSW Publication operations.
  */
-public class CswPublicationDispatcher extends NotInReadOnlyModeService {
+public class CswPublicationDispatcher extends NotInReadOnlyModeServiceWithoutCsrf {
 	private Logger logger;
 
     private String cswServiceSpecificContraint;
@@ -67,7 +69,7 @@ public class CswPublicationDispatcher extends NotInReadOnlyModeService {
     @Override
 	public Element serviceSpecificExec(Element params, ServiceContext context) throws Exception {
 		logger = context.getLogger();
-		
+
 		GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 		SettingManager settingMan = gc.getSettingManager();
 		boolean cswEnable    = settingMan.getValueAsBool("system/csw/enable", false);

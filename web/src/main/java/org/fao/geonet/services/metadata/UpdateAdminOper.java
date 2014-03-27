@@ -38,6 +38,7 @@ import org.fao.geonet.exceptions.MetadataNotFoundEx;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.MdInfo;
 import org.fao.geonet.services.NotInReadOnlyModeService;
+import org.fao.geonet.services.NotInReadOnlyModeServiceWithoutCsrf;
 import org.fao.geonet.services.Utils;
 import org.fao.geonet.util.CSRFUtil;
 import org.jdom.Element;
@@ -47,20 +48,20 @@ import java.util.StringTokenizer;
 
 
 /**
- * Stores all operations allowed for a metadata for each groups. 
- * 
+ * Stores all operations allowed for a metadata for each groups.
+ *
  * In order to set a value for a group use _<groupId>_<operationId>.
- * 
+ *
  * By default, all operations are removed and then added according to the parameter.
  * In order to set or unset existing operations, add the update parameter
  * with value true and set the off/on status for each operations (eg. _<groupId>_<operationId>=<off|on>.
- * 
+ *
  * Called by the metadata.admin service (ie. privileges panel).
- * 
+ *
  * Sample URL: http://localhost:8080/geonetwork/srv/eng/metadata.admin?update=true&id=13962&_1_0=off&_1_1=off&_1_5=off&_1_6=off
- * 
+ *
  */
-public class UpdateAdminOper extends NotInReadOnlyModeService {
+public class UpdateAdminOper extends NotInReadOnlyModeServiceWithoutCsrf {
 	//--------------------------------------------------------------------------
 	//---
 	//--- Init
@@ -99,7 +100,7 @@ public class UpdateAdminOper extends NotInReadOnlyModeService {
 
 		boolean skip = false;
 
-		//--- in case of owner, privileges for groups 0,1 and GUEST are disabled 
+		//--- in case of owner, privileges for groups 0,1 and GUEST are disabled
 		//--- and are not sent to the server. So we cannot remove them
 
 		boolean isAdmin   = Geonet.Profile.ADMINISTRATOR.equals(us.getProfile());
@@ -112,7 +113,7 @@ public class UpdateAdminOper extends NotInReadOnlyModeService {
 		if (!update) {
 			dm.deleteMetadataOper(dbms, id, skip);
 		}
-		
+
 		//-----------------------------------------------------------------------
 		//--- set new ones
 

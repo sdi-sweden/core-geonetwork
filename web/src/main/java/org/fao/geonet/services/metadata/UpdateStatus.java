@@ -30,6 +30,7 @@ import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 import jeeves.utils.Util;
+
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
@@ -37,6 +38,7 @@ import org.fao.geonet.exceptions.UnAuthorizedException;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.services.NotInReadOnlyModeService;
+import org.fao.geonet.services.NotInReadOnlyModeServiceWithoutCsrf;
 import org.fao.geonet.services.Utils;
 import org.fao.geonet.util.ISODate;
 import org.jdom.Element;
@@ -47,7 +49,7 @@ import java.util.Set;
 /**
  * Stores status on a metadata.
  */
-public class UpdateStatus extends NotInReadOnlyModeService{
+public class UpdateStatus extends NotInReadOnlyModeServiceWithoutCsrf{
 
     /**
      *
@@ -86,7 +88,7 @@ public class UpdateStatus extends NotInReadOnlyModeService{
 		String changeMessage = Util.getParam(params, Params.CHANGE_MESSAGE);
 		String changeDate = new ISODate().toString();
 
-		//--- use StatusActionsFactory and StatusActions class to 
+		//--- use StatusActionsFactory and StatusActions class to
 		//--- change status and carry out behaviours for status changes
 		StatusActionsFactory saf = new StatusActionsFactory(gc.getStatusActionsClass());
 
