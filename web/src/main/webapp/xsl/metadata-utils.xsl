@@ -86,9 +86,9 @@
 			</xsl:if>
 
             <!-- edit button -->
-			<xsl:if test="
+			<xsl:if test="java:isAccessibleService('metadata.edit') and (
 		(/root/gui/config/harvester/enableEditing = 'true' and geonet:info/isHarvested = 'y' and geonet:info/edit='true')
-		or (geonet:info/isHarvested = 'n' and geonet:info/edit='true')">
+		or (geonet:info/isHarvested = 'n' and geonet:info/edit='true'))">
 			&#160;
 			<button class="content" onclick="load('{/root/gui/locService}/metadata.edit?id={$metadata/geonet:info/id}')"><xsl:value-of select="/root/gui/strings/edit"/></button>
 			</xsl:if>
@@ -137,7 +137,7 @@
 
 				<!-- Create child option only for iso19139 schema based metadata -->
 				<xsl:variable name="duplicateChild" select="concat(/root/gui/strings/createChild,': ',$ltitle)"/>
-				<xsl:if test="contains(geonet:info/schema, 'iso19139')">
+				<xsl:if test="contains(geonet:info/schema, 'iso19139') and java:isAccessibleService('metadata.duplicate.form')">
 				  <button onclick="load('{/root/gui/locService}/metadata.duplicate.form?uuid={$metadata/geonet:info/uuid}&amp;child=y')"><xsl:value-of select="/root/gui/strings/createChild"/></button>
 				</xsl:if>
 
