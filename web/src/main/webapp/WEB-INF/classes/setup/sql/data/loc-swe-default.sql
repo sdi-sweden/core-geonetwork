@@ -1,10 +1,10 @@
 INSERT INTO Languages VALUES ('swe','Svenska', 'y', 'n');
 
 -- Take care to table ID (related to other loc files)
-INSERT INTO CswServerCapabilitiesInfo VALUES (65, 'swe', 'title', '');
-INSERT INTO CswServerCapabilitiesInfo VALUES (66, 'swe', 'abstract', '');
-INSERT INTO CswServerCapabilitiesInfo VALUES (67, 'swe', 'fees', '');
-INSERT INTO CswServerCapabilitiesInfo VALUES (68, 'swe', 'accessConstraints', '');
+INSERT INTO CswServerCapabilitiesInfo VALUES (65, 'swe', 'title', 'Nationell svensk metadatakatalog');
+INSERT INTO CswServerCapabilitiesInfo VALUES (66, 'swe', 'abstract', 'Detta är den nationella svenska metadatakatalogen för geodata och geodatatjänster för både Inspire och geodatasamverkan');
+INSERT INTO CswServerCapabilitiesInfo VALUES (67, 'swe', 'fees', 'Kostnadsfritt');
+INSERT INTO CswServerCapabilitiesInfo VALUES (68, 'swe', 'accessConstraints', 'Fritt tillgänglig');
 
 INSERT INTO CategoriesDes VALUES (1,'swe','Kartor');
 INSERT INTO CategoriesDes VALUES (2,'swe','Datamängd');

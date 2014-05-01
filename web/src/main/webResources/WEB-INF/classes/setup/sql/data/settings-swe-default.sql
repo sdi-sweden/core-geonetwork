@@ -17,6 +17,16 @@ UPDATE Settings SET value='${siteminder.firstname}' WHERE id=176;
 UPDATE Settings SET value='${siteminder.role}' WHERE id=177;
 UPDATE Settings SET value='${siteminder.group}' WHERE id=178;
 
+UPDATE Languages SET isinspire='n';
+UPDATE Languages SET isdefault='n';
+UPDATE Languages SET isdefault='y' WHERE id='swe';
+UPDATE Languages SET isinspire='y' WHERE id='swe' OR id='eng';
+
+UPDATE CswServerCapabilitiesInfo SET label='National Swedish metadata catalogue' WHERE langid='eng' AND field='title';
+UPDATE CswServerCapabilitiesInfo SET label='This is the Swedish national metadata catalog for geodata and geodata services, for both the INSPIRE initiative and the national initiativ Geodatasamverkan.' WHERE langid='eng' AND field='abstract';
+UPDATE CswServerCapabilitiesInfo SET label='tbd' WHERE langid='eng' AND field='fees';
+UPDATE CswServerCapabilitiesInfo SET label='tbd' WHERE langid='eng' AND field='accessConstraints';
+
 DELETE FROM RegionsDes;
 DELETE FROM Regions;
 
