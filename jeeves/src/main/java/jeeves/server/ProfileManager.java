@@ -73,7 +73,7 @@ public class ProfileManager
 
 	/** Given the user-profiles.xml file name, loads it abd inits its internal data
 	  * putting data in memory into a convenient way
-	 * @param appPath 
+	 * @param appPath
 	  */
 
 	@SuppressWarnings("unchecked")
@@ -108,9 +108,9 @@ public class ProfileManager
 	}
 
 	/**
-	 * Return the case corrected version of the supplied 
+	 * Return the case corrected version of the supplied
 	 * profile name, or empty string if none match.
-	 * 
+	 *
 	 * @param profile The profile name to be corrected.
 	 * @return The correct profile name
 	 */
@@ -122,7 +122,7 @@ public class ProfileManager
 				return key;
 			}
 		}
-		
+
 		return "";
 	}
 
@@ -149,14 +149,14 @@ public class ProfileManager
 	/**
 	 * Return the highest profile in the list by checking the number
 	 * of extended profiles for each.
-	 * 
+	 *
 	 * @param profiles The list of profiles to analyze
 	 * @return The highest profile in the list
 	 */
 	public String getLowestProfile(String[] profiles) {
 		String lowestProfile = null;
 		int numberOfProfilesExtended = getProfilesSet(ADMIN).size();
-		
+
 		for (String p : profiles) {
 			Set<String> currentProfileSet = getProfilesSet(p);
 			if (currentProfileSet.size() < numberOfProfilesExtended) {
@@ -166,18 +166,18 @@ public class ProfileManager
 		}
 		return lowestProfile;
 	}
-	
+
 	/**
 	 * Return the highest profile in the list by checking the number
 	 * of extended profiles for each.
-	 * 
+	 *
 	 * @param profiles The list of profiles to analyze
 	 * @return The highest profile in the list
 	 */
 	public String getHighestProfile(String[] profiles) {
 		String highestProfile = null;
 		int numberOfProfilesExtended = 0;
-		
+
 		for (String p : profiles) {
 			Set<String> currentProfileSet = getProfilesSet(p);
 			if (currentProfileSet.size() > numberOfProfilesExtended) {
@@ -267,9 +267,9 @@ public class ProfileManager
 	}
 
 
-	/** 
+	/**
 	 * Check if bean is defined in the context
-	 * 
+	 *
 	 * @param beanId id of the bean to look up
 	 */
 	public static boolean existsBean(String beanId) {
@@ -285,9 +285,9 @@ public class ProfileManager
 	 * Optimistically check if user can access a given url.  If not possible to determine then
 	 * the methods will return true.  So only use to show url links, not check if a user has access
 	 * for certain.  Spring security should ensure that users cannot access restricted urls though.
-	 *  
-	 * @param serviceName the raw services name (main.home) or (admin) 
-	 * 
+	 *
+	 * @param serviceName the raw services name (main.home) or (admin)
+	 *
 	 * @return true if accessible or system is unable to determine because the current
 	 * 				thread does not have a ServiceContext in its thread local store
 	 */
@@ -298,16 +298,21 @@ public class ProfileManager
 		WebApplicationContext springContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 		SecurityContext context = SecurityContextHolder.getContext();
 		if(springContext == null || context == null) return true;
-		
+
 		Map<String, AbstractSecurityInterceptor> evals = springContext.getBeansOfType(AbstractSecurityInterceptor.class);
 		Authentication authentication = context.getAuthentication();
 
  		String serviceName = resolveXslString(serviceObj);
-        
+
 		FilterInvocation fi = new FilterInvocation(null, "/srv/"+serviceContext.getLanguage()+"/"+serviceName, null);
+
+		boolean isAccessible = true;
+
 		for(AbstractSecurityInterceptor securityInterceptor: evals.values()) {
-	    	if(securityInterceptor == null) return true;
-	    	
+			if(securityInterceptor == null){
+				continue;
+			}
+
 
 	        Collection<ConfigAttribute> attrs = securityInterceptor.obtainSecurityMetadataSource().getAttributes(fi);
 
@@ -321,22 +326,25 @@ public class ProfileManager
 
 	        try {
 	            securityInterceptor.getAccessDecisionManager().decide(authentication, fi, attrs);
-	            return true;
+	            //return true;
 	        } catch (AccessDeniedException unauthorized) {
-	        	// ignore
+	            isAccessible = false;
 	        }
 		}
-        if (Log.isDebugEnabled(Log.REQUEST)) {
-            Log.debug(Log.REQUEST, fi.toString() + " denied for " + authentication.toString());
-        }
 
-		return false;
+		if(!isAccessible){
+			if (Log.isDebugEnabled(Log.REQUEST)) {
+				Log.debug(Log.REQUEST, fi.toString() + " denied for " + authentication.toString());
+			}
+		}
+
+		return isAccessible;
 	}
 
     /**
      * Transform a XSL object into a String.
      * <p/>
-     * Sometimes XSL sends a node collection instead of a String; 
+     * Sometimes XSL sends a node collection instead of a String;
      * here we try to squash the complex object into a String.
      * <p/>
      * <i>At the moment only TextFragmentValue</i>s<i> are handled.</i>
