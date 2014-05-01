@@ -35,7 +35,7 @@
 			</class>
 
 			<output sheet="metadata-show.xsl">
-        <call name="_tk" class="org.fao.geonet.services.GetSecureToken" />
+                <call name="_tk" class="org.fao.geonet.services.GetSecureToken" />
 				<call name="currTab"  class=".guiservices.util.GetCurrentMDTab"/>
 				<call name="position" class=".guiservices.util.GetPositionMD"/>
 				<call name="relation" class =".guiservices.metadata.GetRelated"/>
@@ -58,6 +58,7 @@
 			</class>
 
 			<output sheet="metadata-show-embedded.xsl">
+			    <call name="_tk" class="org.fao.geonet.services.GetSecureToken" />
 				<call name="currTab"  class=".guiservices.util.GetCurrentMDTab"/>
 				<call name="position" class=".guiservices.util.GetPositionMD"/>
 				<call name="relation" class =".guiservices.metadata.GetRelated"/>
