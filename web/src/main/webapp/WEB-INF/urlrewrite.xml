@@ -2,22 +2,22 @@
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN" "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
 <!--
     Configuration file for UrlRewriteFilter http://tuckey.org/urlrewrite/
-    
+
     Used to maintain backwards compatibility for old GeoNetwork URLs that use a 2-letter language code.
-    
-    Permanent redirects are used (HTTP status 301). This signals that the redirect is permanent and people might update their bookmarks, and this changes 
+
+    Permanent redirects are used (HTTP status 301). This signals that the redirect is permanent and people might update their bookmarks, and this changes
     the URL in the browser's address bar to the target URL.
-    
+
     To return HTTP 200 and keep the old URL as is in the browser, change the rules below like this:
-    
+
     <rule>
     <from>^(.*)/es/(.*)$</from>
     <to last="true">$1/spa/$2</to>
     </rule>
-    
+
 -->
 <urlrewrite use-query-string="true" use-context="false">
-    
+
     <rule>
         <from>^(.*)/ar/(.*)$</from>
         <to type="permanent-redirect" last="true">%{context-path}$1/ara/$2</to>
@@ -75,13 +75,21 @@
         <to type="permanent-redirect" last="true">%{context-path}$1/ita/$2</to>
     </rule>
     <rule>
+        <from>^(.*)/se/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/swe/$2</to>
+    </rule>
+    <rule>
+        <from>^(.*)/sv/(.*)$</from>
+        <to type="permanent-redirect" last="true">%{context-path}$1/swe/$2</to>
+    </rule>
+    <rule>
         <note>
             Retrieves robots.txt filemap pointing to sitemaps for better indexing.
         </note>
         <from>^/robots.txt$</from>
         <to type="forward" last="true">/srv/eng/robots.txt</to>
     </rule>
-    
+
     <!-- Rules for RESTful urls for metadata retrieve -->
     <rule>
         <note>
@@ -100,7 +108,7 @@
         <from>^/metadata/(.*)/(.*).xml$</from>
         <to type="forward">/srv/$1/xml.metadata.get?uuid=$2</to>
     </rule>
-    
+
     <rule>
         <note>
             Retrieves RDF format for a metadata.
@@ -109,7 +117,7 @@
         <from>^/metadata/(.*)/(.*).rdf$</from>
         <to type="forward">/srv/$1/rdf.metadata.get?uuid=$2</to>
     </rule>
-    
+
     <rule>
         <note>
             Retrieves pdf format for a metadata.
@@ -139,8 +147,8 @@
         <from>^/metadata/(.*)/(.*)$</from>
         <to type="permanent-redirect">%{context-path}/srv/$1/home?uuid=$2</to>
     </rule>
-    
-    
+
+
     <rule>
         <note>
             map the old xml.user.login to the new login url
@@ -148,7 +156,7 @@
         <from>^.*/.*/xml.user.login(\?.*)</from>
         <to type="permanent-redirect" last="true">%{context-path}/j_spring_security_check$1</to>
     </rule>
-    
+
     <!-- Rule for rss.latest to rss.search?sortBt=changeDate -->
     <rule>
         <note>
@@ -157,12 +165,12 @@
         <from>^(.*)/rss.latest(\.*)</from>
         <to type="permanent-redirect" last="true">%{context-path}$1/rss.search?sortBy=changeDate</to>
     </rule>
-    
+
     <!-- hide jsession id from google bot -->
     <outbound-rule encodefirst="true">
         <condition name="user-agent">googlebot.*</condition>
         <from>^(.*);jsessionid=.*(\?.*)$</from>
         <to>$1$2</to>
     </outbound-rule>
-    
+
 </urlrewrite>
