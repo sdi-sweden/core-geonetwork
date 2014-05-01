@@ -607,7 +607,9 @@
 
         <!-- classic GUI -->
         <service name="feedback">
-            <output sheet="feedback.xsl" />
+            <output sheet="feedback.xsl">
+                <call name="_tk" class="org.fao.geonet.services.GetSecureToken" />
+            </output>
         </service>
 
         <!-- Ext GUIs -->
@@ -1325,7 +1327,7 @@
 					<param name="query" value="SELECT * FROM Users ORDER BY name" />
 				</call>
 
-        <call name="_tk" class="org.fao.geonet.services.GetSecureToken" />
+                <call name="_tk" class="org.fao.geonet.services.GetSecureToken" />
 			</output>
 		</service>
 
