@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	
+
 	<xsl:include href="main.xsl"/>
-	
+
 	<!--
 	additional scripts
 	-->
 	<xsl:template mode="script" match="/">
 		<script type="text/javascript" src="{/root/gui/url}/scripts/form_check.js"></script>
-		
+
 		<script type="text/javascript" language="JavaScript1.2">
 			function processSubmit()
 			{
@@ -21,7 +21,7 @@
 					 alert(translate("checkEmail"));
 				}
 				else
-				{				
+				{
 					if (isWhitespace(document.feedbackf.comments.value)) {
 						document.feedbackf.comments.value = translate('noComment');
 					}
@@ -30,7 +30,7 @@
 			}
 		</script>
 	</xsl:template>
-	
+
 	<!--
 	page content
 	-->
@@ -42,6 +42,7 @@
 				<p/>
 				<form name="feedbackf" accept-charset="UTF-8" action="{/root/gui/locService}/feedback.insert" method="post">
 					<input type="submit" style="display: none;" />
+					<input type="hidden" name="_tk" value="{/root/gui/_tk}"/>
 					<input type="hidden" name="id" value="{/root/response/id}"/>
 					<input type="hidden" name="fname" value="{/root/response/fname}"/>
 					<table>
@@ -73,5 +74,5 @@
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
-		
+
 </xsl:stylesheet>
