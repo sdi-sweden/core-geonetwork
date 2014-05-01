@@ -122,7 +122,7 @@
 	<spring>
 		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.privileges!?.*" access="hasRole('Administrator')"/>
 		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/xml.metadata.info!?.*" access="hasRole('Administrator')"/>
-        <addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/login.form!?.*" access="denyAll"/>
+        <!-- addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/login.form!?.*" access="denyAll"/ -->
 
 		<!-- Deny all pdf requests -->
 		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern=".*pdf.*!?.*" access="denyAll"/>
@@ -131,6 +131,26 @@
 		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/user.pwupdate!?.*" access="denyAll"/>
 		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/user.infoedit!?.*" access="denyAll"/>
 		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/user.infoupdate!?.*" access="denyAll"/>
+
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.create.form!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/user.pwedit!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/user.infoedit!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/category.list!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/subtemplate.admin!?.*" access="hasRole('Administrator')"/>
+
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.batch.newowner!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.batch.update.categories!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.batch.update.privileges!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.batch.update.status!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.batch.version!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.batch.extract.subtemplates!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.status.form!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.version!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.edit!?.*" access="hasRole('Administrator')"/>
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/metadata.duplicate.form!?.*" access="hasRole('Administrator')"/>
+
+		<addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/proxy" access="hasRole('Editor')" />
+        <addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/proxy?.*" access="hasRole('Editor')" />
 
 	</spring>
 
