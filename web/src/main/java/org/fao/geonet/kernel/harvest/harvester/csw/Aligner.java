@@ -108,8 +108,8 @@ public class Aligner extends BaseAligner {
 
 		if (params.useAccount) {
 			request.setCredentials(params.username, params.password);
-		}	
-		
+		}
+
 	}
 
 	//--------------------------------------------------------------------------
@@ -194,7 +194,8 @@ public class Aligner extends BaseAligner {
         //
         // insert metadata
         //
-        String group = null, isTemplate = null, docType = null, title = null, category = null;
+        String group = params.ownerIdGroup;
+        String isTemplate = null, docType = null, title = null, category = null;
         boolean ufo = false, indexImmediate = false;
         String id = dataMan.insertMetadata(context, dbms, schema, md, context.getSerialFactory().getSerial(dbms, "Metadata"), ri.uuid, Integer.parseInt(params.ownerId), group, params.uuid,
                          isTemplate, docType, title, category, ri.changeDate, ri.changeDate, ufo, indexImmediate);
@@ -264,7 +265,7 @@ public class Aligner extends BaseAligner {
 				if (md == null) {
 					return;
 				}
-				
+
                 //
                 // update metadata
                 //
@@ -295,7 +296,7 @@ public class Aligner extends BaseAligner {
 
     /**
      *  Returns true if the uuid is present in the remote node.
-     * 
+     *
      * @param records
      * @param uuid
      * @return
@@ -349,13 +350,13 @@ public class Aligner extends BaseAligner {
                     return null;
                 }
             }
-            
+
             if(params.rejectDuplicateResource) {
                 if (foundDuplicateForResource(uuid, response)) {
                     return null;
                 }
             }
-            
+
             return response;
 		}
 		catch(Exception e)
@@ -372,28 +373,28 @@ public class Aligner extends BaseAligner {
     /**
      * Check for metadata in the catalog having the same resource identifier as the
      * harvested record.
-     * 
-     * If one dataset (same MD_metadata/../identificationInfo/../identifier/../code) 
-     * (eg. a NMA layer for roads) is described in 2 or more catalogs with different 
+     *
+     * If one dataset (same MD_metadata/../identificationInfo/../identifier/../code)
+     * (eg. a NMA layer for roads) is described in 2 or more catalogs with different
      * metadata uuids. The metadata may be slightly different depending on the author,
-     * but the resource is the same. When harvesting, some users would like to have 
+     * but the resource is the same. When harvesting, some users would like to have
      * the capability to exclude "duplicate" description of the same dataset.
-     * 
-     * The check is made searching the identifier field in the index using 
+     *
+     * The check is made searching the identifier field in the index using
      * {@link LuceneSearcher#getAllMetadataFromIndexFor(String, String, String, Set, boolean)}
-     * 
+     *
      * @param uuid the metadata unique identifier
      * @param response  the XML document to check
      * @return true if a record with same resource identifier is found. false otherwise.
      */
     private boolean foundDuplicateForResource(String uuid, Element response) {
         String schema = dataMan.autodetectSchema(response);
-        
+
         if(schema.startsWith("iso19139")) {
             String resourceIdentifierXPath = "gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/*/gmd:code/gco:CharacterString";
             String resourceIdentifierLuceneIndexField = "identifier";
             String defaultLanguage = "eng";
-            
+
             try {
                 // Extract resource identifier
                 XPath xp = XPath.newInstance (resourceIdentifierXPath);
@@ -403,14 +404,14 @@ public class Aligner extends BaseAligner {
                 if (resourceIdentifiers.size() > 0) {
                     // Check if the metadata to import has a resource identifier
                     // existing in current catalog for a record with a different UUID
-                    
+
                     log.debug("  - Resource identifiers found : " + resourceIdentifiers.size());
-                    
+
                     for (Element identifierNode : resourceIdentifiers) {
                         String identifier = identifierNode.getTextTrim();
                         log.debug("    - Searching for duplicates for resource identifier: " + identifier);
-                        
-                        Map<String, Map<String,String>> values = LuceneSearcher.getAllMetadataFromIndexFor(defaultLanguage, resourceIdentifierLuceneIndexField, 
+
+                        Map<String, Map<String,String>> values = LuceneSearcher.getAllMetadataFromIndexFor(defaultLanguage, resourceIdentifierLuceneIndexField,
                                 identifier, Collections.singleton("_uuid"), true);
                         log.debug("    - Number of resources with same identifier: " + values.size());
                         for (String key : values.keySet()) {
@@ -419,7 +420,7 @@ public class Aligner extends BaseAligner {
                             if (!indexRecordUuid.equals(uuid)) {
                                 log.debug("      - UUID " + indexRecordUuid + " in index does not match harvested record UUID " + uuid);
                                 log.warning("      - Duplicates found. Skipping record with UUID " + uuid + " and resource identifier " + identifier);
-                                
+
                                 result.duplicatedResource ++;
                                 return true;
                             }
