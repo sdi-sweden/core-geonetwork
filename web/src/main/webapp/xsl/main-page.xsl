@@ -131,16 +131,59 @@
 					document.search.submit();
 			}
 
-			Ext.onReady(function(){
-				$("loading").hide();
+			/**
+			 * This method creates an Ext CookieProvider and sets it's cookie path to the current application context.
+			 * It also clean up old state cookies stored withou path.
+			 */
+			function getStateProvider()
+			{
+				// determine application context path
+				var appContext = '<xsl:copy-of select="java:escapeForHtml(/root/gui/url)" />' + '/';
+		
 
+				// old style cookie provider without path
 				var GNCookie = new Ext.state.CookieProvider({
 					expires: new Date(new Date().getTime()+(1000*60*60*24*365))
 										//1 year from now
 					});
 
-				Ext.state.Manager.setProvider(GNCookie);
+				/* Start fix path on GN cookies */
+				// get the old cookies
+				var cookiesNoPath = {};
+				Ext.apply(cookiesNoPath, GNCookie.state);
+				// clear the old cookies without path
+				if(cookiesNoPath)
+				{
+					for(var key in cookiesNoPath)
+					{
+						GNCookie.clear(key);	
+					}				
+				}				
+				
+				// re-create, with path set
+				GNCookie = new Ext.state.CookieProvider({
+					path: appContext,
+					expires: new Date(new Date().getTime()+(1000*60*60*24*365)) //1 year from now
+					});
+				// set the state cookie back, using path				
+				if(cookiesNoPath)
+				{
+					for(var key in cookiesNoPath)
+					{
+						GNCookie.set(key, cookiesNoPath[key]);	
+					}				
+				}
+				/* End fix path on GN Cookies */
+						
+				return GNCookie;		
+			}
 
+			Ext.onReady(function(){
+				$("loading").hide();
+
+				var GNCookie = getStateProvider();			
+				Ext.state.Manager.setProvider(GNCookie);
+				
 				GeoNetwork.MapStateManager.loadMapState();
 
 				initMapViewer();
