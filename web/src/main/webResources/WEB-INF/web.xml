@@ -127,7 +127,7 @@
         </init-param>
         <init-param>
             <param-name>profileMappings</param-name>
-            <param-value>geodatase_sysadmin=Administrator,geodatase_admin=UserAdmin,geodatase_publisher=Editor,geodatase_editor=Editor,geodatase_user=Guest</param-value>
+            <param-value>geodatase_sysadmin=Administrator,geodatase_admin=UserAdmin,geodatase_publisher=Reviewer,geodatase_editor=Editor,geodatase_user=Guest</param-value>
         </init-param>
     </filter>
     <filter-mapping>
