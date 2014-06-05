@@ -501,8 +501,8 @@
     </welcome-file-list>
 
     <session-config>
-        <!-- 3 hours -->
-        <session-timeout>180</session-timeout>
+        <!-- 30 minutes -->
+        <session-timeout>30</session-timeout>
     </session-config>
 
     <!-- Error handler/page for some error codes. -->
