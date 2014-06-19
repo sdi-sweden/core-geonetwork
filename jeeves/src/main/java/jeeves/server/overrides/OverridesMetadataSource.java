@@ -27,10 +27,10 @@ public class OverridesMetadataSource implements FilterInvocationSecurityMetadata
         this.baseSource = metadataSource;
     }
 
-    
-    
+
+
     @Override
-    public Collection<ConfigAttribute> getAllConfigAttributes() {
+    public synchronized Collection<ConfigAttribute> getAllConfigAttributes() {
         Set<ConfigAttribute> allAttributes = new HashSet<ConfigAttribute>(baseSource.getAllConfigAttributes());
 
         for (Map.Entry<RequestMatcher, Collection<ConfigAttribute>> entry : requestMap.entrySet()) {
@@ -41,7 +41,7 @@ public class OverridesMetadataSource implements FilterInvocationSecurityMetadata
     }
 
     @Override
-    public Collection<ConfigAttribute> getAttributes(Object object) {
+    public synchronized Collection<ConfigAttribute> getAttributes(Object object) {
         Collection<ConfigAttribute> attributes = baseSource.getAttributes(object);
 
         if(attributes == null) {
@@ -63,20 +63,20 @@ public class OverridesMetadataSource implements FilterInvocationSecurityMetadata
 
 
 
-    public void addMapping(RegexRequestMatcher pattern, final String access) {
+    public synchronized void addMapping(RegexRequestMatcher pattern, final String access) {
         LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>> map = new LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>>();
         Collection<ConfigAttribute> atts = new LinkedList<ConfigAttribute>();
         map.put(pattern, atts );
-        
+
         atts.add(new SecurityConfig(access));
-        
+
         ExpressionBasedFilterInvocationSecurityMetadataSource ms = new ExpressionBasedFilterInvocationSecurityMetadataSource(map, new DefaultWebSecurityExpressionHandler());
         Collection<ConfigAttribute> allAttributes = requestMap.get(pattern);
         if(allAttributes == null) {
             allAttributes = new LinkedList<ConfigAttribute>();
             requestMap.put(pattern, allAttributes);
         }
-        
+
         allAttributes.addAll(ms.getAllConfigAttributes());
     }
 }
