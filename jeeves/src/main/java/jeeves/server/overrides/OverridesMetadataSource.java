@@ -23,6 +23,8 @@ public class OverridesMetadataSource implements FilterInvocationSecurityMetadata
     private final Map<RequestMatcher, Collection<ConfigAttribute>> requestMap = new HashMap<RequestMatcher, Collection<ConfigAttribute>>();
     private FilterInvocationSecurityMetadataSource baseSource;
 
+    private Object lock = new Object();
+
     public OverridesMetadataSource(FilterInvocationSecurityMetadataSource metadataSource) {
         this.baseSource = metadataSource;
     }
@@ -30,28 +32,34 @@ public class OverridesMetadataSource implements FilterInvocationSecurityMetadata
 
 
     @Override
-    public synchronized Collection<ConfigAttribute> getAllConfigAttributes() {
+    public Collection<ConfigAttribute> getAllConfigAttributes() {
         Set<ConfigAttribute> allAttributes = new HashSet<ConfigAttribute>(baseSource.getAllConfigAttributes());
 
-        for (Map.Entry<RequestMatcher, Collection<ConfigAttribute>> entry : requestMap.entrySet()) {
-            allAttributes.addAll(entry.getValue());
+        synchronized (lock) {
+            for (Map.Entry<RequestMatcher, Collection<ConfigAttribute>> entry : requestMap.entrySet()) {
+                allAttributes.addAll(entry.getValue());
+            }
         }
+
 
         return allAttributes;
     }
 
     @Override
-    public synchronized Collection<ConfigAttribute> getAttributes(Object object) {
+    public Collection<ConfigAttribute> getAttributes(Object object) {
         Collection<ConfigAttribute> attributes = baseSource.getAttributes(object);
 
         if(attributes == null) {
             final HttpServletRequest request = ((FilterInvocation) object).getRequest();
-            for (Map.Entry<RequestMatcher, Collection<ConfigAttribute>> entry : requestMap.entrySet()) {
-                if (entry.getKey().matches(request)) {
-                    attributes = entry.getValue();
-                    break;
+            synchronized (lock) {
+                for (Map.Entry<RequestMatcher, Collection<ConfigAttribute>> entry : requestMap.entrySet()) {
+                    if (entry.getKey().matches(request)) {
+                        attributes = entry.getValue();
+                        break;
+                    }
                 }
             }
+
         }
         return attributes;
     }
@@ -71,12 +79,16 @@ public class OverridesMetadataSource implements FilterInvocationSecurityMetadata
         atts.add(new SecurityConfig(access));
 
         ExpressionBasedFilterInvocationSecurityMetadataSource ms = new ExpressionBasedFilterInvocationSecurityMetadataSource(map, new DefaultWebSecurityExpressionHandler());
-        Collection<ConfigAttribute> allAttributes = requestMap.get(pattern);
-        if(allAttributes == null) {
-            allAttributes = new LinkedList<ConfigAttribute>();
-            requestMap.put(pattern, allAttributes);
+
+        synchronized (lock) {
+            Collection<ConfigAttribute> allAttributes = requestMap.get(pattern);
+            if(allAttributes == null) {
+                allAttributes = new LinkedList<ConfigAttribute>();
+                requestMap.put(pattern, allAttributes);
+            }
+
+            allAttributes.addAll(ms.getAllConfigAttributes());
         }
 
-        allAttributes.addAll(ms.getAllConfigAttributes());
     }
 }
