@@ -95,10 +95,6 @@
             <param-value>SM_GROUP</param-value>
         </init-param>
         <init-param>
-            <param-name>groupHeaderName</param-name>
-            <param-value>SM_GROUP</param-value>
-        </init-param>
-        <init-param>
             <param-name>firstnameHeaderName</param-name>
             <param-value>SM_FIRSTNAME</param-value>
         </init-param>
@@ -116,29 +112,44 @@
         <url-pattern>${sitemindersimulator.pattern}</url-pattern>
     </filter-mapping>
 
-       <filter>
-        <display-name>SiteminderRoleFixFilter</display-name>
-        <filter-name>SiteminderRoleFixFilter</filter-name>
-        <filter-class>org.lmv.geodata.web.tomcat.filter.SiteminderRoleFixFilter</filter-class>
+    <filter>
+        <filter-name>RoleExtractor</filter-name>
+        <filter-class>org.lmv.geodata.common.server.servlet.filter.header.CommaStringChooserFilter</filter-class>
         <init-param>
-            <description></description>
-            <param-name>roleHeaderKey</param-name>
+            <param-name>headerKey</param-name>
             <param-value>${siteminder.role}</param-value>
         </init-param>
         <init-param>
-            <param-name>profileMappings</param-name>
+            <param-name>validValues</param-name>
+            <param-value>geodatase_sysadm, geodatase_admin, geodatase_editor, geodatase_publisher, geodatase_user</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoleExtractor</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>RoleMapper</filter-name>
+        <filter-class>org.lmv.geodata.common.server.servlet.filter.header.HeaderValueMapperFilter</filter-class>
+        <init-param>
+            <param-name>headerKey</param-name>
+            <param-value>${siteminder.role}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>valueMappings</param-name>
             <param-value>geodatase_sysadmin=Administrator,geodatase_admin=UserAdmin,geodatase_publisher=Reviewer,geodatase_editor=Editor,geodatase_user=Guest</param-value>
         </init-param>
     </filter>
     <filter-mapping>
-        <filter-name>SiteminderRoleFixFilter</filter-name>
+        <filter-name>RoleMapper</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <filter>
         <display-name>RedirectFilter</display-name>
         <filter-name>RedirectFilter</filter-name>
-        <filter-class>org.lmv.geodata.web.tomcat.filter.RedirectFilter</filter-class>
+        <filter-class>org.lmv.geodata.common.server.servlet.filter.RedirectFilter</filter-class>
         <init-param>
             <description></description>
             <param-name>redirectUrl</param-name>
