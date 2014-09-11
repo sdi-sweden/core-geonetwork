@@ -121,7 +121,7 @@
         </init-param>
         <init-param>
             <param-name>validValues</param-name>
-            <param-value>geodatase_sysadm, geodatase_admin, geodatase_editor, geodatase_publisher, geodatase_user</param-value>
+            <param-value>geodatase_sysadmin, geodatase_admin, geodatase_editor, geodatase_publisher, geodatase_user</param-value>
         </init-param>
     </filter>
     <filter-mapping>
