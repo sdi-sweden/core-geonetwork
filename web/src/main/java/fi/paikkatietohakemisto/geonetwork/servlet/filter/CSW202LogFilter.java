@@ -1,20 +1,21 @@
 package fi.paikkatietohakemisto.geonetwork.servlet.filter;
 
 /**
- * 
+ *
  * This is FREE software.
  * EUPL license.
- * 
+ *
  * This software is provided AS IS. Use at your own risk.
  * No Support will be provided.
- * 
- * This File contains a servlet filter class which wraps some local classes that 
- * process CSW requests to store request statistics to a log file. 
- * 
+ *
+ * This File contains a servlet filter class which wraps some local classes that
+ * process CSW requests to store request statistics to a log file.
+ *
  */
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,6 +34,8 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -56,30 +59,30 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
- * 
+ *
  * Servlet Filter to log CSW requests
- * 
+ *
  * Parses query args if one of following is used.
- * 
- * 
+ *
+ *
  * GET, POST/application/x-www-form-urlencoded, POST (assumes xml)
- * 
- * 
+ *
+ *
  * If POST is used, uses XPath to request csw:XXX Method from request body. Note
  * this is stricter with namespaces than geonetwork itself...
- * 
+ *
  * Supports only CSW 2.0.2 requests
- * 
+ *
  * This is a REQUEST filter. Does NOT check exception responses.
- * 
- * 
+ *
+ *
  * @author jjk
- * 
+ *
  */
 
 public class CSW202LogFilter implements Filter {
 
-	
+
 
 	List<String> paths;
 
@@ -97,7 +100,7 @@ public class CSW202LogFilter implements Filter {
 	Csw202RequestBodyProcessor bodyProcessor = new Csw202RequestBodyProcessor();
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	public void destroy() {
@@ -110,7 +113,7 @@ public class CSW202LogFilter implements Filter {
 	/**
 	 * Filters ANY request but processes only those requested to a configured
 	 * URL.
-	 * 
+	 *
 	 */
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse rsp,
@@ -118,7 +121,7 @@ public class CSW202LogFilter implements Filter {
 
 		/**
 		 * Check CSW request matches from URL if POST
-		 * 
+		 *
 		 */
 		if (!(req instanceof HttpServletRequest)) {
 			chain.doFilter(req, rsp);
@@ -152,7 +155,7 @@ public class CSW202LogFilter implements Filter {
 		if (method.equals("GET")) {
 			/**
 			 * Let's log based on URL params
-			 * 
+			 *
 			 */
 
 			String csw_Request_value = null;
@@ -255,9 +258,13 @@ public class CSW202LogFilter implements Filter {
 
 		String isDebug = config.getInitParameter("debug");
 		boolean debug = isDebug != null && "on".equals(isDebug);
-		
+
 		String logpath = config.getInitParameter("logpath");
+		logpath = resolveEnvVars(logpath);
 		String logfile = logpath + "/csw-statistics-%g.log";
+
+		File f = new File(logpath);
+		f.mkdirs();
 
 		try {
 			fh = new FileHandler(logfile, 1024 * 1024 * 256, 16, true);
@@ -270,16 +277,42 @@ public class CSW202LogFilter implements Filter {
 		}
 		fh.setFormatter(new LogFileFormatter());
 		logger.addHandler(fh);
-		
+
 		if( debug )
 			logger.setLevel(Level.ALL);
 		else
 			logger.setLevel(Level.INFO);
-		
+
 		logDebug("Log initialised to filter CSW requests to " + paths);
 
 	}
+	/*
+	 * Returns input string with environment variable references expanded, e.g. $SOME_VAR or ${SOME_VAR}
+	 */
+	private String resolveEnvVars(String input)
+	{
+	    if (null == input)
+	    {
+	        return null;
+	    }
+	    // match ${ENV_VAR_NAME} or $ENV_VAR_NAME
+	    Pattern p = Pattern.compile("\\$\\{(\\w+)\\}|\\$(\\w+)");
+	    Matcher m = p.matcher(input); // get a matcher object
+	    StringBuffer sb = new StringBuffer();
+	    while(m.find()){
+	        String envVarName = null == m.group(1) ? m.group(2) : m.group(1);
+	        String envVarValue = System.getProperty(envVarName);
+	        if(envVarValue==null){
+	            envVarValue = System.getenv(envVarName);
+	        }
+	        m.appendReplacement(sb, null == envVarValue ? "" : envVarValue);
+	    }
+	    m.appendTail(sb);
 
+	    String resolved = sb.toString();
+	    logDebug("Resolved '"+input+"' => '"+resolved+"'");
+	    return resolved;
+	}
 }
 
 class LogFileFormatter extends java.util.logging.Formatter {
@@ -301,9 +334,9 @@ class LogFileFormatter extends java.util.logging.Formatter {
 
 /**
  * helper to not resolve any entities
- * 
+ *
  * @author JKORHONEN
- * 
+ *
  */
 class NullResolver implements EntityResolver {
 	public InputSource resolveEntity(String publicId, String systemId)
@@ -313,9 +346,9 @@ class NullResolver implements EntityResolver {
 }
 
 /**
- * 
+ *
  * helper to read and store request body
- * 
+ *
  */
 class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
 
@@ -384,8 +417,8 @@ class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
 
 /**
  * helper to map csw to http://www.opengis.net/cat/csw/2.0.2
- * 
- * 
+ *
+ *
  */
 class Csw202NamespaceContext implements NamespaceContext {
 	static final String ns_csw = "http://www.opengis.net/cat/csw/2.0.2";
@@ -483,9 +516,9 @@ class Csw202RequestArgsProcessor implements Csw202RequestProcessor {
 
 /**
  * checks POST body as byte[] for any CSW operations
- * 
+ *
  * @author JKORHONEN
- * 
+ *
  */
 class Csw202RequestBodyProcessor implements Csw202RequestProcessor {
 
@@ -495,7 +528,7 @@ class Csw202RequestBodyProcessor implements Csw202RequestProcessor {
 	/**
 	 * processes BODY with XPath. Creates any XPath related objects per request
 	 * as XPath processing is not thread safe.
-	 * 
+	 *
 	 * @param arr
 	 * @return
 	 * @throws IOException
