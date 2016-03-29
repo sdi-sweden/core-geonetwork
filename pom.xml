@@ -140,17 +140,19 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>findbugs-maven-plugin</artifactId>
-          <version>2.5.3</version>
+          <version>3.0.1</version>
           <configuration>
             <effort>Default</effort>
-            <threshold>Default</threshold>
+<!--             <threshold>Default</threshold> -->
+            <threshold>High</threshold>
             <xmlOutput>true</xmlOutput>
-            <xmlOutput>true</xmlOutput>
+<!--            <xmlOutput>true</xmlOutput> -->
             <excludeFilterFile>${rootProjectDir}/code_quality/findbugs-excludes.xml</excludeFilterFile>
             <debug>false</debug>
             <includeTests>false</includeTests>
+            <failOnError>false</failOnError>
           </configuration>
-<!--
+<!-- -->
          <executions>
             <execution>
               <goals>
@@ -159,7 +161,7 @@
               <phase>test</phase>
             </execution>
           </executions>
--->
+<!-- -->
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
