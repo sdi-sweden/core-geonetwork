@@ -1,0 +1,167 @@
+
+<div data-ng-search-form=""
+     data-runSearch="true">
+
+  <!-- Search form -->
+  <div data-ng-include="'../../catalog/views/swe/templates/searchForm.html'"></div>
+
+  <div class="geo-data-list-cont">
+    <!-- Sort and change view -->
+    <div class="list-filter-cont">
+      <div class="sort-filter-cont">
+        <div class="sort-filter">
+          <span class="sort-filter-label">Sortera efter:</span>
+          <div class="filter-cont"
+                 data-swe-sortby-combo=""
+                 data-params="searchObj.params"
+                 data-swe-sortby-values="searchObj.sortbyValues">
+
+            <!--<div class="-label">A-Ö <span class="icon-down-dir"></span></div>
+            <ul class="-list">
+              <li class="active"><a href="" class="-text-link">A-B</a></li>
+              <li><a href="" class="-text-link">by Name</a></li>
+              <li><a href="" class="-text-link">By Date</a></li>
+              <li><a href="" class="-text-link">By Geography</a></li>
+            </ul>-->
+          </div>
+        </div>
+      </div>
+      <div class="loggedin-filter-link-cont">
+        <a href="">skapa ny metadatapost</a>
+        <a href="">export data</a>
+      </div>
+      <div class="alternate-views">
+        <ul>
+          <li><div class="list-view-btn detail-view active" data-ng-click="setFullViewResults()"><span></span></div></li>
+          <li><div class="list-view-btn compact-view" data-ng-click="setCompactViewResults()"><span></span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="geo-data-list">
+      <div class="geo-data-row" data-ng-repeat="md in searchResults.records" gn-fix-mdlinks="">
+        <div class="cb-cont checked login-cb-cont"><div class="cb"><span class="icon-ok"></span><input type="checkbox"></div></div>
+        <div class="meta-data-wrapper">
+          <div class="meta-data-cont">
+            <img src="../../catalog/views/swe/images/open-repo.png" class="repo-img">
+            <ul class="tools-list">
+              <li><a href="" data-ng-click="showMetadata()"><span class="icon-doc-text"></span></a></li>
+              <li><a href=""><div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span></div></a></li>
+              <li data-ng-show="::layers.length > 0"><a href="" ata-ng-click="resultviewFns.addMdLayerToMap(layers[0], md)"><span class="icon-map"></span></a></li>
+              <li data-ng-show="::downloads.length > 0"><a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}"><span class="download-icn-cont"><span class="icon-down-fat"></span></span></a></li>
+            </ul>
+            <div class="meta-data">
+              <h1><img src="../../catalog/views/swe/images/open-repo.png" class="mobile-repo-img">{{md.title || md.defaultTitle}} <div class="star-cont"><span class="icon-star-empty"></span><span class="icon-star"></span></div></h1>
+              <span class="excerpt">{{md.abstract || md.defaultAbstract}}</span>
+            </div>
+            <div class="update-tag"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
+                                                                 data-from-now=""></span></span>
+              <!--<div class="help-icn-cont">
+                <div class="help-icn-circle"><span class="icon-help"></span></div>
+                <div class="tool-tip-cont">
+                  <div class="tool-tip">
+                    <span class="triangle"></span>
+                    <h2>Sökning på ämnesområden</h2>
+                    <p>Markera ett eller flera ämnesområden du vill söka geodata inom.</p>
+                    <p>Kan kombineras med fritextsökning.</p>
+                  </div>
+                </div>
+              </div>-->
+            </div>
+          </div>
+        </div>
+        <div class="excerpt-table-cont">
+          <span class="excerpt-mobile">{{md.abstract || md.defaultAbstract}}</span>
+          <div class="excerpt-table">
+            <div class="excerpt-row">
+              <div class="excerpt-colm col1">
+                <span class="topic">Ansvarig part</span>
+              </div>
+              <div class="excerpt-colm col2">
+                <div class="excerpt-desc">
+                  <p data-ng-repeat="r in md.responsibleParty" data-ng-show="r.indexOf('pointOfContact') != -1">{{r | split:'|':2}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="excerpt-row">
+              <div class="excerpt-colm col1">
+                <span class="topic">Sammanfattning</span>
+              </div>
+              <div class="excerpt-colm col2">
+                <div class="excerpt-desc">
+                  <p>{{md.abstract || md.defaultAbstract}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="data-timelog-table">
+            <div class="data-timelog-row">
+              <div class="data-timelog-td"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
+                                                                         data-from-now=""></span></span></div>
+              <div class="data-timelog-td"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
+                                                                         data-from-now=""></span></span></div>
+            </div>
+            <div class="data-timelog-row">
+              <div class="data-timelog-td"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
+                                                                         data-from-now=""></span></span></div>
+              <div class="data-timelog-td"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
+                                                                         data-from-now=""></span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="geo-data-toolbar-cont">
+          <div class="toolbar-left-list tool-bar-list">
+            <div data-swe-toggle-style="" class="dropdown-cont meta-dropdown">
+              <div class="-label"><span class="icon-doc-text"></span>visa metadata <span class="icon-down-dir"></span></div>
+              <div data-swe-md-actions-menu="" />
+              <!--<ul class="-list">
+                <li><a href="" data-ng-click="showMetadata()" class="-text-link edit-form-popup-link">redigera</a></li>
+                <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records/{{md['geonet:info'].uuid}}">spara som ISO19139</a></li>
+                <li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md['geonet:info'].uuid)">Spara som DCAT</a></li>
+                <li><a href="" class="-text-link">ta bort</a></li>
+              </ul>-->
+            </div>
+            <div data-swe-toggle-style="" class="dropdown-cont loggedin-meta-dropdown">
+              <div class="-label"><span class="icon-pencil"></span>Publicerarverktyg <span class="icon-down-dir"></span></div>
+              <ul class="-list">
+                <li><a href="" data-ng-click="showMetadata()" class="-text-link edit-form-popup-link">redigera 432432</a></li>
+                <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records111/{{md['geonet:info'].uuid}}"> spara som ISO19139</a></li>
+                <li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md['geonet:info'].uuid)"> 222 Spara som DCAT</a></li>
+                <li><a href="" class="-text-link">ta bort</a></li>
+              </ul>
+            </div>
+            <div class="link-cont" >
+              <a class="-label-link" href=""><div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span></div>visa Täckningsyta</a>
+            </div>
+          </div>
+          <div class="toolbar-right-list tool-bar-list">
+            <!--<div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown">
+              <div class="-label"><span class="icon-info"></span>Mer information <span class="icon-down-dir"></span></div>
+              <ul class="-list">
+                <li><a href="" class="-text-link">redigera</a></li>
+                <li><a href="" class="-text-link">spara som ISO19139</a></li>
+                <li><a href="" class="-text-link">Spara som DCAT</a></li>
+                <li><a href="" class="-text-link">ta bort</a></li>
+              </ul>
+            </div>-->
+            <div class="link-cont" data-ng-show="::layers.length > 0">
+                <a href="" class="-label-link" data-ng-click="resultviewFns.addMdLayerToMap(layers[0], md)"><span class="icon-map"></span>Visa på karta</a>
+            </div>
+
+            <div class="link-cont" data-ng-show="::downloads.length > 0">
+              <a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}" class="-label-link"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>Hämta datamängd</a>
+            </div>
+          </div>
+        </div>
+        <!--<div class="geo-data-mobile-toolbar-cont">
+          <div class="mobile-tools-cont">
+            <a class="mob-metadata-link mob-tool-link" href=""><span class="icon-doc-text"></span>visa metadata</a>
+            <a class="mob-map-link mob-tool-link" href=""><span class="icon-map"></span>Visa på karta</a>
+          </div>
+        </div>-->
+      </div>
+
+    </div>
+  </div>
+</div>

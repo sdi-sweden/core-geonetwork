@@ -1,0 +1,7 @@
+<ul class="-list">
+  <li><a href="" class="-text-link edit-form-popup-link" data-ng-click="showMetadata($index, md, searchResults.records)" >redigera</a></li>
+  <li><a href="" class="-text-link edit-form-popup-link" data-ng-click="showMetadata($index, md, searchResults.records)" >redigera</a></li>
+  <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records/{{md.getUuid()}}">spara som ISO19139</a></li>
+  <li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md.getUuid())">Spara som DCAT</a></li>
+  <li ng-if="user.isEditorOrMore()"><a href="" class="-text-link" data-ng-click="mdService.deleteMd(md)">ta bort</a></li>
+</ul>

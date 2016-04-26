@@ -439,6 +439,12 @@
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>se-web-ui</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
       <dependency>
           <groupId>${project.groupId}</groupId>
           <artifactId>domain</artifactId>
@@ -635,6 +641,9 @@
                   <directory>${project.basedir}/../web-ui/src/main/resources</directory>
             </resource>
             <resource>
+              <directory>${project.basedir}/../se-web-ui/src/main/resources</directory>
+            </resource>
+            <resource>
               <directory>${build.webapp.resources}</directory>
             </resource>
 
@@ -696,6 +705,7 @@
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <configuration>
+            <war>${project.basedir}/target/geonetwork</war>
             <contextXml>${basedir}/jetty-context.xml</contextXml>
             <connectors>
             <connector implementation="org.eclipse.jetty.server.bio.SocketConnector">
@@ -721,19 +731,21 @@
           <webApp>
             <contextPath>/geonetwork</contextPath>
             <descriptor>${project.build.directory}/WEB-INF/web.xml</descriptor>
-            <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+            <!--<baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">-->
            <!--
               Enable to use ExtJS UI
               Add
               ${rootProjectDir}/web-client/src/main/resources/
               to resourcesAsCSV
             -->
-            <resourcesAsCSV>
+              <!-- ${rootProjectDir}/se-web-ui/src/main/resources/, -->
+            <!--<resourcesAsCSV>
               ${project.basedir}/src/main/webapp,
               ${rootProjectDir}/web-ui/src/main/resources/,
+              ${rootProjectDir}/se-web-ui/src/main/resources/,
               ${build.webapp.resources}
               </resourcesAsCSV>
-            </baseResource>
+            </baseResource>-->
           </webApp>
           <systemProperties>
             <systemProperty>

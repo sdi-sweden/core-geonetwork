@@ -1,0 +1,134 @@
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<div>
+
+  <header data-ng-include="'../../catalog/views/swe/templates/header.html'"></header>
+
+  <div data-gn-alert-manager=""></div><cookiewarning></cookiewarning>
+
+  <div class="overlay"></div>
+
+  <!-- Login popup -->
+  <div id="login-popup" class="popup login-popup" data-ng-controller="SweLoginController">
+    <div class="popup-cont">
+      <a href="" data-swe-hide-dialog="" data-dialog="#login-popup" class="cls-btn icon-cancel"></a>
+      <div class="popup-data">
+        <div class="login-section-cont">
+          <div class="login-section">
+            <h1>Logga in på Geodataportalen</h1>
+            <p>Användarkonto till Geodataportalen behövs bara om du är publicerare. Är du redan det logga in nedan.</p>
+
+            <form class="login-form" abineguid="63019F15C9C54502A51867AC03621D44"
+                  name="gnSigninForm" action="{{formAction}}"
+                  method="post" role="form"
+                  data-ng-if="user['@authenticated'] != 'true'">
+              <div class="form-row">
+                <label>Användarnamn</label>
+                <input type="text" class="input" id="inputUsername" name="username"
+                       data-ng-model="formData.username" placeholder="{{'username' | translate}}" required=""/>
+              </div>
+              <div class="form-row">
+                <label>lösenord</label>
+                <input type="password" class="input"  id="inputPassword" name="password"
+                       data-ng-model="formData.password" placeholder="{{'password' | translate}}" required="" />
+              </div>
+            </form>
+            <div class="btn-cont">
+              <div class="remember-login-cont">
+                <div class="cb-cont checked"><div class="cb"><span class="icon-ok"></span><input type="checkbox"></div><span class="text">Håll mig inloggad</span></div>
+                <a href="" class="link-btn publisher-user-login-btn" data-ng-click="login()" data-ng-disabled="!gnSigninForm.$valid">Logga in</a>
+              </div>
+            </div>
+          </div>
+          <div class="login-footer">
+            <a href="" class="login-help-link"><span class="icon-help-1"></span>glömt lösenord</a>
+            <a href="" class="login-plus-link"><span class="icon-plus"></span>skapa konto</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Landing page popup -->
+  <div id="landing-popup" class="popup landing-popup show" data-ng-init="init()" data-ng-controller="SweLandingPageWarningController">
+    <div class="popup-cont">
+      <a href="" data-ng-click="close()" class="cls-btn icon-cancel"></a>
+      <div class="popup-data">
+        <div class="landing-data-cont">
+          <ul class="img-list">
+            <li style="background-image: url(http://lorempixel.com/220/130/);"></li>
+            <li style="background-image: url(http://lorempixel.com/220/130/);"></li>
+            <li style="background-image: url(http://lorempixel.com/220/130/);"></li>
+            <li style="background-image: url(http://lorempixel.com/220/130/);"></li>
+          </ul>
+          <div class="landing-data">
+            <div class="article">
+              <h1>Välkommen till Geodataportalen!</h1>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+            </div>
+            <ul class="link-list">
+              <li><a href="">hitta geodata</a></li>
+              <li><a href="">Hämta datamängder</a></li>
+              <li><a href="">Använda kartan</a></li>
+            </ul>
+            <div class="btn-cont">
+              <div class="terms-cont">
+                <div class="cb-cont checked"><div class="cb"><span ng-class='{"icon-ok":hideLandingPage==true}'></span><input type="checkbox" data-ng-model="hideLandingPage"></div><span class="text">Visa detta meddelande vid start</span></div>
+              </div>
+              <a href="" data-ng-click="close()" class="link-btn start-using-geo-data">börja använda geodataportalen</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div data-ng-controller="GnSearchController">
+    <div class="main-wrapper" data-ng-controller="gnsSwe">
+      <div class="site-wrapper">
+        <!-- Filters -->
+        <div data-ng-include="'../../catalog/views/swe/templates/filters.html'" />
+
+        <div class="site-content">
+          <!-- Map -->
+          <!--<div class="floating-map-cont">
+            <div class="floating-map">
+              <span class="cursor-cont"><span class="icon-cursor"></span></span>
+              <div class="map-img"></div>
+            </div>
+          </div>-->
+
+          <div class="floating-map" data-gn-map-field="searchObj.searchMap"
+               data-template-url="../../catalog/views/swe/directives/partials/mapfield.html"
+               data-gn-map-field-geom="searchObj.params.geometry"
+               data-gn-map-field-opt="searchObj.mapfieldOption"></div>
+
+          <div data-ng-include="'../../catalog/views/swe/templates/resultList.html'" />
+
+          <!-- Result popup -->
+          <div data-ng-include="'../../catalog/views/swe/templates/result.html'" />
+        </div>
+      </div>
+
+      <div class="site-side-map-cont">
+        <div class="site-side-map-wrapper">
+          <!-- Full map -->
+          <div class="map-cont">
+            <ul class="map-tool-list" style="z-index: 1000">
+              <li><a href="" data-ng-click="hideMapPanel()" class="icon-cancel"></a></li>
+              <!--<li class=""><a href="" class="icon-buffer"></a></li>-->
+              <li id="map-panel-resize" class="resize full"><a href="" data-ng-click="resizeMapPanel()"><span class="icon-resize-full"></span><span class="icon-resize-small"></span></a></li>
+            </ul>
+            <div gn-main-viewer=""
+                 data-map="searchObj.viewerMap">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar" data-ng-include="'../../catalog/views/swe/templates/footer.html'"></div>
+
+</div>

@@ -1,0 +1,14 @@
+
+<div data-ng-search-form=""
+     data-runSearch="true">
+
+  <!-- Search form -->
+  <div data-ng-include="'../../catalog/views/swe/templates/searchForm.html'"></div>
+
+
+  <div data-ng-show="searchResults.records.length > 0"
+       data-gn-results-container=""
+       data-search-results="searchResults"
+       data-template-url="resultTemplate"
+      ></div>
+</div>

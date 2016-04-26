@@ -1061,7 +1061,7 @@
       <url>http://maven.k-int.com/content/repositories/releases/</url>
     </repository>
 
-    
+
     <repository>
       <snapshots>
         <enabled>true</enabled>
@@ -1073,7 +1073,7 @@
       <name>GeoNetwork remote repository</name>
       <url>https://raw.githubusercontent.com/geonetwork/core-maven-repo/master</url>
     </repository>
-    
+
     <repository>
       <id>mvnrepository.com</id>
       <name>Repository that has juniversalchardet</name>
@@ -1135,6 +1135,7 @@
       <modules>
         <module>schemas-test</module>
         <module>web-ui</module>
+        <module>se-web-ui</module>
         <module>web-ui-docs</module>
         <module>web-client</module>
         <module>web</module>
