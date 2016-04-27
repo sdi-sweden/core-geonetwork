@@ -105,7 +105,50 @@
                data-gn-map-field-geom="searchObj.params.geometry"
                data-gn-map-field-opt="searchObj.mapfieldOption"></div>
 
-          <div data-ng-include="'../../catalog/views/swe/templates/resultList.html'" />
+          <!-- Search form -->
+          <div data-ng-include="'../../catalog/views/swe/templates/searchForm.html'"></div>
+
+          <div class="geo-data-list-cont">
+              <!-- Sort and change view -->
+              <div class="list-filter-cont">
+                <div class="sort-filter-cont">
+                  <div class="sort-filter">
+                    <span class="sort-filter-label">Sortera efter:</span>
+                    <div class="filter-cont"
+                         data-swe-sortby-combo=""
+                         data-params="searchObj.params"
+                         data-swe-sortby-values="searchObj.sortbyValues">
+
+                      <!--<div class="-label">A-Ö <span class="icon-down-dir"></span></div>
+                      <ul class="-list">
+                        <li class="active"><a href="" class="-text-link">A-B</a></li>
+                        <li><a href="" class="-text-link">by Name</a></li>
+                        <li><a href="" class="-text-link">By Date</a></li>
+                        <li><a href="" class="-text-link">By Geography</a></li>
+                      </ul>-->
+                    </div>
+                  </div>
+                </div>
+                <div data-gn-pagination="paginationInfo"
+                     data-hits-values="searchObj.hitsperpageValues"
+                    class="pagination-cont"
+                     data-enable-hot-keys=""></div>
+
+                <div class="loggedin-filter-link-cont">
+                  <a href="">skapa ny metadatapost</a>
+                  <a href="">export data</a>
+                </div>
+                <div class="alternate-views">
+                  <ul>
+                    <li><div class="list-view-btn detail-view active" data-ng-click="setFullViewResults()"><span></span></div></li>
+                    <li><div class="list-view-btn compact-view" data-ng-click="setCompactViewResults()"><span></span></div></li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Results -->
+              <div data-ng-include="'../../catalog/views/swe/templates/resultList.html'" />
+            </div>
 
           <!-- Result popup -->
           <div data-ng-include="'../../catalog/views/swe/templates/result.html'" />
