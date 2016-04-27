@@ -416,4 +416,45 @@
       };
     }]);
 
+
+  /**
+   * Controller for the filter panel.
+   *
+   */
+  module.controller('SweFilterPanelController', ['$scope',
+    function($scope) {
+
+      $scope.open = false;
+      $scope.advancedMode = false;
+
+      $scope.toggleFilterPanel = function() {
+        if ($scope.open) {
+          angular.element(".site-filter-cont").removeClass('open');
+        } else {
+          angular.element(".site-filter-cont").addClass('open');
+        }
+
+        $scope.open = !$scope.open;
+      };
+
+      $scope.toggleAdvancedOptions = function() {
+        if ($scope.advancedMode) {
+          angular.element(".filter-options-cont").removeClass('open');
+          angular.element(".site-filter-cont").removeClass('advanced');
+        } else {
+          angular.element(".filter-options-cont").addClass('open');
+          angular.element(".site-filter-cont").addClass('advanced');
+        }
+
+        $scope.advancedMode = !$scope.advancedMode;
+      };
+
+
+      $scope.closeFilterPanel = function() {
+        angular.element(".site-filter-cont").removeClass('open');
+
+        $scope.open = false
+      };
+    }]);
+
 })();

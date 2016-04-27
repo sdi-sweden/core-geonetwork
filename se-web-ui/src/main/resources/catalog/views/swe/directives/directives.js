@@ -168,15 +168,17 @@
     function() {
       return {
         restrict: 'A',
+        scope: { element: '@element' },
         link: function(scope, elem) {
           var currentState = true;
 
           elem.on('click', function() {
+            var e = (scope.element !== undefined)?scope.element:elem;
 
             if (currentState === true) {
-              angular.element(elem).addClass('open');
+              angular.element(e).addClass('open');
             } else {
-              angular.element(elem).removeClass('open');
+              angular.element(e).removeClass('open');
             }
 
             currentState = !currentState;
