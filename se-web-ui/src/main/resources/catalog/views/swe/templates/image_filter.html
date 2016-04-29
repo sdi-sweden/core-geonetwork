@@ -1,0 +1,15 @@
+<ul class="img-list">
+    <li ng-repeat="query in predefinedQueries">
+        <a href ng-mouseenter="hovering=true" title="{{query.tooltip}}" ng-mouseleave="hovering=false" ng-click="doFilter(query)">
+            <div  class="bg-img" ng-style="{'background-image':'url({{query.image}}) '}"></div>
+            <div class="tool-tip-cont">
+                <div class="tool-tip">
+                    <span class="triangle"></span>
+                    <h2>Tooltip</h2>
+                    <p>{{query.tooltip}}</p>
+                </div>
+            </div>
+            <span class="filter-text">{{query.text}}</span>
+        </a>
+    </li>
+</ul>

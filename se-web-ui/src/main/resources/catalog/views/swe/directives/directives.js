@@ -211,4 +211,22 @@
     }
   ]);
 
+  /**
+   * @ngdoc directive
+   * @name sweImageFilter
+   * @function
+   *
+   * @description
+   * Shows image filters on home page.
+   *
+   */
+  module.directive("sweImageFilter", function() {
+    return {
+        restrict: 'E',
+        templateUrl: '../../catalog/views/swe/templates/image_filter.html',
+        controller: 'SweFilterController'
+    };
+  });
+
+
 }());

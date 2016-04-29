@@ -457,4 +457,37 @@
       };
     }]);
 
+  /**
+  * Controller for the image filter panel.
+  *
+  */
+  module.controller('SweFilterController', ['$scope', function($scope) {
+      $scope.hovering = false;
+      // replace prefined queries with a service returning the possible queries
+      $scope.predefinedQueries = [{
+          image: "http://lorempixel.com/210/125/nature/?id=1",
+          tooltip: "Filter 1",
+          text: "Filter 1",
+          query: "Filter Query 1"
+      }, {
+          image: "http://lorempixel.com/210/125/nature/?id=2",
+          tooltip: "Filter 2",
+          text: "Filter 2",
+          query: "Filter Query 2"
+      }, {
+          image: "http://lorempixel.com/210/125/nature/?id=3",
+          tooltip: "Filter 3",
+          text: "Filter 3",
+          query: "Filter Query 3"
+      }, {
+          image: "http://lorempixel.com/210/125/nature/?id=4",
+          tooltip: "Filter 4",
+          text: "Filter 4",
+          query: "Filter Query 4"
+      }];
+      $scope.doFilter = function(query) {
+          window.alert(query.query);
+      };
+  }]);
+
 })();
