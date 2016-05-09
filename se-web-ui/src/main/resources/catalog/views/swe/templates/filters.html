@@ -483,7 +483,7 @@
 
 <div class="site-filter-result-cont" data-ng-controller="SweFilterPanelController">
   <div class="data-result-cont">
-    <span class="result-text">visar <b>{{searchResults.count}}</b> resultat</span>
+    <span class="result-text" data-ng-show="searchResults.count >= 0">visar <b>{{searchResults.count}}</b> resultat</span>
     <ul class="selected-filter-list">
       <!--<li><a href="">karttjänster <span class="icon-cancel"></span></a></li>
       <li><a href="">Biologi och ekologi <span class="icon-cancel"></span></a></li>
