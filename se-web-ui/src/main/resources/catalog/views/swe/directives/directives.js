@@ -173,7 +173,7 @@
           var currentState = true;
 
           elem.on('click', function() {
-            var e = (scope.element !== undefined)?scope.element:elem;
+            var e = (scope.element !== undefined) ? scope.element : elem;
 
             if (currentState === true) {
               angular.element(e).addClass('open');
@@ -220,11 +220,11 @@
    * Shows image filters on home page.
    *
    */
-  module.directive("sweImageFilter", function() {
+  module.directive('sweImageFilter', function() {
     return {
-        restrict: 'E',
-        templateUrl: '../../catalog/views/swe/templates/image_filter.html',
-        controller: 'SweFilterController'
+      restrict: 'E',
+      templateUrl: '../../catalog/views/swe/templates/image_filter.html',
+      controller: 'SweFilterController'
     };
   });
 

@@ -427,16 +427,50 @@
       $scope.open = false;
       $scope.advancedMode = false;
 
-      $scope.topicCategories = ['farming', 'biota', 'boundaries', 'climatologyMeteorologyAtmosphere',
-        'economy', 'elevation', 'environment', 'geoscientificInformation', 'health',
-        'imageryBaseMapsEarthCover', 'intelligenceMilitary', 'inlandWaters', 'location',
-        'oceans', 'planningCadastre', 'society', 'structure', 'transportation', 'utilitiesCommunication'];
+      // keys for topic categories translations
+      $scope.topicCategories = ['farming', 'biota', 'boundaries',
+        'climatologyMeteorologyAtmosphere', 'economy',
+        'elevation', 'environment', 'geoscientificInformation', 'health',
+        'imageryBaseMapsEarthCover', 'intelligenceMilitary', 'inlandWaters',
+        'location', 'oceans', 'planningCadastre', 'society', 'structure',
+        'transportation', 'utilitiesCommunication'];
+
+      // Filter options
+      $scope.filters = {
+        selectedTopicCategories: [],
+        mapResources: false,
+        downloadResources: false,
+        fromDate: '',
+        toDate: ''
+      };
+
+      $scope.toggleTopicCategory = function(topic) {
+        var pos = $scope.filters.selectedTopicCategories.indexOf(topic);
+
+        if (pos > -1) {
+          $scope.filters.selectedTopicCategories.splice(pos, 1);
+        } else {
+          $scope.filters.selectedTopicCategories.push(topic);
+        }
+      };
+
+      $scope.unselectTopicCategory = function(topic) {
+        var pos = $scope.filters.selectedTopicCategories.indexOf(topic);
+
+        if (pos > -1) {
+          $scope.filters.selectedTopicCategories.splice(pos, 1);
+        }
+      };
+
+      $scope.isTopicCategorySelected = function(topic) {
+        return ($scope.filters.selectedTopicCategories.indexOf(topic) > -1);
+      };
 
       $scope.toggleFilterPanel = function() {
         if ($scope.open) {
-          angular.element(".site-filter-cont").removeClass('open');
+          angular.element('.site-filter-cont').removeClass('open');
         } else {
-          angular.element(".site-filter-cont").addClass('open');
+          angular.element('.site-filter-cont').addClass('open');
         }
 
         $scope.open = !$scope.open;
@@ -444,11 +478,11 @@
 
       $scope.toggleAdvancedOptions = function() {
         if ($scope.advancedMode) {
-          angular.element(".filter-options-cont").removeClass('open');
-          angular.element(".site-filter-cont").removeClass('advanced');
+          angular.element('.filter-options-cont').removeClass('open');
+          angular.element('.site-filter-cont').removeClass('advanced');
         } else {
-          angular.element(".filter-options-cont").addClass('open');
-          angular.element(".site-filter-cont").addClass('advanced');
+          angular.element('.filter-options-cont').addClass('open');
+          angular.element('.site-filter-cont').addClass('advanced');
         }
 
         $scope.advancedMode = !$scope.advancedMode;
@@ -456,9 +490,9 @@
 
 
       $scope.closeFilterPanel = function() {
-        angular.element(".site-filter-cont").removeClass('open');
+        angular.element('.site-filter-cont').removeClass('open');
 
-        $scope.open = false
+        $scope.open = false;
       };
     }]);
 
@@ -467,32 +501,32 @@
   *
   */
   module.controller('SweFilterController', ['$scope', function($scope) {
-      $scope.hovering = false;
-      // replace prefined queries with a service returning the possible queries
-      $scope.predefinedQueries = [{
-          image: "http://lorempixel.com/210/125/nature/?id=1",
-          tooltip: "Filter 1",
-          text: "Filter 1",
-          query: "Filter Query 1"
-      }, {
-          image: "http://lorempixel.com/210/125/nature/?id=2",
-          tooltip: "Filter 2",
-          text: "Filter 2",
-          query: "Filter Query 2"
-      }, {
-          image: "http://lorempixel.com/210/125/nature/?id=3",
-          tooltip: "Filter 3",
-          text: "Filter 3",
-          query: "Filter Query 3"
-      }, {
-          image: "http://lorempixel.com/210/125/nature/?id=4",
-          tooltip: "Filter 4",
-          text: "Filter 4",
-          query: "Filter Query 4"
-      }];
-      $scope.doFilter = function(query) {
+    $scope.hovering = false;
+    // replace prefined queries with a service returning the possible queries
+    $scope.predefinedQueries = [{
+          image: 'http://lorempixel.com/210/125/nature/?id=1',
+          tooltip: 'Filter 1',
+          text: 'Filter 1',
+          query: 'Filter Query 1'
+    }, {
+          image: 'http://lorempixel.com/210/125/nature/?id=2',
+          tooltip: 'Filter 2',
+          text: 'Filter 2',
+          query: 'Filter Query 2'
+    }, {
+          image: 'http://lorempixel.com/210/125/nature/?id=3',
+          tooltip: 'Filter 3',
+          text: 'Filter 3',
+          query: 'Filter Query 3'
+    }, {
+          image: 'http://lorempixel.com/210/125/nature/?id=4',
+          tooltip: 'Filter 4',
+          text: 'Filter 4',
+          query: 'Filter Query 4'
+    }];
+    $scope.doFilter = function(query) {
           window.alert(query.query);
-      };
+    };
   }]);
 
 
@@ -500,27 +534,31 @@
    * orderByTranslated Filter
    * Sort ng-options or ng-repeat by translated values
    * @example
-   *   ng-repeat="scheme in data.schemes | orderByTranslated:'storage__':'collectionName'"
+   *   ng-repeat="scheme in data.schemes |
+   *    orderByTranslated:'storage__':'collectionName'"
    * @param  {Array|Object} array or hash
    * @param  {String} i18nKeyPrefix
    * @param  {String} objKey (needed if hash)
    * @return {Array}
    */
-  app.filter('orderByTranslated', ['$translate', '$filter', function($translate, $filter) {
-    return function (array, i18nKeyPrefix, objKey) {
-      var result = [];
-      var translated = [];
-      angular.forEach(array, function(value) {
-        var i18nKeySuffix = objKey ? value[objKey] : value;
-        translated.push({
-          key: value,
-          label: $translate.instant(i18nKeyPrefix + i18nKeySuffix)
+  app.filter('orderByTranslated', ['$translate', '$filter',
+    function($translate, $filter) {
+      return function(array, i18nKeyPrefix, objKey) {
+        var result = [];
+        var translated = [];
+        angular.forEach(array, function(value) {
+          var i18nKeySuffix = objKey ? value[objKey] : value;
+          translated.push({
+            key: value,
+            label: $translate.instant(i18nKeyPrefix + i18nKeySuffix)
+          });
         });
-      });
-      angular.forEach($filter('orderBy')(translated, 'label'), function(sortedObject) {
-        result.push(sortedObject.key);
-      });
-      return result;
-    };
-  }]);
+        angular.forEach($filter('orderBy')(translated, 'label'),
+            function(sortedObject) {
+              result.push(sortedObject.key);
+            }
+        );
+        return result;
+      };
+    }]);
 })();

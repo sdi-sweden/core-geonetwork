@@ -25,7 +25,8 @@
 
   goog.provide('swe_search_config');
 
-  //var module = angular.module('swe_search_config', ['pascalprecht.translate']);
+  //var module = angular.module('swe_search_config',
+  // ['pascalprecht.translate']);
   var module = angular.module('swe_search_config', []);
 
 

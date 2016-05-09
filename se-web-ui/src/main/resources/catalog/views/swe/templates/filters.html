@@ -13,8 +13,16 @@
         <div class="site-geo-type-filter">
           <span class="filter-label">visa enbart:</span>
           <ul class="type-filter-list">
-            <li><a href=""><span class="icon-map"></span>karttjänster</a></li>
-            <li><a href=""><span class="download-icn-cont"><span class="icon-down-fat"></span></span>Direktåtkomliga resurser</a></li>
+            <li>
+              <a href="" data-ng-click="filters.mapResources = !filters.mapResources"
+                 data-ng-class="{'active': (filters.mapResources == true)}">
+                <span class="icon-map"></span>karttjänster</a>
+            </li>
+            <li>
+              <a href="" data-ng-click="filters.downloadResources = !filters.downloadResources"
+                 data-ng-class="{'active': (filters.downloadResources == true)}"><span class="download-icn-cont">
+                <span class="icon-down-fat"></span></span>Direktåtkomliga resurser</a>
+            </li>
             <li><a href=""><span class="icon-star"></span>favoriter</a></li>
             <li><a href=""><span class="icon-eye"></span>geoteknik</a></li>
           </ul>
@@ -37,7 +45,9 @@
         <div class="filter-options-cont">
           <div class="basic-filters-cont active">
             <ul class="geo-categories">
-              <li ng-repeat="topic in topicCategories | orderBy: orderByTranslated"><a href="" data-translate="">{{topic}}</a></li>
+              <li data-ng-repeat="topic in topicCategories | orderBy: orderByTranslated"
+                  data-ng-click="toggleTopicCategory(topic)"
+                  data-ng-class="{'active': isTopicCategorySelected(topic)}"><a href="" data-translate="">{{topic}}</a></li>
               <li><a href="">Ej angivet</a></li>
             </ul>
           </div>
@@ -50,14 +60,14 @@
                   <div class="filter-colm" id="abId0.3915931191863504">
                     <label>Från datum</label>
                     <div class="custom-fld-cont" id="abId0.891437811112971">
-                      <input type="text" placeholder="åååå-mm-dd">
+                      <input type="text" placeholder="åååå-mm-dd" data-ng-model="filters.dateFrom">
                       <span class="icon-calendar-empty"></span>
                     </div>
                   </div>
                   <div class="filter-colm till-date-colm" id="abId0.746339667914671">
                     <label>till datum</label>
                     <div class="custom-fld-cont" id="abId0.5676842456397708">
-                      <input type="text" placeholder="åååå-mm-dd">
+                      <input type="text" placeholder="åååå-mm-dd" data-ng-model="filters.dateTo">
                       <span class="icon-calendar-empty"></span>
                     </div>
                     <div class="help-icn-cont date-help-icn">
@@ -481,13 +491,29 @@
   </div>
 </div>
 
-<div class="site-filter-result-cont" data-ng-controller="SweFilterPanelController">
+<div class="site-filter-result-cont">
   <div class="data-result-cont">
     <span class="result-text" data-ng-show="searchResults.count >= 0">visar <b>{{searchResults.count}}</b> resultat</span>
     <ul class="selected-filter-list">
-      <!--<li><a href="">karttjänster <span class="icon-cancel"></span></a></li>
-      <li><a href="">Biologi och ekologi <span class="icon-cancel"></span></a></li>
-      <li><a href="">Ekonomi <span class="icon-cancel"></span></a></li>-->
+      <li data-ng-show="filters.mapResources == true">
+        <a href="" data-ng-click="filters.mapResources = false">
+          <span>karttjänster</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="filters.downloadResources == true">
+        <a href="" data-ng-click="filters.downloadResources = false">
+          <span>Direktåtkomliga resurser</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-repeat="topic in filters.selectedTopicCategories | orderBy: orderByTranslated">
+        <a href="" data-ng-click="unselectTopicCategory(topic)">
+          <span data-translate="">{{topic}}</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+
     </ul>
     <a href="" data-ng-click="toggleFilterPanel()" class="filter-toggle-link opens-filter-section">visa filtrering <span class="icon-up-dir"></span><span class="icon-down-dir"></span></a>
   </div>
