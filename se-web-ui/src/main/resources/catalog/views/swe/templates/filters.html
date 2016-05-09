@@ -14,12 +14,12 @@
           <span class="filter-label">visa enbart:</span>
           <ul class="type-filter-list">
             <li>
-              <a href="" data-ng-click="filters.mapResources = !filters.mapResources"
+              <a href="" data-ng-click="toggleMapResources()"
                  data-ng-class="{'active': (filters.mapResources == true)}">
                 <span class="icon-map"></span>karttjänster</a>
             </li>
             <li>
-              <a href="" data-ng-click="filters.downloadResources = !filters.downloadResources"
+              <a href="" data-ng-click="toggleDownloadResources()"
                  data-ng-class="{'active': (filters.downloadResources == true)}"><span class="download-icn-cont">
                 <span class="icon-down-fat"></span></span>Direktåtkomliga resurser</a>
             </li>
@@ -496,13 +496,13 @@
     <span class="result-text" data-ng-show="searchResults.count >= 0">visar <b>{{searchResults.count}}</b> resultat</span>
     <ul class="selected-filter-list">
       <li data-ng-show="filters.mapResources == true">
-        <a href="" data-ng-click="filters.mapResources = false">
+        <a href="" data-ng-click="unselectMapResources()">
           <span>karttjänster</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
       <li data-ng-show="filters.downloadResources == true">
-        <a href="" data-ng-click="filters.downloadResources = false">
+        <a href="" data-ng-click="unselectDownloadResources()">
           <span>Direktåtkomliga resurser</span>
           <span class="icon-cancel"></span>
         </a>

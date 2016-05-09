@@ -444,6 +444,7 @@
         toDate: ''
       };
 
+
       $scope.toggleTopicCategory = function(topic) {
         var pos = $scope.filters.selectedTopicCategories.indexOf(topic);
 
@@ -452,6 +453,10 @@
         } else {
           $scope.filters.selectedTopicCategories.push(topic);
         }
+
+        $scope.searchObj.params.topicCat =
+            $scope.filters.selectedTopicCategories.join(' or ');
+        $scope.triggerSearch();
       };
 
       $scope.unselectTopicCategory = function(topic) {
@@ -460,10 +465,40 @@
         if (pos > -1) {
           $scope.filters.selectedTopicCategories.splice(pos, 1);
         }
+
+        $scope.searchObj.params.topicCat =
+            $scope.filters.selectedTopicCategories.join(' or ');
+        $scope.triggerSearch();
       };
 
       $scope.isTopicCategorySelected = function(topic) {
         return ($scope.filters.selectedTopicCategories.indexOf(topic) > -1);
+      };
+
+      $scope.toggleMapResources = function() {
+        $scope.filters.mapResources = !$scope.filters.mapResources;
+        $scope.searchObj.params.dynamic =
+            ($scope.filters.mapResources ? 'true' : '');
+        $scope.triggerSearch();
+      };
+
+      $scope.unselectMapResources = function() {
+        $scope.filters.downloadResources = false;
+        $scope.searchObj.params.dynamic = '';
+        $scope.triggerSearch();
+      };
+
+      $scope.toggleDownloadResources = function() {
+        $scope.filters.downloadResources = !$scope.filters.downloadResources;
+        $scope.searchObj.params.download =
+            ($scope.filters.downloadResources ? 'true' : '');
+        $scope.triggerSearch();
+      };
+
+      $scope.unselectDownloadResources = function() {
+        $scope.filters.downloadResources = false;
+        $scope.searchObj.params.download = '';
+        $scope.triggerSearch();
       };
 
       $scope.toggleFilterPanel = function() {
@@ -541,7 +576,7 @@
    * @param  {String} objKey (needed if hash)
    * @return {Array}
    */
-  app.filter('orderByTranslated', ['$translate', '$filter',
+  module.filter('orderByTranslated', ['$translate', '$filter',
     function($translate, $filter) {
       return function(array, i18nKeyPrefix, objKey) {
         var result = [];
