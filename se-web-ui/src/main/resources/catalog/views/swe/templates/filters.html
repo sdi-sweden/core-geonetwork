@@ -15,19 +15,19 @@
           <ul class="type-filter-list">
             <li>
               <a href="" data-ng-click="toggleMapResources()"
-                 data-ng-class="{'active': (filters.mapResources == true)}">
+                 data-ng-class="{'active': (searchObj.params.dynamic == 'true')}">
                 <span class="icon-map"></span>karttjänster</a>
             </li>
             <li>
               <a href="" data-ng-click="toggleDownloadResources()"
-                 data-ng-class="{'active': (filters.downloadResources == true)}"><span class="download-icn-cont">
+                 data-ng-class="{'active': (searchObj.params.download == 'true')}"><span class="download-icn-cont">
                 <span class="icon-down-fat"></span></span>Direktåtkomliga resurser</a>
             </li>
             <li><a href=""><span class="icon-star"></span>favoriter</a></li>
             <li><a href=""><span class="icon-eye"></span>geoteknik</a></li>
           </ul>
           <div class="other-filters">
-            <a href="" class="fltr-link resource-link">Visa alla resurser</a>
+            <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link">Visa alla resurser</a>
             <a href="" data-ng-click="toggleAdvancedOptions()" class="fltr-link advance-link">Avancerad vy</a>
             <div class="help-icn-cont other-filter-help-icn">
               <div class="help-icn-circle"><span class="icon-help"></span></div>
@@ -495,19 +495,19 @@
   <div class="data-result-cont">
     <span class="result-text" data-ng-show="searchResults.count >= 0">visar <b>{{searchResults.count}}</b> resultat</span>
     <ul class="selected-filter-list">
-      <li data-ng-show="filters.mapResources == true">
+      <li data-ng-show="searchObj.params.dynamic == 'true'">
         <a href="" data-ng-click="unselectMapResources()">
           <span>karttjänster</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
-      <li data-ng-show="filters.downloadResources == true">
+      <li data-ng-show="searchObj.params.download == 'true'">
         <a href="" data-ng-click="unselectDownloadResources()">
           <span>Direktåtkomliga resurser</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
-      <li data-ng-repeat="topic in filters.selectedTopicCategories | orderBy: orderByTranslated">
+      <li data-ng-repeat="topic in selectedTopicCategories | orderBy: orderByTranslated">
         <a href="" data-ng-click="unselectTopicCategory(topic)">
           <span data-translate="">{{topic}}</span>
           <span class="icon-cancel"></span>

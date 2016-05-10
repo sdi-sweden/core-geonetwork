@@ -435,69 +435,70 @@
         'location', 'oceans', 'planningCadastre', 'society', 'structure',
         'transportation', 'utilitiesCommunication'];
 
-      // Filter options
-      $scope.filters = {
-        selectedTopicCategories: [],
-        mapResources: false,
-        downloadResources: false,
-        fromDate: '',
-        toDate: ''
-      };
+      // Selected topic categories
+      $scope.selectedTopicCategories = [];
 
 
       $scope.toggleTopicCategory = function(topic) {
-        var pos = $scope.filters.selectedTopicCategories.indexOf(topic);
+        var pos = $scope.selectedTopicCategories.indexOf(topic);
 
         if (pos > -1) {
-          $scope.filters.selectedTopicCategories.splice(pos, 1);
+          $scope.selectedTopicCategories.splice(pos, 1);
         } else {
-          $scope.filters.selectedTopicCategories.push(topic);
+          $scope.selectedTopicCategories.push(topic);
         }
 
         $scope.searchObj.params.topicCat =
-            $scope.filters.selectedTopicCategories.join(' or ');
+            $scope.selectedTopicCategories.join(' or ');
         $scope.triggerSearch();
       };
 
       $scope.unselectTopicCategory = function(topic) {
-        var pos = $scope.filters.selectedTopicCategories.indexOf(topic);
+        var pos = $scope.selectedTopicCategories.indexOf(topic);
 
         if (pos > -1) {
-          $scope.filters.selectedTopicCategories.splice(pos, 1);
+          $scope.selectedTopicCategories.splice(pos, 1);
         }
 
         $scope.searchObj.params.topicCat =
-            $scope.filters.selectedTopicCategories.join(' or ');
+            $scope.selectedTopicCategories.join(' or ');
         $scope.triggerSearch();
       };
 
       $scope.isTopicCategorySelected = function(topic) {
-        return ($scope.filters.selectedTopicCategories.indexOf(topic) > -1);
+        return ($scope.selectedTopicCategories.indexOf(topic) > -1);
       };
 
       $scope.toggleMapResources = function() {
-        $scope.filters.mapResources = !$scope.filters.mapResources;
         $scope.searchObj.params.dynamic =
-            ($scope.filters.mapResources ? 'true' : '');
+            ($scope.searchObj.params.dynamic == 'true' ? '' : 'true');
         $scope.triggerSearch();
       };
 
       $scope.unselectMapResources = function() {
-        $scope.filters.downloadResources = false;
-        $scope.searchObj.params.dynamic = '';
+        delete $scope.searchObj.params.dynamic;
         $scope.triggerSearch();
       };
 
       $scope.toggleDownloadResources = function() {
-        $scope.filters.downloadResources = !$scope.filters.downloadResources;
         $scope.searchObj.params.download =
-            ($scope.filters.downloadResources ? 'true' : '');
+            ($scope.searchObj.params.download == 'true' ? '' : 'true');
         $scope.triggerSearch();
       };
 
       $scope.unselectDownloadResources = function() {
-        $scope.filters.downloadResources = false;
-        $scope.searchObj.params.download = '';
+        delete $scope.searchObj.params.download;
+        $scope.triggerSearch();
+      };
+
+      $scope.viewAllMetadata = function() {
+        // Clean search options
+        $scope.selectedTopicCategories = [];
+        delete $scope.searchObj.params.topicCat;
+        delete $scope.searchObj.params.download;
+        delete $scope.searchObj.params.dynamic;
+        delete $scope.searchObj.params.any;
+
         $scope.triggerSearch();
       };
 
