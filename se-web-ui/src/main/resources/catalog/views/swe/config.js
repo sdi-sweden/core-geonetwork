@@ -120,9 +120,6 @@
       };
 
       gnSearchSettings.sortbyValues = [{
-        sortBy: 'relevance',
-        sortOrder: ''
-      }, {
         sortBy: 'changeDate',
         sortOrder: ''
       }, {
