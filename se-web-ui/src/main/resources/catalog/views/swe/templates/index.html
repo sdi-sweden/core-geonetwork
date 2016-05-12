@@ -18,28 +18,28 @@
             <h1>Logga in på Geodataportalen</h1>
             <p>Användarkonto till Geodataportalen behövs bara om du är publicerare. Är du redan det logga in nedan.</p>
 
-            <form class="login-form" abineguid="63019F15C9C54502A51867AC03621D44"
-                  name="gnSigninForm" action="{{formAction}}"
-                  method="post" role="form"
-                  data-ng-if="user['@authenticated'] != 'true'">
-              <div class="form-row">
-                <label>Användarnamn</label>
-                <input type="text" class="input" id="inputUsername" name="username"
-                       data-ng-model="formData.username" placeholder="{{'username' | translate}}" required=""/>
-              </div>
-              <div class="form-row">
-                <label>lösenord</label>
-                <input type="password" class="input"  id="inputPassword" name="password"
-                       data-ng-model="formData.password" placeholder="{{'password' | translate}}" required="" />
-              </div>
-            </form>
-            <div class="btn-cont">
-              <div class="remember-login-cont">
-                <div class="cb-cont checked"><div class="cb"><span class="icon-ok"></span><input type="checkbox"></div><span class="text">Håll mig inloggad</span></div>
-                <a href="" class="link-btn publisher-user-login-btn" data-ng-click="login()" data-ng-disabled="!gnSigninForm.$valid">Logga in</a>
+              <form class="login-form" abineguid="63019F15C9C54502A51867AC03621D44"
+                    name="gnSigninForm" action="{{formAction}}"
+                    method="post" role="form"
+                    data-ng-if="user['@authenticated'] != 'true'">
+                <div class="form-row">
+                  <label>Användarnamn</label>
+                  <input type="text" class="input" id="inputUsername" name="username"
+                         data-ng-model="formData.username" placeholder="{{'username' | translate}}" required=""/>
+                </div>
+                <div class="form-row">
+                  <label>lösenord</label>
+                  <input type="password" class="input"  id="inputPassword" name="password"
+                         data-ng-model="formData.password" placeholder="{{'password' | translate}}" required="" />
+                </div>
+              </form>
+              <div class="btn-cont">
+                <div class="remember-login-cont">
+                  <div class="cb-cont checked"><div class="cb"><span class="icon-ok"></span><input type="checkbox"></div><span class="text">Håll mig inloggad</span></div>
+                  <a href="" class="link-btn publisher-user-login-btn" data-ng-click="login()" data-ng-disabled="!gnSigninForm.$valid">Logga in</a>
+                </div>
               </div>
             </div>
-          </div>
           <div class="login-footer">
             <a href="" class="login-help-link"><span class="icon-help-1"></span>glömt lösenord</a>
             <a href="" class="login-plus-link"><span class="icon-plus"></span>skapa konto</a>
@@ -83,6 +83,50 @@
     </div>
   </div>
 
+  <!-- Mail comment popup -->
+  <div id="mail-popup" class="popup mail-popup" data-ng-controller="SweMailController">
+    <div class="popup-cont">
+      <a href="" data-ng-click="close()" class="cls-btn icon-cancel"></a>
+      <div class="popup-data">
+        <div class="mail-data-cont">
+          <div class="mail-data">
+            <div class="mail-section-cont">
+              <div class="mail-section">
+                <h1>Tyck Till</h1>
+                <p>Tyck Till ...</p>
+                <div id="mail-form">
+                  <form class="mail-form" abineguid="63019F15C9C54502A51867AC03621D44"
+                        name="gnMailForm"
+                        method="post" role="form">
+                    <div class="form-row">
+                      <label>Mail</label>
+                      <input type="email" class="input" id="inputMail" name="mail"
+                             data-ng-model="formData.mail" placeholder="{{'mail address' | translate}}" required="required"/>
+                    </div>
+
+                    <div class="form-row">
+                      <label class="label-text-area">Comment</label>
+                      <textarea class="textarea" id="inputComment" name="comment"
+                                data-ng-model="formData.comment"placeholder="{{'write your comment' | translate}}" required="required">
+
+                      </textarea>
+                    </div>
+                  </form>
+
+                  <div class="btn-cont">
+                    <div class="mail-actions-cont">
+                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="sendMail()" data-ng-disabled="!gnMailForm.$valid">Send comment</a>
+                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()">cancel</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div data-ng-controller="GnSearchController">
     <div class="main-wrapper" data-ng-controller="gnsSwe">

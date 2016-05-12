@@ -353,6 +353,10 @@
          $scope.signinFailure = gnUtilityService.getUrlParameter('failure');
          $scope.gnConfig = gnConfig;
 
+         $scope.mode = 'login';
+         $scope.usernameToRemind = '';
+         $scope.errorForgotPassword = '';
+
          // TODO: https://github.com/angular/angular.js/issues/1460
          // Browser autofill does not work properly
          $timeout(function() {
@@ -382,7 +386,6 @@
               alert('Error');
             });
          };
-
        }]);
 
 
@@ -412,6 +415,38 @@
           window.localStorage.setItem('hideLandingPage', true);
         }
         angular.element('#landing-popup').removeClass('show');
+        $scope.$emit('body:class:remove', 'show-overlay');
+      };
+    }]);
+
+  /**
+   * Controller for mail feedback popup.
+   *
+   */
+  module.controller('SweMailController', [
+    '$cookies', '$scope',
+    function($cookies, $scope) {
+      $scope.formData = {};
+
+      $scope.sendMail = function() {
+        // TODO: Implement feedback service
+        $http({method: 'POST',
+          url: '../../feedback',
+          data: $.param($scope.formData),
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Ajax-call': true}})
+          .success(function(data) {
+            // TODO: Show message and close dialog?
+          })
+          .error(function(data) {
+            // Show error message
+            alert('Error');
+          });
+      };
+
+      $scope.close = function() {
+        angular.element('#mail-popup').removeClass('show');
         $scope.$emit('body:class:remove', 'show-overlay');
       };
     }]);
