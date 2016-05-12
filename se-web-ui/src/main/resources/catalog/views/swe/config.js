@@ -135,10 +135,11 @@
 
       // Mapping for md links in search result list.
       gnSearchSettings.linkTypes = {
-        links: ['LINK', 'kml'],
-        downloads: ['http:nedladdning','http:ogc:wfs'],
+        //links: ['LINK', 'kml'],
+        links: ['HTTP:Information'],
+        downloads: ['HTTP:Nedladdning','HTTP:OGC:WFS'],
         //layers:['OGC', 'kml'],
-        layers: ['http:ogc:wms'],
+        layers: ['HTTP:OGC:WMS'],
         maps: ['ows']
       };
 
