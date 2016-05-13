@@ -48,9 +48,27 @@
     </license>
   </licenses>
 
+  <repositories>
+		<repository>
+			<id>geodata-release</id>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<name>libs-release</name>
+			<url>http://maven.geodata.se/libs-release</url>
+		</repository>
+  </repositories>
 
   <!-- FIXME set common dependencies to the root pom.xml  -->
   <dependencies>
+  
+    <!-- dependency containing filters for mapping geodata.se roles to geonetwork -->
+  	<dependency>
+  		<groupId>org.lmv.geodata</groupId>
+  		<artifactId>geodata-common-server</artifactId>
+  		<version>3.8.1</version>
+  	</dependency>
+  	
       <dependency>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-log4j12</artifactId>
