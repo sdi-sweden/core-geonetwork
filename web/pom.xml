@@ -57,14 +57,11 @@
 			<name>libs-release</name>
 			<url>http://maven.geodata.se/libs-release</url>
 		</repository>
-<<<<<<< Upstream, based on origin/develop
 		<repository>
             <id>52North</id>
             <name>52North repository</name>
             <url>http://52north.org/maven/repo/releases</url>
         </repository>
-=======
->>>>>>> 1e1f8a0 Prepared for pre-authentication. Added dependency to geodata-common-server since it contains filter for mapping geodata roles to geonetwork roles.
   </repositories>
 
   <!-- FIXME set common dependencies to the root pom.xml  -->
