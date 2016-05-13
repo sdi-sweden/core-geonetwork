@@ -57,7 +57,6 @@
 			<name>libs-release</name>
 			<url>http://maven.geodata.se/libs-release</url>
 		</repository>
-
 		<repository>
             <id>52North</id>
             <name>52North repository</name>
