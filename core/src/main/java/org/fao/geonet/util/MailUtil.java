@@ -40,16 +40,16 @@ import org.fao.geonet.kernel.setting.SettingManager;
 /**
  * Utility class to send mails. Supports both html and plain text. It usually
  * takes the settings from the database, but you can also indicate all params.
- * 
+ *
  * @author delawen
- * 
+ *
  */
 public class MailUtil {
 
     /**
      * Send an html mail. Will look on the settings directly to know the
      * remitent
-     * 
+     *
      * @param toAddress
      * @param subject
      * @param htmlMessage
@@ -86,7 +86,7 @@ public class MailUtil {
     /**
      * Send a plain text mail. Will look on the settings directly to know the
      * remitent
-     * 
+     *
      * @param toAddress
      * @param subject
      * @param message
@@ -122,7 +122,7 @@ public class MailUtil {
     /**
      * Send a plain text mail. Will look on the settings directly to know the
      * remitent
-     * 
+     *
      * @param toAddress
      * @param subject
      * @param message
@@ -172,7 +172,7 @@ public class MailUtil {
 
     /**
      * Send an html mail with atachments
-     * 
+     *
      * @param toAddress
      * @param hostName
      * @param smtpPort
@@ -256,7 +256,7 @@ public class MailUtil {
 
     /**
      * Send a plain text mail
-     * 
+     *
      * @param toAddress
      * @param hostName
      * @param smtpPort
@@ -296,19 +296,69 @@ public class MailUtil {
     }
 
     /**
+     * Sends a plain text mail to the system administrator.
+     *
+     * @param from
+     * @param fromDesc
+     * @param subject
+     * @param message
+     * @param settings
+     * @return
+     */
+    public static Boolean sendMailToAdmin(String from, String fromDesc,
+                                   String subject, String message,
+                                   SettingManager settings) {
+
+        Email email = new SimpleEmail();
+
+        String username = settings
+            .getValue("system/feedback/mailServer/username");
+        String password = settings
+            .getValue("system/feedback/mailServer/password");
+        Boolean ssl = settings
+            .getValueAsBool("system/feedback/mailServer/ssl");
+        Boolean tls = settings
+            .getValueAsBool("system/feedback/mailServer/tls");
+
+        String hostName = settings.getValue("system/feedback/mailServer/host");
+        Integer smtpPort = Integer.valueOf(settings
+            .getValue("system/feedback/mailServer/port"));
+
+        configureBasics(hostName, smtpPort, from, fromDesc, username, password, email, ssl, tls);
+
+        email.setSubject(subject);
+        try {
+            email.addTo(settings.getValue("system/feedback/email"));
+            email.setMsg(message);
+        } catch (EmailException e1) {
+            e1.printStackTrace();
+            return false;
+        }
+
+        return send(email);
+    }
+
+    /**
      * Create data information to compose the mail
-     * 
+     *
      * @param hostName
      * @param smtpPort
      * @param from
      * @param username
      * @param password
      * @param email
-     * @param ssl 
+     * @param ssl
      * @param tls
      */
     private static void configureBasics(String hostName, Integer smtpPort,
             String from, String username, String password, Email email, Boolean ssl, Boolean tls) {
+        configureBasics(hostName, smtpPort, from, "", username, password, email, ssl, tls);
+    }
+
+    private static void configureBasics(String hostName, Integer smtpPort,
+                                        String from, String fromDesc,
+                                        String username, String password,
+                                        Email email, Boolean ssl, Boolean tls) {
         if (hostName != null) {
             email.setHostName(hostName);
         } else {
@@ -324,7 +374,7 @@ public class MailUtil {
         if (username != null) {
             email.setAuthenticator(new DefaultAuthenticator(username, password));
         }
-        
+
 
         if (tls != null) {
             email.setStartTLSEnabled(tls);
@@ -335,10 +385,10 @@ public class MailUtil {
             email.setSSLOnConnect(ssl);
             if (ssl) email.setSslSmtpPort(smtpPort + "");
         }
-        
+
         if (from != null && !from.isEmpty()) {
             try {
-                email.setFrom(from);
+                email.setFrom(from, fromDesc);
             } catch (EmailException e) {
                 e.printStackTrace();
             }
@@ -350,7 +400,7 @@ public class MailUtil {
 
     /**
      * Configure the basics (hostname, port, username, password,...)
-     * 
+     *
      * @param settings
      * @param email
      */

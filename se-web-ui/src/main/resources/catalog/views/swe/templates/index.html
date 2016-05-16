@@ -94,20 +94,39 @@
               <div class="mail-section">
                 <h1>Tyck Till</h1>
                 <p>Tyck Till ...</p>
-                <div id="mail-form">
+
+                <div id="mail-feedback-result" data-ng-show="(feedbackResult != null) && (feedbackResultError == false)">
+                  <p>{{feedbackResult}}</p>
+
+                  <div class="btn-cont">
+                    <div class="mail-actions-cont">
+                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()">close</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="mail-form" data-ng-show="(feedbackResult == null) || (feedbackResultError == true)">
+                  <div class="alert alert-danger" data-ng-show="feedbackResultError == true">{{feedbackResult}}</div>
                   <form class="mail-form" abineguid="63019F15C9C54502A51867AC03621D44"
                         name="gnMailForm"
                         method="post" role="form">
                     <div class="form-row">
+                      <label>Name</label>
+                      <input type="text" class="input" id="inputName" name="name"
+                             data-ng-model="formData.username" placeholder="{{'name' | translate}}"
+                             required="required"/>
+                    </div>
+
+                    <div class="form-row">
                       <label>Mail</label>
-                      <input type="email" class="input" id="inputMail" name="mail"
-                             data-ng-model="formData.mail" placeholder="{{'mail address' | translate}}" required="required"/>
+                      <input type="email" class="input" id="inputMail" name="email"
+                             data-ng-model="formData.email" placeholder="{{'mail address' | translate}}" required="required"/>
                     </div>
 
                     <div class="form-row">
                       <label class="label-text-area">Comment</label>
-                      <textarea class="textarea" id="inputComment" name="comment"
-                                data-ng-model="formData.comment"placeholder="{{'write your comment' | translate}}" required="required">
+                      <textarea class="textarea" id="inputComments" name="comments"
+                                data-ng-model="formData.comments" placeholder="{{'write your comment' | translate}}" required="required">
 
                       </textarea>
                     </div>

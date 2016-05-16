@@ -424,27 +424,25 @@
    *
    */
   module.controller('SweMailController', [
-    '$cookies', '$scope',
-    function($cookies, $scope) {
+    '$cookies', '$scope', '$http', '$rootScope',
+    function($cookies, $scope, $http, $rootScope) {
       $scope.formData = {};
+      $scope.feedbackResult = null;
+      $scope.feedbackResultError = false;
 
       $scope.sendMail = function() {
-        // TODO: Implement feedback service
-        $http({method: 'POST',
-          url: '../../feedback',
-          data: $.param($scope.formData),
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-Ajax-call': true}})
-          .success(function(data) {
-            // TODO: Show message and close dialog?
-          })
-          .error(function(data) {
-            // Show error message
-            alert('Error');
+        $http.post('../api/0.1/site/feedback', null, {params: $scope.formData})
+          .then(function successCallback(response) {
+            $scope.feedbackResult = response.data;
+            $scope.feedbackResultError = false;
+
+          }, function errorCallback(response) {
+            $scope.feedbackResult = response.data;
+            $scope.feedbackResultError = true;
+
           });
       };
-
+      
       $scope.close = function() {
         angular.element('#mail-popup').removeClass('show');
         $scope.$emit('body:class:remove', 'show-overlay');
