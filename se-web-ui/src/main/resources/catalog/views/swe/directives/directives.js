@@ -120,10 +120,14 @@
     function() {
       return {
         restrict: 'A',
-        scope: { dialog: '@dialog' },
+        scope: { dialog: '@dialog', focusControl: '@focusControl'},
         link: function(scope, elem) {
           elem.on('click', function() {
             angular.element(scope.dialog).addClass('show');
+            if (scope.focusControl) {
+              angular.element(scope.focusControl).focus();
+            }
+
             scope.$emit('body:class:add', 'show-overlay');
           });
         }

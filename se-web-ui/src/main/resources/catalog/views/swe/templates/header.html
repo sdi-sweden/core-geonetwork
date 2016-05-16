@@ -1,6 +1,6 @@
 <div class="header-cont">
   <div class="header-left-cont">
-    <a href="" data-swe-show-dialog="" data-dialog="#mail-popup" class="header-leave-comment header-text">
+    <a href="" data-swe-show-dialog="" data-dialog="#mail-popup" data-focus-control="#inputName" class="header-leave-comment header-text">
       <span class="text">tyck till</span>
     </a>
     <a href="http://geonetwork-opensource.org/manuals/trunk/eng/users/index.html" class="header-help header-text">
@@ -16,7 +16,7 @@
         <li><a href="geodata_row_popup.html" class="-text-link">get-tjänster</a></li>
       </ul>
     </div>
-    <a data-swe-show-dialog="" data-dialog="#login-popup" data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="" class="header-login header-text login-popup-link">
+    <a data-swe-show-dialog="" data-dialog="#login-popup" data-focus-control="#inputUsername" data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="" class="header-login header-text login-popup-link">
       för publicerare
     </a>
     <a data-ng-show="authenticated" href="../../j_spring_security_logout" class="header-logout header-text">

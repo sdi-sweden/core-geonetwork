@@ -432,17 +432,17 @@
 
       $scope.sendMail = function() {
         $http.post('../api/0.1/site/feedback', null, {params: $scope.formData})
-          .then(function successCallback(response) {
-            $scope.feedbackResult = response.data;
-            $scope.feedbackResultError = false;
+            .then(function successCallback(response) {
+              $scope.feedbackResult = response.data;
+              $scope.feedbackResultError = false;
 
-          }, function errorCallback(response) {
-            $scope.feedbackResult = response.data;
-            $scope.feedbackResultError = true;
+            }, function errorCallback(response) {
+              $scope.feedbackResult = response.data;
+              $scope.feedbackResultError = true;
 
-          });
+            });
       };
-      
+
       $scope.close = function() {
         angular.element('#mail-popup').removeClass('show');
         $scope.$emit('body:class:remove', 'show-overlay');
