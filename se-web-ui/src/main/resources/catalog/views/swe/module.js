@@ -424,14 +424,15 @@
    *
    */
   module.controller('SweMailController', [
-    '$cookies', '$scope', '$http', '$rootScope',
-    function($cookies, $scope, $http, $rootScope) {
-      $scope.formData = {};
+    '$cookies', '$scope', '$http',
+    function($cookies, $scope, $http) {
       $scope.feedbackResult = null;
       $scope.feedbackResultError = false;
-
+      
       $scope.sendMail = function() {
-        $http.post('../api/0.1/site/feedback', null, {params: $scope.formData})
+        if ($scope.feedbackForm.$invalid) return;
+
+        $http.post('../api/0.1/site/feedback', null, {params: $scope.user})
             .then(function successCallback(response) {
               $scope.feedbackResult = response.data;
               $scope.feedbackResultError = false;
@@ -444,6 +445,14 @@
       };
 
       $scope.close = function() {
+        // Cleanup and close the dialog
+        $scope.user = {};
+        $scope.feedbackResult = null;
+        $scope.feedbackResultError = false;
+
+        $scope.feedbackForm.$setPristine();
+        $scope.feedbackForm.$setValidity();
+
         angular.element('#mail-popup').removeClass('show');
         $scope.$emit('body:class:remove', 'show-overlay');
       };

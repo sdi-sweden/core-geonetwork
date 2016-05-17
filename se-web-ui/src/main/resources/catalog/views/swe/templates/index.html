@@ -20,8 +20,7 @@
 
               <form class="login-form" abineguid="63019F15C9C54502A51867AC03621D44"
                     name="gnSigninForm" action="{{formAction}}"
-                    method="post" role="form"
-                    data-ng-if="user['@authenticated'] != 'true'">
+                    data-ng-if="user['@authenticated'] != 'true'" novalidate="novalidate">
                 <div class="form-row">
                   <label>Användarnamn</label>
                   <input type="text" class="input" id="inputUsername" name="username"
@@ -107,34 +106,33 @@
 
                 <div id="mail-form" data-ng-show="(feedbackResult == null) || (feedbackResultError == true)">
                   <div class="alert alert-danger" data-ng-show="feedbackResultError == true">{{feedbackResult}}</div>
-                  <form class="mail-form" abineguid="63019F15C9C54502A51867AC03621D44"
-                        name="gnMailForm"
-                        method="post" role="form">
-                    <div class="form-row">
+                  <form name="feedbackForm" class="mail-form" novalidate>
+
+                    <!-- NAME -->
+                    <div  ng-class="{'form-row': true, 'has-error' : feedbackForm.name.$invalid && !feedbackForm.name.$pristine }">
                       <label>Name</label>
-                      <input type="text" class="input" id="inputName" name="name"
-                             data-ng-model="formData.username" placeholder="{{'name' | translate}}"
-                             required="required"/>
+                      <input type="text" class="input" name="name" ng-model="user.username" required>
+                      <span class="errorField" ng-show="feedbackForm.name.$invalid && !feedbackForm.name.$pristine" class="help-block">You name is required.</span>
                     </div>
 
-                    <div class="form-row">
-                      <label>Mail</label>
-                      <input type="email" class="input" id="inputMail" name="email"
-                             data-ng-model="formData.email" placeholder="{{'mail address' | translate}}" required="required"/>
+                    <!-- EMAIL -->
+                    <div ng-class="{'form-row': true, 'has-error' : feedbackForm.email.$invalid && !feedbackForm.email.$pristine }">
+                      <label>Email</label>
+                      <input type="email" class="input" name="email" ng-model="user.email" required>
+                      <span class="errorField" ng-show="feedbackForm.email.$invalid && !feedbackForm.email.$pristine" class="help-block">Enter a valid email.</span>
                     </div>
 
-                    <div class="form-row">
+                    <!-- COMMENT -->
+                    <div ng-class="{'form-row': true, 'has-error' : feedbackForm.comment.$invalid && !feedbackForm.comment.$pristine }">
                       <label class="label-text-area">Comment</label>
-                      <textarea class="textarea" id="inputComments" name="comments"
-                                data-ng-model="formData.comments" placeholder="{{'write your comment' | translate}}" required="required">
-
-                      </textarea>
+                      <textarea class="textarea" name="comment" ng-model="user.comments" required></textarea>
+                      <span class="errorField" ng-show="feedbackForm.comment.$invalid && !feedbackForm.comment.$pristine" class="help-block">Your comment is required.</span>
                     </div>
                   </form>
 
                   <div class="btn-cont">
                     <div class="mail-actions-cont">
-                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="sendMail()" data-ng-disabled="!gnMailForm.$valid">Send comment</a>
+                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="sendMail()" data-ng-disabled="!feedbackForm.$valid">Send comment</a>
                       <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()">cancel</a>
                     </div>
                   </div>
