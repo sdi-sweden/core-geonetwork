@@ -39,7 +39,7 @@ import org.jdom.Element;
 
 /**
  * Search parameters that can be provided by a search client.
- * 
+ *
  * @author heikki doeleman
  * @author francois prunayre
  */
@@ -50,34 +50,34 @@ public class UserQueryInput {
      * removed from the request.
      */
     public static final List<String> SECURITY_FIELDS = Arrays.asList(
-            SearchParameter.OWNER, 
-            SearchParameter.ISADMIN, 
-            SearchParameter.ISREVIEWER, 
+            SearchParameter.OWNER,
+            SearchParameter.ISADMIN,
+            SearchParameter.ISREVIEWER,
             SearchParameter.ISUSERADMIN);
 
     /**
-     * Don't take into account those field in search (those field are not 
+     * Don't take into account those field in search (those field are not
      * indexed but are search options).
-     * 
+     *
      * TODO : move to lucene-config.xml because those fields depends on the
      * client
      */
     public static final List<String> RESERVED_FIELDS = Arrays.asList(
-            SearchParameter.GROUP, 
-            Geonet.SearchResult.FAST, 
+            SearchParameter.GROUP,
+            Geonet.SearchResult.FAST,
             Geonet.SearchResult.SORT_BY,
             Geonet.SearchResult.SORT_ORDER,
-            Geonet.SearchResult.REMOTE, 
-            Geonet.SearchResult.EXTENDED, 
-            Geonet.SearchResult.INTERMAP, 
-            Geonet.SearchResult.HITS_PER_PAGE, 
+            Geonet.SearchResult.REMOTE,
+            Geonet.SearchResult.EXTENDED,
+            Geonet.SearchResult.INTERMAP,
+            Geonet.SearchResult.HITS_PER_PAGE,
             Geonet.SearchResult.GEOMETRY,
-            Geonet.SearchResult.TIMEOUT, 
-            Geonet.SearchResult.OUTPUT, 
-            Geonet.SearchResult.SUMMARY_ONLY, 
+            Geonet.SearchResult.TIMEOUT,
+            Geonet.SearchResult.OUTPUT,
+            Geonet.SearchResult.SUMMARY_ONLY,
             Geonet.SearchResult.BUILD_SUMMARY,
             Geonet.SearchResult.REQUESTED_LANGUAGE,
-            "region_simple", "attrset", "mode", 
+            "region_simple", "attrset", "mode",
             "region", "from", "to", "hitsperpage", "georss"
             );
 
@@ -163,7 +163,7 @@ public class UserQueryInput {
 
     /**
      * Creates this from a JDOM element.
-     * 
+     *
      * @param jdom
      *            input
      */
@@ -248,41 +248,46 @@ public class UserQueryInput {
     public static final List<String> RANGE_QUERY_FIELDS = Arrays.asList(
             SearchParameter.DATEFROM,
             SearchParameter.DATETO,
-            SearchParameter.REVISIONDATEFROM, 
+            SearchParameter.REVISIONDATEFROM,
             SearchParameter.REVISIONDATETO,
             SearchParameter.PUBLICATIONDATEFROM,
             SearchParameter.PUBLICATIONDATETO,
             SearchParameter.DENOMINATORFROM,
             SearchParameter.DENOMINATORTO,
             SearchParameter.DENOMINATOR,
-            SearchParameter.CREATIONDATEFROM, 
-            SearchParameter.CREATIONDATETO);
+            SearchParameter.CREATIONDATEFROM,
+            SearchParameter.CREATIONDATETO,
+            SearchParameter.RESOURCEDATEFROM,
+            SearchParameter.RESOURCEDATETO);
 
     /**
-     * TODO : use enum instead ? 
+     * TODO : use enum instead ?
      */
     private static final List<String> RANGE_FIELDS = Arrays.asList(
-            LuceneIndexField.CHANGE_DATE, 
+            LuceneIndexField.CHANGE_DATE,
             LuceneIndexField.REVISION_DATE,
-            LuceneIndexField.PUBLICATION_DATE, 
+            LuceneIndexField.PUBLICATION_DATE,
             LuceneIndexField.CREATE_DATE,
-            LuceneIndexField.DENOMINATOR);
+            LuceneIndexField.DENOMINATOR,
+            LuceneIndexField.RESOURCE_DATE);
     private static final List<String> RANGE_FIELDS_FROM = Arrays.asList(
-            SearchParameter.DATEFROM, 
+            SearchParameter.DATEFROM,
             SearchParameter.REVISIONDATEFROM,
             SearchParameter.PUBLICATIONDATEFROM,
-            SearchParameter.CREATIONDATEFROM, 
-            SearchParameter.DENOMINATORFROM);
+            SearchParameter.CREATIONDATEFROM,
+            SearchParameter.DENOMINATORFROM,
+            SearchParameter.RESOURCEDATEFROM);
     private static final List<String> RANGE_FIELDS_TO = Arrays.asList(
-            SearchParameter.DATETO, 
+            SearchParameter.DATETO,
             SearchParameter.REVISIONDATETO,
-            SearchParameter.PUBLICATIONDATETO, 
+            SearchParameter.PUBLICATIONDATETO,
             SearchParameter.CREATIONDATETO,
-            SearchParameter.DENOMINATORTO);
+            SearchParameter.DENOMINATORTO,
+            SearchParameter.RESOURCEDATETO);
 
     /**
      * Return Lucene field name according to search parameter name.
-     * 
+     *
      * @param searchFieldName
      * @return
      */
@@ -309,7 +314,7 @@ public class UserQueryInput {
     }
 
     /**
-     * 
+     *
      * @return a string representation of the object.
      */
     @Override

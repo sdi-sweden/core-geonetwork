@@ -104,4 +104,5 @@ public class LuceneIndexField {
 	public static final String VALID = "_valid";
 	public static final String WEST = "westBL";
 
+    public static final String RESOURCE_DATE = "resourceDate";
 }
