@@ -23,6 +23,7 @@
   -->
 
 <xsl:stylesheet version="2.0"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gml="http://www.opengis.net/gml"
@@ -195,6 +196,42 @@
             <Field name="tempExtentBegin" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>
           </xsl:if>
         </xsl:for-each>
+
+        <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
+          <Field name="publicationDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>
+          <xsl:if test="$useDateAsTemporalExtent">
+            <Field name="tempExtentBegin" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>
+          </xsl:if>
+        </xsl:for-each>
+
+        <!-- Resource date: SWE profile custom field for date search queries: Max creation or revision date -->
+        <xsl:variable name="resourceDates">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/*">
+            <xsl:choose>
+              <xsl:when test="string-length(.) = 10">
+                <d><xsl:value-of select="." /></d>
+              </xsl:when>
+              <xsl:when test="string-length(.) = 7">
+                <xsl:variable name="aux"><xsl:call-template name="dateWithLastDayOfMonth"><xsl:with-param name="given-date"><xsl:value-of select="." />-01</xsl:with-param></xsl:call-template></xsl:variable>
+                <d><xsl:value-of select="." />-<xsl:value-of select="substring($aux, 9, 2)" /></d>
+              </xsl:when>
+
+              <xsl:when test="string-length(.) = 4">
+                <d><xsl:value-of select="." />-12-31</d>
+              </xsl:when>
+            </xsl:choose>
+            <xsl:if test="position() != last()">,</xsl:if>
+          </xsl:for-each>
+
+        </xsl:variable>
+        <xsl:variable name="resourceDateList" select="tokenize(normalize-space($resourceDates), ',')" />
+
+        <xsl:variable name="resourceDate" select="max($resourceDateList)" />
+        <xsl:message>RD: <xsl:value-of select="$resourceDate" /></xsl:message>
+        <xsl:if test="string($resourceDate)">
+          <Field name="resourceDate" string="{string($resourceDate)}" store="true" index="true"/>
+        </xsl:if>
+        <!-- Resource date: SWE profile custom field for date search queries: Max creation or revision date -->
 
         <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
           <Field name="publicationDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>

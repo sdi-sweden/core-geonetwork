@@ -22,6 +22,15 @@
 ~ Rome - Italy. email: geonetwork@osgeo.org
 -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="2.0">
   <xsl:import href="../../iso19139/convert/functions.xsl"/>
+
+  <!--
+    From a given date calculates the date for the last day of the month.
+  -->
+  <xsl:template name="dateWithLastDayOfMonth">
+    <xsl:param name="given-date"></xsl:param>
+
+    <xsl:value-of select="xs:date($given-date) - xs:dayTimeDuration(concat('P', day-from-date($given-date) - 1, 'D')) + xs:yearMonthDuration('P1M') - xs:dayTimeDuration('P1D')" />
+  </xsl:template>
 </xsl:stylesheet>
