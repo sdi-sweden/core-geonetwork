@@ -7,7 +7,9 @@
           <div class="meta-data-cont">
             <img src="../../catalog/views/swe/images/open-repo.png" class="repo-img">
             <div class="meta-data">
-              <h1>{{mdView.current.record.title || mdView.current.record.defaultTitle}} <div class="star-cont"><span class="icon-star-empty"></span><span class="icon-star"></span></div></h1>
+              <h1>{{mdView.current.record.title || mdView.current.record.defaultTitle}}
+                <div class="star-cont" data-ng-class="{'star-cont': true, 'starred' : containsFavorite(mdView.current.record['geonet:info'].id) }" data-ng-click="toggleFavorite(mdView.current.record['geonet:info'].id)"><span class="icon-star-empty"></span><span class="icon-star"></span></div>
+              </h1>
               <span class="excerpt"></span>
             </div>
             <div class="update-tag"><span>Senast uppdaterad <span data-gn-humanize-time="{{mdView.current.record['geonet:info'].changeDate}}"

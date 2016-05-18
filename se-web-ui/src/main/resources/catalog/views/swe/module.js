@@ -61,7 +61,8 @@
     'gnOwsContextService',
     'hotkeys',
     'gnGlobalSettings',
-    function($scope, $localStorage, $location, suggestService, $http, $window, $translate,
+    function($scope, $localStorage, $location, suggestService,
+             $http, $window, $translate,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
@@ -87,7 +88,7 @@
       /**
        * Toogle a favorite metadata selection.
        *
-       * @param id  Metadata identifier
+       * @param {number} id  Metadata identifier
          */
       $scope.toggleFavorite = function(id) {
         if ($localStorage.favoriteMetadata == undefined) {
@@ -106,8 +107,8 @@
       /**
        * Checks if a metadata is in the favorite selection.
        *
-       * @param id  Metadata identifier
-       * @returns {boolean}
+       * @param {number} id Metadata identifier
+       * @return {boolean}
          */
       $scope.containsFavorite = function(id) {
         var pos = $localStorage.favoriteMetadata.indexOf(id);
@@ -496,8 +497,8 @@
    * Controller for the filter panel.
    *
    */
-  module.controller('SweFilterPanelController', ['$scope',
-    function($scope) {
+  module.controller('SweFilterPanelController', ['$scope', '$localStorage',
+    function($scope, $localStorage) {
 
       $scope.open = false;
       $scope.advancedMode = false;
@@ -514,6 +515,11 @@
       $scope.selectedTopicCategories = [];
 
 
+      /**
+       * Toggles a topic category selection.
+       *
+       * @param {string} topic
+         */
       $scope.toggleTopicCategory = function(topic) {
         var pos = $scope.selectedTopicCategories.indexOf(topic);
 
@@ -528,6 +534,12 @@
         $scope.triggerSearch();
       };
 
+
+      /**
+       * Unselects a topic category.
+       *
+       * @param {string} topic
+         */
       $scope.unselectTopicCategory = function(topic) {
         var pos = $scope.selectedTopicCategories.indexOf(topic);
 
@@ -540,34 +552,92 @@
         $scope.triggerSearch();
       };
 
+
+      /**
+       * Checks if a topic category is selected.
+       *
+       * @param {string} topic
+       * @return {boolean}
+         */
       $scope.isTopicCategorySelected = function(topic) {
         return ($scope.selectedTopicCategories.indexOf(topic) > -1);
       };
 
+
+      /**
+       * Toggles the map resources filter.
+       *
+       */
       $scope.toggleMapResources = function() {
         $scope.searchObj.params.dynamic =
             ($scope.searchObj.params.dynamic == 'true' ? '' : 'true');
         $scope.triggerSearch();
       };
 
+
+      /**
+       * Unselects the map resources filter.
+       */
       $scope.unselectMapResources = function() {
         delete $scope.searchObj.params.dynamic;
         $scope.triggerSearch();
       };
 
+
+      /**
+       * Toggles the download resources filter.
+       */
       $scope.toggleDownloadResources = function() {
         $scope.searchObj.params.download =
             ($scope.searchObj.params.download == 'true' ? '' : 'true');
         $scope.triggerSearch();
       };
 
+
+      /**
+       * Unselects the download resources filter.
+       */
       $scope.unselectDownloadResources = function() {
         delete $scope.searchObj.params.download;
         $scope.triggerSearch();
       };
 
+
+      /**
+       * Toggles a the favorites selection.
+       *
+       * @param {string} topic
+       */
+      $scope.toggleFavorites = function() {
+        // Use an invalid value -- to manage the case no favorites are selected,
+        // to don't display any metadata
+        if ($localStorage.favoriteMetadata != undefined) {
+          $scope.searchObj.params._id =
+              ($scope.searchObj.params._id ? '' :
+              ($localStorage.favoriteMetadata.length > 0) ?
+              $localStorage.favoriteMetadata.join(' or ') : '--');
+        } else {
+          $scope.searchObj.params._id =
+              ($scope.searchObj.params._id ? '' : '--');
+        }
+
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Unselects the favorites filter.
+       */
+      $scope.unselectFavoriteResources = function() {
+        delete $scope.searchObj.params._id;
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Clean search options to view all metadata.
+       */
       $scope.viewAllMetadata = function() {
-        // Clean search options
         $scope.selectedTopicCategories = [];
         delete $scope.searchObj.params.topicCat;
         delete $scope.searchObj.params.download;
@@ -577,6 +647,10 @@
         $scope.triggerSearch();
       };
 
+
+      /**
+       * Toggles the filter panel.
+       */
       $scope.toggleFilterPanel = function() {
         if ($scope.open) {
           angular.element('.site-filter-cont').removeClass('open');
@@ -587,6 +661,9 @@
         $scope.open = !$scope.open;
       };
 
+      /**
+       * Toggles the advance options panel.
+       */
       $scope.toggleAdvancedOptions = function() {
         if ($scope.advancedMode) {
           angular.element('.filter-options-cont').removeClass('open');
@@ -599,7 +676,9 @@
         $scope.advancedMode = !$scope.advancedMode;
       };
 
-
+      /**
+       * Closes the filter panel.
+       */
       $scope.closeFilterPanel = function() {
         angular.element('.site-filter-cont').removeClass('open');
 

@@ -23,7 +23,8 @@
                  data-ng-class="{'active': (searchObj.params.download == 'true')}"><span class="download-icn-cont">
                 <span class="icon-down-fat"></span></span>Direktåtkomliga resurser</a>
             </li>
-            <li><a href=""><span class="icon-star"></span>favoriter</a></li>
+            <li><a href="" data-ng-click="toggleFavorites()"
+                   data-ng-class="{'active': (searchObj.params._id != '') && (searchObj.params._id != undefined)}"><span class="icon-star"></span>favoriter</a></li>
             <li><a href=""><span class="icon-eye"></span>geoteknik</a></li>
           </ul>
           <div class="other-filters">
@@ -503,6 +504,12 @@
       <li data-ng-show="searchObj.params.download == 'true'">
         <a href="" data-ng-click="unselectDownloadResources()">
           <span>Direktåtkomliga resurser</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="(searchObj.params._id != '') && (searchObj.params._id != undefined)">
+        <a href="" data-ng-click="unselectFavoriteResources()">
+          <span>favoriter</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
