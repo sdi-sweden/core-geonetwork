@@ -40,10 +40,11 @@
   var module = angular.module('gn_search_swe', [
     'gn_related_directive', 'gn_search',
     'gn_resultsview', 'cookie_warning',
-    'swe_search_config', 'swe_directives']);
+    'swe_search_config', 'swe_directives', 'ngStorage']);
 
   module.controller('gnsSwe', [
     '$scope',
+    '$localStorage',
     '$location',
     'suggestService',
     '$http',
@@ -60,7 +61,7 @@
     'gnOwsContextService',
     'hotkeys',
     'gnGlobalSettings',
-    function($scope, $location, suggestService, $http, $window, $translate,
+    function($scope, $localStorage, $location, suggestService, $http, $window, $translate,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
@@ -82,6 +83,38 @@
       $scope.toggleMap = function() {
         $(searchMap.getTargetElement()).toggle();
       };
+
+      /**
+       * Toogle a favorite metadata selection.
+       *
+       * @param id  Metadata identifier
+         */
+      $scope.toggleFavorite = function(id) {
+        if ($localStorage.favoriteMetadata == undefined) {
+          $localStorage.favoriteMetadata = [];
+        }
+
+        var pos = $localStorage.favoriteMetadata.indexOf(id);
+
+        if (pos > -1) {
+          $localStorage.favoriteMetadata.splice(pos, 1);
+        } else {
+          $localStorage.favoriteMetadata.push(id);
+        }
+      };
+
+      /**
+       * Checks if a metadata is in the favorite selection.
+       *
+       * @param id  Metadata identifier
+       * @returns {boolean}
+         */
+      $scope.containsFavorite = function(id) {
+        var pos = $localStorage.favoriteMetadata.indexOf(id);
+
+        return (pos > -1);
+      };
+
       hotkeys.bindTo($scope)
           .add({
             combo: 'h',
@@ -428,7 +461,7 @@
     function($cookies, $scope, $http) {
       $scope.feedbackResult = null;
       $scope.feedbackResultError = false;
-      
+
       $scope.sendMail = function() {
         if ($scope.feedbackForm.$invalid) return;
 

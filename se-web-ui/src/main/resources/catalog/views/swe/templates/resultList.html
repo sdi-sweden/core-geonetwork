@@ -11,7 +11,9 @@
           <li data-ng-show="::downloads.length > 0"><a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}"><span class="download-icn-cont"><span class="icon-down-fat"></span></span></a></li>
         </ul>
         <div class="meta-data">
-          <h1><img src="../../catalog/views/swe/images/open-repo.png" class="mobile-repo-img">{{md.title || md.defaultTitle}} <div class="star-cont"><span class="icon-star-empty"></span><span class="icon-star"></span></div></h1>
+          <h1><img src="../../catalog/views/swe/images/open-repo.png" class="mobile-repo-img">{{md.title || md.defaultTitle}}
+            <div class="star-cont" data-ng-class="{'star-cont': true, 'starred' : containsFavorite(md.getId()) }" data-ng-click="toggleFavorite(md.getId())"><span class="icon-star-empty"></span><span class="icon-star"></span></div>
+          </h1>
           <span class="excerpt"></span>
         </div>
         <div class="update-tag"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"

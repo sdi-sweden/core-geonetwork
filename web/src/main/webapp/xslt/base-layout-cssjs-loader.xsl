@@ -126,6 +126,7 @@
         <script src="{$uiResourcesPath}/lib/bootstrap-table/dist/bootstrap-table.js"></script>
         <!--</xsl:if>-->
 
+        <script src="{$uiResourcesPath}/lib/ngStorage/ngStorage.js"></script>
       </xsl:when>
       <xsl:otherwise>
       </xsl:otherwise>
@@ -179,7 +180,7 @@
 	    <xsl:when test="util:getSettingValue('map/isMapViewerEnabled')"><xsl:value-of select="util:getSettingValue('map/isMapViewerEnabled')"/></xsl:when>
 	    <xsl:otherwise>true</xsl:otherwise> <!-- default value -->
 	  </xsl:choose>
-                  
+
     </xsl:variable>
 
     <xsl:if test="$angularApp = 'gn_search'">
@@ -200,7 +201,7 @@
         }]);
       </script>
     </xsl:if>
-    
+
     <xsl:if test="$angularApp = 'gn_editor'">
       <script type="text/javascript">
         var module = angular.module('gn_editor');
@@ -218,7 +219,7 @@
         }]);
       </script>
     </xsl:if>
-    
+
     <xsl:if test="$angularApp = 'gn_admin'">
       <script type="text/javascript">
         var module = angular.module('gn_admin');
