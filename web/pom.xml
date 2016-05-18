@@ -347,7 +347,15 @@
           <version>${project.version}</version>
       </dependency>
 
-      <!-- Handled locally by a temporarly repository -->
+    <!-- SE dependencies -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>se-services</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+
+    <!-- Handled locally by a temporarly repository -->
     <dependency>
       <groupId>dlib</groupId>
       <artifactId>dlib</artifactId>
