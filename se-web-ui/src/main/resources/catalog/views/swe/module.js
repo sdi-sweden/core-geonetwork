@@ -111,6 +111,10 @@
        * @return {boolean}
          */
       $scope.containsFavorite = function(id) {
+        if ($localStorage.favoriteMetadata == undefined) {
+          $localStorage.favoriteMetadata = [];
+        }
+        
         var pos = $localStorage.favoriteMetadata.indexOf(id);
 
         return (pos > -1);
