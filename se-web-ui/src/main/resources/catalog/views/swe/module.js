@@ -114,7 +114,7 @@
         if ($localStorage.favoriteMetadata == undefined) {
           $localStorage.favoriteMetadata = [];
         }
-        
+
         var pos = $localStorage.favoriteMetadata.indexOf(id);
 
         return (pos > -1);
@@ -603,6 +603,24 @@
        */
       $scope.unselectDownloadResources = function() {
         delete $scope.searchObj.params.download;
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Unselects the resource date from.
+       */
+      $scope.unselectResourceDateFrom = function() {
+        delete $scope.searchObj.params.resourceDateFrom;
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Unselects the resource date to.
+       */
+      $scope.unselectResourceDateTo = function() {
+        delete $scope.searchObj.params.resourceDateTo;
         $scope.triggerSearch();
       };
 

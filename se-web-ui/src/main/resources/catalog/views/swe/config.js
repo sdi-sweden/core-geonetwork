@@ -82,37 +82,41 @@
       // Object to store the current Map context
       gnViewerSettings.storage = 'sessionStorage';
 
-      var extent = [ -1200000, 4700000, 2600000, 8500000 ];
-      var resolutions = [ 4096.0, 2048.0, 1024.0, 512.0, 256.0, 128.0, 64.0, 32.0, 16.0, 8.0 ];
-      var matrixIds = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
+      var extent = [-1200000, 4700000, 2600000, 8500000];
+      var resolutions = [4096.0, 2048.0, 1024.0, 512.0, 256.0,
+        128.0, 64.0, 32.0, 16.0, 8.0];
+      var matrixIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
       proj4.defs(
-        "EPSG:3006",
-        "+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+          'EPSG:3006',
+          '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 ' +
+          '+units=m +no_defs');
       ol.proj.get('EPSG:3006').setExtent(extent);
-      ol.proj.get('EPSG:3006').setWorldExtent([-5.05651650131,40.6662879582,18.3766501767,71.7832476487]);
+      ol.proj.get('EPSG:3006').setWorldExtent([-5.05651650131, 40.6662879582,
+        18.3766501767, 71.7832476487]);
 
 
 
       var tileGrid = new ol.tilegrid.WMTS({
-        tileSize : 256,
-        extent : extent,
-        resolutions : resolutions,
-        matrixIds : matrixIds
+        tileSize: 256,
+        extent: extent,
+        resolutions: resolutions,
+        matrixIds: matrixIds
       });
 
       var apiKey = 'a9a380d6b6f25f22e232b8640b05ea8';
 
       var wmts = [new ol.layer.Tile({
-        extent : extent,
-        source : new ol.source.WMTS({
-          url : 'https://api.lantmateriet.se/open/topowebb-ccby/v1/wmts/token/' + apiKey + '/',
-          layer : 'topowebb',
-          format : 'image/png',
-          matrixSet : '3006',
-          tileGrid : tileGrid,
-          version : '1.0.0',
-          style : 'default',
+        extent: extent,
+        source: new ol.source.WMTS({
+          url: 'https://api.lantmateriet.se/open/topowebb-ccby/' +
+              'v1/wmts/token/' + apiKey + '/',
+          layer: 'topowebb',
+          format: 'image/png',
+          matrixSet: '3006',
+          tileGrid: tileGrid,
+          version: '1.0.0',
+          style: 'default',
           crossOrigin: 'anonymous'
         })
       })];
@@ -139,7 +143,7 @@
       });
 
       var searchMap = new ol.Map({
-        controls:[],
+        controls: [],
         layers: wmts,
         view: new ol.View(mapsConfig)
       });

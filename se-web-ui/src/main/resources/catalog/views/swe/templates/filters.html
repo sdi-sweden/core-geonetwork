@@ -60,14 +60,14 @@
                   <div class="filter-colm" id="abId0.3915931191863504">
                     <label>Från datum</label>
                     <div class="custom-fld-cont" id="abId0.891437811112971">
-                      <input type="date" placeholder="åååå-mm-dd" data-ng-model="searchObj.params.resourceDateFrom">
+                      <input type="date" placeholder="åååå-mm-dd" data-ng-model="searchObj.params.resourceDateFrom" data-ng-change="triggerSearch()">
                       <!--<span class="icon-calendar-empty"></span>-->
                     </div>
                   </div>
                   <div class="filter-colm till-date-colm" id="abId0.746339667914671">
                     <label>till datum</label>
                     <div class="custom-fld-cont" id="abId0.5676842456397708">
-                      <input type="date" placeholder="åååå-mm-dd" data-ng-model="searchObj.params.resourceDateTo">
+                      <input type="date" placeholder="åååå-mm-dd" data-ng-model="searchObj.params.resourceDateTo" data-ng-change="triggerSearch()">
                       <!--<span class="icon-calendar-empty"></span>-->
                     </div>
                     <div class="help-icn-cont date-help-icn">
@@ -495,6 +495,18 @@
   <div class="data-result-cont">
     <span class="result-text" data-ng-show="searchResults.count >= 0">visar <b>{{searchResults.count}}</b> resultat</span>
     <ul class="selected-filter-list">
+      <li data-ng-show="searchObj.params.resourceDateFrom">
+        <a href="" data-ng-click="unselectResourceDateFrom()">
+          <span>from date {{searchObj.params.resourceDateFrom | date : 'dd/MM/yyyy'}}</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="searchObj.params.resourceDateTo != undefined">
+        <a href="" data-ng-click="unselectResourceDateTo()">
+          <span>to date {{searchObj.params.resourceDateTo | date : 'dd/MM/yyyy'}}</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
       <li data-ng-show="searchObj.params.dynamic == 'true'">
         <a href="" data-ng-click="unselectMapResources()">
           <span>karttjänster</span>
