@@ -73,15 +73,13 @@
     </div>
     <div class="geo-data-toolbar-cont">
       <div class="toolbar-left-list tool-bar-list">
-        <div data-swe-toggle-style="" class="dropdown-cont meta-dropdown">
-          <div class="-label"><span class="icon-doc-text"></span>visa metadata <span class="icon-down-dir"></span></div>
+        <div class="link-cont"  ng-if="!user.isEditorOrMore()">
+          <a href="" data-ng-click="showMetadata()" class="-label-link" ><span class="icon-doc-text"></span>visa metadata</a>
+        </div>
+
+        <div data-swe-toggle-style="" class="dropdown-cont meta-dropdown" ng-if="user.isEditorOrMore()">
+          <div class="-label"><span class="icon-doc-text"></span>Hantera Metadata <span class="icon-down-dir"></span></div>
           <div data-swe-md-actions-menu="" />
-          <!--<ul class="-list">
-            <li><a href="" data-ng-click="showMetadata()" class="-text-link edit-form-popup-link">redigera</a></li>
-            <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records/{{md['geonet:info'].uuid}}">spara som ISO19139</a></li>
-            <li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md['geonet:info'].uuid)">Spara som DCAT</a></li>
-            <li><a href="" class="-text-link">ta bort</a></li>
-          </ul>-->
         </div>
         <div data-swe-toggle-style="" class="dropdown-cont loggedin-meta-dropdown">
           <div class="-label"><span class="icon-pencil"></span>Publicerarverktyg <span class="icon-down-dir"></span></div>
