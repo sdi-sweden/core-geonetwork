@@ -94,7 +94,7 @@
       ol.proj.get('EPSG:3006').setExtent(extent);
       ol.proj.get('EPSG:3006').setWorldExtent([-5.05651650131, 40.6662879582,
         18.3766501767, 71.7832476487]);
-      var projection =  ol.proj.get('EPSG:3006');
+      var projection = ol.proj.get('EPSG:3006');
 
       var tileGrid = new ol.tilegrid.WMTS({
         tileSize: 256,
@@ -137,20 +137,20 @@
       gnViewerSettings.servicesUrl = {};
 
       var interactions = ol.interaction.defaults({
-        altShiftDragRotate : false,
-        pinchRotate : false
+        altShiftDragRotate: false,
+        pinchRotate: false
       });
 
       var viewerMap = new ol.Map({
         controls: [],
-        interactions : interactions,
+        interactions: interactions,
         view: new ol.View(mapsConfig)
       });
 
       var searchMap = new ol.Map({
         controls: [],
         layers: wmts,
-        interactions : interactions,
+        interactions: interactions,
         view: new ol.View(mapsConfig)
       });
 

@@ -417,6 +417,11 @@
           }
           $obj.removeClass('full').addClass('small');
         }
+
+        // Refresh the viewer map
+        viewerMap.updateSize();
+        viewerMap.render();
+
         return false;
       };
 
