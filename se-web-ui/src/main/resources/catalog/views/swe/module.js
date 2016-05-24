@@ -295,6 +295,25 @@
           }
           gnMap.addWmsFromScratch(viewerMap, link.url, link.name, false, md);
         },
+        addWmsLayersFromCap: function(url, md) {
+          var name = 'layers';
+          var match = RegExp('[?&]' + name + '=([^&]*)').exec(url);
+          var layersList = match &&
+              decodeURIComponent(match[1].replace(/\+/g, ' '));
+
+          if (layersList) {
+            layersList = layersList.split(',');
+
+            for (var i = 0; i < layersList.length; i++)
+              if (!gnMap.isLayerInMap(viewerMap,
+                  layersList[i], url)) {
+                gnMap.addWmsFromScratch(viewerMap, url, layersList[i],
+                    false, md);
+              }
+          } else {
+            gnMap.addWmsAllLayersFromCap(viewerMap, url, false);
+          }
+        },
         addAllMdLayersToMap: function(layers, md) {
           angular.forEach(layers, function(layer) {
             $scope.resultviewFns.addMdLayerToMap(layer, md);

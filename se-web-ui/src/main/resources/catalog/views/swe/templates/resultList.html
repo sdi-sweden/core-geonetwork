@@ -115,13 +115,13 @@
           <div class="-label"><span class="icon-map"></span>Visa på karta <span class="icon-down-dir"></span></div>
           <ul class="-list">
             <li data-ng-repeat="l in ::layers">
-              <a href="" class="-text-link" data-ng-click="resultviewFns.addMdLayerToMap(l, md)">{{l.desc || l.url}}</a>
+              <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l.url, md)">{{l.desc || l.url}}</a>
             </li>
           </ul>
         </div>
 
         <div class="link-cont" data-ng-show="::layers.length == 1">
-          <a href="" class="-label-link" data-ng-click="resultviewFns.addMdLayerToMap(layers[0], md)"><span class="icon-map"></span>Visa på karta</a>
+          <a href="" class="-label-link" data-ng-click="resultviewFns.addWmsLayersFromCap(layers[0].url, md)"><span class="icon-map"></span>Visa på karta</a>
         </div>
 
         <!-- Download links -->

@@ -150,13 +150,13 @@
               <div class="-label"><span class="icon-map"></span>Visa på karta <span class="icon-down-dir"></span></div>
               <ul class="-list">
                 <li data-ng-repeat="l in getMapLinks(mdView.current.record)">
-                  <a href="" class="-text-link" data-ng-click="resultviewFns.addMdLayerToMap(l, mdView.current.record)">{{l.desc || l.url}}</a>
+                  <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l, mdView.current.record)">{{l.desc || l.url}}</a>
                 </li>
               </ul>
             </div>
 
             <div class="link-cont" data-ng-show="getMapLinks(mdView.current.record).length == 1">
-              <a href="" class="-label-link" data-ng-click="resultviewFns.addMdLayerToMap(getMapLinks(mdView.current.record)[0], mdView.current.record)"><span class="icon-map"></span>Visa på karta</a>
+              <a href="" class="-label-link" data-ng-click="resultviewFns.addWmsLayersFromCap(getMapLinks(mdView.current.record)[0], mdView.current.record)"><span class="icon-map"></span>Visa på karta</a>
             </div>
 
             <!-- Download links -->
