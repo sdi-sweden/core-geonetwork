@@ -5,7 +5,7 @@
       <div class="meta-data-cont">
         <img src="../../catalog/views/swe/images/open-repo.png" class="repo-img">
         <ul class="tools-list">
-          <li><a href="" data-ng-click="showMetadata()"><span class="icon-doc-text"></span></a></li>
+          <li><a href="" data-ng-click="showMetadata($index, md, searchResults.records)"><span class="icon-doc-text"></span></a></li>
           <li><a href=""><div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span></div></a></li>
           <li data-ng-show="::layers.length > 0"><a href="" ata-ng-click="resultviewFns.addMdLayerToMap(layers[0], md)"><span class="icon-map"></span></a></li>
           <li data-ng-show="::downloads.length > 0"><a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}"><span class="download-icn-cont"><span class="icon-down-fat"></span></span></a></li>
@@ -74,7 +74,7 @@
     <div class="geo-data-toolbar-cont">
       <div class="toolbar-left-list tool-bar-list">
         <div class="link-cont"  ng-if="!user.isEditorOrMore()">
-          <a href="" data-ng-click="showMetadata()" class="-label-link" ><span class="icon-doc-text"></span>visa metadata</a>
+          <a href="" data-ng-click="showMetadata($index, md, searchResults.records)" class="-label-link" ><span class="icon-doc-text"></span>visa metadata</a>
         </div>
 
         <div data-swe-toggle-style="" class="dropdown-cont meta-dropdown" ng-if="user.isEditorOrMore()">
@@ -84,9 +84,9 @@
         <div data-swe-toggle-style="" class="dropdown-cont loggedin-meta-dropdown">
           <div class="-label"><span class="icon-pencil"></span>Publicerarverktyg <span class="icon-down-dir"></span></div>
           <ul class="-list">
-            <li><a href="" data-ng-click="showMetadata()" class="-text-link edit-form-popup-link">redigera 432432</a></li>
-            <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records111/{{md['geonet:info'].uuid}}"> spara som ISO19139</a></li>
-            <li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md['geonet:info'].uuid)"> 222 Spara som DCAT</a></li>
+            <li><a href="" data-ng-click="showMetadata()" class="-text-link edit-form-popup-link">redigera</a></li>
+            <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records111/{{md['geonet:info'].uuid}}">spara som ISO19139</a></li>
+            <li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md['geonet:info'].uuid)">Spara som DCAT</a></li>
             <li><a href="" class="-text-link">ta bort</a></li>
           </ul>
         </div>
