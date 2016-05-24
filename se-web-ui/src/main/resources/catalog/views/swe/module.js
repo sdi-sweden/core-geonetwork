@@ -296,6 +296,9 @@
           gnMap.addWmsFromScratch(viewerMap, link.url, link.name, false, md);
         },
         addWmsLayersFromCap: function(url, md) {
+          // Open the map panel
+          $scope.showMapPanel();
+
           var name = 'layers';
           var match = RegExp('[?&]' + name + '=([^&]*)').exec(url);
           var layersList = match &&
@@ -313,6 +316,7 @@
           } else {
             gnMap.addWmsAllLayersFromCap(viewerMap, url, false);
           }
+
         },
         addAllMdLayersToMap: function(layers, md) {
           angular.forEach(layers, function(layer) {
