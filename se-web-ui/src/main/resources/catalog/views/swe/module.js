@@ -81,6 +81,7 @@
       $scope.resultTemplate = gnSearchSettings.resultTemplate;
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
+
       $scope.toggleMap = function() {
         $(searchMap.getTargetElement()).toggle();
       };
@@ -189,6 +190,75 @@
       };
       $scope.previousRecord = function() {
         $scope.openRecord(mdView.current.index - 1);
+      };
+
+
+      /**
+       * Returns an array of map links for a metadata.
+       *
+       * @param {object} md
+       * @return {Array}
+         */
+      $scope.getMapLinks = function(md) {
+        var links = [];
+
+        if (md == null) return links;
+
+        for (var t in gnSearchSettings.linkTypes.layers) {
+          var d = md.getLinksByType(gnSearchSettings.linkTypes.layers[t]);
+
+          if (d.length > 0) {
+            links = links.concat(d);
+          }
+        }
+
+        return links;
+      };
+
+
+      /**
+       * Returns an array of download links for a metadata.
+       *
+       * @param {object} md
+       * @return {Array}
+       */
+      $scope.getDownloadLinks = function(md) {
+        var downloads = [];
+
+        if (md == null) return downloads;
+
+        for (var t in gnSearchSettings.linkTypes.downloads) {
+          var d = md.getLinksByType(gnSearchSettings.linkTypes.downloads[t]);
+
+          if (d.length > 0) {
+            downloads = downloads.concat(d);
+          }
+        }
+
+        return downloads;
+      };
+
+
+      /**
+       * Returns an array of information links for a metadata.
+       *
+       * @param {object} md
+       * @return {Array}
+       */
+      $scope.getInformationLinks = function(md) {
+        var information = [];
+
+        if (md == null) return information;
+
+        for (var t in gnSearchSettings.linkTypes.links) {
+          var d = md.getLinksByType(gnSearchSettings.linkTypes.links[t]);
+
+          if (d.length > 0) {
+            information = information.concat(d);
+          }
+        }
+
+        return information;
       };
 
       $scope.infoTabs = {
