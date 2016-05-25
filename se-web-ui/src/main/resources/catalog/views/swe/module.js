@@ -50,6 +50,7 @@
     '$http',
     '$window',
     '$translate',
+    '$timeout',
     'gnUtilityService',
     'gnSearchSettings',
     'gnViewerSettings',
@@ -62,7 +63,7 @@
     'hotkeys',
     'gnGlobalSettings',
     function($scope, $localStorage, $location, suggestService,
-             $http, $window, $translate,
+             $http, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
@@ -419,8 +420,11 @@
         }
 
         // Refresh the viewer map
-        viewerMap.updateSize();
-        viewerMap.render();
+
+        $timeout(function() {
+          viewerMap.updateSize();
+          viewerMap.renderSync();
+        }, 500);
 
         return false;
       };
