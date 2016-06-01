@@ -344,6 +344,34 @@
       };
 
       /**
+       * Displays the metadata BBOX in the search map.
+       *
+       * @param md {object} Metadata
+         */
+      $scope.showMetadataGeometry = function(md) {
+        var feature = gnMap.getBboxFeatureFromMd(md,
+          $scope.searchObj.searchMap.getView().getProjection());
+
+
+        if (angular.isUndefined($scope.vectorLayer)) {
+          var vectorSource = new ol.source.Vector({
+            features: []
+          });
+
+          $scope.vectorLayer = new ol.layer.Vector({
+            source: vectorSource,
+            style: gnSearchSettings.olStyles.mdExtentHighlight
+          });
+
+          $scope.searchObj.searchMap.addLayer($scope.vectorLayer);
+        }
+
+        $scope.vectorLayer.getSource().clear();
+        $scope.vectorLayer.getSource().addFeature(feature);
+
+      };
+
+      /**
        * Show full view results.
        */
       $scope.setFullViewResults = function() {

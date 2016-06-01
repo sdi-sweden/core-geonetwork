@@ -82,7 +82,10 @@
       // Object to store the current Map context
       gnViewerSettings.storage = 'sessionStorage';
 
-      var extent = [-1200000, 4700000, 2600000, 8500000];
+      // -1199982.87894;4699997.48693
+      // 617761.505804;7968053.15247
+
+      var extent = [-1200000, 4700000, 2540000, 8500000];
       var resolutions = [4096.0, 2048.0, 1024.0, 512.0, 256.0,
         128.0, 64.0, 32.0, 16.0, 8.0];
       var matrixIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -93,7 +96,7 @@
           '+units=m +axis=neu +no_defs');
       ol.proj.get('EPSG:3006').setExtent(extent);
       ol.proj.get('EPSG:3006').setWorldExtent([-5.05651650131, 40.6662879582,
-        18.3766501767, 71.7832476487]);
+        28.0689828648, 71.7832476487]);
       var projection = ol.proj.get('EPSG:3006');
 
       var tileGrid = new ol.tilegrid.WMTS({
