@@ -19,6 +19,11 @@
     <a data-swe-show-dialog="" data-dialog="#login-popup" data-focus-control="#inputUsername" data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="" class="header-login header-text login-popup-link">
       för publicerare
     </a>
+
+    <a data-ng-show="authenticated" href="admin.console" class="header-admin header-text">
+      administration
+    </a>
+
     <a data-ng-show="authenticated" href="../../j_spring_security_logout" class="header-logout header-text">
       logout
     </a>
