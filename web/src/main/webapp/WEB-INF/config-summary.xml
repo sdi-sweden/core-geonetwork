@@ -128,11 +128,15 @@
       </facets>
 
       <summaryTypes>
+        <summaryType name="swe-details" format="DIMENSION">
+          <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
+          <item facet="initiativKeyword" max="20"/>
+          <item facet="orgName" max="25"/>
+        </summaryType>
+
         <summaryType name="details" format="DIMENSION">
           <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
           <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
-          <item facet="initiativKeyword" max="20"/>
-
           <item facet="inspireThemeURI" sortBy="value" sortOrder="asc" max="35" translator="term:http://geonetwork-opensource.org/inspire-theme"/>
           <!--<item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>-->
           <!--<item facet="inspireThemeWithAc" sortBy="value" sortOrder="asc" max="35"/>-->

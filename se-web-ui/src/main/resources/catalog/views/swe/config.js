@@ -158,7 +158,7 @@
       });
 
       /** Facets configuration */
-      gnSearchSettings.facetsSummaryType = 'details';
+      gnSearchSettings.facetsSummaryType = 'swe-details';
 
       /*
        * Hits per page combo values configuration. The first one is the
