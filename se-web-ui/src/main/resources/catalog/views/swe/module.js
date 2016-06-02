@@ -83,6 +83,11 @@
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
 
+      $scope.$on('someEvent', function(event, map) {
+        alert('event received. url is: ' + map.url);
+
+      });
+
       $scope.toggleMap = function() {
         $(searchMap.getTargetElement()).toggle();
       };
@@ -324,7 +329,7 @@
             $scope.resultviewFns.addMdLayerToMap(layer, md);
           });
         },
-        loadMap: function(map, md) {
+        loadMap: function(map) {
           gnOwsContextService.loadContextFromUrl(map.url, viewerMap);
         }
       };
@@ -513,7 +518,7 @@
                $location, $window, $timeout,
                gnUtilityService, gnConfig) {
          $scope.formAction = '../../j_spring_security_check#' +
-          $location.path();
+         $location.path();
 
          $scope.formData = {};
 
@@ -546,13 +551,13 @@
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'X-Ajax-call': true}})
             .success(function(data) {
-              // Redirect to home page
-              window.location.href = '../../catalog.search?view=swe';
-            })
+             // Redirect to home page
+             window.location.href = '../../catalog.search?view=swe';
+           })
             .error(function(data) {
-              // Show error message
-              alert('Error');
-            });
+             // Show error message
+             alert('Error');
+           });
          };
        }]);
 
@@ -846,28 +851,39 @@
     $scope.hovering = false;
     // replace prefined queries with a service returning the possible queries
     $scope.predefinedQueries = [{
-          image: 'http://lorempixel.com/210/125/nature/?id=1',
-          tooltip: 'Filter 1',
-          text: 'Filter 1',
-          query: 'Filter Query 1'
+      image: 'http://lorempixel.com/210/125/nature/?id=1',
+      tooltip: 'Filter 1',
+      text: 'Filter 1',
+      query: 'Filter Query 1',
+      url: 'http://localhost:8080/geonetwork/catalog/views/' +
+          'swe/resources/owscontext.xml'
     }, {
-          image: 'http://lorempixel.com/210/125/nature/?id=2',
-          tooltip: 'Filter 2',
-          text: 'Filter 2',
-          query: 'Filter Query 2'
+      image: 'http://lorempixel.com/210/125/nature/?id=2',
+      tooltip: 'Filter 2',
+      text: 'Filter 2',
+      query: 'Filter Query 2',
+      url: 'http://localhost:8080/geonetwork/catalog/views/' +
+          'swe/resources/owscontext.xml'
     }, {
-          image: 'http://lorempixel.com/210/125/nature/?id=3',
-          tooltip: 'Filter 3',
-          text: 'Filter 3',
-          query: 'Filter Query 3'
+      image: 'http://lorempixel.com/210/125/nature/?id=3',
+      tooltip: 'Filter 3',
+      text: 'Filter 3',
+      query: 'Filter Query 3',
+      url: 'http://localhost:8080/geonetwork/catalog/views/' +
+          'swe/resources/owscontext.xml'
     }, {
-          image: 'http://lorempixel.com/210/125/nature/?id=4',
-          tooltip: 'Filter 4',
-          text: 'Filter 4',
-          query: 'Filter Query 4'
+      image: 'http://lorempixel.com/210/125/nature/?id=4',
+      tooltip: 'Filter 4',
+      text: 'Filter 4',
+      query: 'Filter Query 4',
+      url: 'http://localhost:8080/geonetwork/catalog/views/' +
+       'swe/resources/owscontext.xml'
     }];
+
     $scope.doFilter = function(query) {
-          window.alert(query.query);
+      var map = {};
+      map.url = query.url;
+      $scope.resultviewFns.loadMap(map);
     };
   }]);
 

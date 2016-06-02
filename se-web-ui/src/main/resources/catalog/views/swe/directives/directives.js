@@ -94,7 +94,7 @@
                   for (var i = 0; i < scope.values.length; i++) {
                     if (scope.values[i].sortBy === scope.params.sortBy) {
                       var nextOptions = i === scope.values.length - 1 ?
-                      0 : i + 1;
+                          0 : i + 1;
                       '';
                       return;
                     }
@@ -313,7 +313,7 @@
                 scope.maxItems = initialMaxItems;
                 scope.toggleAll = function() {
                   scope.maxItems = (scope.maxItems == Infinity) ?
-                  initialMaxItems : Infinity;
+                      initialMaxItems : Infinity;
                 };
 
                 // Facet drill down is based on facet.q parameter.
@@ -347,8 +347,8 @@
                */
                 scope.buildPath = function(category) {
                   category.path =
-                  (scope.path === undefined ? '' : scope.path + '/') +
-                  encodeURIComponent(category['@value']);
+                      (scope.path === undefined ? '' : scope.path + '/') +
+                      encodeURIComponent(category['@value']);
                   return category.path;
                 };
 
@@ -370,7 +370,7 @@
                   }
                   var facetQParam = scope.params['facet.q'];
                   var dimensionList =
-                  facetQParam.split('&');
+                      facetQParam.split('&');
                   var categoryList = [];
                   $.each(dimensionList, function(idx) {
                     // Dimension filter contains the dimension name first
@@ -381,28 +381,28 @@
 
                     // Dimension but not in that category path. Add filter.
                     if (dimensionFilter[1] &&
-                    dimensionFilter[0] !=
-                    scope.facetConfig.map[scope.categoryKey]) {
+                        dimensionFilter[0] !=
+                        scope.facetConfig.map[scope.categoryKey]) {
                       categoryList.push({
                         dimension: dimensionFilter[0],
                         value: dimensionFilter.slice(1, dimensionFilter.length)
                       });
                     } else if (dimensionFilter[1] &&
-                    dimensionFilter.length > 2 &&
-                    dimensionFilter[0] ==
-                    scope.facetConfig.map[scope.categoryKey]) {
+                        dimensionFilter.length > 2 &&
+                        dimensionFilter[0] ==
+                        scope.facetConfig.map[scope.categoryKey]) {
 
                       var filteredElementInPath =
-                      $.inArray(
-                      encodeURIComponent(category['@value']),
-                      dimensionFilter);
+                          $.inArray(
+                          encodeURIComponent(category['@value']),
+                          dimensionFilter);
                       // Restrict the path to its parent
                       if (filteredElementInPath !== -1) {
                         categoryList.push({
                           dimension: scope.categoryKey,
                           value: dimensionFilter.
-                          slice(1, filteredElementInPath).
-                          join('/')
+                              slice(1, filteredElementInPath).
+                              join('/')
                         });
                       }
                     }
@@ -422,11 +422,11 @@
                   $.each(categoryList, function(idx) {
                     if (categoryList[idx].value) {
                       facetQParam = facetQParam +
-                      (scope.facetConfig.map[categoryList[idx].dimension] ||
-                      categoryList[idx].dimension) +
-                      '/' +
-                      categoryList[idx].value +
-                      (idx < categoryList.length - 1 ? '&' : '');
+                          (scope.facetConfig.map[categoryList[idx].dimension] ||
+                          categoryList[idx].dimension) +
+                          '/' +
+                          categoryList[idx].value +
+                          (idx < categoryList.length - 1 ? '&' : '');
                     }
                   });
                   scope.params['facet.q'] = facetQParam;
@@ -447,12 +447,12 @@
                   // facet.q parameter (ie. combination of
                   // dim1/dim1val/dim1val2&dim2/dim2Val...).
                   category.isSelected =
-                  angular.isUndefined(scope.params['facet.q']) ?
-                  false :
-                  ($.inArray(
+                      angular.isUndefined(scope.params['facet.q']) ?
+                      false :
+                      ($.inArray(
                       encodeURIComponent(category['@value']),
                       scope.params['facet.q'].split(/&|\//)) !== -1 ||
-                  $.inArray(
+                      $.inArray(
                       category['@value'],
                       scope.params['facet.q'].split(/&|\//)) !== -1);
                   return category.isSelected;
@@ -469,18 +469,18 @@
                     return false;
                   }
                   var dimensionList =
-                  facetQParam.split('&');
+                      facetQParam.split('&');
                   var categoryList = [];
                   for (var i = 0; i < dimensionList.length; i++) {
                     var dimensionFilter = dimensionList[i].split('/');
                     if (dimensionFilter[0] ==
-                    scope.facetConfig.map[scope.categoryKey] &&
-                    ($.inArray(
-                    encodeURIComponent(category['@value']),
-                    scope.params['facet.q'].split(/&|\//)) !== -1 ||
-                    $.inArray(
-                    category['@value'],
-                    scope.params['facet.q'].split(/&|\//)) !== -1)) {
+                        scope.facetConfig.map[scope.categoryKey] &&
+                        ($.inArray(
+                        encodeURIComponent(category['@value']),
+                        scope.params['facet.q'].split(/&|\//)) !== -1 ||
+                        $.inArray(
+                        category['@value'],
+                        scope.params['facet.q'].split(/&|\//)) !== -1)) {
                       return true;
                     }
                   }
@@ -489,8 +489,8 @@
 
                 scope.toggleNode = function(evt) {
                   el = evt ?
-                  $(evt.currentTarget).parent() :
-                  element.find('span.fa');
+                      $(evt.currentTarget).parent() :
+                      element.find('span.fa');
                   el.find('.fa').first()
                   .toggleClass('fa-minus-square')
                   .toggleClass('fa-plus-square');
