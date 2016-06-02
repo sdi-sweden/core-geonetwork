@@ -346,11 +346,11 @@
       /**
        * Displays the metadata BBOX in the search map.
        *
-       * @param md {object} Metadata
+       * @param {object} md  Metadata
          */
       $scope.showMetadataGeometry = function(md) {
         var feature = gnMap.getBboxFeatureFromMd(md,
-          $scope.searchObj.searchMap.getView().getProjection());
+            $scope.searchObj.searchMap.getView().getProjection());
 
 
         if (angular.isUndefined($scope.vectorLayer)) {
