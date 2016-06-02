@@ -437,6 +437,10 @@
         <Field name="responsibleParty"
                string="{concat($roleTranslation, '|resource|', ., '|', $logo, '|',  string-join($email, ','), '|', $individualName, '|', $positionName, '|', $address, '|', string-join($phone, ','))}"
                store="true" index="false"/>
+
+        <xsl:if test="$role = 'owner'">
+          <Field name="orgNameOwner" string="{string(.)}" store="true" index="true"/>
+        </xsl:if>
       </xsl:for-each>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
