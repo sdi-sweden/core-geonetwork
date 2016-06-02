@@ -305,6 +305,10 @@
 
       <xsl:for-each select="//gmd:MD_Keywords">
         <!-- Index all keywords as text or anchor -->
+
+        <xsl:variable name="thesaurusName"
+                      select="normalize-space(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString)"/>
+
         <xsl:variable name="listOfKeywords"
                       select="gmd:keyword/gco:CharacterString|
                                         gmd:keyword/gmx:Anchor"/>
@@ -312,6 +316,10 @@
           <xsl:variable name="keyword" select="string(.)"/>
 
           <Field name="keyword" string="{$keyword}" store="true" index="true"/>
+
+          <xsl:if test="lower-case($thesaurusName) = 'initiativ'">
+            <Field name="initiativKeyword" string="{$keyword}" store="true" index="true"/>
+          </xsl:if>
 
           <!-- If INSPIRE is enabled, check if the keyword is one of the 34 themes
                and index annex, theme and theme in english. -->
