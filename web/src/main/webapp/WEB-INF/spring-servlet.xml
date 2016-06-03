@@ -29,7 +29,7 @@
         http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.2.xsd
-	    http://www.springframework.org/schema/mvc 
+	    http://www.springframework.org/schema/mvc
 	    http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
 
@@ -45,11 +45,12 @@
 		<property name="suffix" value=".xsl" />
 	</bean>
 
+
 	<bean id="localeResolver"
  		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
- 		<property name="defaultLocale" value="eng" />
+ 		<property name="defaultLocale" value="swe" />
  	</bean>
- 
+
  	<bean id="localeChangeInterceptor"
  		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
  		<property name="paramName" value="language" />
@@ -61,29 +62,29 @@
     <bean id="readWriteMvcInterceptor" class="jeeves.config.springutil.ReadOnlyMvcInterceptor" />
 
  	<mvc:interceptors>
- 		<ref bean="localeChangeInterceptor" />
- 		<ref bean="urlLocaleChangeInterceptor" />
+    <ref bean="localeChangeInterceptor" />
+    <ref bean="urlLocaleChangeInterceptor" />
  		<ref bean="readWriteMvcInterceptor" />
  	</mvc:interceptors>
 
-	  <bean id="cnManager"  
-	    class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">  
-		  <property name="favorPathExtension" value="false"/>  
-		  <property name="ignoreAcceptHeader" value="false" /> 
+	  <bean id="cnManager"
+	    class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		  <property name="favorPathExtension" value="false"/>
+		  <property name="ignoreAcceptHeader" value="false" />
 		  <property name="favorParameter" value="true"/>
 		  <property name="parameterName" value="_content_type"/>
-		  <property name="defaultContentType" value="application/xml" />  
-		  <property name="useJaf" value="false"/>  
-		  
-		  <property name="mediaTypes">  
-		    <map>  
-			   <entry key="html" value="text/html" />  
-			   <entry key="json" value="application/json" />  
-			   <entry key="xml" value="application/xml" />  
-		    </map>  
-		  </property>  
-	 </bean>  
-	  
+		  <property name="defaultContentType" value="application/xml" />
+		  <property name="useJaf" value="false"/>
+
+		  <property name="mediaTypes">
+		    <map>
+			   <entry key="html" value="text/html" />
+			   <entry key="json" value="application/json" />
+			   <entry key="xml" value="application/xml" />
+		    </map>
+		  </property>
+	 </bean>
+
 	 <mvc:annotation-driven content-negotiation-manager="cnManager">
      <mvc:message-converters>
        <bean class="org.fao.geonet.api.DOMElementMessageConverter"/>
