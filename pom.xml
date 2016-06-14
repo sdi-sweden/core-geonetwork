@@ -228,7 +228,15 @@
                             <propertyName>surefireArgLine</propertyName>
                         </configuration>
                     </execution>
-                    <execution>
+<!--
+                     <execution>
+                        <id>merge-reports</id>
+                        <goals>
+                            <goal></goal>
+                        </goals>
+                    </execution>
+ -->
+                     <execution>
                         <id>post-unit-test</id>
                         <phase>test</phase>
                         <goals>
