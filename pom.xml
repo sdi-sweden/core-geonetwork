@@ -207,49 +207,96 @@
             <encoding>UTF-8</encoding>
           </configuration>
         </plugin>
-  
-            <plugin>
-                <!-- Code Coverage -->
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.plugin.version}</version>
-                <configuration>
-                    <haltOnFailure>false</haltOnFailure>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>pre-unit-test</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                        <configuration>
-                            <destFile>${jacoco.destfile}</destFile>
-                            <append>true</append>
-                            <propertyName>surefireArgLine</propertyName>
-                        </configuration>
-                    </execution>
-<!--
-                     <execution>
-                        <id>merge-reports</id>
-                        <goals>
-                            <goal></goal>
-                        </goals>
-                    </execution>
- -->
-                     <execution>
-                        <id>post-unit-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <dataFile>${jacoco.destfile}</dataFile>
-                            <outputDirectory>${sonar.jacoco.reportPath}</outputDirectory>
-                            <skip>${skip.surefire.tests}</skip>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
+	<plugin>
+		<!-- Code Coverage -->
+		<groupId>org.jacoco</groupId>
+		<artifactId>jacoco-maven-plugin</artifactId>
+		<version>${jacoco.plugin.version}</version>
+		<configuration>
+			<haltOnFailure>false</haltOnFailure>
+		</configuration>
+		<executions>
+			<execution>
+				<id>pre-unit-test</id>
+				<goals>
+					<goal>prepare-agent</goal>
+				</goals>
+				<configuration>
+					<destFile>${jacoco.destfile}</destFile>
+					<append>true</append>
+					<propertyName>surefireArgLine</propertyName>
+				</configuration>
+			</execution>
+			<execution>
+				<id>post-unit-test</id>
+				<phase>test</phase>
+				<goals>
+					<goal>report</goal>
+				</goals>
+				<configuration>
+					<dataFile>${jacoco.destfile}</dataFile>
+					<outputDirectory>${sonar.jacoco.reportPath}</outputDirectory>
+					<skip>${skip.surefire.tests}</skip>
+				</configuration>
+			</execution>
+			<execution>
+				<id>merge-jacoco-reports</id>
+				<phase>prepare-package</phase>
+				<goals>
+					<goal>merge</goal>
+				</goals>
+				<configuration>
+				    <fileSets>
+				        <fileSet>
+				            <directory>${project.basedir}/common/target/coverage</directory>
+				            <includes>jacoco.exec</includes>
+				        </fileSet>
+				        <fileSet>
+				            <directory>${project.basedir}/domain/target/coverage</directory>
+				            <includes>jacoco.exec</includes>
+				        </fileSet>
+<!-- 
+				        <fileSet>
+				            <directory>${project.basedir}/core/target/coverage</directory>
+				            <includes>jacoco.exec</includes>
+				        </fileSet>
+				        <fileSet>
+				            <directory>${project.basedir}/csw-server/target/coverage</directory>
+				            <includes>jacoco.exec</includes>
+				        </fileSet>
+				        <fileSet>
+				            <directory>${project.basedir}/harvesters/target/coverage</directory>
+				            <includes>jacoco.exec</includes>
+				        </fileSet>
+				        <fileSet>
+				            <directory>${project.basedir}/services/target/coverage</directory>
+				            <includes>jacoco.exec</includes>
+				        </fileSet>
+				        <fileSet>
+				            <directory>${project.basedir}/wro4j/target/coverage</directory>
+				            <includes>jacoco.exec</includes>
+				        </fileSet>
+-->
+				    </fileSets>				    
+				    <destFile>${sonar.jacoco.reportPath}/jacoco.exec</destFile>
+					<skip>${skip.surefire.tests}</skip>
+				</configuration>
+			</execution>
+			<execution>
+				<id>report-after-merge</id>
+				<phase>verify</phase>
+				<goals>
+					<goal>report</goal>
+				</goals>
+				<configuration>
+					<dataFile>${sonar.jacoco.reportPath}/jacoco.exec</dataFile>
+					<outputDirectory>${sonar.jacoco.reportPath}</outputDirectory>
+					<skip>${skip.surefire.tests}</skip>
+				</configuration>
+			</execution>
+		</executions>
+	</plugin>
             		     
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -341,7 +388,7 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <version>2.18.1</version>
             <configuration>
-                <argLine>-Dfile.encoding=UTF-8 -Xmx512M  ${surefireArgLine}</argLine>
+                <argLine>-Dfile.encoding=UTF-8 -Xmx1024M  ${surefireArgLine}</argLine>
                 <!--<rerunFailingTestsCount>5</rerunFailingTestsCount>-->
                 <runOrder>alphabetical</runOrder>
                 <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -1159,7 +1206,7 @@
     <module>services</module>
     <module>wro4j</module>
     <module>inspire-atom</module>
-    <module>se-services</module>
+    <!-- <module>se-services</module> -->
   </modules>
 
   <profiles>
