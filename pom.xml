@@ -242,7 +242,7 @@
 				</configuration>
 			</execution>
 -->
-			<execution>
+<!--			<execution>
 				<id>merge-jacoco-reports</id>
 				<phase>prepare-package</phase>
 				<goals>
@@ -258,7 +258,7 @@
 				            <directory>${project.basedir}/domain/target/coverage</directory>
 				            <includes>jacoco.exec</includes>
 				        </fileSet>
-<!-- 
+ 
 				        <fileSet>
 				            <directory>${project.basedir}/core/target/coverage</directory>
 				            <includes>jacoco.exec</includes>
@@ -279,12 +279,13 @@
 				            <directory>${project.basedir}/wro4j/target/coverage</directory>
 				            <includes>jacoco.exec</includes>
 				        </fileSet>
--->
+
 				    </fileSets>				    
 				    <destFile>${sonar.jacoco.reportPath}/jacoco.exec</destFile>
 					<skip>${skip.surefire.tests}</skip>
 				</configuration>
 			</execution>
+-->
 			<execution>
 				<id>report-after-merge</id>
 				<phase>verify</phase>
@@ -1274,7 +1275,7 @@
     <sonar.jacoco.reportPath>${project.basedir}/code_quality/target/coverage-reports</sonar.jacoco.reportPath>
     <sonar.language>java</sonar.language>
 	<jacoco.plugin.version>0.7.6.201602180812</jacoco.plugin.version>    
-    <jacoco.destfile>${project.build.directory}/coverage/jacoco.exec</jacoco.destfile>
+    <jacoco.destfile>${sonar.jacoco.reportPath}/jacoco.exec</jacoco.destfile>
     <jacoco.skip>false</jacoco.skip>
     <jacoco.excludePattern/>
   </properties>
