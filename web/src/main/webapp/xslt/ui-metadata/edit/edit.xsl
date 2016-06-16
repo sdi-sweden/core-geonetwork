@@ -33,16 +33,16 @@
   extension-element-prefixes="saxon" exclude-result-prefixes="#all">
 
   <!-- The editor form.
-  
+
   The form is built from the processing of the metadocument. The metadocument
   is composed of the source metadata record and the schema information.
-  
+
   # Element identification
-  
+
   In the metadocument, each element are identified by a an identifier stored
   in the geonet:element/@ref. This identifier is used when the editor form is
   sent back for saving edits.
-  
+
   eg.
   <gmd:fileIdentifier>
     <gco:CharacterString>
@@ -50,13 +50,13 @@
       <geonet:element ref="3" parent="2" uuid="gco:CharacterString_b1f1c734-258f-4784-9d47-175c7f1a00e1" min="1" max="1"/>
     </gco:CharacterString>
     <geonet:element ref="2" parent="1" uuid="gmd:fileIdentifier_94eae163-101b-49c0-b06c-ff13c3616263" min="0" max="1" del="true"/>
-  
+
   In that case, _3=<new_uuid> will be sent to update the fileIdentifier/CharacterString.
-  
+
   # Element schema
 
   The metadocument also contains cardinality and list of values for enumeration.
-  
+
   -->
 
   <xsl:output omit-xml-declaration="yes" method="html" doctype-public="html" indent="yes"
@@ -72,9 +72,9 @@
   <xsl:include href="../form-builder.xsl"/>
 
   <xsl:template match="/">
-    <!-- 
+    <!--
           The main editor form.
-          
+
           Disable form validation with novalidate attribute. -->
     <form id="gn-editor-{$metadataId}" name="gnEditor" accept-charset="UTF-8" method="POST"
       novalidate="" class="form-horizontal gn-editor gn-tab-{$tab}" role="form"
@@ -102,7 +102,7 @@
         <saxon:call-template name="{concat('get-', $schema, '-extents-as-json')}"/>
       </xsl:variable>
       <input type="hidden" id="extent" value="{$metadataExtents}"/>
-      
+
       <xsl:call-template name="get-online-source-config">
         <xsl:with-param name="pattern" select="$geopublishMatchingPattern"/>
         <xsl:with-param name="id" select="'geoPublisherConfig'"/>
@@ -121,7 +121,8 @@
         </xsl:call-template>
       </xsl:if>
 
-      <div data-gn-toggle=""/>
+      <!-- SWE don't show the toggle all sections button -->
+      <!--<div data-gn-toggle=""/>-->
 
       <xsl:choose>
         <xsl:when test="$service != 'md.element.add' and $tabConfig/section">

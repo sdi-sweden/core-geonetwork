@@ -14,21 +14,6 @@ form.gn-editor {
     text-align: left;
   }
 
-  fieldset {
-    background-color: #ffffff;
-    margin-bottom: 15px;
-  }
-
-  legend {
-    font-family: 'open_sansbold', sans-serif;
-    font-size: 14px;
-    line-height: 20px;
-    color: #000;
-    background-color: #f1f5f4;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-
   .gn-required > label:after {
     content: "*";
     font-family: 'open_sansregular', sans-serif;
@@ -44,4 +29,18 @@ form.gn-editor {
 [data-gn-slide-toggle] {
   padding-right: 20px;
   cursor: pointer;
+}
+
+[data-gn-slide-toggle]:after {
+  content: "\f0d7";
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  font-size: 16px;
+  float: right;
+}
+
+[data-gn-slide-toggle]:before {
+  content: none
 }
