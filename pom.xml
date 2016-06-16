@@ -1276,7 +1276,7 @@
     <sonar.jacoco.reportPath>${project.basedir}/code_quality/target/coverage-reports</sonar.jacoco.reportPath>
     <sonar.language>java</sonar.language>
 	<jacoco.plugin.version>0.7.6.201602180812</jacoco.plugin.version>    
-    <jacoco.destfile>${sonar.jacoco.reportPath}/jacoco.exec</jacoco.destfile>
+    <jacoco.destfile>${project.build.directory}/coverage/jacoco.exec</jacoco.destfile>
     <jacoco.skip>false</jacoco.skip>
     <jacoco.excludePattern/>
 	<surefireArgLine></surefireArgLine>
