@@ -114,8 +114,7 @@
   <referenceSystemInfo2>Ref. system</referenceSystemInfo2>
   <distributionInfo2>Distribution</distributionInfo2>
   <metadata2>Metadata</metadata2>
-  <extent>Utsträckning</extent>
-  <temporalRangeSection2>Temporal utsträckning</temporalRangeSection2>
+  <extent>Geografisk, temporal och vertical utsträckning</extent>
   <distributorContact>Distributör</distributorContact>
   <metadataMaintenance2>Md. underhåll</metadataMaintenance2>
 </strings>
