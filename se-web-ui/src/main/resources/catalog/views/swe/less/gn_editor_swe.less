@@ -11,6 +11,7 @@ form.gn-editor {
     font-size: 12px;
     line-height: 18px;
     letter-spacing: 1px;
+    text-align: left;
   }
 
   fieldset {
@@ -26,6 +27,17 @@ form.gn-editor {
     background-color: #f1f5f4;
     padding-top: 10px;
     padding-bottom: 10px;
+  }
+
+  .gn-required > label:after {
+    content: "*";
+    font-family: 'open_sansregular', sans-serif;
+    font-size: 14px;
+    margin: 2px 0 0 7px;
+    position: absolute;
+    color: #ff0000;
+    font-weight: normal;
+    line-height: 18px;
   }
 }
 
