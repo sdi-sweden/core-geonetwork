@@ -228,7 +228,7 @@
 					<propertyName>surefireArgLine</propertyName>
 				</configuration>
 			</execution>
-<!--
+
 			<execution>
 				<id>post-unit-test</id>
 				<phase>test</phase>
@@ -241,7 +241,6 @@
 					<skip>${skip.surefire.tests}</skip>
 				</configuration>
 			</execution>
--->
 <!--			<execution>
 				<id>merge-jacoco-reports</id>
 				<phase>prepare-package</phase>
@@ -286,6 +285,7 @@
 				</configuration>
 			</execution>
 -->
+<!--
 			<execution>
 				<id>report-after-merge</id>
 				<phase>verify</phase>
@@ -298,7 +298,8 @@
 					<skip>${skip.surefire.tests}</skip>
 				</configuration>
 			</execution>
-		</executions>
+ -->
+			</executions>
 	</plugin>
             		     
         <plugin>
