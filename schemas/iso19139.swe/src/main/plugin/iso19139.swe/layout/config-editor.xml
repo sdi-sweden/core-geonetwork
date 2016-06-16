@@ -482,7 +482,21 @@
           </action>
 
           <!-- Topic Category -->
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:topicCategory" />
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory" />
+
+          <action type="add"
+                  if="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory) = 0"
+                  name="topicCategory" or="topicCategory"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+            <template>
+              <snippet>
+                <gmd:topicCategory>
+                  <gmd:MD_TopicCategoryCode></gmd:MD_TopicCategoryCode>
+                </gmd:topicCategory>
+              </snippet>
+            </template>
+          </action>
+
 
           <!-- Point of contact -->
           <field name="pointOfContact" templateModeOnly="true" notDisplayedIfMissing="true"
