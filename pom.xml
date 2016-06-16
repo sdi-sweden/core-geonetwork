@@ -392,7 +392,7 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <version>2.18.1</version>
             <configuration>
-                <argLine>-Dfile.encoding=UTF-8 -Xmx1024M  ${surefireArgLine}</argLine>
+                <argLine>-Dfile.encoding=UTF-8 -Xmx1024M  @{surefireArgLine}</argLine>
                 <!--<rerunFailingTestsCount>5</rerunFailingTestsCount>-->
                 <runOrder>alphabetical</runOrder>
                 <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -1279,5 +1279,6 @@
     <jacoco.destfile>${sonar.jacoco.reportPath}/jacoco.exec</jacoco.destfile>
     <jacoco.skip>false</jacoco.skip>
     <jacoco.excludePattern/>
+	<surefireArgLine></surefireArgLine>
   </properties>
 </project>
