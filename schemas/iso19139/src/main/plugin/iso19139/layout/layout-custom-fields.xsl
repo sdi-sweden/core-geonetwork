@@ -42,9 +42,9 @@
 
   <xsl:include href="layout-custom-fields-keywords.xsl"/>
   <xsl:include href="layout-custom-fields-sds.xsl"/>
-  
+
   <!-- Readonly elements -->
-  <xsl:template mode="mode-iso19139" priority="2000" match="gmd:fileIdentifier|gmd:dateStamp">
+  <xsl:template mode="mode-iso19139" priority="2005" match="gmd:fileIdentifier|gmd:dateStamp">
 
     <xsl:call-template name="render-element">
       <xsl:with-param name="label" select="gn-fn-metadata:getLabel($schema, name(), $labels)/label"/>
@@ -107,11 +107,11 @@
 
 
   <!-- Duration
-      
+
        xsd:duration elements use the following format:
-       
+
        Format: PnYnMnDTnHnMnS
-       
+
        *  P indicates the period (required)
        * nY indicates the number of years
        * nM indicates the number of months
@@ -120,7 +120,7 @@
        * nH indicates the number of hours
        * nM indicates the number of minutes
        * nS indicates the number of seconds
-       
+
        A custom directive is created.
   -->
   <xsl:template mode="mode-iso19139" match="gts:TM_PeriodDuration|gml:duration" priority="200">
@@ -173,9 +173,9 @@
       <xsl:with-param name="value" select="text()"/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="$xpath"/>
-      <!-- 
+      <!--
           Default field type is Date.
-          
+
           TODO : Add the capability to edit those elements as:
            * xs:time
            * xs:dateTime
@@ -190,14 +190,14 @@
       <xsl:with-param name="attributesSnippet" select="$attributes"/>
     </xsl:call-template>
   </xsl:template>
-  
+
   <xsl:template mode="mode-iso19139" match="gmd:EX_GeographicBoundingBox" priority="2000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
-    
+
     <xsl:call-template name="render-boxed-element">
       <xsl:with-param name="label"
         select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)/label"/>
