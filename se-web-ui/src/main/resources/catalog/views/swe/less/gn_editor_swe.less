@@ -24,6 +24,20 @@ form.gn-editor {
     font-weight: normal;
     line-height: 18px;
   }
+
+  .geo-data-toolbar-cont {
+    *zoom: 1;
+    width: auto;
+    float: right;
+    box-sizing: border-box;
+    padding: 0 8px;
+    background-color: #ffffff;
+    min-height: 45px;
+  }
+
+  .fixed-table-container .table {
+    margin-bottom: inherit !important;
+  }
 }
 
 [data-gn-slide-toggle] {
@@ -43,4 +57,10 @@ form.gn-editor {
 
 [data-gn-slide-toggle]:before {
   content: none
+}
+
+.not-active {
+  pointer-events: none;
+  cursor: default;
+  color: lightgray !important;
 }

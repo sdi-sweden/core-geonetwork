@@ -35,6 +35,7 @@
   goog.require('gn_popup');
   goog.require('gn_suggestion');
   goog.require('gn_validation');
+  goog.require('swe_editor_table_controller');
 
   var module = angular.module('gn_editor', [
     'gn_module',
@@ -48,7 +49,8 @@
     'gn_ows',
     'gn_geopublisher',
     'gn_batch_service',
-    'gn_mdactions_directive'
+    'gn_mdactions_directive',
+    'swe_editor_table_controller'
   ]);
 
   module.constant('gnViewerSettings', {});

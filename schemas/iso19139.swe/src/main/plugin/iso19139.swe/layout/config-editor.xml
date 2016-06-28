@@ -644,7 +644,11 @@
         </section>
 
         <section name="referenceSystemInfo2">
-          <field name="rsIdentifier" templateModeOnly="true"
+          <field name="rsIdentifier"
+                 xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
+                 del="../.." />
+
+          <!--<field name="rsIdentifier" templateModeOnly="false"
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../..">
             <template>
@@ -652,7 +656,7 @@
                 <key label="code"
                      xpath="gmd:RS_Identifier/gmd:code/gco:CharacterString"
                      tooltip="gmd:MD_ReferenceSystem"/>
-                <!-- TODO: Get the helper -->
+
               </values>
               <snippet>
                 <gmd:referenceSystemIdentifier>
@@ -667,7 +671,7 @@
                 </gmd:referenceSystemIdentifier>
               </snippet>
             </template>
-          </field>
+          </field>-->
 
 
           <action type="add" name="rsIdentifier" addDirective="data-gn-crs-selector"
