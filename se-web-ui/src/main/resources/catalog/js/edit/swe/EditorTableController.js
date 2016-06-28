@@ -25,101 +25,128 @@
   goog.provide('swe_editor_table_controller');
 
   var module = angular.module('swe_editor_table_controller',
-    []);
+      []);
 
-  module.controller('SweEditorTableController', ['$scope', '$document', function($scope, $document) {
-    $scope.selectedRowIndex = null;
-    $scope.selectedRow = null;
+  module.controller('SweEditorTableController', ['$scope', '$document',
+    '$compile', function($scope, $document, $compile) {
+
+      // Selected row index in the table
+      $scope.selectedRowIndex = null;
+      // Selected row in the table
+      $scope.selectedRow = null;
+      // Row info used in the edit dialogs
+      $scope.editRow = null;
 
 
-    $scope.init = function(rows, parent, dialog) {
-      $scope.rows= rows;
-      $scope.parent = parent;
-      $scope.dialog = dialog;
-    };
+      $scope.init = function(rows, xmlSnippet, parent, dialog) {
+        $scope.rows = rows;
+        $scope.xmlSnippet = xmlSnippet;
+        $scope.parent = parent;
+        $scope.dialog = dialog;
+      };
 
-    $scope.setClickedRow = function(index){
-      $scope.selectedRowIndex = index;
-      $scope.selectedRow = $scope.rows[index];
-    };
+      /**
+     * Selects a row in the table.
+     *
+     * @param {number} index Row index in the table.
+       */
+      $scope.setClickedRow = function(index) {
+        $scope.selectedRowIndex = index;
+        $scope.selectedRow = $scope.rows[index];
+      };
 
-    $scope.editRow = function(){
-      $scope.mode = 'edit';
-      $($scope.dialog).modal('show');
-    };
+      /**
+     * Shows the edit dialog for the selected row.
+     */
+      $scope.editRow = function() {
+        if ($scope.selectedRow == null) return;
 
-    $scope.addRow = function(){
+        $scope.mode = 'edit';
+        angular.copy($scope.selectedRow, $scope.editRow);
 
-      $scope.mode = 'add';
-      $scope.selectedRow = {ref: '', date: '', datetype: ''};
+        $($scope.dialog).modal('show');
+      };
 
-      $($scope.dialog).modal('show');
-    };
+      /**
+     * Shows the new dialog to add a new row.
+     */
+      $scope.addRow = function() {
+        $scope.mode = 'add';
+        $scope.editRow = {ref: ''};
 
-    $scope.saveRow = function(){
-      $scope.selectedRow.date = document.getElementsByName("datevalue")[0].value;
+        $($scope.dialog).modal('show');
+      };
 
-      if ($scope.mode == 'add') {
-        $scope.selectedRow.xmlSnippet = "<gmd:date xmlns:gmd=\"http://www.isotc211.org/2005/gmd\">" +
-          "<gmd:CI_Date>" +
-        "<gmd:date>" +
-        "<gco:Date xmlns:gco=\"http://www.isotc211.org/2005/gco\">" + $scope.selectedRow.date + "</gco:Date>" +
-        "</gmd:date>" +
-        "<gmd:dateType>" +
-        "<gmd:CI_DateTypeCode codeListValue=\"" + $scope.selectedRow.datetype + "\"" +
-        " codeList=\"http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode\"/>" +
-        "  </gmd:dateType>" +
-        "</gmd:CI_Date>" +
-        "</gmd:date>";
+      /**
+     * Saves the current row edit.
+     */
+      $scope.saveRow = function() {
+        // TODO: Move to a custom controller for the edit dialog
+        $scope.editRow.date = document.getElementsByName('datevalue')[0].value;
 
-        $scope.rows.push($scope.selectedRow);
+        if ($scope.mode == 'add') {
+          if ($scope.xmlSnippet != '') {
+            var content = $compile($scope.xmlSnippet)($scope);
+
+            $scope.editRow.xmlSnippet = content[0].innerHTML;
+          }
+
+          var template = $scope.xmlSnippet;
+          for (var property in $scope.editRow) {
+            if ($scope.editRow.hasOwnProperty(property)) {
+              template = template.replace('{{editRow.' + property + '}}',
+                  $scope.editRow[property]);
+            }
+          }
+          $scope.editRow.xmlSnippet = template;
+          
+          $scope.selectedRow = $scope.editRow;
+          $scope.rows.push($scope.selectedRow);
+        } else {
+          angular.copy($scope.editRow, $scope.selectedRow);
+        }
+
+
         // TODO: Check, removes the element added
         //$scope.save(true);
-      }
 
-
-      // Update the hidden field for the date
-      //var id = "#_" + $scope.selectedRow.refdate;
-      //var el = angular.element(id);
-      //el.val($scope.selectedRow.date);
-
-      // Update the hidden field for the date type
-      //id = "#_" + $scope.selectedRow.refdatetype + "_codeListValue";
-      //var el = angular.element(id);
-      //el.val($scope.selectedRow.datetype);
-
-      $($scope.dialog).modal('hide');
-    };
-
-    $scope.removeRow = function() {
-      $scope.remove($scope.selectedRow.ref, $scope.parent);
-      $scope.rows.splice( $scope.selectedRowIndex, 1 );
-      $scope.selectedRow = null;
-    };
-
-    $scope.isExistingItem = function (item) {
-      return item.ref != '';
-    };
-
-    $scope.isNewItem = function (item) {
-      return item.ref === '';
-    };
-
-    $scope.cancel = function() {
-      $($scope.dialog).modal('hide');
-    }
-
-  }]);
-
-
-  module.directive('SweDateDialog', [
-    function() {
-      return {
-        restrict: 'A',
-        link: function(scope, elem) {
-          alert("hi");
-        }
+        $($scope.dialog).modal('hide');
       };
-    }
-  ]);
+
+      /**
+     * Removes a row from the table and saves
+     * the editor form to update the metadata.
+     */
+      $scope.removeRow = function() {
+        $scope.remove($scope.selectedRow.ref, $scope.parent);
+        $scope.rows.splice($scope.selectedRowIndex, 1);
+        $scope.selectedRow = null;
+
+        $scope.save(true);
+      };
+
+      /**
+     * Filter to check if an item exists in the
+     * metadata (not empty ref).
+     */
+      $scope.isExistingItem = function(item) {
+        return item.ref != '';
+      };
+
+      /**
+     * Filter to check if an item has to be added to the
+     * metadata (empty ref).
+     */
+      $scope.isNewItem = function(item) {
+        return item.ref === '';
+      };
+
+      /**
+     * Cancels the edit of the current row, closing the edit form.
+     */
+      $scope.cancel = function() {
+        $($scope.dialog).modal('hide');
+      };
+
+    }]);
 })();

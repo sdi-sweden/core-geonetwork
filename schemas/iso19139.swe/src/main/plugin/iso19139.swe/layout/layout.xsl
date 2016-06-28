@@ -48,41 +48,124 @@
   </xsl:template>
 
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:referenceSystemInfo[1]/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier" priority="1000">
-    <div class="geo-data-toolbar-cont" style="width:100%">
-      <div class="toolbar-right-list tool-bar-list">
-        <div class="link-cont ng-scope">
-          <a class="-label-link" href=""><span class="icon-pencil"></span>Lägg till</a>
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+    <xsl:variable name="labelConfig"
+                  select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
+
+
+    <xsl:variable name="refSystemXmlSnippet">
+      <![CDATA[
+         <gmd:referenceSystemInfo xmlns:gmd="http://www.isotc211.org/2005/gmd"
+              xmlns:gco="http://www.isotc211.org/2005/gco">
+            <gmd:MD_ReferenceSystem>
+               <gmd:referenceSystemIdentifier>
+                  <gmd:RS_Identifier>
+                     <gmd:code>
+                        <gco:CharacterString>{{editRow.code}}</gco:CharacterString>
+                     </gmd:code>
+                     <gmd:codeSpace>
+                        <gco:CharacterString>{{editRow.codespace}}</gco:CharacterString>
+                     </gmd:codeSpace>
+
+                  </gmd:RS_Identifier>
+               </gmd:referenceSystemIdentifier>
+            </gmd:MD_ReferenceSystem>
+        </gmd:referenceSystemInfo>
+    ]]>
+    </xsl:variable>
+
+    <xsl:variable name="refSystemModel">
+      [
+      <xsl:for-each select="../../../gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier">
+        {
+        'ref': '<xsl:value-of select="../../../gn:element/@ref" />',
+        'refcode': '<xsl:value-of select="gmd:RS_Identifier/gmd:code/gco:CharacterString/gn:element/@ref" />',
+        'refcodespace': '<xsl:value-of select="gmd:RS_Identifier/gmd:codeSpace/gco:CharacterString/gn:element/@ref" />',
+        'code': '<xsl:value-of select="normalize-space(gmd:RS_Identifier/gmd:code/gco:CharacterString )" />',
+        'codespace': '<xsl:value-of select="normalize-space(gmd:RS_Identifier/gmd:codeSpace/gco:CharacterString)" />'
+        }
+        <xsl:if test="position() != last()">,</xsl:if>
+      </xsl:for-each>
+      ]
+    </xsl:variable>
+
+    <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
+         data-ng-init="init({$refSystemModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '#refsystem-popup')" >
+      <label class="col-sm-2 control-label">
+        <xsl:value-of select="$labelConfig/label"/>
+      </label>
+
+      <div class="geo-data-toolbar-cont col-sm-10">
+        <div class="toolbar-right-list tool-bar-list">
+          <div class="link-cont ng-scope">
+            <a class="-label-link" href="" data-ng-click="addRow()" ><span class="icon-pencil"></span>Lägg till</a>
+          </div>
+          <div class="link-cont ng-scope">
+            <a class="-label-link" href="" data-ng-class="{{'not-active':selectedRowIndex == null}}" data-ng-click="removeRow()" ><span class="icon-pencil"></span>Ta bort</a>
+          </div>
+          <div class="link-cont ng-scope">
+            <a class="-label-link" href="" data-ng-class="{{'not-active':selectedRowIndex == null}}" data-ng-click="editRow()" ><span class="icon-pencil"></span>Redigera</a>
+          </div>
         </div>
-        <div class="link-cont ng-scope">
-          <a class="-label-link" href=""><span class="icon-pencil"></span>Ta bort</a>
-        </div>
-        <div class="link-cont ng-scope">
-          <a class="-label-link" href=""><span class="icon-pencil"></span>Redigera</a>
+      </div>
+
+      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.code" name="_{{{{row.refcode}}}}" />
+      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.codespace" name="_{{{{row.refcodespace}}}}" />
+
+      <input type="hidden" data-ng-repeat="row in rows | filter: isNewItem" data-ng-value="row.xmlSnippet" name="_X{{{{parent}}}}_gmdCOLONreferenceSystemInfo" />
+
+      <div class="fixed-table-container">
+        <table class="table table-hover table-bordered" style="background-color: #ffffff">
+          <thead>
+            <tr>
+              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:RS_Identifier/gmd:code), $labels, name(gmd:RS_Identifier), '', '')/label" /></div></th>
+              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:RS_Identifier/gmd:codeSpace), $labels, name(gmd:RS_Identifier), '', '')/label" /></div></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="row in rows" data-ng-class="{{'selected':$index == selectedRowIndex}}" data-ng-click="setClickedRow($index)">
+              <td>{{row.code}}</td>
+              <td>{{row.codespace}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Dialog to edit the ref. system -->
+      <div data-gn-modal=""
+           data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
+           id="refsystem-popup" class="gn-modal-lg">
+
+        <div data-swe-date-dialog="">
+          <div>
+            <label class="col-sm-2 control-label">
+              Code
+            </label>
+            <input type="text" class="form-control" data-ng-model="editRow.code" />
+          </div>
+
+          <div>
+            <label class="col-sm-2 control-label">
+              Codespace
+            </label>
+
+            <input type="text" class="form-control" data-ng-model="editRow.codespace" />
+          </div>
+
+          <div class="">
+            <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
+              Save
+            </button>&#160;
+            <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
+              Cancel
+            </button>
+
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="fixed-table-container">
-      <table class="table" style="background-color: #ffffff">
-        <thead>
-          <tr>
-            <th style="display:none"></th>
-            <th><div class="th-inner ">Code</div></th>
-            <th><div class="th-inner ">Codespace</div></th>
-          </tr>
-        </thead>
-        <tbody>
-          <xsl:for-each select="../../../gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier">
-          <tr>
-            <td style="display:none"><xsl:value-of select="position()" /></td>
-            <td><xsl:value-of select="gmd:code/gco:CharacterString" /></td>
-            <td><xsl:value-of select="gmd:codeSpace/gco:CharacterString" /></td>
-          </tr>
-          </xsl:for-each>
-        </tbody>
-      </table>
-    </div>
-
   </xsl:template>
 
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:referenceSystemInfo[position() &gt; 1]/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier" priority="1000" />
@@ -93,10 +176,23 @@
 
     <xsl:variable name="labelConfig"
                   select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
-    <xsl:variable name="labelMeasureType"
-                  select="gn-fn-metadata:getLabel($schema, name(gco:*), $labels, name(), '', '')"/>
-    <xsl:variable name="isRequired" select="gn:element/@min = 1 and gn:element/@max = 1"/>
 
+
+    <xsl:variable name="dateXmlSnippet">
+      <![CDATA[
+      <gmd:date xmlns:gmd="http://www.isotc211.org/2005/gmd">
+      <gmd:CI_Date>
+      <gmd:date>
+        <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">{{editRow.date}}</gco:Date>
+      </gmd:date>
+      <gmd:dateType>
+      <gmd:CI_DateTypeCode codeListValue="{{editRow.datetype}}"
+                            codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"/>
+        </gmd:dateType>
+      </gmd:CI_Date>
+    </gmd:date>
+    ]]>
+    </xsl:variable>
 
     <xsl:variable name="dateModel">
       [
@@ -113,38 +209,11 @@
       ]
     </xsl:variable>
 
-    <!--<xsl:for-each select="../gmd:date">
-      <input type="hidden" id="_{gmd:CI_Date/gmd:date/*/gn:element/@ref}"
-             name="_{gmd:CI_Date/gmd:date/*/gn:element/@ref}"
-             value="{gmd:CI_Date/gmd:date/*}" />
-    </xsl:for-each>
-
-    <xsl:for-each select="../gmd:date">
-    <input type="hidden" id="_{gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/gn:element/@ref}_codeListValue"
-           name="_{gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/gn:element/@ref}_codeListValue"
-           value="{gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue}" />
-    </xsl:for-each>-->
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$dateModel}, {../gn:element/@ref}, '#date-popup')" >
+         data-ng-init="init({$dateModel}, '{$dateXmlSnippet}', {../gn:element/@ref}, '#date-popup')" >
       <label class="col-sm-2 control-label">
         <xsl:value-of select="$labelConfig/label"/>
-        <xsl:if test="$labelMeasureType != '' and
-                        $labelMeasureType/label != $labelConfig/label">&#10;
-          (<xsl:value-of select="$labelMeasureType/label"/>)
-        </xsl:if>
-
-        <!--<div class="help-icn-cont other-filter-help-icn">
-          <div class="help-icn-circle"><span class="icon-help"></span></div>
-          <div class="tool-tip-cont">
-            <div class="tool-tip">
-              <span class="triangle"></span>
-              <h2>Sökning på ämnesområden</h2>
-              <p>Markera ett eller flera ämnesområden du vill söka geodata inom.</p>
-              <p>Kan kombineras med fritextsökning.</p>
-            </div>
-          </div>
-        </div>-->
       </label>
 
       <div class="geo-data-toolbar-cont col-sm-10">
@@ -171,7 +240,7 @@
           <thead>
             <tr>
               <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_Date/gmd:date), $labels, name(..), '', '')/label" /></div></th>
-              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_Date/gmd:dateType), $labels, name(..), '', '')/label" /> Date Type</div></th>
+              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_Date/gmd:dateType), $labels, name(..), '', '')/label" /></div></th>
             </tr>
           </thead>
           <tbody>
@@ -179,15 +248,6 @@
                 <td>{{row.date}}</td>
                 <td>{{row.datetype}}</td>
               </tr>
-
-            <!--<xsl:for-each select="../gmd:date">
-              <xsl:variable name="pos" select="position()" />
-              <tr data-ng-click="setClickedRow(this)">
-                <td style="display:none"><xsl:value-of select="position()" /></td>
-                <td><xsl:value-of select="gmd:CI_Date/gmd:date/*" /></td>
-                <td><xsl:value-of select="gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue" /></td>
-              </tr>
-            </xsl:for-each>-->
           </tbody>
         </table>
       </div>
@@ -203,12 +263,11 @@
             Date
           </label>
           <!--<input name="date" type="text" class="form-control" data-ng-model="selectedRow.date" />-->
-          <div data-gn-date-picker="{{selectedRow.date}}"
+          <div data-gn-date-picker="{{editRow.date}}"
                data-label=""
                data-tag-name=""
                data-element-ref="datevalue">>
           </div>
-
         </div>
 
         <div>
@@ -222,7 +281,7 @@
                                   $codelists,
                                   .)"/>
 
-          <select class="" data-ng-model="selectedRow.datetype">
+          <select class="" data-ng-model="editRow.datetype">
             <xsl:for-each select="$codelist/entry">
               <xsl:sort select="label"/>
               <option value="{code}" title="{normalize-space(description)}">
