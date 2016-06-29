@@ -63,16 +63,17 @@
 	
 	<!-- added by LM -->
 	
-	<!-- 
+	
 	<filter>
         <filter-name>HeaderLogger</filter-name>
         <filter-class>org.lmv.geodata.common.server.servlet.filter.LogHeaderValuesFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>HeaderLogger</filter-name>
-        <url-pattern>/home</url-pattern>
+        <!-- this will log headers when user switches language to spanish -->
+        <url-pattern>/srv/spa/catalog.search</url-pattern>
     </filter-mapping>
-	 -->
+	
 	 
 	<filter>
         <filter-name>RoleExtractor</filter-name>
