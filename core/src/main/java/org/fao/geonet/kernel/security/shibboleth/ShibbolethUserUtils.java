@@ -169,11 +169,20 @@ public class ShibbolethUserUtils {
 			User user = new User();
 			try {
 				user = (User) authProvider.loadUserByUsername(username);
+				
+				if(config.isUpdateProfile()){
+				    user.setProfile(profile);
+				}
+				
 			} catch (UsernameNotFoundException e) {
 				user.setUsername(username);
 				user.setSurname(surname);
 				user.setName(firstname);
 				user.setProfile(profile);
+				
+				if(email != null){
+				    user.getEmailAddresses().add(email);
+				}
 
 				// TODO add group to user
 				// Group g = _groupRepository.findByName(group);
