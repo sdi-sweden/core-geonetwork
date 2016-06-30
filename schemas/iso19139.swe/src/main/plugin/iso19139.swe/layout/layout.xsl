@@ -246,7 +246,7 @@
           <tbody>
               <tr data-ng-repeat="row in rows" data-ng-class="{{'selected':$index == selectedRowIndex}}" data-ng-click="setClickedRow($index)">
                 <td>{{row.date}}</td>
-                <td>{{row.datetype}}</td>
+                <td>{{row.datetype | translate}}</td>
               </tr>
           </tbody>
         </table>
@@ -308,6 +308,212 @@
 
   </xsl:template>
 
-  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date[position() &gt; 1]" priority="3000" />
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[1]" priority="3000">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+    <xsl:message>CONTACT</xsl:message>
+    <xsl:variable name="labelConfig"
+                  select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
+
+
+    <xsl:variable name="contactXmlSnippet">
+      <![CDATA[
+   <gmd:contact xmlns:gmd="http://www.isotc211.org/2005/gmd"
+              xmlns:gco="http://www.isotc211.org/2005/gco">
+      <gmd:CI_ResponsibleParty>
+         <gmd:individualName gco:nilReason="missing">
+            <gco:CharacterString/>
+         </gmd:individualName>
+         <gmd:organisationName>
+            <gco:CharacterString>{{editRow.organisation}}</gco:CharacterString>
+         </gmd:organisationName>
+         <gmd:positionName gco:nilReason="missing">
+            <gco:CharacterString/>
+         </gmd:positionName>
+         <gmd:contactInfo>
+            <gmd:CI_Contact>
+               <gmd:phone>
+                  <gmd:CI_Telephone>
+                     <gmd:voice>
+                        <gco:CharacterString>{{editRow.phone}}</gco:CharacterString>
+                     </gmd:voice>
+                     <gmd:facsimile gco:nilReason="missing">
+                        <gco:CharacterString/>
+                     </gmd:facsimile>
+                  </gmd:CI_Telephone>
+               </gmd:phone>
+               <gmd:address>
+                  <gmd:CI_Address>
+                     <gmd:deliveryPoint gco:nilReason="missing">
+                        <gco:CharacterString/>
+                     </gmd:deliveryPoint>
+                     <gmd:city gco:nilReason="missing">
+                        <gco:CharacterString/>
+                     </gmd:city>
+                     <gmd:administrativeArea gco:nilReason="missing">
+                        <gco:CharacterString/>
+                     </gmd:administrativeArea>
+                     <gmd:postalCode gco:nilReason="missing">
+                        <gco:CharacterString/>
+                     </gmd:postalCode>
+                     <gmd:country gco:nilReason="missing">
+                        <gco:CharacterString/>
+                     </gmd:country>
+                     <gmd:electronicMailAddress>
+                        <gco:CharacterString>{{editRow.email}}</gco:CharacterString>
+                     </gmd:electronicMailAddress>
+                  </gmd:CI_Address>
+               </gmd:address>
+            </gmd:CI_Contact>
+         </gmd:contactInfo>
+         <gmd:role>
+            <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                             codeListValue="{{editRow.role}}"/>
+         </gmd:role>
+      </gmd:CI_ResponsibleParty>
+  </gmd:contact>
+    ]]>
+    </xsl:variable>
+
+    <xsl:variable name="contactModel">
+      [
+      <xsl:for-each select="../gmd:contact">
+        {
+        'ref': '<xsl:value-of select="gn:element/@ref" />',
+        'reforganisation': '<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString/gn:element/@ref" />',
+        'refphone': '<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString/gn:element/@ref" />',
+        'refemail': '<xsl:value-of     select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress /gco:CharacterString/gn:element/@ref" />',
+        'refrole': '<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/gn:element/@ref" />',
+        'organisation': '<xsl:value-of select="normalize-space(gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString)" />',
+        'phone': '<xsl:value-of select="normalize-space(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString)" />',
+        'email': '<xsl:value-of select="normalize-space(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString)" />',
+        'role': '<xsl:value-of select="normalize-space(gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue)" />'
+        }
+        <xsl:if test="position() != last()">,</xsl:if>
+      </xsl:for-each>
+      ]
+    </xsl:variable>
+
+
+    <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
+         data-ng-init="init({$contactModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '#contact-popup')" >
+      <label class="col-sm-2 control-label">
+        <xsl:value-of select="$labelConfig/label"/>
+      </label>
+
+      <div class="geo-data-toolbar-cont col-sm-10">
+        <div class="toolbar-right-list tool-bar-list">
+          <div class="link-cont ng-scope">
+            <a class="-label-link" href="" data-ng-click="addRow()" ><span class="icon-pencil"></span>Lägg till</a>
+          </div>
+          <div class="link-cont ng-scope">
+            <a class="-label-link" href="" data-ng-class="{{'not-active':selectedRowIndex == null}}" data-ng-click="removeRow()" ><span class="icon-pencil"></span>Ta bort</a>
+          </div>
+          <div class="link-cont ng-scope">
+            <a class="-label-link" href="" data-ng-class="{{'not-active':selectedRowIndex == null}}" data-ng-click="editRow()" ><span class="icon-pencil"></span>Redigera</a>
+          </div>
+        </div>
+      </div>
+
+      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.organisation" name="_{{{{row.reforganisation}}}}" />
+      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.phone" name="_{{{{row.refphone}}}}" />
+      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.email" name="_{{{{row.refemail}}}}" />
+      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.role" name="_{{{{row.refrole}}}}_codeListValue" />
+
+      <input type="hidden" data-ng-repeat="row in rows | filter: isNewItem" data-ng-value="row.xmlSnippet" name="_X{{{{parent}}}}_gmdCOLONcontact" />
+
+      <div class="fixed-table-container">
+        <table class="table table-hover table-bordered" style="background-color: #ffffff">
+          <thead>
+            <tr>
+              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:organisationName), $labels, name(..), '', '')/label" /></div></th>
+              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice), $labels, name(..), '', '')/label" /></div></th>
+              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress), $labels, name(..), '', '')/label" /></div></th>
+              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:role), $labels, name(..), '', '')/label" /></div></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="row in rows" data-ng-class="{{'selected':$index == selectedRowIndex}}" data-ng-click="setClickedRow($index)">
+              <td>{{row.organisation}}</td>
+              <td>{{row.phone}}</td>
+              <td>{{row.email}}</td>
+              <td>{{row.role | translate}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Dialog to edit the dates -->
+      <div data-gn-modal=""
+           data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
+           id="contact-popup" class="gn-modal-lg">
+
+        <div data-swe-date-dialog="">
+          <div>
+            <label class="col-sm-2 control-label">
+              Organisation
+            </label>
+            <input type="text" class="form-control" data-ng-model="editRow.organisation" />
+          </div>
+
+          <div>
+            <label class="col-sm-2 control-label">
+              Phone
+            </label>
+
+            <input type="text" class="form-control" data-ng-model="editRow.phone" />
+          </div>
+
+
+          <div>
+            <label class="col-sm-2 control-label">
+              E-mail
+            </label>
+
+            <input type="text" class="form-control" data-ng-model="editRow.email" />
+          </div>
+
+
+          <div>
+            <label class="col-sm-2 control-label">
+              Role
+            </label>
+
+            <xsl:variable name="codelist"
+                          select="gn-fn-metadata:getCodeListValues($schema,
+                                  'gmd:CI_RoleCode',
+                                  $codelists,
+                                  .)"/>
+
+            <select class="" data-ng-model="editRow.role">
+              <xsl:for-each select="$codelist/entry">
+                <xsl:sort select="label"/>
+                <option value="{code}" title="{normalize-space(description)}">
+                  <xsl:value-of select="label"/>
+                </option>
+              </xsl:for-each>
+            </select>
+          </div>
+
+          <div class="">
+            <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
+              Save
+            </button>&#160;
+            <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
+              Cancel
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </xsl:template>
+
+
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[position() &gt; 1]" priority="3000" />
+
 
 </xsl:stylesheet>

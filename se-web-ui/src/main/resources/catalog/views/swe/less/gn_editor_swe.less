@@ -46,7 +46,17 @@ form.gn-editor {
 }
 
 [data-gn-slide-toggle]:after {
-  content: "\f0d7";
+  content: "\f077";
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  font-size: 16px;
+  float: right;
+}
+
+[data-gn-slide-toggle].collapsed:after {
+  content: "\f078";
   font-family: FontAwesome;
   font-style: normal;
   font-weight: normal;
@@ -59,8 +69,24 @@ form.gn-editor {
   content: none
 }
 
+[data-gn-slide-toggle].collapsed:before {
+  content: none
+}
+
 .not-active {
   pointer-events: none;
   cursor: default;
   color: lightgray !important;
 }
+
+.fixed-table-container tbody .selected td {
+  background-color: #28605D !important;
+  color: #ffffff !important;
+}
+
+.panel-default {
+  .panel-heading {
+    background-color: #F1F5F4 !important;
+  }
+}
+
