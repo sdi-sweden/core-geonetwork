@@ -33,7 +33,7 @@
       return {
         restrict: 'A',
         templateUrl: '../../catalog/components/edit/swe/partials/' +
-        'editortable.html',
+            'editortable.html',
         link: function(scope, element, attrs) {
         }
       };

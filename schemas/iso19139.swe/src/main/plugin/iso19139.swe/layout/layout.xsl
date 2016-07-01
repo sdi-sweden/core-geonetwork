@@ -77,16 +77,18 @@
     ]]>
     </xsl:variable>
 
+    <xsl:variable name="codexpath" select="gn-fn-metadata:getXPath(gmd:RS_Identifier/gmd:code)" />
+
     <xsl:variable name="refSystemTableModel">
       [
       {
       name: 'code',
-      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:RS_Identifier/gmd:code), $labels, name(gmd:RS_Identifier), '', '')/label" />',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:code', $labels, name(gmd:RS_Identifier), '', $codexpath)/label" />',
       codelist: false,
       },
       {
       name: 'codespace',
-      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:RS_Identifier/gmd:codeSpace), $labels, name(gmd:RS_Identifier), '', '')/label" />',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:codeSpace', $labels, name(gmd:RS_Identifier), '', '')/label" />',
       codelist: false
       }
       ]
@@ -180,12 +182,12 @@
       [
       {
       name: 'date',
-      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_Date/gmd:date), $labels, name(..), '', '')/label" />',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:date', $labels, name(..), '', '')/label" />',
       codelist: false,
       },
       {
       name: 'datetype',
-      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_Date/gmd:dateType), $labels, name(..), '', '')/label" />',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:dateType', $labels, name(..), '', '')/label" />',
       codelist: true
       }
       ]
@@ -343,22 +345,22 @@
       [
       {
         name: 'organisation',
-        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:organisationName), $labels, name(..), '', '')/label" />',
+        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:organisationName', $labels, name(..), '', '')/label" />',
         codelist: false,
       },
       {
         name: 'role',
-        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:role), $labels, name(..), '', '')/label" />',
+        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:role', $labels, name(..), '', '')/label" />',
         codelist: true
       },
       {
         name: 'phone',
-        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice), $labels, name(..), '', '')/label" />',
+        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:voice', $labels, name(..), '', '')/label" />',
         codelist: false
       },
       {
         name: 'email',
-        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress), $labels, name(..), '', '')/label" />',
+        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:electronicMailAddress', $labels, name(..), '', '')/label" />',
         codelist: false
       }
       ]
