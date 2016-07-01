@@ -47,6 +47,7 @@
     </xsl:apply-templates>
   </xsl:template>
 
+  <!-- Reference system -->
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:referenceSystemInfo[1]/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier" priority="1000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
@@ -170,6 +171,7 @@
 
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:referenceSystemInfo[position() &gt; 1]/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier" priority="1000" />
 
+  <!-- Metadata dates -->
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date[1]" priority="3000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
@@ -308,19 +310,23 @@
 
   </xsl:template>
 
-  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[1]" priority="3000">
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date[position() &gt; 1]" priority="1000" />
+
+  <!-- Metadata contact,  Metadata point of contact, Distributor contact -->
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[1]|
+                                            gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact[1]|
+                                            gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact[1]" priority="3000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
     <xsl:message>CONTACT</xsl:message>
+    <xsl:variable name="elementName" select="name()"/>
+
     <xsl:variable name="labelConfig"
                   select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
 
-
     <xsl:variable name="contactXmlSnippet">
-      <![CDATA[
-   <gmd:contact xmlns:gmd="http://www.isotc211.org/2005/gmd"
-              xmlns:gco="http://www.isotc211.org/2005/gco">
+      <![CDATA[<]]><xsl:value-of select="$elementName" /><![CDATA[ xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco">
       <gmd:CI_ResponsibleParty>
          <gmd:individualName gco:nilReason="missing">
             <gco:CharacterString/>
@@ -372,13 +378,11 @@
                              codeListValue="{{editRow.role}}"/>
          </gmd:role>
       </gmd:CI_ResponsibleParty>
-  </gmd:contact>
-    ]]>
-    </xsl:variable>
+ </]]><xsl:value-of select="$elementName" /><![CDATA[>]]></xsl:variable>
 
     <xsl:variable name="contactModel">
       [
-      <xsl:for-each select="../gmd:contact">
+      <xsl:for-each select="../*[name() = $elementName]">
         {
         'ref': '<xsl:value-of select="gn:element/@ref" />',
         'reforganisation': '<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString/gn:element/@ref" />',
@@ -397,7 +401,7 @@
 
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$contactModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '#contact-popup')" >
+         data-ng-init="init({$contactModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '#contact-popup-{local-name()}')" >
       <label class="col-sm-2 control-label">
         <xsl:value-of select="$labelConfig/label"/>
       </label>
@@ -421,7 +425,7 @@
       <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.email" name="_{{{{row.refemail}}}}" />
       <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.role" name="_{{{{row.refrole}}}}_codeListValue" />
 
-      <input type="hidden" data-ng-repeat="row in rows | filter: isNewItem" data-ng-value="row.xmlSnippet" name="_X{{{{parent}}}}_gmdCOLONcontact" />
+      <input type="hidden" data-ng-repeat="row in rows | filter: isNewItem" data-ng-value="row.xmlSnippet" name="_X{{{{parent}}}}_gmdCOLON{local-name()}" />
 
       <div class="fixed-table-container">
         <table class="table table-hover table-bordered" style="background-color: #ffffff">
@@ -447,7 +451,7 @@
       <!-- Dialog to edit the dates -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="contact-popup" class="gn-modal-lg">
+           id="contact-popup-{local-name()}" class="gn-modal-lg">
 
         <div data-swe-date-dialog="">
           <div>
@@ -512,8 +516,7 @@
 
   </xsl:template>
 
-
-  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[position() &gt; 1]" priority="3000" />
-
-
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[position() &gt; 1]|
+                                            gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact[position() &gt; 1]|
+                                            gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact[position() &gt; 1]" priority="3000" />
 </xsl:stylesheet>
