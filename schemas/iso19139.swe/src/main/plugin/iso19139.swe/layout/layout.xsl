@@ -77,13 +77,31 @@
     ]]>
     </xsl:variable>
 
+    <xsl:variable name="refSystemTableModel">
+      [
+      {
+      name: 'code',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:RS_Identifier/gmd:code), $labels, name(gmd:RS_Identifier), '', '')/label" />',
+      codelist: false,
+      },
+      {
+      name: 'codespace',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:RS_Identifier/gmd:codeSpace), $labels, name(gmd:RS_Identifier), '', '')/label" />',
+      codelist: false
+      }
+      ]
+    </xsl:variable>
+
+
     <xsl:variable name="refSystemModel">
       [
       <xsl:for-each select="../../../gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier">
         {
         'ref': '<xsl:value-of select="../../../gn:element/@ref" />',
-        'refcode': '<xsl:value-of select="gmd:RS_Identifier/gmd:code/gco:CharacterString/gn:element/@ref" />',
-        'refcodespace': '<xsl:value-of select="gmd:RS_Identifier/gmd:codeSpace/gco:CharacterString/gn:element/@ref" />',
+        'refChildren': {
+          'code': '<xsl:value-of select="gmd:RS_Identifier/gmd:code/gco:CharacterString/gn:element/@ref" />',
+          'codespace': '<xsl:value-of select="gmd:RS_Identifier/gmd:codeSpace/gco:CharacterString/gn:element/@ref" />',
+        },
         'code': '<xsl:value-of select="normalize-space(gmd:RS_Identifier/gmd:code/gco:CharacterString )" />',
         'codespace': '<xsl:value-of select="normalize-space(gmd:RS_Identifier/gmd:codeSpace/gco:CharacterString)" />'
         }
@@ -93,46 +111,9 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$refSystemModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '#refsystem-popup')" >
-      <label class="col-sm-2 control-label">
-        <xsl:value-of select="$labelConfig/label"/>
-      </label>
+         data-ng-init="init({$refSystemModel}, {$refSystemTableModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '{local-name()}', '#refsystem-popup', '{$labelConfig/label}')" >
 
-      <div class="geo-data-toolbar-cont col-sm-10">
-        <div class="toolbar-right-list tool-bar-list">
-          <div class="link-cont ng-scope">
-            <a class="-label-link" href="" data-ng-click="addRow()" ><span class="icon-pencil"></span>Lägg till</a>
-          </div>
-          <div class="link-cont ng-scope">
-            <a class="-label-link" href="" data-ng-class="{{'not-active':selectedRowIndex == null}}" data-ng-click="removeRow()" ><span class="icon-pencil"></span>Ta bort</a>
-          </div>
-          <div class="link-cont ng-scope">
-            <a class="-label-link" href="" data-ng-class="{{'not-active':selectedRowIndex == null}}" data-ng-click="editRow()" ><span class="icon-pencil"></span>Redigera</a>
-          </div>
-        </div>
-      </div>
-
-      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.code" name="_{{{{row.refcode}}}}" />
-      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.codespace" name="_{{{{row.refcodespace}}}}" />
-
-      <input type="hidden" data-ng-repeat="row in rows | filter: isNewItem" data-ng-value="row.xmlSnippet" name="_X{{{{parent}}}}_gmdCOLONreferenceSystemInfo" />
-
-      <div class="fixed-table-container">
-        <table class="table table-hover table-bordered" style="background-color: #ffffff">
-          <thead>
-            <tr>
-              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:RS_Identifier/gmd:code), $labels, name(gmd:RS_Identifier), '', '')/label" /></div></th>
-              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:RS_Identifier/gmd:codeSpace), $labels, name(gmd:RS_Identifier), '', '')/label" /></div></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr data-ng-repeat="row in rows" data-ng-class="{{'selected':$index == selectedRowIndex}}" data-ng-click="setClickedRow($index)">
-              <td>{{row.code}}</td>
-              <td>{{row.codespace}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
@@ -179,7 +160,6 @@
     <xsl:variable name="labelConfig"
                   select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
 
-
     <xsl:variable name="dateXmlSnippet">
       <![CDATA[
       <gmd:date xmlns:gmd="http://www.isotc211.org/2005/gmd">
@@ -196,13 +176,30 @@
     ]]>
     </xsl:variable>
 
+    <xsl:variable name="dateTableModel">
+      [
+      {
+      name: 'date',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_Date/gmd:date), $labels, name(..), '', '')/label" />',
+      codelist: false,
+      },
+      {
+      name: 'datetype',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_Date/gmd:dateType), $labels, name(..), '', '')/label" />',
+      codelist: true
+      }
+      ]
+    </xsl:variable>
+
     <xsl:variable name="dateModel">
       [
       <xsl:for-each select="../gmd:date">
         {
         'ref': '<xsl:value-of select="gn:element/@ref" />',
-        'refdate': '<xsl:value-of select="gmd:CI_Date/gmd:date/*/gn:element/@ref" />',
-        'refdatetype': '<xsl:value-of select="gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/gn:element/@ref" />',
+        'refChildren': {
+          'date': '<xsl:value-of select="gmd:CI_Date/gmd:date/*/gn:element/@ref" />',
+          'datetype': '<xsl:value-of select="gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/gn:element/@ref" />',
+        },
         'date': '<xsl:value-of select="normalize-space(gmd:CI_Date/gmd:date/gco:DateTime|gmd:CI_Date/gmd:date/gco:Date)" />',
         'datetype': '<xsl:value-of select="normalize-space(gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue)" />'
         }
@@ -213,46 +210,9 @@
 
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$dateModel}, '{$dateXmlSnippet}', {../gn:element/@ref}, '#date-popup')" >
-      <label class="col-sm-2 control-label">
-        <xsl:value-of select="$labelConfig/label"/>
-      </label>
+         data-ng-init="init({$dateModel},  {$dateTableModel}, '{$dateXmlSnippet}', {../gn:element/@ref}, '{local-name()}',  '#date-popup', '{$labelConfig/label}')" >
 
-      <div class="geo-data-toolbar-cont col-sm-10">
-        <div class="toolbar-right-list tool-bar-list">
-          <div class="link-cont ng-scope">
-            <a class="-label-link" href="" data-ng-click="addRow()" ><span class="icon-pencil"></span>Lägg till</a>
-          </div>
-          <div class="link-cont ng-scope">
-            <a class="-label-link" href="" data-ng-class="{{'not-active':selectedRowIndex == null}}" data-ng-click="removeRow()" ><span class="icon-pencil"></span>Ta bort</a>
-          </div>
-          <div class="link-cont ng-scope">
-            <a class="-label-link" href="" data-ng-class="{{'not-active':selectedRowIndex == null}}" data-ng-click="editRow()" ><span class="icon-pencil"></span>Redigera</a>
-          </div>
-        </div>
-      </div>
-
-      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.date" name="_{{{{row.refdate}}}}" />
-      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.datetype" name="_{{{{row.refdatetype}}}}_codeListValue" />
-
-      <input type="hidden" data-ng-repeat="row in rows | filter: isNewItem" data-ng-value="row.xmlSnippet" name="_X{{{{parent}}}}_gmdCOLONdate" />
-
-      <div class="fixed-table-container">
-        <table class="table table-hover table-bordered" style="background-color: #ffffff">
-          <thead>
-            <tr>
-              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_Date/gmd:date), $labels, name(..), '', '')/label" /></div></th>
-              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_Date/gmd:dateType), $labels, name(..), '', '')/label" /></div></th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr data-ng-repeat="row in rows" data-ng-class="{{'selected':$index == selectedRowIndex}}" data-ng-click="setClickedRow($index)">
-                <td>{{row.date}}</td>
-                <td>{{row.datetype | translate}}</td>
-              </tr>
-          </tbody>
-        </table>
-      </div>
+      <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the dates -->
       <div data-gn-modal=""
@@ -319,7 +279,6 @@
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
-    <xsl:message>CONTACT</xsl:message>
     <xsl:variable name="elementName" select="name()"/>
 
     <xsl:variable name="labelConfig"
@@ -380,15 +339,42 @@
       </gmd:CI_ResponsibleParty>
  </]]><xsl:value-of select="$elementName" /><![CDATA[>]]></xsl:variable>
 
+    <xsl:variable name="contactTableModel">
+      [
+      {
+        name: 'organisation',
+        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:organisationName), $labels, name(..), '', '')/label" />',
+        codelist: false,
+      },
+      {
+        name: 'role',
+        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:role), $labels, name(..), '', '')/label" />',
+        codelist: true
+      },
+      {
+        name: 'phone',
+        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice), $labels, name(..), '', '')/label" />',
+        codelist: false
+      },
+      {
+        name: 'email',
+        title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress), $labels, name(..), '', '')/label" />',
+        codelist: false
+      }
+      ]
+    </xsl:variable>
+
     <xsl:variable name="contactModel">
       [
       <xsl:for-each select="../*[name() = $elementName]">
         {
         'ref': '<xsl:value-of select="gn:element/@ref" />',
-        'reforganisation': '<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString/gn:element/@ref" />',
-        'refphone': '<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString/gn:element/@ref" />',
-        'refemail': '<xsl:value-of     select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress /gco:CharacterString/gn:element/@ref" />',
-        'refrole': '<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/gn:element/@ref" />',
+        'refChildren': {
+          'organisation': '<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString/gn:element/@ref" />',
+          'phone': '<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString/gn:element/@ref" />',
+          'email': '<xsl:value-of     select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress /gco:CharacterString/gn:element/@ref" />',
+          'role': '<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/gn:element/@ref" />'
+        },
         'organisation': '<xsl:value-of select="normalize-space(gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString)" />',
         'phone': '<xsl:value-of select="normalize-space(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString)" />',
         'email': '<xsl:value-of select="normalize-space(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString)" />',
@@ -400,53 +386,12 @@
     </xsl:variable>
 
 
+
+
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$contactModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '#contact-popup-{local-name()}')" >
-      <label class="col-sm-2 control-label">
-        <xsl:value-of select="$labelConfig/label"/>
-      </label>
+         data-ng-init="init({$contactModel}, {$contactTableModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#contact-popup-{local-name()}', '{$labelConfig/label}')" >
 
-      <div class="geo-data-toolbar-cont col-sm-10">
-        <div class="toolbar-right-list tool-bar-list">
-          <div class="link-cont ng-scope">
-            <a class="-label-link" href="" data-ng-click="addRow()" ><span class="icon-pencil"></span>Lägg till</a>
-          </div>
-          <div class="link-cont ng-scope">
-            <a class="-label-link" href="" data-ng-class="{{'not-active':selectedRowIndex == null}}" data-ng-click="removeRow()" ><span class="icon-pencil"></span>Ta bort</a>
-          </div>
-          <div class="link-cont ng-scope">
-            <a class="-label-link" href="" data-ng-class="{{'not-active':selectedRowIndex == null}}" data-ng-click="editRow()" ><span class="icon-pencil"></span>Redigera</a>
-          </div>
-        </div>
-      </div>
-
-      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.organisation" name="_{{{{row.reforganisation}}}}" />
-      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.phone" name="_{{{{row.refphone}}}}" />
-      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.email" name="_{{{{row.refemail}}}}" />
-      <input type="hidden" data-ng-repeat="row in rows | filter: isExistingItem" data-ng-value="row.role" name="_{{{{row.refrole}}}}_codeListValue" />
-
-      <input type="hidden" data-ng-repeat="row in rows | filter: isNewItem" data-ng-value="row.xmlSnippet" name="_X{{{{parent}}}}_gmdCOLON{local-name()}" />
-
-      <div class="fixed-table-container">
-        <table class="table table-hover table-bordered" style="background-color: #ffffff">
-          <thead>
-            <tr>
-              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:organisationName), $labels, name(..), '', '')/label" /></div></th>
-              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice), $labels, name(..), '', '')/label" /></div></th>
-              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress), $labels, name(..), '', '')/label" /></div></th>
-              <th><div class="th-inner "><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(gmd:CI_ResponsibleParty/gmd:role), $labels, name(..), '', '')/label" /></div></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr data-ng-repeat="row in rows" data-ng-class="{{'selected':$index == selectedRowIndex}}" data-ng-click="setClickedRow($index)">
-              <td>{{row.organisation}}</td>
-              <td>{{row.phone}}</td>
-              <td>{{row.email}}</td>
-              <td>{{row.role | translate}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the dates -->
       <div data-gn-modal=""

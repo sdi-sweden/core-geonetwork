@@ -1,0 +1,40 @@
+<div class="form-group gn-field">
+  <label class="col-sm-2 control-label">{{title}}</label>
+
+  <div class="geo-data-toolbar-cont col-sm-10">
+    <div class="toolbar-right-list tool-bar-list">
+      <div class="link-cont ng-scope">
+        <a class="-label-link" href="" data-ng-click="addRow()" ><span class="icon-pencil"></span>Lägg till</a>
+      </div>
+      <div class="link-cont ng-scope">
+        <a class="-label-link" href="" data-ng-class="{'not-active':selectedRowIndex == null}" data-ng-click="removeRow()" ><span class="icon-pencil"></span>Ta bort</a>
+      </div>
+      <div class="link-cont ng-scope">
+        <a class="-label-link" href="" data-ng-class="{'not-active':selectedRowIndex == null}" data-ng-click="editRow()" ><span class="icon-pencil"></span>Redigera</a>
+      </div>
+    </div>
+  </div>
+
+
+  <span data-ng-repeat="row in rows | filter: isExistingItem">
+  <input type="hidden" data-ng-repeat="m in rowsModel" data-ng-value="row[m.name]" name="_{{row.refChildren[m.name]}}" data-ng-if="m.codelist == false"/>
+  <input type="hidden" data-ng-repeat="m in rowsModel" data-ng-value="row[m.name]" name="_{{row.refChildren[m.name]}}_codeListValue" data-ng-if="m.codelist == true"/>
+  </span>
+
+  <input type="hidden" data-ng-repeat="row in rows | filter: isNewItem" data-ng-value="row.xmlSnippet" name="_X{{parent}}_gmdCOLON{{name}}" />
+
+  <div class="fixed-table-container">
+    <table class="table table-hover table-bordered" style="background-color: #ffffff">
+      <thead>
+      <tr>
+        <th data-ng-repeat="m in rowsModel"><div class="th-inner ">{{m.title}}</div></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr data-ng-repeat="row in rows" data-ng-class="{'selected':$index == selectedRowIndex}" data-ng-click="setClickedRow($index)">
+        <td data-ng-repeat="m in rowsModel">{{row[m.name] | translate}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

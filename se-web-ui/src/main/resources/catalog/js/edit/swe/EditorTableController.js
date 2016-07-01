@@ -27,6 +27,7 @@
   var module = angular.module('swe_editor_table_controller',
       []);
 
+
   module.controller('SweEditorTableController', ['$scope', '$document',
     '$compile', function($scope, $document, $compile) {
 
@@ -38,11 +39,15 @@
       $scope.editRow = null;
 
 
-      $scope.init = function(rows, xmlSnippet, parent, dialog) {
+      $scope.init = function(rows, rowsModel, xmlSnippet, parent, 
+                             name, dialog, title) {
         $scope.rows = rows;
+        $scope.rowsModel = rowsModel;
         $scope.xmlSnippet = xmlSnippet;
         $scope.parent = parent;
+        $scope.name = name;
         $scope.dialog = dialog;
+        $scope.title = title;
       };
 
       /**
@@ -99,7 +104,7 @@
             }
           }
           $scope.editRow.xmlSnippet = template;
-          
+
           $scope.selectedRow = $scope.editRow;
           $scope.rows.push($scope.selectedRow);
         } else {
@@ -122,7 +127,8 @@
         $scope.rows.splice($scope.selectedRowIndex, 1);
         $scope.selectedRow = null;
 
-        $scope.save(true);
+        // TODO: Check, doesn't remove the element added
+        //$scope.save(true);
       };
 
       /**
