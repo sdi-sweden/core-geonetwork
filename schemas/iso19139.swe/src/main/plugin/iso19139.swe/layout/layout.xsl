@@ -466,4 +466,105 @@
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[position() &gt; 1]|
                                             gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact[position() &gt; 1]|
                                             gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact[position() &gt; 1]" priority="3000" />
+
+  <!-- Distribution format -->
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat[1]" priority="1000">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+    <xsl:variable name="labelConfig"
+                  select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
+
+
+    <xsl:variable name="formatXmlSnippet">
+      <![CDATA[
+          <gmd:distributionFormat xmlns:gmd="http://www.isotc211.org/2005/gmd"
+              xmlns:gco="http://www.isotc211.org/2005/gco">
+             <gmd:MD_Format>
+                <gmd:name>
+                   <gco:CharacterString>{{editRow.fname}}</gco:CharacterString>
+                </gmd:name>
+                <gmd:version>
+                   <gco:CharacterString>{{editRow.version}}</gco:CharacterString>
+                </gmd:version>
+             </gmd:MD_Format>
+          </gmd:distributionFormat>
+    ]]>
+    </xsl:variable>
+
+    <xsl:variable name="formatTableModel">
+      [
+      {
+      name: 'fname',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:name', $labels, name(gmd:MD_Format), '', '')/label" />',
+      codelist: false,
+      },
+      {
+      name: 'version',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:version', $labels, name(gmd:MD_Format), '', '')/label" />',
+      codelist: false
+      }
+      ]
+    </xsl:variable>
+
+
+    <xsl:variable name="formatModel">
+      [
+      <xsl:for-each select="../gmd:distributionFormat">
+        {
+        'ref': '<xsl:value-of select="gn:element/@ref" />',
+        'refChildren': {
+        'fname': '<xsl:value-of select="gmd:MD_Format/gmd:name/gco:CharacterString/gn:element/@ref" />',
+        'version': '<xsl:value-of select="gmd:MD_Format/gmd:version/gco:CharacterString/gn:element/@ref" />',
+        },
+        'fname': '<xsl:value-of select="normalize-space(gmd:MD_Format/gmd:name/gco:CharacterString )" />',
+        'version': '<xsl:value-of select="normalize-space(gmd:MD_Format/gmd:version/gco:CharacterString)" />'
+        }
+        <xsl:if test="position() != last()">,</xsl:if>
+      </xsl:for-each>
+      ]
+    </xsl:variable>
+
+    <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
+         data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#format-popup', '{$labelConfig/label}')" >
+
+      <div data-swe-editor-table-directive="" />
+
+      <!-- Dialog to edit the ref. system -->
+      <div data-gn-modal=""
+           data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
+           id="format-popup" class="gn-modal-lg">
+
+        <div data-swe-date-dialog="">
+          <div>
+            <label class="col-sm-2 control-label">
+              Name
+            </label>
+            <input type="text" class="form-control" data-ng-model="editRow.fname" />
+          </div>
+
+          <div>
+            <label class="col-sm-2 control-label">
+              Version
+            </label>
+
+            <input type="text" class="form-control" data-ng-model="editRow.version" />
+          </div>
+
+          <div class="">
+            <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
+              Save
+            </button>&#160;
+            <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
+              Cancel
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </xsl:template>
+
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat[position() &gt; 1]" priority="1000" />
+
 </xsl:stylesheet>

@@ -302,8 +302,8 @@
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date" />
 
           <!-- Resource identifier for dataset, service
-         and add action to compute it if not defined. -->
-          <!--<field name="identifier"
+           and add action to compute it if not defined. -->
+          <field name="identifier" templateModeOnly="true" notDisplayedIfMissing="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier"
                  del="."
                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
@@ -326,11 +326,31 @@
               </snippet>
             </template>
           </field>
+          <field name="identifier" templateModeOnly="true"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier"
+                 del="."
+                 if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            <template>
+              <values>
+                <key label="code"
+                     xpath="gmd:MD_Identifier/gmd:code/gco:CharacterString"
+                     tooltip="gmd:code|gmd:MD_Identifier"/>
+              </values>
+              <snippet>
+                <gmd:identifier>
+                  <gmd:MD_Identifier>
+                    <gmd:code>
+                      <gco:CharacterString>{{code}}</gco:CharacterString>
+                      <gn:copy select="gmd:PT_FreeText"/>
+                    </gmd:code>
+                  </gmd:MD_Identifier>
+                </gmd:identifier>
+              </snippet>
+            </template>
+          </field>
 
-          <action type="add"
-                  if="count(gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier) = 0"
-                  name="identifier" or="identifier"
-                  in="/gmd:MD_Metadata">
+          <action type="add" name="identifier" or="identifier"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">
             <template>
               <snippet>
                 <gmd:identifier>
@@ -342,7 +362,7 @@
                 </gmd:identifier>
               </snippet>
             </template>
-          </action>-->
+          </action>
 
 
           <!-- Abstract -->
@@ -351,6 +371,9 @@
 
           <!-- Status -->
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:status" />
+
+          <!-- Character set -->
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:characterSet" />
 
           <!-- Keywords -->
           <field
@@ -614,11 +637,75 @@
         </section>
 
         <section name="metadataMaintenance2">
-          <section xpath="/gmd:MD_Metadata/gmd:metadataMaintenance" or="metadataMaintenance"
-                   in="/gmd:MD_Metadata"/>
+          <field name="maintenanceAndUpdateFrequency"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency"
+                 or="maintenanceAndUpdateFrequency"
+                 in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/*" />
+
+          <field
+            name="maintenanceNote"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote"
+            or="maintenanceNote"
+            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/*" />
+
         </section>
 
         <section name="service">
+
+          <field
+            name="spatialRepresentationType"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType"
+            or="spatialRepresentationType"
+            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*" />
+
+          <field
+            name="equivalentScale"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale"
+            or="equivalentScale"
+            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/*" />
+
+          <action type="add" name="spatialResolution" or="spatialResolution" btnLabel="equivalentScale"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
+                  if="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale) = 0">
+            <template>
+              <snippet>
+                <gmd:spatialResolution>
+                  <gmd:MD_Resolution>
+                    <gmd:equivalentScale>
+                      <gmd:MD_RepresentativeFraction>
+                        <gmd:denominator>
+                          <gco:Integer></gco:Integer>
+                        </gmd:denominator>
+                      </gmd:MD_RepresentativeFraction>
+                    </gmd:equivalentScale>
+                  </gmd:MD_Resolution>
+                </gmd:spatialResolution>
+              </snippet>
+            </template>
+          </action>
+
+          <field
+            name="distance"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance"
+            or="distance"
+            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/*" />
+
+          <action type="add" name="spatialResolution" or="spatialResolution" btnLabel="spatialDistance"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
+                  if="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance) = 0">
+            <template>
+              <snippet>
+                <gmd:spatialResolution>
+                  <gmd:MD_Resolution>
+                    <gmd:distance>
+                      <gco:Distance></gco:Distance>
+                    </gmd:distance>
+                  </gmd:MD_Resolution>
+                </gmd:spatialResolution>
+              </snippet>
+            </template>
+          </action>
+
 
         </section>
 
@@ -824,13 +911,12 @@
           </action>-->
         </section>
 
-        <section name="distributionInfo2">
+        <section name="resources">
           <field name="distributorContact"
                  xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact" />
 
-          <field name="distributionFormat" templateModeOnly="true"
-                 notDisplayedIfMissing="true"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat" del=".">
+          <field name="distributionFormat"
+                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat">
           </field>
 
 
@@ -864,10 +950,6 @@
               </snippet>
             </template>
           </action>
-        </section>
-
-        <section name="resources">
-
         </section>
       </tab>
     </view>
