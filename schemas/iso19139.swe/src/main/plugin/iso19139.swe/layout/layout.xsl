@@ -47,6 +47,32 @@
     </xsl:apply-templates>
   </xsl:template>
 
+  <!-- Readonly elements -->
+  <xsl:template mode="mode-iso19139" priority="2005" match="gmd:hierarchyLevel">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+    <xsl:variable name="codelist"
+                  select="gn-fn-metadata:getCodeListValues($schema,
+                                  'gmd:MD_ScopeCode',
+                                  $codelists,
+                                  .)"/>
+
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label" select="gn-fn-metadata:getLabel($schema, name(), $labels)/label"/>
+      <xsl:with-param name="value" select="gmd:MD_ScopeCode/@codeListValue"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+      <xsl:with-param name="type" select="'select'"/>
+      <xsl:with-param name="name" select="''"/>
+      <xsl:with-param name="editInfo" select="*/gn:element"/>
+      <xsl:with-param name="parentEditInfo" select="gn:element"/>
+      <xsl:with-param name="isDisabled" select="true()"/>
+      <xsl:with-param name="listOfValues" select="$codelist" />
+    </xsl:call-template>
+
+  </xsl:template>
+
   <!-- Reference system -->
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:referenceSystemInfo[1]/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier" priority="1000">
     <xsl:param name="schema" select="$schema" required="no"/>
