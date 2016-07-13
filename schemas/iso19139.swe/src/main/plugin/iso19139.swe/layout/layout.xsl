@@ -298,7 +298,7 @@
 
   </xsl:template>
 
-  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date[position() &gt; 1]" priority="1000" />
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date[position() &gt; 1]" priority="3000" />
 
   <!-- Metadata contact,  Metadata point of contact, Distributor contact -->
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[1]|
