@@ -10,7 +10,7 @@
 		<help>alphanumeric value identifying an instance in the namespace</help>
 	</element>
 
-	<element context="MD_metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
+	<element context="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
 		<label>Identifierare för geografiskt referenssystem</label>
 		<description>Namn för geografiskt referenssystem, oftast SWEREF 99 TM</description>
 		<condition>mandatory</condition>
@@ -25,8 +25,8 @@
 			<option value="RH00">Rikets höjdsystem RH00</option>
 			<option value="RH70">Rikets höjdsystem RH70</option>
 			<option value="RH2000">Rikets höjdsystem RH2000</option>
-			<option value="---">-</option>	
-			<option value="---">###Övriga SWEREFsystem###</option>			
+			<option value="---">-</option>
+			<option value="---">###Övriga SWEREFsystem###</option>
 			<option value="EPSG:3007">SWEREF 99 12 00 (EPSG:3007)</option>
 			<option value="EPSG:3008">SWEREF 99 13 30 (EPSG:3008)</option>
 			<option value="EPSG:3012">SWEREF 99 14 15 (EPSG:3012)</option>
@@ -80,8 +80,8 @@
 	</element>
 	<element name="gco:DateTime">
 		<label>Date and time</label>
-		<description>Date and time or range of date and time on or over which the process step occurred 
-		(YYYY-MM-DDThh:mm:ss)</description> 
+		<description>Date and time or range of date and time on or over which the process step occurred
+		(YYYY-MM-DDThh:mm:ss)</description>
 	</element>
 	<element context="gmd:DQ_Element" id="100.0" name="gco:Measure">
 		<label>Måttbenämning</label>
@@ -107,7 +107,7 @@
 	</element>
 	<element id="387.0" name="gmd:CI_Contact">
 		<label>Kontaktinformation</label>
-        <description>Information för att nå 
+        <description>Information för att nå
 		ansvarig person eller organisation</description>
 		<_condition>Use obligation/condition from referencing object</_condition>
 	</element>
@@ -163,7 +163,7 @@
     </element>
     <element id="129.0" name="gmd:DQ_ConformanceResult">
         <label>Specifikationsuppfyllelse</label>
-        <description>Resultat av utvärdering mot 
+        <description>Resultat av utvärdering mot
 		en specificerad kravnivå</description>
     </element>
     <element id="78.0" name="gmd:DQ_DataQuality">
@@ -232,7 +232,7 @@ samma typ.</description>
         <label>Omskrivande polygon</label>
         <description>En polygon som visar utbredningen för resursen.</description>
     </element>
-    <element id="334.0" name="gmd:EX_Extent">              
+    <element id="334.0" name="gmd:EX_Extent">
         <label>Utsträckning</label>
         <description>Information om horisontal, vertikal och temporal utsträckning</description>
     </element>
@@ -271,8 +271,8 @@ samma typ.</description>
     </element>
     <element id="82.0" name="gmd:LI_Lineage">
         <label>Tillkomsthistorik</label>
-        <description>Information kring hur resursen har skapats. 
-		T ex information om ursprungsdata och bearbetningar. 
+        <description>Information kring hur resursen har skapats.
+		T ex information om ursprungsdata och bearbetningar.
 		Ange: Ej känt om det inte finns information.</description>
     </element>
     <element id="86.0" name="gmd:LI_ProcessStep">
@@ -302,7 +302,7 @@ samma typ.</description>
         <help>range of wavelengths in the electromagnetic spectrum</help>
     </element>
     <element id="48.0" name="gmd:MD_BrowseGraphic">
-        <description>En illustration av resursen, kan vara en översikt och 
+        <description>En illustration av resursen, kan vara en översikt och
 		en teckenförklaring (eller både och).</description>
         <label>Exempelbild</label>
     </element>
@@ -383,7 +383,7 @@ samma typ.</description>
     </element>
     <element id="205.0" name="gmd:MD_Identifier">
         <label>Identifierare</label>
-        <description>Ett unikt värde som identifierar ett objekt 
+        <description>Ett unikt värde som identifierar ett objekt
 		(inom en namnrymd).</description>
     </element>
     <element id="243.0" name="gmd:MD_ImageDescription">
@@ -401,7 +401,7 @@ samma typ.</description>
     </element>
     <element id="142.0" name="gmd:MD_MaintenanceInformation">
         <label>Underhåll</label>
-        <description>Information om hur ofta och i vilken 
+        <description>Information om hur ofta och i vilken
 		omfattning resursen underhålls / uppdateras.</description>
     </element>
     <element id="291.0" name="gmd:MD_Medium">
@@ -418,12 +418,12 @@ samma typ.</description>
         <description>Unformation som beskriver utökning av metadata (i
 	förhållande till SS-EN ISO 19115)</description>
         <label>Utökningar av
-		metadata</label>        
+		metadata</label>
     </element>
     <element id="268.0" name="gmd:MD_PortrayalCatalogueReference">
         <label>Presentationsregler</label>
         <description>Information som identifierar den katalog med
-presentationsregler som används</description>       
+presentationsregler som används</description>
     </element>
     <element id="256.0" name="gmd:MD_RangeDimension">
         <label>Intervall för mätvärden</label>
@@ -444,13 +444,13 @@ presentationsregler som används</description>
         <label>Upplösning</label>
         <description>Vilken detaljeringsgrad har resursen uttryckt som skala eller avstånd.</description>
     </element>
-	
+
     <element id="149.0" name="gmd:MD_ScopeDescription">
         <label>Omfattning</label>
         <description>Beskrivning av omfattningen
 		ANM. Omfatting kan avse t.ex. information om
 		datakvalitet och underhåll.</description>
-        <condition>Either attributes, features, featureInstances, attributeInstnaces, dataset or other must be provided</condition>    
+        <condition>Either attributes, features, featureInstances, attributeInstnaces, dataset or other must be provided</condition>
     </element>
     <element id="73.0" name="gmd:MD_SecurityConstraints">
         <label>Säkerhetsrestriktioner</label>
@@ -467,7 +467,7 @@ presentationsregler som används</description>
     </element>
     <element id="298.0" name="gmd:MD_StandardOrderProcess">
         <label>Beställning</label>
-        <description>Här anges på vilka sätt resursen kan 
+        <description>Här anges på vilka sätt resursen kan
 		beställas. Inklusive instruktioner och prisuppgifter.
 		Används EJ.</description>
     </element>
@@ -538,13 +538,13 @@ presentationsregler som används</description>
     </element>
     <element id="35.1" name="gmd:aggregationInfo">
         <label>Relaterad resurs</label>
-        <description>Information kring vilka andra resuerser som 
-		ingår i ett sammanhang. T ex dataset som ingår som lager i 
+        <description>Information kring vilka andra resuerser som
+		ingår i ett sammanhang. T ex dataset som ingår som lager i
 		en WMS-tjänst.</description>
     </element>
     <element id="361.0" name="gmd:alternateTitle">
         <label>Alternativ titel</label>
-        <description>Alternativ titel, vanlig förkorning, 
+        <description>Alternativ titel, vanlig förkorning,
 		eller engelsk titel. Flera kan anges. </description>
     </element>
     <element id="287.0" name="gmd:amendmentNumber">
@@ -683,7 +683,7 @@ presentationsregler som används</description>
     <element id="76.0" name="gmd:classificationSystem">
         <label>Skyddsklassningssystem</label>
         <description> Namn på skyddsklassningssystem som tillämpas på
-		resurs eller metadata</description>        
+		resurs eller metadata</description>
     </element>
     <element id="248.0" name="gmd:cloudCoverPercentage">
         <label>Molnighet</label>
@@ -699,7 +699,7 @@ presentationsregler som används</description>
 		<label>Identifieringskod</label>
         <description>Value code</description>
         <help>Value code (i.e. numeric)</help>
-    </element> 
+    </element>
     <element id="208.1" name="gmd:codeSpace">
         <label>Namnrymd</label>
         <description>namn eller identifierare för person eller organisation
@@ -714,7 +714,7 @@ presentationsregler som används</description>
 		ANM. titeln idetifierar element i en serie kollektivt,
 		kombinerad med information om vilka utgåvor som är
 		tillgängliga hos den angivna källan.</description>
-        <help>This field is used to name the Basic Geodata as defined in the GeoIV Annex I, as it is possible that there are more than 1 "physical" datasets assigned to 1 legal entry. E.g.: Entry no. 47 "Geophysikalisches Kartenwerk" consists of 3 datasets "Geophysikalische Karten 1:500000", "Geophysikalische Spezialkarten" and "Gravimetrischer Atlas 1:100000"</help>    
+        <help>This field is used to name the Basic Geodata as defined in the GeoIV Annex I, as it is possible that there are more than 1 "physical" datasets assigned to 1 legal entry. E.g.: Entry no. 47 "Geophysikalisches Kartenwerk" consists of 3 datasets "Geophysikalische Karten 1:500000", "Geophysikalische Spezialkarten" and "Gravimetrischer Atlas 1:100000"</help>
     </element>
     <element id="234.0" name="gmd:complianceCode">
         <label>Uppfyller ISO 19110</label>
@@ -872,7 +872,7 @@ metadatamängden avser</description>
     <element context="LI_ProcessStep" id="89.0" name="gmd:dateTime">
         <description>Datum och tidpunkt eller tidsintervall för
 bearbetningens genomförande</description>
-        <label>Tidpunkt</label>        
+        <label>Tidpunkt</label>
     </element>
     <element context="gmd:DQ_Element" id="106.0" name="gmd:dateTime">
         <label>Datum</label>
@@ -909,7 +909,7 @@ bearbetningens genomförande</description>
 			<option value="300000">1:300 000</option>
 			<option value="500000">1:500 000</option>
 			<option value="1000000">1:1 000 000</option>
-		</helper>        
+		</helper>
     </element>
     <element id="293.0" name="gmd:density">
         <label>Lagringstäthet</label>
@@ -1012,7 +1012,7 @@ bearbetningens genomförande</description>
     </element>
     <element id="17.0" name="gmd:distributionInfo">
 		<label>Tillhandahållande</label>
-        <description>Information om hur och av vem man får tillgång till resursen.</description>        
+        <description>Information om hur och av vem man får tillgång till resursen.</description>
     </element>
     <element id="281.0" name="gmd:distributionOrderProcess">
         <label>Beställning</label>
@@ -1073,12 +1073,12 @@ angiven som longitud i decimalgrader</description>
     </element>
     <element id="386.0" name="gmd:electronicMailAddress">
         <label>E-post</label>
-        <description>E-postadress. Använd i 
+        <description>E-postadress. Använd i
 		första hand en funktionsbrevlåda.</description>
 			<helper sort="true">
 			<option value="data@naturvardsverket.se">data@naturvardsverket.se</option>
 			<option value="havochvatten@havochvatten.se">havochvatten@havochvatten.se</option>
-			<option value="gis@havochvatten.se">gis@havochvatten.se</option>			
+			<option value="gis@havochvatten.se">gis@havochvatten.se</option>
 		</helper>
     </element>
     <element id="44.0" name="gmd:environmentDescription">
@@ -1213,7 +1213,7 @@ T ex JPEG, GIF, PNG.</description>
 		<helper sort="true">
 			<option value="JPG">JPG</option>
 			<option value="GIF">GIF</option>
-			<option value="PNG">PNG</option>			
+			<option value="PNG">PNG</option>
 		</helper>
     </element>
     <element id="254.0" name="gmd:filmDistortionInformationAvailability">
@@ -1227,8 +1227,8 @@ T ex JPEG, GIF, PNG.</description>
     </element>
     <element id="402.0" name="gmd:function">
         <label>Funktion hos webbplats</label>
-        <description>Kod för den operation som kan utföras på online-resursen. 
-		T ex Information för en annan webbplats eller 
+        <description>Kod för den operation som kan utföras på online-resursen.
+		T ex Information för en annan webbplats eller
 		nedladdning för en ftp-site.</description>
     </element>
     <element id="336.0" name="gmd:geographicElement">
@@ -1291,7 +1291,7 @@ Exempelvis: datamängd, datamängdserie eller tjänst.…</description>
     </element>
     <element id="391.0" name="gmd:hoursOfService">
         <label>Öppettider</label>
-        <description>tidsperiod (inklusive tidszon) då ansvarig person eller organisation kan kontaktas</description>        
+        <description>tidsperiod (inklusive tidszon) då ansvarig person eller organisation kan kontaktas</description>
     </element>
     <element id="15.0" name="gmd:identificationInfo">
         <label>Resursbeskrivning</label>
@@ -1458,7 +1458,7 @@ inklusive namn på eventuell profil
 Ex. SS-EN ISO 19115.</description>
 		<helper sort="true">
 			<option value="SS-EN ISO 19115:2005-geodata.se">SS-EN ISO 19115:2005-geodata.se</option>
-			<option value="SS-EN ISO 19115:2005-geodata.se version 3.1">SS-EN ISO 19115:2005-geodata.se version 3.1</option>			
+			<option value="SS-EN ISO 19115:2005-geodata.se version 3.1">SS-EN ISO 19115:2005-geodata.se version 3.1</option>
 		</helper>
     </element>
     <element id="11.0" name="gmd:metadataStandardVersion">
@@ -1467,7 +1467,7 @@ Ex. SS-EN ISO 19115.</description>
 		<helper sort="true">
 			<option value="Naturvårdsverket 4.0">Naturvårdsverket 4.0</option>
 		</helper>
-		
+
     </element>
     <element id="261.0" name="gmd:minValue">
         <label>Minimivärde</label>
@@ -1554,11 +1554,11 @@ Ex. SS-EN ISO 19115.</description>
     <element id="100.0" name="gmd:nameOfMeasure">
         <label>Måttbenämning</label>
         <description>Benämning på kvantitativt mått på kvalitet hos geogafiska data</description>
-		<!-- ISO19138 Data quality basic measures Annex C - under revision ISO 
+		<!-- ISO19138 Data quality basic measures Annex C - under revision ISO
 			19157 http://www.iso.org/iso/fr/catalogue_detail.htm?csnumber=32575 -->
 		<helper rel="gmd:measureDescription">
 			<option value="">-- Completeness --</option>
-			
+
 			<option id="Yttäckning - täckningsgrad" title="Yttäckning - täckningsgrad enligt krav från Svensk Inspirerapportering" value="Yttäckning - täckningsgrad">Yttäckning - täckningsgrad</option>
 			<option id="ISO19138:2006:measure:1" title="Indication that an item is incorrectly present in the data" value="Excess item">Excess item</option>
 			<option id="ISO19138:2006:measure:2" title="Number of items within the dataset, that should not have been in the dataset" value="Number of excess items">Number of excess items</option>
@@ -1788,7 +1788,7 @@ Ex. SS-EN ISO 19115.</description>
 	<option show="y" value="Universitetssjukhuset i Lund, arbets- och miljömedicin">Universitetssjukhuset i Lund, arbets- och miljömedicin</option>
 	<option show="y" value="Vattenfall Power Consultant AB">Vattenfall Power Consultant AB</option>
 	<option show="y" value="Örebro läns landsting">Örebro läns landsting</option>
-	
+
 </helper>
     </element>
     <element id="172.0" name="gmd:orientationParameterAvailability">
@@ -1813,16 +1813,16 @@ Ex. SS-EN ISO 19115.</description>
         <label>Övriga restriktioner</label>
         <description>Andra restriktioner och rättsliga förutsättningar för åtkomst och nyttjande av resursen (eller metadata)</description>
         <condition>conditional</condition>
-		<helper sort="false">			
-			<option show="y" title="Inga begransningar" value="inga begransningar">Inga begränsningar</option>           
+		<helper sort="false">
+			<option show="y" title="Inga begransningar" value="inga begransningar">Inga begränsningar</option>
 			<option show="y" value="-----Restriktioner tillämpliga för Inspire">-----Restriktioner tillämpliga för Inspire</option>
 			<option show="y" value="Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag">Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag</option>
 			<option show="y" value="Internationella förbindelser, allmän säkerhet eller nationellt försvar">Internationella förbindelser, allmän säkerhet eller nationellt försvar</option>
 			<option show="y" value="Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.">Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.</option>
 			<option show="y" value="Sekretess som omfattar kommersiell eller industriell information, där sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning i syfte att skydda legitima ekonomiska intressen, inbegripet det allmänna intresset att upprätthålla sekretess för statistiska uppgifter och skattesekretess">Sekretess som omfattar kommersiell eller industriell information, där sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning i syfte att skydda legitima ekonomiska intressen, inbegripet det allmänna intresset att upprätthålla sekretess för statistiska uppgifter och skattesekretess</option>
-			<option show="y" value="Immateriella rättigheter">Immateriella rättigheter</option>		
-			<option show="y" value="Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning">Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning</option>		
-			<option show="y" value="En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.">En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.</option>		
+			<option show="y" value="Immateriella rättigheter">Immateriella rättigheter</option>
+			<option show="y" value="Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning">Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning</option>
+			<option show="y" value="En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.">En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.</option>
 			<option show="y" value="Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter">Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter</option>
 		</helper>
     </element>
@@ -1854,7 +1854,7 @@ ingår i den nya profilen.</description>
     <element id="263.0" name="gmd:peakResponse">
         <label>Karaktäristisk våglängd</label>
         <description>våglängd där sensorn är som mest känslig</description>
-    </element>    
+    </element>
     <element id="526.0" name="gmd:phone">
         <label>Tel</label>
         <description>Telefon som en organisation kan bli kontaktad på</description>
@@ -2022,7 +2022,7 @@ andra existerande metadataelement eller klasser.</description>
     <element id="324.0" name="gmd:schemaAscii">
         <description>Namn på den ascii-fil som innehåller det fullständiga
 applikationsschemat.</description>
-        <label>Textfil</label>        
+        <label>Textfil</label>
     </element>
     <element id="322.0" name="gmd:schemaLanguage">
         <label>Schemaspråk</label>
@@ -2046,7 +2046,7 @@ till 7.</description>
         <label>Serie</label>
         <description>information om de datamängdsserier eller aggregat
 som datamängden är en del av</description>
-    </element>    
+    </element>
     <element id="308.0" name="gmd:shortName">
         <label>Kortnamn</label>
         <description>kortnamn på metadataelementet som är lämpligt att
@@ -2171,7 +2171,7 @@ Ex. “under produktion” eller ”färdigställd”.</description>
         <label>Nyckelordslexikon</label>
         <description>Hänvisning till nyckelordslexikon</description>
     </element>
-	<element context="gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title" id="900.0" name="gmd:title">	  
+	<element context="gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title" id="900.0" name="gmd:title">
 		<label>Titel</label>
 		<description>Namn som den hänvisade rapporten är känd under</description>
         <condition>mandatory</condition>
@@ -2200,7 +2200,7 @@ Ex. “under produktion” eller ”färdigställd”.</description>
         <label>Titel</label>
         <description>Namn som resursen är känd under</description>
     </element>
-	
+
 	 <element context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:title" id="904.0" name="gmd:title">
         <label>Titel</label>
         <description>Namn som tjänsten är känd under</description>
@@ -2210,7 +2210,7 @@ Ex. “under produktion” eller ”färdigställd”.</description>
         <label>Titel</label>
         <description>Titel för resursen, använd en beskrivande "huvudtitel".</description>
     </element>
- 
+
 
  <element id="265.0" name="gmd:toneGradation">
         <label>Antal enskilda värden</label>
@@ -2333,7 +2333,7 @@ rasterkoordinater och geografiska eller kartkoordinater
     </element>
     <element id="75.0" name="gmd:userNote">
         <label>Kommentar</label>
-        <description>Förklaring till skyddsgrad och tillämpningen av densamma</description>        
+        <description>Förklaring till skyddsgrad och tillämpningen av densamma</description>
     </element>
     <element context="gmd:DQ_QuantitativeResult" id="137.0" name="gmd:value">
         <condition>mandatory</condition>
@@ -2455,7 +2455,7 @@ Detta undvikar vi att ange.</description>
     <element name="gml:begin">
         <label>Begin</label>
         <description></description>
-    </element>    
+    </element>
     <element name="gml:end">
         <label>End</label>
         <description></description>
@@ -2463,7 +2463,7 @@ Detta undvikar vi att ange.</description>
     <element name="gml:duration">
         <label>Duration</label>
         <description></description>
-    </element>    
+    </element>
     <element name="gml:timeInterval">
         <label>Time interval</label>
         <description>conforms to ISO 11404 which is based on floating point values for temporal length.
@@ -2517,11 +2517,11 @@ Detta undvikar vi att ange.</description>
     <element name="gml:ProjectedCRS">
         <label>Projected CRS</label>
         <description></description>
-    </element>        
+    </element>
     <element name="gml:id">
 		<label>Identifier</label>
 		<description>Unique identifier</description>
-	</element>    
+	</element>
     <element context="gmd:MD_CRS" id="191.0" name="gml:id">
         <label>Ellipsoid</label>
         <description>Identity of the ellipsoid used</description>
@@ -2582,9 +2582,9 @@ Detta undvikar vi att ange.</description>
             <option value="view">View Service (view)</option>
             <option value="download">Download Service (download)</option>
             <option value="transformation">Transformation Service (transformation)</option>
-            <option value="other">Other Services (other)</option> --> 
+            <option value="other">Other Services (other)</option> -->
         </helper>
-    </element>	
+    </element>
     <element name="srv:serviceTypeVersion">
         <label>Tjänsteversion</label>
         <description>Version av angiven tjänst</description>
@@ -2605,7 +2605,7 @@ Detta undvikar vi att ange.</description>
     </element>
     <element name="srv:operatesOn">
         <label>Kopplad resurs</label>
-        <description>Ger information om vilka datamängder som tjänsten använder. 
+        <description>Ger information om vilka datamängder som tjänsten använder.
 		T ex vilka datamängder som ingår i en WMS-tjänst.</description>
     </element>
     <element name="srv:operationName">
@@ -2727,7 +2727,7 @@ Detta undvikar vi att ange.</description>
         <label>Feature type</label>
         <description>Subset of feature types from cited feature catalogue occurring in
             data</description>
-    </element>    
+    </element>
     <element name="gmd:featureAttribute">
         <label>Feature attribute</label>
         <description></description>
@@ -2890,9 +2890,9 @@ Detta undvikar vi att ange.</description>
         <label>Period duration</label>
         <description>
             The duration data type is used to specify a time interval.
-            
+
             The time interval is specified in the following form "PnYnMnDTnHnMnS" where:
-            
+
             * P indicates the period (required)
             * nY indicates the number of years
             * nM indicates the number of months
@@ -2900,7 +2900,7 @@ Detta undvikar vi att ange.</description>
             * T indicates the start of a time section (required if you are going to specify hours, minutes, or seconds)
             * nH indicates the number of hours
             * nM indicates the number of minutes
-            * nS indicates the number of seconds            
+            * nS indicates the number of seconds
         </description>
     </element>
     <element name="gco:CharacterString">
@@ -2940,25 +2940,25 @@ Detta undvikar vi att ange.</description>
         <description>Child elements and attributes have been hidden because you do no have access to view those elements</description>
     </element>
     <!-- ==================================================== -->
-    <element name="gmx:name"> 
-        <label>Name</label> 
-        <description>Feature catalogue name</description> 
-    </element> 
-    <element name="gmx:scope"> 
-        <label>Scope</label> 
-        <description>Scope definition</description> 
-    </element> 
-    <element name="gmx:versionNumber"> 
-        <label>Version</label> 
-        <description>Catalogue version</description> 
-    </element> 
-    <element name="gmx:versionDate"> 
-        <label>Date</label> 
-        <description>Catalogue date</description> 
-    </element> 
-    <element name="gmx:fieldOfApplication"> 
-        <label>Field of application</label> 
-        <description>Field of application</description> 
+    <element name="gmx:name">
+        <label>Name</label>
+        <description>Feature catalogue name</description>
+    </element>
+    <element name="gmx:scope">
+        <label>Scope</label>
+        <description>Scope definition</description>
+    </element>
+    <element name="gmx:versionNumber">
+        <label>Version</label>
+        <description>Catalogue version</description>
+    </element>
+    <element name="gmx:versionDate">
+        <label>Date</label>
+        <description>Catalogue date</description>
+    </element>
+    <element name="gmx:fieldOfApplication">
+        <label>Field of application</label>
+        <description>Field of application</description>
     </element>
     <element name="gml:axis">
         <label>Axis</label>

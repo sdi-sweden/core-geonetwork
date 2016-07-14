@@ -110,11 +110,15 @@
   <add-extent-from-geokeywordsHelp>Analysera alla nyckelord och försök ta fram lämplig utsträckning.</add-extent-from-geokeywordsHelp>
 
   <swedish>Vy SDI-Sverige</swedish>
-  <identificationInfo2>Identifiering</identificationInfo2>
-  <referenceSystemInfo2>Ref. system</referenceSystemInfo2>
+  <identificationInfo2>Identifiering av resurs</identificationInfo2>
+  <referenceSystemInfo2>Referenssystem</referenceSystemInfo2>
   <distributionInfo2>Distribution</distributionInfo2>
-  <metadata2>Metadata</metadata2>
+  <metadata2>Information om metadata</metadata2>
   <extent>Geografisk, temporal och vertical utsträckning</extent>
   <distributorContact>Distributör</distributorContact>
-  <metadataMaintenance2>Md. underhåll</metadataMaintenance2>
+  <metadataMaintenance2>Underhäll</metadataMaintenance2>
+  <restrictions>Restriktioner</restrictions>
+  <dataQualityInfo2>Kvaliteinformation</dataQualityInfo2>
+  <service>Beskrivning av tjänst</service>
+  <resources>Tillhandahållande av resurser</resources>
 </strings>
