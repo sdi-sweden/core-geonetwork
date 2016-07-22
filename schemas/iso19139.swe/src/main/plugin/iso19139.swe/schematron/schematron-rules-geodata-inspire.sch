@@ -41,9 +41,7 @@ San Francisco, California, 94105,
 USA.
 
 -->
-  <sch:title xmlns="http://www.w3.org/2001/XMLSchema">Valideringsresult vid kontroll av Nationell
-    metadataprofil version SS-EN_ISO_19115_geodata.se_version3.4 -- Eventuella felaktigheter
-    redovisas nedan </sch:title>
+  <sch:title xmlns="http://www.w3.org/2001/XMLSchema">Nationell metadataprofil 3.1 fˆr Inspire teman</sch:title>
   <sch:ns prefix="gml" uri="http://www.opengis.net/gml"/>
   <sch:ns prefix="gmd" uri="http://www.isotc211.org/2005/gmd"/>
   <sch:ns prefix="srv" uri="http://www.isotc211.org/2005/srv"/>
@@ -53,18 +51,6 @@ USA.
   <sch:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
   <!-- INSPIRE metadata rules / START -->
   <!-- ############################################ -->
-  <sch:pattern fpi="[Geodata.se:101] - En titel måste anges">
-    <sch:rule context="//gmd:identificationInfo[1]/*/gmd:citation/*/gmd:title">
-      <sch:let name="resourceTitle" value="normalize-space(*/text())"/>
-      <sch:let name="resourceTitleLength" value="string-length(*/text())"/>
-      <!--<sch:report test="$resourceTitle">Titel funnen:
-        <sch:value-of select="$resourceTitle"/>
-        <sch:value-of select="$resourceTitleLength"/>
-        </sch:report>-->
-      <sch:assert test="$resourceTitle and ($resourceTitleLength &lt; 300)">[Geodata.se:101] - Titel måste anges och innehålla mindre än 300 tecken</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-
   <sch:pattern fpi="[Geodata.se:101] - En titel måste anges">
     <sch:rule context="//gmd:identificationInfo[1]/*">
       <sch:let name="resourceTitle" value="normalize-space(gmd:citation/*/gmd:title/*/text())"/>
@@ -116,13 +102,14 @@ USA.
       <sch:assert test="$resourceIdentifier_code">[Geodata.se:104] - Identifierare för resursen krävs</sch:assert>
       <!--Rep	<sch:report test="$resourceIdentifier_code">ID <sch:value-of select="$resourceIdentifier_code"/> </sch:report> -->
     </sch:rule>
-
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:105] - Ämnesområde  måste anges ">
     <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']">
       <sch:assert test="gmd:topicCategory">[Geodata.se:105] - Ämnesområde krävs </sch:assert>
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[[Geodata.se:105] - Ämnesområde  måste anges">
     <sch:title>Testing 'Classification of spatial data and services' elements</sch:title>
     <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']">
@@ -157,6 +144,7 @@ USA.
       </sch:report>-->
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:106c] OM resursen ingår i Inspire är nyckelord obligatoriskt med ett värde ur nyckelordslexikonet GEMET">
     <sch:title>[Geodata.se:106c]OM resursen ingår i Inspire är nyckelord obligatoriskt med ett värde ur nyckelordslexikonet GEMET</sch:title>
     <sch:rule context="//gmd:MD_DataIdentification|
@@ -183,6 +171,7 @@ USA.
       </sch:report>-->
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:106d] Nyckelord tjänsteklassificering är obligatoriskt för tjänster">
     <sch:rule context="//gmd:hierarchyLevel[1]/*[@codeListValue ='service']">
       <sch:let name="keywordValue" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()"/>
@@ -274,6 +263,7 @@ USA.
       </sch:report>-->
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:106e] Typ av tjänst måste anges (discovery, view, download etc)">
     <sch:title>[Geodata.se:106e] Kontrollerar: Tjänstetyp måste anges (discovery, view, download etc)</sch:title>
     <sch:rule context="//gmd:hierarchyLevel[1]/*[@codeListValue ='service']">
@@ -295,27 +285,7 @@ USA.
       </sch:report>-->
     </sch:rule>
   </sch:pattern>
-  <sch:pattern fpi="[Geodata.se:106f] OM resursen ingår i Inspire eller Geodatasamverkan är nyckelord obligatoriskt med ett värde ur nyckelordslexikonet Initiativ">
-    <sch:title>[Geodata.se:106f]OM resursen ingår i Inspire eller Geodatasamverkan är nyckelord obligatoriskt med ett värde ur nyckelordslexikonet Initiativ</sch:title>
-    <sch:rule
-      context="//gmd:MD_DataIdentification|
-			//*[@gco:isoType='gmd:MD_DataIdentification']|
-			//srv:SV_ServiceIdentification|
-			//*[@gco:isoType='srv:SV_ServiceIdentification']">
-      <sch:let name="keywordValue_SDT"
-               value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire' or
-    		//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Geodatasamverkan'"/>
-      <sch:let name="thesaurus_name_SDT"
-               value="//gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:title/*/text()='Initiativ'"/>
-      <!--			<sch:assert test="$keywordValue_SDT">[Geodata.se:106f] Nyckelord är obligatoriskt för Inspire data och Geodatasamverkan med ett värde ur Initiativ</sch:assert>
-      <sch:assert test="$thesaurus_name_SDT">[Geodata.se:106f] Nyckelord är obligatoriskt OM resursen ingår i Inspire eller Geodatasamverkan med ett värde ur Initiativ</sch:assert>
--->
-      <sch:assert test="$thesaurus_name_SDT and $keywordValue_SDT">[Geodata.se:106f] OM resursen ingår i Inspire eller Geodatasamverkan är nyckelord obligatoriskt med ett värde ur nyckelordslexikonet Initiativ</sch:assert>
-      <!--<sch:report test="$keywordValue_SDT">[Geodata.se:106f] Nyckelord är obligatoriskt för Inspire data och Geodatasamverkan med ett värde ur Initiativ<sch:value-of select="$keywordValue_SDT"/></sch:report>
-      <sch:report test="$thesaurus_name_SDT">[Geodata.se:106f] Nyckelord är obligatoriskt för Inspire data och Geodatasamverkan med ett värde ur Initiativ<sch:value-of select="$thesaurus_name_SDT"/></sch:report>
--->
-    </sch:rule>
-  </sch:pattern>
+
   <sch:pattern		fpi="[Geodata.se:106g] OM resursen ingår i Inspire är nyckelord obligatoriskt med värdet Inspire ur nyckelordslexikonet Initiativ">
     <sch:title>[Geodata.se:106g] OM resursen ingår i Inspire är nyckelord obligatoriskt med värdet Inspire ur nyckelordslexikonet Initiativ</sch:title>
     <sch:rule
@@ -336,56 +306,14 @@ USA.
 -->
     </sch:rule>
   </sch:pattern>
-  <sch:pattern fpi="[Geodata.se:106h] OM resursen ingår i Geodatasamverkan är nyckelord obligatoriskt med värdet Geodatasamverkan ur nyckelordslexikonet Initiativ">
-    <sch:title>[Geodata.se:106h] OM resursen ingår i Geodatasamverkan är nyckelord obligatoriskt med värdet Geodatasamverkan ur nyckelordslexikonet Initiativ</sch:title>
-    <sch:rule
-      context="//gmd:MD_DataIdentification|
-			//*[@gco:isoType='gmd:MD_DataIdentification']|
-			//srv:SV_ServiceIdentification|
-			//*[@gco:isoType='srv:SV_ServiceIdentification']">
-      <sch:let name="keywordValue_SDT"
-               value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Geodatasamverkan'"/>
-      <sch:let name="thesaurus_name_SDT"
-               value="//gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:title/*/text()='Initiativ'"/>
-      <!--			<sch:assert test="$keywordValue_SDT">[Geodata.se:106h] Nyckelord är obligatoriskt för resurser inom Geodatasamverkan med värdet Geodatasamverkan i nyckelordslexikonet Initiativ</sch:assert>
-      <sch:assert test="$thesaurus_name_SDT">[Geodata.se:106h] Nyckelord är obligatoriskt OM resursen ingår i Geodatasamverkan med värdet Geodatasamverkan i nyckelordslexikonet Initiativ </sch:assert>
--->
-      <sch:assert test="$thesaurus_name_SDT and $keywordValue_SDT">[Geodata.se:106h] OM resursen ingår i Geodatasamverkan är nyckelord obligatoriskt med värdet Geodatasamverkan ur nyckelordslexikonet Initiativ</sch:assert>
-      <!--	<sch:report test="$keywordValue_SDT">[Geodata.se:106h] OM resursen ingår i Geodatasamverkan är nyckelord obligatoriskt med ett värdet Geodatasamverkan ur nyckelordslexikonet Initiativ<sch:value-of select="$keywordValue_SDT"/></sch:report>
-        <sch:report test="$thesaurus_name_SDT">[Geodata.se:106h] OM resursen ingår i Geodatasamverkan är nyckelord obligatoriskt med ett värdet Geodatasamverkan ur nyckelordslexikonet Initiativ<sch:value-of select="$thesaurus_name_SDT"/></sch:report>-->
-    </sch:rule>
-  </sch:pattern>
-  <!-- TODO : add bbox is mandatory M41 -->
-  <sch:pattern fpi="[Geodata.se:107] Referensdatum eller Temporal utsträckning  måste anges">
 
-    <sch:rule context="//gmd:identificationInfo">
-      <sch:let name="temporalExtentBegin" value="//gmd:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:beginPosition/text() | //srv:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:beginPosition/text()"/>
-      <sch:let name="temporalExtentEnd" value="//gmd:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:endPosition/text() |  //srv:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:endPosition/text()"/>
-      <sch:let name="publicationDate" value="//gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='publication']/*/gmd:date/*"/>
-      <sch:let name="creationDate" value="//gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='creation']/*/gmd:date/*"/>
-      <sch:let name="no_creationDate" value="count(gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='creation']/*/gmd:date/*)"/>
-      <sch:let name="revisionDate" value="//gmd:citation/*/gmd:date[./*/gmd:dateType/*/@codeListValue='revision']/*/gmd:date/*"/>
-      <!-- assertions and report -->
-      <!--	    <sch:report test="$temporalExtentBegin"> temporalExtentBegin found: <sch:value-of select="$temporalExtentBegin"/>	</sch:report>
-          <sch:report test="$temporalExtentEnd"> temporalExtentEnd found: <sch:value-of select="$temporalExtentEnd"/>	</sch:report>
-          <sch:report test="$publicationDate"> publicationDate found: <sch:value-of select="$publicationDate"/>	</sch:report>
-          <sch:report test="$creationDate"> creationDate found: <sch:value-of select="$creationDate"/>	</sch:report>
-          <sch:report test="$revisionDate"> revisionDate found: <sch:value-of select="$revisionDate"/>	</sch:report>
-      -->		<sch:assert test="$no_creationDate &lt;= 1">Endast en förekomst av produktionsdatum får anges</sch:assert>
-      <sch:assert test="$publicationDate or $creationDate or $revisionDate or $temporalExtentBegin or $temporalExtentEnd">[Geodata.se:107]  Referensdatum eller Temporal utsträckning krävs.</sch:assert>
-    </sch:rule>
-    <sch:rule context="//gmd:identificationInfo">
-      <sch:assert
-        test="(//gmd:citation/gmd:CI_Citation/gmd:date or //gmd:extent/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent)"
-      >[Geodata.se:107b] Referensdatum eller Temporal utsträckning krävs</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern fpi="[Geodata.se:107b] Referensdatum måste anges">
+   <sch:pattern fpi="[Geodata.se:107b] Referensdatum måste anges">
     <sch:rule context="//gmd:identificationInfo">
       <sch:assert test="(//gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date) "
       >[Geodata.se:107b] Referensdatum krävs</sch:assert>
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:108] Tillkomsthistorik  måste anges">
     <sch:rule context="/*">
       <sch:let name="lineage" value="normalize-space(//gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/*/text())"/>
@@ -397,49 +325,6 @@ USA.
       <!-- assertions and report -->
       <sch:assert test="$lineage">[Geodata.se:108] Tillkomsthistorik är obligatorisk</sch:assert>
       <!--		<sch:report test="$lineage">[Geodata.se:108] Tillkomst<sch:value-of select="$lineage"/></sch:report>-->
-    </sch:rule>
-  </sch:pattern>
-
-  <sch:pattern fpi="[Geodata.se:109]">
-    <sch:title>Data som ingår i Inspire skall ha en överensstämmelserapport [Geodata.se:109]</sch:title>
-    <sch:rule context="/gmd:MD_Metadata">
-      <sch:let name="degree" value="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency"/>
-      <sch:let name="keywordValue_INS" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
-      <sch:assert test="$degree or not($keywordValue_INS)">[Geodata.se:109] Resurser som ingår i Inspire skall ha en överensstämmelserapport </sch:assert>
-
-    </sch:rule>
-
-    <sch:rule context="/gmd:MD_Metadata//gmd:report/gmd:DQ_DomainConsistency/gmd:result">
-      <sch:let name="keywordValue_INS" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
-      <sch:let name="degree" value="//gmd:pass/*/text()"/>
-      <sch:let name="specification_title" value="//gmd:specification/*/gmd:title/*/text()"/>
-      <sch:let name="specification_date" value="//gmd:specification/*/gmd:date/*/gmd:date/*/text()"/>
-      <sch:let name="specification_dateType" value="//gmd:specification/*/gmd:date/*/gmd:dateType/*/@codeListValue"/>
-      <sch:let name="explanation" value="//gmd:explanation/*/text()"/>
-
-
-      <!--			<sch:report test="$degree">(2.8.1) Degree of conformity found:
-        <sch:value-of select="$degree"/>
-      </sch:report>
--->
-      <sch:assert
-        test="($specification_title and $degree and $specification_date and $explanation) or not($keywordValue_INS)">[Geodata.se:109] Resurser som ingår i Inspire bör ha en överensstämmelserapport
-      </sch:assert>
-
-      <sch:assert test="$specification_title or not($keywordValue_INS)">[Geodata.se:109a] Resurser som ingår i Inspire
-        bör ha en överensstämmelserapport  - namn på specifikation saknas </sch:assert>
-      <sch:assert test="$explanation or not($keywordValue_INS)">[Geodata.se:109b] Resurser som ingår i Inspire skall ha en
-        överensstämmelserapport - beskrivning av specifikationsuppfyllelse saknas </sch:assert>
-      <sch:assert test="$degree or not($keywordValue_INS)">[Geodata.se:109c] Resurser som ingår i Inspire skall ha en
-        överensstämmelserapport) - överensstämmelse (ja/nej) saknas </sch:assert>
-      <sch:assert test="($specification_date and $specification_dateType) or not($keywordValue_INS)">[Geodata.se:109d] Resurser som ingår i Inspire skall ha en
-        överensstämmelserapport) - publiceringsdatum för specifikation saknas </sch:assert>
-
-
-      <!--		<sch:report test="$specification_title">(2.8.2) Specification found:
-      <sch:value-of select="$specification_title"/>, (<sch:value-of select="$specification_date"/>, <sch:value-of select="$specification_dateType"/>), <sch:value-of select="$degree"/>, <sch:value-of select="$explanation"/>
-    </sch:report> -->
-
     </sch:rule>
   </sch:pattern>
 
@@ -554,6 +439,7 @@ USA.
       <sch:assert test="(gmd:pointOfContact)">[Geodata.se:112a] Resurskontakt måste anges</sch:assert>
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:112b] Kontaktinformation måste anges med organisationsnamn och epostadress ">
     <sch:rule context="//gmd:identificationInfo[1]/*">
       <sch:assert
@@ -561,6 +447,7 @@ USA.
       >[Geodata.se:112b] Kontaktinformation måste anges med organisationsnamn och epostadress</sch:assert>
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:112c] Kontaktinformation inom Infrastrukturen för geodata måste ha en resurskontakt som har ansvarsområdet(rollen)  ägare">
     <sch:rule context="//gmd:identificationInfo[1]/*">
       <sch:assert
@@ -568,6 +455,7 @@ USA.
       >[Geodata.se:112c] Kontaktinformation inom Infrastrukturen för geodata måste ha en resurskontakt som har ansvarsområdet(rollen) ägare</sch:assert>
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="Responsible organisation">
     <sch:rule context="//gmd:identificationInfo[1]/*">
       <sch:let name="organisationName" value="gmd:pointOfContact/*/gmd:organisationName/*/text()"/>
@@ -594,12 +482,14 @@ USA.
       <sch:assert test="$role_present">[Geodata.se:112d] Ansvarsområde är angiven med felaktig roll</sch:assert>
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:113a] Metadatakontakt måste anges">
     <sch:rule context="//gmd:MD_Metadata">
       <sch:assert test="(gmd:contact)">[Geodata.se:113a] Metadatakontakt måste
         anges</sch:assert>
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:113b] Metadatakontakt måste ha epostadress och organisation eller person angiven">
     <sch:rule context="//gmd:MD_Metadata">
       <sch:assert
@@ -608,6 +498,7 @@ USA.
         person angiven</sch:assert>
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:113c] Metadatakontakt måste ha epostadress och organisation angiven">
     <sch:rule context="//gmd:MD_Metadata">
       <sch:assert
@@ -616,6 +507,7 @@ USA.
         angiven</sch:assert>
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:113d] Metadatakontakt måste ha rollen Kontakt(pointOfContact) angiven ">
     <sch:rule context="//gmd:MD_Metadata">
       <sch:assert
@@ -623,6 +515,7 @@ USA.
       >[Geodata.se:113d] Metadatakontakt måste ha rollen Kontakt(pointOfContact) angiven </sch:assert>
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:114] - Metadataspråk måste anges">
     <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
       <sch:assert
@@ -631,18 +524,12 @@ USA.
       <!--			<sch:assert test="gmd:language">[Geodata.se:114b] Metadataspråk saknas.</sch:assert> -->
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:116] Datum för metadata måste anges">
     <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
       <sch:assert test="(gmd:dateStamp)">[Geodata.se:116] Datum för metadata måste anges</sch:assert>
     </sch:rule>
   </sch:pattern>
-  <sch:pattern fpi="[Geodata.se:117] Kopplade resurser måste anges för en tjänst">
-    <sch:rule context="//srv:SV_ServiceIdentification">
-      <sch:assert test="(//srv:operatesOn)">[Geodata.se:117] Kopplade resurser måste anges för
-        en tjänst</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-
 
   <sch:pattern fpi="[Geodata.se:119]">
     <sch:rule context="//gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*">
@@ -687,52 +574,6 @@ USA.
 
   </sch:pattern>
 
-
-
-
-
-
-
-
-  <sch:pattern fpi="[Geodata.se:121] Det är obligatoriskt att ange språk om det är ett dataset eller serie och detta innehåller textinformation">
-    <sch:rule context="//gmd:identificationInfo[1]/*">
-      <sch:let name="resourceTitle" value="normalize-space(gmd:citation/*/gmd:title/*/text())"/>
-      <sch:let name="resourceIdentifier_code"
-               value="normalize-space(gmd:citation/*/gmd:identifier/*/gmd:code/*/text())"/>
-      <sch:let name="resourceIdentifier_codeSpace"
-               value="normalize-space(gmd:citation/*/gmd:identifier/*/gmd:codeSpace/*/text())"/>
-      <sch:let name="resourceAbstract" value="normalize-space(gmd:abstract/*/text())"/>
-      <sch:let name="resourceLanguage_present"
-               value="gmd:language/*/@codeListValue='bul' or
-				gmd:language/*/@codeListValue='ita' or
-				gmd:language/*/@codeListValue='cze' or
-				gmd:language/*/@codeListValue='lav' or
-				gmd:language/*/@codeListValue='dan' or
-				gmd:language/*/@codeListValue='lit' or
-				gmd:language/*/@codeListValue='dut' or
-				gmd:language/*/@codeListValue='mlt' or
-				gmd:language/*/@codeListValue='eng' or
-				gmd:language/*/@codeListValue='pol' or
-				gmd:language/*/@codeListValue='est' or
-				gmd:language/*/@codeListValue='por' or
-				gmd:language/*/@codeListValue='fin' or
-				gmd:language/*/@codeListValue='rum' or
-				gmd:language/*/@codeListValue='fre' or
-				gmd:language/*/@codeListValue='slo' or
-				gmd:language/*/@codeListValue='ger' or
-				gmd:language/*/@codeListValue='slv' or
-				gmd:language/*/@codeListValue='gre' or
-				gmd:language/*/@codeListValue='spa' or
-				gmd:language/*/@codeListValue='hun' or
-				gmd:language/*/@codeListValue='swe' or
-				gmd:language/*/@codeListValue='gle'"/>
-      <sch:let name="resourceLanguage" value="gmd:language/*/@codeListValue"/>
-      <!--			<sch:report test="$resourceLanguage_present">(2.2.7) Resource language found (Only
-              conditional): <sch:value-of select="$resourceLanguage"/>
-            </sch:report>
-      -->		</sch:rule>
-  </sch:pattern>
-
   <!-- INSPIRE metadata rules / END -->
   <!-- Kontroller för Geodata.se -->
   <!-- Kontrollera att fileidentifier finns med-->
@@ -744,11 +585,13 @@ USA.
       <!-- the text "fileIdentifier not present" only gets emitted if the assertion fails -->
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:124] Metadatastandard måste anges">
     <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
       <sch:assert test="gmd:metadataStandardName/gco:CharacterString">[Geodata.se:124] Metadatastandard måste anges</sch:assert>
     </sch:rule>
   </sch:pattern>
+
   <sch:pattern fpi="Geograpfisk utsträckning [Geodata.se:125]">
     <sch:title>Kontroll av geografisk utsträckning</sch:title>
     <sch:rule context="//gmd:identificationInfo/gmd:MD_DataIdentification">
