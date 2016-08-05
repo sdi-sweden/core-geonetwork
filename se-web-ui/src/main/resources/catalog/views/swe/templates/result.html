@@ -7,9 +7,7 @@
           <div class="meta-data-cont">
             <img src="../../catalog/views/swe/images/open-repo.png" class="repo-img">
             <div class="meta-data">
-              <h1>{{mdView.current.record.title || mdView.current.record.defaultTitle}}
-                <div class="star-cont" data-ng-class="{'star-cont': true, 'starred' : containsFavorite(mdView.current.record['geonet:info'].id) }" data-ng-click="toggleFavorite(mdView.current.record['geonet:info'].id)"><span class="icon-star-empty"></span><span class="icon-star"></span></div>
-              </h1>
+              <h1>{{mdView.current.record.title || mdView.current.record.defaultTitle}} <div class="star-cont"><span class="icon-star-empty"></span><span class="icon-star"></span></div></h1>
               <span class="excerpt"></span>
             </div>
             <div class="update-tag"><span>Senast uppdaterad <span data-gn-humanize-time="{{mdView.current.record['geonet:info'].changeDate}}"
@@ -89,7 +87,7 @@
                   </div>
                   <div class="excerpt-colm col2">
                     <div class="excerpt-desc">
-                      <p data-ng-repeat="r in mdView.current.record.responsibleParty" data-ng-show="r.indexOf('Ägare') != -1">{{r | split:'|':2}}</p>
+                      <p data-ng-repeat="r in mdView.current.record.responsibleParty" data-ng-show="r.indexOf('pointOfContact') != -1">{{r | split:'|':2}}</p>
                     </div>
                   </div>
                 </div>
@@ -113,7 +111,6 @@
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -130,47 +127,21 @@
             <div class="link-cont">
               <a class="-label-link" target="_blank" href="md.format.pdf?xsl=full_view&uuid={{mdView.current.record['geonet:info'].uuid}}"><span class="icon-print"></span>Skriv ut</a>
             </div>
-
-            <!-- Metadata links -->
-            <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="getInformationLinks(mdView.current.record).length > 1">
+            <div class="dropdown-cont more-info-dropdown">
               <div class="-label"><span class="icon-info"></span>Mer information <span class="icon-down-dir"></span></div>
               <ul class="-list">
-                <li data-ng-repeat="l in getInformationLinks(mdView.current.record)">
-                  <a href="{{l.url}}" class="-text-link" target="_blank">{{l.desc || l.url}}</a>
-                </li>
+                <!--<li class="active"><a href="" class="-text-link">visa metadata</a></li>-->
+                <!--<li><a href="" class="-text-link">redigera</a></li>-->
+                <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records/{{md.getUuid()}}">spara som ISO19139</a></li>
+                <li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md.getUuid())">Spara som DCAT</a></li>
+                <li ng-if="user.isEditorOrMore()"><a href="" class="-text-link" data-ng-click="mdService.deleteMd(md)">ta bort</a></li>
               </ul>
             </div>
-
-            <div class="link-cont" data-ng-show="getInformationLinks(mdView.current.record).length == 1">
-              <a href="{{getInformationLinks(mdView.current.record)[0].url}}" class="-label-link" target="_blank"><span class="icon-info"></span>Mer information</a>
+            <div class="link-cont">
+              <a class="-label-link" href=""><span class="icon-map"></span>Visa på karta</a>
             </div>
-
-            <!-- Map links -->
-            <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="getMapLinks(mdView.current.record).length > 1">
-              <div class="-label"><span class="icon-map"></span>Visa på karta <span class="icon-down-dir"></span></div>
-              <ul class="-list">
-                <li data-ng-repeat="l in getMapLinks(mdView.current.record)">
-                  <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l, mdView.current.record)">{{l.desc || l.url}}</a>
-                </li>
-              </ul>
-            </div>
-
-            <div class="link-cont" data-ng-show="getMapLinks(mdView.current.record).length == 1">
-              <a href="" class="-label-link" data-ng-click="resultviewFns.addWmsLayersFromCap(getMapLinks(mdView.current.record)[0], mdView.current.record)"><span class="icon-map"></span>Visa på karta</a>
-            </div>
-
-            <!-- Download links -->
-            <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="getDownloadLinks(mdView.current.record).length > 1">
-              <div class="-label"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>Hämta datamängd <span class="icon-down-dir"></span></div>
-              <ul class="-list">
-                <li data-ng-repeat="l in getDownloadLinks(mdView.current.record)">
-                  <a href="{{l.url}}" class="-text-link" target="_blank">{{l.desc || l.url}}</a>
-                </li>
-              </ul>
-            </div>
-
-            <div class="link-cont" data-ng-show="getDownloadLinks(mdView.current.record).length == 1">
-              <a href="{{getDownloadLinks(mdView.current.record)[0].url}}" download="{{getDownloadLinks(mdView.current.record)[0].desc}}" class="-label-link" target="_blank"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>Hämta datamängd</a>
+            <div class="link-cont">
+              <a href="" class="-label-link"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>Hämta datamängd</a>
             </div>
           </div>
         </div>

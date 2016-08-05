@@ -25,8 +25,7 @@
 
   goog.provide('swe_search_config');
 
-  //var module = angular.module('swe_search_config',
-  // ['pascalprecht.translate']);
+  //var module = angular.module('swe_search_config', ['pascalprecht.translate']);
   var module = angular.module('swe_search_config', []);
 
 
@@ -35,7 +34,10 @@
     function(gnSearchSettings, gnViewerSettings,
              gnOwsContextService, gnMap) {
 
-      gnViewerSettings.defaultContext = null;
+      // Load the context defined in the configuration
+      gnViewerSettings.defaultContext =
+          gnViewerSettings.mapConfig.viewerMap ||
+          '../../map/config-viewer.xml';
 
       // Keep one layer in the background
       // while the context is not yet loaded.
@@ -82,75 +84,23 @@
       // Object to store the current Map context
       gnViewerSettings.storage = 'sessionStorage';
 
-      var extent = [-1200000, 4700000, 2600000, 8500000];
-      var resolutions = [4096.0, 2048.0, 1024.0, 512.0, 256.0,
-        128.0, 64.0, 32.0, 16.0, 8.0];
-      var matrixIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-      proj4.defs(
-          'EPSG:3006',
-          '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 ' +
-          '+units=m +axis=neu +no_defs');
-      ol.proj.get('EPSG:3006').setExtent(extent);
-      ol.proj.get('EPSG:3006').setWorldExtent([-5.05651650131, 40.6662879582,
-        18.3766501767, 71.7832476487]);
-      var projection = ol.proj.get('EPSG:3006');
-
-      var tileGrid = new ol.tilegrid.WMTS({
-        tileSize: 256,
-        extent: extent,
-        resolutions: resolutions,
-        matrixIds: matrixIds
-      });
-
-      var apiKey = 'a9a380d6b6f25f22e232b8640b05ea8';
-
-      var wmts = [new ol.layer.Tile({
-        extent: extent,
-        source: new ol.source.WMTS({
-          url: 'https://api.lantmateriet.se/open/topowebb-ccby/' +
-              'v1/wmts/token/' + apiKey + '/',
-          layer: 'topowebb',
-          format: 'image/png',
-          matrixSet: '3006',
-          tileGrid: tileGrid,
-          version: '1.0.0',
-          style: 'default',
-          crossOrigin: 'anonymous'
-        })
-      })];
-
-
       /*******************************************************************
        * Define maps
        */
       var mapsConfig = {
-        resolutions: resolutions,
-        extent: extent,
-        projection: projection,
-        center: [572087, 6802255],
-        zoom: 0
+        center: [280274.03240585705, 6053178.654789996],
+        zoom: 2
+        //maxResolution: 9783.93962050256
       };
-
-      // Add backgrounds to TOC
-      gnViewerSettings.bgLayers = wmts;
-      gnViewerSettings.servicesUrl = {};
-
-      var interactions = ol.interaction.defaults({
-        altShiftDragRotate: false,
-        pinchRotate: false
-      });
 
       var viewerMap = new ol.Map({
         controls: [],
-        interactions: interactions,
         view: new ol.View(mapsConfig)
       });
 
       var searchMap = new ol.Map({
         controls: [],
-        layers: wmts,
-        interactions: interactions,
+        layers: viewerMap.getLayers(),
         view: new ol.View(mapsConfig)
       });
 
@@ -169,6 +119,9 @@
       };
 
       gnSearchSettings.sortbyValues = [{
+        sortBy: 'relevance',
+        sortOrder: ''
+      }, {
         sortBy: 'changeDate',
         sortOrder: ''
       }, {
@@ -184,11 +137,10 @@
 
       // Mapping for md links in search result list.
       gnSearchSettings.linkTypes = {
-        //links: ['LINK', 'kml'],
-        links: ['HTTP:Information'],
-        downloads: ['HTTP:Nedladdning', 'HTTP:OGC:WFS'],
+        links: ['LINK', 'kml'],
+        downloads: ['DOWNLOAD'],
         //layers:['OGC', 'kml'],
-        layers: ['HTTP:OGC:WMS'],
+        layers: ['OGC'],
         maps: ['ows']
       };
 

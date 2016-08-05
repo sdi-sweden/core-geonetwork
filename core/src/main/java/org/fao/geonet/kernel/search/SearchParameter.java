@@ -23,11 +23,11 @@
 package org.fao.geonet.kernel.search;
 
 /**
- *
+ * 
  * Parameter names used in search.
  *
  * @author heikki doeleman
- *
+ * 
  */
 public class SearchParameter {
 
@@ -104,8 +104,5 @@ public class SearchParameter {
 	public static final String OP_NOTIFY   = "_operation3";
 	public static final String OP_DYNAMIC  = "_operation5";
 	public static final String OP_FEATURED = "_operation6";
-
-    public static final String RESOURCEDATETO = "resourceDateTo";
-    public static final String RESOURCEDATEFROM = "resourceDateFrom";
 
 }

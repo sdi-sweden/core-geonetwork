@@ -23,29 +23,29 @@
   -->
 
 <!--
-
+	
  * Hide in edit mode : If some codelist needs to be hidden
  in edit mode, the hideInEditMode attribute could be added
  to any entries.
-
+ 
  eg.
 	<entry hideInEditMode="true">
-
+	
  This will restrict the number of available entries for end
  user editors and keep all records ISO compatible when using
  codelist (eg. harvested records could use codelist hidden
  in local node and needs to be displayed in view mode).
-
+ 
  By default, this attribute is not used.
-
+ 
  * editorMode attribute allows to configure the editor form field.
-
+ 
  * - not set -: simple combo box
  * radio : radio button in one line
  * radio_linebreak : radio button with line break
  * radio_withdesc : radion button with line break and codelist entry description
  * select : select box with size set to the number of items if lower than 7 entries.
-
+ 
 -->
 <codelists xmlns:gmd="http://www.isotc211.org/2005/gmd">
 	<!-- ==================================================== -->
@@ -276,7 +276,7 @@
 			<label>Author</label>
 			<description>Party who authored the resource</description>
 		</entry>
-		<!-- ISO PROFIL CHE ONLY
+		<!-- ISO PROFIL CHE ONLY 
 		<entry>
 			<code>editor</code>
 			<label>Editor</label>
@@ -1239,7 +1239,7 @@
 			<description>Pamphlet or leaflet giving descriptive information</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!-- ISO PROFIL CHE ONLY
+		<!-- ISO PROFIL CHE ONLY 
 		<entry>
 			<code>zip100</code>
 			<label>Zip100</label>
@@ -1433,29 +1433,29 @@
 	</codelist>
 	<!-- ==================================================== -->
 	<codelist name="gmd:MD_ScopeCode">
-		<!--<entry>
+		<entry>
 			<code>attribute</code>
 			<label>Attribute</label>
 			<description>Information applies to the attribute class</description>
-		</entry>-->
+		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
+		<entry>
 			<code>attributeType</code>
 			<label>Attribute type</label>
 			<description>Information applies to the characteristic of a feature</description>
-		</entry>-->
+		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
+		<entry>
 			<code>collectionHardware</code>
 			<label>Collection hardware</label>
 			<description>Information applies to the collection hardware class</description>
-		</entry>-->
+		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
+		<entry>
 			<code>collectionSession</code>
 			<label>Collection session</label>
 			<description>Information applies to the collection session</description>
-		</entry>-->
+		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>dataset</code>
@@ -1470,6 +1470,48 @@
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
+			<code>nonGeographicDataset</code>
+			<label>Non geographic dataset</label>
+			<description>Information applies to non-geographic data</description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
+			<code>dimensionGroup</code>
+			<label>Dimension group</label>
+			<description>Information applies to a dimension group</description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
+			<code>feature</code>
+			<label>Feature</label>
+			<description>Information applies to a feature</description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
+			<code>featureType</code>
+			<label>Feature type</label>
+			<description>Information applies to a feature type</description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
+			<code>propertyType</code>
+			<label>Property type</label>
+			<description>Information applies to a property type</description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
+			<code>fieldSession</code>
+			<label>Field session</label>
+			<description>Information applies to a field session</description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
+			<code>software</code>
+			<label>Software</label>
+			<description>Information applies to a computer program or routine</description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
 			<code>service</code>
 			<label>Service</label>
 			<description>Information applies to a capability which a service provider entity makes
@@ -1477,61 +1519,19 @@
 				such as a use case</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
-			<code>nonGeographicDataset</code>
-			<label>Non geographic dataset</label>
-			<description>Information applies to non-geographic data</description>
-		</entry>-->
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
-			<code>dimensionGroup</code>
-			<label>Dimension group</label>
-			<description>Information applies to a dimension group</description>
-		</entry>-->
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
-			<code>feature</code>
-			<label>Feature</label>
-			<description>Information applies to a feature</description>
-		</entry>-->
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
-			<code>featureType</code>
-			<label>Feature type</label>
-			<description>Information applies to a feature type</description>
-		</entry>-->
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
-			<code>propertyType</code>
-			<label>Property type</label>
-			<description>Information applies to a property type</description>
-		</entry>-->
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
-			<code>fieldSession</code>
-			<label>Field session</label>
-			<description>Information applies to a field session</description>
-		</entry>-->
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
-			<code>software</code>
-			<label>Software</label>
-			<description>Information applies to a computer program or routine</description>
-		</entry>-->
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
+		<entry>
 			<code>model</code>
 			<label>Model</label>
 			<description>Information applies to a copy or imitation of an existing or hypothetical
 				object</description>
-		</entry>-->
+		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!--<entry>
+		<entry>
 			<code>tile</code>
 			<label>Tile</label>
 			<description>Information applies to a tile, a spatial subset of geographic
 			data</description>
-		</entry>-->
+		</entry>
 		<!-- ISO PROFIL CHE ONLY
 		<entry>
 			<code>project</code>
@@ -1548,7 +1548,7 @@
 			<label>Publication</label>
 			<description>Publication</description>
 		</entry>-->
-
+		
 		<!-- Used for facet translation only and not displayed in editor -->
 		<entry hideInEditMode="true">
 			<code>map</code>
@@ -1844,7 +1844,7 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 	</codelist>
 	<!-- ==================================================== -->
-	<codelist name="gmx:MX_ScopeCode">
+	<codelist name="gmd:MX_ScopeCode">
 		<entry>
 			<code>attribute</code>
 			<label>Attribute</label>

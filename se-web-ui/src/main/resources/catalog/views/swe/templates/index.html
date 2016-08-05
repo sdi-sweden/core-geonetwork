@@ -18,27 +18,28 @@
             <h1>Logga in på Geodataportalen</h1>
             <p>Användarkonto till Geodataportalen behövs bara om du är publicerare. Är du redan det logga in nedan.</p>
 
-              <form class="login-form" abineguid="63019F15C9C54502A51867AC03621D44"
-                    name="gnSigninForm" action="{{formAction}}"
-                    data-ng-if="user['@authenticated'] != 'true'" novalidate="novalidate">
-                <div class="form-row">
-                  <label>Användarnamn</label>
-                  <input type="text" class="input" id="inputUsername" name="username"
-                         data-ng-model="formData.username" placeholder="{{'username' | translate}}" required=""/>
-                </div>
-                <div class="form-row">
-                  <label>lösenord</label>
-                  <input type="password" class="input"  id="inputPassword" name="password"
-                         data-ng-model="formData.password" placeholder="{{'password' | translate}}" required="" />
-                </div>
-              </form>
-              <div class="btn-cont">
-                <div class="remember-login-cont">
-                  <div class="cb-cont checked"><div class="cb"><span class="icon-ok"></span><input type="checkbox"></div><span class="text">Håll mig inloggad</span></div>
-                  <a href="" class="link-btn publisher-user-login-btn" data-ng-click="login()" data-ng-disabled="!gnSigninForm.$valid">Logga in</a>
-                </div>
+            <form class="login-form" abineguid="63019F15C9C54502A51867AC03621D44"
+                  name="gnSigninForm" action="{{formAction}}"
+                  method="post" role="form"
+                  data-ng-if="user['@authenticated'] != 'true'">
+              <div class="form-row">
+                <label>Användarnamn</label>
+                <input type="text" class="input" id="inputUsername" name="username"
+                       data-ng-model="formData.username" placeholder="{{'username' | translate}}" required=""/>
+              </div>
+              <div class="form-row">
+                <label>lösenord</label>
+                <input type="password" class="input"  id="inputPassword" name="password"
+                       data-ng-model="formData.password" placeholder="{{'password' | translate}}" required="" />
+              </div>
+            </form>
+            <div class="btn-cont">
+              <div class="remember-login-cont">
+                <div class="cb-cont checked"><div class="cb"><span class="icon-ok"></span><input type="checkbox"></div><span class="text">Håll mig inloggad</span></div>
+                <a href="" class="link-btn publisher-user-login-btn" data-ng-click="login()" data-ng-disabled="!gnSigninForm.$valid">Logga in</a>
               </div>
             </div>
+          </div>
           <div class="login-footer">
             <a href="" class="login-help-link"><span class="icon-help-1"></span>glömt lösenord</a>
             <a href="" class="login-plus-link"><span class="icon-plus"></span>skapa konto</a>
@@ -82,68 +83,6 @@
     </div>
   </div>
 
-  <!-- Mail comment popup -->
-  <div id="mail-popup" class="popup mail-popup" data-ng-controller="SweMailController">
-    <div class="popup-cont">
-      <a href="" data-ng-click="close()" class="cls-btn icon-cancel"></a>
-      <div class="popup-data">
-        <div class="mail-data-cont">
-          <div class="mail-data">
-            <div class="mail-section-cont">
-              <div class="mail-section">
-                <h1>Tyck Till</h1>
-                <p>Tyck Till ...</p>
-
-                <div id="mail-feedback-result" data-ng-show="(feedbackResult != null) && (feedbackResultError == false)">
-                  <p>{{feedbackResult}}</p>
-
-                  <div class="btn-cont">
-                    <div class="mail-actions-cont">
-                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()">close</a>
-                    </div>
-                  </div>
-                </div>
-
-                <div id="mail-form" data-ng-show="(feedbackResult == null) || (feedbackResultError == true)">
-                  <div class="alert alert-danger" data-ng-show="feedbackResultError == true">{{feedbackResult}}</div>
-                  <form name="feedbackForm" class="mail-form" novalidate>
-
-                    <!-- NAME -->
-                    <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.name.$invalid && !feedbackForm.name.$pristine }">
-                      <label>Name</label>
-                      <input type="text" class="input" name="name" ng-model="user.username" required>
-                      <span class="errorField" data-ng-show="feedbackForm.name.$invalid && !feedbackForm.name.$pristine" class="help-block">You name is required.</span>
-                    </div>
-
-                    <!-- EMAIL -->
-                    <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.email.$invalid && !feedbackForm.email.$pristine }">
-                      <label>Email</label>
-                      <input type="email" class="input" name="email" ng-model="user.email" required>
-                      <span class="errorField" data-ng-show="feedbackForm.email.$invalid && !feedbackForm.email.$pristine" class="help-block">Enter a valid email.</span>
-                    </div>
-
-                    <!-- COMMENT -->
-                    <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.comment.$invalid && !feedbackForm.comment.$pristine }">
-                      <label class="label-text-area">Comment</label>
-                      <textarea class="textarea" name="comment" ng-model="user.comments" required></textarea>
-                      <span class="errorField" data-ng-show="feedbackForm.comment.$invalid && !feedbackForm.comment.$pristine" class="help-block">Your comment is required.</span>
-                    </div>
-                  </form>
-
-                  <div class="btn-cont">
-                    <div class="mail-actions-cont">
-                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="sendMail()" data-ng-disabled="!feedbackForm.$valid">Send comment</a>
-                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()">cancel</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div data-ng-controller="GnSearchController">
     <div class="main-wrapper" data-ng-controller="gnsSwe">
@@ -176,12 +115,17 @@
                   <div class="sort-filter">
                     <span class="sort-filter-label">Sortera efter:</span>
                     <div class="filter-cont"
-                         data-swe-toggle-style="">
-
-                       <div data-swe-sortby-combo=""
+                         data-swe-sortby-combo=""
                          data-params="searchObj.params"
-                         data-swe-sortby-values="searchObj.sortbyValues"></div>
+                         data-swe-sortby-values="searchObj.sortbyValues">
 
+                      <!--<div class="-label">A-Ö <span class="icon-down-dir"></span></div>
+                      <ul class="-list">
+                        <li class="active"><a href="" class="-text-link">A-B</a></li>
+                        <li><a href="" class="-text-link">by Name</a></li>
+                        <li><a href="" class="-text-link">By Date</a></li>
+                        <li><a href="" class="-text-link">By Geography</a></li>
+                      </ul>-->
                     </div>
                   </div>
                 </div>

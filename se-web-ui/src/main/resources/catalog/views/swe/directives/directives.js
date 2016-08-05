@@ -120,14 +120,10 @@
     function() {
       return {
         restrict: 'A',
-        scope: { dialog: '@dialog', focusControl: '@focusControl'},
+        scope: { dialog: '@dialog' },
         link: function(scope, elem) {
           elem.on('click', function() {
             angular.element(scope.dialog).addClass('show');
-            if (scope.focusControl) {
-              angular.element(scope.focusControl).focus();
-            }
-
             scope.$emit('body:class:add', 'show-overlay');
           });
         }
@@ -177,7 +173,7 @@
           var currentState = true;
 
           elem.on('click', function() {
-            var e = (scope.element !== undefined) ? scope.element : elem;
+            var e = (scope.element !== undefined)?scope.element:elem;
 
             if (currentState === true) {
               angular.element(e).addClass('open');
@@ -214,23 +210,5 @@
       };
     }
   ]);
-
-  /**
-   * @ngdoc directive
-   * @name sweImageFilter
-   * @function
-   *
-   * @description
-   * Shows image filters on home page.
-   *
-   */
-  module.directive('sweImageFilter', function() {
-    return {
-      restrict: 'E',
-      templateUrl: '../../catalog/views/swe/templates/image_filter.html',
-      controller: 'SweFilterController'
-    };
-  });
-
 
 }());
