@@ -37,8 +37,12 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.Group;
 import org.fao.geonet.domain.OperationAllowed;
 import org.fao.geonet.domain.OperationAllowedId;
+import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.ReservedGroup;
 import org.fao.geonet.domain.ReservedOperation;
+import org.fao.geonet.domain.User;
+import org.fao.geonet.domain.UserGroup;
+import org.fao.geonet.domain.UserGroupId;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.SelectionManager;
 import org.fao.geonet.kernel.mef.MEFLibIntegrationTest.ImportMetadata;
@@ -46,6 +50,8 @@ import org.fao.geonet.kernel.search.IndexAndTaxonomy;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.repository.OperationAllowedRepository;
+import org.fao.geonet.repository.UserGroupRepository;
+import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.repository.specification.GroupSpecs;
 import org.fao.geonet.repository.specification.OperationAllowedSpecs;
 import org.fao.geonet.services.AbstractServiceIntegrationTest;
@@ -74,14 +80,18 @@ public class PublishTest extends AbstractServiceIntegrationTest {
     private OperationAllowedRepository allowedRepository;
     @Autowired
     private GroupRepository groupRepository;
-
+    @Autowired
+    private UserGroupRepository userGroupRepository;
+    @Autowired
+    private UserRepository userRepository;
+    
     private int sampleGroupId;
     @Autowired
     private DataManager dataManager;
     @Autowired
     private SearchManager searchManager;
-
-
+    
+    
     @Before
     public void setUp() throws Exception {
         final List<Group> all = groupRepository.findAll(Specifications.not(GroupSpecs.isReserved()));
@@ -98,7 +108,17 @@ public class PublishTest extends AbstractServiceIntegrationTest {
     }
 
     @Test
-    public void testPublishSingle() throws Exception {
+    public void testPublishSingleAsReviewer() throws Exception {
+        final User user = getNewUser("user1", Profile.Reviewer);
+// get the Sample Group - the last item in the list
+        List<Group> tmpGroup = groupRepository.findAll();
+        Group sampleGroup = null;
+        for (Group group : tmpGroup) {
+            sampleGroup = group;
+        }
+        getNewUserGroup(user, sampleGroup, Profile.Reviewer);
+        loginAs(user);
+        
         final String metadataId = metadataIds.get(0);
 
         allowedRepository.deleteAll();
@@ -108,21 +128,167 @@ public class PublishTest extends AbstractServiceIntegrationTest {
 
         PublishReport report = publishService.publish("eng", request, metadataId, false);
         assertCorrectReport(report, 1, 0, 0, 0);
-        assertPublishedInIndex(true, metadataId);
+        assertPublishedInIndex(true, metadataId, false);
 
         report = publishService.publish("eng", request, metadataId, false);
         assertCorrectReport(report, 0, 0, 1, 0);
-        assertPublishedInIndex(true, metadataId);
+        assertPublishedInIndex(true, metadataId, false);
+
+        assertEquals(10, allowedRepository.count());
+        int iMetadataId = Integer.parseInt(metadataId);
+        final int downloadId = ReservedOperation.download.getId();
+        final int allGroupId = ReservedGroup.all.getId();
+        final int featuredId = ReservedOperation.featured.getId();
+        assertNotNull("ALL, Download not found", allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, downloadId));
+        assertNotNull("ALL, Feature not found", allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, featuredId));
+//        assertNotNull("Sample Group, Feature not found", allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(sampleGroupId, iMetadataId, featuredId));
 
         allowedRepository.deleteAll();
         dataManager.indexMetadata(metadataId, true);
-        assertPublishedInIndex(false, metadataId);
+        assertPublishedInIndex(false, metadataId, false);
 
         SecurityContextHolder.clearContext();
 
         report = publishService.publish("eng", request, metadataId, false);
         assertCorrectReport(report, 0, 0, 0, 1);
-        assertPublishedInIndex(false, metadataId);
+        assertPublishedInIndex(false, metadataId, false);
+
+        allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, allGroupId, downloadId)));
+        allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, allGroupId, featuredId)));
+        allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, sampleGroupId, featuredId)));
+
+        report = publishService.publish("eng", request, metadataId, false);
+        assertCorrectReport(report, 0, 0, 0, 1);
+        assertEquals(3, allowedRepository.count());
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, downloadId));
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, featuredId));
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(sampleGroupId, iMetadataId, featuredId));
+    }
+
+    
+    @Test
+    public void testPublishSingleAsEditor() throws Exception {
+        final User user = getNewUser("user2", Profile.Editor);  
+        List<Group> tmpGroup = groupRepository.findAll();
+        Group sampleGroup = null;
+        for (Group group : tmpGroup) {
+            sampleGroup = group;
+        }
+        getNewUserGroup(user, sampleGroup, Profile.Editor);
+
+        loginAs(user);
+        
+        final String metadataId = metadataIds.get(0);
+
+        allowedRepository.deleteAll();
+        dataManager.indexMetadata(metadataId, true);
+
+        MockHttpServletRequest request = new MockHttpServletRequest();
+
+        PublishReport report = publishService.publish("eng", request, metadataId, false);
+        assertCorrectReport(report, 0, 0, 0, 1);
+        assertPublishedInIndex(false, metadataId, false);
+
+        report = publishService.publish("eng", request, metadataId, false);
+        assertCorrectReport(report, 0, 0, 0, 1);
+        assertPublishedInIndex(false, metadataId, false);
+
+        allowedRepository.deleteAll();
+        dataManager.indexMetadata(metadataId, true);
+        assertPublishedInIndex(false, metadataId, false);
+
+        SecurityContextHolder.clearContext();
+
+        report = publishService.publish("eng", request, metadataId, false);
+        assertCorrectReport(report, 0, 0, 0, 1);
+        assertPublishedInIndex(false, metadataId, false);
+
+        int iMetadataId = Integer.parseInt(metadataId);
+        final int downloadId = ReservedOperation.download.getId();
+        final int allGroupId = ReservedGroup.all.getId();
+        allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, allGroupId, downloadId)));
+        final int featuredId = ReservedOperation.featured.getId();
+        allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, allGroupId, featuredId)));
+        allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, sampleGroupId, featuredId)));
+
+        report = publishService.publish("eng", request, metadataId, false);
+        assertCorrectReport(report, 0, 0, 0, 1);
+        assertEquals(3, allowedRepository.count());
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, downloadId));
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, featuredId));
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(sampleGroupId, iMetadataId, featuredId));
+    }
+
+    @Test
+    public void testPublishSingleSkippingIntranet() throws Exception {
+        final String metadataId = metadataIds.get(0);
+
+        allowedRepository.deleteAll();
+        dataManager.indexMetadata(metadataId, true);
+
+        MockHttpServletRequest request = new MockHttpServletRequest();
+
+        PublishReport report = publishService.publish("eng", request, metadataId, true);
+        assertCorrectReport(report, 1, 0, 0, 0);
+        assertPublishedInIndex(true, metadataId, true);
+
+        report = publishService.publish("eng", request, metadataId, true);
+        assertCorrectReport(report, 0, 0, 1, 0);
+        assertPublishedInIndex(true, metadataId, true);
+
+        allowedRepository.deleteAll();
+        dataManager.indexMetadata(metadataId, true);
+        assertPublishedInIndex(false, metadataId, true);
+
+        SecurityContextHolder.clearContext();
+
+        report = publishService.publish("eng", request, metadataId, true);
+        assertCorrectReport(report, 0, 0, 0, 1);
+        assertPublishedInIndex(false, metadataId, true);
+
+        int iMetadataId = Integer.parseInt(metadataId);
+        final int downloadId = ReservedOperation.download.getId();
+        final int allGroupId = ReservedGroup.all.getId();
+        allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, allGroupId, downloadId)));
+        final int featuredId = ReservedOperation.featured.getId();
+        allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, allGroupId, featuredId)));
+        allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, sampleGroupId, featuredId)));
+
+        report = publishService.publish("eng", request, metadataId, false);
+        assertCorrectReport(report, 0, 0, 0, 1);
+        assertEquals(3, allowedRepository.count());
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, downloadId));
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, featuredId));
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(sampleGroupId, iMetadataId, featuredId));
+    }
+
+
+    @Test
+    public void testPublishSingleAsAdministrator() throws Exception {
+        final String metadataId = metadataIds.get(0);
+
+        allowedRepository.deleteAll();
+        dataManager.indexMetadata(metadataId, true);
+
+        MockHttpServletRequest request = new MockHttpServletRequest();
+
+        PublishReport report = publishService.publish("eng", request, metadataId, false);
+        assertCorrectReport(report, 1, 0, 0, 0);
+        assertPublishedInIndex(true, metadataId, false);
+
+        report = publishService.publish("eng", request, metadataId, false);
+        assertCorrectReport(report, 0, 0, 1, 0);
+        assertPublishedInIndex(true, metadataId, false);
+
+        allowedRepository.deleteAll();
+        dataManager.indexMetadata(metadataId, true);
+        assertPublishedInIndex(false, metadataId, false);
+
+        SecurityContextHolder.clearContext();
+
+        report = publishService.publish("eng", request, metadataId, false);
+        assertCorrectReport(report, 0, 0, 0, 1);
+        assertPublishedInIndex(false, metadataId, false);
 
         int iMetadataId = Integer.parseInt(metadataId);
         final int downloadId = ReservedOperation.download.getId();
@@ -259,12 +425,16 @@ public class PublishTest extends AbstractServiceIntegrationTest {
         assertEquals(report.toString(), disallowed, report.getDisallowed());
     }
 
-    private void assertPublishedInIndex(boolean published, String metadataId) throws IOException {
+    private void assertPublishedInIndex(boolean published, String metadataId, boolean skipIntranet) throws IOException {
         try (IndexAndTaxonomy indexReader = this.searchManager.getIndexReader(null, -1)) {
             final IndexSearcher searcher = new IndexSearcher(indexReader.indexReader);
             final TopDocs docs = searcher.search(new TermQuery(new Term(Geonet.IndexFieldNames.ID, metadataId)), 1);
             final Document document = indexReader.indexReader.document(docs.scoreDocs[0].doc);
-            for (ReservedGroup reservedGroup : Lists.newArrayList(ReservedGroup.all, ReservedGroup.intranet)) {
+            List<ReservedGroup> reserveGroup = Lists.newArrayList(ReservedGroup.all);
+            if(!skipIntranet) {
+                reserveGroup.add(ReservedGroup.intranet);
+            }
+            for (ReservedGroup reservedGroup : reserveGroup) {
                     final String[] values = document.getValues(Geonet.IndexFieldNames.GROUP_PUBLISHED);
                     final String expectedInIndex = Geonet.IndexFieldNames.GROUP_PUBLISHED + ":" + reservedGroup;
                     assertEquals(expectedInIndex + " is not in " + Arrays.asList(values),
@@ -272,4 +442,22 @@ public class PublishTest extends AbstractServiceIntegrationTest {
             }
         }
     }
+    
+    private User getNewUser(String userName, Profile profile) {
+        User user = new User().setUsername(userName);
+        user.getSecurity().setPassword("password" + userName);
+        user.setProfile(profile);
+        return user = userRepository.save(user);        
+    }
+
+    private Group getNewGroup(String groupName) {
+        return groupRepository.save(new Group().setName(groupName ));
+    }
+    
+    private UserGroup getNewUserGroup(User user, Group group, Profile profile) {
+        UserGroup userGroup = new UserGroup().setGroup(group).setUser(user).setId(new UserGroupId(user, group));
+        userGroup.setProfile(profile);
+        return userGroup = userGroupRepository.saveAndFlush(userGroup);
+    }
+   
 }
