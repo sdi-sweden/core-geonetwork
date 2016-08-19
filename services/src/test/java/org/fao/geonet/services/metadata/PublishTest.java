@@ -450,9 +450,9 @@ public class PublishTest extends AbstractServiceIntegrationTest {
         return user = userRepository.save(user);        
     }
 
-    private Group getNewGroup(String groupName) {
-        return groupRepository.save(new Group().setName(groupName ));
-    }
+//    private Group getNewGroup(String groupName) {
+//        return groupRepository.save(new Group().setName(groupName ));
+//    }
     
     private UserGroup getNewUserGroup(User user, Group group, Profile profile) {
         UserGroup userGroup = new UserGroup().setGroup(group).setUser(user).setId(new UserGroupId(user, group));
