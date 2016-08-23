@@ -4750,3 +4750,14 @@ a.link-btn[disabled] {
   top: auto;
   bottom: 5em;
 }
+
+// columns
+.columns-2 {
+  columns: 2;
+  column-gap: 2em;
+  .checkbox {
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

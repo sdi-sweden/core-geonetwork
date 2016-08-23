@@ -532,6 +532,7 @@ eg. only 2 INSPIRE themes.
             <xs:attribute name="key" type="xs:string" use="required"/>
             <xs:attribute name="maxtags" type="xs:integer" use="optional"/>
             <xs:attribute name="transformations" type="xs:string" use="optional"/>
+            <xs:attribute name="widgetMode" type="xs:string" use="optional" />
           </xs:complexType>
         </xs:element>
       </xs:sequence>
