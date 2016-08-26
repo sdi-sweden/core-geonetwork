@@ -2965,6 +2965,11 @@ Detta undvikar vi att ange.</description>
     <element name="gmd:verticalCRS">
         <label>Vertikalt datum</label>
         <description>Information om basnivån som vertikala värden utgår från, exempelvis havsytan eller geoiden</description>
+      <helper>
+        <option value="Rikets höjdsystem RH2000">Rikets höjdsystem RH2000</option>
+        <option value="Rikets höjdsystem RH70">Rikets höjdsystem RH70</option>
+        <option value="Rikets höjdsystem RH00">Rikets höjdsystem RH00</option>
+      </helper>
     </element>
     <element name="gmx:FileName">
         <label>File name</label>
