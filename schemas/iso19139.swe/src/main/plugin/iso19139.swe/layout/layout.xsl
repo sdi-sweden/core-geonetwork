@@ -73,6 +73,37 @@
 
   </xsl:template>
 
+  <!-- Language - Use restricted values defined as codelist in labels.xml -->
+  <xsl:template mode="mode-iso19139" priority="2005" match="gmd:language">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+    <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+    <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+    <xsl:variable name="elementName" select="name()"/>
+
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+    <xsl:variable name="codelist" select="$labelConfig/codelist"/>
+
+
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label"
+                      select="$labelConfig/label"/>
+      <xsl:with-param name="value" select="*/@codeListValue"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <xsl:with-param name="xpath" select="$xpath"/>
+      <xsl:with-param name="type" select="gn-fn-iso19139:getCodeListType(name())"/>
+      <xsl:with-param name="name"
+                      select="if ($isEditing) then concat(*/gn:element/@ref, '_codeListValue') else ''"/>
+      <xsl:with-param name="editInfo" select="*/gn:element"/>
+      <xsl:with-param name="parentEditInfo" select="gn:element"/>
+      <xsl:with-param name="listOfValues"
+                      select="$codelist"/>
+      <xsl:with-param name="isFirst" select="count(preceding-sibling::*[name() = $elementName]) = 0"/>
+    </xsl:call-template>
+  </xsl:template>
+
+
   <!-- Reference system -->
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:referenceSystemInfo[1]/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier" priority="1000">
     <xsl:param name="schema" select="$schema" required="no"/>
@@ -592,5 +623,104 @@
   </xsl:template>
 
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat[position() &gt; 1]" priority="1000" />
+
+  <!-- Thumbnails -->
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:graphicOverview[1]" priority="1000">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+    <xsl:variable name="labelConfig"
+                  select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
+
+
+    <xsl:variable name="formatXmlSnippet">
+      <![CDATA[
+          <gmd:graphicOverview>
+              <gmd:MD_BrowseGraphic>
+                 <gmd:fileName>
+                    <gco:CharacterString>{{editRow.fname}}</gco:CharacterString>
+                 </gmd:fileName>
+                 <gmd:fileDescription>
+                    <gco:CharacterString>{{editRow.fdescription}}</gco:CharacterString>
+                 </gmd:fileDescription>
+              </gmd:MD_BrowseGraphic>
+          </gmd:graphicOverview>
+    ]]>
+    </xsl:variable>
+
+    <xsl:variable name="formatTableModel">
+      [
+      {
+      name: 'fname',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:fileName', $labels, name(gmd:MD_BrowseGraphic), '', '')/label" />',
+      codelist: false,
+      },
+      {
+      name: 'fdescription',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:fileDescription', $labels, name(gmd:MD_BrowseGraphic), '', '')/label" />',
+      codelist: false
+      }
+      ]
+    </xsl:variable>
+
+
+    <xsl:variable name="formatModel">
+      [
+      <xsl:for-each select="../gmd:graphicOverview">
+        {
+        'ref': '<xsl:value-of select="gn:element/@ref" />',
+        'refChildren': {
+        'fname': '<xsl:value-of select="gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString/gn:element/@ref" />',
+        'fdescription': '<xsl:value-of select="gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString/gn:element/@ref" />',
+        },
+        'fname': '<xsl:value-of select="normalize-space(gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString )" />',
+        'fdescription': '<xsl:value-of select="normalize-space(gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString)" />'
+        }
+        <xsl:if test="position() != last()">,</xsl:if>
+      </xsl:for-each>
+      ]
+    </xsl:variable>
+
+    <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
+         data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#thumbnail-popup', '{$labelConfig/label}')" >
+
+      <div data-swe-editor-table-directive="" />
+
+      <!-- Dialog to edit the ref. system -->
+      <div data-gn-modal=""
+           data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
+           id="thumbnail-popup" class="gn-modal-lg">
+
+        <div data-swe-date-dialog="">
+          <div>
+            <label class="col-sm-2 control-label">
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:fileName', $labels, name(gmd:MD_BrowseGraphic), '', '')/label" />
+            </label>
+            <input type="text" class="form-control" data-ng-model="editRow.fname" />
+          </div>
+
+          <div>
+            <label class="col-sm-2 control-label">
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:fileDescription', $labels, name(gmd:MD_BrowseGraphic), '', '')/label" />
+            </label>
+
+            <textarea class="form-control" data-ng-model="editRow.fdescription"></textarea>
+          </div>
+
+          <div class="">
+            <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
+              Save
+            </button>&#160;
+            <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
+              Cancel
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </xsl:template>
+
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:graphicOverview[position() &gt; 1]" priority="1000" />
 
 </xsl:stylesheet>
