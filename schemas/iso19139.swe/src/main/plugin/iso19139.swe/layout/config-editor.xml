@@ -746,16 +746,55 @@
         </section>
 
         <section name="metadataMaintenance2">
-          <field name="maintenanceAndUpdateFrequency"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency"
-                 or="maintenanceAndUpdateFrequency"
-                 in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/*" />
 
-          <field
-            name="maintenanceNote"
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote"
-            or="maintenanceNote"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/*" />
+          <field name="resourceMaintanceSection" templateModeOnly="true"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceMaintenance"
+                 del=".">
+            <template>
+              <values>
+                <key label="maintenance_note"
+                     xpath="gmd:MD_MaintenanceInformation/gmd:maintenanceNote/gco:CharacterString"
+                     tooltip="gmd:maintenanceNote"/>
+
+                <key label="maintenance_frequency"
+                     xpath="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codelistValue"
+                     tooltip="gmd:maintenanceAndUpdateFrequency">
+                  <codelist name="gmd:MD_MaintenanceFrequencyCode"/>
+                </key>
+              </values>
+              <snippet>
+                <gmd:resourceMaintenance>
+                  <gmd:MD_MaintenanceInformation>
+                    <gmd:maintenanceAndUpdateFrequency>
+                      <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodeLists.xml#MD_MaintenanceFrequencyCode" codeListValue="{{maintenance_frequency}}"/>
+                    </gmd:maintenanceAndUpdateFrequency>
+                    <gmd:maintenanceNote>
+                      <gco:CharacterString>{{maintenance_note}}</gco:CharacterString>
+                    </gmd:maintenanceNote>
+                  </gmd:MD_MaintenanceInformation>
+                </gmd:resourceMaintenance>
+              </snippet>
+            </template>
+          </field>
+
+          <action type="add" name="resourceMaintanceSection" or="resourceMaintenance"
+                  forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+            <template>
+              <snippet>
+                <gmd:resourceMaintenance>
+                  <gmd:MD_MaintenanceInformation>
+                    <gmd:maintenanceAndUpdateFrequency>
+                      <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodeLists.xml#MD_MaintenanceFrequencyCode" codeListValue=""/>
+                    </gmd:maintenanceAndUpdateFrequency>
+                    <gmd:maintenanceNote>
+                      <gco:CharacterString></gco:CharacterString>
+                    </gmd:maintenanceNote>
+                  </gmd:MD_MaintenanceInformation>
+                </gmd:resourceMaintenance>
+              </snippet>
+            </template>
+          </action>
 
         </section>
 

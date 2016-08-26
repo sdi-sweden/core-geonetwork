@@ -126,4 +126,8 @@
   <vertical_crs_minimum_value>Lägsta höjd</vertical_crs_minimum_value>
   <vertical_crs_maximum_value>Högsta höjd</vertical_crs_maximum_value>
   <vertical_crs_datum>Vertikalt Datum</vertical_crs_datum>
+
+  <resourceMaintanceSection>Ajourhållning</resourceMaintanceSection>
+  <maintenance_frequency>Underhållsfrekvens</maintenance_frequency>
+  <maintenance_note>Anmärkning</maintenance_note>
 </strings>
