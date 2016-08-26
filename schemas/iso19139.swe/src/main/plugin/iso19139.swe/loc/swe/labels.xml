@@ -15,32 +15,82 @@
 		<description>Namn för geografiskt referenssystem, oftast SWEREF 99 TM</description>
 		<condition>mandatory</condition>
 		<helper>
-			<option value="EPSG:3006">SWEREF 99 TM (EPSG:3006)</option>
-			<option value="EPSG:3021">RT 90 2,5 gon V 0:-15 (EPSG:3021)</option>
-			<option value="ETRS89 Lamberts azimutala ytriktiga projektion (ETRS89 Lamberts azimutala ytriktiga projektion)">ETRS89 Lamberts azimutala ytriktiga projektion (ETRS89 Lamberts azimutala ytriktiga projektion)</option>
-			<option value="ETRS89 Lamberts koniska konforma projektion (ETRS89 Lamberts koniska konforma projektion)">ETRS89 Lamberts koniska konforma projektion (ETRS89 Lamberts koniska konforma projektion)</option>
-			<option value="ETRS89 Traversala Mercatorprojection (ETRS89 Traversala Mercatorprojection)">ETRS89 Traversala Mercatorprojection (ETRS89 Traversala Mercatorprojection)</option>
-			<option value="---">-</option>
-			<option value="---">###Vertikala referenssystem###</option>
-			<option value="RH00">Rikets höjdsystem RH00</option>
-			<option value="RH70">Rikets höjdsystem RH70</option>
-			<option value="RH2000">Rikets höjdsystem RH2000</option>
-			<option value="---">-</option>
-			<option value="---">###Övriga SWEREFsystem###</option>
-			<option value="EPSG:3007">SWEREF 99 12 00 (EPSG:3007)</option>
-			<option value="EPSG:3008">SWEREF 99 13 30 (EPSG:3008)</option>
-			<option value="EPSG:3012">SWEREF 99 14 15 (EPSG:3012)</option>
-			<option value="EPSG:3009">SWEREF 99 15 00 (EPSG:3009)</option>
-			<option value="EPSG:3010">SWEREF 99 16 30 (EPSG:3010)</option>
-			<option value="EPSG:3014">SWEREF 99 17 15 (EPSG:3014)</option>
-			<option value="EPSG:3011">SWEREF 99 18 00 (EPSG:3011)</option>
-			<option value="EPSG:3015">SWEREF 99 18 45 (EPSG:3015)</option>
-			<option value="EPSG:3016">SWEREF 99 20 15 (EPSG:3016)</option>
-			<option value="EPSG:3017">SWEREF 99 21 45 (EPSG:3017)</option>
-			<option value="EPSG:3018">SWEREF 99 23 15 (EPSG:3018)</option>
-			<option value="SWEREF 99 lat long (SWEREF 99 lat long)">SWEREF 99 lat long (SWEREF 99 lat long)</option>
-			<option value="SWEREF 99 cart (SWEREF 99 cart)">SWEREF 99 cart (SWEREF 99 cart)</option>
-			<option value="SWEREF (SWEREF)">SWEREF (SWEREF)</option>
+      <option value="EPSG:3006(SWEREF 99 TM)">EPSG:3006(SWEREF 99 TM)</option>
+      <option value="EPSG:3021(RT 90 2,5 gon V 0:-15)">EPSG:3021(RT 90 2,5 gon V 0:-15)</option>
+      <option value="EPSG:3007 (SWEREF 99 12 00)">EPSG:3007 (SWEREF 99 12 00)</option>
+      <option value="EPSG:3008 (SWEREF 99 13 30)">EPSG:3008 (SWEREF 99 13 30)</option>
+      <option value="EPSG:3012 (SWEREF 99 14 15)">EPSG:3012 (SWEREF 99 14 15)</option>
+      <option value="EPSG:3009 (SWEREF 99 15 00)">EPSG:3009 (SWEREF 99 15 00)</option>
+      <option value="EPSG:3010 (SWEREF 99 16 30)">EPSG:3010 (SWEREF 99 16 30)</option>
+      <option value="EPSG:3014 (SWEREF 99 17 15)">EPSG:3014 (SWEREF 99 17 15)</option>
+      <option value="EPSG:3011 (SWEREF 99 18 00)">EPSG:3011 (SWEREF 99 18 00)</option>
+      <option value="EPSG:3015 (SWEREF 99 18 45)">EPSG:3015 (SWEREF 99 18 45)</option>
+      <option value="EPSG:3016 (SWEREF 99 20 15)">EPSG:3016 (SWEREF 99 20 15)</option>
+      <option value="EPSG:3017 (SWEREF 99 21 45)">EPSG:3017 (SWEREF 99 21 45)</option>
+      <option value="EPSG:3018 (SWEREF 99 23 15)">EPSG:3018 (SWEREF 99 23 15)</option>
+      <option value="EPSG:3013 (SWEREF 99 15 45)">EPSG:3013 (SWEREF 99 15 45)</option>
+      <option value="EPSG:4326 (WGS84)">EPSG:4326 (WGS84)</option>
+      <option value="EPSG:4258 (ETRS89)">EPSG:4258 (ETRS89)</option>
+      <option value="EPSG:4619 (SWEREF99)">EPSG:4619 (SWEREF99)</option>
+      <option value="EPSG:3035 (ETRS89/LAEA Europé)">EPSG:3035 (ETRS89/LAEA Europé)</option>
+      <option value="EPSG:3034 (ETRS89/LCC Europé)">EPSG:3034 (ETRS89/LCC Europé)</option>
+      <option value="EPSG:3857 (Psuedo-Mercator)">EPSG:3857 (Psuedo-Mercator)</option>
+      <option value="3D Cartesian in ETRS89 (ETRS89-XYZ)">3D Cartesian in ETRS89 (ETRS89-XYZ)</option>
+      <option value="3D geodetic in ETRS89 on GRS80(ETRS89-GRS80h)">3D geodetic in ETRS89 on GRS80(ETRS89-GRS80h)</option>
+      <option value="2D geodetic in ETRS89 on GRS80(ETRS89-GRS80)">2D geodetic in ETRS89 on GRS80(ETRS89-GRS80)</option>
+      <option value="2D LAEA projection in ETRS89 on GRS80(ETRS89-LAEA)">2D LAEA projection in ETRS89 on GRS80(ETRS89-LAEA)</option>
+      <option value="2D LCC projection in ETRS89 on GRS80(ETRS89-LCC)">2D LCC projection in ETRS89 on GRS80(ETRS89-LCC)</option>
+      <option value="2D TM projection in ETRS89 on GRS80, zone 26N (30°W to 24°W) (ETRS89-TM26N)">2D TM projection in ETRS89 on GRS80, zone 26N (30°W to 24°W) (ETRS89-TM26N)</option>
+      <option value="2D TM projection in ETRS89 on GRS80, zone 27N (24°W to 18°W) (ETRS89-TM27N)">2D TM projection in ETRS89 on GRS80, zone 27N (24°W to 18°W) (ETRS89-TM27N)</option>
+      <option value="2D TM projection in ETRS89 on GRS80, zone 28N (18°W to 12°W) (ETRS89-TM28N)">2D TM projection in ETRS89 on GRS80, zone 28N (18°W to 12°W) (ETRS89-TM28N)</option>
+      <option value="2D TM projection in ETRS89 on GRS80, zone 29N (12°W to 6°W) (ETRS89-TM29N)">2D TM projection in ETRS89 on GRS80, zone 29N (12°W to 6°W) (ETRS89-TM29N)</option>
+      <option value="2D TM projection in ETRS89 on GRS80, zone 30N (6°W to 0°) (ETRS89-TM30N)">2D TM projection in ETRS89 on GRS80, zone 30N (6°W to 0°) (ETRS89-TM30N)</option>
+      <option value="2D TM projection in ETRS89 on GRS80, zone 31N (0° to 6°E) (ETRS89-TM31N)">2D TM projection in ETRS89 on GRS80, zone 31N (0° to 6°E) (ETRS89-TM31N)</option>
+      <option value="2D TM projection in ETRS89 on GRS80, zone 32N (6°E to 12°E) (ETRS89-TM32N)">2D TM projection in ETRS89 on GRS80, zone 32N (6°E to 12°E) (ETRS89-TM32N)</option>
+      <option value="2D TM projection in ETRS89 on GRS80, zone 33N (12°E to 18°E) (ETRS89-TM33N)">2D TM projection in ETRS89 on GRS80, zone 33N (12°E to 18°E) (ETRS89-TM33N)</option>
+      <option value="EPSG:32632 (WGS84/UTM 32N)">EPSG:32632 (WGS84/UTM 32N)</option>
+      <option value="EPSG:25832 (ETRS89/UTM 32N)">EPSG:25832 (ETRS89/UTM 32N)</option>
+      <option value="EPSG:3045 (ETRS89/TM33)">EPSG:3045 (ETRS89/TM33)</option>
+      <option value="EPSG:25833 (ETRS89/UTM 33N)">EPSG:25833 (ETRS89/UTM 33N)</option>
+      <option value="EPSG:32633 (WGS84/UTM 33N)">EPSG:32633 (WGS84/UTM 33N)</option>
+      <option value="EPSG:3046 2D TM projection in ETRS89 on GRS80, zone 34N (18°E to 24°E) (ETRS89-TM34N)">EPSG:3046 2D TM projection in ETRS89 on GRS80, zone 34N (18°E to 24°E) (ETRS89-TM34N)</option>
+      <option value="EPSG:32634 (WGS84/UTM 34N)">EPSG:32634 (WGS84/UTM 34N)</option>
+      <option value="EPSG:25834 (ETRS89/UTM 34N)">EPSG:25834 (ETRS89/UTM 34N)</option>
+      <option value="EPSG:3047 2D TM projection in ETRS89 on GRS80, zone 35N (24°E to 30°E) (ETRS89-TM35N)">EPSG:3047 2D TM projection in ETRS89 on GRS80, zone 35N (24°E to 30°E) (ETRS89-TM35N)</option>
+      <option value="EPSG:32635 (WGS84/UTM 35N)">EPSG:32635 (WGS84/UTM 35N)</option>
+      <option value="EPSG:25835 (ETRS89/UTM 35N)">EPSG:25835 (ETRS89/UTM 35N)</option>
+      <option value="EPSG:3048 2D TM projection in ETRS89 on GRS80, zone 36N (30°E to 36°E) (ETRS89-TM36N)">EPSG:3048 2D TM projection in ETRS89 on GRS80, zone 36N (30°E to 36°E) (ETRS89-TM36N)</option>
+      <option value="EPSG:3049 2D TM projection in ETRS89 on GRS80, zone 37N (36°E to 42°E) (ETRS89-TM37N)">EPSG:3049 2D TM projection in ETRS89 on GRS80, zone 37N (36°E to 42°E) (ETRS89-TM37N)</option>
+      <option value="EPSG:3050 2D TM projection in ETRS89 on GRS80, zone 38N (42°E to 48°E) ETRS89-TM38N">EPSG:3050 2D TM projection in ETRS89 on GRS80, zone 38N (42°E to 48°E) ETRS89-TM38N</option>
+      <option value="EPSG:3051 2D TM projection in ETRS89 on GRS80, zone 39N (48°E to 54°E) ETRS89-TM39N">EPSG:3051 2D TM projection in ETRS89 on GRS80, zone 39N (48°E to 54°E) ETRS89-TM39N</option>
+      <option value="EPSG:5730 Height in EVRS (EVRS)">EPSG:5730 Height in EVRS (EVRS)</option>
+      <option value="EPSG:7409 3D compound: 2D geodetic in ETRS89 on GRS80,and EVRS height (ETRS89-GRS80-EVRS)">EPSG:7409 3D compound: 2D geodetic in ETRS89 on GRS80,and EVRS height (ETRS89-GRS80-EVRS)</option>
+      <option value="Utgår EPSG:3007 (SWEREF 99 12 00)">Utgår EPSG:3007 (SWEREF 99 12 00)</option>
+      <option value="Utgår EPSG:3008 (SWEREF 99 13 30)">Utgår EPSG:3008 (SWEREF 99 13 30)</option>
+      <option value="Utgår EPSG:3012 (SWEREF 99 14 15)">Utgår EPSG:3012 (SWEREF 99 14 15)</option>
+      <option value="Utgår EPSG:3009 (SWEREF 99 15 00)">Utgår EPSG:3009 (SWEREF 99 15 00)</option>
+      <option value="Utgår EPSG:3010 (SWEREF 99 16 30)">Utgår EPSG:3010 (SWEREF 99 16 30)</option>
+      <option value="Utgår EPSG:3014 (SWEREF 99 17 15)">Utgår EPSG:3014 (SWEREF 99 17 15)</option>
+      <option value="Utgår EPSG:3011 (SWEREF 99 18 00)">Utgår EPSG:3011 (SWEREF 99 18 00)</option>
+      <option value="Utgår EPSG:3015 (SWEREF 99 18 45)">Utgår EPSG:3015 (SWEREF 99 18 45)</option>
+      <option value="Utgår EPSG:3016 (SWEREF 99 20 15)">Utgår EPSG:3016 (SWEREF 99 20 15)</option>
+      <option value="Utgår EPSG:3017 (SWEREF 99 21 45)">Utgår EPSG:3017 (SWEREF 99 21 45)</option>
+      <option value="Utgår EPSG:3018 (SWEREF 99 23 15)">Utgår EPSG:3018 (SWEREF 99 23 15)</option>
+      <option value="Utgår EPSG:3013 (SWEREF 99 15 45)">Utgår EPSG:3013 (SWEREF 99 15 45)</option>
+      <option value="Utgår EPSG:4326 (WGS84)">Utgår EPSG:4326 (WGS84)</option>
+      <option value="Utgår EPSG:4258 (ETRS89)">Utgår EPSG:4258 (ETRS89)</option>
+      <option value="Utgår EPSG:4619 (SWEREF99)">Utgår EPSG:4619 (SWEREF99)</option>
+      <option value="Utgår EPSG:3035 (ETRS89/LAEA Europé)">Utgår EPSG:3035 (ETRS89/LAEA Europé)</option>
+      <option value="Utgår EPSG:3034 (ETRS89/LCC Europé)">Utgår EPSG:3034 (ETRS89/LCC Europé)</option>
+      <option value="Utgår EPSG:3857 (Psuedo-Mercator)">Utgår EPSG:3857 (Psuedo-Mercator)</option>
+      <option value="Utgår EPSG:3006(SWEREF 99 TM)">Utgår EPSG:3006(SWEREF 99 TM)</option>
+      <option value="Utgår EPSG:3021(RT 90 2,5 gon V 0:-15)">Utgår EPSG:3021(RT 90 2,5 gon V 0:-15)</option>
+      <option value="Utgår ETRS89 Lamberts azimutala ytriktiga projekktion">Utgår ETRS89 Lamberts azimutala ytriktiga projekktion</option>
+      <option value="Utgår ETRS89 Lamberts koniska konforma projekktion">Utgår ETRS89 Lamberts koniska konforma projekktion</option>
+      <option value="Utgår ETRS89 Traversala Mercatorprojection">Utgår ETRS89 Traversala Mercatorprojection</option>
+      <option value="Utgår ? SWEREF 99 lat long">Utgår ? SWEREF 99 lat long</option>
+      <option value="Utgår ? SWEREF 99 cart">Utgår ? SWEREF 99 cart</option>
+      <option value="Utgår ? SWEREF">Utgår ? SWEREF</option>
 		</helper>
 	</element>
 	<element name="code">
@@ -1544,21 +1594,37 @@ Ex. SS-EN ISO 19115.</description>
         <description>Beteckning på formatet</description>
         <help>name of the data transfer format(s)</help>
         <condition>mandatory</condition>
-		<helper rel="gmd:version">
-			<option value="Text">Text</option>
-			<option title="1.0" value="ESRI Shapefile">ESRI Shapefile</option>
-			<option value="KML">KML</option>
-			<option title="3.2.1" value="GML">GML</option>
-			<option title="1.0" value="GeoTIFF">GeoTIFF</option>
-			<option value="TIFF">TIFF</option>
-			<option value="ECW">ECW</option>
-			<option value="JPEG2000">JPEG2000</option>
-			<option value="ZIP">ZIP</option>
-			<option value="PDF">PDF</option>
-			<option value="PNG">PNG</option>
-			<option value="JPEG">JPEG</option>
-			<option value="OGC:WMC">OGC:WMC</option>
-			<option value="OGC:OWS Context">OGC:OWS Context</option>
+		<helper>
+      <option value="ASCII-grid (ESRI)">ASCII-grid (ESRI)</option>
+      <option value="ASCII-tabell">ASCII-tabell</option>
+      <option value="Atom-feed">Atom-feed</option>
+      <option value="DGN">DGN</option>
+      <option value="DXF">DXF</option>
+      <option value="ESRI Shape">ESRI Shape</option>
+      <option value="ESRI ArcSDE">ESRI ArcSDE</option>
+      <option value="ESRI Personlig Geodatabas">ESRI Personlig Geodatabas</option>
+      <option value="GEOTIFF">GEOTIFF</option>
+      <option value="GEOTIFF - LZW">GEOTIFF - LZW</option>
+      <option value="GEOTIFF - packbits">GEOTIFF - packbits</option>
+      <option value="GML">GML</option>
+      <option value="GML 2.0">GML 2.0</option>
+      <option value="GML 3.1">GML 3.1</option>
+      <option value="JPEG">JPEG</option>
+      <option value="KML">KML</option>
+      <option value="LAS">LAS</option>
+      <option value="Match-AT">Match-AT</option>
+      <option value="MS Access">MS Access</option>
+      <option value="MapInfo MIF">MapInfo MIF</option>
+      <option value="MapInfo Tab">MapInfo Tab</option>
+      <option value="ORACLE Spatial">ORACLE Spatial</option>
+      <option value="ORACLE">ORACLE</option>
+      <option value="RIK3">RIK3</option>
+      <option value="SQL Server">SQL Server</option>
+      <option value="TIFF">TIFF</option>
+      <option value="TIFF - LZW">TIFF - LZW</option>
+      <option value="TIFF - packbits">TIFF - packbits</option>
+      <option value="Svensk standard SS637006, XML-format">Svensk standard SS637006, XML-format</option>
+      <option value="Svensk standard SS637007, XML-format">Svensk standard SS637007, XML-format</option>
 		</helper>
     </element>
 	<element context="gmd:MD_ExtendedElementInformation" id="307.0" name="gmd:name">

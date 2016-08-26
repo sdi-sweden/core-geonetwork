@@ -812,7 +812,7 @@
             or="equivalentScale"
             in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/*" />
 
-          <action type="add" name="spatialResolution" or="spatialResolution" btnLabel="equivalentScale"
+          <!--<action type="add" name="spatialResolution" or="spatialResolution" btnLabel="equivalentScale"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
                   if="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale) = 0">
             <template>
@@ -830,7 +830,7 @@
                 </gmd:spatialResolution>
               </snippet>
             </template>
-          </action>
+          </action>-->
 
           <field
             name="distance"
@@ -838,7 +838,7 @@
             or="distance"
             in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/*" />
 
-          <action type="add" name="spatialResolution" or="spatialResolution" btnLabel="spatialDistance"
+          <!--<action type="add" name="spatialResolution" or="spatialResolution" btnLabel="spatialDistance"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
                   if="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance) = 0">
             <template>
@@ -852,10 +852,8 @@
                 </gmd:spatialResolution>
               </snippet>
             </template>
-          </action>
+          </action>-->
 
-          <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance" />
 
           <!-- Resource language -->
           <field
@@ -1085,40 +1083,12 @@
                  xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact" />
 
           <field name="distributionFormat"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat">
+                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat">
           </field>
 
-
-          <field name="url" templateModeOnly="true" notDisplayedIfMissing="true"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions
-            /gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage"
-                 del="../..">
-            <template>
-              <values>
-                <key label="url" xpath="gmd:URL" tooltip="gmd:linkage"/>
-              </values>
-              <snippet>
-                <gmd:linkage>
-                  <gmd:URL>{{url}}</gmd:URL>
-                </gmd:linkage>
-              </snippet>
-            </template>
+          <field name="distributionFormat"
+                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine">
           </field>
-
-          <action type="add" name="url" or="onLine"
-                  in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions">
-            <template>
-              <snippet>
-                <gmd:onLine>
-                  <gmd:CI_OnlineResource>
-                    <gmd:linkage>
-                      <gmd:URL/>
-                    </gmd:linkage>
-                  </gmd:CI_OnlineResource>
-                </gmd:onLine>
-              </snippet>
-            </template>
-          </action>
         </section>
       </tab>
 

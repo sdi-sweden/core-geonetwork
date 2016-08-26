@@ -73,6 +73,27 @@
 
   </xsl:template>
 
+  <!-- Readonly elements -->
+  <xsl:template mode="mode-iso19139" priority="2005" match="gmd:metadataStandardName">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label" select="gn-fn-metadata:getLabel($schema, name(), $labels)/label"/>
+      <xsl:with-param name="value" select="gco:CharacterString"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+      <xsl:with-param name="type" select="''"/>
+      <xsl:with-param name="name" select="''"/>
+      <xsl:with-param name="editInfo" select="*/gn:element"/>
+      <xsl:with-param name="parentEditInfo" select="gn:element"/>
+      <xsl:with-param name="isDisabled" select="true()"/>
+      <xsl:with-param name="listOfValues" select="''" />
+    </xsl:call-template>
+
+  </xsl:template>
+
+
   <!-- Language - Use restricted values defined as codelist in labels.xml -->
   <xsl:template mode="mode-iso19139" priority="2005" match="gmd:language">
     <xsl:param name="schema" select="$schema" required="no"/>
@@ -182,14 +203,25 @@
         <div data-swe-date-dialog="">
           <div>
             <label class="col-sm-2 control-label">
-              Code
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:code', $labels, name(gmd:RS_Identifier), '', $codexpath)/label" />
             </label>
-            <input type="text" class="form-control" data-ng-model="editRow.code" />
+
+            <xsl:variable name="helper"
+                          select="gn-fn-metadata:getHelper($schema, 'gmd:code', '/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code', '')"/>
+
+            <select class="" data-ng-model="editRow.code">
+              <xsl:for-each select="$helper/option">
+                <xsl:sort select="."/>
+                <option value="{@value}" title="{normalize-space(.)}">
+                  <xsl:value-of select="."/>
+                </option>
+              </xsl:for-each>
+            </select>
           </div>
 
           <div>
             <label class="col-sm-2 control-label">
-              Codespace
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:codeSpace', $labels, name(gmd:RS_Identifier), '', '')/label" />
             </label>
 
             <input type="text" class="form-control" data-ng-model="editRow.codespace" />
@@ -524,8 +556,8 @@
                                             gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact[position() &gt; 1]|
                                             gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact[position() &gt; 1]" priority="3000" />
 
-  <!-- Distribution format -->
-  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat[1]" priority="1000">
+  <!-- Distributor format -->
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat[1]" priority="1000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
@@ -535,7 +567,7 @@
 
     <xsl:variable name="formatXmlSnippet">
       <![CDATA[
-          <gmd:distributionFormat xmlns:gmd="http://www.isotc211.org/2005/gmd"
+          <gmd:distributorFormat xmlns:gmd="http://www.isotc211.org/2005/gmd"
               xmlns:gco="http://www.isotc211.org/2005/gco">
              <gmd:MD_Format>
                 <gmd:name>
@@ -545,7 +577,7 @@
                    <gco:CharacterString>{{editRow.version}}</gco:CharacterString>
                 </gmd:version>
              </gmd:MD_Format>
-          </gmd:distributionFormat>
+          </gmd:distributorFormat>
     ]]>
     </xsl:variable>
 
@@ -567,7 +599,7 @@
 
     <xsl:variable name="formatModel">
       [
-      <xsl:for-each select="../gmd:distributionFormat">
+      <xsl:for-each select="../gmd:distributorFormat">
         {
         'ref': '<xsl:value-of select="gn:element/@ref" />',
         'refChildren': {
@@ -595,14 +627,25 @@
         <div data-swe-date-dialog="">
           <div>
             <label class="col-sm-2 control-label">
-              Name
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:name', $labels, name(gmd:MD_Format), '', '')/label" />
             </label>
-            <input type="text" class="form-control" data-ng-model="editRow.fname" />
+
+            <xsl:variable name="helper"
+                          select="gn-fn-metadata:getHelper($schema, 'gmd:name', 'gmd:MD_Format', '')"/>
+
+            <select class="" data-ng-model="editRow.fname">
+              <xsl:for-each select="$helper/option">
+                <xsl:sort select="."/>
+                <option value="{@value}" title="{normalize-space(.)}">
+                  <xsl:value-of select="."/>
+                </option>
+              </xsl:for-each>
+            </select>
           </div>
 
           <div>
             <label class="col-sm-2 control-label">
-              Version
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:version', $labels, name(gmd:MD_Format), '', '')/label" />
             </label>
 
             <input type="text" class="form-control" data-ng-model="editRow.version" />
@@ -622,9 +665,9 @@
     </div>
   </xsl:template>
 
-  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat[position() &gt; 1]" priority="1000" />
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat[position() &gt; 1]" priority="1000" />
 
-  <!-- Thumbnails -->
+   <!-- Thumbnails -->
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:graphicOverview[1]" priority="1000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
@@ -633,7 +676,7 @@
                   select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
 
 
-    <xsl:variable name="formatXmlSnippet">
+    <xsl:variable name="thumbnailXmlSnippet">
       <![CDATA[
           <gmd:graphicOverview>
               <gmd:MD_BrowseGraphic>
@@ -648,7 +691,7 @@
     ]]>
     </xsl:variable>
 
-    <xsl:variable name="formatTableModel">
+    <xsl:variable name="thumbnailTableModel">
       [
       {
       name: 'fname',
@@ -664,7 +707,7 @@
     </xsl:variable>
 
 
-    <xsl:variable name="formatModel">
+    <xsl:variable name="thumbnailModel">
       [
       <xsl:for-each select="../gmd:graphicOverview">
         {
@@ -682,7 +725,7 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#thumbnail-popup', '{$labelConfig/label}')" >
+         data-ng-init="init({$thumbnailModel}, {$thumbnailTableModel}, '{$thumbnailXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#thumbnail-popup', '{$labelConfig/label}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -722,5 +765,154 @@
   </xsl:template>
 
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:graphicOverview[position() &gt; 1]" priority="1000" />
+
+  <!-- Distributor transfer options -->
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[1]" priority="1000">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+    <xsl:variable name="labelConfig"
+                  select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
+
+
+    <xsl:variable name="onlineResXmlSnippet">
+      <![CDATA[
+          <gmd:onLine xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                      xmlns:gco="http://www.isotc211.org/2005/gco">
+            <gmd:CI_OnlineResource>
+              <gmd:linkage>
+                <gmd:URL>{{editRow.url}}</gmd:URL>
+              </gmd:linkage>
+              <gmd:protocol>
+                <gco:CharacterString>{{editRow.protocol}}</gco:CharacterString>
+              </gmd:protocol>
+              <gmd:name>
+                <gco:CharacterString>{{editRow.name}}</gco:CharacterString>
+              </gmd:name>
+              <gmd:description>
+                <gco:CharacterString>{{editRow.description}}</gco:CharacterString>
+              </gmd:description>
+            </gmd:CI_OnlineResource>
+          </gmd:onLine>
+    ]]>
+    </xsl:variable>
+
+    <xsl:variable name="onlineResTableModel">
+      [
+      {
+      name: 'url',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:linkage', $labels, name(gmd:CI_OnlineResource), '', '')/label" />',
+      codelist: false,
+      },
+      {
+      name: 'protocol',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:protocol', $labels, name(gmd:CI_OnlineResource), '', '')/label" />',
+      codelist: false,
+      },
+      {
+      name: 'fname',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:name', $labels, name(gmd:CI_OnlineResource), '', '')/label" />',
+      codelist: false,
+      },
+      {
+      name: 'description',
+      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:description', $labels, name(gmd:CI_OnlineResource), '', '')/label" />',
+      codelist: false
+      }
+      ]
+    </xsl:variable>
+
+
+    <xsl:variable name="onlineResModel">
+      [
+      <xsl:for-each select="../gmd:onLine">
+        {
+        'ref': '<xsl:value-of select="gn:element/@ref" />',
+        'refChildren': {
+        'url': '<xsl:value-of select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL/gn:element/@ref" />',
+        'protocol': '<xsl:value-of select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString/gn:element/@ref" />',
+        'fname': '<xsl:value-of select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString/gn:element/@ref" />',
+        'description': '<xsl:value-of select="gmd:CI_OnlineResource/gmd:description/gco:CharacterString/gn:element/@ref" />',
+        },
+        'url': '<xsl:value-of select="normalize-space(gmd:CI_OnlineResource/gmd:linkage/gmd:URL)" />',
+        'protocol': '<xsl:value-of select="normalize-space(gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString)" />',
+        'fname': '<xsl:value-of select="normalize-space(gmd:CI_OnlineResource/gmd:name/gco:CharacterString)" />',
+        'description': '<xsl:value-of select="normalize-space(gmd:CI_OnlineResource/gmd:description/gco:CharacterString)" />'
+        }
+        <xsl:if test="position() != last()">,</xsl:if>
+      </xsl:for-each>
+      ]
+    </xsl:variable>
+
+    <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
+         data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup', '{$labelConfig/label}')" >
+
+      <div data-swe-editor-table-directive="" />
+
+      <!-- Dialog to edit the ref. system -->
+      <div data-gn-modal=""
+           data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
+           id="onlineres-popup" class="gn-modal-lg">
+
+        <div data-swe-date-dialog="">
+
+
+          <div>
+            <label class="col-sm-2 control-label">
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:linkage', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
+            </label>
+
+            <input type="text" class="form-control" data-ng-model="editRow.url" />
+          </div>
+
+          <div>
+            <label class="col-sm-2 control-label">
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:protocol', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
+            </label>
+
+            <xsl:variable name="helper"
+                          select="gn-fn-metadata:getHelper($schema, 'gmd:protocol', '', '')"/>
+
+            <select class="" data-ng-model="editRow.protocol">
+              <xsl:for-each select="$helper/option">
+                <xsl:sort select="."/>
+                <option value="{@value}" title="{normalize-space(.)}">
+                  <xsl:value-of select="."/>
+                </option>
+              </xsl:for-each>
+            </select>
+          </div>
+
+          <div>
+            <label class="col-sm-2 control-label">
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:name', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
+            </label>
+            <input type="text" class="form-control" data-ng-model="editRow.fname" />
+          </div>
+
+          <div>
+            <label class="col-sm-2 control-label">
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:description', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
+            </label>
+
+            <input type="text" class="form-control" data-ng-model="editRow.description" />
+          </div>
+
+          <div class="">
+            <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
+              Save
+            </button>&#160;
+            <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
+              Cancel
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </xsl:template>
+
+  <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[position() &gt; 1]" priority="1000" />
+
 
 </xsl:stylesheet>
