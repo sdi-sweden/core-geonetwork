@@ -33,6 +33,7 @@ import jeeves.server.context.ServiceContext;
 import jeeves.server.dispatchers.ServiceManager;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.domain.OperationAllowed;
+import org.fao.geonet.domain.OperationAllowedId;
 import org.fao.geonet.domain.ReservedGroup;
 import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.exceptions.ServiceNotAllowedEx;
@@ -66,8 +67,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import static org.fao.geonet.repository.specification.OperationAllowedSpecs.hasMetadataId;
 
 /**
- * Service to publish and unpublish one or more metadata.  This service only modifies guest, all and intranet privileges all others
- * are left unmodified.
+ * Service to publish and unpublish one or more metadata. This service only modifies guest, all and intranet privileges all others are left
+ * unmodified.
  *
  * @author Jesse on 1/16/2015.
  */
@@ -77,13 +78,9 @@ public class Publish {
     @VisibleForTesting
     boolean testing = false;
 
-
-    @RequestMapping(value = "/{lang}/md.publish", produces = {
-            MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @RequestMapping(value = "/{lang}/md.publish", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @ResponseBody
-    public PublishReport publish(
-            @PathVariable String lang,
-            HttpServletRequest request,
+    public PublishReport publish(@PathVariable String lang, HttpServletRequest request,
             @RequestParam(value = "ids", required = false) String commaSeparatedIds,
             @RequestParam(value = "skipIntranet", defaultValue = "false") boolean skipIntranet) throws Exception {
         ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
@@ -93,13 +90,9 @@ public class Publish {
         return exec(commaSeparatedIds, true, skipIntranet, serviceContext);
     }
 
-
-    @RequestMapping(value = "/{lang}/md.unpublish", produces = {
-            MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @RequestMapping(value = "/{lang}/md.unpublish", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @ResponseBody
-    public PublishReport unpublish(
-            @PathVariable String lang,
-            HttpServletRequest request,
+    public PublishReport unpublish(@PathVariable String lang, HttpServletRequest request,
             @RequestParam(value = "ids", required = false) String commaSeparatedIds,
             @RequestParam(value = "skipIntranet", defaultValue = "false") boolean skipIntranet) throws Exception {
         ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
@@ -116,8 +109,8 @@ public class Publish {
      * @param publish if true the metadata will be published otherwise unpublished
      * @param skipIntranet if true then metadata only the all group will be affected
      */
-    private PublishReport exec(String commaSeparatedIds, boolean publish, boolean skipIntranet, ServiceContext serviceContext) throws
-            Exception {
+    private PublishReport exec(String commaSeparatedIds, boolean publish, boolean skipIntranet, ServiceContext serviceContext)
+            throws Exception {
         ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
         DataManager dataManager = appContext.getBean(DataManager.class);
         OperationAllowedRepository operationAllowedRepository = appContext.getBean(OperationAllowedRepository.class);
@@ -144,10 +137,14 @@ public class Publish {
             }
 
             int mdId = Integer.parseInt(nextId);
-            final Specifications<OperationAllowed> allOpsSpec = Specifications.where(hasMetadataId(nextId)).and
-                    (hasGroupIdIn).and(hasOperationIdIn);
+            final Specifications<OperationAllowed> allOpsSpec = Specifications.where(hasMetadataId(nextId)).and(hasGroupIdIn)
+                    .and(hasOperationIdIn);
 
             List<OperationAllowed> operationAllowed = operationAllowedRepository.findAll(allOpsSpec);
+
+            // #1373 make published metadata viewable and downloadable to All users
+            forceAddOfViewAndDownloadToGrouplAll(operationAllowed);
+
             if (publish) {
                 doPublish(serviceContext, report, groupIds, toIndex, operationIds, mdId, allOpsSpec, operationAllowed);
             } else {
@@ -158,8 +155,51 @@ public class Publish {
         BatchOpsMetadataReindexer r = new BatchOpsMetadataReindexer(dataManager, toIndex);
         r.process(testing || toIndex.size() < 5);
 
-
         return report;
+    }
+
+    private void forceAddOfViewAndDownloadToGrouplAll(List<OperationAllowed> operationsAllowed) {
+        boolean hasGroupAll = false;
+        boolean hasView = false;
+        boolean hasDownload = false;
+        int GROUP_ALL = ReservedGroup.all.getId();
+        int VIEW = ReservedOperation.view.getId();
+        int DOWNLOAD = ReservedOperation.download.getId();
+
+        int metadataId = -1;
+        for (OperationAllowed operationAllowed : operationsAllowed) {
+            OperationAllowedId opAllowedId = operationAllowed.getId();
+            metadataId = opAllowedId.getMetadataId();
+            if (opAllowedId.getGroupId() == GROUP_ALL) {
+                hasGroupAll = true;
+            }
+            if (opAllowedId.getOperationId() == VIEW) {
+                hasView = true;
+            }
+            ;
+            if (opAllowedId.getOperationId() == 1) {
+                hasDownload = true;
+            }
+            ;
+        }
+        if (metadataId > -1) {
+            if (!hasGroupAll) {
+                createNewOperation(operationsAllowed, GROUP_ALL, VIEW, metadataId);
+                createNewOperation(operationsAllowed, GROUP_ALL, DOWNLOAD, metadataId);
+            } else {
+                if (!hasView) {
+                    createNewOperation(operationsAllowed, GROUP_ALL, VIEW, metadataId);
+                }
+                if (!hasDownload) {
+                    createNewOperation(operationsAllowed, GROUP_ALL, DOWNLOAD, metadataId);                }
+            }
+        }
+    }
+
+    private void createNewOperation(List<OperationAllowed> operationsAllowed, int group, int operation, int metadataId) {
+        OperationAllowedId newOpID = new OperationAllowedId(metadataId, group, operation);
+        OperationAllowed newOperationAllowed = new OperationAllowed(newOpID);
+        operationsAllowed.add(newOperationAllowed);
     }
 
     private Iterator<String> getIds(ConfigurableApplicationContext appContext, UserSession userSession, final String commaSeparatedIds) {
@@ -206,8 +246,8 @@ public class Publish {
     }
 
     private void doUnpublish(ServiceContext serviceContext, PublishReport report, ArrayList<Integer> groupIds, Set<Integer> toIndex,
-                             Collection<Integer> operationIds, int mdId, Specifications<OperationAllowed> allOpsSpec,
-                             List<OperationAllowed> operationAllowed) throws Exception {
+            Collection<Integer> operationIds, int mdId, Specifications<OperationAllowed> allOpsSpec,
+            List<OperationAllowed> operationAllowed) throws Exception {
 
         OperationAllowedRepository operationAllowedRepository = serviceContext.getBean(OperationAllowedRepository.class);
         final long count = operationAllowedRepository.count(allOpsSpec);
@@ -227,11 +267,11 @@ public class Publish {
     }
 
     private void doPublish(ServiceContext serviceContext, PublishReport report, ArrayList<Integer> groupIds, Set<Integer> toIndex,
-                           Collection<Integer> operationIds, int mdId, Specifications<OperationAllowed> allOpsSpec,
-                           List<OperationAllowed> operationAllowed) throws Exception {
+            Collection<Integer> operationIds, int mdId, Specifications<OperationAllowed> allOpsSpec,
+            List<OperationAllowed> operationAllowed) throws Exception {
         OperationAllowedRepository operationAllowedRepository = serviceContext.getBean(OperationAllowedRepository.class);
-        long count = operationAllowedRepository.count(Specifications.where(hasMetadataId(mdId)).and
-                (OperationAllowedSpecs.isPublic(ReservedOperation.view)));
+        long count = operationAllowedRepository
+                .count(Specifications.where(hasMetadataId(mdId)).and(OperationAllowedSpecs.isPublic(ReservedOperation.view)));
         if (count == 1) {
             report.incUnmodified();
         } else {
@@ -247,8 +287,8 @@ public class Publish {
         }
     }
 
-    private boolean updateOps(ServiceContext serviceContext, boolean publish, ArrayList<Integer> groupIds, Collection<Integer>
-            operationIds, int metadataId) throws Exception {
+    private boolean updateOps(ServiceContext serviceContext, boolean publish, ArrayList<Integer> groupIds, Collection<Integer> operationIds,
+            int metadataId) throws Exception {
         final DataManager dataManager = serviceContext.getBean(DataManager.class);
 
         for (Integer groupId : groupIds) {
@@ -268,7 +308,7 @@ public class Publish {
         return true;
     }
 
-
+    @SuppressWarnings("serial")
     @XmlRootElement(name = "publishReport")
     @XmlAccessorType(XmlAccessType.FIELD)
     public static final class PublishReport implements Serializable {
@@ -308,12 +348,8 @@ public class Publish {
 
         @Override
         public String toString() {
-            return "PublishReport{" +
-                   "published=" + published +
-                   ", unpublished=" + unpublished +
-                   ", unmodified=" + unmodified +
-                   ", disallowed=" + disallowed +
-                   '}';
+            return "PublishReport{" + "published=" + published + ", unpublished=" + unpublished + ", unmodified=" + unmodified
+                    + ", disallowed=" + disallowed + '}';
         }
     }
 }

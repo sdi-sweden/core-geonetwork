@@ -136,6 +136,7 @@ public class PublishTest extends AbstractServiceIntegrationTest {
 
         assertEquals(10, allowedRepository.count());
         int iMetadataId = Integer.parseInt(metadataId);
+        final int viewId = ReservedOperation.view.getId();
         final int downloadId = ReservedOperation.download.getId();
         final int allGroupId = ReservedGroup.all.getId();
         final int featuredId = ReservedOperation.featured.getId();
@@ -159,7 +160,8 @@ public class PublishTest extends AbstractServiceIntegrationTest {
 
         report = publishService.publish("eng", request, metadataId, false);
         assertCorrectReport(report, 0, 0, 0, 1);
-        assertEquals(3, allowedRepository.count());
+        assertEquals(4, allowedRepository.count());
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, viewId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, downloadId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, featuredId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(sampleGroupId, iMetadataId, featuredId));
@@ -204,6 +206,7 @@ public class PublishTest extends AbstractServiceIntegrationTest {
         assertPublishedInIndex(false, metadataId, false);
 
         int iMetadataId = Integer.parseInt(metadataId);
+        final int viewId = ReservedOperation.view.getId();
         final int downloadId = ReservedOperation.download.getId();
         final int allGroupId = ReservedGroup.all.getId();
         allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, allGroupId, downloadId)));
@@ -213,7 +216,8 @@ public class PublishTest extends AbstractServiceIntegrationTest {
 
         report = publishService.publish("eng", request, metadataId, false);
         assertCorrectReport(report, 0, 0, 0, 1);
-        assertEquals(3, allowedRepository.count());
+        assertEquals(4, allowedRepository.count());
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, viewId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, downloadId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, featuredId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(sampleGroupId, iMetadataId, featuredId));
@@ -247,6 +251,7 @@ public class PublishTest extends AbstractServiceIntegrationTest {
         assertPublishedInIndex(false, metadataId, true);
 
         int iMetadataId = Integer.parseInt(metadataId);
+        final int viewId = ReservedOperation.view.getId();
         final int downloadId = ReservedOperation.download.getId();
         final int allGroupId = ReservedGroup.all.getId();
         allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, allGroupId, downloadId)));
@@ -256,7 +261,8 @@ public class PublishTest extends AbstractServiceIntegrationTest {
 
         report = publishService.publish("eng", request, metadataId, false);
         assertCorrectReport(report, 0, 0, 0, 1);
-        assertEquals(3, allowedRepository.count());
+        assertEquals(4, allowedRepository.count());
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, viewId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, downloadId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, featuredId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(sampleGroupId, iMetadataId, featuredId));
@@ -291,6 +297,7 @@ public class PublishTest extends AbstractServiceIntegrationTest {
         assertPublishedInIndex(false, metadataId, false);
 
         int iMetadataId = Integer.parseInt(metadataId);
+        final int viewId = ReservedOperation.view.getId();
         final int downloadId = ReservedOperation.download.getId();
         final int allGroupId = ReservedGroup.all.getId();
         allowedRepository.save(new OperationAllowed(new OperationAllowedId(iMetadataId, allGroupId, downloadId)));
@@ -300,7 +307,8 @@ public class PublishTest extends AbstractServiceIntegrationTest {
 
         report = publishService.publish("eng", request, metadataId, false);
         assertCorrectReport(report, 0, 0, 0, 1);
-        assertEquals(3, allowedRepository.count());
+        assertEquals(4, allowedRepository.count());
+        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, viewId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, downloadId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, featuredId));
         assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(sampleGroupId, iMetadataId, featuredId));
