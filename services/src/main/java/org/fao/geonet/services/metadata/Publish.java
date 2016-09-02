@@ -141,11 +141,11 @@ public class Publish {
                     .and(hasOperationIdIn);
 
             List<OperationAllowed> operationAllowed = operationAllowedRepository.findAll(allOpsSpec);
-
-            // #1373 make published metadata viewable and downloadable to All users
-            forceAddOfViewAndDownloadToGrouplAll(operationAllowed);
-
             if (publish) {
+
+                // #1373 make published metadata viewable and downloadable to All users
+                forceAddOfViewAndDownloadToGrouplAll(mdId, operationAllowed);
+
                 doPublish(serviceContext, report, groupIds, toIndex, operationIds, mdId, allOpsSpec, operationAllowed);
             } else {
                 doUnpublish(serviceContext, report, groupIds, toIndex, operationIds, mdId, allOpsSpec, operationAllowed);
@@ -158,7 +158,7 @@ public class Publish {
         return report;
     }
 
-    private void forceAddOfViewAndDownloadToGrouplAll(List<OperationAllowed> operationsAllowed) {
+    private void forceAddOfViewAndDownloadToGrouplAll(int metadataId, List<OperationAllowed> operationsAllowed) {
         boolean hasGroupAll = false;
         boolean hasView = false;
         boolean hasDownload = false;
@@ -166,7 +166,6 @@ public class Publish {
         int VIEW = ReservedOperation.view.getId();
         int DOWNLOAD = ReservedOperation.download.getId();
 
-        int metadataId = -1;
         for (OperationAllowed operationAllowed : operationsAllowed) {
             OperationAllowedId opAllowedId = operationAllowed.getId();
             metadataId = opAllowedId.getMetadataId();
@@ -182,16 +181,15 @@ public class Publish {
             }
             ;
         }
-        if (metadataId > -1) {
-            if (!hasGroupAll) {
+        if (!hasGroupAll) {
+            createNewOperation(operationsAllowed, GROUP_ALL, VIEW, metadataId);
+            createNewOperation(operationsAllowed, GROUP_ALL, DOWNLOAD, metadataId);
+        } else {
+            if (!hasView) {
                 createNewOperation(operationsAllowed, GROUP_ALL, VIEW, metadataId);
+            }
+            if (!hasDownload) {
                 createNewOperation(operationsAllowed, GROUP_ALL, DOWNLOAD, metadataId);
-            } else {
-                if (!hasView) {
-                    createNewOperation(operationsAllowed, GROUP_ALL, VIEW, metadataId);
-                }
-                if (!hasDownload) {
-                    createNewOperation(operationsAllowed, GROUP_ALL, DOWNLOAD, metadataId);                }
             }
         }
     }
