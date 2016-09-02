@@ -100,6 +100,11 @@ public class ShibbolethUserUtilsTest  extends AbstractCoreIntegrationTest{
         assertTrue(res);
         
         assertEquals(initialUserGroupCount+1, _userGroupRepo.count());
+        
+        spec = Specifications.where(UserGroupSpecs.hasGroupId(group.getId()));
+        
+        findAll = _userGroupRepo.findAll(spec);        
+        assertEquals(1, findAll.size());
     }
     
     /**
