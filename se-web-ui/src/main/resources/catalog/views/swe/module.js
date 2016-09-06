@@ -48,6 +48,7 @@
     '$location',
     'suggestService',
     '$http',
+    '$compile',
     '$window',
     '$translate',
     '$timeout',
@@ -62,18 +63,20 @@
     'gnOwsContextService',
     'hotkeys',
     'gnGlobalSettings',
+    'gnMdFormatter',
     function($scope, $localStorage, $location, suggestService,
-             $http, $window, $translate, $timeout,
+             $http, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings) {
+             hotkeys, gnGlobalSettings, gnMdFormatter) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
 
       $scope.viewMode = 'full';
 
+      $scope.formatter = gnSearchSettings.formatter;
       $scope.modelOptions = angular.copy(gnGlobalSettings.modelOptions);
       $scope.modelOptionsForm = angular.copy(gnGlobalSettings.modelOptions);
       $scope.gnWmsQueue = gnWmsQueue;
@@ -82,6 +85,8 @@
       $scope.resultTemplate = gnSearchSettings.resultTemplate;
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
+
+      $scope.compileScope = $scope.$new();
 
       $scope.$on('someEvent', function(event, map) {
         alert('event received. url is: ' + map.url);
@@ -346,6 +351,36 @@
         angular.element('.geodata-row-popup').addClass('show');
         $scope.$emit('body:class:add', 'show-overlay');
         gnMdView.feedMd(index, md, records);
+
+        var mdUrl = 'md.format.xml?xsl=xsl-view&view=advanced&uuid='// + md['geonet:info'].uuid;
+
+console.log(md);
+
+        gnMdFormatter.getFormatterUrl(mdUrl, $scope, md['geonet:info'].uuid).then(function(url) {
+          $http.get(url).then(
+            function(response) {
+              var snippet = response.data.replace(
+                  '<?xml version="1.0" encoding="UTF-8"?>', '');
+
+              $('#gn-metadata-display').find('*').remove();
+
+              $scope.compileScope.$destroy();
+
+              // Compile against a new scope
+              $scope.compileScope = $scope.$new();
+              var content = $compile(snippet)($scope.compileScope);
+
+console.log(content);
+
+              $('#gn-metadata-display').append(content);
+            });
+          });
+
+        // activate tabs
+        $('#tab-result-nav a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show');
+        });
       };
 
       /**
