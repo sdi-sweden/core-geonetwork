@@ -1416,10 +1416,6 @@ Detta undviker vi att ange, ange istället organisation.</description>
             <code>swe</code>
             <label>Svenska(swe)</label>
           </entry>
-          <entry>
-            <code>ger</code>
-            <label>Tyska(ger)</label>
-          </entry>
         </codelist>
     </element>
     <element context="gmd:MD_DataIdentification" id="39.0" name="gmd:language">
@@ -1455,10 +1451,6 @@ Detta undviker vi att ange, ange istället organisation.</description>
           <entry>
             <code>fiu</code>
             <label>Tornedalsfinska(fiu)</label>
-          </entry>
-          <entry>
-            <code>ger</code>
-            <label>Tyska(ger)</label>
           </entry>
         </codelist>
     </element>
