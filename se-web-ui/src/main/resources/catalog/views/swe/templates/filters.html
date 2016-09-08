@@ -30,17 +30,8 @@
           <div class="other-filters">
             <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link">Visa alla resurser</a>
             <a href="" data-ng-click="toggleAdvancedOptions()" class="fltr-link advance-link">Avancerad vy</a>
-            <div class="help-icn-cont other-filter-help-icn">
-              <div class="help-icn-circle"><span class="icon-help"></span></div>
-              <div class="tool-tip-cont">
-                <div class="tool-tip">
-                  <span class="triangle"></span>
-                  <h2>Sökning på ämnesområden</h2>
-                  <p>Markera ett eller flera ämnesområden du vill söka geodata inom.</p>
-                  <p>Kan kombineras med fritextsökning.</p>
-                </div>
-              </div>
-            </div>
+
+            <div data-swe-tooltip="" data-title="Advanced search" data-text="Advanced search ..."></div>
           </div>
         </div>
         <div class="filter-options-cont">
@@ -70,17 +61,7 @@
                       <input type="date" placeholder="åååå-mm-dd" data-ng-model="searchObj.params.resourceDateTo" data-ng-change="triggerSearch()">
                       <!--<span class="icon-calendar-empty"></span>-->
                     </div>
-                    <div class="help-icn-cont date-help-icn">
-                      <div class="help-icn-circle"><span class="icon-help"></span></div>
-                      <div class="tool-tip-cont">
-                        <div class="tool-tip">
-                          <span class="triangle"></span>
-                          <h2>Sökning på ämnesområden</h2>
-                          <p>Markera ett eller flera ämnesområden du vill söka geodata inom.</p>
-                          <p>Kan kombineras med fritextsökning.</p>
-                        </div>
-                      </div>
-                    </div>
+                    <div data-swe-tooltip="" data-title="Date filter" data-text="Date filter ..." data-link="http://google.es"></div>
                   </div>
                 </div>
                 <div class="right-side-filter">
@@ -101,17 +82,7 @@
                   </div>
                   <div class="filter-colm draw-map-link-colm">
                     <a href="" class="fltr-link draw-map-link">Rita på karta</a>
-                    <div class="help-icn-cont">
-                      <div class="help-icn-circle"><span class="icon-help"></span></div>
-                      <div class="tool-tip-cont">
-                        <div class="tool-tip">
-                          <span class="triangle"></span>
-                          <h2>Sökning på ämnesområden</h2>
-                          <p>Markera ett eller flera ämnesområden du vill söka geodata inom.</p>
-                          <p>Kan kombineras med fritextsökning.</p>
-                        </div>
-                      </div>
-                    </div>
+                    <div data-swe-tooltip="" data-title="Geographical filter" data-text="Geographical filter ..."></div>
                   </div>
                 </div>
               </div>
@@ -124,6 +95,7 @@
                    data-current-facets="currentFacets">
               </div>
 
+              <div data-swe-tooltip="" data-title="Facets filter" data-text="Facets filter ..."></div>
             </div>
           </div>
         </div>
