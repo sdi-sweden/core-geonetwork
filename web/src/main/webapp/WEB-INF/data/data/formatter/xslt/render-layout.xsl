@@ -27,7 +27,7 @@
           <!-- TODO : Add thumbnail to header -->
 
           <xsl:apply-templates mode="getMetadataHeader" select="$metadata"/>
-          <!--<xsl:apply-templates mode="render-toc" select="$viewConfig"/>-->
+          <xsl:apply-templates mode="render-toc" select="$viewConfig"/>
         </header>
         <xsl:apply-templates mode="render-view" select="$viewConfig/*"/>
         <!--
@@ -47,16 +47,16 @@
 
   <!-- Render list of tabs in the current view -->
   <xsl:template mode="render-toc" match="view">
-    <xsl:if test="count(tab) > 1">
+    <!-- <xsl:if test="count(tab) > 1"> -->
       <!-- TODO: Hide tabs which does not contains anything -->
-      <ul class="view-outline nav nav-pills">
+      <ul class="view-outline nav nav-tabs">
         <xsl:for-each select="tab">
           <li><a href="#gn-tab-{@id}">
             <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
           </a></li>
         </xsl:for-each>
       </ul>
-    </xsl:if>
+    <!-- </xsl:if> -->
   </xsl:template>
 
 
@@ -68,18 +68,20 @@
       <xsl:apply-templates mode="render-view" select="*|@*"/>
     </xsl:variable>
 
-    <!-- Display a tab only if it contains something -->
-    <xsl:if test="$content != ''">
-      <xsl:variable name="title"
-                    select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
+    <div class="tab-content geo-data-tab-cont">
+      <!-- Display a tab only if it contains something -->
+      <xsl:if test="$content != ''">
+        <xsl:variable name="title"
+                      select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
 
-      <div id="gn-tab-{@id}">
-        <h3 class="view-header">
-          <xsl:value-of select="$title"/>
-        </h3>
-        <xsl:copy-of select="$content"/>
-      </div>
-    </xsl:if>
+        <div id="gn-tab-{@id}" class="tab-pane geo-data-tab">
+          <h3 class="view-header">
+            <xsl:value-of select="$title"/>
+          </h3>
+          <xsl:copy-of select="$content"/>
+        </div>
+      </xsl:if>
+    </div>
   </xsl:template>
 
 

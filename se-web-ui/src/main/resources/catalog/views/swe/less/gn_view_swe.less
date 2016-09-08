@@ -4763,4 +4763,104 @@ a.link-btn[disabled] {
   }
 }
 
+/metadata page
+.gn-metadata-view {
+  width: 100%;
+
+  header {
+    height: auto;
+    background: transparent;
+    h1 {
+      font-size: 36px;
+    }
+  }
+  h3.view-header {
+    display: none;
+  }
+  // look out with this one, till now the title conatins only one word,
+  // if there's gonna be more, all words will start with a capital character
+  h4.view-header {
+    text-transform: capitalize;
+  }
+  h3 {
+    color: #333;
+    position: relative;
+    font-size: 24px;
+    margin: 20px 0 10px 0;
+    padding-left: 0px;
+    .fa-envelope {
+      display: none;
+    }
+  }
+  .entry {
+    
+    .entry {
+      margin-left: 0;
+      h3 {
+        font-size: 18px;
+      }
+    }
+  }
+  
+  // contact block
+  .gn-contact {
+    h3 {
+      margin: 0;
+      font-size: 14px;
+      line-height: 2em;
+      text-transform: capitalize;
+      span {
+        font-family: rijksoverheidsanstext-bold, sans, arial !important;
+      }
+    }
+    // ----- no padding for columns in contact block
+    .col-md-6 {
+      padding-left: 0;
+    }
+  }
+  
+  // thumbnails block
+  .gn-thumbnails {
+    list-style: none;
+    padding: 0;
+    // ----- clearing the floats
+    &:before,
+    &:after {
+      content: " ";
+      display: table;
+    }
+    &:after {
+      clear: both;
+    }
+    li {
+      float: left;
+      width: auto;
+      padding: 0;
+      margin: 0 10px 10px 0;
+      max-width: 45%;
+    }
+  }
+  ul {
+    padding-left: 20px;
+  }
+  dt {
+    line-height: 2em;
+    font-family: rijksoverheidsanstext-bold, sans, arial !important;
+    font-size: 14px;
+  }
+  dl {
+    line-height: 1.75em;
+    padding-bottom: 5px;
+  }
+  dd {
+    background: #fff;
+    border: 0;
+    padding-left: 0;
+  }
+  // ----- hide the download button
+  a[href*="xml.metadata.get"] { 
+    display: none;
+  }
+
+}
 

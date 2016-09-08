@@ -86,7 +86,7 @@
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
 
-      $scope.compileScope = $scope.$new();
+      //$scope.compileScope = $scope.$new();
 
       $scope.$on('someEvent', function(event, map) {
         alert('event received. url is: ' + map.url);
@@ -354,7 +354,9 @@
 
         var mdUrl = 'md.format.xml?xsl=xsl-view&view=advanced&uuid='// + md['geonet:info'].uuid;
 
-console.log(md);
+        // set scope md
+        $scope.md = md;
+console.log($scope,md['geonet:info'].uuid);
 
         gnMdFormatter.getFormatterUrl(mdUrl, $scope, md['geonet:info'].uuid).then(function(url) {
           $http.get(url).then(
@@ -364,13 +366,11 @@ console.log(md);
 
               $('#gn-metadata-display').find('*').remove();
 
-              $scope.compileScope.$destroy();
+              //$scope.compileScope.$destroy();
 
               // Compile against a new scope
               $scope.compileScope = $scope.$new();
               var content = $compile(snippet)($scope.compileScope);
-
-console.log(content);
 
               $('#gn-metadata-display').append(content);
             });
