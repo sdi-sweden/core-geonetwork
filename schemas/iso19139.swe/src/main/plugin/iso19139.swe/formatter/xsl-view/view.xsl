@@ -190,30 +190,30 @@
       </xsl:choose>
     </xsl:variable>
 
-    <div class="gn-contact">
-      <h3>
-        <i class="fa fa-envelope"></i>
+    <dl class="gn-contact">
+      <dt>
         <xsl:apply-templates mode="render-value"
                              select="*/gmd:role/*/@codeListValue"/>
-      </h3>
-      <div class="row">
+      </dt>
+      <dd>
         <div class="col-md-6">
           <address>
             <strong>
               <xsl:choose>
                 <xsl:when test="$email">
+                  <i class="fa fa-envelope"></i>
                   <a href="mailto:{normalize-space($email)}"><xsl:value-of select="$displayName"/></a>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:value-of select="$displayName"/>
                 </xsl:otherwise>
               </xsl:choose>
-            </strong><br/>
+            </strong>
             <xsl:for-each select="*/gmd:contactInfo/*">
               <xsl:for-each select="gmd:address/*/(
                                           gmd:deliveryPoint|gmd:city|
                                           gmd:administrativeArea|gmd:postalCode|gmd:country)">
-                <xsl:apply-templates mode="render-value" select="."/><br/>
+                <xsl:apply-templates mode="render-value" select="."/>
               </xsl:for-each>
             </xsl:for-each>
           </address>
@@ -248,8 +248,8 @@
             </xsl:for-each>
           </address>
         </div>
-      </div>
-    </div>
+      </dd>
+    </dl>
   </xsl:template>
 
   <!-- Metadata linkage -->
