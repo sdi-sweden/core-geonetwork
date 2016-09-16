@@ -10,5 +10,15 @@
     "advancedSearchTooltip-link": "",
     "dateFilterTooltip-title": "Date filter",
     "dateFilterTooltip-desc": "Date filter ...",
-    "dateFilterTooltip-link": ""
+    "dateFilterTooltip-link": "",
+    "searchFromDate": "Från datum",
+    "searchToDate": "till datum",
+    "searchGeographicFilter": "Geografisk filtrering",
+    "searchShowOnly": "visa enbart:",
+    "shows": "Visar",
+    "results": "resultat",
+    "showFiltering": "visa filtrering",
+    "viewAllResources": "visa all resurser",
+    "viewAdvance": "Avancerad vy",
+    "freeTextPlaceholder": "fritextsök"
 }
