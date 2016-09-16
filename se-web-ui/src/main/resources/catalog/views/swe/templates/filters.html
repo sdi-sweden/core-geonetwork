@@ -31,7 +31,10 @@
             <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link">Visa alla resurser</a>
             <a href="" data-ng-click="toggleAdvancedOptions()" class="fltr-link advance-link">Avancerad vy</a>
 
-            <div data-swe-tooltip="" data-title="Advanced search" data-text="Advanced search ..."></div>
+            <div data-swe-tooltip=""
+                 data-title="{{ 'advancedSearchTooltip-title' | translate }}"
+                 data-text="{{ 'advancedSearchTooltip-desc' | translate }}"
+                 data-link="{{ 'advancedSearchTooltip-link' | translate }}"></div>
           </div>
         </div>
         <div class="filter-options-cont">
@@ -61,7 +64,10 @@
                       <input type="date" placeholder="åååå-mm-dd" data-ng-model="searchObj.params.resourceDateTo" data-ng-change="triggerSearch()">
                       <!--<span class="icon-calendar-empty"></span>-->
                     </div>
-                    <div data-swe-tooltip="" data-title="Date filter" data-text="Date filter ..." data-link="http://google.es"></div>
+                    <div data-swe-tooltip=""
+                         data-title="{{ 'dateFilterTooltip-title' | translate }}"
+                         data-text="{{ 'dateFilterTooltip-desc' | translate }}"
+                         data-link="{{ 'dateFilterTooltip-link' | translate }}"></div>
                   </div>
                 </div>
                 <div class="right-side-filter">
@@ -82,11 +88,16 @@
                   </div>
                   <div class="filter-colm draw-map-link-colm">
                     <a href="" class="fltr-link draw-map-link">Rita på karta</a>
-                    <div data-swe-tooltip="" data-title="Geographical filter" data-text="Geographical filter ..."></div>
+                    <div data-swe-tooltip=""
+                         data-title="{{ 'geographicalFilterTooltip-title' | translate }}"
+                         data-text="{{ 'geographicalFilterTooltip-desc' | translate }}"
+                         data-link="{{ 'geographicalFilterTooltip-link' | translate }}"></div>
                   </div>
                 </div>
               </div>
 
+              <span data-translate="">geographicalFilterTooltip-title</span>
+              <span data-translate="">AddALayer</span>
               <!-- Facets -->
               <div data-ng-show="searchResults.records.length > 0"
                    data-swe-facet-dimension-list="searchResults.dimension"
@@ -95,7 +106,10 @@
                    data-current-facets="currentFacets">
               </div>
 
-              <div data-swe-tooltip="" data-title="Facets filter" data-text="Facets filter ..."></div>
+              <div data-swe-tooltip=""
+                   data-title="{{ 'facetsFilterTooltip-title' | translate }}"
+                   data-text="{{ 'facetsFilterTooltip-desc' | translate }}"
+                   data-link="{{ 'facetsFilterTooltip-link' | translate }}"></div>
             </div>
           </div>
         </div>
