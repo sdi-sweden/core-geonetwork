@@ -48,6 +48,7 @@
     '$location',
     'suggestService',
     '$http',
+    '$compile',
     '$window',
     '$translate',
     '$timeout',
@@ -62,18 +63,20 @@
     'gnOwsContextService',
     'hotkeys',
     'gnGlobalSettings',
+    'gnMdFormatter',
     function($scope, $localStorage, $location, suggestService,
-             $http, $window, $translate, $timeout,
+             $http, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings) {
+             hotkeys, gnGlobalSettings, gnMdFormatter) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
 
       $scope.viewMode = 'full';
 
+      $scope.formatter = gnSearchSettings.formatter;
       $scope.modelOptions = angular.copy(gnGlobalSettings.modelOptions);
       $scope.modelOptionsForm = angular.copy(gnGlobalSettings.modelOptions);
       $scope.gnWmsQueue = gnWmsQueue;
@@ -342,10 +345,53 @@
           match(/^(\/[a-zA-Z0-9]*)($|\/.*)/)[1];
 
 
+      $scope.activateTabs = function() {
+        // activate tabs
+        $('#tab-result-nav a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show');
+        });
+        // hide empty
+        $('#tab-result-nav a').each(function() {
+          if ($($(this).attr('href')).length === 0) {
+            $(this).parent().hide();
+          }
+        });
+        // show the first
+        $('#tab-result-nav a:first').tab('show');
+      };   
+
       $scope.showMetadata = function(index, md, records) {
         angular.element('.geodata-row-popup').addClass('show');
         $scope.$emit('body:class:add', 'show-overlay');
         gnMdView.feedMd(index, md, records);
+
+        var mdUrl = 'md.format.xml?xsl=xsl-view&view=advanced&uuid='; // + md['geonet:info'].uuid;
+        // set scope md
+        $scope.md = md;
+
+        gnMdFormatter.getFormatterUrl(mdUrl, $scope, md['geonet:info'].uuid).then(function(url) {
+          $http.get(url).then(
+            function(response) {
+              var snippet = response.data.replace(
+                  '<?xml version="1.0" encoding="UTF-8"?>', '');
+
+              $('#gn-metadata-display').find('*').remove();
+
+              //$scope.compileScope.$destroy();
+
+              // Compile against a new scope
+              $scope.compileScope = $scope.$new();
+              var content = $compile(snippet)($scope.compileScope);
+
+              $('#gn-metadata-display').append(content);
+
+              $scope.activateTabs();
+
+console.log('start tabs') ;             
+            });
+          });
+
       };
 
       /**

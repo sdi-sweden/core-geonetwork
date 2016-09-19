@@ -12,23 +12,6 @@
               </h1>
               <span class="excerpt"></span>
             </div>
-            <div class="update-tag"><span>Senast uppdaterad <span data-gn-humanize-time="{{mdView.current.record['geonet:info'].changeDate}}"
-                                                                    data-from-now=""></span></span>
-            </div>
-          </div>
-        </div>
-        <ul class="geo-data-tab-nav">
-          <li class="active"><a href="">Översikt</a></li>
-          <li><a href="">Inspire</a></li>
-          <li><a href="">metadata</a></li>
-          <li><a href="">dataKvalitet</a></li>
-          <li><a href="">Referenssystem</a></li>
-          <li><a href="">Distribution</a></li>
-          <li><a href="">Restriktioner</a></li>
-          <li><a href="">Alla metadata</a></li>
-        </ul>
-        <div class="geo-data-tab-cont">
-          <div class="geo-data-tab">
             <div class="help-icn-cont">
               <div class="help-icn-circle"><span class="icon-help"></span></div>
               <div class="tool-tip-cont">
@@ -40,84 +23,26 @@
                 </div>
               </div>
             </div>
-            <div class="excerpt-table-cont">
-              <div class="excerpt-table">
-                <div class="excerpt-row">
-                  <div class="excerpt-colm col1">
-                    <span class="topic">Resurstyp</span>
-                  </div>
-                  <div class="excerpt-colm col2">
-                    <div class="excerpt-desc">
-                      <p>{{mdView.current.record.type[0] | translate}}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="excerpt-row">
-                  <div class="excerpt-colm col1">
-                    <span class="topic">Produktionsdatum</span>
-                  </div>
-                  <div class="excerpt-colm col2">
-                    <div class="excerpt-desc">
-                      <p>2006</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="excerpt-row">
-                  <div class="excerpt-colm col1">
-                    <span class="topic">Sammanfattning</span>
-                  </div>
-                  <div class="excerpt-colm col2">
-                    <div class="excerpt-desc">
-                      <p data-ng-bind-html="mdView.current.record.abstract | newlines"></p>
-                    </div>
-                  </div>
-                </div>
-                <div class="excerpt-row">
-                  <div class="excerpt-colm col1">
-                    <span class="topic">Ämnesområde</span>
-                  </div>
-                  <div class="excerpt-colm col2">
-                    <div class="excerpt-desc">
-                      <p data-ng-repeat="cat in mdView.current.record.topicCat track by $index">
-                        {{cat | translate}}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="excerpt-row">
-                  <div class="excerpt-colm col1">
-                    <span class="topic">Ansvarig part</span>
-                  </div>
-                  <div class="excerpt-colm col2">
-                    <div class="excerpt-desc">
-                      <p data-ng-repeat="r in mdView.current.record.responsibleParty" data-ng-show="r.indexOf('Ägare') != -1">{{r | split:'|':2}}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="excerpt-row">
-                  <div class="excerpt-colm col1">
-                    <span class="topic">Externa länkar</span>
-                  </div>
-                  <div class="excerpt-colm col2">
-                    <div class="excerpt-desc">
-                      <p><a href="" class="external-link">Skyddad natur - Naturvårdsverket</a></p>
-                    </div>
-                  </div>
-                </div>
-                <div class="excerpt-row">
-                  <div class="excerpt-colm col1">
-                    <span class="topic">licenstyp</span>
-                  </div>
-                  <div class="excerpt-colm col2">
-                    <div class="excerpt-desc">
-                      <p><span class="icon-creative-commons-attribution"></span>{{mdView.current.record.resourceConstraints[0]}}</p>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
+            <div class="update-tag"><span>Senast uppdaterad <span data-gn-humanize-time="{{mdView.current.record['geonet:info'].changeDate}}"
+                                                                    data-from-now=""></span></span>
             </div>
+            
           </div>
         </div>
+
+        <div id="gn-metadata-display"></div>
+
+        <!-- <ul class="geo-data-tab-nav">
+          <li class="active"><a href="">Översikt</a></li>
+          <li><a href="">Inspire</a></li>
+          <li><a href="">metadata</a></li>
+          <li><a href="">dataKvalitet</a></li>
+          <li><a href="">Referenssystem</a></li>
+          <li><a href="">Distribution</a></li>
+          <li><a href="">Restriktioner</a></li>
+          <li><a href="">Alla metadata</a></li>
+        </ul> -->
+
         <div class="geo-data-toolbar-cont">
           <div class="data-repo-status">
             <img src="../../catalog/views/swe/images/open-repo.png" class="popup-repo-img">
