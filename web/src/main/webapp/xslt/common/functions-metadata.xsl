@@ -22,11 +22,11 @@
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
 
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gn="http://www.fao.org/geonetwork"
-  xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
-  xmlns:saxon="http://saxon.sf.net/" extension-element-prefixes="saxon"
-  exclude-result-prefixes="#all">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:gn="http://www.fao.org/geonetwork" xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
+                xmlns:saxon="http://saxon.sf.net/"
+                version="2.0" extension-element-prefixes="saxon"
+                exclude-result-prefixes="#all">
   <!-- Provides XSL function related to metadata management like
   retrieving labels, helper, -->
 
@@ -93,16 +93,19 @@
         <xsl:when test="matches($name, '.*GROUP_ELEMENT.*')">
           <xsl:value-of select="substring-before($name, 'GROUP_ELEMENT')"/>
         </xsl:when>
-        <xsl:otherwise><xsl:value-of select="$name"/></xsl:otherwise>
+        <xsl:otherwise>
+          <xsl:value-of select="$name"/>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
 
     <!-- Name with context in current schema -->
     <xsl:variable name="schemaLabelWithContext"
-      select="$labels/element[@name=$escapedName and (@context=$xpath or @context=$parent or @context=$parentIsoType)]"/>
+                  select="$labels/element[@name=$escapedName and (@context=$xpath or @context=$parent or @context=$parentIsoType)]"/>
 
     <!-- Name in current schema -->
-    <xsl:variable name="schemaLabel" select="$labels/element[@name=$escapedName and not(@context)]"/>
+    <xsl:variable name="schemaLabel"
+                  select="$labels/element[@name=$escapedName and not(@context)]"/>
 
     <xsl:choose>
       <xsl:when test="$schemaLabelWithContext">
@@ -123,8 +126,7 @@
                 <xsl:value-of select="$escapedName"/>
               </label>
             </element>
-            <xsl:message>gn-fn-metadata:getLabel | missing translation in schema <xsl:value-of
-              select="$schema"/> for <xsl:value-of select="$name"/>.</xsl:message>
+            <xsl:message>gn-fn-metadata:getLabel | missing translation in schema <xsl:value-of select="$schema"/> for <xsl:value-of select="$name"/>.</xsl:message>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:otherwise>
@@ -167,7 +169,7 @@
     <xsl:param name="node" as="item()?"/>
 
     <xsl:variable name="codelists" select="$codelists/codelist[@name=$name]"
-      exclude-result-prefixes="#all"/>
+                  exclude-result-prefixes="#all"/>
 
     <!--
     <xsl:message>#gn-fn-metadata:getCodeListValues</xsl:message>
@@ -185,7 +187,8 @@
           <xsl:if test="@displayIf">
             <xsl:variable name="match">
               <saxon:call-template name="{concat('evaluate-', $schema)}">
-                <xsl:with-param name="base" select="$metadata/descendant-or-self::node()[gn:element/@ref = $node/gn:element/@ref]"/>
+                <xsl:with-param name="base"
+                                select="$metadata/descendant-or-self::node()[gn:element/@ref = $node/gn:element/@ref]"/>
                 <xsl:with-param name="in" select="concat('/', @displayIf)"/>
               </saxon:call-template>
             </xsl:variable>
@@ -255,7 +258,7 @@
 
         <!-- Search for the related element identifier -->
         <xsl:variable name="relatedElementRef"
-          select="$node/../*[name()=$helper/@rel]/*/gn:element/@ref"/>
+                      select="$node/../*[name()=$helper/@rel]/*/gn:element/@ref"/>
 
         <helper>
           <xsl:attribute name="relElementRef" select="$relatedElementRef"/>
@@ -265,7 +268,8 @@
             <xsl:for-each select="$helper[@displayIf]">
               <xsl:variable name="match">
                 <saxon:call-template name="{concat('evaluate-', $schema)}">
-                  <xsl:with-param name="base" select="$metadata/descendant-or-self::node()[gn:element/@ref = $node/gn:element/@ref]"/>
+                  <xsl:with-param name="base"
+                                  select="$metadata/descendant-or-self::node()[gn:element/@ref = $node/gn:element/@ref]"/>
                   <xsl:with-param name="in" select="concat('/', @displayIf)"/>
                 </saxon:call-template>
               </xsl:variable>
@@ -278,7 +282,7 @@
 
           <xsl:choose>
             <xsl:when
-                    test="count($helpersMatchingCurrentRecord/*) > 0">
+              test="count($helpersMatchingCurrentRecord/*) > 0">
               <xsl:copy-of select="$helpersMatchingCurrentRecord"/>
             </xsl:when>
             <xsl:otherwise>
@@ -292,7 +296,7 @@
       <xsl:when test="$helper">
         <!-- Search for the related element identifier -->
         <xsl:variable name="relatedElementRef"
-          select="$node/../*[name()=$helper/@rel]/*/gn:element/@ref"/>
+                      select="$node/../*[name()=$helper/@rel]/*/gn:element/@ref"/>
 
         <helper>
           <xsl:attribute name="relElementRef" select="$relatedElementRef"/>
@@ -315,9 +319,7 @@
 
     <!-- Name with context in current schema -->
     <xsl:variable name="helper"
-      select="if (string($context) or string($xpath))
-              then $labels/element[@name=$name and (@context=$xpath or @context=$context)]/helper
-              else $labels/element[@name=$name]/helper"/>
+                  select="$labels/element[@name=$name and (@context=$xpath or @context=$context)]/helper"/>
 
     <xsl:choose>
       <xsl:when test="$helper">
@@ -329,8 +331,6 @@
     </xsl:choose>
 
   </xsl:function>
-
-
 
 
   <!-- Get field type based on editor configuration.
@@ -346,8 +346,10 @@
     <!-- The element containing the value eg. gco:Date -->
     <xsl:param name="childName" as="xs:string?"/>
 
-    <xsl:variable name="childType" select="normalize-space($configuration/editor/fields/for[@name = $childName]/@use)"/>
-    <xsl:variable name="type" select="normalize-space($configuration/editor/fields/for[@name = $name]/@use)"/>
+    <xsl:variable name="childType"
+                  select="normalize-space($configuration/editor/fields/for[@name = $childName]/@use)"/>
+    <xsl:variable name="type"
+                  select="normalize-space($configuration/editor/fields/for[@name = $name]/@use)"/>
 
     <xsl:value-of
       select="if ($childType != '')
@@ -366,7 +368,8 @@
     <xsl:param name="configuration" as="node()"/>
     <xsl:param name="name" as="xs:string"/>
 
-    <xsl:variable name="type" select="$configuration/editor/fields/for[@name = $name and @addDirective]"/>
+    <xsl:variable name="type"
+                  select="$configuration/editor/fields/for[@name = $name and @addDirective]"/>
     <xsl:choose>
       <xsl:when test="$type">
         <xsl:copy-of select="$type" copy-namespaces="no"/>
@@ -392,13 +395,14 @@
     <xsl:param name="configuration" as="node()"/>
     <xsl:param name="name" as="xs:string"/>
 
-    <xsl:variable name="exception" select="count($configuration/flatModeExceptions/for[@name = $name])"/>
+    <xsl:variable name="exception"
+                  select="count($configuration/flatModeExceptions/for[@name = $name])"/>
 
     <xsl:value-of
-        select="if ($exception > 0)
+      select="if ($exception > 0)
       then true()
       else false()"
-        />
+    />
   </xsl:function>
 
   <xsl:function name="gn-fn-metadata:getXPath" as="xs:string">
@@ -409,8 +413,9 @@
 
   <xsl:function name="gn-fn-metadata:positionOfType" as="xs:string">
     <xsl:param name="node" as="node()"/>
-    <xsl:variable name="nodePosition" select="$node/position()" />
-    <xsl:variable name="allPrecedingSiblings" select="$node/preceding-sibling::*[name() = name($node)]" />
+    <xsl:variable name="nodePosition" select="$node/position()"/>
+    <xsl:variable name="allPrecedingSiblings"
+                  select="$node/preceding-sibling::*[name() = name($node)]"/>
     <!--<xsl:value-of select="count($node/../*[name = name($node) and position() &lt; $nodePosition]) + 1"/>-->
     <xsl:value-of select="count($allPrecedingSiblings) + 1"/>
   </xsl:function>
@@ -456,7 +461,6 @@
 
     <xsl:value-of select="gn-fn-metadata:getXPath($node, $withPosition)"/>
   </xsl:function>
-
 
 
 </xsl:stylesheet>

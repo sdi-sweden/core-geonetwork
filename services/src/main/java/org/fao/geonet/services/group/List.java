@@ -36,10 +36,8 @@ import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.specification.GroupSpecs;
 import org.fao.geonet.resources.Resources;
 import org.fao.geonet.utils.Xml;
-import org.jasig.cas.client.util.XmlUtils;
 import org.jdom.Element;
 
-import groovy.xml.XmlUtil;
 import jeeves.constants.Jeeves;
 import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
@@ -52,6 +50,7 @@ import jeeves.server.context.ServiceContext;
  * Retrieves all groups in the system
  */
 
+@Deprecated
 public class List implements Service {
     public void init(Path appPath, ServiceConfig params) throws Exception {
     }
@@ -63,56 +62,55 @@ public class List implements Service {
     // --------------------------------------------------------------------------
 
     public Element exec(Element params, ServiceContext context)
-            throws Exception {
+        throws Exception {
 
         UserSession session = context.getUserSession();
         Element elRes = null;
         if (session.getProfile().equals(Profile.Administrator)) {
             elRes = context.getBean(GroupRepository.class)
-                    .findAllAsXml(not(GroupSpecs.isReserved()));
+                .findAllAsXml(not(GroupSpecs.isReserved()));
         } else if (session.isAuthenticated()) {
             java.util.List<UserGroup> usergroups = context.getBean(UserGroupRepository.class).findAll(
-                    GroupSpecs.isEditorOrMore(session.getUserIdAsInt()));
+                GroupSpecs.isEditorOrMore(session.getUserIdAsInt()));
             java.util.List<Integer> ids = new LinkedList<Integer>();
             java.util.List<Integer> editableIds = new LinkedList<Integer>();
-            for(UserGroup ug : usergroups) {
+            for (UserGroup ug : usergroups) {
                 ids.add(ug.getGroup().getId());
-                if(ug.getProfile().equals(Profile.UserAdmin)) {
+                if (ug.getProfile().equals(Profile.UserAdmin)) {
                     editableIds.add(ug.getGroup().getId());
                 }
             }
             elRes = context.getBean(GroupRepository.class).findAllAsXml(GroupSpecs.in(ids));
-            
-            for(Object o : elRes.getChildren()) {
+
+            for (Object o : elRes.getChildren()) {
                 Element e = (Element) o;
-                for(Object o2 : e.getChildren("id")) {
+                for (Object o2 : e.getChildren("id")) {
                     Element e2 = (Element) o2;
-                    System.out.println(e2.getTextTrim());
-                    if(editableIds.contains(Integer.valueOf(e2.getTextTrim()))){
+                    if (editableIds.contains(Integer.valueOf(e2.getTextTrim()))) {
                         e.setAttribute("editable", "true");
                     }
                 }
             }
-            
+
         } else {
             throw new SecurityException("You are not authorized to see this");
         }
-        
+
         final Path resourcesDir = context.getBean(GeonetworkDataDirectory.class)
-                .getResourcesDir();
+            .getResourcesDir();
         final Path logosDir = Resources.locateLogosDir(context);
         final java.util.List<?> logoElements = Xml.selectNodes(elRes,
-                "*//logo");
+            "*//logo");
         for (Object logoObj : logoElements) {
             Element logoEl = (Element) logoObj;
             final String logoRef = logoEl.getTextTrim();
             if (logoRef != null && !logoRef.isEmpty()
-                    && !logoRef.startsWith("http://")) {
+                && !logoRef.startsWith("http://")) {
                 final Path imagePath = Resources.findImagePath(logoRef,
-                        logosDir);
+                    logosDir);
                 if (imagePath != null) {
                     String relativePath = resourcesDir.relativize(imagePath)
-                            .toString().replace('\\', '/');
+                        .toString().replace('\\', '/');
                     logoEl.setText(context.getBaseUrl() + '/' + relativePath);
                 }
             }

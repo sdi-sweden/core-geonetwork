@@ -21,16 +21,10 @@
   ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
-
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:saxon="http://saxon.sf.net/" xmlns:gn="http://www.fao.org/geonetwork"
-  xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
-  xmlns:gmd="http://www.isotc211.org/2005/gmd"
-  xmlns:gco="http://www.isotc211.org/2005/gco"
-  xmlns:gmx="http://www.isotc211.org/2005/gmx"
-  xmlns:java-xsl-util="java:org.fao.geonet.util.XslUtil"
-  extension-element-prefixes="saxon" exclude-result-prefixes="#all">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:saxon="http://saxon.sf.net/"
+                xmlns:gn="http://www.fao.org/geonetwork" xmlns:java-xsl-util="java:org.fao.geonet.util.XslUtil"
+                version="2.0"
+                extension-element-prefixes="saxon" exclude-result-prefixes="#all">
 
   <!-- The editor form.
 
@@ -60,7 +54,7 @@
   -->
 
   <xsl:output omit-xml-declaration="yes" method="html" doctype-public="html" indent="yes"
-    encoding="UTF-8"/>
+              encoding="UTF-8"/>
 
   <xsl:include href="../../common/base-variables-metadata-editor.xsl"/>
 
@@ -77,8 +71,8 @@
 
           Disable form validation with novalidate attribute. -->
     <form id="gn-editor-{$metadataId}" name="gnEditor" accept-charset="UTF-8" method="POST"
-      novalidate="" class="form-horizontal gn-editor gn-tab-{$tab}" role="form"
-      data-spy="scroll" data-target="#gn-editor-{$metadataId}-spy">
+          novalidate="" class="form-horizontal gn-editor gn-tab-{$tab}" role="form"
+          data-spy="scroll" data-target="#gn-editor-{$metadataId}-spy">
 
       <input type="hidden" id="schema" value="{$schema}"/>
       <input type="hidden" id="template" name="template" value="{$isTemplate}"/>
@@ -90,12 +84,13 @@
       <input type="hidden" id="version" name="version" value="{$metadata/gn:info/version}"/>
       <input type="hidden" id="currTab" name="currTab" value="{$tab}"/>
       <input type="hidden" id="displayAttributes" name="displayAttributes"
-        value="{$isDisplayingAttributes}"/>
+             value="{$isDisplayingAttributes}"/>
       <input type="hidden" id="displayTooltips" name="displayTooltips"
-        value="{$isDisplayingTooltips}"/>
+             value="{$isDisplayingTooltips}"/>
       <input type="hidden" id="minor" name="minor" value="{$isMinorEdit}"/>
       <input type="hidden" id="flat" name="flat" value="{$isFlatMode}"/>
-      <input type="hidden" id="showvalidationerrors" name="showvalidationerrors" value="{$showValidationErrors}"/>
+      <input type="hidden" id="showvalidationerrors" name="showvalidationerrors"
+             value="{$showValidationErrors}"/>
 
 
       <xsl:variable name="metadataExtents">
@@ -112,7 +107,6 @@
         <xsl:with-param name="pattern" select="$layerMatchingPattern"/>
         <xsl:with-param name="id" select="'layerConfig'"/>
       </xsl:call-template>
-
 
       <!-- Dispatch to profile mode -->
       <xsl:if test="$service != 'md.element.add'">
@@ -159,7 +153,7 @@
 
     <xsl:if test="$config/config/*">
       <input id="{$id}" type="hidden"
-        value="{java-xsl-util:xmlToJson(
+             value="{java-xsl-util:xmlToJson(
         saxon:serialize($config, 'default-serialize-mode'))}"/>
     </xsl:if>
   </xsl:template>

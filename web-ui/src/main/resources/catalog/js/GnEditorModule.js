@@ -51,6 +51,7 @@
     'gn_geopublisher',
     'gn_batch_service',
     'gn_mdactions_directive',
+    'ui.ace',
     'swe_editor_table_controller',
     'swe_editor_table_directive'
   ]);
@@ -61,6 +62,8 @@
     function($LOCALES) {
       $LOCALES.push('search');
       $LOCALES.push('editor');
-      $LOCALES.push('/../api/0.1/tools/i18n/db?type=StatusValue');
+      $LOCALES.push('/../api/0.1/tools/i18n/db?' +
+          'type=StatusValue&type=Operation&type=Group');
+
     }]);
 })();

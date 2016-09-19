@@ -77,7 +77,7 @@
          */
       function loadSettings() {
         $http.get('admin.config.list?_content_type=json&asTree=false')
-          .success(function(data) {
+            .success(function(data) {
               for (var i = 0; i < data.length; i++) {
                 var setting = data[i];
                 if (cswBooleanSettings.indexOf(setting['@name']) !== -1) {
@@ -94,7 +94,7 @@
       }
 
       function loadUsers() {
-        $http.get('admin.user.list?_content_type=json&').
+        $http.get('../api/users').
             success(function(data) {
               $scope.users = data;
               loadSettings();
@@ -123,7 +123,7 @@
 
       function loadCSWElementSetName() {
         $http.get('admin.config.csw.customelementset?_content_type=json&')
-        .success(function(data) {
+            .success(function(data) {
               if (data) {
                 $scope.cswElementSetName =
                     $.isArray(data.xpath) ? data.xpath : [data.xpath];
@@ -142,7 +142,7 @@
       $scope.saveCSWElementSetName = function(formId) {
         $http.get('admin.config.csw.customelementset.save?_content_type=json&' +
                 $(formId).serialize())
-          .success(function(data) {
+            .success(function(data) {
               loadCSWElementSetName();
             });
       };

@@ -52,13 +52,14 @@
 
   module.config(['$LOCALES', function($LOCALES) {
     $LOCALES.push('search');
-    $LOCALES.push('/../api/0.1/tools/i18n/db?type=MetadataCategory');
-    $LOCALES.push('/../api/0.1/standard/iso19139/' +
+    $LOCALES.push('/../api/0.1/tools/i18n/db?' +
+        'type=MetadataCategory&type=Operation&type=Group');
+    $LOCALES.push('/../api/0.1/standards/iso19139/' +
         'codelists/gmd%3AMD_TopicCategoryCode');
 
-    $LOCALES.push('/../api/0.1/standard/iso19139.swe/' +
+    $LOCALES.push('/../api/0.1/standards/iso19139.swe/' +
       'codelists/gmd%3ACI_RoleCode');
-    $LOCALES.push('/../api/0.1/standard/iso19139.swe/' +
+    $LOCALES.push('/../api/0.1/standards/iso19139.swe/' +
       'codelists/gmd%3ACI_DateTypeCode');
   }]);
 
