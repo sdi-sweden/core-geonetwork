@@ -6,7 +6,6 @@
                 exclude-result-prefixes="#all"
                 version="2.0">
 
-  <xsl:import href="common/render-html.xsl"/>
   <xsl:import href="render-variables.xsl"/>
   <xsl:import href="render-functions.xsl"/>
   <xsl:import href="render-layout-fields.xsl"/>
@@ -14,54 +13,26 @@
   <!-- Those templates should be overriden in the schema plugin - start -->
   <xsl:template mode="getMetadataTitle" match="undefined"/>
   <xsl:template mode="getMetadataAbstract" match="undefined"/>
-  <xsl:template mode="getMetadataHierarchyLevel" match="undefined"/>
   <xsl:template mode="getMetadataHeader" match="undefined"/>
   <!-- Those templates should be overriden in the schema plugin - end -->
 
   <!-- Starting point -->
   <xsl:template match="/">
-    <xsl:choose>
-      <xsl:when test="$root = 'div'">
-        <!-- Render only a DIV with the record details -->
-        <xsl:call-template name="render-record"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <!-- Render complete HTML page -->
-        <xsl:call-template name="render-html">
-          <xsl:with-param name="content">
-            <xsl:call-template name="render-record"/>
-          </xsl:with-param>
-          <xsl:with-param name="title">
-            <xsl:apply-templates mode="getMetadataTitle" select="$metadata"/>
-          </xsl:with-param>
-          <xsl:with-param name="description">
-            <xsl:apply-templates mode="getMetadataAbstract" select="$metadata"/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+    <div class="gn-metadata-view">
 
-  <xsl:template name="render-record">
-    <div class="container gn-metadata-view">
-
-      <xsl:variable name="type">
-        <xsl:apply-templates mode="getMetadataHierarchyLevel" select="$metadata"/>
-      </xsl:variable>
-      <article id="gn-metadata-view-{$metadataId}"
-               itemscope="itemscope"
-               itemtype="{gn-fn-render:get-schema-org-class($type)}">
+      <article id="gn-metadata-view-{$metadataId}">
         <header>
-          <h1>
-            <xsl:apply-templates mode="getMetadataTitle" select="$metadata"/>
-          </h1>
+          <!-- <h1><xsl:apply-templates mode="getMetadataTitle" select="$metadata"/></h1> -->
           <!--<p><xsl:apply-templates mode="getMetadataAbstract" select="$metadata"/></p>-->
           <!-- TODO : Add thumbnail to header -->
 
           <xsl:apply-templates mode="getMetadataHeader" select="$metadata"/>
-          <!--<xsl:apply-templates mode="render-toc" select="$viewConfig"/>-->
+          <xsl:apply-templates mode="render-toc" select="$viewConfig"/>
         </header>
-        <xsl:apply-templates mode="render-view" select="$viewConfig/*"/>
+        <!-- Tab panes -->
+        <div class="tab-content geo-data-tab-cont">
+          <xsl:apply-templates mode="render-view" select="$viewConfig/*"/>
+        </div>
         <!--
         TODO: scrollspy or tabs on header ?
         <div class="gn-scroll-spy"
@@ -77,22 +48,20 @@
 
 
 
-
   <!-- Render list of tabs in the current view -->
   <xsl:template mode="render-toc" match="view">
     <xsl:if test="count(tab) > 1">
       <!-- TODO: Hide tabs which does not contains anything -->
-      <ul class="view-outline nav nav-pills">
+      <ul class="nav nav-tabs geo-data-tab-nav" role="tablist" id="tab-result-nav">
         <xsl:for-each select="tab">
-          <li>
-            <a href="#gn-tab-{@id}">
-              <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
-            </a>
-          </li>
+          <li><a href="#gn-tab-{@id}">
+            <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
+          </a></li>
         </xsl:for-each>
       </ul>
     </xsl:if>
   </xsl:template>
+
 
 
   <!-- Render a tab. Tab id is defined in strings
@@ -107,7 +76,7 @@
       <xsl:variable name="title"
                     select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
 
-      <div id="gn-tab-{@id}">
+      <div role="tabpanel" class="tab-pane geo-data-tab" id="gn-tab-{@id}">
         <h3 class="view-header">
           <xsl:value-of select="$title"/>
         </h3>
@@ -115,6 +84,7 @@
       </div>
     </xsl:if>
   </xsl:template>
+
 
 
   <!-- Render sections. 2 types of sections could be

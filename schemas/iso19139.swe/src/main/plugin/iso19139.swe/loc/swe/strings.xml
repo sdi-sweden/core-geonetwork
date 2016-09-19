@@ -130,4 +130,7 @@
   <resourceMaintanceSection>Ajourhållning</resourceMaintanceSection>
   <maintenance_frequency>Underhållsfrekvens</maintenance_frequency>
   <maintenance_note>Anmärkning</maintenance_note>
+
+  <introduction>Översikt</introduction>
+  <allMetadata>Alla metadata</allMetadata>
 </strings>
