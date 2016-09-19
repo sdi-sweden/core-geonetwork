@@ -110,6 +110,7 @@
 
       var wmts = [new ol.layer.Tile({
         extent: extent,
+        group: 'Background layers',
         source: new ol.source.WMTS({
           url: 'https://api.lantmateriet.se/open/topowebb-ccby/' +
               'v1/wmts/token/' + apiKey + '/',
@@ -152,7 +153,6 @@
 
       var searchMap = new ol.Map({
         controls: [],
-        layers: wmts,
         interactions: interactions,
         view: new ol.View(mapsConfig)
       });
