@@ -608,6 +608,23 @@
                   <directory>${project.basedir}/../schemas/iso19139.swe/src/main/plugin</directory>
                   <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
                 </resource>
+
+                <resource>
+                  <directory>${project.basedir}/../web-ui/src/main/resources/catalog</directory>
+                  <targetPath>${basedir}/target/geonetwork/catalog</targetPath>
+                </resource>
+
+                <resource>
+                  <directory>${project.basedir}/../se-web-ui/src/main/resources/catalog</directory>
+                  <targetPath>${basedir}/target/geonetwork/catalog</targetPath>
+                </resource>
+
+                <resource>
+                  <directory>${basedir}/src/main/webapp/xslt</directory>
+                  <targetPath>${basedir}/target/geonetwork/xslt</targetPath>
+                </resource>
+
+
                 <!-- Copy the documentation in the webapp. -->
                 <resource>
                   <directory>${project.basedir}/../docs/manuals/target/doc</directory>
