@@ -608,7 +608,6 @@
   module.controller('SweFilterPanelController', ['$scope', '$localStorage',
     function($scope, $localStorage) {
 
-      $scope.open = false;
       $scope.advancedMode = false;
 
       // keys for topic categories translations
@@ -778,13 +777,13 @@
        * Toggles the filter panel.
        */
       $scope.toggleFilterPanel = function() {
-        if ($scope.open) {
-          angular.element('.site-filter-cont').removeClass('open');
-        } else {
-          angular.element('.site-filter-cont').addClass('open');
-        }
+        var element = angular.element('.site-filter-cont');
 
-        $scope.open = !$scope.open;
+        if (element.hasClass('open')) {
+          element.removeClass('open');
+        } else {
+          element.addClass('open');
+        }
       };
 
       /**
