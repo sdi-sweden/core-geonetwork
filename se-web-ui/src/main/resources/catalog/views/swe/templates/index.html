@@ -6,48 +6,7 @@
 
   <div data-gn-alert-manager=""></div><cookiewarning></cookiewarning>
 
-  <div class="overlay"></div>
-
-  <!-- Login popup -->
-  <div id="login-popup" class="popup login-popup" data-ng-controller="SweLoginController">
-    <div class="popup-cont">
-      <a href="" data-swe-hide-dialog="" data-dialog="#login-popup" class="cls-btn icon-cancel"></a>
-      <div class="popup-data">
-        <div class="login-section-cont">
-          <div class="login-section">
-            <h1>Logga in på Geodataportalen</h1>
-            <p>Användarkonto till Geodataportalen behövs bara om du är publicerare. Är du redan det logga in nedan.</p>
-
-              <form class="login-form" abineguid="63019F15C9C54502A51867AC03621D44"
-                    name="gnSigninForm" action="{{formAction}}"
-                    data-ng-if="user['@authenticated'] != 'true'" novalidate="novalidate">
-                <div class="form-row">
-                  <label>Användarnamn</label>
-                  <input type="text" class="input" id="inputUsername" name="username"
-                         data-ng-model="formData.username" placeholder="{{'username' | translate}}" required=""/>
-                </div>
-                <div class="form-row">
-                  <label>lösenord</label>
-                  <input type="password" class="input"  id="inputPassword" name="password"
-                         data-ng-model="formData.password" placeholder="{{'password' | translate}}" required="" />
-                </div>
-              </form>
-              <div class="btn-cont">
-                <div class="remember-login-cont">
-                  <div class="cb-cont checked"><div class="cb"><span class="icon-ok"></span><input type="checkbox"></div><span class="text">Håll mig inloggad</span></div>
-                  <a href="" class="link-btn publisher-user-login-btn" data-ng-click="login()" data-ng-disabled="!gnSigninForm.$valid">Logga in</a>
-                </div>
-              </div>
-            </div>
-          <div class="login-footer">
-            <a href="" class="login-help-link"><span class="icon-help-1"></span>glömt lösenord</a>
-            <a href="" class="login-plus-link"><span class="icon-plus"></span>skapa konto</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <div class="overlay"></div> 
 
   <!-- Mail comment popup -->
   <div id="mail-popup" class="popup mail-popup" data-ng-controller="SweMailController">

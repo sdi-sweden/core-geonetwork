@@ -16,7 +16,7 @@
         <li><a href="geodata_row_popup.html" class="-text-link">get-tjänster</a></li>
       </ul>
     </div>
-    <a data-swe-show-dialog="" data-dialog="#login-popup" data-focus-control="#inputUsername" data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="" class="header-login header-text login-popup-link">
+    <a data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="../../login" class="header-login header-text">
       för publicerare
     </a>
 
@@ -28,7 +28,7 @@
       administration
     </a>
 
-    <a data-ng-show="authenticated" href="../../j_spring_security_logout" class="header-logout header-text">
+    <a data-ng-show="authenticated" href="" data-ng-click="logout()" data-ng-controller="SweLogoutController" class="header-logout header-text">
       logout
     </a>
   </div>
