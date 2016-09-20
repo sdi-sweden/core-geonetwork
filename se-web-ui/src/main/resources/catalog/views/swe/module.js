@@ -507,59 +507,26 @@
 
     }]);
 
-  /**
-   * Controller for the login page popup.
-   */
-  module.controller('SweLoginController',
-      ['$scope', '$http', '$rootScope', '$translate',
-       '$location', '$window', '$timeout',
-       'gnUtilityService', 'gnConfig',
-       function($scope, $http, $rootScope, $translate,
-               $location, $window, $timeout,
-               gnUtilityService, gnConfig) {
-         $scope.formAction = '../../j_spring_security_check#' +
-         $location.path();
-
-         $scope.formData = {};
-
-         $scope.redirectUrl = gnUtilityService.getUrlParameter('redirect');
-         $scope.signinFailure = gnUtilityService.getUrlParameter('failure');
-         $scope.gnConfig = gnConfig;
-
-         $scope.mode = 'login';
-         $scope.usernameToRemind = '';
-         $scope.errorForgotPassword = '';
-
-         // TODO: https://github.com/angular/angular.js/issues/1460
-         // Browser autofill does not work properly
-         $timeout(function() {
-           $('input[data-ng-model], select[data-ng-model]').each(function() {
-             angular.element(this).controller('ngModel')
-              .$setViewValue($(this).val());
-           });
-         }, 300);
-
-         /**
-         * Ajax login.
-         */
-         $scope.login = function() {
-
-           $http({method: 'POST',
-              url: '../../j_spring_security_check',
-              data: $.param($scope.formData),
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-Ajax-call': true}})
-            .success(function(data) {
-             // Redirect to home page
-             window.location.href = '../../catalog.search?view=swe';
-           })
-            .error(function(data) {
-             // Show error message
-             alert('Error');
-           });
-         };
-       }]);
+  module.controller('SweLogoutController', 
+	  ['$scope', '$http',
+	  function($scope, $http) {
+		  
+		  $scope.logout = function() {
+			  $http({method: 'GET',
+	              url: '/AGLogout'
+	              
+	              /*headers: {
+	                'X-Ajax-call': true}*/})
+	            .success(function(data) {
+	             // Redirect to home page
+	             window.location.href = 'catalog.search';
+	           })
+	            .error(function(data) {
+	             // Show error message
+	             alert('Error');
+	           });
+		  };
+	  }]);
   
   /**
    * Controller for mail feedback popup.
