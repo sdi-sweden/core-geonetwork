@@ -664,7 +664,7 @@
               var layer = this.createOlWMS(map, {
                 LAYERS: getCapLayer.Name
               }, {
-                url: url || getCapLayer.url,
+                url: getCapLayer.url || url,
                 label: getCapLayer.Title,
                 attribution: attribution,
                 attributionUrl: attributionUrl,

@@ -37,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -167,6 +168,12 @@ public class LocaleRedirects {
     }
 
     private String lang(String langParam, String langCookie, String langHeader) {
+        // Give precedence to the locale configured in Spring
+        Locale locale = LocaleContextHolder.getLocale();
+
+        if (locale != null) {
+            return locale.getLanguage();
+        }
 
         if (langParam != null) {
             return langParam;

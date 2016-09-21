@@ -1,18 +1,20 @@
 <div class="geo-data-list">
-  <div class="geo-data-row" data-ng-repeat="md in searchResults.records" gn-fix-mdlinks="">
+  <div class="geo-data-row" data-ng-repeat="md in searchResults.records" gn-fix-mdlinks=""  data-swe-displayextent-onhover>
     <div class="cb-cont checked login-cb-cont"><div class="cb"><span class="icon-ok"></span><input type="checkbox"></div></div>
     <div class="meta-data-wrapper">
       <div class="meta-data-cont">
         <img src="../../catalog/views/swe/images/open-repo.png" class="repo-img">
         <ul class="tools-list">
-          <li><a href="" data-ng-click="showMetadata()"><span class="icon-doc-text"></span></a></li>
+          <li><a href="" data-ng-click="showMetadata($index, md, searchResults.records)"><span class="icon-doc-text"></span></a></li>
           <li><a href=""><div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span></div></a></li>
           <li data-ng-show="::layers.length > 0"><a href="" ata-ng-click="resultviewFns.addMdLayerToMap(layers[0], md)"><span class="icon-map"></span></a></li>
           <li data-ng-show="::downloads.length > 0"><a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}"><span class="download-icn-cont"><span class="icon-down-fat"></span></span></a></li>
         </ul>
         <div class="meta-data">
-          <h1><img src="../../catalog/views/swe/images/open-repo.png" class="mobile-repo-img">{{md.title || md.defaultTitle}} <div class="star-cont"><span class="icon-star-empty"></span><span class="icon-star"></span></div></h1>
-          <span class="excerpt">{{md.abstract || md.defaultAbstract}}</span>
+          <h1><img src="../../catalog/views/swe/images/open-repo.png" class="mobile-repo-img">{{md.title || md.defaultTitle}}
+            <div class="star-cont" data-ng-class="{'star-cont': true, 'starred' : containsFavorite(md.getId()) }" data-ng-click="toggleFavorite(md.getId())"><span class="icon-star-empty"></span><span class="icon-star"></span></div>
+          </h1>
+          <span class="excerpt"></span>
         </div>
         <div class="update-tag"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
                                                               data-from-now=""></span></span>
@@ -39,7 +41,7 @@
           </div>
           <div class="excerpt-colm col2">
             <div class="excerpt-desc">
-              <p data-ng-repeat="r in md.responsibleParty" data-ng-show="r.indexOf('pointOfContact') != -1">{{r | split:'|':2}}</p>
+              <p data-ng-repeat="r in md.responsibleParty" data-ng-show=" r.indexOf('Ägare') != -1">{{r | split:'|':2}}</p>
             </div>
           </div>
         </div>
@@ -71,44 +73,68 @@
     </div>
     <div class="geo-data-toolbar-cont">
       <div class="toolbar-left-list tool-bar-list">
-        <div data-swe-toggle-style="" class="dropdown-cont meta-dropdown">
-          <div class="-label"><span class="icon-doc-text"></span>visa metadata <span class="icon-down-dir"></span></div>
+        <div class="link-cont"  ng-if="!user.isEditorOrMore()">
+          <a href="" data-ng-click="showMetadata($index, md, searchResults.records)" class="-label-link" ><span class="icon-doc-text"></span>visa metadata</a>
+        </div>
+
+        <div data-swe-toggle-style="" class="dropdown-cont meta-dropdown" ng-if="user.isEditorOrMore()">
+          <div class="-label"><span class="icon-doc-text"></span>Hantera Metadata <span class="icon-down-dir"></span></div>
           <div data-swe-md-actions-menu="" />
-          <!--<ul class="-list">
-            <li><a href="" data-ng-click="showMetadata()" class="-text-link edit-form-popup-link">redigera</a></li>
-            <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records/{{md['geonet:info'].uuid}}">spara som ISO19139</a></li>
-            <li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md['geonet:info'].uuid)">Spara som DCAT</a></li>
-            <li><a href="" class="-text-link">ta bort</a></li>
-          </ul>-->
         </div>
         <div data-swe-toggle-style="" class="dropdown-cont loggedin-meta-dropdown">
           <div class="-label"><span class="icon-pencil"></span>Publicerarverktyg <span class="icon-down-dir"></span></div>
           <ul class="-list">
-            <li><a href="" data-ng-click="showMetadata()" class="-text-link edit-form-popup-link">redigera 432432</a></li>
-            <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records111/{{md['geonet:info'].uuid}}"> spara som ISO19139</a></li>
-            <li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md['geonet:info'].uuid)"> 222 Spara som DCAT</a></li>
+            <li><a href="" data-ng-click="showMetadata()" class="-text-link edit-form-popup-link">redigera</a></li>
+            <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records111/{{md['geonet:info'].uuid}}">spara som ISO19139</a></li>
+            <li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md['geonet:info'].uuid)">Spara som DCAT</a></li>
             <li><a href="" class="-text-link">ta bort</a></li>
           </ul>
         </div>
-        <div class="link-cont" >
-          <a class="-label-link" href=""><div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span></div>visa Täckningsyta</a>
+        <div class="link-cont" data-ng-show="md.geoBox !== undefined">
+          <a class="-label-link" href="" data-ng-click="showMetadataGeometry(md)"><div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span></div>visa Täckningsyta</a>
         </div>
       </div>
       <div class="toolbar-right-list tool-bar-list">
-        <!--<div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown">
+
+        <!-- Metadata links -->
+        <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="::links.length > 1">
           <div class="-label"><span class="icon-info"></span>Mer information <span class="icon-down-dir"></span></div>
           <ul class="-list">
-            <li><a href="" class="-text-link">redigera</a></li>
-            <li><a href="" class="-text-link">spara som ISO19139</a></li>
-            <li><a href="" class="-text-link">Spara som DCAT</a></li>
-            <li><a href="" class="-text-link">ta bort</a></li>
+            <li data-ng-repeat="l in ::links">
+              <a href="{{l.url}}" class="-text-link" target="_blank">{{l.desc || l.url}}</a>
+            </li>
           </ul>
-        </div>-->
-        <div class="link-cont" data-ng-show="::layers.length > 0">
-          <a href="" class="-label-link" data-ng-click="resultviewFns.addMdLayerToMap(layers[0], md)"><span class="icon-map"></span>Visa på karta</a>
         </div>
 
-        <div class="link-cont" data-ng-show="::downloads.length > 0">
+        <div class="link-cont" data-ng-show="::links.length == 1">
+          <a href="{{::links[0].url}}" class="-label-link" target="_blank"><span class="icon-info"></span>Mer information</a>
+        </div>
+
+        <!-- Map links -->
+        <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="::layers.length > 1">
+          <div class="-label"><span class="icon-map"></span>Visa på karta <span class="icon-down-dir"></span></div>
+          <ul class="-list">
+            <li data-ng-repeat="l in ::layers">
+              <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l.url, md)">{{l.desc || l.url}}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="link-cont" data-ng-show="::layers.length == 1">
+          <a href="" class="-label-link" data-ng-click="resultviewFns.addWmsLayersFromCap(layers[0].url, md)"><span class="icon-map"></span>Visa på karta</a>
+        </div>
+
+        <!-- Download links -->
+        <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="::downloads.length > 1">
+          <div class="-label"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>Hämta datamängd <span class="icon-down-dir"></span></div>
+          <ul class="-list">
+            <li data-ng-repeat="l in ::downloads">
+              <a href="{{l.url}}" download="{{l.desc}}" class="-text-link">{{l.desc || l.url}}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="link-cont" data-ng-show="::downloads.length == 1">
           <a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}" class="-label-link"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>Hämta datamängd</a>
         </div>
       </div>

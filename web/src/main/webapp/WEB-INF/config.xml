@@ -129,7 +129,7 @@
     <param name="DBHeartBeatEnabled" value="false"/>
     <param name="DBHeartBeatInitialDelaySeconds" value="20"/>
     <param name="DBHeartBeatFixedDelaySeconds" value="20"/>
-		
+
     <!-- Define if the schema catalog should be updated on startup.
         Default is true. -->
     <param name="createOrUpdateSchemaCatalog" value="true"/>
@@ -205,7 +205,7 @@
       <!-- TODO rename Catalogue.js -->
       <class name=".services.mef.Import"/>
       <output sheet="metadata/md-insert-results.xsl"/>
-			
+
       <error sheet="error-xml.xsl"/>
     </service>
 
@@ -232,8 +232,8 @@
       <class name=".services.crs.GetCRS"/>
       <output sheet="crs.xsl" contentType="text/xml; charset=UTF-8"/>
     </service>
-		
-		
+
+
     <service name="isolanguages" deprecated="true">
       <!-- Still used by ExtJS search form criteria on language -->
       <class name="org.fao.geonet.guiservices.isolanguages.Get"/>
@@ -261,10 +261,10 @@
   <include>config/config-service-csv.xml</include>
   <include>config/config-service-dcat-rdf.xml</include>
   <include>config/config-service-pdf.xml</include>
-  
+
   <include>config/config-service-thesaurus.xml</include>
   <include>config/config-service-region.xml</include>
-  
+
   <include>config/config-service-admin.xml</include>
   <include>config/config-service-admin-harvesting.xml</include>
 
@@ -285,7 +285,7 @@
 
   <include>config/config-service-csw.xml</include>
   <include>config/config-service-csw-virtual.xml</include>
-  
+
   <include>config/config-service-sitemap.xml</include>
 
   <include>config/config-service-crs.xml</include>
@@ -295,7 +295,7 @@
   <include>config/config-ui-search.xml</include>
   <include>config/config-ui-metadata.xml</include>
   <include>config/config-ui-admin.xml</include>
-  
+
   <include>config/config-service-monitoring.xml</include>
 
   <include>config/config-service-reports.xml</include>

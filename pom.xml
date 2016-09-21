@@ -178,6 +178,7 @@
             <includeTests>false</includeTests>
             <failOnError>false</failOnError>
           </configuration>
+<!-- -->
          <executions>
             <execution>
               <goals>
@@ -186,6 +187,7 @@
               <phase>test</phase>
             </execution>
           </executions>
+<!-- -->
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

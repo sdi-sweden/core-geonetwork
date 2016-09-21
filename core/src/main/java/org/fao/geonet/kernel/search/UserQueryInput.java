@@ -39,7 +39,7 @@ import org.jdom.Element;
 
 /**
  * Search parameters that can be provided by a search client.
- * 
+ *
  * @author heikki doeleman
  * @author francois prunayre
  */
@@ -58,7 +58,7 @@ public class UserQueryInput {
     /**
      * Don't take into account those field in search (those field are not indexed but are search
      * options).
-     * 
+     *
      * TODO : move to lucene-config.xml because those fields depends on the client
      */
     public static final List<String> RESERVED_FIELDS = Arrays.asList(
@@ -157,7 +157,7 @@ public class UserQueryInput {
 
     /**
      * Creates this from a JDOM element.
-     * 
+     *
      * @param jdom input
      */
     public UserQueryInput(Element jdom) {
@@ -243,7 +243,7 @@ public class UserQueryInput {
     /**
      * Return all search criteria except those which does not contains textual information like
      * identifiers or codelists (eg. UUID, PARENTUUID).
-     * 
+     *
      *
      * Those fields may be used for language detection.
      */

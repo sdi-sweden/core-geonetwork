@@ -40,7 +40,7 @@ import java.util.Properties;
 /**
  * Utility class to send mails. Supports both html and plain text. It usually
  * takes the settings from the database, but you can also indicate all params.
- * 
+ *
  * @author delawen
  */
 public class MailUtil {
@@ -50,7 +50,7 @@ public class MailUtil {
     /**
      * Send an html mail. Will look on the settings directly to know the
      * remitent
-     * 
+     *
      * @param toAddress
      * @param subject
      * @param htmlMessage
@@ -87,7 +87,7 @@ public class MailUtil {
     /**
      * Send a plain text mail. Will look on the settings directly to know the
      * remitent
-     * 
+     *
      * @param toAddress
      * @param subject
      * @param message
@@ -123,7 +123,7 @@ public class MailUtil {
     /**
      * Send a plain text mail. Will look on the settings directly to know the
      * remitent
-     * 
+     *
      * @param toAddress
      * @param subject
      * @param message
@@ -176,7 +176,7 @@ public class MailUtil {
 
     /**
      * Send an html mail with atachments
-     * 
+     *
      * @param toAddress
      * @param from
      * @param subject
@@ -272,7 +272,7 @@ public class MailUtil {
 
     /**
      * Send a plain text mail
-     * 
+     *
      * @param toAddress
      * @param from
      * @param subject
@@ -321,18 +321,59 @@ public class MailUtil {
     }
 
     /**
+     * Sends a plain text mail to the system administrator.
+     *
+     * @param from
+     * @param fromDesc
+     * @param subject
+     * @param message
+     * @param settings
+     * @return
+     */
+    public static Boolean sendMailToAdmin(String from, String fromDesc,
+                                   String subject, String message,
+                                   SettingManager settings) {
+
+        Email email = new SimpleEmail();
+
+        String username = settings
+            .getValue("system/feedback/mailServer/username");
+        String password = settings
+            .getValue("system/feedback/mailServer/password");
+        Boolean ssl = settings
+            .getValueAsBool("system/feedback/mailServer/ssl");
+        Boolean tls = settings
+            .getValueAsBool("system/feedback/mailServer/tls");
         Boolean ignoreSslCertificateErrors = settings.getValueAsBool
             (Settings.SYSTEM_FEEDBACK_MAILSERVER_IGNORE_SSL_CERTIFICATE_ERRORS, false);
+        String hostName = settings.getValue("system/feedback/mailServer/host");
+        Integer smtpPort = Integer.valueOf(settings
+            .getValue("system/feedback/mailServer/port"));
+
         configureBasics(hostName, smtpPort, from, username, password, email, ssl, tls, ignoreSslCertificateErrors);
+
+        email.setSubject(subject);
+        try {
+            email.addTo(settings.getValue("system/feedback/email"));
+            email.setMsg(message);
+        } catch (EmailException e1) {
+            e1.printStackTrace();
+            return false;
+        }
+
+        return send(email);
+    }
+
+    /**
      * Create data information to compose the mail
-     * 
+     *
      * @param hostName
      * @param smtpPort
      * @param from
      * @param username
      * @param password
      * @param email
-     * @param ssl 
+     * @param ssl
      * @param tls
      * @param ignoreSslCertificateErrors
      */
@@ -354,7 +395,7 @@ public class MailUtil {
         if (username != null) {
             email.setAuthenticator(new DefaultAuthenticator(username, password));
         }
-        
+
 
         email.setDebug(true);
 
@@ -369,7 +410,7 @@ public class MailUtil {
                 email.setSslSmtpPort(smtpPort + "");
             }
         }
-        
+
         if (ignoreSslCertificateErrors != null && ignoreSslCertificateErrors) {
             try {
                 Session mailSession = email.getMailSession();
@@ -398,7 +439,7 @@ public class MailUtil {
 
     /**
      * Configure the basics (hostname, port, username, password,...)
-     * 
+     *
      * @param settings
      * @param email
      */

@@ -351,6 +351,7 @@ public class Publish {
         return true;
     }
 
+
     @SuppressWarnings("serial")
     @XmlRootElement(name = "publishReport")
     @XmlAccessorType(XmlAccessType.FIELD)
