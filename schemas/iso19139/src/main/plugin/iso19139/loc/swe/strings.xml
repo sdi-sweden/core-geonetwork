@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
+  ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
+  ~ and United Nations Environment Programme (UNEP)
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 2 of the License, or (at
+  ~ your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but
+  ~ WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  ~ General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program; if not, write to the Free Software
+  ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+  ~
+  ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
+  ~ Rome - Italy. email: geonetwork@osgeo.org
+  -->
+
+<strings>
+  <understandResource>Information om datat</understandResource>
+  <relatedResources>Relaterade tjänster och länkade data</relatedResources>
+  <techInfo>Teknisk information</techInfo>
+  <contactInfo>Kontaktinformation</contactInfo>
+  <mdContactInfo>Metadatakontakt</mdContactInfo>
+  <refDate>Referensdatum</refDate>
+  <temporalRef>Tidsmässig information</temporalRef>
+  <constraintInfo>Restriktioner</constraintInfo>
+  <xml_iso19139>Spara metadata till en ISO19139 XML file</xml_iso19139>
+  <xml_iso19139Tooai_dc>Spara metadata till en OAI Dublin Core XML fil</xml_iso19139Tooai_dc>
+
+  <!-- New strings added for the AngularJS editor -->
+  <!-- View and tabs -->
+  <advanced>Utökad</advanced>
+  <default>Standard</default>
+  <simple>Enkel</simple>
+  <inspire>INSPIRE</inspire>
+  <resource>Resurs</resource>
+  <xml>XML</xml>
+  <metadata>Metadata</metadata>
+  <identificationInfo>Identifiering</identificationInfo>
+  <distributionInfo>Distribution</distributionInfo>
+  <dataQualityInfo>Kvalite</dataQualityInfo>
+  <spatialRepresentationInfo>Spatial rep.</spatialRepresentationInfo>
+  <referenceSystemInfo>Ref. system</referenceSystemInfo>
+  <contentInfo>Innehåll</contentInfo>
+  <portrayalCatalogueInfo>Presentation</portrayalCatalogueInfo>
+  <metadataConstraints>Md. Begräsningar</metadataConstraints>
+  <metadataMaintenance>Md. Underhpåll</metadataMaintenance>
+  <applicationSchemaInfo>Schema info</applicationSchemaInfo>
+  <noThesaurusName>Nyckelord</noThesaurusName>
+  <bboxesSection>Geographic täckning</bboxesSection>
+
+  <!-- XSD error translation -->
+  <invalidElement>Invalid element. Invalid content was found starting with element: </invalidElement>
+  <onElementOf>One of the following elements </onElementOf>
+  <isExpected> is expected.</isExpected>
+  <isNotComplete> is not complete.</isNotComplete>
+  <elementLocated>Parent element is </elementLocated>
+  <missingElement>Missing element. The content of element: </missingElement>
+  <invalidValue>Invalid or missing value.</invalidValue>
+  <notValidFor> is not a valid value for </notValidFor>
+  <xsdErrorIs>XSD error is: </xsdErrorIs>
+  <inElement> in element </inElement>
+  <enum1>Value </enum1>
+  <enum2> is not valid for the field </enum2>
+  <enum3>List of values is :</enum3>
+
+  <!-- INSPIRE view labels and help -->
+  <url>Onlinelänk</url>
+  <identifier>Resursidentifierare</identifier>
+  <rsIdentifier>Projektion</rsIdentifier>
+  <referenceDate>Temporal information</referenceDate>
+  <creationDate>Produktionsdatum</creationDate>
+  <hierarchyLevel>Resurstyp</hierarchyLevel>
+  <publicationDate>Publiceringsdatum</publicationDate>
+  <revisionDate>Revideringsdatum</revisionDate>
+  <temporalRangeSection>Temporaluträckning</temporalRangeSection>
+  <beginPosition>Start</beginPosition>
+  <endPosition>Slut</endPosition>
+  <conformity>Överensstämmelse</conformity>
+  <conformity_title>Titel</conformity_title>
+  <conformity_date>Datum</conformity_date>
+  <explanation>Förklaring</explanation>
+  <pass>Överensstämmer</pass>
+  <indeterminatePosition>Obestämbar position</indeterminatePosition>
+  <pointOfContact>Resurskontakt</pointOfContact>
+  <metadataPointOfContact>Metadatakontakt</metadataPointOfContact>
+  <organisationName>Organisationsnamn</organisationName>
+  <electronicMailAddress>ePost</electronicMailAddress>
+  <role>Roll</role>
+  <encoding>Tecknuppsättning</encoding>
+  <inspireTheme>INSPIRE tema</inspireTheme>
+  <inspireThemeURI>INSPIRE tema</inspireThemeURI>
+  <format>Format</format>
+  <format_version>Version</format_version>
+  <lineage>Historik</lineage>
+  <spatialResolution>Rumslig upplösning (skala)</spatialResolution>
+  <spatialDistance>Rumslig upplösning (distans)</spatialDistance>
+  <accessConstraints>Åtkomst begränsningar</accessConstraints>
+  <useLimitation>Användningsbegräsningar</useLimitation>
+  <add-resource-id>Skapa ny identifierare för resurs</add-resource-id>
+  <add-resource-idHelp>Skapa en identifierare baserat på katalogens adress (ex. http://www.organization.org/catalogue/5391bf69-44bc-4ea0-8cc0-6cf6c3bc81ae).</add-resource-idHelp>
+  <add-extent-from-geokeywords>Beräkna utsträckning från nyckelord</add-extent-from-geokeywords>
+  <add-extent-from-geokeywordsHelp>Analysera alla nyckelord och försök ta fram lämplig utsträckning.</add-extent-from-geokeywordsHelp>
+
+  <swedish>Vy SDI-Sverige</swedish>
+  <identificationInfo2>Identifiering</identificationInfo2>
+  <referenceSystemInfo2>Ref. system</referenceSystemInfo2>
+  <distributionInfo2>Distribution</distributionInfo2>
+  <metadata2>Metadata</metadata2>
+  <extent>Utsträckning</extent>
+  <temporalRangeSection2>Temporal utsträckning</temporalRangeSection2>
+  <distributorContact>Distributör</distributorContact>
+  <metadataMaintenance2>Md. underhåll</metadataMaintenance2>
+</strings>
