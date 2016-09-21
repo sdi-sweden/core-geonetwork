@@ -40,15 +40,18 @@
   var module = angular.module('gn_search_swe', [
     'gn_related_directive', 'gn_search',
     'gn_resultsview', 'cookie_warning',
-    'swe_search_config', 'swe_directives']);
+    'swe_search_config', 'swe_directives', 'ngStorage']);
 
   module.controller('gnsSwe', [
     '$scope',
+    '$localStorage',
     '$location',
     'suggestService',
     '$http',
+    '$compile',
     '$window',
     '$translate',
+    '$timeout',
     'gnUtilityService',
     'gnSearchSettings',
     'gnViewerSettings',
@@ -60,17 +63,20 @@
     'gnOwsContextService',
     'hotkeys',
     'gnGlobalSettings',
-    function($scope, $location, suggestService, $http, $window, $translate,
+    'gnMdFormatter',
+    function($scope, $localStorage, $location, suggestService,
+             $http, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings) {
+             hotkeys, gnGlobalSettings, gnMdFormatter) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
 
       $scope.viewMode = 'full';
 
+      $scope.formatter = gnSearchSettings.formatter;
       $scope.modelOptions = angular.copy(gnGlobalSettings.modelOptions);
       $scope.modelOptionsForm = angular.copy(gnGlobalSettings.modelOptions);
       $scope.gnWmsQueue = gnWmsQueue;
@@ -79,9 +85,51 @@
       $scope.resultTemplate = gnSearchSettings.resultTemplate;
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
+
+      $scope.$on('someEvent', function(event, map) {
+        alert('event received. url is: ' + map.url);
+
+      });
+
       $scope.toggleMap = function() {
         $(searchMap.getTargetElement()).toggle();
       };
+
+      /**
+       * Toogle a favorite metadata selection.
+       *
+       * @param {number} id  Metadata identifier
+         */
+      $scope.toggleFavorite = function(id) {
+        if ($localStorage.favoriteMetadata == undefined) {
+          $localStorage.favoriteMetadata = [];
+        }
+
+        var pos = $localStorage.favoriteMetadata.indexOf(id);
+
+        if (pos > -1) {
+          $localStorage.favoriteMetadata.splice(pos, 1);
+        } else {
+          $localStorage.favoriteMetadata.push(id);
+        }
+      };
+
+      /**
+       * Checks if a metadata is in the favorite selection.
+       *
+       * @param {number} id Metadata identifier
+       * @return {boolean}
+         */
+      $scope.containsFavorite = function(id) {
+        if ($localStorage.favoriteMetadata == undefined) {
+          $localStorage.favoriteMetadata = [];
+        }
+
+        var pos = $localStorage.favoriteMetadata.indexOf(id);
+
+        return (pos > -1);
+      };
+
       hotkeys.bindTo($scope)
           .add({
             combo: 'h',
@@ -153,6 +201,75 @@
         $scope.openRecord(mdView.current.index - 1);
       };
 
+
+      /**
+       * Returns an array of map links for a metadata.
+       *
+       * @param {object} md
+       * @return {Array}
+         */
+      $scope.getMapLinks = function(md) {
+        var links = [];
+
+        if (md == null) return links;
+
+        for (var t in gnSearchSettings.linkTypes.layers) {
+          var d = md.getLinksByType(gnSearchSettings.linkTypes.layers[t]);
+
+          if (d.length > 0) {
+            links = links.concat(d);
+          }
+        }
+
+        return links;
+      };
+
+
+      /**
+       * Returns an array of download links for a metadata.
+       *
+       * @param {object} md
+       * @return {Array}
+       */
+      $scope.getDownloadLinks = function(md) {
+        var downloads = [];
+
+        if (md == null) return downloads;
+
+        for (var t in gnSearchSettings.linkTypes.downloads) {
+          var d = md.getLinksByType(gnSearchSettings.linkTypes.downloads[t]);
+
+          if (d.length > 0) {
+            downloads = downloads.concat(d);
+          }
+        }
+
+        return downloads;
+      };
+
+
+      /**
+       * Returns an array of information links for a metadata.
+       *
+       * @param {object} md
+       * @return {Array}
+       */
+      $scope.getInformationLinks = function(md) {
+        var information = [];
+
+        if (md == null) return information;
+
+        for (var t in gnSearchSettings.linkTypes.links) {
+          var d = md.getLinksByType(gnSearchSettings.linkTypes.links[t]);
+
+          if (d.length > 0) {
+            information = information.concat(d);
+          }
+        }
+
+        return information;
+      };
+
       $scope.infoTabs = {
         lastRecords: {
           title: 'lastRecords',
@@ -187,12 +304,35 @@
           }
           gnMap.addWmsFromScratch(viewerMap, link.url, link.name, false, md);
         },
+        addWmsLayersFromCap: function(url, md) {
+          // Open the map panel
+          $scope.showMapPanel();
+
+          var name = 'layers';
+          var match = RegExp('[?&]' + name + '=([^&]*)').exec(url);
+          var layersList = match &&
+              decodeURIComponent(match[1].replace(/\+/g, ' '));
+
+          if (layersList) {
+            layersList = layersList.split(',');
+
+            for (var i = 0; i < layersList.length; i++)
+              if (!gnMap.isLayerInMap(viewerMap,
+                  layersList[i], url)) {
+                gnMap.addWmsFromScratch(viewerMap, url, layersList[i],
+                    false, md);
+              }
+          } else {
+            gnMap.addWmsAllLayersFromCap(viewerMap, url, false);
+          }
+
+        },
         addAllMdLayersToMap: function(layers, md) {
           angular.forEach(layers, function(layer) {
             $scope.resultviewFns.addMdLayerToMap(layer, md);
           });
         },
-        loadMap: function(map, md) {
+        loadMap: function(map) {
           gnOwsContextService.loadContextFromUrl(map.url, viewerMap);
         }
       };
@@ -205,10 +345,81 @@
           match(/^(\/[a-zA-Z0-9]*)($|\/.*)/)[1];
 
 
+      $scope.activateTabs = function() {
+        // activate tabs
+        $('#tab-result-nav a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show');
+        });
+        // hide empty
+        $('#tab-result-nav a').each(function() {
+          if ($($(this).attr('href')).length === 0) {
+            $(this).parent().hide();
+          }
+        });
+        // show the first
+        $('#tab-result-nav a:first').tab('show');
+      };   
+
       $scope.showMetadata = function(index, md, records) {
         angular.element('.geodata-row-popup').addClass('show');
         $scope.$emit('body:class:add', 'show-overlay');
         gnMdView.feedMd(index, md, records);
+
+        var mdUrl = 'md.format.xml?xsl=xsl-view&view=full-view-swe&uuid={{uuid}}'; // + md['geonet:info'].uuid;
+        // set scope md
+        $scope.md = md;
+
+        gnMdFormatter.getFormatterUrl(mdUrl, $scope, md['geonet:info'].uuid).then(function(url) {
+          $http.get(url).then(
+            function(response) {
+              var snippet = response.data.replace(
+                  '<?xml version="1.0" encoding="UTF-8"?>', '');
+
+              $('#gn-metadata-display').find('*').remove();
+
+              //$scope.compileScope.$destroy();
+
+              // Compile against a new scope
+              $scope.compileScope = $scope.$new();
+              var content = $compile(snippet)($scope.compileScope);
+
+              $('#gn-metadata-display').append(content);
+
+              $scope.activateTabs();
+
+console.log('start tabs') ;             
+            });
+          });
+
+      };
+
+      /**
+       * Displays the metadata BBOX in the search map.
+       *
+       * @param {object} md  Metadata
+         */
+      $scope.showMetadataGeometry = function(md) {
+        var feature = gnMap.getBboxFeatureFromMd(md,
+            $scope.searchObj.searchMap.getView().getProjection());
+
+
+        if (angular.isUndefined($scope.vectorLayer)) {
+          var vectorSource = new ol.source.Vector({
+            features: []
+          });
+
+          $scope.vectorLayer = new ol.layer.Vector({
+            source: vectorSource,
+            style: gnSearchSettings.olStyles.mdExtentHighlight
+          });
+
+          $scope.searchObj.searchMap.addLayer($scope.vectorLayer);
+        }
+
+        $scope.vectorLayer.getSource().clear();
+        $scope.vectorLayer.getSource().addFeature(feature);
+
       };
 
       /**
@@ -286,6 +497,14 @@
           }
           $obj.removeClass('full').addClass('small');
         }
+
+        // Refresh the viewer map
+
+        $timeout(function() {
+          viewerMap.updateSize();
+          viewerMap.renderSync();
+        }, 500);
+
         return false;
       };
 
@@ -334,84 +553,62 @@
 
     }]);
 
+  module.controller('SweLogoutController', 
+	  ['$scope', '$http',
+	  function($scope, $http) {
+		  
+		  $scope.logout = function() {
+			  $http({method: 'GET',
+	              url: '/AGLogout'
+	              
+	              /*headers: {
+	                'X-Ajax-call': true}*/})
+	            .success(function(data) {
+	             // Redirect to home page
+	             window.location.href = 'catalog.search';
+	           })
+	            .error(function(data) {
+	             // Show error message
+	             alert('Error');
+	           });
+		  };
+	  }]);
+  
   /**
-   * Controller for the login page popup.
-   */
-  module.controller('SweLoginController',
-      ['$scope', '$http', '$rootScope', '$translate',
-       '$location', '$window', '$timeout',
-       'gnUtilityService', 'gnConfig',
-       function($scope, $http, $rootScope, $translate,
-               $location, $window, $timeout,
-               gnUtilityService, gnConfig) {
-         $scope.formAction = '../../j_spring_security_check#' +
-          $location.path();
-
-         $scope.formData = {};
-
-         $scope.redirectUrl = gnUtilityService.getUrlParameter('redirect');
-         $scope.signinFailure = gnUtilityService.getUrlParameter('failure');
-         $scope.gnConfig = gnConfig;
-
-         // TODO: https://github.com/angular/angular.js/issues/1460
-         // Browser autofill does not work properly
-         $timeout(function() {
-           $('input[data-ng-model], select[data-ng-model]').each(function() {
-             angular.element(this).controller('ngModel')
-              .$setViewValue($(this).val());
-           });
-         }, 300);
-
-         /**
-         * Ajax login.
-         */
-         $scope.login = function() {
-
-           $http({method: 'POST',
-              url: '../../j_spring_security_check',
-              data: $.param($scope.formData),
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-Ajax-call': true}})
-            .success(function(data) {
-              // Redirect to home page
-              window.location.href = '../../catalog.search?view=swe';
-            })
-            .error(function(data) {
-              // Show error message
-              alert('Error');
-            });
-         };
-
-       }]);
-
-
-  /**
-   * Controller for the landing page popup.
+   * Controller for mail feedback popup.
    *
    */
-  module.controller('SweLandingPageWarningController', [
-    '$cookies', '$scope',
-    function($cookies, $scope) {
+  module.controller('SweMailController', [
+    '$cookies', '$scope', '$http',
+    function($cookies, $scope, $http) {
+      $scope.feedbackResult = null;
+      $scope.feedbackResultError = false;
 
-      $scope.hideLandingPage = true;
+      $scope.sendMail = function() {
+        if ($scope.feedbackForm.$invalid) return;
 
-      $scope.init = function() {
-        var hiddenLandingPage = window.localStorage.getItem('hideLandingPage');
+        $http.post('../api/0.1/site/feedback', null, {params: $scope.user})
+            .then(function successCallback(response) {
+              $scope.feedbackResult = response.data;
+              $scope.feedbackResultError = false;
 
-        if (hiddenLandingPage) {
-          angular.element('#landing-popup').removeClass('show');
-        } else {
-          angular.element('#landing-popup').addClass('show');
-          $scope.$emit('body:class:add', 'show-overlay');
-        }
+            }, function errorCallback(response) {
+              $scope.feedbackResult = response.data;
+              $scope.feedbackResultError = true;
+
+            });
       };
 
       $scope.close = function() {
-        if ($scope.hideLandingPage) {
-          window.localStorage.setItem('hideLandingPage', true);
-        }
-        angular.element('#landing-popup').removeClass('show');
+        // Cleanup and close the dialog
+        $scope.user = {};
+        $scope.feedbackResult = null;
+        $scope.feedbackResultError = false;
+
+        $scope.feedbackForm.$setPristine();
+        $scope.feedbackForm.$setValidity();
+
+        angular.element('#mail-popup').removeClass('show');
         $scope.$emit('body:class:remove', 'show-overlay');
       };
     }]);
@@ -421,39 +618,286 @@
    * Controller for the filter panel.
    *
    */
-  module.controller('SweFilterPanelController', ['$scope',
-    function($scope) {
+  module.controller('SweFilterPanelController', ['$scope', '$localStorage',
+    function($scope, $localStorage) {
 
-      $scope.open = false;
       $scope.advancedMode = false;
 
-      $scope.toggleFilterPanel = function() {
-        if ($scope.open) {
-          angular.element(".site-filter-cont").removeClass('open');
+      // keys for topic categories translations
+      $scope.topicCategories = ['farming', 'biota', 'boundaries',
+        'climatologyMeteorologyAtmosphere', 'economy',
+        'elevation', 'environment', 'geoscientificInformation', 'health',
+        'imageryBaseMapsEarthCover', 'intelligenceMilitary', 'inlandWaters',
+        'location', 'oceans', 'planningCadastre', 'society', 'structure',
+        'transportation', 'utilitiesCommunication'];
+
+      // Selected topic categories
+      $scope.selectedTopicCategories = [];
+
+
+      /**
+       * Toggles a topic category selection.
+       *
+       * @param {string} topic
+         */
+      $scope.toggleTopicCategory = function(topic) {
+        var pos = $scope.selectedTopicCategories.indexOf(topic);
+
+        if (pos > -1) {
+          $scope.selectedTopicCategories.splice(pos, 1);
         } else {
-          angular.element(".site-filter-cont").addClass('open');
+          $scope.selectedTopicCategories.push(topic);
         }
 
-        $scope.open = !$scope.open;
+        $scope.searchObj.params.topicCat =
+            $scope.selectedTopicCategories.join(' or ');
+        $scope.triggerSearch();
       };
 
+
+      /**
+       * Unselects a topic category.
+       *
+       * @param {string} topic
+         */
+      $scope.unselectTopicCategory = function(topic) {
+        var pos = $scope.selectedTopicCategories.indexOf(topic);
+
+        if (pos > -1) {
+          $scope.selectedTopicCategories.splice(pos, 1);
+        }
+
+        $scope.searchObj.params.topicCat =
+            $scope.selectedTopicCategories.join(' or ');
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Checks if a topic category is selected.
+       *
+       * @param {string} topic
+       * @return {boolean}
+         */
+      $scope.isTopicCategorySelected = function(topic) {
+        return ($scope.selectedTopicCategories.indexOf(topic) > -1);
+      };
+
+
+      /**
+       * Toggles the map resources filter.
+       *
+       */
+      $scope.toggleMapResources = function() {
+        $scope.searchObj.params.dynamic =
+            ($scope.searchObj.params.dynamic == 'true' ? '' : 'true');
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Unselects the map resources filter.
+       */
+      $scope.unselectMapResources = function() {
+        delete $scope.searchObj.params.dynamic;
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Toggles the download resources filter.
+       */
+      $scope.toggleDownloadResources = function() {
+        $scope.searchObj.params.download =
+            ($scope.searchObj.params.download == 'true' ? '' : 'true');
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Unselects the download resources filter.
+       */
+      $scope.unselectDownloadResources = function() {
+        delete $scope.searchObj.params.download;
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Unselects the resource date from.
+       */
+      $scope.unselectResourceDateFrom = function() {
+        delete $scope.searchObj.params.resourceDateFrom;
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Unselects the resource date to.
+       */
+      $scope.unselectResourceDateTo = function() {
+        delete $scope.searchObj.params.resourceDateTo;
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Toggles a the favorites selection.
+       *
+       * @param {string} topic
+       */
+      $scope.toggleFavorites = function() {
+        // Use an invalid value -- to manage the case no favorites are selected,
+        // to don't display any metadata
+        if ($localStorage.favoriteMetadata != undefined) {
+          $scope.searchObj.params._id =
+              ($scope.searchObj.params._id ? '' :
+              ($localStorage.favoriteMetadata.length > 0) ?
+              $localStorage.favoriteMetadata.join(' or ') : '--');
+        } else {
+          $scope.searchObj.params._id =
+              ($scope.searchObj.params._id ? '' : '--');
+        }
+
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Unselects the favorites filter.
+       */
+      $scope.unselectFavoriteResources = function() {
+        delete $scope.searchObj.params._id;
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Clean search options to view all metadata.
+       */
+      $scope.viewAllMetadata = function() {
+        $scope.selectedTopicCategories = [];
+        delete $scope.searchObj.params.topicCat;
+        delete $scope.searchObj.params.download;
+        delete $scope.searchObj.params.dynamic;
+        delete $scope.searchObj.params.any;
+
+        $scope.triggerSearch();
+      };
+
+
+      /**
+       * Toggles the filter panel.
+       */
+      $scope.toggleFilterPanel = function() {
+        var element = angular.element('.site-filter-cont');
+
+        if (element.hasClass('open')) {
+          element.removeClass('open');
+        } else {
+          element.addClass('open');
+        }
+      };
+
+      /**
+       * Toggles the advance options panel.
+       */
       $scope.toggleAdvancedOptions = function() {
         if ($scope.advancedMode) {
-          angular.element(".filter-options-cont").removeClass('open');
-          angular.element(".site-filter-cont").removeClass('advanced');
+          angular.element('.filter-options-cont').removeClass('open');
+          angular.element('.site-filter-cont').removeClass('advanced');
         } else {
-          angular.element(".filter-options-cont").addClass('open');
-          angular.element(".site-filter-cont").addClass('advanced');
+          angular.element('.filter-options-cont').addClass('open');
+          angular.element('.site-filter-cont').addClass('advanced');
         }
 
         $scope.advancedMode = !$scope.advancedMode;
       };
 
-
+      /**
+       * Closes the filter panel.
+       */
       $scope.closeFilterPanel = function() {
-        angular.element(".site-filter-cont").removeClass('open');
+        angular.element('.site-filter-cont').removeClass('open');
 
-        $scope.open = false
+        $scope.open = false;
+      };
+    }]);
+
+  /**
+  * Controller for the image filter panel.
+  *
+  */
+  module.controller('SweFilterController', ['$scope', function($scope) {
+    $scope.hovering = false;
+    // replace prefined queries with a service returning the possible queries
+    $scope.predefinedQueries = [{
+      image: 'http://lorempixel.com/210/125/nature/?id=1',
+      tooltip: 'Filter 1',
+      text: 'Filter 1',
+      query: 'Filter Query 1',
+      url: 'http://localhost:8080/geonetwork/catalog/views/' +
+          'swe/resources/owscontext.xml'
+    }, {
+      image: 'http://lorempixel.com/210/125/nature/?id=2',
+      tooltip: 'Filter 2',
+      text: 'Filter 2',
+      query: 'Filter Query 2',
+      url: 'http://localhost:8080/geonetwork/catalog/views/' +
+          'swe/resources/owscontext.xml'
+    }, {
+      image: 'http://lorempixel.com/210/125/nature/?id=3',
+      tooltip: 'Filter 3',
+      text: 'Filter 3',
+      query: 'Filter Query 3',
+      url: 'http://localhost:8080/geonetwork/catalog/views/' +
+          'swe/resources/owscontext.xml'
+    }, {
+      image: 'http://lorempixel.com/210/125/nature/?id=4',
+      tooltip: 'Filter 4',
+      text: 'Filter 4',
+      query: 'Filter Query 4',
+      url: 'http://localhost:8080/geonetwork/catalog/views/' +
+          'swe/resources/owscontext.xml'
+    }];
+
+    $scope.doFilter = function(query) {
+      var map = {};
+      map.url = query.url;
+      $scope.resultviewFns.loadMap(map);
+    };
+  }]);
+
+
+  /**
+   * orderByTranslated Filter
+   * Sort ng-options or ng-repeat by translated values
+   * @example
+   *   ng-repeat="scheme in data.schemes |
+   *    orderByTranslated:'storage__':'collectionName'"
+   * @param  {Array|Object} array or hash
+   * @param  {String} i18nKeyPrefix
+   * @param  {String} objKey (needed if hash)
+   * @return {Array}
+   */
+  module.filter('orderByTranslated', ['$translate', '$filter',
+    function($translate, $filter) {
+      return function(array, i18nKeyPrefix, objKey) {
+        var result = [];
+        var translated = [];
+        angular.forEach(array, function(value) {
+          var i18nKeySuffix = objKey ? value[objKey] : value;
+          translated.push({
+            key: value,
+            label: $translate.instant(i18nKeyPrefix + i18nKeySuffix)
+          });
+        });
+        angular.forEach($filter('orderBy')(translated, 'label'),
+            function(sortedObject) {
+              result.push(sortedObject.key);
+            }
+        );
+        return result;
       };
     }]);
 

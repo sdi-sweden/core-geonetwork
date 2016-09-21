@@ -115,7 +115,7 @@
     'gnEditor', 'gnSearchManagerService', 'gnSchemaManagerService',
     'gnConfigService', 'gnUtilityService', 'gnOnlinesrc',
     'gnCurrentEdit', 'gnConfig', 'gnMetadataActions', 'Metadata',
-    function($q, $scope, $routeParams, $http, $rootScope, 
+    function($q, $scope, $routeParams, $http, $rootScope,
         $translate, $compile, $timeout, $location,
         gnEditor, gnSearchManagerService, gnSchemaManagerService,
         gnConfigService, gnUtilityService, gnOnlinesrc,
@@ -260,7 +260,8 @@
                 // appending a random int in order to avoid
                 // caching by route.
                 $scope.editorFormUrl = gnEditor
-                  .buildEditUrlPrefix('md.edit') + '&starteditingsession=yes&' +
+                    .buildEditUrlPrefix('editor') +
+                    '&starteditingsession=yes&' +
                     '_random=' + Math.floor(Math.random() * 10000);
 
                 window.onbeforeunload = function() {
@@ -296,6 +297,19 @@
             });
           }
         });
+      };
+
+      /**
+       * Update textarea containing XML when the ACE editor change.
+       * See form-builder-xml.xsl.
+       */
+      $scope.xmlEditorChange = function(e) {
+        // TODO: Here we could check if XML is valid based on ACE info
+        // and disable save action ?
+        $('textarea[name=data]').val(e[1].getSession().getValue());
+      };
+      $scope.xmlEditorLoaded = function(e) {
+        // TODO: Adjust height of editor based on screen size ?
       };
 
       $scope.startVersioning = function() {
@@ -378,7 +392,7 @@
           // and the newly created attributes.
           // Save to not lose current edits in main field.
           return gnEditor.save(false)
-            .then(function() {
+              .then(function() {
                 gnEditor.add(gnCurrentEdit.id, ref, name,
                     insertRef, position, attribute);
               });
@@ -404,7 +418,7 @@
       $scope.save = function(refreshForm) {
         $scope.saveError = false;
         var promise = gnEditor.save(refreshForm)
-          .then(function(form) {
+            .then(function(form) {
               $scope.savedStatus = gnCurrentEdit.savedStatus;
               $scope.saveError = false;
               $scope.toggleAttributes();
@@ -436,7 +450,7 @@
       $scope.cancel = function(refreshForm) {
         $scope.savedStatus = gnCurrentEdit.savedStatus;
         return gnEditor.cancel(refreshForm)
-          .then(function(form) {
+            .then(function(form) {
               // Refresh editor form after cancel
               //  $scope.savedStatus = gnCurrentEdit.savedStatus;
               //  $rootScope.$broadcast('StatusUpdated', {
@@ -455,8 +469,8 @@
       };
 
       $scope.close = function() {
-        var promise = gnEditor.save(false)
-          .then(function(form) {
+        var promise = gnEditor.save(false, null, true)
+            .then(function(form) {
               closeEditor();
             }, function(error) {
               $rootScope.$broadcast('StatusUpdated', {

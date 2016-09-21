@@ -35,6 +35,8 @@
   goog.require('gn_popup');
   goog.require('gn_suggestion');
   goog.require('gn_validation');
+  goog.require('swe_editor_table_controller');
+  goog.require('swe_editor_table_directive');
 
   var module = angular.module('gn_editor', [
     'gn_module',
@@ -48,7 +50,10 @@
     'gn_ows',
     'gn_geopublisher',
     'gn_batch_service',
-    'gn_mdactions_directive'
+    'gn_mdactions_directive',
+    'ui.ace',
+    'swe_editor_table_controller',
+    'swe_editor_table_directive'
   ]);
 
   module.constant('gnViewerSettings', {});
@@ -57,6 +62,8 @@
     function($LOCALES) {
       $LOCALES.push('search');
       $LOCALES.push('editor');
-      $LOCALES.push('/../api/0.1/tools/i18n/db?type=StatusValue');
+      $LOCALES.push('/../api/0.1/tools/i18n/db?' +
+          'type=StatusValue&type=Operation&type=Group');
+
     }]);
 })();

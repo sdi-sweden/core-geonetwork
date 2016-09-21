@@ -18,18 +18,21 @@
 
   <!-- Starting point -->
   <xsl:template match="/">
-    <div class="container gn-metadata-view">
+    <div class="gn-metadata-view">
 
       <article id="gn-metadata-view-{$metadataId}">
         <header>
-          <h1><xsl:apply-templates mode="getMetadataTitle" select="$metadata"/></h1>
+          <!-- <h1><xsl:apply-templates mode="getMetadataTitle" select="$metadata"/></h1> -->
           <!--<p><xsl:apply-templates mode="getMetadataAbstract" select="$metadata"/></p>-->
           <!-- TODO : Add thumbnail to header -->
 
           <xsl:apply-templates mode="getMetadataHeader" select="$metadata"/>
-          <!--<xsl:apply-templates mode="render-toc" select="$viewConfig"/>-->
+          <xsl:apply-templates mode="render-toc" select="$viewConfig"/>
         </header>
-        <xsl:apply-templates mode="render-view" select="$viewConfig/*"/>
+        <!-- Tab panes -->
+        <div class="tab-content geo-data-tab-cont">
+          <xsl:apply-templates mode="render-view" select="$viewConfig/*"/>
+        </div>
         <!--
         TODO: scrollspy or tabs on header ?
         <div class="gn-scroll-spy"
@@ -49,7 +52,7 @@
   <xsl:template mode="render-toc" match="view">
     <xsl:if test="count(tab) > 1">
       <!-- TODO: Hide tabs which does not contains anything -->
-      <ul class="view-outline nav nav-pills">
+      <ul class="nav nav-tabs geo-data-tab-nav" role="tablist" id="tab-result-nav">
         <xsl:for-each select="tab">
           <li><a href="#gn-tab-{@id}">
             <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
@@ -73,7 +76,7 @@
       <xsl:variable name="title"
                     select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
 
-      <div id="gn-tab-{@id}">
+      <div role="tabpanel" class="tab-pane geo-data-tab" id="gn-tab-{@id}">
         <h3 class="view-header">
           <xsl:value-of select="$title"/>
         </h3>

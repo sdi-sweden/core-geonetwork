@@ -2043,7 +2043,7 @@ body.loggedin-user .header-logout {
   -moz-opacity: 1;
   opacity: 1;
 }
-.link-btn {
+.link-btn, a.link-btn:hover, a.link-btn:visited {
   display: inline-block;
   color: #fff;
   text-transform: uppercase;
@@ -2064,8 +2064,8 @@ body.loggedin-user .header-logout {
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   border-radius: 100%;
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
 }
 @media screen and (max-width: 1400px) {
   .small-map-view .main-wrapper {
@@ -2148,6 +2148,11 @@ body.loggedin-user .header-logout {
 .header-logout {
   padding-left: 25px;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MEU5NUE3ODNERUFGMTFFNTkyNEU5MUEwQjIzNkNBQjciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MEU5NUE3ODRERUFGMTFFNTkyNEU5MUEwQjIzNkNBQjciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowRTk1QTc4MURFQUYxMUU1OTI0RTkxQTBCMjM2Q0FCNyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowRTk1QTc4MkRFQUYxMUU1OTI0RTkxQTBCMjM2Q0FCNyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pm9VFX0AAADxSURBVHjaYoztaGPAAdSB+DIQs+KQb2VhwA1+QjXzoon/A2IhIM7Cp/kREDsAMSMQ/0fTnAXEXdg08wMxSPwtEH/GYfA3EMGEJigFxFuB2IgBPwDrQ7bZFIgXAbEGNJC4kQyHOf0r1NkMyJoDgHg+EAtA+TOA+AuaZpAXgoH4IbLmWiBuQnOWLI7QZ0d3+zYg3slAGDBDXcCAbPNZIA4E4klAnAIVnwDE15G8xQi1+QW6ZhD4DsSpQHwbiDuBeB0QHybkFPR47gLil1DDGEjVDAILidD3E5dm5JQWCg1h5OT5B4hdCGmWAOLpeNTsAQgwAOs+LG+Nccj2AAAAAElFTkSuQmCC);
+}
+.header-admin {
+  padding-left: 25px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAMAAAAMCGV4AAAAqFBMVEUAAABdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIY8QqPtAAAAN3RSTlMAAQIDBAUGBwoLDA0ODxASHiUmKSw7Q0VJUlVrc3uOoqiqsre5ury+xczOz9XX2dze6e319/v91oit4gAAAH5JREFUCFttz0cKwgAARNEfjb3E3nvvNfrvfzNXoqBvNzAwDAAkYg+8ldpEajLopQDKN6dbdblxFwItPyoAEzXeP9UBEDXO2g9IjnRezaJ6BQhVVz+5UDt9+vUcMFbj/UMdAjS/9qpA/upspy7WHtMAhQ5FNQy6mfeF4O6Fv14GKhgEaCOP+AAAAABJRU5ErkJggg==);
+  margin-right: 10px;
 }
 .mobile-menu-link {
   display: none;
@@ -2821,25 +2826,30 @@ body.loggedin-user .header-logout {
   top: 8px;
   left: -1px;
 }
-.geo-data-toolbar-cont .-label-link .icon-map {
+.geo-data-toolbar-cont .-label-link .icon-map,
+.geo-data-toolbar-cont .-label-link .icon-doc-text,
+.geo-data-toolbar-cont .-label .icon-map,
+.geo-data-toolbar-cont .-label .icon-doc-text {
   font-size: 15px;
   color: #5d8886;
   margin-right: 4px;
 }
-.geo-data-toolbar-cont .-label-link .icon-down-fat {
-  line-height: 10px;
+.geo-data-toolbar-cont .-label-link .icon-down-fat,
+.geo-data-toolbar-cont .-label .icon-down-fat {
+  line-height: 9px;
   color: #5d8886;
-  font-size: 8px;
+  font-size: 9px;
   position: absolute;
-  left: 0.5px;
-  top: 1.5px;
+  left: 0px;
+  top: 1px;
 }
-.geo-data-toolbar-cont .-label-link .download-icn-cont {
+.geo-data-toolbar-cont .-label-link .download-icn-cont,
+.geo-data-toolbar-cont .-label .download-icn-cont {
   position: relative;
   top: 4px;
   margin-right: 6px;
-  width: 12px;
-  height: 12px;
+  width: 15px;
+  height: 15px;
 }
 .geo-data-toolbar-cont .icon-info {
   margin-right: 4px;
@@ -3033,6 +3043,9 @@ body.loggedin-user .header-logout {
   max-width: 1080px;
 }
 .popup.login-popup {
+  max-width: 585px;
+}
+.popup.mail-popup {
   max-width: 585px;
 }
 .popup.geodata-row-popup {
@@ -3232,7 +3245,7 @@ body.loggedin-user .header-logout {
   transition: all 300ms linear;
 }
 .site-filter-cont.open {
-  height: 526px;
+  height: 562px;
 }
 .site-filter-cont.open.advanced {
   height: 887px;
@@ -3388,13 +3401,14 @@ body.loggedin-user .header-logout {
 .site-geo-type-filter .type-filter-list .download-icn-cont {
   position: relative;
   margin-right: 5px;
-  top: 7px;
+  top: 9px;
 }
 .site-geo-type-filter .type-filter-list .icon-down-fat {
-  font-size: 10px;
+  font-size: 9px;
   color: #5d8886;
   position: relative;
-  top: -8px;
+  top: -10px;
+  left: -0.5px;
 }
 .site-geo-type-filter .type-filter-list .icon-eye {
   font-size: 17px;
@@ -3784,10 +3798,22 @@ body.loggedin-user .header-logout {
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
-.advance-filters-cont .custom-fld-cont input[type="text"] {
+.advance-filters-cont .custom-fld-cont input[type="text"]
+{
   border: none;
   background-color: transparent;
   width: 105px;
+  line-height: 40px;
+  font-size: 14px;
+  padding: 0 10px 0;
+  color: #b8b8b8;
+  outline: none;
+}
+
+.advance-filters-cont .custom-fld-cont input[type="date"]
+{
+  border: none;
+  background-color: transparent;
   line-height: 40px;
   font-size: 14px;
   padding: 0 10px 0;
@@ -4039,7 +4065,7 @@ body.loggedin-user .header-logout {
   width: 359px;
   position: relative;
   height: 100%;
-  background-color: red;
+  background-color: white;
   display: inline-block;
   -webkit-transition: width 300ms linear;
   -moz-transition: width 300ms linear;
@@ -4496,6 +4522,102 @@ body.loggedin-user .header-logout {
   width: 100%;
   max-width: 319px;
 }
+.mail-section-cont {
+  *zoom: 1;
+}
+.mail-section-cont:before,
+.mail-section-cont:after {
+  display: table;
+  content: "";
+}
+.mail-section-cont:after {
+  clear: both;
+}
+.mail-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 35px 40px 0;
+}
+.mail-section h1 {
+  font-family: 'open_sansbold', sans-serif;
+  font-size: 20px;
+  line-height: 26px;
+  color: #000;
+  margin: 0 0 15px;
+}
+.mail-section p {
+  font-family: 'open_sansregular', sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  color: #000;
+  margin: 0 0 10px;
+}
+.mail-section .mail-actions-cont{
+  *zoom: 1;
+  margin: 14px auto 35px;
+}
+.mail-section .mail-actions-cont:before,
+.mail-sectionn .mail-actions-cont:after {
+  display: table;
+  content: "";
+}
+.mail-section .mail-actions-cont:after {
+  clear: both;
+}
+.mail-form {
+  *zoom: 1;
+  margin-top: 38px;
+}
+.mail-form:before,
+.mail-form:after {
+  display: table;
+  content: "";
+}
+.mail-form:after {
+  clear: both;
+}
+.mail-form .form-row {
+  *zoom: 1;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.mail-form .form-row:before,
+.mail-form .form-row:after {
+  display: table;
+  content: "";
+}
+.mail-form.form-row:after {
+  clear: both;
+}
+.mail-form label {
+  text-transform: uppercase;
+  font-size: 12px;
+  color: #9e9e9e;
+  line-height: 36px;
+  width: 150px;
+  display: inline-block;
+  letter-spacing: 1px;
+}
+.mail-form input[type=text], .mail-form input[type=email], .mail-form textarea {
+  border: 1px solid #c9c9c9;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  padding: 0 15px;
+  line-height: 36px;
+  color: #000;
+  font-family: 'open_sansregular', sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  width: 100%;
+  max-width: 700px;
+}
+.mail-form textarea {
+  height: 143px;
+}
+.label-text-area {
+  vertical-align: top;
+}
 .btn-cont {
   text-align: center;
 }
@@ -4603,3 +4725,40 @@ body.loggedin-user .header-logout {
   font-size: 13px;
   margin-right: 2px;
 }
+
+a[disabled] {
+  cursor: default;
+}
+
+a.link-btn[disabled] {
+  background-color: gray;
+}
+
+.errorField {
+  font-family: 'open_sansregular', sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  color: #ff0000;
+  margin-left: 150px;
+}
+
+.has-error .input, .has-error .textarea {
+  border-color: #a94442 !important;
+}
+
+.control-tools {
+  top: auto;
+  bottom: 5em;
+}
+
+// columns
+.columns-2 {
+  columns: 2;
+  column-gap: 2em;
+  .checkbox {
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+

@@ -123,7 +123,7 @@
                           formattedName: formatter(loc),
                           extent: ol.proj.transformExtent([loc.bbox.west,
                             loc.bbox.south, loc.bbox.east, loc.bbox.north],
-                          'EPSG:4326', 'EPSG:3857')
+                          'EPSG:4326', $scope.map.getView().getProjection())
                         });
                       }
                     }
@@ -158,7 +158,7 @@
           element.on('keydown', 'input', function(e) {
             if (e.keyCode === 40) {
               $(this).parents('.search-container')
-                .find('.dropdown-menu a').first().focus();
+                  .find('.dropdown-menu a').first().focus();
             }
           });
 

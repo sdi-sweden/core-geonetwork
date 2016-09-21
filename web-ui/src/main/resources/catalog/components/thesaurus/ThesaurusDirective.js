@@ -123,8 +123,8 @@
                } else {
                  gnCurrentEdit.working = true;
                  return gnThesaurusService
-                         .getXML(thesaurusIdentifier,  null,
-                                 attrs.transformation).then(
+                 .getXML(thesaurusIdentifier,  null,
+                 attrs.transformation).then(
                          function(data) {
                    // Add the fragment to the form
                    scope.snippet = data;
@@ -181,10 +181,12 @@
              mode: '@gnKeywordSelector',
              elementRef: '@',
              thesaurusKey: '@',
+             thesaurusTitle: '@',
              keywords: '@',
              transformations: '@',
              currentTransformation: '@',
              lang: '@',
+             label: '@',
              textgroupOnly: '@',
 
              // Max number of tags allowed. Use 1 to restrict to only
@@ -205,6 +207,7 @@
              scope.elementRefBackup = scope.elementRef;
              scope.invalidKeywordMatch = false;
              scope.selected = [];
+             scope.allKeywords = [];
              scope.initialKeywords = [];
              if (scope.keywords) {
                var buffer = '';
@@ -235,6 +238,7 @@
              for (var p in JSON.parse(scope.lang)) {
                langs.push(p);
              }
+             scope.mainLang = langs[0];
              scope.langs = langs.join(',');
 
              // Check initial keywords are available in the thesaurus
@@ -279,23 +283,24 @@
                  angular.forEach(scope.initialKeywords, function(keyword) {
                    // One keyword only and exact match search
                    gnThesaurusService.getKeywords(keyword,
-                   scope.thesaurusKey, 1, 2).then(function(listOfKeywords) {
-                      counter++;
+                   scope.thesaurusKey, scope.mainLang, 1, 'MATCH')
+                     .then(function(listOfKeywords) {
+                     counter++;
 
-                      listOfKeywords[0] &&
+                     listOfKeywords[0] &&
                      scope.selected.push(listOfKeywords[0]);
-                      // Init done when all keywords are selected
-                      if (counter === scope.initialKeywords.length) {
-                        scope.isInitialized = true;
-                        scope.invalidKeywordMatch =
+                     // Init done when all keywords are selected
+                     if (counter === scope.initialKeywords.length) {
+                       scope.isInitialized = true;
+                       scope.invalidKeywordMatch =
                        scope.selected.length !== scope.initialKeywords.length;
 
-                        // Get the matching XML snippet for
-                        // the initial set of keywords
-                        // once the loaded keywords are all selected.
-                        checkState();
-                      }
-                    });
+                       // Get the matching XML snippet for
+                       // the initial set of keywords
+                       // once the loaded keywords are all selected.
+                       checkState();
+                     }
+                   });
                  });
                }
 
@@ -345,7 +350,7 @@
 
                  // Load all keywords from thesaurus on startup
                  gnThesaurusService.getKeywords('',
-                 scope.thesaurusKey, scope.max)
+                 scope.thesaurusKey, scope.mainLang, scope.max)
                   .then(function(listOfKeywords) {
 
                    var field = $(id).tagsinput('input');
@@ -354,7 +359,8 @@
                    var keywordsAutocompleter =
                    gnThesaurusService.getKeywordAutocompleter({
                      thesaurusKey: scope.thesaurusKey,
-                     dataToExclude: scope.selected
+                     dataToExclude: scope.selected,
+                     lang: scope.mainLang
                    });
 
                    // Init typeahead
@@ -413,6 +419,8 @@
 
                  if (scope.mode === 'tagsinput') {
                    initTagsInput();
+                 } else if (scope.mode === 'checkboxes') {
+                   initCheckboxes();
                  }
                } else if (scope.invalidKeywordMatch) {
                  // invalidate element ref to not trigger
@@ -425,37 +433,81 @@
 
              var search = function() {
                gnThesaurusService.getKeywords(scope.filter,
-               scope.thesaurusKey, scope.max)
+               scope.thesaurusKey, scope.mainLang, scope.max)
                 .then(function(listOfKeywords) {
-                 // Remove from search already selected keywords
-                 scope.results = $.grep(listOfKeywords, function(n) {
-                   var alreadySelected = true;
-                   if (scope.selected.length !== 0) {
-                     alreadySelected = $.grep(scope.selected, function(s) {
-                       return s.getLabel() === n.getLabel();
-                     }).length === 0;
-                   }
-                   return alreadySelected;
-                 });
-               });
-             };
-             scope.setTransformation = function(t) {
-               $timeout(function() {
-                 scope.currentTransformation = t;
-                 getSnippet();
-               });
-               return false;
-             };
-             scope.isCurrent = function(t) {
-               return t === scope.currentTransformation;
-             };
-             var getKeywordIds = function() {
-               var ids = [];
-               angular.forEach(scope.selected, function(k) {
-                 ids.push(k.getId());
-               });
-               return ids;
-             };
+                  if (scope.mode === 'checkboxes') {
+                    // fill array with all keywords
+                    scope.allKeywords = listOfKeywords;
+
+                    initCheckboxes();
+                  }
+
+                  // Remove from search already selected keywords
+                  scope.results = $.grep(listOfKeywords, function(n) {
+                    var alreadySelected = true;
+
+                    if (scope.selected.length !== 0) {
+                      alreadySelected = $.grep(scope.selected, function(s) {
+                          return s.getLabel() === n.getLabel();
+                        }).length === 0;
+                    }
+                    return alreadySelected;
+                  });
+                });
+            };
+
+            // function for the selected state of the checkbox
+            scope.toggleSelection = function($event) {
+
+              // Update selection and snippet
+              if ($event.currentTarget.checked) {
+                // ----- checkbox is selected
+                scope.selected.push(this.keyword);
+                scope.results.splice(this.keyword,1);
+              } else {
+                // ----- checkbox is unselected
+                scope.selected.splice(this.keyword,1);
+                scope.results.push(this.keyword);
+              }
+              getSnippet();
+            };
+
+            // Init checkboxes and the pre-check when needed
+            var initCheckboxes = function() {
+
+              $timeout(function() {
+
+                // select the checkbox when needed by looping through the list
+                // with selected keywords
+                angular.forEach(scope.selected, function(k) {
+
+                  // select the checkbox based on its label
+                  $("input:checkbox[value='" + k.label + "']").prop("checked", true);
+
+                });
+
+              });
+            };
+
+            scope.setTransformation = function(t) {
+              $timeout(function() {
+                scope.currentTransformation = t;
+                getSnippet();
+              });
+              return false;
+            };
+
+            scope.isCurrent = function(t) {
+              return t === scope.currentTransformation;
+            };
+
+            var getKeywordIds = function() {
+              var ids = [];
+              angular.forEach(scope.selected, function(k) {
+                ids.push(k.getId());
+              });
+              return ids;
+            };
 
              var getSnippet = function() {
                gnThesaurusService
@@ -531,7 +583,8 @@
             }
             var keywordsAutocompleter =
                 gnThesaurusService.getKeywordAutocompleter({
-                  thesaurusKey: scope.thesaurusKey
+                  thesaurusKey: scope.thesaurusKey,
+                  lang: scope.lang
                 });
 
             // Init typeahead
