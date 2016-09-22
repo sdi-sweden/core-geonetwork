@@ -754,3 +754,131 @@ html, body {
   background-color: transparent; 
   padding-bottom: 1px;
 }
+
+
+// header
+body {
+  padding-top: 60px;
+}
+.header-cont {
+  position: fixed;
+  height: 60px;
+  top: 0;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+
+  .header-left-cont {
+    position: initial;
+    margin-left: 26px;
+    margin-top: 12px;
+    float: left;
+  }
+  .header-middle-cont {
+    margin: 16px auto;
+    display: inline-block;
+  }
+  .header-right-cont {
+    position: initial;
+    margin-right: 26px;
+    margin-top: 16px;
+    float: right;
+  }
+  /* menu icon */
+  .header-menu {
+    padding-right: 25px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAOCAYAAADwikbvAAAABGdBTUEAALGPC/xhBQAAAB9JREFUKBVjjO1o+89AJmAiU9+I1cY4Gtp0jPuBC20AzRIHSN1Cyp8AAAAASUVORK5CYII=');
+    background-position: right !important;
+    background-size: 16px 12px;
+  }
+}
+// logo
+.logo {
+  padding-top: 0;
+  img {
+    height: 30px;
+  }
+}
+
+// footer 
+.footer-cont {  
+  img {
+    margin-bottom: 30px;
+    margin: 0 0 30px 0;
+  }
+  .footer {
+    background-color: #333333;
+    color: #fff;
+    padding: 40px 0;
+    max-width: none;
+    h3 {
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 1em;
+    }
+    p, a {
+      font-size: 12.6px;
+      line-height: 19.6px;
+     
+    }
+    a {
+      color: #fff;
+      text-decoration: underline;
+    }
+    a:hover {
+      color: #fff;
+      text-decoration: none;
+    }
+    p {
+      margin-top: 23px;
+    }
+    .site-map ul {
+      margin-top: 36px;
+      list-style: none;
+      margin-left: 0;
+      padding-left: 0;
+    }
+    .site-map ul li {
+      display: inline-block;
+      width: 30%;
+      margin-bottom: 10px;
+    }
+    /* left column */
+    .about-site {
+        padding: 0 30px 0 30px;
+        text-align: left;
+    }
+    /* center column */
+    .site-map {
+        text-align: center;
+    }
+    /* right column */
+    .geodata-contact {
+        text-align: right;
+        padding: 0 30px 0 30px;
+    }
+  }
+
+  /* double lines */
+  .special-border-bottom {
+    border-top: 1px solid #FFFFFF;
+    display: block;
+    width: 100px;
+    height: 1px;
+    margin: 0 auto;
+  }
+  .special-border-bottom::before {
+    border-bottom: 1px solid #fff;
+    content: '';
+    display: block;
+    height: 11px;
+    width: 75px;
+    margin: 0 auto;
+  }
+  .footer .geodata-contact .special-border-bottom {
+    margin: 0;
+    float: right;
+  }
+  .footer .geodata-contact .special-border-bottom::before {
+    margin: 0;
+    float: right;
+  }
+}
