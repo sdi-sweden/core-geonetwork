@@ -73,10 +73,19 @@
                 <div class="right-side-filter">
                   <div class="filter-colm geo-filter-cont" id="abId0.6149162834088198">
                     <label data-translate="searchGeographicFilter"></label>
-                    <div class="live-search-dd-cont" id="abId0.436428290830839">
+                    <div class="live-search-dd-cont" id="abId0.436428290830839" data-ng-controller="SweGeoSuggestionsController">
                       <div class="custom-fld-cont" id="abId0.04694894537269523" abineguid="642F5A31C48A429E83484111F435AA09">
                         <span class="icon-search"></span>
-                        <input type="text" placeholder="" class="live-search-query">
+                        <input id="namesearch-id" type="text" placeholder="" class="live-search-query"
+                               data-ng-model="searchObj.params.namesearch"
+                               data-ng-model-options="modelOptionsFormGeo"
+                               data-ng-keyup="$event.keyCode == 13 && drawPolygonInMap() && triggerSearch()"
+                               data-typeahead="namesearch as (namesearch.Name + ', ' + namesearch.Type) for namesearch in getNameSearch($viewValue) "
+                               data-typeahead-loading="anyLoading"
+                               data-typeahead-min-length="1"
+                               data-typeahead-focus-first="false"
+
+                        >
                       </div>
                       <ul class="live-search-cont">
                         <li><a href="">malmo<span>kommun</span></a></li>
