@@ -202,6 +202,13 @@
               <phase>test</phase>
             </execution>
           </executions>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>6.19</version>
+            </dependency>
+          </dependencies>
           <configuration>
             <enableRulesSummary>false</enableRulesSummary>
             <configLocation>${rootProjectDir}/code_quality/checkstyle_checks.xml</configLocation>
@@ -1262,7 +1269,7 @@
     <!-- Sonar and Jacoco -->
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-    <sonar.jacoco.reportPath>${project.basedir}/code_quality/target/coverage-reports</sonar.jacoco.reportPath>
+    <sonar.jacoco.reportPath>${project.basedir}/target/coverage-reports</sonar.jacoco.reportPath>
     <sonar.language>java</sonar.language>
     <jacoco.plugin.version>0.7.6.201602180812</jacoco.plugin.version>    
     <jacoco.destfile>${project.build.directory}/coverage/jacoco.exec</jacoco.destfile>
