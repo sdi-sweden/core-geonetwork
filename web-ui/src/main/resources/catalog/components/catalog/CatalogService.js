@@ -175,6 +175,42 @@
 
         /**
          * @ngdoc method
+         * @name gnMetadataManager#create
+         * @methodOf gnMetadataManager
+         *
+         * @description
+         * Create a new metadata as a copy of an existing template.
+         * Will forward to `copy` method. Uses editorApp name to
+         * append to the url. This allows to open the editor from
+         * the search application, for example having the metadata create
+         * form displayed in a popup.
+         *
+         * @param {string} id Internal id of the metadata to be copied.
+         * @param {string} groupId Internal id of the group of the metadata
+         * @param {boolean} withFullPrivileges privileges to assign.
+         * @param {boolean} isTemplate type of the metadata
+         * @param {boolean} isChild is child of a parent metadata
+         * @param {string} tab is the metadata editor tab to open
+         * @param {string} metadataUuid , the uuid of the metadata to create
+         *                 (when metadata uuid is set to manual)
+         * @param {string} editorAppUrl URL of the editor application
+         * @return {HttpPromise} Future object
+         */
+        create: function(id, groupId, withFullPrivileges,
+                         isTemplate, isChild, tab, metadataUuid, editorAppUrl) {
+
+          return this.copy(id, groupId, withFullPrivileges,
+              isTemplate, isChild, metadataUuid).success(function(id) {
+            var path = editorAppUrl + '/metadata/' + id;
+            if (tab) {
+              path +=  editorAppUrl + '/tab/' + tab;
+            }
+            window.location.href = path;
+          });
+        },
+
+        /**
+         * @ngdoc method
          * @name gnMetadataManager#getMdObjByUuid
          * @methodOf gnMetadataManager
          *
