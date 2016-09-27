@@ -200,7 +200,7 @@
           <address>
             <strong>
               <xsl:choose>
-                <xsl:when test="$email">
+                <xsl:when test="normalize-space($email) != ''">
                   <i class="fa fa-envelope"></i>
                   <a href="mailto:{normalize-space($email)}"><xsl:value-of select="$displayName"/></a>
                 </xsl:when>
