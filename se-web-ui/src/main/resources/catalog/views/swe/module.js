@@ -79,9 +79,10 @@
       $scope.formatter = gnSearchSettings.formatter;
       $scope.modelOptions = angular.copy(gnGlobalSettings.modelOptions);
       $scope.modelOptionsForm = angular.copy(gnGlobalSettings.modelOptions);
+      $scope.modelOptionsFormGeo = angular.copy(gnGlobalSettings.modelOptions);
       $scope.gnWmsQueue = gnWmsQueue;
       $scope.$location = $location;
-      $scope.activeTab = '/home';
+      $scope.activeTab = '/search';
       $scope.resultTemplate = gnSearchSettings.resultTemplate;
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
@@ -339,7 +340,7 @@
 
       // Manage route at start and on $location change
       if (!$location.path()) {
-        $location.path('/home');
+        $location.path('/search');
       }
       $scope.activeTab = $location.path().
           match(/^(\/[a-zA-Z0-9]*)($|\/.*)/)[1];
@@ -421,6 +422,73 @@ console.log('start tabs') ;
         $scope.vectorLayer.getSource().addFeature(feature);
 
       };
+
+      /**
+       * Displays the polygon in map.
+       *
+       */
+      $scope.drawPolygonInMap = function() {
+        var namesearch = $scope.searchObj.params.namesearch;
+        var coordinates = namesearch.Coordinates;
+
+        if (coordinates) {
+          var proj = $scope.searchObj.searchMap.getView().getProjection();
+
+          var xy0 = coordinates[0];
+          var xy1 = coordinates[1];
+          var extent = []; // geoBox=10.59|55.15|24.18|69.05
+          extent.push([parseFloat(xy0.X), parseFloat(xy0.Y),
+            parseFloat(xy1.X), parseFloat(xy1.Y)]);
+
+          var feature = new ol.Feature();
+          //var feature = gnMap.getPolygonFeature(namesearch, $scope.searchObj.searchMap.getView().getProjection());
+
+          // Build multipolygon from the set of bboxes
+          geometry = new ol.geom.MultiPolygon(null);
+          for (var j = 0; j < extent.length; j++) {
+            // TODO: Point will not be supported in multi geometry
+            var projectedExtent =
+                ol.extent.containsExtent(
+                    proj.getWorldExtent(),
+                    extent[j]) ?
+                    ol.proj.transformExtent(extent[j], 'EPSG:4326', proj) :
+                    proj.getExtent();
+            var coords =
+                [
+                  [
+                    [projectedExtent[0], projectedExtent[1]],
+                    [projectedExtent[0], projectedExtent[3]],
+                    [projectedExtent[2], projectedExtent[3]],
+                    [projectedExtent[2], projectedExtent[1]],
+                    [projectedExtent[0], projectedExtent[1]]
+                  ]
+                ];
+            geometry.appendPolygon(new ol.geom.Polygon(coords));
+          }
+
+          feature.setGeometry(geometry);
+
+          if (angular.isUndefined($scope.vectorLayer)) {
+            var vectorSource = new ol.source.Vector({
+              features: []
+            });
+
+            $scope.vectorLayer = new ol.layer.Vector({
+              source: vectorSource,
+              style: gnSearchSettings.olStyles.mdExtentHighlight
+            });
+
+            $scope.searchObj.searchMap.addLayer($scope.vectorLayer);
+          }
+          $scope.vectorLayer.getSource().clear();
+          $scope.vectorLayer.getSource().addFeature(feature);
+
+          return true; // always return true so search query is fired.
+
+        } else {
+          return false; // always return false if cooridinates are absent. Not sure if we shall still return true.
+        }
+    };
 
       /**
        * Show full view results.
@@ -553,7 +621,7 @@ console.log('start tabs') ;
 
     }]);
 
-  module.controller('SweLogoutController', 
+  module.controller('SweLogoutController',
 	  ['$scope', '$http',
 	  function($scope, $http) {
 		  
@@ -611,6 +679,142 @@ console.log('start tabs') ;
         angular.element('#mail-popup').removeClass('show');
         $scope.$emit('body:class:remove', 'show-overlay');
       };
+    }]);
+
+
+  /**
+   * Controller for new metadata popup.
+   *
+   */
+  module.controller('SweNewMetadataController', [
+    '$cookies', '$scope', '$rootScope', '$http', '$window', 'gnSearchManagerService', 'gnMetadataManager',
+    function($cookies, $scope, $rootScope, $http, $window, gnSearchManagerService, gnMetadataManager) {
+      var dataTypesToExclude = ['staticMap', 'theme', 'place'];
+      var defaultType = 'dataset';
+      var unknownType = 'unknownType';
+      var fullPrivileges = true;
+
+      var init = function() {
+
+        // Metadata creation could be on a template
+        // or by duplicating an existing record
+        var query = 'template=y';
+
+          // TODO: Better handling of lots of templates
+          gnSearchManagerService.search('qi@json?template=y' +
+            '&fast=index&from=1&to=200&_schema=iso19139.swe').
+          then(function(data) {
+
+            $scope.mdList = data;
+            $scope.hasTemplates = data.count != '0';
+
+            var types = [];
+            // TODO: A faster option, could be to rely on facet type
+            // But it may not be available
+            for (var i = 0; i < data.metadata.length; i++) {
+              var type = data.metadata[i].type || unknownType;
+              if (type instanceof Array) {
+                for (var j = 0; j < type.length; j++) {
+                  if ($.inArray(type[j], dataTypesToExclude) === -1 &&
+                    $.inArray(type[j], types) === -1) {
+                    types.push(type[j]);
+                  }
+                }
+              } else if ($.inArray(type, dataTypesToExclude) === -1 &&
+                $.inArray(type, types) === -1) {
+                types.push(type);
+              }
+            }
+            types.sort();
+            $scope.mdTypes = types;
+
+            // Select the default one or the first one
+            if (defaultType &&
+              $.inArray(defaultType, $scope.mdTypes) > -1) {
+              $scope.getTemplateNamesByType(defaultType);
+            } else if ($scope.mdTypes[0]) {
+              $scope.getTemplateNamesByType($scope.mdTypes[0]);
+            } else {
+              // No templates available ?
+            }
+          });
+
+      };
+
+      /**
+       * Get all the templates for a given type.
+       * Will put this list into $scope.tpls variable.
+       */
+      $scope.getTemplateNamesByType = function(type) {
+        var tpls = [];
+        $scope.titleFilter = '';
+        for (var i = 0; i < $scope.mdList.metadata.length; i++) {
+          var mdType = $scope.mdList.metadata[i].type || unknownType;
+          if (mdType instanceof Array) {
+            tpls.push($scope.mdList.metadata[i]);
+
+            //if (mdType.indexOf(type) >= 0) {
+            //  tpls.push($scope.mdList.metadata[i]);
+            //}
+          } else if (mdType == type) {
+            tpls.push($scope.mdList.metadata[i]);
+          } else {
+            tpls.push($scope.mdList.metadata[i]);
+          }
+        }
+
+        // Sort template list
+        function compare(a, b) {
+          if (a.title < b.title)
+            return -1;
+          if (a.title > b.title)
+            return 1;
+          return 0;
+        }
+        tpls.sort(compare);
+
+        $scope.tpls = tpls;
+        $scope.activeType = type;
+        $scope.setActiveTpl($scope.tpls[0]);
+        return false;
+      };
+
+      $scope.setActiveTpl = function(tpl) {
+        $scope.activeTpl = tpl;
+      };
+
+      $scope.createNewMetadata = function(isPublic) {
+        var metadataUuid = '';
+
+        var editorAppUrl = $window.location.origin +
+            $window.location.pathname.replace('catalog.search', 'catalog.edit') + '#';
+
+        return gnMetadataManager.create(
+          $scope.activeTpl['geonet:info'].id,
+          $scope.ownerGroup,
+          isPublic || false,
+          false,
+          false,
+          undefined,
+          metadataUuid,
+          editorAppUrl
+        ).error(function(data) {
+          $rootScope.$broadcast('StatusUpdated', {
+            title: $translate('createMetadataError'),
+            error: data.error,
+            timeout: 0,
+            type: 'danger'});
+        });
+      };
+
+      $scope.close = function() {
+        // Cleanup and close the dialog
+
+        angular.element('#newmetadata-popup').removeClass('show');
+        $scope.$emit('body:class:remove', 'show-overlay');
+      };
+
+      init();
     }]);
 
 
@@ -868,6 +1072,35 @@ console.log('start tabs') ;
     };
   }]);
 
+  /**
+   * Controller for geo suggestions.
+   *
+   */
+  module.controller('SweGeoSuggestionsController', ['$scope', '$http',
+    function($scope, $http) {
+    $scope.getNameSearch = function(val) {
+      var posturl = 'https://www.geodata.se/NameWebService/search';
+
+      var params = {
+        'searchstring': val,
+        'callback': 'JSON_CALLBACK'
+      };
+      return $http({
+        method: 'JSONP',
+        url: posturl,
+        params: params
+      }).then(function(res) {
+        var data = res.data;
+        var status = res.status;
+        var headers = res.headers;
+        var config = res.config;
+        var statusText = res.statusText;
+
+
+        return data;
+      });
+    };
+  }]);
 
   /**
    * orderByTranslated Filter
