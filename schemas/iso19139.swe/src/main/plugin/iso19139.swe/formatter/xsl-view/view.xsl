@@ -173,13 +173,13 @@
     <xsl:variable name="displayName">
       <xsl:choose>
         <xsl:when
-                test="*/gmd:organisationName and */gmd:individualName">
+                test="normalize-space(*/gmd:organisationName) != '' and normalize-space(*/gmd:individualName) != ''">
           <!-- Org name may be multilingual -->
           <xsl:apply-templates mode="render-value"
                                select="*/gmd:organisationName"/>
           -
           <xsl:value-of select="*/gmd:individualName"/>
-          <xsl:if test="*/gmd:positionName">
+          <xsl:if test="normalize-space(*/gmd:positionName) != ''">
             (<xsl:apply-templates mode="render-value"
                                   select="*/gmd:positionName"/>)
           </xsl:if>
