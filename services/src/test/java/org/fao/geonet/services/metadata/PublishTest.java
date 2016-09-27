@@ -23,12 +23,14 @@
 
 package org.fao.geonet.services.metadata;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
-import jeeves.constants.Jeeves;
-import jeeves.server.context.ServiceContext;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.Term;
@@ -65,13 +67,12 @@ import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import jeeves.constants.Jeeves;
+import jeeves.server.context.ServiceContext;
 
 public class PublishTest extends AbstractServiceIntegrationTest {
 
@@ -87,6 +88,7 @@ public class PublishTest extends AbstractServiceIntegrationTest {
     @Autowired
     private UserRepository userRepository;
     
+    private Group sampleGroup;
     private int sampleGroupId;
     @Autowired
     private DataManager dataManager;
@@ -97,7 +99,9 @@ public class PublishTest extends AbstractServiceIntegrationTest {
     @Before
     public void setUp() throws Exception {
         final List<Group> all = groupRepository.findAll(Specifications.not(GroupSpecs.isReserved()));
-        this.sampleGroupId = all.get(0).getId();
+        this.sampleGroup = all.get(0);
+        this.sampleGroupId = this.sampleGroup.getId();
+
         final ServiceContext serviceContext = createServiceContext();
         loginAsAdmin(serviceContext);
 
@@ -112,12 +116,7 @@ public class PublishTest extends AbstractServiceIntegrationTest {
     @Test
     public void testPublishSingleAsReviewer() throws Exception {
         final User user = getNewUser("user1", Profile.Reviewer);
-// get the Sample Group - the last item in the list
-        List<Group> tmpGroup = groupRepository.findAll();
-        Group sampleGroup = null;
-        for (Group group : tmpGroup) {
-            sampleGroup = group;
-        }
+
         getNewUserGroup(user, sampleGroup, Profile.Reviewer);
         loginAs(user);
         
@@ -174,14 +173,7 @@ public class PublishTest extends AbstractServiceIntegrationTest {
     @Test
     public void testPublishSingleAsEditor() throws Exception {
         final User user = getNewUser("user2", Profile.Editor);  
-//        get the Sample Group - the last item in the list
-        List<Group> tmpGroup = groupRepository.findAll();
-        Group sampleGroup = null;
-        for (Group group : tmpGroup) {
-            sampleGroup = group;
-        }
         getNewUserGroup(user, sampleGroup, Profile.Editor);
-
         loginAs(user);
         
         final String metadataId = metadataIds.get(0);
@@ -190,7 +182,8 @@ public class PublishTest extends AbstractServiceIntegrationTest {
         dataManager.indexMetadata(metadataId, true);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
-
+        request.getSession();
+        
         PublishReport report = publishService.publish("eng", request, metadataId, false);
         assertCorrectReport(report, 0, 0, 0, 1);
         assertPublishedInIndex(false, metadataId, false);
@@ -234,6 +227,7 @@ public class PublishTest extends AbstractServiceIntegrationTest {
         dataManager.indexMetadata(metadataId, true);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
+        request.getSession();
 
         PublishReport report = publishService.publish("eng", request, metadataId, true);
         assertCorrectReport(report, 1, 0, 0, 0);
@@ -281,6 +275,7 @@ public class PublishTest extends AbstractServiceIntegrationTest {
         dataManager.indexMetadata(metadataId, true);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
+        request.getSession();
 
         PublishReport report = publishService.publish("eng", request, metadataId, false);
         assertCorrectReport(report, 1, 0, 0, 0);
@@ -310,10 +305,10 @@ public class PublishTest extends AbstractServiceIntegrationTest {
         report = publishService.publish("eng", request, metadataId, false);
         assertCorrectReport(report, 0, 0, 1, 0);
         assertEquals(3, allowedRepository.count());
-        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, viewId));
-        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, downloadId));
-        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, featuredId));
-        assertNotNull(allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(sampleGroupId, iMetadataId, featuredId));
+        assertNotNull("All Group viewID not found",allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, viewId));
+        assertNotNull("All Group downloadID not found",allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, downloadId));
+        assertNull("All Group featureID found",allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(allGroupId, iMetadataId, featuredId));
+        assertNotNull("Sample Group featureID not found",allowedRepository.findOneById_GroupIdAndId_MetadataIdAndId_OperationId(sampleGroupId, iMetadataId, featuredId));
     }
 
     @Test

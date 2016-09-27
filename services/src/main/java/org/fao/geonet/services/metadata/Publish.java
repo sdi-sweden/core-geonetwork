@@ -166,10 +166,6 @@ public class Publish {
             List<OperationAllowed> operationAllowed = operationAllowedRepository.findAll(allOpsSpec);
             if (publish) {
 
-                // #1373 make published metadata viewable and downloadable to All users
-                forceAddOfViewAndDownloadToGrouplAll(mdId, operationAllowed);
-
-
                 if (!allowPublishInvalidMd) {
                     boolean hasValidation =
                             (metadataValidationRepository.count(MetadataValidationSpecs.hasMetadataId(mdId)) > 0);
@@ -190,6 +186,9 @@ public class Publish {
                         continue;
                     }
                 }
+
+                // #1373 make published metadata viewable and downloadable to All users
+                forceAddOfViewAndDownloadToGrouplAll(mdId, operationAllowed);
 
                 doPublish(serviceContext, report, groupIds, toIndex, operationIds, mdId, allOpsSpec, operationAllowed);
             } else {
