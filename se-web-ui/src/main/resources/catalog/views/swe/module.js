@@ -43,6 +43,7 @@
     'swe_search_config', 'swe_directives', 'ngStorage']);
 
   module.controller('gnsSwe', [
+    '$rootScope',
     '$scope',
     '$localStorage',
     '$location',
@@ -64,7 +65,7 @@
     'hotkeys',
     'gnGlobalSettings',
     'gnMdFormatter',
-    function($scope, $localStorage, $location, suggestService,
+    function($rootScope, $scope, $localStorage, $location, suggestService,
              $http, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
@@ -92,6 +93,25 @@
 
       });
 
+      // prevent the floating map from positioning on top of the footer
+      $scope.affixFloatingMap = function() {
+        
+        $(window).scroll(function (event) {
+          var windowTop = $(this).scrollTop() + $(window).height();     
+
+          if (windowTop >= $('.footer').offset().top) {
+            $('.floating-map-cont').addClass('affix-bottom');
+          } else {
+            $('.floating-map-cont').removeClass('affix-bottom');
+          }
+        });
+      };
+
+      $rootScope.$on('$includeContentLoaded', function() {
+        
+        $timeout($scope.affixFloatingMap());
+      });
+      
       $scope.toggleMap = function() {
         $(searchMap.getTargetElement()).toggle();
       };
@@ -296,6 +316,7 @@
         }
       });
 
+
       $scope.resultviewFns = {
         addMdLayerToMap: function(link, md) {
 
@@ -387,9 +408,7 @@
 
               $('#gn-metadata-display').append(content);
 
-              $scope.activateTabs();
-
-console.log('start tabs') ;             
+              $scope.activateTabs();       
             });
           });
 
