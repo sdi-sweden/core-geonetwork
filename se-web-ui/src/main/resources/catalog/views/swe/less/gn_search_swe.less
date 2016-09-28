@@ -685,6 +685,10 @@ html, body {
   float: right;
   margin-left: 10px;
 }
+.popup-cont .geo-data-row .help-icn-cont .icon-help {
+  top: -5px;
+  left: -2px;
+}
 
 /* tabs */
 .geo-data-tab-nav {
@@ -881,4 +885,18 @@ body {
     margin: 0;
     float: right;
   }
+}
+
+// affix for floating map
+// 
+// when the user scrolls to the bottom of the page, the floating map 
+// should stay above the footer
+.floating-map-cont {
+  right: 20px;
+  bottom: 25px;
+  position: fixed;
+}
+.floating-map-cont.affix-bottom {
+  position: absolute;
+  bottom: 270px;
 }
