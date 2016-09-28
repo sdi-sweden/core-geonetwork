@@ -93,6 +93,10 @@
 
       });
 
+      $scope.$on('search', function() {
+        $scope.triggerSearch();
+      });
+
       // prevent the floating map from positioning on top of the footer
       $scope.affixFloatingMap = function() {
         
