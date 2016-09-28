@@ -93,6 +93,10 @@
 
       });
 
+      $scope.$on('search', function() {
+        $scope.triggerSearch();
+      });
+
       // prevent the floating map from positioning on top of the footer
       $scope.affixFloatingMap = function() {
         
@@ -471,7 +475,9 @@
                     proj.getWorldExtent(),
                     extent[j]) ?
                     ol.proj.transformExtent(extent[j], 'EPSG:4326', proj) :
-                    proj.getExtent();
+                    extent[j];
+
+            projectedExtent = extent[j];
             var coords =
                 [
                   [
