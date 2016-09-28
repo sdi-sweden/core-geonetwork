@@ -22,5 +22,7 @@
     "viewAdvance": "Avancerad vy",
     "freeTextPlaceholder": "fritextsök",
     "otherGeodata": "Andra geodatatjänster",
-    "inGroup": "Group"
+    "inGroup": "Group",
+    "ascending": "stigande",
+    "descending": "fallande"
 }
