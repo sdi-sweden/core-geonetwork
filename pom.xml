@@ -208,7 +208,7 @@
 			<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
             <logViolationsToConsole>true</logViolationsToConsole>
             <maxAllowedViolations>0</maxAllowedViolations>
-            <violationSeverity>error</violationSeverity>
+            <violationSeverity>warning</violationSeverity>
             <encoding>UTF-8</encoding>
 			<failOnViolation>false</failOnViolation>
 			<failsOnError>false</failsOnError>
