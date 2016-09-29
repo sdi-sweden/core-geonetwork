@@ -123,10 +123,10 @@
     </div>
   </div>
 
-  <div data-ng-controller="GnSearchController">
+  <div data-ng-controller="GnSearchController" data-ng-search-form=""
+       data-runSearch="true">
     <div class="main-wrapper" data-ng-controller="gnsSwe">
-      <div class="site-wrapper" data-ng-search-form=""
-           data-runSearch="true">
+      <div class="site-wrapper">
         <!-- Filters -->
         <div data-ng-include="'../../catalog/views/swe/templates/filters.html'" data-ng-controller="SweFilterPanelController"></div>
 
