@@ -153,11 +153,11 @@
           data-gn-field-highlight="">
           <label
             for="gn-field-{$editInfo/@ref}"
-            class="col-sm-2 control-label">
+            class="col-sm-3 control-label">
             <xsl:value-of select="$label"/>
           </label>
 
-          <div class="col-sm-9 gn-value">
+          <div class="col-sm-8 gn-value">
             <xsl:if test="$isMultilingual">
               <xsl:attribute name="data-gn-multilingual-field"
                              select="$metadataOtherLanguagesAsJson"/>
@@ -434,10 +434,10 @@
       id="gn-el-{if ($refToDelete) then $refToDelete/@ref else generate-id()}"
       data-gn-field-highlight="">
 
-      <label class="col-sm-2 control-label">
+      <label class="col-sm-3 control-label" data-gn-field-tooltip="{$schema}|{$qname}|{$parentRef}|">
         <xsl:value-of select="$name"/>&#160;
       </label>
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <!-- Create an empty input to contain the data-gn-field-tooltip
         key which is used to check if an element
         is the first element of its kind in the form. The key for a template
@@ -715,14 +715,14 @@
         id="gn-el-{$id}"
         data-gn-cardinality="{$childEditInfo/@min}-{$childEditInfo/@max}"
         data-gn-field-highlight="">
-        <label class="col-sm-2 control-label"
+        <label class="col-sm-3 control-label"
                data-gn-field-tooltip="{$schema}|{$qualifiedName}|{$parentName}|">
           <xsl:if test="normalize-space($label) != ''">
             <xsl:value-of select="$label"/>
           </xsl:if>
           &#160;
         </label>
-        <div class="col-sm-9">
+        <div class="col-sm-8">
 
           <xsl:variable name="addActionDom">
             <xsl:choose>
