@@ -123,10 +123,10 @@
     </div>
   </div>
 
-  <div data-ng-controller="GnSearchController">
+  <div data-ng-controller="GnSearchController" data-ng-search-form=""
+       data-runSearch="true">
     <div class="main-wrapper" data-ng-controller="gnsSwe">
-      <div class="site-wrapper" data-ng-search-form=""
-           data-runSearch="true">
+      <div class="site-wrapper">
         <!-- Filters -->
         <div data-ng-include="'../../catalog/views/swe/templates/filters.html'" data-ng-controller="SweFilterPanelController"></div>
 
@@ -153,8 +153,7 @@
                 <div class="sort-filter-cont">
                   <div class="sort-filter">
                     <span class="sort-filter-label">Sortera efter:</span>
-                    <div class="filter-cont"
-                         data-swe-toggle-style="">
+                    <div class="filter-cont">
 
                        <div data-swe-sortby-combo=""
                          data-params="searchObj.params"

@@ -93,6 +93,10 @@
 
       });
 
+      $scope.$on('search', function() {
+        $scope.triggerSearch();
+      });
+
       // prevent the floating map from positioning on top of the footer
       $scope.affixFloatingMap = function() {
         
@@ -107,8 +111,8 @@
         });
       };
 
+
       $rootScope.$on('$includeContentLoaded', function() {
-        
         $timeout($scope.affixFloatingMap());
       });
       
@@ -471,7 +475,9 @@
                     proj.getWorldExtent(),
                     extent[j]) ?
                     ol.proj.transformExtent(extent[j], 'EPSG:4326', proj) :
-                    proj.getExtent();
+                    extent[j];
+
+            projectedExtent = extent[j];
             var coords =
                 [
                   [
@@ -601,8 +607,10 @@
 
         if (gnSearchLocation.isSearch() && (!angular.isArray(
             searchMap.getSize()) || searchMap.getSize()[0] < 0)) {
+
           setTimeout(function() {
             searchMap.updateSize();
+            searchMap.renderSync(1000);
 
             // TODO: load custom context to the search map
             //gnOwsContextService.loadContextFromUrl(
@@ -638,6 +646,15 @@
         }
       }, gnSearchSettings.sortbyDefault);
 
+
+      // Refreshes the map in the initial load, otherwise no map displayed
+      // until the window is resize or the user clicks the map.
+      // Tried other options, but not working.
+      setTimeout(function() {
+        searchMap.updateSize();
+        searchMap.renderSync();
+
+      }, 2000);
     }]);
 
   module.controller('SweLogoutController',
