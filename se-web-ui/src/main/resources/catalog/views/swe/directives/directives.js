@@ -56,6 +56,7 @@
     };
   }]);
 
+
   /**
    * @ngdoc directive
    * @name sweSortbyCombo
@@ -81,8 +82,29 @@
         link: function(scope, element, attrs, searchFormCtrl) {
           scope.params.sortBy = scope.params.sortBy ||
               scope.values[0].sortBy;
+
           scope.sortBy = function(v) {
             angular.extend(scope.params, v);
+            scope.sortByOrder(scope.params.sortOrder);
+          };
+
+          if (angular.isUndefined(scope.params.sortOrder)) {
+            scope.sortOrder = 'descending';
+          } else {
+            scope.sortOrder = 'ascending';
+          }
+
+          scope.sortByOrder = function(v) {
+            scope.params.sortOrder = v;
+
+            if (angular.isUndefined(v) || (v == '')) {
+              delete scope.params.sortOrder;
+              scope.sortOrder = 'descending';
+            } else {
+              scope.params.sortOrder = v;
+              scope.sortOrder = 'ascending';
+            }
+
             searchFormCtrl.triggerSearch(true);
           };
 
