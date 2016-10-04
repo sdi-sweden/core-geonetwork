@@ -154,36 +154,27 @@
           var tooltipIconCompiled = $compile(iconTemplate)(scope);
 
           var createTooltipForDatePicker = function (el, tooltip) {
-            var controlColumn = el.closest(".gn-field").find("div.gn-control");
-            if(controlColumn.length > 0) {
-              controlColumn.append(tooltip);
-            }
+
+            // put the button before the datepicker, but after the sublabel
+            el.before(tooltipIconCompiled);
           };
           if (isDatePicker) {
             createTooltipForDatePicker(element, tooltipIconCompiled);
           }
           if (isField && element.attr('type') !== 'hidden') {
-            // if element div parent has another div width gn-control class,
-            // put the tooltip there.
-            var asideCol = element.parents('div').prev('.control-label');
-            //var asideCol = element.closest('div').next('div.gn-control');
-            if (asideCol.length > 0) {
-              asideCol.append(tooltipIconCompiled);
+            // try to find the label (with class 'control-label') that
+            // is before this element in the DOM and append the tooltip
+            // button to it.
+            // 
+            //  If it's not found, place the button just before the element 
+            var asideCol = element.parent('div').prev();
 
+            if (asideCol.hasClass('control-label')) {
+              asideCol.append(tooltipIconCompiled);
             } else {
-              // if element is part of a template snippet, look for the
-              // previous label and add the icon after it
-              var id = element.attr('id');
-              var re = /^_X[0-9]+_replace_.+$/;
-              if (id && id.match(re)) {
-                var label = element.closest('div')
-                .children('label[for=' + id + ']')
-                .after(tooltipIconCompiled);
-              } else {
-                // Add tooltip after the input element
-                element.after(tooltipIconCompiled);
-              }
+              element.before(tooltipIconCompiled);
             }
+
           }
 
           // close tooltips on click in body

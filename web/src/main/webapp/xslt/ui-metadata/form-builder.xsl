@@ -434,7 +434,7 @@
       id="gn-el-{if ($refToDelete) then $refToDelete/@ref else generate-id()}"
       data-gn-field-highlight="">
 
-      <label class="col-sm-3 control-label" data-gn-field-tooltip="{$schema}|{$qname}|{$parentRef}|">
+      <label class="col-sm-3 control-label">
         <xsl:value-of select="$name"/>&#160;
       </label>
       <div class="col-sm-8">
