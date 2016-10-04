@@ -136,119 +136,177 @@
    </example>
    */
   module.directive('gnFieldTooltip',
-      ['gnSchemaManagerService', 'gnCurrentEdit',
-       function(gnSchemaManagerService, gnCurrentEdit) {
-         return {
-           restrict: 'A',
-           link: function(scope, element, attrs) {
-             var isInitialized = false;
-             var isField =
-             element.is('input') || element.is('textarea');
+    ['gnSchemaManagerService', 'gnCurrentEdit', '$compile', '$translate',
+      function(gnSchemaManagerService, gnCurrentEdit, $compile, $translate) {
+         
+      var iconTemplate = "<a class='btn field-tooltip' " +
+      "data-ng-show='gnCurrentEdit.displayTooltips'>" +
+      "<span class='fa fa-question-circle-o'></span></a>";
 
-             element.on('$destroy', function() {
-               element.off();
-             });
+      return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+          var isInitialized = false;
+          var stopEventBubble = false;
+          var tooltipIcon;
+          var isField = element.is('input') || element.is('textarea') || element.is('select');
+          var isDatePicker = 'gnDatePicker' in attrs;
+          var tooltipIconCompiled = $compile(iconTemplate)(scope);
 
-             var initTooltip = function(event) {
-               if (!isInitialized && gnCurrentEdit.displayTooltips) {
-                 // Retrieve field information (there is a cache)
-                 gnSchemaManagerService
-                  .getElementInfo(attrs.gnFieldTooltip).then(function(data) {
-                   var info = data;
-                   if (info.description && info.description.length > 0) {
-                     // Initialize tooltip when description returned
-                     var html = '';
+          var createTooltipForDatePicker = function (el, tooltip) {
+            var controlColumn = el.closest(".gn-field").find("div.gn-control");
+            if(controlColumn.length > 0) {
+              controlColumn.append(tooltip);
+            }
+          };
+          if (isDatePicker) {
+            createTooltipForDatePicker(element, tooltipIconCompiled);
+          }
+          if (isField && element.attr('type') !== 'hidden') {
+            // if element div parent has another div width gn-control class,
+            // put the tooltip there.
+            var asideCol = element.parents('div').prev('.control-label');
+            //var asideCol = element.closest('div').next('div.gn-control');
+            if (asideCol.length > 0) {
+              asideCol.append(tooltipIconCompiled);
 
-                     // TODO: externalize in a template.
-                     if (angular.isArray(info.help)) {
-                       angular.forEach(info.help, function(helpText) {
-                         if (helpText['@for']) {
-                           html += helpText['#text'];
-                         } else {
-                           html += helpText;
-                         }
-                       });
-                     } else if (info.help) {
-                       html += info.help;
-                     }
+            } else {
+              // if element is part of a template snippet, look for the
+              // previous label and add the icon after it
+              var id = element.attr('id');
+              var re = /^_X[0-9]+_replace_.+$/;
+              if (id && id.match(re)) {
+                var label = element.closest('div')
+                .children('label[for=' + id + ']')
+                .after(tooltipIconCompiled);
+              } else {
+                // Add tooltip after the input element
+                element.after(tooltipIconCompiled);
+              }
+            }
+          }
+
+          // close tooltips on click in body
+          $('body').on('mouseover', function (e) {
+            //did not click a popover toggle or popover
+            if ($(e.target).data('toggle') !== 'popover' && $(e.target).parents('.popover.in').length === 0) {
+              closeTooltips();
+            }
+          });
 
 
-                     // Right same width as field
-                     // For legend, popover is right
-                     // Bottom is not recommended when typeahead
-                     var placement = attrs.placement || 'right';
+          // if element is a fieldset legend
+          if (element.is('legend')) {
+            element.contents().first().after(tooltipIconCompiled);
+            stopEventBubble = true;
+          }
+          if (element.is('label')) {
+            element.parent().children('div').append(tooltipIconCompiled);
+          }
+          tooltipIcon = tooltipIconCompiled;
 
-                     // TODO : improve. Here we fix the width
-                     // to the remaining space between the element
-                     // and the right window border.
-                     var width = ($(window).width() -
-                         element.offset().left -
-                         element.outerWidth()) * .95;
+          var closeTooltips = function() {
+            // Close all tooltips/popovers (there still might be some open)
+            $('.popover').popover('hide');
+            // Less official way to hide
+            $('.popover').hide();
+          };
+        
+          var initTooltip = function(eventName, event) {
+            // if (stopEventBubble) {
+            //   event.stopPropagation();
+            // }
+            if (!isInitialized && gnCurrentEdit.displayTooltips) {
+              // Retrieve field information (there is a cache)
+              gnSchemaManagerService
+               .getElementInfo(attrs.gnFieldTooltip).then(function(data) {
+                var info = data;
 
-                     var closeBtn = '<button onclick="$(this).' +
-                     'closest(\'div.popover\').remove();" type="button" ' +
-                     'class="fa fa-times btn btn-link pull-right"></button>';
+                if (info.description && info.label) {
+                  //if (info.description && info.description.length > 0) {
+                  // Initialize tooltip when description returned
+                  var html = '';
 
-                     element.popover({
-                       title: info.description,
-                       container: 'body',
-                       content: html,
-                       html: true,
-                       placement: placement,
-                       template: '<div class="popover gn-popover" ' +
-                       'style="max-width:' + width + 'px;' +
-                       'width:' + width + 'px"' +
-                       '>' +
-                       '<div class="arrow">' +
-                       '</div><div class="popover-inner">' + closeBtn +
-                       '<h3 class="popover-title"></h3>' +
-                       '<div class="popover-content"><p></p></div></div></div>',
-                       //                       trigger: 'click',
-                       trigger: isField ? 'focus' : 'click'
-                     });
+                  // TODO: externalize in a template.
+                  if (angular.isArray(info.help)) {
+                    angular.forEach(info.help, function(helpText) {
+                      if (helpText['@for']) {
+                        html += helpText['#text'];
+                      } else {
+                        html += helpText;
+                      }
+                    });
+                  } else if (info.help) {
+                    html += info.help;
+                  }
 
-                     //                     if (event === 'hover' && !isField) {
-                     //                       element.popover('show');
-                     //                     } else
-                     if (event === 'click' && !isField) {
-                       element.click('show');
-                     } else {
-                       element.focus();
-                     }
+                  // Add description to the body html
+                  html += '<p>' + info.description + '</p>';
 
-                     element.on('shown.bs.popover', function(event) {
-                       if ($('div.popover').css('top').charAt(0) === '-') {
-                         // move popover under navbar.
-                         var oldTopPopover = $('div.popover').position().top;
-                         var newTopPopover =
-                         $(".navbar:not('.ng-hide')").outerHeight() + 5;
-                         var oldTopArrow = $('.popover>.arrow').position().top;
-                         $('div.popover').css('top', newTopPopover);
-                         $('.popover>.arrow').css('top',
-                         oldTopArrow - newTopPopover + oldTopPopover);
-                       }
-                     });
+                  // Add @name to de body html
+                  //html += '<p class="text-muted"><span class="title">' + $translate('elementName') + ': </span>' + info['@name'] + '</p>';
 
-                     isInitialized = true;
-                   }
-                 });
-               }
-             };
+                  // Right same width as field
+                  // For legend, popover is right
+                  // Bottom is not recommended when typeahead
+                  var placement = attrs.placement || 'right';
 
-             // On hover trigger the tooltip init
-             if (isField) {
-               element.focus(function() {
-                 initTooltip('focus');
-               });
-             } else {
-               element.click(function() {
-                 initTooltip('hover');
-               });
-             }
-           }
-         };
-       }]);
+                  // TODO : improve. Here we fix the width
+                  // to the remaining space between the element
+                  // and the right window border.
+                  var width = ($(window).width() -
+                      tooltipIcon.offset().left -
+                      tooltipIcon.outerWidth()) * .95;
 
+                  tooltipIcon.popover({
+                    title: info.label,
+                    container: 'body',
+                    content: html,
+                    html: true,
+                    placement: placement,
+                    template: '<div class="popover gn-popover" ' +
+                    'style="width:' + width + 'px"' +
+                    '>' +
+                    '<div class="arrow">' +
+                    '</div><div class="popover-inner">' +
+                    '<h3 class="popover-title"></h3>' +
+                    '<div class="popover-content"><p></p></div></div></div>',
+                    trigger: 'click'
+                  });
+
+                   closeTooltips();
+
+                  tooltipIcon.on('shown.bs.popover', function(event) {
+
+                    if ($('div.popover').css('top') && $('div.popover').css('top').charAt(0) === '-') {
+                      // move popover under navbar.
+                      var oldTopPopover = $('div.popover').position().top;
+                      var newTopPopover =
+                      $(".navbar:not('.ng-hide')").outerHeight() + 5;
+                      var oldTopArrow = $('.popover>.arrow').position().top;
+                      $('div.popover').css('top', newTopPopover);
+                      $('.popover>.arrow').css('top',
+                      oldTopArrow - newTopPopover + oldTopPopover);
+                    }
+                  });
+                  tooltipIcon.on('$destroy', function() {
+                    tooltipIcon.off();
+                  });
+                  //tooltipIcon.popover('show');
+
+
+                  isInitialized = true;
+                }
+              });
+            }
+          };
+
+          tooltipIcon.hover(function(event) {
+            initTooltip();
+          });
+        }
+      };
+    }]);
   /**
    * @ngdoc directive
    * @name gn_fields.directive:gnEditorControlMove
