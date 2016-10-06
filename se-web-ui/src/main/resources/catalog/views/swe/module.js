@@ -40,7 +40,8 @@
   var module = angular.module('gn_search_swe', [
     'gn_related_directive', 'gn_search',
     'gn_resultsview', 'cookie_warning',
-    'swe_search_config', 'swe_directives', 'ngStorage']);
+    'swe_search_config', 'swe_directives', 'ngStorage',
+    'angulartics', 'angulartics.google.tagmanager', 'angulartics.debug']);
 
   module.controller('gnsSwe', [
     '$rootScope',
