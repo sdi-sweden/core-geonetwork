@@ -657,4 +657,21 @@
   <xsl:template mode="render-value"
                 match="@*"/>
 
+  <xsl:template mode="render-field"
+                match="gmd:abstract[not(normalize-space())][position() = 1 or position() = last()]"
+                priority="100">
+    <xsl:param name="fieldName" select="''" as="xs:string"/>
+
+    <dl>
+      <dt>
+        <xsl:value-of select="if ($fieldName)
+                              then $fieldName
+                              else tr:node-label(tr:create($schema), name(), null)"/>
+      </dt>
+      <dd>
+        <p><xsl:value-of select="gco:CharacterString"/><xsl:apply-templates mode="render-value" select="@*"/></p>
+      </dd>
+   </dl>
+ </xsl:template>
+
 </xsl:stylesheet>
