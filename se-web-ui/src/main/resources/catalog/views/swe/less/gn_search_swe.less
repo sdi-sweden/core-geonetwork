@@ -691,10 +691,31 @@ html, body {
 }
 
 // all help icons
-// .help-icn-cont .icon-help {
-//   top: -5px !important;
-//   left: -2px !important;
-// }
+
+/* ----- general */
+.help-icn-cont .help-icn-circle {
+  border: 0;
+}
+.help-icn-cont .icon-help {
+  font-size: 16px !important;
+}
+.help-icn-cont .icon-help:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f29c";
+}
+/* ----- metadata popup */
+.popup-cont .geo-data-row .help-icn-cont .icon-help {
+  top: -2px;
+}
+/* ----- filters */
+.advance-filters-cont .draw-map-link-colm .help-icn-cont .icon-help {
+  left: -3px;
+}
 
 /* tabs */
 .geo-data-tab-nav {
