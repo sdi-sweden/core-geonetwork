@@ -16,7 +16,7 @@
           </h1>
           <span class="excerpt"></span>
         </div>
-        <div class="update-tag"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
+        <div class="update-tag"><span>{{ 'lastUpdate' | translate }} <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
                                                               data-from-now=""></span></span>
           <!--<div class="help-icn-cont">
             <div class="help-icn-circle"><span class="icon-help"></span></div>
@@ -37,7 +37,7 @@
       <div class="excerpt-table">
         <div class="excerpt-row">
           <div class="excerpt-colm col1">
-            <span class="topic">Ansvarig part</span>
+            <span class="topic">{{ 'responsibleParty' | translate }}</span>
           </div>
           <div class="excerpt-colm col2">
             <div class="excerpt-desc">
@@ -47,7 +47,7 @@
         </div>
         <div class="excerpt-row">
           <div class="excerpt-colm col1">
-            <span class="topic">Sammanfattning</span>
+            <span class="topic">{{ 'abstract' | translate }}</span>
           </div>
           <div class="excerpt-colm col2">
             <div class="excerpt-desc">
@@ -58,15 +58,15 @@
       </div>
       <div class="data-timelog-table">
         <div class="data-timelog-row">
-          <div class="data-timelog-td"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
+          <div class="data-timelog-td"><span>{{ 'lastUpdate' | translate }} <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
                                                                      data-from-now=""></span></span></div>
-          <div class="data-timelog-td"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
+          <div class="data-timelog-td"><span>{{ 'lastUpdate' | translate }} <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
                                                                      data-from-now=""></span></span></div>
         </div>
         <div class="data-timelog-row">
-          <div class="data-timelog-td"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
+          <div class="data-timelog-td"><span>{{ 'lastUpdate' | translate }} <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
                                                                      data-from-now=""></span></span></div>
-          <div class="data-timelog-td"><span>Senast uppdaterad <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
+          <div class="data-timelog-td"><span>{{ 'lastUpdate' | translate }} <span data-gn-humanize-time="{{md['geonet:info'].changeDate}}"
                                                                      data-from-now=""></span></span></div>
         </div>
       </div>
@@ -74,31 +74,22 @@
     <div class="geo-data-toolbar-cont">
       <div class="toolbar-left-list tool-bar-list">
         <div class="link-cont"  ng-if="!user.isEditorOrMore()">
-          <a href="" data-ng-click="showMetadata($index, md, searchResults.records)" class="-label-link" ><span class="icon-doc-text"></span>visa metadata</a>
+          <a href="" data-ng-click="showMetadata($index, md, searchResults.records)" class="-label-link" ><span class="icon-doc-text"></span>{{ 'viewMetadata' | translate }}</a>
         </div>
 
         <div data-swe-toggle-style="" class="dropdown-cont meta-dropdown" ng-if="user.isEditorOrMore()">
-          <div class="-label"><span class="icon-doc-text"></span>Hantera Metadata <span class="icon-down-dir"></span></div>
+          <div class="-label"><span class="icon-doc-text"></span>{{ 'manageMetadata' | translate }} <span class="icon-down-dir"></span></div>
           <div data-swe-md-actions-menu="" />
         </div>
-        <div data-swe-toggle-style="" class="dropdown-cont loggedin-meta-dropdown">
-          <div class="-label"><span class="icon-pencil"></span>Publicerarverktyg <span class="icon-down-dir"></span></div>
-          <ul class="-list">
-            <li><a href="" data-ng-click="showMetadata()" class="-text-link edit-form-popup-link">redigera</a></li>
-            <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records111/{{md['geonet:info'].uuid}}">spara som ISO19139</a></li>
-            <li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md['geonet:info'].uuid)">Spara som DCAT</a></li>
-            <li><a href="" class="-text-link">ta bort</a></li>
-          </ul>
-        </div>
         <div class="link-cont" data-ng-show="md.geoBox !== undefined">
-          <a class="-label-link" href="" data-ng-click="showMetadataGeometry(md)"><div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span></div>visa Täckningsyta</a>
+          <a class="-label-link" href="" data-ng-click="showMetadataGeometry(md)"><div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span></div>{{ 'showBBOX' | translate }}</a>
         </div>
       </div>
       <div class="toolbar-right-list tool-bar-list">
 
         <!-- Metadata links -->
         <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="::links.length > 1">
-          <div class="-label"><span class="icon-info"></span>Mer information <span class="icon-down-dir"></span></div>
+          <div class="-label"><span class="icon-info"></span>{{ 'moreInformation' | translate }} <span class="icon-down-dir"></span></div>
           <ul class="-list">
             <li data-ng-repeat="l in ::links">
               <a href="{{l.url}}" class="-text-link" target="_blank">{{l.desc || l.url}}</a>
@@ -107,7 +98,7 @@
         </div>
 
         <div class="link-cont" data-ng-show="::links.length == 1">
-          <a href="{{::links[0].url}}" class="-label-link" target="_blank"><span class="icon-info"></span>Mer information</a>
+          <a href="{{::links[0].url}}" class="-label-link" target="_blank"><span class="icon-info"></span>{{ 'moreInformation' | translate }}</a>
         </div>
 
         <!-- Map links -->
@@ -126,7 +117,7 @@
 
         <!-- Download links -->
         <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="::downloads.length > 1">
-          <div class="-label"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>Hämta datamängd <span class="icon-down-dir"></span></div>
+          <div class="-label"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>{{ 'downloadDataset' | translate }} <span class="icon-down-dir"></span></div>
           <ul class="-list">
             <li data-ng-repeat="l in ::downloads">
               <a href="{{l.url}}" download="{{l.desc}}" class="-text-link">{{l.desc || l.url}}</a>
@@ -135,7 +126,7 @@
         </div>
 
         <div class="link-cont" data-ng-show="::downloads.length == 1">
-          <a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}" class="-label-link"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>Hämta datamängd</a>
+          <a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}" class="-label-link"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>{{ 'downloadDataset' | translate }}</a>
         </div>
       </div>
     </div>

@@ -50,15 +50,15 @@
           </div>
           <div class="toolbar-right-list tool-bar-list">
             <div class="link-cont" ng-if="user.isEditorOrMore()">
-              <a class="-label-link" href=""><span class="icon-pencil"></span>Redigera</a>
+              <a class="-label-link" href=""><span class="icon-pencil"></span>{{ 'edit' | translate }}</a>
             </div>
             <div class="link-cont">
-              <a class="-label-link" href="pdf?uuid={{mdView.current.record['geonet:info'].uuid}}"><span class="icon-print"></span>Skriv ut</a>
+              <a class="-label-link" href="pdf?uuid={{mdView.current.record['geonet:info'].uuid}}"><span class="icon-print"></span>{{ 'Print' | translate }}</a>
             </div>
 
             <!-- Metadata links -->
             <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="getInformationLinks(mdView.current.record).length > 1">
-              <div class="-label"><span class="icon-info"></span>Mer information <span class="icon-down-dir"></span></div>
+              <div class="-label"><span class="icon-info"></span>{{ 'moreInformation' | translate }} <span class="icon-down-dir"></span></div>
               <ul class="-list">
                 <li data-ng-repeat="l in getInformationLinks(mdView.current.record)">
                   <a href="{{l.url}}" class="-text-link" target="_blank">{{l.desc || l.url}}</a>
@@ -67,12 +67,12 @@
             </div>
 
             <div class="link-cont" data-ng-show="getInformationLinks(mdView.current.record).length == 1">
-              <a href="{{getInformationLinks(mdView.current.record)[0].url}}" class="-label-link" target="_blank"><span class="icon-info"></span>Mer information</a>
+              <a href="{{getInformationLinks(mdView.current.record)[0].url}}" class="-label-link" target="_blank"><span class="icon-info"></span>{{ 'moreInformation' | translate }}</a>
             </div>
 
             <!-- Map links -->
             <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="getMapLinks(mdView.current.record).length > 1">
-              <div class="-label"><span class="icon-map"></span>Visa på karta <span class="icon-down-dir"></span></div>
+              <div class="-label"><span class="icon-map"></span>{{ 'showOnMap' | translate }} <span class="icon-down-dir"></span></div>
               <ul class="-list">
                 <li data-ng-repeat="l in getMapLinks(mdView.current.record)">
                   <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l, mdView.current.record)">{{l.desc || l.url}}</a>
@@ -81,12 +81,12 @@
             </div>
 
             <div class="link-cont" data-ng-show="getMapLinks(mdView.current.record).length == 1">
-              <a href="" class="-label-link" data-ng-click="resultviewFns.addWmsLayersFromCap(getMapLinks(mdView.current.record)[0], mdView.current.record)"><span class="icon-map"></span>Visa på karta</a>
+              <a href="" class="-label-link" data-ng-click="resultviewFns.addWmsLayersFromCap(getMapLinks(mdView.current.record)[0], mdView.current.record)"><span class="icon-map"></span>{{ 'showOnMap' | translate }}</a>
             </div>
 
             <!-- Download links -->
             <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="getDownloadLinks(mdView.current.record).length > 1">
-              <div class="-label"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>Hämta datamängd <span class="icon-down-dir"></span></div>
+              <div class="-label"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>{{ 'downloadDataset' | translate }} <span class="icon-down-dir"></span></div>
               <ul class="-list">
                 <li data-ng-repeat="l in getDownloadLinks(mdView.current.record)">
                   <a href="{{l.url}}" class="-text-link" target="_blank">{{l.desc || l.url}}</a>
@@ -95,7 +95,7 @@
             </div>
 
             <div class="link-cont" data-ng-show="getDownloadLinks(mdView.current.record).length == 1">
-              <a href="{{getDownloadLinks(mdView.current.record)[0].url}}" download="{{getDownloadLinks(mdView.current.record)[0].desc}}" class="-label-link" target="_blank"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>Hämta datamängd</a>
+              <a href="{{getDownloadLinks(mdView.current.record)[0].url}}" download="{{getDownloadLinks(mdView.current.record)[0].desc}}" class="-label-link" target="_blank"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>{{ 'downloadDataset' | translate }}</a>
             </div>
           </div>
         </div>

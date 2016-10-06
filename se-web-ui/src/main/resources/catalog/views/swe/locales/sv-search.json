@@ -24,5 +24,17 @@
     "otherGeodata": "Andra geodatatjänster",
     "inGroup": "Group",
     "ascending": "stigande",
-    "descending": "fallande"
+    "descending": "fallande",
+    "edit": "Redigera",
+    "delete": "Ta bort",
+    "viewMetadata": "Visa metadata",
+    "exportISO19139": "Spara som ISO19139",
+    "exportDCAT": "Spara som DCAT",
+    "showBBOX": "Visa Täckningsyta",
+    "manageMetadata": "Hantera Metadata",
+    "downloadDataset": "Hämta datamängd",
+    "moreInformation": "Mer information",
+    "lastUpdate": "Senast uppdaterad",
+    "responsibleParty": "Ansvarig part",
+    "showOnMap": "Visa på karta"
 }
