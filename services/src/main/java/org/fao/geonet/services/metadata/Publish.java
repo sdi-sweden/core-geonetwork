@@ -213,28 +213,22 @@ public class Publish {
         for (OperationAllowed operationAllowed : operationsAllowed) {
             OperationAllowedId opAllowedId = operationAllowed.getId();
             metadataId = opAllowedId.getMetadataId();
+            boolean groupAll = false;
             if (opAllowedId.getGroupId() == GROUP_ALL) {
-                hasGroupAll = true;
+                groupAll = true;
             }
-            if (opAllowedId.getOperationId() == VIEW) {
+            if (groupAll && opAllowedId.getOperationId() == VIEW) {
                 hasView = true;
             }
-            ;
-            if (opAllowedId.getOperationId() == 1) {
+            if (groupAll && opAllowedId.getOperationId() == DOWNLOAD) {
                 hasDownload = true;
             }
-            ;
         }
-        if (!hasGroupAll) {
+        if (!hasView) {
             createNewOperation(operationsAllowed, GROUP_ALL, VIEW, metadataId);
+        }
+        if (!hasDownload) {
             createNewOperation(operationsAllowed, GROUP_ALL, DOWNLOAD, metadataId);
-        } else {
-            if (!hasView) {
-                createNewOperation(operationsAllowed, GROUP_ALL, VIEW, metadataId);
-            }
-            if (!hasDownload) {
-                createNewOperation(operationsAllowed, GROUP_ALL, DOWNLOAD, metadataId);
-            }
         }
     }
 
