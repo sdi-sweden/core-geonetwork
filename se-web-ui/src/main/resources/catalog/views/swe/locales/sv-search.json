@@ -1,10 +1,10 @@
 {
     "geographicalFilterTooltip-title": "Geographical filter",
     "geographicalFilterTooltip-desc": "Geographical filter ...",
-    "geographicalFilterTooltip-link": "https://ver.geodata.se/geodataportalens-hjalpsidor/forstasidan/#chapter1",
+    "geographicalFilterTooltip-link": "https://ver.geodata.se/geodataportalens-hjalpsidor/forstasidan/",
     "facetsFilterTooltip-title": "Facets filter",
     "facetsFilterTooltip-desc": "Facets filter ...",
-    "facetsFilterTooltip-link": "https://ver.geodata.se/geodataportalens-hjalpsidor/forstasidan/#chapter2",
+    "facetsFilterTooltip-link": "https://ver.geodata.se/geodataportalens-hjalpsidor/forstasidan/kartpanel/",
     "advancedSearchTooltip-title": "Advanced search",
     "advancedSearchTooltip-desc": "Refine your search based on Organisation, Topic category and Keywords",
     "advancedSearchTooltip-link": "https://ver.geodata.se/geodataportalens-hjalpsidor/forstasidan/sokpanel/",
