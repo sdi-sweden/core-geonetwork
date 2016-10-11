@@ -24,6 +24,18 @@
   }
 }
 
+/* Buttons */
+ 
+/* override bootstrap colors */
+.fltr-link:hover, .fltr-link:focus {
+  color: #6c9290;
+}
+.cls-btn:hover, .cls-btn:focus {
+  color: #fff;
+}
+.tool-tip a, .tool-tip a:hover, .tool-tip a:focus {
+  color: #fff;
+}
 
 /* Pagination */
 .gn-pager {
@@ -718,6 +730,22 @@ html, body {
 /* ----- filters */
 .advance-filters-cont .draw-map-link-colm .help-icn-cont .icon-help {
   left: -3px;
+}
+/* ----- smaller screens */
+@media screen and (max-width: 1300px) {
+  .site-geo-type-filter .other-filter-help-icn {
+    top: 38px; 
+  }
+  .site-geo-type-filter .other-filters {
+    margin-right: 22px;
+  }
+  .advance-filters-cont .right-side-filter {
+    margin-right: 5px;
+  }
+  .advance-filters-cont .draw-map-link-colm .help-icn-cont {
+    top: 0px;
+    right: -25px;
+  }
 }
 
 /* tabs */
