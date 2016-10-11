@@ -128,7 +128,7 @@
     "ClearTitle": "Rensa sökningar, filter och sorteringsordningar.",
     "hitsPerPage": "Antal poster per sida",
     "chooseRecordsPerPage": "Klicka för att välja hur många poster som skall visas per sida",
-    "sortedBy": "Sorterat på {{fält}}",
+    "sortedBy": "Sorterat på {{field}}",
     "relevance": "relevans",
     "rating": "betyg",
     "popularity": "popularitet",
