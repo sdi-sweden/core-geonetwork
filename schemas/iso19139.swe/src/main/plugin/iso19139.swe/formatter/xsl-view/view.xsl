@@ -658,7 +658,7 @@
                 match="@*"/>
 
   <xsl:template mode="render-field"
-                match="gmd:abstract[not(normalize-space())][position() = 1 or position() = last()]"
+                match="gmd:abstract"
                 priority="100">
     <xsl:param name="fieldName" select="''" as="xs:string"/>
 
