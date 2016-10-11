@@ -185,7 +185,6 @@
             }
           });
 
-
           // if element is a fieldset legend
           if (element.is('legend')) {
             element.contents().first().after(tooltipIconCompiled);
@@ -283,7 +282,7 @@
                   tooltipIcon.on('$destroy', function() {
                     tooltipIcon.off();
                   });
-                  //tooltipIcon.popover('show');
+                  tooltipIcon.popover('show');
 
 
                   isInitialized = true;
@@ -292,7 +291,7 @@
             }
           };
 
-          tooltipIcon.hover(function(event) {
+          tooltipIcon.click(function(event) {
             initTooltip();
           });
         }
