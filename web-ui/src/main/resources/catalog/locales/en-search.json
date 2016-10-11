@@ -296,6 +296,7 @@
   "isValid": "Validation status",
   "Attribution":"Attribution",
   "layerDelete":"Remove layer",
+  "layersDelete":"Remove all layer",
   "layerMetadata":"Metadata",
   "layerVisible":"Visible",
   "layerMoveDown":"Move layer down",
