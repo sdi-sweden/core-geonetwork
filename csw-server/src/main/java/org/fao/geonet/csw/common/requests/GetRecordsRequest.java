@@ -255,7 +255,7 @@ public class GetRecordsRequest extends CatalogRequest {
         if (hsTypeNames.size() == 0)
             setAttrib(query, "typeNames", "csw:Record");
         else
-            setAttribCommaSeparated(query, "typeNames", hsTypeNames, "");
+            setAttribSpaceSeparated(query, "typeNames", hsTypeNames, "");
 
         // TODO: Add all namespace required for typenames
 
