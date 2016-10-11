@@ -336,6 +336,27 @@ public abstract class CatalogRequest {
         el.setAttribute(name, sb.toString());
     }
 
+    protected void setAttribCommaSeparated(Element el, String name, Iterable<?> iter, String prefix) {
+        Iterator<?> i = iter.iterator();
+
+        if (!i.hasNext())
+            return;
+
+        StringBuffer sb = new StringBuffer();
+
+        while (i.hasNext()) {
+            Object value = i.next();
+
+            sb.append(prefix);
+            sb.append(value.toString());
+
+            if (i.hasNext())
+                sb.append(",");
+        }
+
+        el.setAttribute(name, sb.toString());
+    }
+
     protected void addParam(Element root, String name, Object value) {
         if (value != null)
             root.addContent(new Element(name, Csw.NAMESPACE_CSW).setText(value.toString()));
