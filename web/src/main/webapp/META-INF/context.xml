@@ -1,4 +1,4 @@
-<Context>
+<Context useHttpOnly="true">
   <Resources>
     <PreResources className="org.apache.catalina.webresources.FileResourceSet"
                   base="${catalina.home}/../GeodataFiles/geonetwork/conf/config-node/srv.xml"
