@@ -203,7 +203,6 @@ public class Publish {
     }
 
     private void forceAddOfViewAndDownloadToGrouplAll(int metadataId, List<OperationAllowed> operationsAllowed) {
-        boolean hasGroupAll = false;
         boolean hasView = false;
         boolean hasDownload = false;
         int GROUP_ALL = ReservedGroup.all.getId();
