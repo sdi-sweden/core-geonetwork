@@ -492,6 +492,8 @@
     "map/is3DModeAllowed": "Tillåt 3D läge (betaversion)",
     "map/isSaveMapInCatalogAllowed": "Tillåt användare att spara kartor som metadataposter",
     "map/isSaveMapInCatalogAllowed-help": "I kartvisaren kan användaren välja namn på kartan och sammanfattningen och spara kartan direkt med OWS på katalogen som en metadatapost.",
+    "map/isMyPositionEnabled": "Display a button to zoom to My Position",
+    "map/isMyPositionEnabled-help": "From the map viewer, a tool to zoom to the user position is displayed.",
     "mapserverConfiguration": "URL konfiguration",
     "mapserverDescription": "Beskrivning",
     "mapserverName": "Namn",

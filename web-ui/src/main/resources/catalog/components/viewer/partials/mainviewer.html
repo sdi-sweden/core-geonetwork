@@ -78,7 +78,8 @@
       <span class="fa fa-arrows-alt"></span>
       <span role="tooltip" data-translate="">ZoomToMapMaxExtent</span>
     </button>
-    <button class="btn btn-default" type="submit" data-ng-click="zoomToYou(map)">
+    <button class="btn btn-default" type="submit" data-ng-click="zoomToYou(map)"
+            data-ng-if="isMyPositionAllowed">
       <span class="fa fa-map-marker"></span>
       <span role="tooltip" data-translate="">ZoomToYourLocation</span>
     </button>
