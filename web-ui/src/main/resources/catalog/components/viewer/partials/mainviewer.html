@@ -16,7 +16,10 @@
   <div class="tools" gi-btn-group gnv-close-panel data-ng-controller="toolsController">
     <button class="btn btn-default" ng-model="activeTools.addLayers" type="submit"
             rel="#addLayers" gi-btn gnv-tools-btn>
-      <span class="fa fa-plus"></span>
+      <span class="fa-stack gn-stack">
+        <i class="fa fa-stack-1x fa-tasks"></i>
+        <i class="fa fa-stack-1x fa-plus-circle"></i>
+      </span>
       <span role="tooltip" data-translate="">addLayers</span>
     </button>
     <button class="btn btn-default" ng-model="activeTools.layers" type="submit"
