@@ -859,8 +859,8 @@
    * Controller for the filter panel.
    *
    */
-  module.controller('SweFilterPanelController', ['$scope', '$localStorage',
-    function($scope, $localStorage) {
+  module.controller('SweFilterPanelController', ['$scope', '$filter', '$localStorage',
+    function($scope, $filter, $localStorage) {
 
       $scope.advancedMode = false;
 
@@ -1012,6 +1012,9 @@
         $scope.triggerSearch();
       };
 
+      $scope.translatedTopicCat = function(p) {
+        return $filter('translate')(p);
+      }
 
       /**
        * Clean search options to view all metadata.
@@ -1138,37 +1141,4 @@
       });
     };
   }]);
-
-  /**
-   * orderByTranslated Filter
-   * Sort ng-options or ng-repeat by translated values
-   * @example
-   *   ng-repeat="scheme in data.schemes |
-   *    orderByTranslated:'storage__':'collectionName'"
-   * @param  {Array|Object} array or hash
-   * @param  {String} i18nKeyPrefix
-   * @param  {String} objKey (needed if hash)
-   * @return {Array}
-   */
-  module.filter('orderByTranslated', ['$translate', '$filter',
-    function($translate, $filter) {
-      return function(array, i18nKeyPrefix, objKey) {
-        var result = [];
-        var translated = [];
-        angular.forEach(array, function(value) {
-          var i18nKeySuffix = objKey ? value[objKey] : value;
-          translated.push({
-            key: value,
-            label: $translate.instant(i18nKeyPrefix + i18nKeySuffix)
-          });
-        });
-        angular.forEach($filter('orderBy')(translated, 'label'),
-            function(sortedObject) {
-              result.push(sortedObject.key);
-            }
-        );
-        return result;
-      };
-    }]);
-
 })();
