@@ -73,6 +73,8 @@
         $scope.action = '../api/0.1/predefinedmaps/' + c.id;
         $scope.predefinedMapUpdated = false;
         $scope.predefinedMapSelected = c;
+        $scope.queue = null;
+
         $timeout(function() {
           $('#predefinedmapname').focus();
         }, 100);
@@ -102,25 +104,40 @@
        * Save a predefined map
        */
       $scope.savePredefinedMap = function(id) {
-        $scope.uploadScope.submit();
+        if ($scope.queue && $scope.queue.length > 0) {
+          // call submit in blueimp.fileupload
+          $scope.uploadScope.submit();
+        } else {
+          var request = new FormData();
+          request.append("id", $scope.predefinedMapSelected.id);
+          request.append("name", $scope.predefinedMapSelected.name);
+          request.append("description", $scope.predefinedMapSelected.description);
+          request.append("map", $scope.predefinedMapSelected.map);
+          request.append("enabled", $scope.predefinedMapSelected.enabled);
+          request.append("position", $scope.predefinedMapSelected.position);
+          //request.append("image", $scope.predefinedMapSelected.image);
 
-        /*$http.post('../api/0.1/predefinedmaps/' + id,
-            $scope.predefinedMapSelected)
-          .success(function(data) {
-            $scope.unselectPredefinedMap();
-            loadPredefinedMaps();
-            $rootScope.$broadcast('StatusUpdated', {
-              msg: $translate('predefinedMapUpdated'),
-              timeout: 2,
-              type: 'success'});
-          })
-          .error(function(data) {
-            $rootScope.$broadcast('StatusUpdated', {
-              title: $translate('predefinedMapUpdateError'),
-              error: data,
-              timeout: 0,
-              type: 'danger'});
-          });*/
+          $http.post('../api/0.1/predefinedmaps/' + $scope.predefinedMapSelected.id,
+              request, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+              })
+              .success(function(data) {
+                $scope.unselectPredefinedMap();
+                loadPredefinedMaps();
+                $rootScope.$broadcast('StatusUpdated', {
+                  msg: $translate('predefinedMapUpdated'),
+                  timeout: 2,
+                  type: 'success'});
+              })
+              .error(function(data) {
+                $rootScope.$broadcast('StatusUpdated', {
+                  title: $translate('predefinedMapUpdateError'),
+                  error: data,
+                  timeout: 0,
+                  type: 'danger'});
+              });
+        }
       };
 
       $scope.addPredefinedMap = function() {
@@ -138,6 +155,7 @@
         };
 
         $scope.action = '../api/0.1/predefinedmaps';
+        $scope.queue = null;
 
         $timeout(function() {
           $('#predefinedmapname').focus();

@@ -74,7 +74,6 @@ public class PredefinedMapsApi {
     @ApiOperation(value = "Retrieve a list of predefined maps",
         nickname = "retrievePredefinedMaps")
     @RequestMapping(
-        value = "/",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
@@ -108,7 +107,6 @@ public class PredefinedMapsApi {
     @ApiOperation(value = "Creates a predefined map",
         nickname = "createPredefinedMap")
     @RequestMapping(
-        value = "/",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -120,6 +118,12 @@ public class PredefinedMapsApi {
         )
         @RequestParam
         final String name,
+        @ApiParam(
+                value = "Predefined map description",
+                required = true
+        )
+        @RequestParam
+        final String description,
         @ApiParam(
                 value = "Predefined map status",
                 required = true
@@ -137,23 +141,23 @@ public class PredefinedMapsApi {
                 required = true
         )
         @RequestParam
-        final String mapContext,
+        final String map,
         @ApiParam(
                 value = "Predefined map image",
                 required = true
         )
         @RequestParam
-        final MultipartFile image,
-        ServletRequest request)
+        final MultipartFile image)
         throws Exception {
 
         saveFile(image);
 
         PredefinedMap predefinedMap = new PredefinedMap();
         predefinedMap.setName(name);
+        predefinedMap.setDescription(description);
         predefinedMap.setEnabled(enabled);
         predefinedMap.setPosition(position);
-        predefinedMap.setMap(mapContext);
+        predefinedMap.setMap(map);
         predefinedMap.setImage(image.getOriginalFilename());
 
         predefinedMapRepository.save(predefinedMap);
@@ -208,6 +212,12 @@ public class PredefinedMapsApi {
             @RequestParam
             final String name,
             @ApiParam(
+                    value = "Predefined map description",
+                    required = true
+            )
+            @RequestParam
+            final String description,
+            @ApiParam(
                     value = "Predefined map status",
                     required = true
             )
@@ -224,14 +234,15 @@ public class PredefinedMapsApi {
                     required = true
             )
             @RequestParam
-            final String mapContext,
+            final String map,
             @ApiParam(
                     value = "Predefined map image",
-                    required = true
+                    required = false
             )
-            @RequestParam
-            final MultipartFile image,
-            ServletRequest request)
+            @RequestParam(
+                    required = false
+            )
+            final MultipartFile image)
             throws Exception {
 
         PredefinedMap predefinedMap = predefinedMapRepository.findOne(id);
@@ -241,13 +252,18 @@ public class PredefinedMapsApi {
                     + id);
         }
 
-        saveFile(image);
+       if (image != null) {
+           saveFile(image);
+       }
 
         predefinedMap.setName(name);
+        predefinedMap.setDescription(description);
         predefinedMap.setEnabled(enabled);
         predefinedMap.setPosition(position);
-        predefinedMap.setMap(mapContext);
-        predefinedMap.setImage(image.getOriginalFilename());
+        predefinedMap.setMap(map);
+        if (image != null) {
+            predefinedMap.setImage(image.getOriginalFilename());
+        }
 
         predefinedMapRepository.save(predefinedMap);
 

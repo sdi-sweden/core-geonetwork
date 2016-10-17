@@ -45,6 +45,7 @@ public class PredefinedMap extends GeonetEntity implements Serializable {
 
     private int _id;
     private String _name;
+    private String _description;
     private int _position;
     private Boolean _enabled;
     private String _map;
@@ -75,6 +76,7 @@ public class PredefinedMap extends GeonetEntity implements Serializable {
     /**
      * Get the name of the predefined map.
      */
+    @Column(nullable = false, unique = true, length = 255)
     public String getName() {
         return _name;
     }
@@ -91,8 +93,28 @@ public class PredefinedMap extends GeonetEntity implements Serializable {
     }
 
     /**
+     * Get the description of the predefined map.
+     */
+    @Column
+    public String getDescription() {
+        return _description;
+    }
+
+    /**
+     * Set the predefined map description.
+     *
+     * @param description the new predefined map description
+     * @return this predefined map object
+     */
+    public PredefinedMap setDescription(final String description) {
+        this._description = description;
+        return this;
+    }
+
+    /**
      * Get the position of the predefined map.
      */
+    @Column
     public int getPosition() {
         return _position;
     }
@@ -155,6 +177,7 @@ public class PredefinedMap extends GeonetEntity implements Serializable {
      *
      * @return the map image
      */
+    @Column
     public String getImage() {
         return this._image;
     }
@@ -179,8 +202,9 @@ public class PredefinedMap extends GeonetEntity implements Serializable {
 
         if (_id != that._id) return false;
         if (_position != that._position) return false;
-        if (!_enabled.equals(that._enabled)) return false;
         if (!_name.equals(that._name)) return false;
+        if (!_description.equals(that._description)) return false;
+        if (!_enabled.equals(that._enabled)) return false;
         if (!_map.equals(that._map)) return false;
         return _image.equals(that._image);
 
@@ -190,6 +214,7 @@ public class PredefinedMap extends GeonetEntity implements Serializable {
     public int hashCode() {
         int result = _id;
         result = 31 * result + _name.hashCode();
+        result = 31 * result + _description.hashCode();
         result = 31 * result + _position;
         result = 31 * result + _enabled.hashCode();
         result = 31 * result + _map.hashCode();
