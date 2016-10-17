@@ -1044,5 +1044,19 @@
     "serviceUrlHelp": "Web service URL without GetCapabilities parameters",
     "serviceTypeHelp": "Service type",
     "metadata/editor/schemaConfig": "Standard configuration",
-    "selectExistingLogo": "Select from existing logos"
+    "selectExistingLogo": "Select from existing logos",
+    "managePredefinedMaps": "Predefined maps",
+    "predefinedmaps": "Predefined maps",
+    "predefinedMapPosition": "Position",
+    "predefinedMapPositionHelp": "Position of the map in the predefined maps widget",
+    "predefinedMapName": "Name",
+    "predefinedMapDescription": "Description",
+    "predefinedMapWmc": "Map Context",
+    "predefinedMapWmcHelp": "Map Context to display in the map viewer",
+    "predefinedMapImg": "Map Image",
+    "predefinedMapImgHelp": "Image to display in the predefined maps widget for the map",
+    "updatePredefinedMap ": "Update ",
+    "newPredefinedMap": "New ",
+    "deletePredefinedMap": "Delete",
+    "savePredefinedMap": "Save"
 }
