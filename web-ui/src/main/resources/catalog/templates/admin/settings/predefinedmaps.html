@@ -15,7 +15,9 @@
           <a href="" class="list-group-item" data-ng-repeat="m in pageItems()"
             data-ng-click="selectPredefinedMap(m)">
             {{m.name}} {{m.label[lang]}}
-            <span class="badge ng-scope">Position {{m.position}}</span>
+            <span class="badge ng-scope"><span data-translate="">predefinedMapsPos</span> {{m.position}}</span>
+            <span class="badge ng-scope" data-ng-show="m.enabled === false"
+                  data-translate="">disabled</span>
           </a>
           <span data-gn-pagination-list=""
                 data-items="predefinedMaps | filter:predefinedMapSearch"
@@ -75,19 +77,23 @@
                      name="name" class="form-control" autofocus=""
                      data-ng-required="true"
                      data-ng-model="predefinedMapSelected.name"> </input>
+              <p class="help-block" data-translate="">predefinedMapNameHelp</p>
             </div>
 
-            <div>
+            <div data-ng-class="gnPredefinedMapEdit.description.$error.required ? 'has-error' : ''">
               <label data-translate="">predefinedMapDescription</label>
 
-              <textarea id="predefinedmapdescription" name="description" class="form-control" rows="5" autofocus=""
+              <textarea id="predefinedmapdescription" name="description" class="form-control" rows="3" autofocus=""
+                        data-ng-required="true"
                         data-ng-model="predefinedMapSelected.description"> </textarea>
+              <p class="help-block" data-translate="">predefinedMapDescriptionHelp</p>
             </div>
 
-            <div>
+            <div data-ng-class="gnPredefinedMapEdit.position.$error.required ? 'has-error' : ''">
               <label data-translate="">Position</label>
 
-              <input type="number" name="position"  data-ng-model="predefinedMapSelected.position" class="form-control" />
+              <input type="number" name="position"  data-ng-model="predefinedMapSelected.position"
+                     class="form-control"  data-ng-required="true"/>
               <p class="help-block" data-translate="">predefinedMapPositionHelp</p>
             </div>
 
@@ -103,45 +109,49 @@
             </div>
 
 
-            <div data-ng-class="gnPredefinedMapEdit.image.$error.required ? 'has-error' : ''"
-                 data-ng-hide="predefinedMapSelected.image">
+            <div data-ng-class="gnPredefinedMapEdit.image.$error.required ? 'has-error' : ''">
               <label data-translate="">predefinedMapImg</label>
-              <span class="btn btn-success btn-block fileinput-button"
-                     ng-class="{disabled: disabled}">
-                <i class="fa fa-plus fa-white"/>
-                <span data-translate="">chooseLogos</span>
-                <input type="file"
-                       name="image"
-                       id="predefinedmap-file"
-                       multiple="false"
-                       data-ng-model="predefinedMapSelected.image"
-                       data-ng-required="true"
-                       autofocus="" ng-disabled="disabled"/>
 
-              </span>
+              <div data-ng-hide="predefinedMapSelected.image">
+                <span class="btn btn-success btn-block fileinput-button"
+                       ng-class="{disabled: disabled}">
+                  <i class="fa fa-plus fa-white"/>
+                  <span data-translate="">chooseLogos</span>
+                  <input type="file"
+                         name="image"
+                         id="predefinedmap-file"
+                         multiple="false"
+                         data-ng-model="predefinedMapSelected.image"
+                         data-ng-required="true"
+                         autofocus="" ng-disabled="disabled"/>
 
-              <ul>
-                <li data-ng-repeat="file in queue">
-                  <div class="preview" data-file-upload-preview="file"></div>
-                  {{file.name}} ({{file.type}} / {{file.size | formatFileSize}})
-                  <i class="fa fa-times" data-ng-click="clear(file)"/>
-                </li>
-              </ul>
+                </span>
+
+                <ul>
+                  <li data-ng-repeat="file in queue">
+                    <div class="preview" data-file-upload-preview="file"></div>
+                    {{file.name}} ({{file.type}} / {{file.size | formatFileSize}})
+                    <i class="fa fa-times" data-ng-click="clear(file)"/>
+                  </li>
+                </ul>
+              </div>
+
+              <!--Display saved logo-->
+              <div data-ng-show="predefinedMapSelected.image">
+                <img data-ng-show="predefinedMapSelected.image"
+                     src="../../images/harvesting/{{predefinedMapSelected.image}}"
+                     style="max-width:128px; max-height:128px">
+                <a href="" data-ng-click="deleteImage()"
+                   class="text-danger">
+                  <i data-ng-show="predefinedMapSelected.image"
+                     class="fa fa-times delete"></i>
+                </a>
+              </div>
 
               <p class="help-block" data-translate="">predefinedMapImgHelp</p>
             </div>
 
-            <!--Display saved logo-->
-            <div data-ng-show="predefinedMapSelected.image">
-              <img data-ng-show="predefinedMapSelected.image"
-                   src="../../images/harvesting/{{predefinedMapSelected.image}}"
-                   style="max-width:128px; max-height:128px">
-              <a href="" data-ng-click="deleteImage()"
-                 class="text-danger">
-                <i data-ng-show="predefinedMapSelected.image"
-                   class="fa fa-times delete"></i>
-              </a>
-            </div>
+
           </fieldset>
         </form>
       </div>
