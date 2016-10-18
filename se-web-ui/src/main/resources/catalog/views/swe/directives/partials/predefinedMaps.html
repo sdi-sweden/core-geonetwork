@@ -1,5 +1,5 @@
 <ul class="img-list">
-    <li data-ng-repeat="map in predefinedMaps | orderBy: 'position'">
+    <li data-ng-repeat="map in predefinedMaps | orderBy: 'position'" data-ng-if="map.enabled">
         <a href data-ng-mouseenter="hovering=true" title="{{map.description}}" data-ng-mouseleave="hovering=false" data-ng-click="doView(map)">
             <div  class="bg-img" data-ng-style="{'background-image':'url(../../images/harvesting/{{map.image}}) '}"></div>
             <div class="tool-tip-cont">

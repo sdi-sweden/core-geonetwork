@@ -73,7 +73,7 @@
         $scope.action = '../api/0.1/predefinedmaps/' + c.id;
         $scope.predefinedMapUpdated = false;
         $scope.predefinedMapSelected = c;
-        $scope.queue = null;
+        $scope.queue = [];
 
         $timeout(function() {
           $('#predefinedmapname').focus();
@@ -155,7 +155,7 @@
         };
 
         $scope.action = '../api/0.1/predefinedmaps';
-        $scope.queue = null;
+        $scope.queue = [];
 
         $timeout(function() {
           $('#predefinedmapname').focus();
