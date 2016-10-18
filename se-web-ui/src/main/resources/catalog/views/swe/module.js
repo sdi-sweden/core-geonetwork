@@ -999,7 +999,6 @@
           $scope.searchObj.params._id =
               ($scope.searchObj.params._id ? '' : '--');
         }
-
         $scope.triggerSearch();
       };
 
@@ -1020,11 +1019,16 @@
        * Clean search options to view all metadata.
        */
       $scope.viewAllMetadata = function() {
+
         $scope.selectedTopicCategories = [];
         delete $scope.searchObj.params.topicCat;
         delete $scope.searchObj.params.download;
         delete $scope.searchObj.params.dynamic;
         delete $scope.searchObj.params.any;
+        delete $scope.searchObj.params._id;
+        delete $scope.searchObj.params.resourceDateFrom;
+        delete $scope.searchObj.params.resourceDateTo;
+        delete $scope.searchObj.params.namesearch;
 
         $scope.triggerSearch();
       };
