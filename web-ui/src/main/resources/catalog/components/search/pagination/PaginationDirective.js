@@ -48,8 +48,8 @@
             hitsPerPage: 10
           };
           angular.extend(defaultConfig, scope.config);
-          scope.config = defaultConfig;
           delete defaultConfig;
+
           /**
            * If an object {paginationInfo} is defined inside the
            * SearchFormController, then add from and to  params
