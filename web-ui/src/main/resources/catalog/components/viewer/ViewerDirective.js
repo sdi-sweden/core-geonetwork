@@ -76,6 +76,9 @@
               scope.is3DModeAllowed = gnConfig['map.is3DModeAllowed'] || false;
               scope.is3dEnabled = gnConfig['is3dEnabled'] || false;
 
+              // My position
+              scope.isMyPositionAllowed = gnConfig['map.isMyPositionEnabled'] || false;
+
               // By default, synch only background layer
               // between main map and search map
               scope.synAllLayers = false;
