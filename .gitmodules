@@ -21,3 +21,6 @@
 [submodule "web-ui/src/main/resources/catalog/lib/ngStorage"]
 	path = web-ui/src/main/resources/catalog/lib/ngStorage
 	url = https://github.com/gsklee/ngStorage.git
+[submodule "web-ui/src/main/resources/catalog/lib/angulartics"]
+	path = web-ui/src/main/resources/catalog/lib/angulartics
+	url = https://github.com/angulartics/angulartics.git

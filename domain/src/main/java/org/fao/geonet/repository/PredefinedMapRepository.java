@@ -21,30 +21,16 @@
  * Rome - Italy. email: geonetwork@osgeo.org
  */
 
-(function() {
-  goog.provide('gn_admin');
+package org.fao.geonet.repository;
 
+import org.fao.geonet.domain.PredefinedMap;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+/**
+ * Data Access object for accessing {@link PredefinedMap} entities.
+ *
+ * @author Jesse
+ */
+public interface PredefinedMapRepository extends GeonetRepository<PredefinedMap, Integer>, JpaSpecificationExecutor<PredefinedMap> {
 
-
-
-
-
-
-
-
-  goog.require('gn_admin_controller');
-  goog.require('gn_module');
-
-  var module = angular.module('gn_admin', [
-    'gn_module',
-    'gn_admin_controller',
-    'angulartics', 'angulartics.google.tagmanager', 'angulartics.debug'
-  ]);
-
-
-  module.config(['$LOCALES',
-    function($LOCALES) {
-      $LOCALES.push('admin');
-    }]);
-})();
+}

@@ -150,6 +150,10 @@
         <!--</xsl:if>-->
 
         <script src="{$uiResourcesPath}lib/ngStorage/ngStorage.js"></script>
+
+        <script src="{$uiResourcesPath}lib/angulartics/dist/angulartics.min.js"></script>
+        <script src="{$uiResourcesPath}lib/angulartics/dist/angulartics-debug.min.js"></script>
+        <script src="{$uiResourcesPath}lib/angulartics/dist/angulartics-gtm.min.js"></script>
       </xsl:when>
       <xsl:otherwise>
       </xsl:otherwise>

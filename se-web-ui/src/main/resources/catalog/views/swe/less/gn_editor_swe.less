@@ -2,6 +2,13 @@
 @import "../../../style/gn_editor";
 @import "gn_view_swe.less";
 
+body {
+  padding-top: 0;
+}
+.navbar {
+  position: initial;
+}
+
 form.gn-editor {
   .control-label {
     text-transform: uppercase;
@@ -13,6 +20,14 @@ form.gn-editor {
     letter-spacing: 1px;
     text-align: left;
     padding-left: 4px;
+  }
+  // same background on mousehover
+   .field-bg {
+    background: #fff;
+  }
+  // hide the delete button
+  .gn-control a.btn {
+    display: none !important;
   }
 
   .gn-required > label:after {
