@@ -177,14 +177,6 @@
 
           }
 
-          // close tooltips on click in body
-          $('body').on('mouseover', function (e) {
-            //did not click a popover toggle or popover
-            if ($(e.target).data('toggle') !== 'popover' && $(e.target).parents('.popover.in').length === 0) {
-              closeTooltips();
-            }
-          });
-
           // if element is a fieldset legend
           if (element.is('legend')) {
             element.contents().first().after(tooltipIconCompiled);
