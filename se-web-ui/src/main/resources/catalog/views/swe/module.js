@@ -40,7 +40,8 @@
   var module = angular.module('gn_search_swe', [
     'gn_related_directive', 'gn_search',
     'gn_resultsview', 'cookie_warning',
-    'swe_search_config', 'swe_directives', 'ngStorage']);
+    'swe_search_config', 'swe_directives', 'ngStorage',
+    'angulartics', 'angulartics.google.tagmanager', 'angulartics.debug']);
 
   module.controller('gnsSwe', [
     '$rootScope',
@@ -359,7 +360,7 @@
           });
         },
         loadMap: function(map) {
-          gnOwsContextService.loadContextFromUrl(map.url, viewerMap);
+          gnOwsContextService.loadContext(map, viewerMap);
         }
       };
 
@@ -858,8 +859,8 @@
    * Controller for the filter panel.
    *
    */
-  module.controller('SweFilterPanelController', ['$scope', '$localStorage',
-    function($scope, $localStorage) {
+  module.controller('SweFilterPanelController', ['$scope', '$filter', '$localStorage',
+    function($scope, $filter, $localStorage) {
 
       $scope.advancedMode = false;
 
@@ -998,7 +999,6 @@
           $scope.searchObj.params._id =
               ($scope.searchObj.params._id ? '' : '--');
         }
-
         $scope.triggerSearch();
       };
 
@@ -1011,16 +1011,24 @@
         $scope.triggerSearch();
       };
 
+      $scope.translatedTopicCat = function(p) {
+        return $filter('translate')(p);
+      }
 
       /**
        * Clean search options to view all metadata.
        */
       $scope.viewAllMetadata = function() {
+
         $scope.selectedTopicCategories = [];
         delete $scope.searchObj.params.topicCat;
         delete $scope.searchObj.params.download;
         delete $scope.searchObj.params.dynamic;
         delete $scope.searchObj.params.any;
+        delete $scope.searchObj.params._id;
+        delete $scope.searchObj.params.resourceDateFrom;
+        delete $scope.searchObj.params.resourceDateTo;
+        delete $scope.searchObj.params.namesearch;
 
         $scope.triggerSearch();
       };
@@ -1065,50 +1073,6 @@
     }]);
 
   /**
-  * Controller for the image filter panel.
-  *
-  */
-  module.controller('SweFilterController', ['$scope', function($scope) {
-    $scope.hovering = false;
-    // replace prefined queries with a service returning the possible queries
-    $scope.predefinedQueries = [{
-      image: 'http://lorempixel.com/210/125/nature/?id=1',
-      tooltip: 'Filter 1',
-      text: 'Filter 1',
-      query: 'Filter Query 1',
-      url: 'http://localhost:8080/geonetwork/catalog/views/' +
-          'swe/resources/owscontext.xml'
-    }, {
-      image: 'http://lorempixel.com/210/125/nature/?id=2',
-      tooltip: 'Filter 2',
-      text: 'Filter 2',
-      query: 'Filter Query 2',
-      url: 'http://localhost:8080/geonetwork/catalog/views/' +
-          'swe/resources/owscontext.xml'
-    }, {
-      image: 'http://lorempixel.com/210/125/nature/?id=3',
-      tooltip: 'Filter 3',
-      text: 'Filter 3',
-      query: 'Filter Query 3',
-      url: 'http://localhost:8080/geonetwork/catalog/views/' +
-          'swe/resources/owscontext.xml'
-    }, {
-      image: 'http://lorempixel.com/210/125/nature/?id=4',
-      tooltip: 'Filter 4',
-      text: 'Filter 4',
-      query: 'Filter Query 4',
-      url: 'http://localhost:8080/geonetwork/catalog/views/' +
-          'swe/resources/owscontext.xml'
-    }];
-
-    $scope.doFilter = function(query) {
-      var map = {};
-      map.url = query.url;
-      $scope.resultviewFns.loadMap(map);
-    };
-  }]);
-
-  /**
    * Controller for geo suggestions.
    *
    */
@@ -1137,37 +1101,4 @@
       });
     };
   }]);
-
-  /**
-   * orderByTranslated Filter
-   * Sort ng-options or ng-repeat by translated values
-   * @example
-   *   ng-repeat="scheme in data.schemes |
-   *    orderByTranslated:'storage__':'collectionName'"
-   * @param  {Array|Object} array or hash
-   * @param  {String} i18nKeyPrefix
-   * @param  {String} objKey (needed if hash)
-   * @return {Array}
-   */
-  module.filter('orderByTranslated', ['$translate', '$filter',
-    function($translate, $filter) {
-      return function(array, i18nKeyPrefix, objKey) {
-        var result = [];
-        var translated = [];
-        angular.forEach(array, function(value) {
-          var i18nKeySuffix = objKey ? value[objKey] : value;
-          translated.push({
-            key: value,
-            label: $translate.instant(i18nKeyPrefix + i18nKeySuffix)
-          });
-        });
-        angular.forEach($filter('orderBy')(translated, 'label'),
-            function(sortedObject) {
-              result.push(sortedObject.key);
-            }
-        );
-        return result;
-      };
-    }]);
-
 })();

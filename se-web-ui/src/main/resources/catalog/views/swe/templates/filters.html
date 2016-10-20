@@ -4,7 +4,7 @@
     <div class="site-image-filter">
       <a href="" data-ng-click="closeFilterPanel()" class="cls-btn icon-cancel"></a>
       <span class="image-filter-text">rekommenderade datasamlingar</span>
-      <swe-image-filter></swe-image-filter>
+      <swe-predefined-maps-filter data-viewerMap="resultviewFns.loadMap"></swe-predefined-maps-filter>
     </div>
 
     <!-- Search filters -->
@@ -40,7 +40,7 @@
         <div class="filter-options-cont">
           <div class="basic-filters-cont active">
             <ul class="geo-categories">
-              <li data-ng-repeat="topic in topicCategories | orderBy: orderByTranslated"
+              <li data-ng-repeat="topic in topicCategories | orderBy: translatedTopicCat"
                   data-ng-click="toggleTopicCategory(topic)"
                   data-ng-class="{'active': isTopicCategorySelected(topic)}"><a href="" data-translate="">{{topic}}</a></li>
             </ul>
@@ -160,7 +160,7 @@
           <span class="icon-cancel"></span>
         </a>
       </li>
-      <li data-ng-repeat="topic in selectedTopicCategories | orderBy: orderByTranslated">
+      <li data-ng-repeat="topic in selectedTopicCategories | orderBy: translatedTopicCat">
         <a href="" data-ng-click="unselectTopicCategory(topic)">
           <span data-translate="">{{topic}}</span>
           <span class="icon-cancel"></span>

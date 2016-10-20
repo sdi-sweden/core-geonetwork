@@ -296,6 +296,7 @@
     "isValid": "Valideringsstatus",
     "Attribution": "Attribution",
     "layerDelete": "Ta bort lager",
+    "layersDelete":"Radera alla lager",
     "layerMetadata": "Metadata",
     "layerVisible": "Synlig",
     "layerMoveDown": "Flytta lager nedåt",

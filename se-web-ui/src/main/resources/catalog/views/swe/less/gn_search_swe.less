@@ -24,6 +24,40 @@
   }
 }
 
+// Map
+// 
+/* add layer icon */
+.gn-stack {
+  height: 1em;
+  line-height: inherit;
+}
+.gn-stack .fa-tasks {
+  top: -3px;
+  left: -6px;
+}
+.gn-stack .fa-plus-circle {
+  top: -9px;
+  right: -4px;
+}
+.gn-stack .fa-plus-circle:before {
+  background: #fff;
+  border-radius: 50%;
+  padding: 1px 1px 0px 1px;
+}
+
+/* Buttons */
+ 
+/* override bootstrap colors */
+.fltr-link:hover, .fltr-link:focus {
+  color: #6c9290;
+}
+.cls-btn:hover, .cls-btn:focus {
+  color: #fff;
+  text-decoration: none;
+}
+.tool-tip a, .tool-tip a:hover, .tool-tip a:focus {
+  color: #fff;
+}
 
 /* Pagination */
 .gn-pager {
@@ -631,6 +665,9 @@ html, body {
   padding-left: 0;
   background: #fff;
   line-height: 1.9em;
+  p {
+    white-space: pre-line;
+  }
 }
 .gn-metadata-view dd .col-md-6 {
   float: left;
@@ -691,9 +728,46 @@ html, body {
 }
 
 // all help icons
+
+/* ----- general */
+.help-icn-cont .help-icn-circle {
+  border: 0;
+}
 .help-icn-cont .icon-help {
-  top: -5px !important;
-  left: -2px !important;
+  font-size: 16px !important;
+}
+.help-icn-cont .icon-help:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f29c";
+}
+/* ----- metadata popup */
+.popup-cont .geo-data-row .help-icn-cont .icon-help {
+  top: -2px;
+}
+/* ----- filters */
+.advance-filters-cont .draw-map-link-colm .help-icn-cont .icon-help {
+  left: -3px;
+}
+/* ----- smaller screens */
+@media screen and (max-width: 1300px) {
+  .site-geo-type-filter .other-filter-help-icn {
+    top: 38px; 
+  }
+  .site-geo-type-filter .other-filters {
+    margin-right: 22px;
+  }
+  .advance-filters-cont .right-side-filter {
+    margin-right: 5px;
+  }
+  .advance-filters-cont .draw-map-link-colm .help-icn-cont {
+    top: 0px;
+    right: -25px;
+  }
 }
 
 /* tabs */

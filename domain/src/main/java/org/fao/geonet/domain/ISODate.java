@@ -519,9 +519,13 @@ public class ISODate
     private void parseDate(@Nonnull String isoDate) {
         try {
             String[] parts = isoDate.split("-|/");
-            if (parts.length != 3) {
+            if (parts.length == 1) {
+                parts = (parts[0] + "-01-01").split("-|/");
+            } else if (parts.length == 2) {
+                parts = (parts[0] + "-" + parts[1] + "-01").split("-|/");
+            } else if (parts.length != 3) {
                 throw new IllegalArgumentException(
-                    "Invalid ISO date : " + isoDate);
+                        "Invalid ISO date : " + isoDate);
             }
             int year;
             if (parts[0].length() < 4) {

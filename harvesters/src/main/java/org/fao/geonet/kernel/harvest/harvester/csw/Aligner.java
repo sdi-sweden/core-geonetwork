@@ -280,12 +280,15 @@ public class Aligner extends BaseAligner {
             ownerId = Integer.parseInt(params.getOwnerId());
         }
         Metadata metadata = new Metadata().setUuid(ri.uuid);
+
+        ISODate changeDate = new ISODate(ri.changeDate);
+
         metadata.getDataInfo().
             setSchemaId(schema).
             setRoot(md.getQualifiedName()).
             setType(MetadataType.METADATA).
-            setChangeDate(new ISODate(ri.changeDate)).
-            setCreateDate(new ISODate(ri.changeDate));
+            setChangeDate(changeDate).
+            setCreateDate(changeDate);
         metadata.getSourceInfo().
             setSourceId(params.getUuid()).
             setOwner(ownerId);
