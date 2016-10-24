@@ -137,9 +137,12 @@
       </xsl:if>
     </xsl:variable>
 
+	<xsl:variable name="tabName" select="../..[name()='tab']/@id" />
+	
     <xsl:for-each select="$nodes">
       <xsl:apply-templates mode="render-field">
         <xsl:with-param name="fieldName" select="$fieldName"/>
+		<xsl:with-param name="tabName" select="$tabName"/>
       </xsl:apply-templates>
     </xsl:for-each>
   </xsl:template>
@@ -192,9 +195,12 @@
           </xsl:if>
         </xsl:variable>
 
+		<xsl:variable name="tabName" select="../..[name()='tab']/@id" />
+		
         <xsl:for-each select="$nodes">
           <xsl:apply-templates mode="render-field">
             <xsl:with-param name="fieldName" select="$fieldName"/>
+			<xsl:with-param name="tabName" select="$tabName"/>
           </xsl:apply-templates>
         </xsl:for-each>
       </xsl:for-each>
@@ -219,9 +225,12 @@
       </xsl:if>
     </xsl:variable>
 
+	<xsl:variable name="tabName" select="../..[name()='tab']/@id" />
+	
     <xsl:for-each select="$nodes">
       <xsl:apply-templates mode="render-field">
         <xsl:with-param name="fieldName" select="$fieldName"/>
+		<xsl:with-param name="tabName" select="$tabName"/>
       </xsl:apply-templates>
     </xsl:for-each>
   </xsl:template>
