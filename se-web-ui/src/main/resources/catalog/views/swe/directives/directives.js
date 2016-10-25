@@ -56,6 +56,7 @@
     };
   }]);
 
+
   /**
    * @ngdoc directive
    * @name sweSortbyCombo
@@ -81,8 +82,29 @@
         link: function(scope, element, attrs, searchFormCtrl) {
           scope.params.sortBy = scope.params.sortBy ||
               scope.values[0].sortBy;
+
           scope.sortBy = function(v) {
             angular.extend(scope.params, v);
+            scope.sortByOrder(scope.params.sortOrder);
+          };
+
+          if (angular.isUndefined(scope.params.sortOrder)) {
+            scope.sortOrder = 'descending';
+          } else {
+            scope.sortOrder = 'ascending';
+          }
+
+          scope.sortByOrder = function(v) {
+            scope.params.sortOrder = v;
+
+            if (angular.isUndefined(v) || (v == '')) {
+              delete scope.params.sortOrder;
+              scope.sortOrder = 'descending';
+            } else {
+              scope.params.sortOrder = v;
+              scope.sortOrder = 'ascending';
+            }
+
             searchFormCtrl.triggerSearch(true);
           };
 
@@ -255,20 +277,36 @@
 
   /**
    * @ngdoc directive
-   * @name sweImageFilter
+   * @name swePredefinedMapsFilter
    * @function
    *
    * @description
-   * Shows image filters on home page.
+   * Shows predefined maps filters on home page.
    *
    */
-  module.directive('sweImageFilter', function() {
-    return {
-      restrict: 'E',
-      templateUrl: '../../catalog/views/swe/templates/image_filter.html',
-      controller: 'SweFilterController'
-    };
-  });
+  module.directive('swePredefinedMapsFilter', ['$http', 'gnOwsContextService', 'gnSearchSettings',
+    function($http, gnOwsContextService, gnSearchSettings) {
+      return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: '../../catalog/views/swe/directives/' +
+          'partials/predefinedMaps.html',
+        //controller: 'SwePredefinedMapsController'
+        controller: function ($scope, $element) {
+          $scope.hovering = false;
+
+          $http.get('../api/0.1/predefinedmaps/').success(function(data) {
+            $scope.predefinedMaps = data;
+          }).error(function(data) {
+            // TODO
+          });
+
+          $scope.doView = function(predefinedMap) {
+            gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+          };
+        }
+      };
+  }]);
 
 
   module.directive('sweFacetDimensionList', [

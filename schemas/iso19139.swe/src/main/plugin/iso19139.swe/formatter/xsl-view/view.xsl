@@ -118,9 +118,12 @@
   <xsl:template mode="render-field"
                 match="*[count(gmd:*) = 1]"
                 priority="50">
+    <xsl:param name="tabName" select="''" as="xs:string"/>
 
     <xsl:apply-templates mode="render-value" select="@*"/>
-    <xsl:apply-templates mode="render-field" select="*"/>
+    <xsl:apply-templates mode="render-field" select="*">
+      <xsl:with-param name="tabName" select="$tabName"/>
+    </xsl:apply-templates>
   </xsl:template>
 
 
@@ -133,6 +136,8 @@
       gmd:extent[name(..)!='gmd:EX_TemporalExtent']|
       *[$isFlatMode = false() and gmd:* and not(gco:CharacterString) and not(gmd:URL)]">
 
+    <xsl:param name="tabName" select="''" as="xs:string"/>
+
     <div class="entry name">
       <h3>
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
@@ -140,7 +145,9 @@
                              select="@*"/>
       </h3>
       <div class="target">
-        <xsl:apply-templates mode="render-field" select="*"/>
+        <xsl:apply-templates mode="render-field" select="*">
+          <xsl:with-param name="tabName" select="$tabName"/>
+        </xsl:apply-templates>
       </div>
     </div>
   </xsl:template>
@@ -151,11 +158,28 @@
   <xsl:template mode="render-field"
                 match="gmd:EX_GeographicBoundingBox[
           gmd:westBoundLongitude/gco:Decimal != '']">
-    <xsl:copy-of select="gn-fn-render:bbox(
+		  
+		  
+	<xsl:variable name="west">
+		<xsl:value-of select="xs:double(gmd:westBoundLongitude/gco:Decimal)"/>
+	</xsl:variable>
+	<xsl:variable name="north">
+		<xsl:value-of select="xs:double(gmd:northBoundLatitude/gco:Decimal)"/>
+	</xsl:variable>
+	<xsl:variable name="east">
+		<xsl:value-of select="xs:double(gmd:eastBoundLongitude/gco:Decimal)"/>
+	</xsl:variable>
+	<xsl:variable name="south">
+		<xsl:value-of select="xs:double(gmd:southBoundLatitude/gco:Decimal)"/>
+	</xsl:variable>
+
+	<xsl:if test="$west != 0 and $north != 0 and $east != 0 and $south != 0">
+		<xsl:copy-of select="gn-fn-render:bbox(
                             xs:double(gmd:westBoundLongitude/gco:Decimal),
                             xs:double(gmd:southBoundLatitude/gco:Decimal),
                             xs:double(gmd:eastBoundLongitude/gco:Decimal),
                             xs:double(gmd:northBoundLatitude/gco:Decimal))"/>
+	</xsl:if>
   </xsl:template>
 
 
@@ -173,13 +197,13 @@
     <xsl:variable name="displayName">
       <xsl:choose>
         <xsl:when
-                test="*/gmd:organisationName and */gmd:individualName">
+                test="normalize-space(*/gmd:organisationName) != '' and normalize-space(*/gmd:individualName) != ''">
           <!-- Org name may be multilingual -->
           <xsl:apply-templates mode="render-value"
                                select="*/gmd:organisationName"/>
           -
           <xsl:value-of select="*/gmd:individualName"/>
-          <xsl:if test="*/gmd:positionName">
+          <xsl:if test="normalize-space(*/gmd:positionName) != ''">
             (<xsl:apply-templates mode="render-value"
                                   select="*/gmd:positionName"/>)
           </xsl:if>
@@ -200,7 +224,7 @@
           <address>
             <strong>
               <xsl:choose>
-                <xsl:when test="$email">
+                <xsl:when test="normalize-space($email) != ''">
                   <i class="fa fa-envelope"></i>
                   <a href="mailto:{normalize-space($email)}"><xsl:value-of select="$displayName"/></a>
                 </xsl:when>
@@ -240,6 +264,16 @@
                 </a>
               </xsl:for-each>
 
+			  <xsl:variable name="website">
+					<xsl:apply-templates mode="render-value"
+                           select="gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+			  </xsl:variable>
+			  <xsl:if test="$website !=''">
+				-
+				<a href="http://{$website}" target="_blank">
+					<xsl:value-of select="normalize-space($website)"/>
+				</a>
+			  </xsl:if>	
               <xsl:apply-templates mode="render-field"
                                    select="gmd:hoursOfService|gmd:contactInstructions"/>
               <xsl:apply-templates mode="render-field"
@@ -252,6 +286,102 @@
     </dl>
   </xsl:template>
 
+  <!-- A Resursetyp is displayed with its translated codeListValue -->
+  <xsl:template mode="render-field"
+                match="gmd:hierarchyLevel"
+                priority="100">
+    <dl class="gn-contact">
+      <dt>
+        <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'hierarchyLevel')"/>
+      </dt>
+      <dd>
+        <xsl:apply-templates mode="render-value"
+                             select="gmd:MD_ScopeCode/@codeListValue"/>
+        
+      </dd>
+    </dl>
+  </xsl:template>
+  
+  <!-- A Resurskontakt is displayed with its role=owner -->
+  <xsl:template mode="render-field"
+                match="gmd:pointOfContact"
+                priority="100">
+	<xsl:param name="tabName" select="''" as="xs:string"/>
+	<xsl:variable name="role" select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue"/>
+	<xsl:if test="$role='owner'">
+		<dl class="gn-contact">
+		  <dt>
+			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'pointOfContact')"/>
+		  </dt>
+		  <dd>
+			 <dl class="gn-contact">
+				<table border="1" style="width:100%" bordercolor="#D3D3D3">
+					<tr>
+						<th style="padding-left:15px">
+							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'organisationName')"/>
+						</th>
+						<td style="padding-left:15px">
+							<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
+						</td>
+					</tr>
+					<tr>
+						<th style="padding-left:15px">
+							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'roleLabel')"/>
+						</th>
+						<td style="padding-left:15px">
+							<xsl:apply-templates mode="render-value"
+								 select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue"/>
+						</td>
+					</tr>
+					<tr>
+						<th style="padding-left:15px">
+							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'electronicMailAddress')"/>
+						</th>
+						<td style="padding-left:15px">
+							<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/>
+						</td>
+					</tr>
+				</table>
+			</dl>
+		  </dd>
+		</dl>
+		
+	</xsl:if>
+  </xsl:template>
+  
+  <!-- A Restriktioner:MD_Constraints is displayed -->
+  <xsl:template mode="render-field"
+                match="gmd:MD_Constraints"
+                priority="100">
+	<xsl:param name="tabName" select="''" as="xs:string"/>
+	<xsl:for-each select="gmd:useLimitation">    
+		<dl class="gn-contact">
+		  <dt>
+			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'useLimitation')"/>
+		  </dt>
+		  <dd>		  
+			<xsl:value-of select="gco:CharacterString"/>		
+		  </dd>
+		</dl>
+	</xsl:for-each>
+  </xsl:template>
+  <!-- A Restriktioner:MD_LegalConstraints is displayed -->
+  <xsl:template mode="render-field"
+                match="gmd:MD_LegalConstraints"
+                priority="100">
+	<xsl:param name="tabName" select="''" as="xs:string"/>
+	<xsl:for-each select="gmd:otherConstraints">
+		<dl class="gn-contact">
+		  <dt>
+			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'otherConstraints')"/>
+		  </dt>
+		  <dd>		  
+			<xsl:value-of select="gco:CharacterString"/>		
+		  </dd>
+		</dl>
+	</xsl:for-each>
+  </xsl:template>
+  
   <!-- Metadata linkage -->
   <xsl:template mode="render-field"
                 match="gmd:fileIdentifier"
@@ -273,7 +403,7 @@
   </xsl:template>
 
   <!-- Linkage -->
-  <xsl:template mode="render-field"
+  <!-- <xsl:template mode="render-field"
                 match="*[gmd:CI_OnlineResource and */gmd:linkage/gmd:URL != '']"
                 priority="100">
     <dl class="gn-link">
@@ -294,8 +424,50 @@
         </p>
       </dd>
     </dl>
+  </xsl:template> -->
+  
+  <xsl:template mode="render-field"
+                match="gmd:onLine[1]"
+                priority="100">
+	
+		<dl class="gn-link">
+			<dt>
+				<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLinkLinks')"/>
+			</dt>
+			<dd>
+				<table border="1" style="width:100%" bordercolor="#D3D3D3">
+					<tr>
+						<th style="padding-left:15px"><xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkProtocol')"/></th>
+						<th style="padding-left:15px"><xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkName')"/></th>
+						<th style="padding-left:15px"><xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkUrl')"/></th>
+					</tr>
+					<xsl:for-each select="parent::node()/gmd:onLine">
+						<xsl:variable name="protocol">
+							<xsl:apply-templates mode="render-value" select="*/gmd:protocol"/>
+						</xsl:variable>
+						<xsl:variable name="name">
+							<xsl:apply-templates mode="render-value" select="*/gmd:name"/>
+						</xsl:variable>
+						<xsl:variable name="url">
+							<xsl:apply-templates mode="render-value" select="*/gmd:linkage/gmd:URL"/>
+						</xsl:variable>
+						<tr>
+							<td style="padding-left:15px"><xsl:value-of select="normalize-space($protocol)"/></td>
+							<td style="padding-left:15px"><xsl:value-of select="normalize-space($name)"/></td>
+							<td style="padding-left:15px">
+								<a href="{$url}" target="_blank">
+									<xsl:value-of select="normalize-space($url)"/>
+								</a>
+							</td>
+						</tr>
+					</xsl:for-each>	
+				</table>				
+			</dd>
+		</dl>
   </xsl:template>
 
+  <xsl:template mode="render-field" match="gmd:onLine[position() > 1]" priority="100"/>
+  
   <!-- Identifier -->
   <xsl:template mode="render-field"
                 match="*[(gmd:RS_Identifier or gmd:MD_Identifier) and
@@ -442,7 +614,7 @@
                 priority="100"/>
 
   <!-- Date -->
-  <xsl:template mode="render-field"
+  <!-- <xsl:template mode="render-field"
                 match="gmd:date"
                 priority="100">
     <dl class="gn-date">
@@ -459,8 +631,52 @@
       </dd>
     </dl>
   </xsl:template>
+  -->
+  <xsl:template mode="render-field"
+                match="gmd:date[1]"
+                priority="100">
+				
+	  <xsl:param name="tabName" select="''" as="xs:string"/>
+	  <xsl:choose>
+		  <xsl:when test="$tabName = 'introduction'">
+			  <xsl:variable name="dates">
+				<xsl:for-each select="parent::node()/gmd:date">
+					<xsl:value-of  select="*/gmd:date/gco:Date[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}')]"/>
+					<xsl:if test="position() != last()">,</xsl:if>
+				</xsl:for-each>
+			  </xsl:variable>
+			  <xsl:variable name="dateList" select="tokenize(normalize-space($dates), ',')" />
+			  <xsl:variable name="latestDate" select="max($dateList)" />
+			  <xsl:for-each select="parent::node()/gmd:date[gmd:CI_Date/gmd:date/gco:Date=$latestDate]">
+					<dl class="gn-date">
+					  <dt>
+						<xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
+						  (<xsl:apply-templates mode="render-value"	select="*/gmd:dateType/*/@codeListValue"/>)
+					  </dt>
+					  <dd>
+						<xsl:apply-templates mode="render-value" select="*/gmd:date/*"/>
+					  </dd>
+					</dl>
+			  </xsl:for-each>
+		  </xsl:when>
+          <xsl:otherwise>
+			  <xsl:for-each select="parent::node()/gmd:date">
+					<dl class="gn-date">
+					  <dt>
+						<xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
+						  (<xsl:apply-templates mode="render-value"	select="*/gmd:dateType/*/@codeListValue"/>)
+					  </dt>
+					  <dd>
+						<xsl:apply-templates mode="render-value" select="*/gmd:date/*"/>
+					  </dd>
+					</dl>
+			  </xsl:for-each>
+          </xsl:otherwise>
+	  </xsl:choose>
+  </xsl:template>
 
-
+  <xsl:template mode="render-field" match="gmd:date[position() > 1]" priority="100"/>
+  
   <!-- Enumeration -->
   <xsl:template mode="render-field"
                 match="gmd:topicCategory[1]|gmd:obligation[1]|gmd:pointInPixel[1]"
@@ -552,7 +768,7 @@
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="normalize-space(.)"/>
+        <xsl:value-of select="normalize-space(.)"/><xsl:text>&#160;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -583,17 +799,17 @@
 
   <xsl:template mode="render-value"
                 match="gco:Date[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}')]">
-    <span data-gn-humanize-time="{.}" data-format="DD MMM YYYY"></span>
+    <span data-gn-humanize-time="{.}" data-format="YYYY-MM-DD"></span>
   </xsl:template>
 
   <xsl:template mode="render-value"
                 match="gco:DateTime[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}')]">
-    <span data-gn-humanize-time="{.}"></span>
+    <span data-gn-humanize-time="{.}" data-format="YYYY-MM-DD hh:mm"></span>
   </xsl:template>
 
   <xsl:template mode="render-value"
                 match="gco:Date|gco:DateTime">
-    <span data-gn-humanize-time="{.}"></span>
+    <span data-gn-humanize-time="{.}" data-format="YYYY-MM-DD"></span>
   </xsl:template>
 
   <xsl:template mode="render-value"
@@ -656,5 +872,22 @@
   </xsl:template>
   <xsl:template mode="render-value"
                 match="@*"/>
+
+  <xsl:template mode="render-field"
+                match="gmd:abstract"
+                priority="100">
+    <xsl:param name="fieldName" select="''" as="xs:string"/>
+
+    <dl>
+      <dt>
+        <xsl:value-of select="if ($fieldName)
+                              then $fieldName
+                              else tr:node-label(tr:create($schema), name(), null)"/>
+      </dt>
+      <dd>
+        <p><xsl:value-of select="gco:CharacterString"/><xsl:apply-templates mode="render-value" select="@*"/></p>
+      </dd>
+   </dl>
+ </xsl:template>
 
 </xsl:stylesheet>

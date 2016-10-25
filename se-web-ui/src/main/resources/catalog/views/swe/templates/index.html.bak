@@ -188,7 +188,7 @@
         </div>
       </div>
 
-      <div class="site-side-map-cont" data-ng-search-form="">
+      <div class="site-side-map-cont">
         <div class="site-side-map-wrapper">
           <!-- Full map -->
           <div class="map-cont">

@@ -1,3 +1,11 @@
+
+
+<div class="gn-layer-remove-all">
+  <a href="#" ng-click="removeLayers()">
+        <i class="fa fa-times"/> <span data-translate="">layersDelete</span>
+  </a>
+</div>
+
 <ul class="list-group">
   <li gn-layermanager-item="layer" ng-repeat="layer in (layers | gnReverse | filter:layerFilterFn)"
       class="list-group-item"

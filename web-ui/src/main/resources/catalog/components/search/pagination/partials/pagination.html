@@ -1,5 +1,5 @@
 <div class="gn-pager"
-     data-ng-show="config.pages > 0">
+     data-ng-show="config.resultsCount && config.resultsCount > config.hitsPerPage">
   <ul class="pager gn-pager-start">
     <li data-ng-class="config.currentPage == 1 ? 'disabled' : ''">
       <a href="" data-ng-click="first()">

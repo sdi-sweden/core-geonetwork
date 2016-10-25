@@ -33,6 +33,7 @@
   goog.require('gn_scroll_spy');
   goog.require('gn_sources_controller');
   goog.require('gn_system_settings_controller');
+  goog.require('gn_predefinedmaps_controller');
 
   var module = angular.module('gn_settings_controller',
       ['gn_system_settings_controller',
@@ -43,7 +44,8 @@
        'gn_logo_settings_controller',
        'gn_sources_controller',
        'gn_metadata_identifier_templates_controller',
-       'gn_scroll_spy']
+       'gn_scroll_spy',
+       'gn_predefinedmaps_controller']
       );
 
   module.controller('GnSettingsController', ['$scope',
@@ -85,6 +87,11 @@
               icon: 'fa-globe',
               label: 'manageMapServers',
               href: '#/settings/mapservers'
+            },{
+                type: 'predefinedmaps',
+                icon: 'fa-globe',
+                label: 'managePredefinedMaps',
+                href: '#/settings/predefinedmaps'
             }]};
     }]);
 })();
