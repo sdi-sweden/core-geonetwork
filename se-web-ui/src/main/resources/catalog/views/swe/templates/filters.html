@@ -133,13 +133,13 @@
     <ul class="selected-filter-list">
       <li data-ng-show="searchObj.params.resourceDateFrom">
         <a href="" data-ng-click="unselectResourceDateFrom()">
-          <span>from date {{searchObj.params.resourceDateFrom | date : 'dd/MM/yyyy'}}</span>
+          <span>from date {{searchObj.params.resourceDateFrom | date : 'yyyy-MM-dd'}}</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
       <li data-ng-show="searchObj.params.resourceDateTo != undefined">
         <a href="" data-ng-click="unselectResourceDateTo()">
-          <span>to date {{searchObj.params.resourceDateTo | date : 'dd/MM/yyyy'}}</span>
+          <span>to date {{searchObj.params.resourceDateTo | date : 'yyyy-MM-dd'}}</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
