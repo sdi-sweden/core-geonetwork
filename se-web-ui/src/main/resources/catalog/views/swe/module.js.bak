@@ -66,13 +66,12 @@
     'hotkeys',
     'gnGlobalSettings',
     'gnMdFormatter',
-    'gnConfig',
     function($rootScope, $scope, $localStorage, $location, suggestService,
              $http, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig) {
+             hotkeys, gnGlobalSettings, gnMdFormatter) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -965,8 +964,7 @@
         delete $scope.searchObj.params._id;
         delete $scope.searchObj.params.resourceDateFrom;
         delete $scope.searchObj.params.resourceDateTo;
-        delete $scope.searchObj.params.geometry;
-        delete $scope.searchObj.namesearch;
+        delete $scope.searchObj.params.namesearch;
 
         $scope.triggerSearch();
       };
@@ -1044,8 +1042,8 @@
    * Controller for draw polygon using wfs getfeature.
    *
    */
-  module.controller('SweGeoWfsGetFeatureController', ['$scope', '$http', 'gnSearchSettings', 'gnMap', 'gnConfig',
-    function($scope, $http, gnSearchSettings, gnMap, gnConfig) {
+  module.controller('SweGeoWfsGetFeatureController', ['$scope', '$http', 'gnSearchSettings', 'gnMap',
+    function($scope, $http, gnSearchSettings, gnMap) {
      /**
        * Displays the polygon in map.
        *
@@ -1090,13 +1088,13 @@
             $scope.searchObj.searchMap.addLayer($scope.vectorLayer);
           }
           //$scope.searchObj.searchMap.addLayer($scope.vectorLayer);
-           var wfsurl = gnConfig['map.wfsServer.url'];
+           var wfsurl = 'http://localhost:8080/geoserver/wfs';
             var params = {
               'request': 'GetFeature',
               'service': 'WFS',
               'srs': 'EPSG:3006',
               'version': '1.0.0',
-              'typeName': gnConfig['map.wfsServer.workspace'] + ":" + gnConfig['map.wfsServer.layer'],
+              'typeName': 'metagis:metagis_gazetter',
               'bbox': extent[0] + "," + extent[1] + "," + extent[2] + "," + extent[3],
               'outputFormat': 'application/json',
               'callback': 'JSON_CALLBACK'
