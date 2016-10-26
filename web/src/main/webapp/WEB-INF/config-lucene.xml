@@ -266,6 +266,11 @@
       need to add those synonyms for search if users search for Londres, it will match.
       We only need synonym expansion during indexing or during searching, not both.
     -->
+    <Field name="_title" analyzer="org.apache.lucene.analysis.sv.SwedishAnalyzer">
+      <Param name="version" type="org.apache.lucene.util.Version"/>
+<!--      <Param name="stopWords" type="java.io.File" value="../resources/stopwords/swe.txt"/>
+ -->
+    </Field>
   </fieldSpecificSearchAnalyzer>
 
   <!-- Document boosting configuration.
