@@ -386,6 +386,10 @@ ul.gn-resultview {
     }
   }
 }
+// IE11 needs the height
+.geo-data-serach-filter input[type='text'] {
+  height: 56px;
+}
 
 [data-gn-map-field] > [ngeo-map] {
   //height: 89.9vh;
@@ -854,6 +858,9 @@ body {
     position: initial;
     margin-left: 26px;
     margin-top: 12px;
+    // reset top/left for IE11
+    top: 0;
+    left: 0;
     float: left;
   }
   .header-middle-cont {
@@ -864,6 +871,9 @@ body {
     position: initial;
     margin-right: 26px;
     margin-top: 16px;
+    // reset top/right for IE11
+    top: 0;
+    right: 0;
     float: right;
   }
   /* menu icon */
