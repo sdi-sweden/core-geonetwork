@@ -299,17 +299,17 @@ public class PredefinedMapsApi {
     }
 
 
-    private void checkFileName(String fileName) throws Exception {
-        if (fileName.contains("..")) {
-            throw new BadParameterEx(
-                    "Invalid character found in resource name.",
-                    fileName);
-        }
-
-        if ("".equals(fileName)) {
-            throw new Exception("File name is not defined.");
-        }
-    }
+//    private void checkFileName(String fileName) throws Exception {
+//        if (fileName.contains("..")) {
+//            throw new BadParameterEx(
+//                    "Invalid character found in resource name.",
+//                    fileName);
+//        }
+//
+//        if ("".equals(fileName)) {
+//            throw new Exception("File name is not defined.");
+//        }
+//    }
 
 
     private void saveFile(MultipartFile image) throws Exception {

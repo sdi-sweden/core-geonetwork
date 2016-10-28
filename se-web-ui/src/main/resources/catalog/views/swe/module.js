@@ -66,12 +66,13 @@
     'hotkeys',
     'gnGlobalSettings',
     'gnMdFormatter',
+    'gnConfig',
     function($rootScope, $scope, $localStorage, $location, suggestService,
              $http, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnMdFormatter) {
+             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -447,75 +448,7 @@
 
       };
 
-      /**
-       * Displays the polygon in map.
-       *
-       */
-      $scope.drawPolygonInMap = function() {
-        var namesearch = $scope.searchObj.params.namesearch;
-        var coordinates = namesearch.Coordinates;
-
-        if (coordinates) {
-          var proj = $scope.searchObj.searchMap.getView().getProjection();
-
-          var xy0 = coordinates[0];
-          var xy1 = coordinates[1];
-          var extent = []; // geoBox=10.59|55.15|24.18|69.05
-          extent.push([parseFloat(xy0.X), parseFloat(xy0.Y),
-            parseFloat(xy1.X), parseFloat(xy1.Y)]);
-
-          var feature = new ol.Feature();
-          //var feature = gnMap.getPolygonFeature(namesearch, $scope.searchObj.searchMap.getView().getProjection());
-
-          // Build multipolygon from the set of bboxes
-          geometry = new ol.geom.MultiPolygon(null);
-          for (var j = 0; j < extent.length; j++) {
-            // TODO: Point will not be supported in multi geometry
-            var projectedExtent =
-                ol.extent.containsExtent(
-                    proj.getWorldExtent(),
-                    extent[j]) ?
-                    ol.proj.transformExtent(extent[j], 'EPSG:4326', proj) :
-                    extent[j];
-
-            projectedExtent = extent[j];
-            var coords =
-                [
-                  [
-                    [projectedExtent[0], projectedExtent[1]],
-                    [projectedExtent[0], projectedExtent[3]],
-                    [projectedExtent[2], projectedExtent[3]],
-                    [projectedExtent[2], projectedExtent[1]],
-                    [projectedExtent[0], projectedExtent[1]]
-                  ]
-                ];
-            geometry.appendPolygon(new ol.geom.Polygon(coords));
-          }
-
-          feature.setGeometry(geometry);
-
-          if (angular.isUndefined($scope.vectorLayer)) {
-            var vectorSource = new ol.source.Vector({
-              features: []
-            });
-
-            $scope.vectorLayer = new ol.layer.Vector({
-              source: vectorSource,
-              style: gnSearchSettings.olStyles.mdExtentHighlight
-            });
-
-            $scope.searchObj.searchMap.addLayer($scope.vectorLayer);
-          }
-          $scope.vectorLayer.getSource().clear();
-          $scope.vectorLayer.getSource().addFeature(feature);
-
-          return true; // always return true so search query is fired.
-
-        } else {
-          return false; // always return false if cooridinates are absent. Not sure if we shall still return true.
-        }
-    };
-
+     
       /**
        * Show full view results.
        */
@@ -542,6 +475,10 @@
       $scope.showMapPanel = function() {
         angular.element('.floating-map-cont').hide();
         $scope.$emit('body:class:add', 'small-map-view');
+          $timeout(function() {
+          viewerMap.updateSize();
+          viewerMap.renderSync();
+        }, 500);
       };
 
       /**
@@ -1028,7 +965,8 @@
         delete $scope.searchObj.params._id;
         delete $scope.searchObj.params.resourceDateFrom;
         delete $scope.searchObj.params.resourceDateTo;
-        delete $scope.searchObj.params.namesearch;
+        delete $scope.searchObj.params.geometry;
+        delete $scope.searchObj.namesearch;
 
         $scope.triggerSearch();
       };
@@ -1101,4 +1039,121 @@
       });
     };
   }]);
+
+ /**
+   * Controller for draw polygon using wfs getfeature.
+   *
+   */
+  module.controller('SweGeoWfsGetFeatureController', ['$scope', '$http', 'gnSearchSettings', 'gnMap', 'gnConfig',
+    function($scope, $http, gnSearchSettings, gnMap, gnConfig) {
+     /**
+       * Displays the polygon in map.
+       *
+       */
+      $scope.drawPolygonInMap = function() {
+        //var namesearch = $scope.searchObj.params.namesearch;
+        var namesearch = $scope.searchObj.namesearch;
+        var coordinates = namesearch.Coordinates;
+        var geoJson = new ol.format.GeoJSON();
+        if (coordinates) {
+          var proj = $scope.searchObj.searchMap.getView().getProjection();
+
+          var xy0 = coordinates[0];
+          var xy1 = coordinates[1];
+          var extent = []; // geoBox=10.59|55.15|24.18|69.05
+          extent.push(parseFloat(xy0.X), parseFloat(xy0.Y),
+            parseFloat(xy1.X), parseFloat(xy1.Y));
+          //To transform projection for metadata list based on polygon drawn
+          proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+          //proj4.defs("EPSG:4258","+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs");
+          var geom = gnMap.reprojExtent(extent , 'EPSG:3006', 'EPSG:4326')
+          var geom_wkt = "POLYGON((" + geom[0] + " " + geom[1] + "," + geom[2] + " " + geom[1] + "," + geom[2] + " " + geom[3] + "," + geom[2] + " " + geom[1] + "," + geom[0] + " " + geom[1] + "))";
+          $scope.searchObj.params.geometry = geom_wkt;
+          var feature = new ol.Feature();
+          //var feature = gnMap.getPolygonFeature(namesearch, $scope.searchObj.searchMap.getView().getProjection());
+
+          // Build multipolygon from the set of bboxes
+          geometry = new ol.geom.MultiPolygon(null);
+       
+
+          feature.setGeometry(geometry);
+
+          if (angular.isUndefined($scope.vectorLayer)) {
+            var vectorSource = new ol.source.Vector();
+
+            $scope.vectorLayer = new ol.layer.Vector({
+              source: vectorSource,
+              style: gnSearchSettings.olStyles.mdExtentHighlight
+            });
+
+            $scope.searchObj.viewerMap.addLayer($scope.vectorLayer);
+            $scope.searchObj.searchMap.addLayer($scope.vectorLayer);
+          }
+          //$scope.searchObj.searchMap.addLayer($scope.vectorLayer);
+           var wfsurl = gnConfig['map.wfsServer.url'];
+            var params = {
+              'request': 'GetFeature',
+              'service': 'WFS',
+              'srs': 'EPSG:3006',
+              'version': '1.0.0',
+              'typeName': gnConfig['map.wfsServer.workspace'] + ":" + gnConfig['map.wfsServer.layer'],
+              'bbox': extent[0] + "," + extent[1] + "," + extent[2] + "," + extent[3],
+              'outputFormat': 'application/json',
+              'callback': 'JSON_CALLBACK'
+            };
+            return $http({
+              url: wfsurl,
+              params: params
+            }).then(function(result) {
+              $scope.vectorLayer.getSource().clear();
+              $scope.searchObj.viewerMap.getLayers().getArray()[1].getSource().clear()
+              $scope.vectorLayer.getSource().addFeatures(geoJson.readFeatures(result.data));
+              $scope.searchObj.searchMap.getView().setCenter([extent[0],extent[1]])
+              $scope.triggerSearch()
+            });
+
+          return true; // always return true so search query is fired.
+
+        } else {
+          return false; // always return false if cooridinates are absent. Not sure if we shall still return true.
+        }
+    };
+    
+  }]);
+
+
+   
+
+  /**
+   * orderByTranslated Filter
+   * Sort ng-options or ng-repeat by translated values
+   * @example
+   *   ng-repeat="scheme in data.schemes |
+   *    orderByTranslated:'storage__':'collectionName'"
+   * @param  {Array|Object} array or hash
+   * @param  {String} i18nKeyPrefix
+   * @param  {String} objKey (needed if hash)
+   * @return {Array}
+   */
+  module.filter('orderByTranslated', ['$translate', '$filter',
+    function($translate, $filter) {
+      return function(array, i18nKeyPrefix, objKey) {
+        var result = [];
+        var translated = [];
+        angular.forEach(array, function(value) {
+          var i18nKeySuffix = objKey ? value[objKey] : value;
+          translated.push({
+            key: value,
+            label: $translate.instant(i18nKeyPrefix + i18nKeySuffix)
+          });
+        });
+        angular.forEach($filter('orderBy')(translated, 'label'),
+            function(sortedObject) {
+              result.push(sortedObject.key);
+            }
+        );
+        return result;
+      };
+    }]);
+
 })();

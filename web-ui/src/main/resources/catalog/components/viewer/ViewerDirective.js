@@ -23,8 +23,8 @@
 
 (function() {
   goog.provide('gn_viewer_directive');
-
-  var module = angular.module('gn_viewer_directive', []);
+  goog.require('gn_search_form_controller');
+  var module = angular.module('gn_viewer_directive', ['gn_search_form_controller']);
 
   /**
    * @ngdoc directive
@@ -38,6 +38,7 @@
     function(gnMap, gnConfig, gnSearchLocation, gnSearchSettings) {
       return {
         restrict: 'A',
+        require: '^ngSearchForm',
         replace: true,
         scope: true,
         templateUrl: '../../catalog/components/viewer/' +
@@ -62,6 +63,8 @@
               /** print definition */
               scope.activeTools = {};
 
+              scope.toggle = false
+
               scope.zoom = function(map, delta) {
                 gnMap.zoom(map, delta);
               };
@@ -69,6 +72,13 @@
                 map.getView().fit(map.getView().
                     getProjection().getExtent(), map.getSize());
               };
+              scope.drawFreeHandPolygonInMap = function(){
+                scope.toggle = !scope.toggle
+                   var scope_var = scope.searchObj;
+                   var trigger = controller
+                   var toggle = scope.toggle
+                   gnMap.drawFreeHandPolygonInMap(scope_var, trigger, toggle);               
+              }
               scope.ol3d = null;
 
 

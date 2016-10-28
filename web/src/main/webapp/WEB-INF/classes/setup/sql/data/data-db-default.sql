@@ -669,6 +669,10 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metada
 
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/ui/defaultView', 'swe', 0, 10100, 'n');
 
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/wfsServer/url', 'http://localhost:8080/geoserver/wfs', 0, 9596, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/wfsServer/workspace', 'metagis', 0, 9597, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/wfsServer/layer', 'metagis_gazetter', 0, 9598, 'n');
+
 INSERT INTO HarvesterSettings (id, parentid, name, value) VALUES  (1,NULL,'harvesting',NULL);
 
 -- ======================================================================
