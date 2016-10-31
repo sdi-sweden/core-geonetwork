@@ -70,16 +70,31 @@ public class PredefinedMapRepositoryTest extends AbstractSpringDataTest {
         assertTrue(result.contains(predefinedMap2));
     }
 
-    
     @Ignore
+    public void testFindAllReturnsStaticValues() {
+
+        List<PredefinedMap> result = _repo.findAll();
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+        assertEquals(2, result.size());
+    }
+    
+   @Test
     public void testTheActualCall() {
         _repo = new PredefinedMapRepositoryImpl();
         List<PredefinedMap> result = _repo.findAll();
+        assertEquals(2, result.size());
         for (PredefinedMap predefinedMap : result) {
-            System.out.println(predefinedMap.toString());
+            assertNotNull(predefinedMap.getName());
+            assertNotNull(predefinedMap.getDescription());
+            assertNotNull(predefinedMap.getImage());
+            assertNotNull(predefinedMap.getId());
+            assertNotNull(predefinedMap.getPosition());
+            assertTrue(predefinedMap.isEnabled());
         }
     }
     
+
 
     private PredefinedMap newPredefinedMap() {
         return newPredefinedMap(_inc);

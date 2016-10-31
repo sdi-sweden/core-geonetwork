@@ -29,19 +29,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.domain.PredefinedMap;
 import org.fao.geonet.repository.statistic.PathSpec;
 import org.jdom.Element;
@@ -54,26 +46,26 @@ import com.google.common.collect.ImmutableList;
 
 public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
 
+    private static final String TEXT = "\"text\":\"";
+    private static final String LINK = "\"link\":\"";
+    private static final String DESCRIPTION = "\"description\":\"";
+    private static final String TITLE = "\"title\":\"";
+    private static final String URL = "https://ver.geodata.se/geodataportalens-hjalpsidor/datasamlingar-rotsida";
     private List<PredefinedMap> resultList;
-    private String url = "https://ver.geodata.se/geodataportalens-hjalpsidor/datasamlingar-rotsida";
 
     @Override
     public List<PredefinedMap> findAll() {
         if (resultList == null) {
             resultList = new ArrayList<PredefinedMap>();
-            // call URL to retrieve JSON file
-            String jsonResponse = getJSON();
-            // convert JSON to list of SimplePredefinedMap objects
-            convertResponseToList(jsonResponse, resultList);
         }
-        // return List of PredefinedMap objects
+        String jsonResponse = getJSON();
+        parseJsonToList(jsonResponse, resultList);
         return ImmutableList.copyOf(resultList);
     }
 
-
     @Override
     public PredefinedMap findOne(Integer arg0) {
-        
+
         for (PredefinedMap predefinedMap : resultList) {
             if (predefinedMap.getId() == arg0) {
                 return predefinedMap;
@@ -81,92 +73,12 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
         }
         return null;
     }
-    
-    private void convertResponseToList(String jsonResponse, List<PredefinedMap> resultList) {
-
-         createStaticResult(resultList);
-
-
-//        JsonFactory f = new JsonFactory();
-//        JsonParser jp;
-//        try {
-//            PredefinedMap predefinedMap = new PredefinedMap();
-//            jp = f.createParser(jsonResponse);
-//            while (jp.nextToken() != JsonToken.END_OBJECT) {
-//
-//                String fieldname = jp.getCurrentName();
-//                
-//                if ("title".equals(fieldname)) {
-//                    jp.nextToken(); 
-//                    predefinedMap.setName(jp.getText());
-//                } else if ("description".equals(fieldname)) {
-//                    jp.nextToken(); 
-//                    predefinedMap.setDescription(jp.getText());
-//                } else if ("link".equals(fieldname)) {
-//                    jp.nextToken(); 
-//                    predefinedMap.setImage(jp.getText());
-//                } else if ("text".equals(fieldname)) { // contains an object
-//                    jp.nextToken(); 
-//                    String owsText = "";
-//                  while (jp.nextToken() != JsonToken.END_OBJECT) {
-//                      owsText = owsText + jp.getText();
-//                      jp.nextToken(); // move to value
-//                  }
-//                  predefinedMap.setMap(owsText);
-//                
-//                } else {
-////                    throw new IllegalStateException("Unrecognized field '" + fieldname + "'!");
-//                    System.out.println("unknown fieldname = " + fieldname);
-//                }
-//
-//                if (jp.nextToken() == JsonToken.START_OBJECT) {
-//                    predefinedMap = new PredefinedMap();
-//                }
-//                if (jp.nextToken() == JsonToken.END_ARRAY) {
-//                    resultList.add(predefinedMap);
-//                }
-//
-//            }
-//            jp.close(); // ensure resources get cleaned up timely and properly
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-    }
-
-    private void createStaticResult(List<PredefinedMap> resultList) {
-
-        PredefinedMap map1 = new PredefinedMap();
-        map1.setId(1);
-        map1.setPosition(1);
-        map1.setEnabled(Boolean.TRUE);
-        map1.setName("Vatten och Jord");
-        map1.setDescription("<p>Den har är en exempel av en rekomenderade datasamlingar</p>");
-        map1.setImage("http:/ver.geodata.se/contentassets/7f2ae34b2b30491d90a0a38845d11cd4/bild2.jpg");
-        map1.setMap("<ows-context:OWSContext xmlns:ows-context=\"http://www.opengis.net/ows-context\" version=\"0.3.1\"\n id=\"ows-context-ex-1-v3\">\n <ows-context:General>\n <ows:BoundingBox xmlns:ows=\"http://www.opengis.net/ows\" crs=\"EPSG:3006\">\n <ows:LowerCorner>98304 5899264</ows:LowerCorner>\n <ows:UpperCorner>3031040 7330816</ows:UpperCorner>\n </ows:BoundingBox>\n </ows-context:General>\n <ows-context:ResourceList>\n <ows-context:Layer name=\"{type=wmts,name=undefined}\" hidden=\"false\" opacity=\"1\">\n <ows-context:Server service=\"urn:ogc:serviceType:WMS\">\n <ows-context:OnlineResource/>\n </ows-context:Server>\n </ows-context:Layer>\n <ows-context:Layer name=\"{type=wmts,name=undefined}\" hidden=\"false\" opacity=\"1\">\n <ows-context:Server service=\"urn:ogc:serviceType:WMS\">\n <ows-context:OnlineResource/>\n </ows-context:Server>\n </ows-context:Layer>\n <ows-context:Layer name=\"GEONETWORK:phy_landf_7386\" hidden=\"false\" opacity=\"1\">\n <ows-context:Server service=\"urn:ogc:serviceType:WMS\">\n <ows-context:OnlineResource xlink:href=\"http://data.fao.org/maps/wms\"\n xmlns:xlink=\"http://www.w3.org/1999/xlink\"/>\n </ows-context:Server>\n </ows-context:Layer>\n </ows-context:ResourceList>\n</ows-context:OWSContext>");
-        resultList.add(map1);
-
-        PredefinedMap map2 = new PredefinedMap();
-        map2.setId(2);
-        map1.setPosition(2);
-        map2.setEnabled(Boolean.TRUE);
-        map2.setName("Brunn och Jord");
-        map2.setDescription("<p>Förbättrade jordartskartor över landskapet ger detaljerad information om markförhållandena. Kartorna visar bland annat vilken kornstorlek marken innehåller, hur genomsläpplig marken är för rent eller</p>");
-        map2.setImage("http:/ver.geodata.se/contentassets/71ef34b68b3f4d0a842b2c7986dd878e/bild1.jpg");
-        map2.setMap("<ows-context:OWSContext xmlns:ows-context=\"http://www.opengis.net/ows-context\" version=\"0.3.1\"\n id=\"ows-context-ex-1-v3\">\n <ows-context:General>\n <ows:BoundingBox xmlns:ows=\"http://www.opengis.net/ows\" crs=\"EPSG:3006\">\n <ows:LowerCorner>98304 5899264</ows:LowerCorner>\n <ows:UpperCorner>3031040 7330816</ows:UpperCorner>\n </ows:BoundingBox>\n </ows-context:General>\n <ows-context:ResourceList>\n <ows-context:Layer name=\"{type=wmts,name=undefined}\" hidden=\"false\" opacity=\"1\">\n <ows-context:Server service=\"urn:ogc:serviceType:WMS\">\n <ows-context:OnlineResource/>\n </ows-context:Server>\n </ows-context:Layer>\n <ows-context:Layer name=\"{type=wmts,name=undefined}\" hidden=\"false\" opacity=\"1\">\n <ows-context:Server service=\"urn:ogc:serviceType:WMS\">\n <ows-context:OnlineResource/>\n </ows-context:Server>\n </ows-context:Layer>\n <ows-context:Layer name=\"GEONETWORK:phy_landf_7386\" hidden=\"false\" opacity=\"1\">\n <ows-context:Server service=\"urn:ogc:serviceType:WMS\">\n <ows-context:OnlineResource xlink:href=\"http://data.fao.org/maps/wms\"\n xmlns:xlink=\"http://www.w3.org/1999/xlink\"/>\n </ows-context:Server>\n </ows-context:Layer>\n </ows-context:ResourceList>\n</ows-context:OWSContext>");
-        resultList.add(map2);
-        
-    }
 
     private String getJSON() {
         try {
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            HttpURLConnection con = getConnection(URL);
             con.setRequestMethod("GET");
-            int responseCode = con.getResponseCode();
-
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
+            con.getResponseCode();
 
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
@@ -177,39 +89,101 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
             }
             in.close();
 
-            // print result
-            System.out.println("response = " + response.toString());
-            
-            return response.toString();
+            String result = StringEscapeUtils.unescapeJava(response.toString());
+            return result;
 
         } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return "";
 
     }
 
-    
-    private class SimplePredefinedMap {
-        public String title;
-        public String description;
-        public String link;
-        public String text;
-        
-        public SimplePredefinedMap(String title, String description, String link, String text) {
-            super();
-            this.title = title;
-            this.description = description;
-            this.link = link;
-            this.text = text;
-        }
-        
+    protected HttpURLConnection getConnection(String url) throws MalformedURLException, IOException {
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        return con;
     }
 
+    public List<PredefinedMap> parseJsonToList(String jsonString, List<PredefinedMap> result) {
+
+        boolean inMap = false;
+        boolean endOfObject = false;
+
+        int counter = 1;
+
+        String title = "";
+        String description = "";
+        String link = "";
+        String map = "";
+
+        String[] jsonSplit = StringUtils.split(jsonString, ",");
+        for (String splitString : jsonSplit) {
+            int pos = -1;
+            pos = StringUtils.indexOf(splitString, TITLE);
+            if (pos > 0) {
+                title = StringUtils.substring(splitString, pos + TITLE.length());
+                title = StringUtils.mid(title, 0, title.length() - 1);
+            }
+
+            pos = StringUtils.indexOf(splitString, DESCRIPTION);
+            if (pos > -1) {
+                description = StringUtils.substring(splitString, pos + DESCRIPTION.length());
+                description = StringUtils.mid(description, 0, description.length() - 1);
+            }
+
+            pos = StringUtils.indexOf(splitString, LINK);
+            if (pos > -1) {
+                link = StringUtils.substring(splitString, pos + LINK.length());
+                link = StringUtils.mid(link, 0, link.length() - 1);
+            }
+
+            pos = StringUtils.indexOf(splitString, TEXT);
+            if (pos > -1) {
+                inMap = true;
+            }
+
+            if (inMap) {
+                map = map + StringUtils.substring(splitString, pos + TEXT.length());
+
+                if (map.endsWith("]")) {
+                    map = StringUtils.mid(map, 0, map.length() - 1);
+                }
+                if (map.endsWith("}")) {
+                    inMap = false;
+                    endOfObject = true;
+                    map = StringUtils.mid(map, 0, map.length() - 2);
+                }
+
+                if (endOfObject) {
+                    PredefinedMap predefinedMap = createPredefineMap(counter, title, description, link, map);
+                    result.add(predefinedMap);
+                    counter++;
+
+                    description = "";
+                    title = "";
+                    link = "";
+                    map = "";
+                    endOfObject = false;
+                }
+            }
+        }
+        return result;
+    }
+
+    PredefinedMap createPredefineMap(int counter, String title, String description, String link, String map) {
+        PredefinedMap predefinedMap = new PredefinedMap();
+        predefinedMap.setDescription(description);
+        predefinedMap.setName(title);
+        predefinedMap.setImage(link);
+        predefinedMap.setMap(map);
+        predefinedMap.setEnabled(true);
+        predefinedMap.setId(counter);
+        predefinedMap.setPosition(counter);
+        return predefinedMap;
+    }
 
     @Override
     public <V> BatchUpdateQuery<PredefinedMap> createBatchUpdateQuery(PathSpec<PredefinedMap, V> pathToUpdate, V newValue) {
@@ -287,7 +261,6 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
     @Override
     public void flush() {
         // TODO Auto-generated method stub
-        
     }
 
     @Override
@@ -299,13 +272,13 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
     @Override
     public void deleteInBatch(Iterable<PredefinedMap> entities) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void deleteAllInBatch() {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -316,32 +289,31 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
 
     @Override
     public long count() {
-        // TODO Auto-generated method stub
-        return 0;
+        return resultList.size();
     }
 
     @Override
     public void delete(Integer arg0) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void delete(PredefinedMap arg0) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void delete(Iterable<? extends PredefinedMap> arg0) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void deleteAll() {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -386,12 +358,10 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
         return 0;
     }
 
-
     @Override
     public PredefinedMap update(Integer id, Updater<PredefinedMap> updater) {
         // TODO Auto-generated method stub
         return null;
     }
-    
-    
+
 }
