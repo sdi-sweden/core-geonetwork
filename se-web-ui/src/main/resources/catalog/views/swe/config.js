@@ -171,12 +171,17 @@
         hitsPerPage: gnSearchSettings.hitsperpageValues[0]
       };
 
+      // after sorting the results go back to the first page of results (with from & to)
       gnSearchSettings.sortbyValues = [{
         sortBy: 'changeDate',
-        sortOrder: ''
+        sortOrder: '',
+        from: 1,
+        to: gnSearchSettings.hitsperpageValues[0]
       }, {
         sortBy: 'title',
-        sortOrder: 'reverse'
+        sortOrder: 'reverse',
+        from: 1,
+        to: gnSearchSettings.hitsperpageValues[0]
       }];
 
       /* Default search by option */

@@ -77,9 +77,9 @@
                     select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
 
       <div role="tabpanel" class="tab-pane geo-data-tab" id="gn-tab-{@id}">
-        <h3 class="view-header">
+        <!-- <h3 class="view-header">
           <xsl:value-of select="$title"/>
-        </h3>
+        </h3> -->
         <xsl:copy-of select="$content"/>
       </div>
     </xsl:if>
@@ -95,6 +95,15 @@
   <xsl:template mode="render-view"
                 match="section[@xpath]">
     <div id="gn-view-{generate-id()}">
+		<xsl:if test="@name">
+        <xsl:variable name="title"
+                      select="gn-fn-render:get-schema-strings($schemaStrings, @name)"/>
+
+        <xsl:element name="h{3 + count(ancestor-or-self::*[name(.) = 'section'])}">
+          <xsl:attribute name="class" select="'view-section-header'"/>
+          <xsl:value-of select="$title"/>
+        </xsl:element>
+      </xsl:if>
       <xsl:apply-templates mode="render-view" select="@xpath"/>
     </div>
   </xsl:template>
@@ -108,7 +117,7 @@
                       select="gn-fn-render:get-schema-strings($schemaStrings, @name)"/>
 
         <xsl:element name="h{3 + count(ancestor-or-self::*[name(.) = 'section'])}">
-          <xsl:attribute name="class" select="'view-header'"/>
+          <xsl:attribute name="class" select="'view-section-header'"/>
           <xsl:value-of select="$title"/>
         </xsl:element>
       </xsl:if>

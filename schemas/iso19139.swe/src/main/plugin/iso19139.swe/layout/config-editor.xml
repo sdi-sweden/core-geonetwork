@@ -2223,7 +2223,7 @@
     </view>
     <view name="full-view-swe">
       <tab id="introduction">
-        <section name="introduction">
+        <section>
           <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevel" or="hierarchyLevel"
                  in="/gmd:MD_Metadata"/>
           <field xpath="/gmd:MD_Metadata/gmd:dateStamp"/>
@@ -2237,7 +2237,7 @@
       </tab>
 
       <tab id="metadata2">
-        <section name="metadata2">
+        <section>
           <field xpath="/gmd:MD_Metadata/gmd:language" or="language" in="/gmd:MD_Metadata"/>
           <field xpath="/gmd:MD_Metadata/gmd:characterSet"/>
           <field xpath="/gmd:MD_Metadata/gmd:parentIdentifier" or="parentIdentifier"
@@ -2275,21 +2275,22 @@
         <section xpath="/gmd:MD_Metadata/gmd:dataQualityInfo" or="dataQualityInfo"
                  in="/gmd:MD_Metadata"/>
       </tab>
-      <tab id="spatialRepresentationInfo">
+      <!-- <tab id="spatialRepresentationInfo">
         <section xpath="/gmd:MD_Metadata/gmd:spatialRepresentationInfo"
                  or="spatialRepresentationInfo" in="/gmd:MD_Metadata"/>
-      </tab>
+      </tab> -->
       <!-- <tab id="referenceSystemInfo">
         <section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo" or="referenceSystemInfo"
                  in="/gmd:MD_Metadata"/>
       </tab> -->
 	  <tab id="restriktionerInfo">
-        <section name="restriktionerInfo">
+        <section>
 			<field xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:resourceConstraints/gmd:MD_Constraints"/>
 			<field xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints"/>
 		</section>
       </tab>
-      <tab id="contentInfo" toggle="true">
+      <!-- 
+	  <tab id="contentInfo" toggle="true">
         <section xpath="/gmd:MD_Metadata/gmd:contentInfo" or="contentInfo" in="/gmd:MD_Metadata"/>
       </tab>
       <tab id="portrayalCatalogueInfo" toggle="true">
@@ -2309,41 +2310,33 @@
         <section xpath="/gmd:MD_Metadata/gmd:applicationSchemaInfo" or="applicationSchemaInfo"
                  in="/gmd:MD_Metadata"/>
       </tab>
-
-      <tab id="allMetadata">		
-		<section xpath="/gmd:MD_Metadata/gmd:identificationInfo" or="identificationInfo"
+		-->
+      <tab id="allMetadata">
+		<!-- INFORMATION OM DATA - Start -->
+		<section name="understandResource" xpath="/gmd:MD_Metadata/gmd:identificationInfo" or="identificationInfo"
                  in="/gmd:MD_Metadata"/>
 		<section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo" or="referenceSystemInfo"
                  in="/gmd:MD_Metadata"/>
+		<!-- INFORMATION ON DATA - End -->
 		
-		<section xpath="/gmd:MD_Metadata/gmd:distributionInfo" or="distributionInfo"
+		<!-- DISTRIBUTION - Start -->
+		<section name="distributionInfo" xpath="/gmd:MD_Metadata/gmd:distributionInfo" or="distributionInfo"
                  in="/gmd:MD_Metadata"/>
-				 
-		<section xpath="/gmd:MD_Metadata/gmd:dataQualityInfo" or="dataQualityInfo"
+		<!-- DISTRIBUTION - End -->
+		
+		<!-- KVALITET - Start -->
+		<section name="dataQualityInfo" xpath="/gmd:MD_Metadata/gmd:dataQualityInfo" or="dataQualityInfo"
                  in="/gmd:MD_Metadata"/>
+		<!-- KVALITET - End -->
 		
-		<section xpath="/gmd:MD_Metadata/gmd:spatialRepresentationInfo"
-                 or="spatialRepresentationInfo" in="/gmd:MD_Metadata"/>
-		
+		<!-- RESTRIKTIONER - Start -->
 		<section name="restriktionerInfo">
 			<field xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:resourceConstraints/gmd:MD_Constraints"/>
 			<field xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints"/>
 		</section>
+		<!-- RESTRIKTIONER - End -->
 		
-		<section xpath="/gmd:MD_Metadata/gmd:contentInfo" or="contentInfo" in="/gmd:MD_Metadata"/>
-		
-		<section xpath="/gmd:MD_Metadata/gmd:portrayalCatalogueInfo" or="portrayalCatalogueInfo"
-                 in="/gmd:MD_Metadata"/>
-		
-		<section xpath="/gmd:MD_Metadata/gmd:metadataConstraints" or="metadataConstraints"
-                 in="/gmd:MD_Metadata"/>
-				 
-		<section xpath="/gmd:MD_Metadata/gmd:metadataMaintenance" or="metadataMaintenance"
-                 in="/gmd:MD_Metadata"/>
-		
-		<section xpath="/gmd:MD_Metadata/gmd:applicationSchemaInfo" or="applicationSchemaInfo"
-                 in="/gmd:MD_Metadata"/>
-		
+		<!-- INFORMATION OM METADATA - Start -->
 		<section name="metadata2">
           <field xpath="/gmd:MD_Metadata/gmd:language" or="language" in="/gmd:MD_Metadata"/>
           <field xpath="/gmd:MD_Metadata/gmd:characterSet"/>
@@ -2366,6 +2359,7 @@
           <field xpath="/gmd:MD_Metadata/gmd:featureType"/>
           <field xpath="/gmd:MD_Metadata/gmd:featureAttribute"/>
         </section>
+		<!-- INFORMATION OM METADATA - End -->
       </tab>
     </view>
     <view name="xml">

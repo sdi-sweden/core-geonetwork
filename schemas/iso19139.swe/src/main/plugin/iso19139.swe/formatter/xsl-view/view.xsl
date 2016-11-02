@@ -435,11 +435,17 @@
 				<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLinkLinks')"/>
 			</dt>
 			<dd>
-				<table border="1" style="width:100%" bordercolor="#D3D3D3">
+				<table class="view-metadata-table">
 					<tr>
-						<th style="padding-left:15px"><xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkProtocol')"/></th>
-						<th style="padding-left:15px"><xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkName')"/></th>
-						<th style="padding-left:15px"><xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkUrl')"/></th>
+						<th class="view-metadata-table-th-1">
+							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkProtocol')"/>
+						</th>
+						<th class="view-metadata-table-th-2">
+							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkName')"/>
+						</th>
+						<th class="view-metadata-table-th-3">
+							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkUrl')"/>
+						</th>
 					</tr>
 					<xsl:for-each select="parent::node()/gmd:onLine">
 						<xsl:variable name="protocol">
@@ -452,9 +458,13 @@
 							<xsl:apply-templates mode="render-value" select="*/gmd:linkage/gmd:URL"/>
 						</xsl:variable>
 						<tr>
-							<td style="padding-left:15px"><xsl:value-of select="normalize-space($protocol)"/></td>
-							<td style="padding-left:15px"><xsl:value-of select="normalize-space($name)"/></td>
-							<td style="padding-left:15px">
+							<td class="view-metadata-table-td-1">
+								<xsl:value-of select="normalize-space($protocol)"/>
+							</td>
+							<td class="view-metadata-table-td-2">
+								<xsl:value-of select="normalize-space($name)"/>
+							</td>
+							<td class="view-metadata-table-td-3">
 								<a href="{$url}" target="_blank">
 									<xsl:value-of select="normalize-space($url)"/>
 								</a>
