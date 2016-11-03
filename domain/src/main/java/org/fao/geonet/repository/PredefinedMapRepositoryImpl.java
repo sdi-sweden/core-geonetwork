@@ -58,6 +58,7 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
         if (resultList == null) {
             resultList = new ArrayList<PredefinedMap>();
         }
+        resultList.clear();
         String jsonResponse = getJSON();
         parseJsonToList(jsonResponse, resultList);
         return ImmutableList.copyOf(resultList);
@@ -107,6 +108,10 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
         return con;
     }
 
+    /*
+     * Because the response includes an XML file in the JSON response (fieldname 'Text')
+     * I cannot use the standard Jackson JSON parser, so I do it by hand!
+     */
     public List<PredefinedMap> parseJsonToList(String jsonString, List<PredefinedMap> result) {
 
         boolean inMap = false;
@@ -175,18 +180,7 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
     }
 
     void addPredefinedMapToList(List<PredefinedMap> result, PredefinedMap predefinedMap) {
-        boolean alreadyInList = false;
-        for (PredefinedMap item : result) {
-            if ( item.getName().equals(predefinedMap.getName()) &&
-                 item.getDescription().equals(predefinedMap.getDescription()) &&
-                 item.getImage().equals(predefinedMap.getImage()) && 
-                 item.getMap().equals(predefinedMap.getMap()) ) {
-                alreadyInList = true;
-            }
-        }
-        if (!alreadyInList) {
             result.add(predefinedMap);
-        }
     }
 
     PredefinedMap createPredefineMap(int counter, String title, String description, String link, String map) {
