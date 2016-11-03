@@ -177,7 +177,9 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
     void addPredefinedMapToList(List<PredefinedMap> result, PredefinedMap predefinedMap) {
         boolean alreadyInList = false;
         for (PredefinedMap item : result) {
-            if ( item.getName().equals(predefinedMap.getName()) && 
+            if ( item.getName().equals(predefinedMap.getName()) &&
+                 item.getDescription().equals(predefinedMap.getDescription()) &&
+                 item.getImage().equals(predefinedMap.getImage()) && 
                  item.getMap().equals(predefinedMap.getMap()) ) {
                 alreadyInList = true;
             }
