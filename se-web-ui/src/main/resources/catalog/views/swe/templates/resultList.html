@@ -7,7 +7,7 @@
         <ul class="tools-list">
           <li><a href="" data-ng-click="showMetadata($index, md, searchResults.records)"><span class="icon-doc-text"></span></a></li>
           <li><a href=""><div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span></div></a></li>
-          <li data-ng-show="::layers.length > 0"><a href="" ata-ng-click="resultviewFns.addMdLayerToMap(layers[0], md)"><span class="icon-map"></span></a></li>
+          <li data-ng-show="::layers.length > 0"><a href="" data-ng-click="resultviewFns.addMdLayerToMap(layers[0], md)"><span class="icon-map"></span></a></li>
           <li data-ng-show="::downloads.length > 0"><a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}"><span class="download-icn-cont"><span class="icon-down-fat"></span></span></a></li>
         </ul>
         <div class="meta-data">
