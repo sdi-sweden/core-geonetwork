@@ -715,7 +715,7 @@
           <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
           <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
           <attachClasses>true</attachClasses>
-          <warName>geonetwork</warName>
+          <warName>${war-name}</warName>
           <webappDirectory>${project.build.directory}/geonetwork</webappDirectory>
         </configuration>
       </plugin>
@@ -723,11 +723,11 @@
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <configuration>
-          <war>${project.basedir}/target/geonetwork</war>
+          <war>${project.basedir}/target/${war-name}</war>
           <contextXml>${basedir}/jetty-context.xml</contextXml>
-          <webAppSourceDirectory>${project.build.directory}/geonetwork</webAppSourceDirectory>
+          <webAppSourceDirectory>${project.build.directory}/${war-name}</webAppSourceDirectory>
           <webApp>
-            <contextPath>/geonetwork</contextPath>
+            <contextPath>/${war-name}</contextPath>
             <descriptor>${project.build.directory}/WEB-INF/web.xml</descriptor>
             <!--<baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
               <resourcesAsCSV>

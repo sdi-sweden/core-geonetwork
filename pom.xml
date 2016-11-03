@@ -1279,6 +1279,8 @@
     <slf4j.version>1.7.7</slf4j.version>
     <xbean.version>3.18</xbean.version>
     <build.helper.version>1.9.1</build.helper.version>
+	
+	<war-name>geodataportalen</war-name>
 
     <!-- Sonar and Jacoco -->
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
