@@ -88,6 +88,7 @@ public class PredefinedMapRepositoryTest extends AbstractSpringDataTest {
             assertNotNull(predefinedMap.getName());
             assertNotNull(predefinedMap.getDescription());
             assertNotNull(predefinedMap.getImage());
+            assertTrue(predefinedMap.getImage().contains("https"));
             assertNotNull(predefinedMap.getId());
             assertNotNull(predefinedMap.getPosition());
             assertTrue(predefinedMap.isEnabled());

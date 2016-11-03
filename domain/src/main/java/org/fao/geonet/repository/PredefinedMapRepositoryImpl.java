@@ -138,6 +138,7 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
             if (pos > -1) {
                 link = StringUtils.substring(splitString, pos + LINK.length());
                 link = StringUtils.mid(link, 0, link.length() - 1);
+                link = StringUtils.replace(link, "http", "https");
             }
 
             pos = StringUtils.indexOf(splitString, TEXT);
