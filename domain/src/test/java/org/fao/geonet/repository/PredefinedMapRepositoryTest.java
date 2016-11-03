@@ -95,7 +95,14 @@ public class PredefinedMapRepositoryTest extends AbstractSpringDataTest {
         }
     }
     
-
+   @Test
+   public void callingTwiceDoesNotAddDuplicatesToTheList() {
+       _repo = new PredefinedMapRepositoryImpl();
+       List<PredefinedMap> result = _repo.findAll();
+       assertEquals(2, result.size());
+       result = _repo.findAll();
+       assertEquals(2, result.size());
+   }
 
     private PredefinedMap newPredefinedMap() {
         return newPredefinedMap(_inc);

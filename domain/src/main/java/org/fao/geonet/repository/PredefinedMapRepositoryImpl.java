@@ -160,7 +160,7 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
 
                 if (endOfObject) {
                     PredefinedMap predefinedMap = createPredefineMap(counter, title, description, link, map);
-                    result.add(predefinedMap);
+                    addPredefinedMapToList(result, predefinedMap);
                     counter++;
 
                     description = "";
@@ -172,6 +172,19 @@ public class PredefinedMapRepositoryImpl implements PredefinedMapRepository {
             }
         }
         return result;
+    }
+
+    void addPredefinedMapToList(List<PredefinedMap> result, PredefinedMap predefinedMap) {
+        boolean alreadyInList = false;
+        for (PredefinedMap item : result) {
+            if ( item.getName().equals(predefinedMap.getName()) && 
+                 item.getMap().equals(predefinedMap.getMap()) ) {
+                alreadyInList = true;
+            }
+        }
+        if (!alreadyInList) {
+            result.add(predefinedMap);
+        }
     }
 
     PredefinedMap createPredefineMap(int counter, String title, String description, String link, String map) {
