@@ -1018,7 +1018,7 @@
     function($scope, $http) {
     $scope.getNameSearch = function(val) {
       var posturl = 'https://www.geodata.se/NameWebService/search';
-
+	  val = encodeURIComponent(val);
       var params = {
         'searchstring': val,
         'callback': 'JSON_CALLBACK'
