@@ -391,6 +391,23 @@ ul.gn-resultview {
   height: 56px;
 }
 
+// filter block arrows
+// 
+// ----- filter block is open
+.site-filter-result-cont.filter-is-open .icon-up-dir {
+  display: block !important;
+}
+.site-filter-result-cont.filter-is-open .icon-down-dir {
+  display: none !important;
+}
+// ----- filter block is closed
+.site-filter-result-cont .icon-up-dir {
+  display: none !important;
+}
+.site-filter-result-cont .icon-down-dir {
+  display: block !important;
+}
+
 [data-gn-map-field] > [ngeo-map] {
   //height: 89.9vh;
   border: 1px solid #ccc;
@@ -636,19 +653,43 @@ html, body {
 	border:1px solid #D3D3D3;
 	width:100%;
 }
-.gn-metadata-view table.view-metadata-table th.view-metadata-table-th-1, .gn-metadata-view table.view-metadata-table td.view-metadata-table-td-1{
+.gn-metadata-view table.view-metadata-table th.view-metadata-table-th-1 {
+	width:20%;
+	word-wrap:break-word;
+	border:1px solid #D3D3D3;
+	padding-left:15px;
+	font-weight:normal;
+	color: gray;
+}
+.gn-metadata-view table.view-metadata-table td.view-metadata-table-td-1 {
 	width:20%;
 	word-wrap:break-word;
 	border:1px solid #D3D3D3;
 	padding-left:15px;
 }
-.gn-metadata-view table.view-metadata-table th.view-metadata-table-th-2, .gn-metadata-view table.view-metadata-table td.view-metadata-table-td-2{
+.gn-metadata-view table.view-metadata-table th.view-metadata-table-th-2 {
+	width:20%;
+	word-wrap:break-word;
+	border:1px solid #D3D3D3;
+	padding-left:15px;
+	font-weight:normal;
+	color: gray;
+}
+.gn-metadata-view table.view-metadata-table td.view-metadata-table-td-2 {
 	width:20%;
 	word-wrap:break-word;
 	border:1px solid #D3D3D3;
 	padding-left:15px;
 }
-.gn-metadata-view table.view-metadata-table th.view-metadata-table-th-3, .gn-metadata-view table.view-metadata-table td.view-metadata-table-td-3{
+.gn-metadata-view table.view-metadata-table th.view-metadata-table-th-3 {
+	width:50%;
+	word-wrap:break-word;
+	border:1px solid #D3D3D3;
+	padding-left:15px;
+	font-weight:normal;
+	color: gray;
+}
+.gn-metadata-view table.view-metadata-table td.view-metadata-table-td-3 {
 	width:50%;
 	word-wrap:break-word;
 	border:1px solid #D3D3D3;

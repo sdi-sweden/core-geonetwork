@@ -127,7 +127,7 @@
   </div>
 </div>
 
-<div class="site-filter-result-cont">
+<div class="site-filter-result-cont filter-is-open">
   <div class="data-result-cont">
     <span class="result-text" data-ng-show="searchResults.count >= 0"><span data-translate="">shows</span> <b>{{searchResults.count}}</b> <span data-translate="">results</span></span>
     <ul class="selected-filter-list">
@@ -169,6 +169,8 @@
       </li>
 
     </ul>
-    <a href="" data-ng-click="toggleFilterPanel()" class="filter-toggle-link opens-filter-section"><span data-translate="">showFiltering</span> <span class="icon-up-dir"></span><span class="icon-down-dir"></span></a>
+    <a href="" data-ng-click="toggleFilterPanel()" class="filter-toggle-link opens-filter-section">
+      <span data-translate="">showFiltering</span> <span class="icon-up-dir"></span><span class="icon-down-dir"></span>
+    </a>
   </div>
 </div>

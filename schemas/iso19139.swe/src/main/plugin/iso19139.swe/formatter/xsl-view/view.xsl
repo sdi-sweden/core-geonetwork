@@ -94,7 +94,7 @@
        gco:Boolean|gco:Real|gco:Measure|gco:Length|gco:Distance|
        gco:Angle|gmx:FileName|
        gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|
-       gco:LocalName|gmd:PT_FreeText|gml:beginPosition|gml:endPosition|
+       gmd:PT_FreeText|gml:beginPosition|gml:endPosition|
        gco:Date|gco:DateTime|*/@codeListValue]"
                 priority="50">
     <xsl:param name="fieldName" select="''" as="xs:string"/>
@@ -112,8 +112,24 @@
     </dl>
   </xsl:template>
 
+  <!-- Case to handle gco.LocalName: start -->
+  <xsl:template mode="render-field"
+                match="*[gco:LocalName]"
+                priority="50">
+    <xsl:param name="fieldName" select="''" as="xs:string"/>
 
-
+    <dl>
+      <dt>
+        <xsl:value-of select="if ($fieldName)
+                                then $fieldName
+                                else tr:node-label(tr:create($schema), name(), null)"/>
+      </dt>
+      <dd>
+        <xsl:apply-templates mode="render-value" select="*|*/@codeListValue"/>
+      </dd>
+    </dl>
+  </xsl:template>
+  <!-- Case to handle gco.LocalName: end -->
   <!-- Some elements are only containers so bypass them -->
   <xsl:template mode="render-field"
                 match="*[count(gmd:*) = 1]"
@@ -315,7 +331,23 @@
 		  </dt>
 		  <dd>
 			 <dl class="gn-contact">
-				<table border="1" style="width:100%" bordercolor="#D3D3D3">
+				<xsl:variable name="orgName">
+					<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
+				</xsl:variable>
+				<xsl:variable name="email">
+					<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/>
+				</xsl:variable>
+				<address>
+					<strong>
+						<xsl:value-of select="$orgName"/>, 
+						<i class="fa fa-envelope"></i>
+						<a href="mailto:{normalize-space($email)}">
+							<xsl:value-of select="$email"/>
+						</a>
+					</strong>
+				</address>
+
+				<!-- <table border="1" style="width:100%" bordercolor="#D3D3D3">
 					<tr>
 						<th style="padding-left:15px">
 							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'organisationName')"/>
@@ -341,7 +373,7 @@
 							<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/>
 						</td>
 					</tr>
-				</table>
+				</table> -->
 			</dl>
 		  </dd>
 		</dl>
@@ -489,21 +521,21 @@
       </dt>
       <dd>
 
-        <xsl:if test="*/gmd:codeSpace">
+        <!-- <xsl:if test="*/gmd:codeSpace">
           <xsl:apply-templates mode="render-value"
                                select="*/gmd:codeSpace"/>
           /
-        </xsl:if>
+        </xsl:if> -->
         <xsl:apply-templates mode="render-value"
                              select="*/gmd:code"/>
-        <xsl:if test="*/gmd:version">
+        <!-- <xsl:if test="*/gmd:version">
           / <xsl:apply-templates mode="render-value"
                                  select="*/gmd:version"/>
         </xsl:if>
         <p>
           <xsl:apply-templates mode="render-field"
                                select="*/gmd:authority"/>
-        </p>
+        </p> -->
       </dd>
     </dl>
   </xsl:template>
@@ -782,7 +814,26 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
+  
+  <!-- Case to handle gco.LocalName: start -->
+	<xsl:template mode="render-value" match="gco:LocalName">
+		<xsl:variable name="localNameValue">
+			<xsl:value-of select="normalize-space(.)"/>
+		</xsl:variable>
+		<xsl:choose>
+			<xsl:when test="$localNameValue = 'download'">
+				Nedladdning
+			</xsl:when>
+			<xsl:when test="$localNameValue = 'view'">
+				Visning
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$localNameValue"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+  <!-- Case to handle gco.LocalName: end -->
+  
   <xsl:template mode="render-value"
                 match="gmd:PT_FreeText">
     <xsl:apply-templates mode="localised" select="../node()">
