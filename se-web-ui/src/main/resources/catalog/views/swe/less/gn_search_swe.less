@@ -391,6 +391,23 @@ ul.gn-resultview {
   height: 56px;
 }
 
+// filter block arrows
+// 
+// ----- filter block is open
+.site-filter-result-cont.filter-is-open .icon-up-dir {
+  display: block !important;
+}
+.site-filter-result-cont.filter-is-open .icon-down-dir {
+  display: none !important;
+}
+// ----- filter block is closed
+.site-filter-result-cont .icon-up-dir {
+  display: none !important;
+}
+.site-filter-result-cont .icon-down-dir {
+  display: block !important;
+}
+
 [data-gn-map-field] > [ngeo-map] {
   //height: 89.9vh;
   border: 1px solid #ccc;
