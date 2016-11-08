@@ -36,5 +36,11 @@
     "moreInformation": "Mer information",
     "lastUpdate": "Senast uppdaterad",
     "responsibleParty": "Ansvarig part",
-    "showOnMap": "Visa på karta"
+    "showOnMap": "Visa på karta",
+    "createMetadata-menu": "New metadata",
+    "createMetadata-title": "Create metadata",
+    "createMetadata-desc": "Select the type of metadata to create",
+    "createMetadata-create": "Create",
+    "createMetadata-group": "Group",
+    "createMetadata-cancel": "Cancel"
 }
