@@ -136,8 +136,8 @@
   
   <restriktionerInfo>Restriktioner</restriktionerInfo>
   <onLinkLinks>Online-länkar</onLinkLinks>
-  <onLineLinkProtocol>Protocol</onLineLinkProtocol>
-  <onLineLinkName>Name</onLineLinkName>
+  <onLineLinkProtocol>Protokoll</onLineLinkProtocol>
+  <onLineLinkName>Namn</onLineLinkName>
   <onLineLinkUrl>Url</onLineLinkUrl>
   <roleLabel>Ansvarsområde</roleLabel>
   <otherConstraints>Övriga restriktioner</otherConstraints>

@@ -629,7 +629,7 @@
       $scope.sendMail = function() {
         if ($scope.feedbackForm.$invalid) return;
 
-        $http.post('../api/0.1/site/feedback', null, {params: $scope.user})
+        $http.post('../api/0.1/site/feedback-swe', null, {params: $scope.user})
             .then(function successCallback(response) {
               $scope.feedbackResult = response.data;
               $scope.feedbackResultError = false;
@@ -977,11 +977,14 @@
        */
       $scope.toggleFilterPanel = function() {
         var element = angular.element('.site-filter-cont');
+        var filterSection = angular.element('.site-filter-result-cont');
 
         if (element.hasClass('open')) {
           element.removeClass('open');
+          filterSection.removeClass('filter-is-open');
         } else {
           element.addClass('open');
+          filterSection.addClass('filter-is-open');
         }
       };
 
@@ -1005,6 +1008,7 @@
        */
       $scope.closeFilterPanel = function() {
         angular.element('.site-filter-cont').removeClass('open');
+        angular.element('.site-filter-result-cont').removeClass('filter-is-open');
 
         $scope.open = false;
       };

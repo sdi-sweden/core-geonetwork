@@ -80,8 +80,8 @@
           <div class="mail-data">
             <div class="mail-section-cont">
               <div class="mail-section">
-                <h1>Create metadata</h1>
-                <p>Select the type of metadata to create</p>
+                <h1 data-translate="">createMetadata-title</h1>
+                <p data-translate="">createMetadata-desc</p>
 
                 <form name="newMetadataForm" novalidate>
                   <div data-ng-repeat="tpl in tpls">
@@ -96,9 +96,9 @@
                     </label>
                   </div>
 
-                  <div class="row" data-ng-show="groups && groups.length > 1">
+                  <div class="row" data-ng-show="groups && groups.length > 0">
                     <label class="control-label ngr-md-label">
-                      <span data-translate="">inGroup</span>:
+                      <span data-translate="">createMetadata-group</span>:
                       <!-- <strong>{{(ownerGroup.label[lang] || '...') | translate}}</strong> -->
                     </label>
 
@@ -108,8 +108,8 @@
 
                   <div class="btn-cont">
                     <div class="mail-actions-cont">
-                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="createNewMetadata()" data-ng-disabled="!newMetadataForm.$valid">create</a>
-                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()">cancel</a>
+                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="createNewMetadata()" data-ng-disabled="!newMetadataForm.$valid" data-translate="">createMetadata-create</a>
+                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()" data-translate="">createMetadata-cancel</a>
                     </div>
                   </div>
 
