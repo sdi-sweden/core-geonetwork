@@ -629,7 +629,7 @@
       $scope.sendMail = function() {
         if ($scope.feedbackForm.$invalid) return;
 
-        $http.post('../api/0.1/site/feedback', null, {params: $scope.user})
+        $http.post('../api/0.1/site/feedback-swe', null, {params: $scope.user})
             .then(function successCallback(response) {
               $scope.feedbackResult = response.data;
               $scope.feedbackResultError = false;
