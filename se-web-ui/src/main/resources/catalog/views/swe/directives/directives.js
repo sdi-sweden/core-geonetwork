@@ -66,8 +66,8 @@
    * Provides a sort-by combo list in the search page.
    *
    */
-  module.directive('sweSortbyCombo', ['$translate', 'hotkeys',
-    function($translate, hotkeys) {
+  module.directive('sweSortbyCombo', ['$translate', 'hotkeys', 'gnSearchSettings',
+    function($translate, hotkeys, gnSearchSettings) {
       return {
         restrict: 'A',
         require: '^ngSearchForm',
@@ -104,6 +104,10 @@
               scope.params.sortOrder = v;
               scope.sortOrder = 'ascending';
             }
+
+            // after sorting the results go back to the first page of results (with from & to)
+            scope.params.from = 1;
+            scope.params.to = gnSearchSettings.hitsperpageValues[0];
 
             searchFormCtrl.triggerSearch(true);
           };
