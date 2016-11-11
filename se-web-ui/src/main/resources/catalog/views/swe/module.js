@@ -358,7 +358,7 @@
                     false, md);
               }
           } else {
-            gnMap.addWmsAllLayersFromCap(viewerMap, url, false);
+            gnMap.addWmsAllLayersFromCap(viewerMap, url, false,  md);
           }
 
         },
