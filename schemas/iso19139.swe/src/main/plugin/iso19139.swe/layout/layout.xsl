@@ -24,6 +24,7 @@
 
 
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gts="http://www.isotc211.org/2005/gts"
                 xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -32,6 +33,8 @@
                 xmlns:gn-fn-core="http://geonetwork-opensource.org/xsl/functions/core"
                 xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
                 xmlns:gn-fn-iso19139="http://geonetwork-opensource.org/xsl/functions/profiles/iso19139"
+                xmlns:java-xsl-util="java:org.fao.geonet.util.XslUtil"
+                xmlns:saxon="http://saxon.sf.net/"
                 xmlns:exslt="http://exslt.org/common" exclude-result-prefixes="#all">
 
   <xsl:include href="utility-tpl.xsl"/>
@@ -126,6 +129,142 @@
     </xsl:call-template>
   </xsl:template>
 
+  <!-- Measure elements, gco:Distance, gco:Angle, gco:Scale, gco:Length, ... - Don't show measure type and make mandatory only 1st -->
+  <xsl:template mode="mode-iso19139" priority="2005" match="gmd:distance[gco:*/@uom]">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="refToDelete" select="gn:element" required="no"/>
+
+    <xsl:variable name="labelConfig"
+                  select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
+    <xsl:variable name="labelMeasureType"
+                  select="gn-fn-metadata:getLabel($schema, name(gco:*), $labels, name(), '', '')"/>
+
+
+    <xsl:variable name="isRequired" as="xs:boolean">
+      <xsl:choose>
+        <xsl:when test="count(../../preceding-sibling::gmd:spatialResolution[*/*[name() = 'gmd:distance']]) eq 0">
+          <xsl:value-of select="true()"/>
+        </xsl:when>
+        <!--<xsl:when
+                test="($refToDelete and $refToDelete/@min = 1 and $refToDelete/@max = 1) or
+          (not($refToDelete) and gn:element/@min = 1 and gn:element/@max = 1)">
+          <xsl:value-of select="true()"/>
+        </xsl:when>-->
+        <xsl:otherwise>
+          <xsl:value-of select="false()"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+
+    <div class="form-group gn-field gn-title {if ($isRequired) then 'gn-required' else ''}"
+         id="gn-el-{*/gn:element/@ref}"
+         data-gn-field-highlight="">
+      <label class="col-sm-2 control-label">
+        <xsl:value-of select="$labelConfig/label"/>
+        <!--<xsl:if test="$labelMeasureType != '' and
+                      $labelMeasureType/label != $labelConfig/label">&#10;
+          (<xsl:value-of select="$labelMeasureType/label"/>)
+        </xsl:if>-->
+      </label>
+      <div class="col-sm-9 gn-value">
+        <xsl:variable name="elementRef"
+                      select="gco:*/gn:element/@ref"/>
+        <xsl:variable name="helper"
+                      select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
+        <div data-gn-measure="{gco:*/text()}"
+             data-uom="{gco:*/@uom}"
+             data-ref="{concat('_', $elementRef)}">
+        </div>
+
+        <textarea id="_{$elementRef}_config" class="hidden">
+          <xsl:copy-of select="java-xsl-util:xmlToJson(
+              saxon:serialize($helper, 'default-serialize-mode'))"/>
+        </textarea>
+      </div>
+      <div class="col-sm-1 gn-control">
+        <xsl:call-template name="render-form-field-control-remove">
+          <xsl:with-param name="editInfo" select="*/gn:element"/>
+          <xsl:with-param name="parentEditInfo" select="$refToDelete"/>
+        </xsl:call-template>
+      </div>
+    </div>
+  </xsl:template>
+
+
+  <!--
+
+   <gmd:spatialResolution>
+            <gmd:MD_Resolution>
+               <gmd:equivalentScale>
+                  <gmd:MD_RepresentativeFraction>
+                     <gmd:denominator>
+                        <gco:Integer>10000</gco:Integer>
+                     </gmd:denominator>
+                  </gmd:MD_RepresentativeFraction>
+               </gmd:equivalentScale>
+            </gmd:MD_Resolution>
+         </gmd:spatialResolution>
+
+  -->
+
+  <xsl:template mode="mode-iso19139" priority="2005" match="gmd:denominator">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="refToDelete" select="gn:element" required="no"/>
+
+
+    <xsl:variable name="labelConfig"
+                  select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
+
+
+    <xsl:variable name="isRequired" as="xs:boolean">
+      <xsl:choose>
+        <xsl:when test="count(../../../../preceding-sibling::gmd:spatialResolution[*/*/*/*[name() = 'gmd:denominator']]) eq 0">
+          <xsl:value-of select="true()"/>
+        </xsl:when>
+        <!--<xsl:when
+                test="($refToDelete and $refToDelete/@min = 1 and $refToDelete/@max = 1) or
+          (not($refToDelete) and gn:element/@min = 1 and gn:element/@max = 1)">
+          <xsl:value-of select="true()"/>
+        </xsl:when>-->
+        <xsl:otherwise>
+          <xsl:value-of select="false()"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <div class="form-group gn-field gn-title {if ($isRequired) then 'gn-required' else ''}"
+         id="gn-el-{*/gn:element/@ref}"
+         data-gn-field-highlight="">
+      <label class="col-sm-2 control-label">
+        <xsl:value-of select="$labelConfig/label"/>
+      </label>
+      <div class="col-sm-9 gn-value">
+        <xsl:variable name="elementRef"
+                      select="gco:*/gn:element/@ref"/>
+        <xsl:variable name="helper"
+                      select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
+
+
+        <!-- Hidden as the helper directive manages to display a related custom control -->
+        <input type="text" value="{./*}" class="form-control hidden" id="{concat('gn-field-', $elementRef)}" name="{concat('_', $elementRef)}" />
+
+        <xsl:call-template name="render-form-field-helper">
+          <xsl:with-param name="elementRef" select="concat('_', $elementRef)"/>
+          <xsl:with-param name="listOfValues" select="$helper"/>
+        </xsl:call-template>
+      </div>
+
+      <div class="col-sm-1 gn-control">
+        <xsl:call-template name="render-form-field-control-remove">
+          <xsl:with-param name="editInfo" select="*/gn:element"/>
+          <xsl:with-param name="parentEditInfo" select="$refToDelete"/>
+        </xsl:call-template>
+      </div>
+    </div>
+  </xsl:template>
 
   <!-- Reference system -->
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:referenceSystemInfo[1]/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier" priority="1000">

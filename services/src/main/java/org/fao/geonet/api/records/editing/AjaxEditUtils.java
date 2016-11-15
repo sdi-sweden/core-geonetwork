@@ -253,7 +253,7 @@ public class AjaxEditUtils extends EditUtils {
      */
     public Element getMetadataEmbedded(ServiceContext srvContext, String id, boolean forEditing, boolean withValidationErrors) throws Exception {
         boolean keepXlinkAttributes = false;
-        Element md = dataManager.getMetadata(srvContext, id, forEditing, withValidationErrors, keepXlinkAttributes);
+        Element md = dataManager.getMetadata(srvContext, id, forEditing, withValidationErrors, keepXlinkAttributes, true);
         UserSession session = srvContext.getUserSession();
         setMetadataIntoSession(session, md, id);
         return md;
