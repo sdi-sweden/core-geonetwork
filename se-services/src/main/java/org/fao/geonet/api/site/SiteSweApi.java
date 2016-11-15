@@ -56,13 +56,13 @@ import java.util.ResourceBundle;
 })
 @Api(value = "site",
     tags = "site",
-    description = "Site related operations")
+    description = "Site SWE related operations")
 /**
  * API for site related operations.
  *
  * @author Jose García
  */
-public class SiteApi {
+public class SiteSweApi {
 
     @Autowired
     SettingManager settingManager;
@@ -73,7 +73,7 @@ public class SiteApi {
     @ApiOperation(value = "Sent site feedback mails",
         nickname = "sendFeedback")
     @RequestMapping(
-        value = "/feedback",
+        value = "/feedback-swe",
         method = RequestMethod.POST,
         produces = MediaType.TEXT_PLAIN_VALUE)
     @ResponseStatus(value = HttpStatus.OK)

@@ -1065,7 +1065,7 @@
            * @param {string} name of the layer
            * @param {boolean} createOnly or add it to the map
            */
-          addWmsAllLayersFromCap: function(map, url, createOnly) {
+          addWmsAllLayersFromCap: function(map, url, createOnly, md) {
             var $this = this;
 
             return gnOwsCapabilities.getWMSCapabilities(url).
@@ -1077,6 +1077,10 @@
                   for (var i = 0, len = layers.length; i < len; i++) {
                     var capL = layers[i];
                     var olL = $this.createOlWMSFromCap(map, capL);
+                    if (md) {
+                      olL.set('md', md);
+                    }
+
                     if (!createOnly) {
                       map.addLayer(olL);
                     }
