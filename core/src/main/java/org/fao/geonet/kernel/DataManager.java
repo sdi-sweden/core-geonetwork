@@ -141,6 +141,7 @@ import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -1656,6 +1657,12 @@ public class DataManager implements ApplicationEventPublisherAware {
      *                            attributes.
      */
     public Element getMetadata(ServiceContext srvContext, String id, boolean forEditing, boolean withEditorValidationErrors, boolean keepXlinkAttributes) throws Exception {
+        return getMetadata(srvContext, id, forEditing, withEditorValidationErrors, keepXlinkAttributes, false);
+    }
+
+    public Element getMetadata(ServiceContext srvContext, String id, boolean forEditing,
+                               boolean withEditorValidationErrors, boolean keepXlinkAttributes,
+                               boolean inflate) throws Exception {
         boolean doXLinks = getXmlSerializer().resolveXLinks();
         Element metadataXml = getXmlSerializer().selectNoXLinkResolver(id, false);
         if (metadataXml == null) return null;
@@ -1665,6 +1672,23 @@ public class DataManager implements ApplicationEventPublisherAware {
         if (forEditing) { // copy in xlink'd fragments but leave xlink atts to editor
             if (doXLinks) Processor.processXLink(metadataXml, srvContext);
             String schema = getMetadataSchema(id);
+
+            if (inflate) {
+
+                Path inflateStyleSheet = getSchemaDir(schema).resolve( "inflate-metadata.xsl");
+                if (Files.exists(inflateStyleSheet)) {
+                    //--- setup environment
+                    Element env = new Element("env");
+                    env.addContent(new Element("lang").setText(srvContext.getLanguage()));
+
+                    // add original metadata to result
+                    Element result = new Element("root");
+                    result.addContent(metadataXml);
+                    result.addContent(env);
+
+                    metadataXml = Xml.transform(result, inflateStyleSheet);
+                }
+            }
 
             if (withEditorValidationErrors) {
                 version = doValidate(srvContext.getUserSession(), schema, id, metadataXml, srvContext.getLanguage(), forEditing).two();
