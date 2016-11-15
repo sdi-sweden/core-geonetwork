@@ -532,6 +532,39 @@ ul.gn-resultview {
       margin-top: 15px;
     }
   }
+  // search box on the map
+  .search-container {
+    position: absolute;
+    top: 9px;
+    left: 39px;
+    width: 280px;
+    .form-control {
+      width: 252px;
+      border: 0;
+      border-radius: 0;
+    }
+    .dropdown-menu {
+      width: calc(~"100% - 4px");
+      border-left: 0;
+      border-right: 0;
+      border-radius: 0;
+    }
+    .dropdown-menu a {
+      color: #27605d;
+    }
+    .dropdown-menu .list-group {
+      border-radius: 0;
+    }
+    .dropdown-menu .list-group-item {
+      border-left: 0;
+      border-right: 0;
+      border-radius: 0;
+    }
+    .clear {
+      top: 1.1em;
+      right: 1.1em;
+    }
+  }
 }
 /*
     Place bottom-bar at the bottom of page; approach is based on http://matthewjamestaylor.com/blog/bottom-footer-demo.htm

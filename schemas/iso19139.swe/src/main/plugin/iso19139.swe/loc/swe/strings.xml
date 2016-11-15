@@ -141,4 +141,5 @@
   <onLineLinkUrl>Url</onLineLinkUrl>
   <roleLabel>Ansvarsområde</roleLabel>
   <otherConstraints>Övriga restriktioner</otherConstraints>
+  <scales>Rumslig upplösning</scales>
 </strings>
