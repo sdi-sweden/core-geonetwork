@@ -99,6 +99,13 @@
         $scope.triggerSearch();
       });
 
+
+      $scope.$on('layerView', function(event) {
+        $scope.showMetadata($scope.mdView.current.index,
+            $scope.mdView.current.record,
+            $scope.mdView.current.records);
+      });
+
       // prevent the floating map from positioning on top of the footer
       $scope.affixFloatingMap = function() {
         
@@ -351,7 +358,7 @@
                     false, md);
               }
           } else {
-            gnMap.addWmsAllLayersFromCap(viewerMap, url, false);
+            gnMap.addWmsAllLayersFromCap(viewerMap, url, false,  md);
           }
 
         },
