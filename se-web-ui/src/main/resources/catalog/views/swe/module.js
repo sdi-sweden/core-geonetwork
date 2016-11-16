@@ -974,7 +974,10 @@
         delete $scope.searchObj.params.resourceDateTo;
         delete $scope.searchObj.params.geometry;
         delete $scope.searchObj.namesearch;
-
+        len = $scope.searchObj.viewerMap.getLayers().getLength();
+        for(i=1;i<len;i++){
+           $scope.searchObj.viewerMap.getLayers().getArray()[i].getSource().clear();
+        }
         $scope.triggerSearch();
       };
 
@@ -1077,7 +1080,7 @@
           //To transform projection for metadata list based on polygon drawn
           proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
           //proj4.defs("EPSG:4258","+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs");
-          var geom = gnMap.reprojExtent(extent , 'EPSG:3006', 'EPSG:4326')
+          var geom = gnMap.reprojExtent(extent , 'EPSG:3006', 'EPSG:4326');
           var geom_wkt = "POLYGON((" + geom[0] + " " + geom[1] + "," + geom[2] + " " + geom[1] + "," + geom[2] + " " + geom[3] + "," + geom[2] + " " + geom[1] + "," + geom[0] + " " + geom[1] + "))";
           $scope.searchObj.params.geometry = geom_wkt;
           var feature = new ol.Feature();
@@ -1117,10 +1120,10 @@
               params: params
             }).then(function(result) {
               $scope.vectorLayer.getSource().clear();
-              $scope.searchObj.viewerMap.getLayers().getArray()[1].getSource().clear()
+              $scope.searchObj.viewerMap.getLayers().getArray()[1].getSource().clear();
               $scope.vectorLayer.getSource().addFeatures(geoJson.readFeatures(result.data));
-              $scope.searchObj.searchMap.getView().setCenter([extent[0],extent[1]])
-              $scope.triggerSearch()
+              $scope.searchObj.searchMap.getView().setCenter([extent[0],extent[1]]);
+              $scope.triggerSearch();
             });
 
           return true; // always return true so search query is fired.
@@ -1131,6 +1134,49 @@
     };
     
   }]);
+
+  /**
+   * Controller for draw free hand polygon in map
+   *
+   */
+  
+   module.controller('SweGeoFreeHandPolygonController', ['$scope', '$http', 'gnSearchSettings', 'gnMap',
+    function($scope, $http, gnSearchSettings, gnMap) {
+             $scope.drawFreeHandPolygonInMap = function(){
+
+              $scope.searchObj.viewerMap.getLayers().getArray()[1].setStyle(gnSearchSettings.olStyles.mdExtentHighlight);
+              $scope.searchObj.viewerMap.getLayers().getArray()[1].setMap($scope.searchObj.searchMap);
+              var features = new ol.Collection();
+              var extent;
+              draw = new ol.interaction.Draw({
+                features: features,
+                type: 'Polygon'
+              });
+ 
+              $scope.searchObj.viewerMap.addInteraction(draw);
+              $scope.searchObj.searchMap.addInteraction(draw);
+               draw.on('drawend', function (e) {
+                  delete $scope.searchObj.namesearch;
+                  len = $scope.searchObj.viewerMap.getLayers().getLength();
+                  for(i=1;i<len;i++){
+                    $scope.searchObj.viewerMap.getLayers().getArray()[i].getSource().clear();
+                  }
+                  $scope.searchObj.viewerMap.getLayers().getArray()[1].getSource().addFeature(e.feature);
+                  var extent = $scope.searchObj.viewerMap.getLayers().getArray()[1].getSource().getExtent();
+                  var geoJson = new ol.format.GeoJSON();
+                  proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+                //proj4.defs("EPSG:4258","+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs");
+                  var geom = gnMap.reprojExtent(extent , 'EPSG:3006', 'EPSG:4326');
+                  var geom_wkt = "POLYGON((" + geom[0] + " " + geom[1] + "," + geom[2] + " " + geom[1] + "," + geom[2] + " " + geom[3] + "," + geom[2] + " " + geom[1] + "," + geom[0] + " " + geom[1] + "))";
+                  $scope.searchObj.params.geometry = geom_wkt;
+                  $scope.searchObj.viewerMap.removeInteraction(draw);
+                  $scope.searchObj.searchMap.removeInteraction(draw);
+                  $scope.triggerSearch();
+                  })
+
+        }
+
+          }]);
 
 
    

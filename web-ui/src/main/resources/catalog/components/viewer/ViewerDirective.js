@@ -72,13 +72,7 @@
                 map.getView().fit(map.getView().
                     getProjection().getExtent(), map.getSize());
               };
-              scope.drawFreeHandPolygonInMap = function(){
-                scope.toggle = !scope.toggle
-                   var scope_var = scope.searchObj;
-                   var trigger = controller
-                   var toggle = scope.toggle
-                   gnMap.drawFreeHandPolygonInMap(scope_var, trigger, toggle);               
-              }
+
               scope.ol3d = null;
 
 
