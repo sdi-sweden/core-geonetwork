@@ -292,9 +292,11 @@ public class ISODateTest {
         new ISODate(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCreateISODateExceptionBecauseOfBadFormat() throws Exception {
-        new ISODate("2001");
+        ISODate isoDate = new ISODate("2001");
+        assertEquals("2001-01-01", isoDate.toString());
+        assertTrue(isoDate.isDateOnly());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -303,10 +305,12 @@ public class ISODateTest {
         isoDate.setDateAndTime(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSetDateExceptionBecauseOfBadFormat() throws Exception {
         ISODate isoDate = new ISODate();
         isoDate.setDateAndTime("2001");
+        assertEquals("2001-01-01", isoDate.toString());
+        assertTrue(isoDate.isDateOnly());
     }
 
     @Test

@@ -427,6 +427,50 @@
     </xsl:choose>
   </xsl:template>
 
+	<xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification">
+		<xsl:copy>
+			<xsl:copy-of select="@*" />
+
+			<xsl:apply-templates select="gmd:citation" />
+			<xsl:apply-templates select="gmd:abstract" />
+			<xsl:apply-templates select="gmd:purpose" />
+			<xsl:apply-templates select="gmd:credit" />
+			<xsl:apply-templates select="gmd:status" />
+			<xsl:apply-templates select="gmd:pointOfContact" />
+			<xsl:apply-templates select="gmd:resourceMaintenance" />
+			<xsl:apply-templates select="gmd:graphicOverview" />
+			<xsl:apply-templates select="gmd:resourceFormat" />
+			<xsl:apply-templates select="gmd:descriptiveKeywords" />
+			<xsl:apply-templates select="gmd:resourceSpecificUsage" />
+			<xsl:apply-templates select="gmd:resourceConstraints" />
+			<xsl:apply-templates select="gmd:aggregationInfo" />
+			<xsl:apply-templates select="gmd:spatialRepresentationType" />
+
+			<!-- Remove spatial resolutions with empty values -->
+			<xsl:for-each select="gmd:spatialResolution">
+				<xsl:choose>
+					<xsl:when test="gmd:MD_Resolution/gmd:equivalentScale">
+						<xsl:if test="string(gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer)">
+							<xsl:apply-templates select="." />
+						</xsl:if>
+					</xsl:when>
+					<xsl:when test="gmd:MD_Resolution/gmd:distance">
+						<xsl:if test="string(gmd:MD_Resolution/gmd:distance/gco:Distance)">
+							<xsl:apply-templates select="." />
+						</xsl:if>
+					</xsl:when>
+				</xsl:choose>
+			</xsl:for-each>
+
+			<xsl:apply-templates select="gmd:language" />
+			<xsl:apply-templates select="gmd:characterSet" />
+			<xsl:apply-templates select="gmd:topicCategory" />
+			<xsl:apply-templates select="gmd:environmentDescription" />
+			<xsl:apply-templates select="gmd:extent" />
+			<xsl:apply-templates select="gmd:supplementalInformation" />
+		</xsl:copy>
+	</xsl:template>
+
 
   <!-- ================================================================= -->
 	<!-- Adjust the namespace declaration - In some cases name() is used to get the

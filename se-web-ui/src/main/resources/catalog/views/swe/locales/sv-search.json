@@ -37,10 +37,10 @@
     "lastUpdate": "Senast uppdaterad",
     "responsibleParty": "Ansvarig part",
     "showOnMap": "Visa på karta",
-    "createMetadata-menu": "New metadata",
-    "createMetadata-title": "Create metadata",
-    "createMetadata-desc": "Select the type of metadata to create",
-    "createMetadata-create": "Create",
-    "createMetadata-group": "Group",
-    "createMetadata-cancel": "Cancel"
+    "createMetadata-menu": "Ny metadata",
+    "createMetadata-title": "Skapa metadata",
+    "createMetadata-desc": "Välj vilken typ av metadata för att skapa",
+    "createMetadata-create": "Skapa",
+    "createMetadata-group": "Grupp",
+    "createMetadata-cancel": "Avbryt"
 }

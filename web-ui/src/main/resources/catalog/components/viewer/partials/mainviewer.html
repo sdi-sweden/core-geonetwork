@@ -27,11 +27,6 @@
       <span class="fa fa-tasks"></span>
       <span role="tooltip" data-translate="">Layers</span>
     </button>
-    <button gi-btn class="btn btn-default" type="submit"
-            rel="#filterData" ng-model="activeTools.filter" gnv-tools-btn>
-      <span class="fa fa-filter"></span>
-      <span role="tooltip" data-translate="">filterData</span>
-    </button>
     <button class="btn btn-default" ng-model="activeTools.contexts" type="submit"
             rel="#contexts" gi-btn gnv-tools-btn>
       <span class="fa fa-book"></span>
@@ -62,11 +57,6 @@
             rel="#draw" ng-model="drawVector.inmap" gnv-tools-btn>
       <span class="fa fa-pencil"></span>
       <span role="tooltip" data-translate="">Annotations</span>
-    </button>
-       <button class="btn btn-default" type="submit" data-ng-click="drawFreeHandPolygonInMap()"
-            data-ng-hide="is3dEnabled" gnv-tools-btn>
-      <span class="fa fa-pencil-square-o"></span>
-      <span role="tooltip" data-translate="">drawFreeHandPolygonInMap</span>
     </button>
   </div>
   <!--Bottom right buttons - Navigation-->
@@ -159,15 +149,6 @@
          data-ng-show="is3dEnabled"></div>
     <br/>
   </div>
-
-
-  <div class="panel panel-default force-hide panel-tools gn-data-filter-view"
-       id="filterData">
-    <div class="panel-body">
-      <div data-gn-data-filter-view="map"/>
-    </div>
-  </div>
-
 
   <div class="panel panel-default force-hide panel-tools" id="contexts">
     <div class="panel-heading">
