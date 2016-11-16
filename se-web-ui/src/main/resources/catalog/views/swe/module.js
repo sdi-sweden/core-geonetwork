@@ -1087,9 +1087,7 @@
           //var feature = gnMap.getPolygonFeature(namesearch, $scope.searchObj.searchMap.getView().getProjection());
 
           // Build multipolygon from the set of bboxes
-          geometry = new ol.geom.MultiPolygon(null);
-       
-
+          geometry = new ol.geom.MultiPolygon(null);    
           feature.setGeometry(geometry);
 
           if (angular.isUndefined($scope.vectorLayer)) {
@@ -1133,6 +1131,7 @@
         }
     };
     
+
   }]);
 
   /**
@@ -1144,6 +1143,17 @@
     function($scope, $http, gnSearchSettings, gnMap) {
              $scope.drawFreeHandPolygonInMap = function(){
 
+              if (angular.isUndefined($scope.vectorLayer)) {
+                  var vectorSource = new ol.source.Vector();
+
+                  $scope.vectorLayer = new ol.layer.Vector({
+                    source: vectorSource,
+                    style: gnSearchSettings.olStyles.mdExtentHighlight
+                  });
+
+                  $scope.searchObj.viewerMap.addLayer($scope.vectorLayer);
+                  $scope.searchObj.searchMap.addLayer($scope.vectorLayer);
+              }
               $scope.searchObj.viewerMap.getLayers().getArray()[1].setStyle(gnSearchSettings.olStyles.mdExtentHighlight);
               $scope.searchObj.viewerMap.getLayers().getArray()[1].setMap($scope.searchObj.searchMap);
               var features = new ol.Collection();
