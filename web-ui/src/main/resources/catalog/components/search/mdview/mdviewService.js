@@ -196,6 +196,8 @@
         }
         else {
           this.feedMd(0, md, [md]);
+
+          $rootScope.$broadcast('layerView');
         }
       };
     }
