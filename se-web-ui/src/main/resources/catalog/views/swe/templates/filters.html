@@ -2,11 +2,12 @@
   <div class="site-filter-wrapper">
     <!-- Predefined search filters -->
     <div class="site-image-filter">
-      <a href="" data-ng-click="closeFilterPanel()" class="cls-btn icon-cancel"></a>
       <span class="image-filter-text">kartexempel</span>
-      <swe-predefined-maps-filter data-viewerMap="resultviewFns.loadMap"></swe-predefined-maps-filter>
+      <div>
+      	<a href="" data-ng-click="collapsed=!collapsed" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
+      	<swe-predefined-maps-filter ng-hide="collapsed" data-viewerMap="resultviewFns.loadMap"></swe-predefined-maps-filter>
+      </div>
     </div>
-
     <!-- Search filters -->
     <div class="site-filter-section-wrapper">
       <div class="site-filter-section">
