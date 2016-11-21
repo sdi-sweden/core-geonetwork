@@ -111,6 +111,8 @@
       var wmts = [new ol.layer.Tile({
         extent: extent,
         group: 'Background layers',
+        url:  'https://api.lantmateriet.se/open/topowebb-ccby/' +
+        'v1/wmts/token/' + apiKey + '/',
         source: new ol.source.WMTS({
           url: 'https://api.lantmateriet.se/open/topowebb-ccby/' +
               'v1/wmts/token/' + apiKey + '/',
