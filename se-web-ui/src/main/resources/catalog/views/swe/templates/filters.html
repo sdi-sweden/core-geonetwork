@@ -78,9 +78,9 @@
                         <span class="icon-search"></span>
                         <input id="namesearch-id" type="text" placeholder="" class="live-search-query"
                                data-ng-model="searchObj.namesearch"
-                               data-ng-model-options="modelOptionsFormGeo"
-                               data-ng-keyup="$event.keyCode == 13 && drawPolygonInMap()"
+                               data-ng-model-options="modelOptionsFormGeo"                            
                                data-typeahead="namesearch as (namesearch.Name + ', ' + namesearch.Type) for namesearch in getNameSearch($viewValue) "
+                               data-typeahead-on-select="drawPolygonInMap()"
                                data-typeahead-loading="anyLoading"
                                data-typeahead-min-length="1"
                                data-typeahead-focus-first="false"
