@@ -47,7 +47,7 @@
                   getFlatLayers(layer[i]);
               }
             } else if (angular.isDefined(layer)) {
-              if (wmsUrl.includes("layers=")){
+                if (wmsUrl.indexOf("layers=") >= 0){
                 var wmsLayers = wmsUrl.substring(wmsUrl.indexOf("layers="));
                 var splitLayer = wmsLayers.substring(wmsLayers.indexOf("=") + 1).split(",");
                 for (var i = 0, len = layer.Layer.length; i < len; i++) {
@@ -85,7 +85,7 @@
           getFlatLayers(result.Capability.Layer);
           setLayerAsArray(result.Capability);
           result.Capability.layers = layers;
-          if (wmsUrl.includes("layers=")){
+          if (wmsUrl.indexOf("layers=") >= 0){
             result.Capability.Layer[0].Layer = layers;
           }          
           return result.Capability;
