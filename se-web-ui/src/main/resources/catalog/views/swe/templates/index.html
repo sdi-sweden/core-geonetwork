@@ -36,21 +36,21 @@
 
                     <!-- NAME -->
                     <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.name.$invalid && !feedbackForm.name.$pristine }">
-                      <label>Name</label>
+                      <label>Namn</label>
                       <input type="text" class="input" name="name" ng-model="user.username" required>
                       <span class="errorField" data-ng-show="feedbackForm.name.$invalid && !feedbackForm.name.$pristine" class="help-block">You name is required.</span>
                     </div>
 
                     <!-- EMAIL -->
                     <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.email.$invalid && !feedbackForm.email.$pristine }">
-                      <label>Email</label>
+                      <label>E-post</label>
                       <input type="email" class="input" name="email" ng-model="user.email" required>
                       <span class="errorField" data-ng-show="feedbackForm.email.$invalid && !feedbackForm.email.$pristine" class="help-block">Enter a valid email.</span>
                     </div>
 
                     <!-- COMMENT -->
                     <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.comment.$invalid && !feedbackForm.comment.$pristine }">
-                      <label class="label-text-area">Comment</label>
+                      <label class="label-text-area">Kommentar</label>
                       <textarea class="textarea" name="comment" ng-model="user.comments" required></textarea>
                       <span class="errorField" data-ng-show="feedbackForm.comment.$invalid && !feedbackForm.comment.$pristine" class="help-block">Your comment is required.</span>
                     </div>
