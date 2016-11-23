@@ -36,7 +36,7 @@
     "mapSavedInCatalog": "<a href='#/metadata/{{uuid}}'>Visa kartans metadatapost</a>.",
     "mapAbstract": "Map abstract",
     "uploadContext": "Ladda en karta",
-    "resetContext": "ladda  standardkarta",
+    "resetContext": "Ladda  standardkarta",
     "kmlContext": "KML format",
     "displayHeatMap": "Visa värmekarta",
     "removeFeatures": "Ta bort objekt",
@@ -360,12 +360,14 @@
     "fbCatHarvesting": "Skördning",
     "fbCatValidator": "Validerare",
     "fbCatOthers": "Andra",
-    "syncAllLayers": "Synkronisera alla lager (eller endast bakgrundslager ) mellan karta betraktaren och söka översiktskarta ",
+    "syncAllLayers": "Synkronisera alla lager",
     "Add" : "Lägg",
     "layersDelete":"Radera alla lager",
 	"mdvalid": "Metadatat är giltigt",
     "mdinvalid": "Metadatat är ogiltigt",
     "mdinvalidcantpublish": "Ogiltigt metadata kan inte publiseras",
     "mdnovalidation": "Metadatat har ingen valideringsinformation",
-    "setall": "Set all privileges"
+    "setall": "Set all privileges",
+    "drawFreeHandPolygonInMap": "Dra fria händer Polygon In Karta",
+    "Graticule": "Fokalplattan"
 }

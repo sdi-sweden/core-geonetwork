@@ -37,9 +37,9 @@
     "lastUpdate": "Senast uppdaterad",
     "responsibleParty": "Ansvarig part",
     "showOnMap": "Visa på karta",
-    "createMetadata-menu": "Ny metadata",
+    "createMetadata-menu": "Skapa ny metadatapost",
     "createMetadata-title": "Skapa metadata",
-    "createMetadata-desc": "Välj vilken typ av metadata för att skapa",
+    "createMetadata-desc": "Välj typ av metadata som ska skapas",
     "createMetadata-create": "Skapa",
     "createMetadata-group": "Grupp",
     "createMetadata-cancel": "Avbryt"
