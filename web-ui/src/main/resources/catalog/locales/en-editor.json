@@ -90,6 +90,8 @@
     "chooseRegion": "Choose a region",
     "clickToDrawABox": "Click once to enable control and draw a box. Click again to stop drawing.",
     "closeEditor": "Save & close",
+	"inspireValidation": "Inspire validation",
+	"mdRelationValidation": "MD Relation validation",
     "conceptBroader": " is more general than ",
     "conceptNarrower": " is more specific than ",
     "conceptRelated": " is related to ",

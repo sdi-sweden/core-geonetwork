@@ -90,6 +90,8 @@
     "chooseRegion": "Wähle eine Region",
     "clickToDrawABox": "Klicke einmal und zeichne ein Rechteck. Mit erneutem Klicken beenden Sie die Zeichnung.",
     "closeEditor": "Speichern und schliessen",
+	"inspireValidation": "Inspire-validering",
+	"mdRelationValidation": "Kontroll av länkar",
     "continent": "Kontinent",
     "copyPaste": "Kopieren / Einfügen",
     "country": "Land",

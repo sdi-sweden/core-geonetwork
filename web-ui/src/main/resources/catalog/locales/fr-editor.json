@@ -90,6 +90,8 @@
     "chooseRegion": "Choisir un territoire",
     "clickToDrawABox": "Cliquer une fois pour activer le bouton et dessiner l'emprise. Recliquer pour arrêter de dessiner.",
     "closeEditor": "Enregistrer & fermer",
+	"inspireValidation": "Inspire-validering",
+	"mdRelationValidation": "Kontroll av länkar",
     "continent": "Continent",
     "copyPaste": "Copier/Coller",
     "country": "Pays",

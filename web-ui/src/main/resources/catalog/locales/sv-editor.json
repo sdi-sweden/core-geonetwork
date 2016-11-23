@@ -90,6 +90,8 @@
     "chooseRegion": "Välj region",
     "clickToDrawABox": "Klicka en gång för att kunna rita en ruta. Klicka igen för att sluta rita.",
     "closeEditor": "Spara och stäng",
+	"inspireValidation": "Inspire-validering",
+	"mdRelationValidation": "Kontroll av länkar",
     "continent": "Kontinent",
     "copyPaste": "Copy/Paste",
     "country": "Land",

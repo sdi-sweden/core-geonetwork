@@ -1061,5 +1061,9 @@
     "updatePredefinedMap": "Update ",
     "newPredefinedMap": "New ",
     "deletePredefinedMap": "Delete",
-    "savePredefinedMap": "Save"
+    "savePredefinedMap": "Save",
+	"metadata/validator/inspireUrl": "Inspire validation url",
+	"metadata/validator/inspireXml": "Inspire validation xml",
+	"metadata/validator/mdrelationUrl": "MD Relation validation url",
+	"metadata/validator/mdrelationXml": "MD Relation validation xml"
 }
