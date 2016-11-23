@@ -434,6 +434,31 @@
         $scope.savedStatus = gnCurrentEdit.savedStatus;
         return promise;
       };
+	  
+	  // Inspire and MDRelation validation : Start
+	  $scope.inspireValidateMetadata = function() {
+        var promise = gnEditor.inspireValidate()
+            .then(function(response) {
+				var win = window.open();
+				win.document.write(response.htmlResponse);
+            }, function(error) {
+				//alert('failed'+error);
+            });
+        return promise;
+      };
+	  
+	  $scope.mdRelationValidateMetadata = function(refreshForm) {
+        var promise = gnEditor.mdRelationValidate()
+            .then(function(response) {
+				var win = window.open();
+				win.document.write(response.htmlResponse);
+            }, function(error) {
+				//alert('failed'+error);
+            });
+        return promise;
+      };
+	  // Inspire and MDRelation validation : End
+	  
       var closeEditor = function() {
         $scope.layout.hideTopToolBar = false;
         // Close the editor tab
@@ -506,6 +531,15 @@
         $('#showvalidationerrors')[0].value = 'true';
         return $scope.save(true);
       };
+	  // Inspire and MDRelation validation : Start
+	  $scope.inspireValidate = function() {
+        return $scope.inspireValidateMetadata();
+      };
+	  
+	  $scope.mdRelationValidate = function() {
+        return $scope.mdRelationValidateMetadata(false);
+      };
+	  // Inspire and MDRelation validation : End
 
       init();
 
