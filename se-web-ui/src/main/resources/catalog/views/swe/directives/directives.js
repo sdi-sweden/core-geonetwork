@@ -295,20 +295,31 @@
         replace: true,
         templateUrl: '../../catalog/views/swe/directives/' +
           'partials/predefinedMaps.html',
-        //controller: 'SwePredefinedMapsController'
-        controller: function ($scope, $element) {
-          $scope.hovering = false;
-
-          $http.get('../api/0.1/predefinedmaps/').success(function(data) {
-            $scope.predefinedMaps = data;
-          }).error(function(data) {
-            // TODO
-          });
-
-          $scope.doView = function(predefinedMap) {
-            gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
-          };
+        scope: {
+           predefinedMaps: '@'
+        },
+        link: function(scope, element, attrs) {
+           $http.get('../api/0.1/predefinedmaps/').success(function(data) {
+              scope.predefinedMaps = data;
+           });
+           scope.doView = function(predefinedMap) {
+        	   gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+      		};
         }
+//        controller: 'SwePredefinedMapsController'
+//        controller: function ($scope, $element) {
+//          $scope.hovering = false;
+//
+//          $http.get('../api/0.1/predefinedmaps/').success(function(data) {
+//            $scope.predefinedMaps = data;
+//          }).error(function(data) {
+//            // TODO
+//          });
+//
+//          $scope.doView = function(predefinedMap) {
+//            gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+//          };
+//        }
       };
   }]);
 

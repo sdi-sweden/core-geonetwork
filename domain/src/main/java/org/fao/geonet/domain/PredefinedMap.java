@@ -23,13 +23,21 @@
 
 package org.fao.geonet.domain;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.io.Serializable;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
 import org.fao.geonet.entitylistener.PredefinedMapEntityListenerManager;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Arrays;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * Represents a predefined map. This is a JPA Entity object and is contained in a database table.
@@ -87,6 +95,7 @@ public class PredefinedMap extends GeonetEntity implements Serializable {
      * @param name the new predefined map name
      * @return this predefined map object
      */
+    @JsonSetter("title")
     public PredefinedMap setName(final String name) {
         this._name = name;
         return this;
@@ -106,6 +115,7 @@ public class PredefinedMap extends GeonetEntity implements Serializable {
      * @param description the new predefined map description
      * @return this predefined map object
      */
+    @JsonSetter("description")
     public PredefinedMap setDescription(final String description) {
         this._description = description;
         return this;
@@ -188,6 +198,7 @@ public class PredefinedMap extends GeonetEntity implements Serializable {
      * @param image the map image
      * @return this predefined map object
      */
+    @JsonSetter("link")
     public PredefinedMap setImage(String image) {
         this._image = image;
         return this;
