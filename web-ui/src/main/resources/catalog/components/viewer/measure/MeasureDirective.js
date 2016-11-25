@@ -154,7 +154,6 @@
 
       var initInteraction = function(map, measureObj) {
         var deregisterFeature;
-
         var featureOverlay = new ol.layer.Vector({
           source: new ol.source.Vector(),
           map: map,
