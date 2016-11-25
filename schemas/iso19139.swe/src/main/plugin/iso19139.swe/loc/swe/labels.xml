@@ -971,7 +971,7 @@ bearbetningens genomförande</description>
         <condition>conditional</condition>
     </element>
     <element id="561.0" name="gmd:description">
-        <label>Description</label>
+        <label>Beskriving av utsträckning</label>
         <description>Description of the event, including related parameters or
             tolerances</description>
     </element>
