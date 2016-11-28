@@ -297,7 +297,7 @@
           'partials/predefinedMaps.html',
         scope: {
             predefinedMaps: '@',
-            doView: '@'
+            showMapFn: '&'
             },
         link: function(scope, element, attrs) {
         	$http.get('../api/0.1/predefinedmaps/')
@@ -305,8 +305,9 @@
                 	  scope.predefinedMaps = data;
             });
         	scope.doView = function(predefinedMap) {
-                //gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
-    		};
+                gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+                scope.showMapFn()();
+            };
       }
   }}]);
 
