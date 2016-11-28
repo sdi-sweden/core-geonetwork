@@ -296,11 +296,12 @@
         templateUrl: '../../catalog/views/swe/directives/' +
           'partials/predefinedMaps.html',
         scope: {
-           predefinedMaps: '@',
-           showMapFn: '&'
+          predefinedMaps: '@',
+          showMapFn: '&',
+          configUrl: '@'
         },
         link: function(scope, element, attrs) {
-          $http.get('../api/0.1/predefinedmaps/').success(function(data) {
+          $http.get(scope.configUrl).success(function(data) {
             scope.predefinedMaps = data;
           });
           scope.doView = function(predefinedMap) {

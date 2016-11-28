@@ -90,6 +90,9 @@
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
 
+      $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl +
+          gnConfig['map.predefinedMaps.url'];
+
       $scope.$on('someEvent', function(event, map) {
         alert('event received. url is: ' + map.url);
 
