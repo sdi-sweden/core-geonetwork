@@ -4,6 +4,7 @@
       <span class="icon-search"></span>
       <input type="text" placeholder="{{ 'freeTextPlaceholder' | translate}}"
              id="gn-any-field"
+             maxlength="80"
              data-ng-model="searchObj.params.any"
              data-ng-model-options="modelOptionsForm"
              data-ng-keyup="$event.keyCode == 13 && triggerSearch()"
