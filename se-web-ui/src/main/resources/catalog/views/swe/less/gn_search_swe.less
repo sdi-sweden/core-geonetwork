@@ -1203,3 +1203,81 @@ body {
   display: block;
   padding: 10px 17px;
 }
+
+// panel tools for on the map
+// 
+// ----- buttons to open panels
+[gi-btn-group] {
+  top: 9px !important;
+}
+[gn-main-viewer] .tools, .gn-main-viewer .tools {
+  width: 2.6em;
+}
+[gn-main-viewer] .tools button, .gn-main-viewer .tools button {
+  margin-bottom: .2em;
+  background: #fff;
+  width: 2.6em;
+  border: 0;
+  border-radius: 0;
+}
+[gn-main-viewer] .tools button .fa, .gn-main-viewer .tools button .fa {
+  color: #5d8886;
+}
+[gn-main-viewer] .tools button.active .fa, .gn-main-viewer .tools button.active .fa {
+  color: #FFF;
+}
+[gn-main-viewer] .tools button.active, .gn-main-viewer .tools button.active {
+    width: 2.6em;
+    margin-left: 0; 
+    background: #5d8886;
+    color: #FFF;
+}
+button:focus [role=tooltip], button:hover [role=tooltip] {
+  right: 2.8em;
+}
+/* ----- panels */
+[gn-main-viewer] .panel-tools, .gn-main-viewer .panel-tools {
+  position: absolute;
+  top: 9px;
+  right: 3em;
+  width: 310px;
+  min-height: 15em;
+  max-height: calc(100% - 2em);
+  max-width: none; 
+  overflow-y: auto;
+  transition: opacity .3s ease;
+  z-index: 10000;
+  background: #fff;
+  border-radius: 0;
+  border: 0;
+}
+[gn-main-viewer] .panel-tools .fa, .gn-main-viewer .panel-tools .fa {
+  color: #333;
+}
+[gn-main-viewer] .panel-tools .form-control, [gn-main-viewer] .panel-tools .btn {
+  font-size: 13px;
+}
+[gn-main-viewer] .panel-tools .panel-heading {
+  padding: 0 15px;
+  height: auto;
+}
+[gn-main-viewer] .panel-tools .panel-heading h3 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+[gn-main-viewer] .panel-tools .panel-heading h3 .btn {
+  font-size: 22px;
+}
+[gn-main-viewer] .panel-tools .panel-body {
+  padding: 10px;
+}
+[gn-main-viewer] .gn-draw-styleform form, .gn-main-viewer .gn-draw-styleform form {
+  margin-top: 10px;
+  padding-bottom: 15px;
+}
+[gn-main-viewer] .panel-tools .flux, .gn-main-viewer .panel-tools .flux,
+[gn-main-viewer] .panel-tools .context, .gn-main-viewer .panel-tools .context {
+  margin: 0;
+}
+
+
