@@ -32,7 +32,10 @@
           </ul>
           <div class="other-filters">
             <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link" data-translate="">viewAllResources</a>
-            <a href="" data-ng-click="toggleAdvancedOptions()" class="fltr-link advance-link"data-translate="">viewAdvance</a>
+            <a href="" data-ng-click="toggleAdvancedOptions()" class="fltr-link advance-link">
+              <span class="show-advanced" data-translate="">viewAdvance</span>
+              <span class="hide-advanced" data-translate="">hideAdvance</span>
+            </a>
 
             <div data-swe-tooltip=""
                  data-title="{{ 'advancedSearchTooltip-title' | translate }}"
@@ -53,20 +56,33 @@
           <div class="advance-filters-cont">
             <div class="advance-filter">
               <div class="date-filter">
-                <div class="left-side-filter" id="abId0.901597265871972" abineguid="B24E06EA694549E08380FB3D35F8BC85">
-                  <div class="filter-colm" id="abId0.3915931191863504">
-                    <label data-translate="searchFromDate"></label>
-                    <div class="custom-fld-cont" id="abId0.891437811112971">
-                      <input type="date" placeholder="åååå-mm-dd" data-ng-model="searchObj.params.resourceDateFrom" data-ng-change="triggerSearch()">
-                      <!--<span class="icon-calendar-empty"></span>-->
-                    </div>
+                <div class="left-side-filter clearfix" id="abId0.901597265871972" abineguid="B24E06EA694549E08380FB3D35F8BC85">
+
+                  <div class="filter-colm clearfix pull-left" id="abId0.3915931191863504">
+                    <label data-translate="searchFromDate" class="date-label pull-left"></label>
+
+                    <div class="input-group date custom-fld-cont pull-left" data-date="" data-date-format="yyyy-mm-dd"
+                         gn-bootstrap-datepicker="searchObj.params.resourceDateFrom" lang="lang">
+                      <input class="form-control" type="text"
+                             data-ng-model="searchObj.params.resourceDateFrom" 
+                             placeholder="åååå-mm-dd" data-ng-change="triggerSearch()">
+
+                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>                    
+
                   </div>
-                  <div class="filter-colm till-date-colm" id="abId0.746339667914671">
-                    <label data-translate="searchToDate"></label>
-                    <div class="custom-fld-cont" id="abId0.5676842456397708">
-                      <input type="date" placeholder="åååå-mm-dd" data-ng-model="searchObj.params.resourceDateTo" data-ng-change="triggerSearch()">
-                      <!--<span class="icon-calendar-empty"></span>-->
+                  <div class="filter-colm till-date-colm clearfix pull-left" id="abId0.746339667914671">
+                    <label data-translate="searchToDate" class="date-label pull-left"></label>
+
+                    <div class="input-group date custom-fld-cont pull-left" data-date="" data-date-format="yyyy-mm-dd"
+                         gn-bootstrap-datepicker="searchObj.params.resourceDateTo" lang="lang">
+                      <input class="form-control" type="text"
+                             data-ng-model="searchObj.params.resourceDateTo" 
+                             placeholder="åååå-mm-dd" data-ng-change="triggerSearch()">
+
+                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
+
                     <div data-swe-tooltip=""
                          data-title="{{ 'dateFilterTooltip-title' | translate }}"
                          data-text="{{ 'dateFilterTooltip-desc' | translate }}"
@@ -173,7 +189,8 @@
 
     </ul>
     <a href="" data-ng-click="toggleFilterPanel()" class="filter-toggle-link opens-filter-section">
-      <span data-translate="">showFiltering</span> <span class="icon-up-dir"></span><span class="icon-down-dir"></span>
+      <span class="show-filtering" data-translate="">showFiltering</span>
+      <span class="hide-filtering" data-translate="">hideFiltering</span> <span class="icon-up-dir"></span><span class="icon-down-dir"></span>
     </a>
   </div>
 </div>
