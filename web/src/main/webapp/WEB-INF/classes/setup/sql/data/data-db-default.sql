@@ -673,6 +673,9 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/wf
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/wfsServer/workspace', 'metagis', 0, 9597, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/wfsServer/layer', 'metagis_gazetter', 0, 9598, 'n');
 
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/predefinedMaps/url', 'https://ver.geodata.se/geodataportalens-hjalpsidor/datasamlingar-rotsida', 0, 10200, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/geotechnics/url', 'https://ver.geodata.se/geodataportalens-hjalpsidor/datasamlingar-rotsida', 0, 10210, 'n');
+
 INSERT INTO HarvesterSettings (id, parentid, name, value) VALUES  (1,NULL,'harvesting',NULL);
 
 -- ======================================================================

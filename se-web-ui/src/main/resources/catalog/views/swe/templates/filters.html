@@ -1,12 +1,12 @@
-<div class="site-filter-cont open">
+<div class="site-filter-cont open" >
   <div class="site-filter-wrapper">
     <!-- Predefined search filters -->
     <div class="site-image-filter">
-      <span class="image-filter-text">Exempel pÃ¥ datasamlingar</span>
-      <div>
-      	<a href="" data-ng-click="collapsed=!collapsed" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
-      	<swe-predefined-maps-filter ng-hide="collapsed" data-show-map-fn="showMapPanel"></swe-predefined-maps-filter>
-      </div>
+      <span class="image-filter-text">Exempel på datasamlingar</span>
+		<div> 
+		    <a href="" data-ng-click="collapsed=!collapsed" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
+			<swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showMapPanel"></swe-predefined-maps-filter>
+		</div>
     </div>
     <!-- Search filters -->
     <div class="site-filter-section-wrapper">
@@ -17,16 +17,16 @@
             <li>
               <a href="" data-ng-click="toggleMapResources()"
                  data-ng-class="{'active': (searchObj.params.dynamic == 'true')}">
-                <span class="icon-map"></span>karttjÃ¤nster</a>
+                <span class="icon-map"></span>karttjänster</a>
             </li>
             <li>
               <a href="" data-ng-click="toggleDownloadResources()"
                  data-ng-class="{'active': (searchObj.params.download == 'true')}"><span class="download-icn-cont">
-                <span class="icon-down-fat"></span></span>DirektÃ¥tkomliga resurser</a>
+                <span class="icon-down-fat"></span></span>Direktåtkomliga resurser</a>
             </li>
             <li><a href="" data-ng-click="toggleFavorites()"
                    data-ng-class="{'active': (searchObj.params._id != '') && (searchObj.params._id != undefined)}"><span class="icon-star"></span>favoriter</a></li>
-            <li><a href=""><span class="icon-eye"></span>geoteknik</a></li>
+            <li><a href="{{geotechnicUrl}}" target="_blank"><span class="icon-eye"></span>geoteknik</a></li>
           </ul>
           <div class="other-filters">
             <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link" data-translate="">viewAllResources</a>
@@ -98,7 +98,7 @@
                     </div>
                   </div>
                   <div class="filter-colm draw-map-link-colm">
-                    <a href="" class="fltr-link draw-map-link">Rita pÃ¥ karta</a>
+                    <a href="" class="fltr-link draw-map-link">Rita på karta</a>
                     <div data-swe-tooltip=""
                          data-title="{{ 'geographicalFilterTooltip-title' | translate }}"
                          data-text="{{ 'geographicalFilterTooltip-desc' | translate }}"
