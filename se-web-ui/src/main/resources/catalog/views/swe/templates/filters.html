@@ -29,7 +29,10 @@
           </ul>
           <div class="other-filters">
             <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link" data-translate="">viewAllResources</a>
-            <a href="" data-ng-click="toggleAdvancedOptions()" class="fltr-link advance-link"data-translate="">viewAdvance</a>
+            <a href="" data-ng-click="toggleAdvancedOptions()" class="fltr-link advance-link">
+              <span class="show-advanced" data-translate="">viewAdvance</span>
+              <span class="hide-advanced" data-translate="">hideAdvance</span>
+            </a>
 
             <div data-swe-tooltip=""
                  data-title="{{ 'advancedSearchTooltip-title' | translate }}"
@@ -170,7 +173,8 @@
 
     </ul>
     <a href="" data-ng-click="toggleFilterPanel()" class="filter-toggle-link opens-filter-section">
-      <span data-translate="">showFiltering</span> <span class="icon-up-dir"></span><span class="icon-down-dir"></span>
+      <span class="show-filtering" data-translate="">showFiltering</span>
+      <span class="hide-filtering" data-translate="">hideFiltering</span> <span class="icon-up-dir"></span><span class="icon-down-dir"></span>
     </a>
   </div>
 </div>

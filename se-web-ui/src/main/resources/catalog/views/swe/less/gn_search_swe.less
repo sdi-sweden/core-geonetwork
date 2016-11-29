@@ -391,21 +391,47 @@ ul.gn-resultview {
   height: 56px;
 }
 
-// filter block arrows
+// filter block arrows and text
 // 
 // ----- filter block is open
-.site-filter-result-cont.filter-is-open .icon-up-dir {
-  display: block !important;
-}
-.site-filter-result-cont.filter-is-open .icon-down-dir {
-  display: none !important;
+.site-filter-result-cont.filter-is-open {
+
+  .icon-up-dir, .hide-filtering {
+    display: block !important;
+  }
+  .icon-down-dir, .show-filtering {
+    display: none !important;
+  }
 }
 // ----- filter block is closed
-.site-filter-result-cont .icon-up-dir {
-  display: none !important;
+.site-filter-result-cont {
+
+  .icon-up-dir, .hide-filtering {
+    display: none !important;
+  }
+  .icon-down-dir, .show-filtering {
+    display: block !important;
+  }
 }
-.site-filter-result-cont .icon-down-dir {
-  display: block !important;
+// ----- advanced filter block is open
+.site-filter-cont.advanced {
+
+  .hide-advanced {
+    display: block !important;
+  }
+  .show-advanced {
+    display: none !important;
+  }
+}
+// ----- advanced filter block is closed
+.site-filter-cont {
+
+  .hide-advanced {
+    display: none !important;
+  }
+  .show-advanced {
+    display: block !important;
+  }
 }
 
 [data-gn-map-field] > [ngeo-map] {
@@ -536,7 +562,7 @@ ul.gn-resultview {
   .search-container {
     position: absolute;
     top: 9px;
-    left: 39px;
+    left: 40px;
     width: 280px;
     .form-control {
       width: 252px;
