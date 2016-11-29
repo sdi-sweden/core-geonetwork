@@ -1221,7 +1221,7 @@ body {
   border-radius: 0;
 }
 [gn-main-viewer] .tools button .fa, .gn-main-viewer .tools button .fa {
-  color: #5d8886;
+  color: #27605d;
 }
 [gn-main-viewer] .tools button.active .fa, .gn-main-viewer .tools button.active .fa {
   color: #FFF;
@@ -1229,7 +1229,7 @@ body {
 [gn-main-viewer] .tools button.active, .gn-main-viewer .tools button.active {
     width: 2.6em;
     margin-left: 0; 
-    background: #5d8886;
+    background: #27605d;
     color: #FFF;
 }
 button:focus [role=tooltip], button:hover [role=tooltip] {
@@ -1280,4 +1280,45 @@ button:focus [role=tooltip], button:hover [role=tooltip] {
   margin: 0;
 }
 
+/* search */
+
+/* for IE */
+.live-search-dd-cont .custom-fld-cont, .live-search-dd-cont .custom-fld-cont .live-search-query {
+  height: 40px;
+}
+
+/* datepicker field in filter block */
+.advance-filters-cont .custom-fld-cont .form-control {
+  border: none;
+  background-color: transparent;
+  line-height: 40px;
+  font-size: 14px;
+  padding: 0 10px;
+  color: #b8b8b8;
+  outline: none;
+  width: 170px !important;
+  height: 40px;
+}
+.advance-filters-cont .custom-fld-cont .input-group-addon {
+  display: none;
+}
+.advance-filters-cont .date-label {
+  display: block !important;
+  top: 13px !important;
+}
+
+/* datepicker */
+.datepicker.dropdown-menu {
+  margin-top: 18px;
+  border-radius: 0;
+  border: 0;
+}
+.datepicker td, .datepicker th {
+  border-radius: 0;
+}
+.datepicker.dropdown-menu .active, .datepicker table tr td.active.active,
+.datepicker table tr td.active:hover.active {
+  background: #27605d;
+  border-radius: 0
+}
 
