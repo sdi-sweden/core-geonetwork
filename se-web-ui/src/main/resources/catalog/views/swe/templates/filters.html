@@ -2,7 +2,7 @@
   <div class="site-filter-wrapper">
     <!-- Predefined search filters -->
     <div class="site-image-filter">
-      <span class="image-filter-text">Exempel på datasamlingar</span>
+      <span class="image-filter-text">Exempel pÃ¥ datasamlingar</span>
 		<div> 
 		    <a href="" data-ng-click="collapsed=!collapsed" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
 			<swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showMapPanel"></swe-predefined-maps-filter>
@@ -17,12 +17,12 @@
             <li>
               <a href="" data-ng-click="toggleMapResources()"
                  data-ng-class="{'active': (searchObj.params.dynamic == 'true')}">
-                <span class="icon-map"></span>karttjänster</a>
+                <span class="icon-map"></span>karttjÃ¤nster</a>
             </li>
             <li>
               <a href="" data-ng-click="toggleDownloadResources()"
                  data-ng-class="{'active': (searchObj.params.download == 'true')}"><span class="download-icn-cont">
-                <span class="icon-down-fat"></span></span>Direktåtkomliga resurser</a>
+                <span class="icon-down-fat"></span></span>DirektÃ¥tkomliga resurser</a>
             </li>
             <li><a href="" data-ng-click="toggleFavorites()"
                    data-ng-class="{'active': (searchObj.params._id != '') && (searchObj.params._id != undefined)}"><span class="icon-star"></span>favoriter</a></li>
@@ -98,7 +98,7 @@
                     </div>
                   </div>
                   <div class="filter-colm draw-map-link-colm">
-                    <a href="" class="fltr-link draw-map-link">Rita på karta</a>
+                    <a href="" class="fltr-link draw-map-link">Rita pÃ¥ karta</a>
                     <div data-swe-tooltip=""
                          data-title="{{ 'geographicalFilterTooltip-title' | translate }}"
                          data-text="{{ 'geographicalFilterTooltip-desc' | translate }}"
