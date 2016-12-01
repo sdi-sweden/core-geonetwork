@@ -1,10 +1,13 @@
-<div class="site-filter-cont open">
+<div class="site-filter-cont open" >
   <div class="site-filter-wrapper">
     <!-- Predefined search filters -->
     <div class="site-image-filter">
-      <a href="" data-ng-click="closeFilterPanel()" class="cls-btn icon-cancel"></a>
-      <span class="image-filter-text">rekommenderade datasamlingar</span>
-      <swe-predefined-maps-filter data-viewerMap="resultviewFns.loadMap"></swe-predefined-maps-filter>
+
+      <span class="image-filter-text">Exempel på datasamlingar</span>
+		<div> 
+		    <a href="" data-ng-click="collapsed=!collapsed" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
+			<swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showMapPanel"></swe-predefined-maps-filter>
+		</div>
     </div>
 
     <!-- Search filters -->
@@ -25,7 +28,7 @@
             </li>
             <li><a href="" data-ng-click="toggleFavorites()"
                    data-ng-class="{'active': (searchObj.params._id != '') && (searchObj.params._id != undefined)}"><span class="icon-star"></span>favoriter</a></li>
-            <li><a href=""><span class="icon-eye"></span>geoteknik</a></li>
+            <li><a href="{{geotechnicUrl}}" target="_blank"><span class="icon-eye"></span>geoteknik</a></li>
           </ul>
           <div class="other-filters">
             <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link" data-translate="">viewAllResources</a>

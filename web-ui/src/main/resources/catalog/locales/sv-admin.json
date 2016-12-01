@@ -1066,4 +1066,10 @@
 	"metadata/validator/inspireXml": "Inspire validation xml",
 	"metadata/validator/mdrelationUrl": "MD Relation validation url",
 	"metadata/validator/mdrelationXml": "MD Relation validation xml"
+    "map/predefinedMaps": "Predefined maps:",
+    "map/predefinedMaps/url": "Predefined maps url:",
+    "map/predefinedMaps/url-help": "URL to the json containing the prefefined maps configuration.",
+    "map/geotechnics": "Geoteknik:",
+    "map/geotechnics/url": "Geoteknik url:"
+
 }

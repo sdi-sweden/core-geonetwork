@@ -1,7 +1,7 @@
 <ul class="img-list">
-    <li data-ng-repeat="map in predefinedMaps | orderBy: 'position'" data-ng-if="map.enabled">
+    <li data-ng-repeat="map in predefinedMaps">
         <a href data-ng-mouseenter="hovering=true" title="{{map.description}}" data-ng-mouseleave="hovering=false" data-ng-click="doView(map)">
-            <div  class="bg-img" data-ng-style="{'background-image':'url(../../images/harvesting/{{map.image}}) '}"></div>
+            <div class="bg-img" data-ng-style="{'background-image':'url({{map.link}}) '}"></div>
             <div class="tool-tip-cont">
                 <div class="tool-tip">
                     <span class="triangle"></span>
@@ -9,7 +9,7 @@
                     <p>{{map.description}}</p>
                 </div>
             </div>
-            <span class="filter-text">{{map.name}}</span>
+            <span class="filter-text">{{map.title}}</span>
         </a>
     </li>
 </ul>

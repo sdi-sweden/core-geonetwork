@@ -295,18 +295,18 @@
         replace: true,
         templateUrl: '../../catalog/views/swe/directives/' +
           'partials/predefinedMaps.html',
-        //controller: 'SwePredefinedMapsController'
-        controller: function ($scope, $element) {
-          $scope.hovering = false;
-
-          $http.get('../api/0.1/predefinedmaps/').success(function(data) {
-            $scope.predefinedMaps = data;
-          }).error(function(data) {
-            // TODO
+        scope: {
+          predefinedMaps: '@',
+          showMapFn: '&',
+          configUrl: '@'
+        },
+        link: function(scope, element, attrs) {
+          $http.get(scope.configUrl).success(function(data) {
+            scope.predefinedMaps = data;
           });
-
-          $scope.doView = function(predefinedMap) {
+          scope.doView = function(predefinedMap) {
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+            scope.showMapFn()();
           };
         }
       };
