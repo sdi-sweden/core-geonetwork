@@ -120,11 +120,10 @@
           scope.removeLayers = function() {
             var layerList = [];
             scope.map.getLayers().forEach(function (layer) {
-              if (layer.get('group') != 'Background Layers') {
+              if (layer.get('group') != 'Background layers') {
                 layerList.push(layer);
               }
             });
-
             for(var i = 0; i < layerList.length; i++) {
               scope.map.removeLayer(layerList[i]);
             }
