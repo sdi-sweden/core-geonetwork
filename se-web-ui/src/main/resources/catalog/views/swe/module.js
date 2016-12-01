@@ -465,6 +465,7 @@
        * Show full view results.
        */
       $scope.setFullViewResults = function() {
+        angular.element('.geo-data-list-cont').removeClass('compact');
         angular.element('.geo-data-row').removeClass('compact-view');
         angular.element('.detail-view').addClass('active');
         angular.element('.compact-view').removeClass('active');
@@ -475,6 +476,7 @@
        * Show compact view results.
        */
       $scope.setCompactViewResults = function() {
+        angular.element('.geo-data-list-cont').addClass('compact');
         angular.element('.geo-data-row').addClass('compact-view');
         angular.element('.compact-view').addClass('active');
         angular.element('.detail-view').removeClass('active');
