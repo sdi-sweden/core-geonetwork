@@ -110,6 +110,10 @@
       ol.proj.get('EPSG:3006').setExtent(extent);
       ol.proj.get('EPSG:3006').setWorldExtent([-5.05651650131, 40.6662879582,
         28.0689828648, 71.7832476487]);
+
+      proj4.defs('urn:ogc:def:crs:EPSG::3006', proj4.defs('EPSG:3006'));
+      proj4.defs('http://www.opengis.net/gml/srs/epsg.xml#3006', proj4.defs('EPSG:3006'));
+
       var projection = ol.proj.get('EPSG:3006');
 
       var tileGrid = new ol.tilegrid.WMTS({
