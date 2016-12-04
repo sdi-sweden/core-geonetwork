@@ -93,7 +93,14 @@
               content="{$south},{$east} {$north},{$west}"/>
 
       </span>
-      <xsl:copy-of select="gn-fn-render:geometry($boxGeometry)"/>
+	  <xsl:choose>
+		<xsl:when test="$west != 0 and $north != 0 and $east != 0 and $south != 0">
+			<xsl:copy-of select="gn-fn-render:geometry($boxGeometry)"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<img class="gn-img-extent" />
+		</xsl:otherwise>
+	  </xsl:choose>
     </div>
   </xsl:function>
 
