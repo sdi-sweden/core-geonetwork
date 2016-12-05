@@ -365,5 +365,8 @@
     "mdvalid": "Metadata is valid",
     "mdinvalid": "Metadata is invalid",
     "mdinvalidcantpublish": "Invalid metadata can't be publish",
-    "mdnovalidation": "Metadata has no validation information"
+    "mdnovalidation": "Metadata has no validation information",
+    "Distance": "Distance",
+    "Surface": "Surface",
+    "drawFreeHandPolygonInMap": "Draw free-hand polygon in map"
 }
