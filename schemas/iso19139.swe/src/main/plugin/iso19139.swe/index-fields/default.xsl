@@ -206,7 +206,7 @@
 
         <!-- Resource date: SWE profile custom field for date search queries: Max creation or revision date -->
         <xsl:variable name="resourceDates">
-          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/*">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date/*">
             <xsl:choose>
               <xsl:when test="string-length(.) > 10">
                 <d><xsl:value-of select="substring(., 1, 10)" /></d>
