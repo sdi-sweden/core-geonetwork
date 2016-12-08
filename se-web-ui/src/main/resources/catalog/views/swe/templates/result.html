@@ -49,7 +49,7 @@
             <span>Datamängd direktåtkomlig för hämtning</span>
           </div>
           <div class="toolbar-right-list tool-bar-list">
-            <div class="link-cont" ng-if="user.isEditorOrMore()">
+            <div class="link-cont" ng-if="user.isEditorOrMore() && user.canEditRecord(mdView.current.record)">
               <a class="-label-link" href=""><span class="icon-pencil"></span>{{ 'edit' | translate }}</a>
             </div>
             <div class="link-cont">
