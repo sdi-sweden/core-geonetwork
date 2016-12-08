@@ -76,7 +76,6 @@
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
-
       $scope.viewMode = 'full';
 
       $scope.formatter = gnSearchSettings.formatter;
@@ -1111,17 +1110,19 @@
           }
           //$scope.searchObj.searchMap.addLayer($scope.vectorLayer);
            var wfsurl = gnConfig['map.wfsServer.url'];
+           var CQL_FILTER = "Name='" + encodeURIComponent(namesearch.Name) + "'";
             var params = {
               'request': 'GetFeature',
               'service': 'WFS',
               'srs': 'EPSG:3006',
               'version': '1.0.0',
               'typeName': gnConfig['map.wfsServer.workspace'] + ":" + gnConfig['map.wfsServer.layer'],
-              'bbox': extent[0] + "," + extent[1] + "," + extent[2] + "," + extent[3],
-              'outputFormat': 'application/json',
-              'callback': 'JSON_CALLBACK'
+              'outputFormat': 'json',
+              'callback': 'JSON_CALLBACK',
+              'CQL_FILTER': CQL_FILTER
             };
             return $http({
+              method: 'POST',
               url: wfsurl,
               params: params
             }).then(function(result) {
@@ -1129,6 +1130,8 @@
               $scope.searchObj.viewerMap.getLayers().getArray()[1].getSource().clear();
               $scope.vectorLayer.getSource().addFeatures(geoJson.readFeatures(result.data));
               $scope.searchObj.searchMap.getView().setCenter([extent[0],extent[1]]);
+              $scope.searchObj.searchMap.getView().fit(extent, $scope.searchObj.searchMap.getSize());
+              $scope.searchObj.viewerMap.getView().fit(extent, $scope.searchObj.viewerMap.getSize());
               $scope.triggerSearch();
             });
 
