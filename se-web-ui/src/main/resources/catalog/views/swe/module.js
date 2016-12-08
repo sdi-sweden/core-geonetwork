@@ -1016,6 +1016,9 @@
         }
 
         $scope.advancedMode = !$scope.advancedMode;
+
+        // clear filters
+        $scope.viewAllMetadata();
       };
 
       /**
