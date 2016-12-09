@@ -386,26 +386,57 @@ ul.gn-resultview {
     }
   }
 }
+
+
+
+
+
 // IE11 needs the height
 .geo-data-serach-filter input[type='text'] {
   height: 56px;
 }
 
-// filter block arrows
+// filter block arrows and text
 // 
 // ----- filter block is open
-.site-filter-result-cont.filter-is-open .icon-up-dir {
-  display: block !important;
-}
-.site-filter-result-cont.filter-is-open .icon-down-dir {
-  display: none !important;
+.site-filter-result-cont.filter-is-open {
+
+  .icon-up-dir, .hide-filtering {
+    display: block !important;
+  }
+  .icon-down-dir, .show-filtering {
+    display: none !important;
+  }
 }
 // ----- filter block is closed
-.site-filter-result-cont .icon-up-dir {
-  display: none !important;
+.site-filter-result-cont {
+
+  .icon-up-dir, .hide-filtering {
+    display: none !important;
+  }
+  .icon-down-dir, .show-filtering {
+    display: block !important;
+  }
 }
-.site-filter-result-cont .icon-down-dir {
-  display: block !important;
+// ----- advanced filter block is open
+.site-filter-cont.advanced {
+
+  .hide-advanced {
+    display: block !important;
+  }
+  .show-advanced {
+    display: none !important;
+  }
+}
+// ----- advanced filter block is closed
+.site-filter-cont {
+
+  .hide-advanced {
+    display: none !important;
+  }
+  .show-advanced {
+    display: block !important;
+  }
 }
 
 [data-gn-map-field] > [ngeo-map] {
@@ -536,7 +567,7 @@ ul.gn-resultview {
   .search-container {
     position: absolute;
     top: 9px;
-    left: 39px;
+    left: 40px;
     width: 280px;
     .form-control {
       width: 252px;
@@ -563,6 +594,10 @@ ul.gn-resultview {
     .clear {
       top: 1.1em;
       right: 1.1em;
+    }
+    /* remove input cross for IE */
+    input::-ms-clear {
+      display: none;
     }
   }
 }
@@ -871,6 +906,10 @@ html, body {
 .advance-filters-cont .draw-map-link-colm .help-icn-cont .icon-help {
   left: -3px;
 }
+/* ----- scrollbars for filter boxes */
+.advance-filters-cont .category-filter-colm {
+  overflow-y: auto;
+}
 /* ----- smaller screens */
 @media screen and (max-width: 1300px) {
   .site-geo-type-filter .other-filter-help-icn {
@@ -1169,3 +1208,122 @@ body {
   display: block;
   padding: 10px 17px;
 }
+
+// panel tools for on the map
+// 
+// ----- buttons to open panels
+[gi-btn-group] {
+  top: 9px !important;
+}
+[gn-main-viewer] .tools, .gn-main-viewer .tools {
+  width: 2.6em;
+}
+[gn-main-viewer] .tools button, .gn-main-viewer .tools button {
+  margin-bottom: .2em;
+  background: #fff;
+  width: 2.6em;
+  border: 0;
+  border-radius: 0;
+}
+[gn-main-viewer] .tools button .fa, .gn-main-viewer .tools button .fa {
+  color: #27605d;
+}
+[gn-main-viewer] .tools button.active .fa, .gn-main-viewer .tools button.active .fa {
+  color: #FFF;
+}
+[gn-main-viewer] .tools button.active, .gn-main-viewer .tools button.active {
+    width: 2.6em;
+    margin-left: 0; 
+    background: #27605d;
+    color: #FFF;
+}
+button:focus [role=tooltip], button:hover [role=tooltip] {
+  right: 2.8em;
+}
+/* ----- panels */
+[gn-main-viewer] .panel-tools, .gn-main-viewer .panel-tools {
+  position: absolute;
+  top: 9px;
+  right: 3em;
+  width: 310px;
+  min-height: 15em;
+  max-height: calc(100% - 2em);
+  max-width: none; 
+  overflow-y: auto;
+  transition: opacity .3s ease;
+  z-index: 10000;
+  background: #fff;
+  border-radius: 0;
+  border: 0;
+}
+[gn-main-viewer] .panel-tools .fa, .gn-main-viewer .panel-tools .fa {
+  color: #333;
+}
+[gn-main-viewer] .panel-tools .form-control, [gn-main-viewer] .panel-tools .btn {
+  font-size: 13px;
+}
+[gn-main-viewer] .panel-tools .panel-heading {
+  padding: 0 15px;
+  height: auto;
+}
+[gn-main-viewer] .panel-tools .panel-heading h3 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+[gn-main-viewer] .panel-tools .panel-heading h3 .btn {
+  font-size: 22px;
+}
+[gn-main-viewer] .panel-tools .panel-body {
+  padding: 10px;
+}
+[gn-main-viewer] .gn-draw-styleform form, .gn-main-viewer .gn-draw-styleform form {
+  margin-top: 10px;
+  padding-bottom: 15px;
+}
+[gn-main-viewer] .panel-tools .flux, .gn-main-viewer .panel-tools .flux,
+[gn-main-viewer] .panel-tools .context, .gn-main-viewer .panel-tools .context {
+  margin: 0;
+}
+
+/* search */
+
+/* for IE */
+.live-search-dd-cont .custom-fld-cont, .live-search-dd-cont .custom-fld-cont .live-search-query {
+  height: 40px;
+}
+
+/* datepicker field in filter block */
+.advance-filters-cont .custom-fld-cont .form-control {
+  border: none;
+  background-color: transparent;
+  line-height: 40px;
+  font-size: 14px;
+  padding: 0 10px;
+  color: #b8b8b8;
+  outline: none;
+  width: 170px !important;
+  height: 40px;
+}
+.advance-filters-cont .custom-fld-cont .input-group-addon {
+  display: none;
+}
+.advance-filters-cont .date-label {
+  display: block !important;
+  top: 13px !important;
+}
+
+/* datepicker */
+.datepicker.dropdown-menu {
+  margin-top: 18px;
+  border-radius: 0;
+  border: 0;
+}
+.datepicker td, .datepicker th {
+  border-radius: 0;
+}
+.datepicker.dropdown-menu .active, .datepicker table tr td.active.active,
+.datepicker table tr td.active:hover.active {
+  background: #27605d;
+  border-radius: 0
+}
+

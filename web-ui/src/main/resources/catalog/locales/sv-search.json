@@ -363,11 +363,13 @@
     "syncAllLayers": "Synkronisera alla lager",
     "Add" : "Lägg",
     "layersDelete":"Radera alla lager",
-	"mdvalid": "Metadatat är giltigt",
+    "mdvalid": "Metadatat är giltigt",
     "mdinvalid": "Metadatat är ogiltigt",
     "mdinvalidcantpublish": "Ogiltigt metadata kan inte publiseras",
     "mdnovalidation": "Metadatat har ingen valideringsinformation",
-    "setall": "Set all privileges",
-    "drawFreeHandPolygonInMap": "Dra fria händer Polygon In Karta",
+    "setall": "Sätt alla rättigheter",
+    "drawFreeHandPolygonInMap": "Rita frihands-polygon på karta",
     "Graticule": "Fokalplattan"
+    "Distance": "Avstånd",
+    "Surface": "Yta",
 }

@@ -43,6 +43,19 @@
         gnMap.createLayerForType('osm')
       ];
 
+      // add Swedish language to the datepicker
+      $.fn.datepicker.dates['sv'] = {
+        days:["Söndag","Måndag","Tisdag","Onsdag","Torsdag","Fredag","Lördag","Söndag"],
+        daysShort:["Sön","Mån","Tis","Ons","Tor","Fre","Lör","Sön"],
+        daysMin:["Sö","Må","Ti","On","To","Fr","Lö","Sö"],
+        months:["Januari","Februari","Mars","April","Maj","Juni","Juli","Augusti","September","Oktober","November","December"],
+        monthsShort:["Jan","Feb","Mar","Apr","Maj","Jun","Jul","Aug","Sep","Okt","Nov","Dec"],
+        today:"Idag",
+        format:"yyyy-mm-dd",
+        weekStart:1,
+        clear:"Rensa"
+      };
+
       gnViewerSettings.servicesUrl =
           gnViewerSettings.mapConfig.listOfServices || {};
 
@@ -97,6 +110,10 @@
       ol.proj.get('EPSG:3006').setExtent(extent);
       ol.proj.get('EPSG:3006').setWorldExtent([-5.05651650131, 40.6662879582,
         28.0689828648, 71.7832476487]);
+
+      proj4.defs('urn:ogc:def:crs:EPSG::3006', proj4.defs('EPSG:3006'));
+      proj4.defs('http://www.opengis.net/gml/srs/epsg.xml#3006', proj4.defs('EPSG:3006'));
+
       var projection = ol.proj.get('EPSG:3006');
 
       var tileGrid = new ol.tilegrid.WMTS({

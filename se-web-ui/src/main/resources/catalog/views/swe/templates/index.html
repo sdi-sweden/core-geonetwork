@@ -147,7 +147,8 @@
           <!-- Search form -->
           <div data-ng-include="'../../catalog/views/swe/templates/searchForm.html'"></div>
 
-          <div class="geo-data-list-cont">
+          <div class="geo-data-list-cont"
+               data-ng-show="searchResults.count > 0">
               <!-- Sort and change view -->
               <div class="list-filter-cont">
                 <div class="sort-filter-cont">
@@ -164,7 +165,7 @@
                 </div>
                 <div data-gn-pagination="paginationInfo"
                      data-hits-values="searchObj.hitsperpageValues"
-                    class="pagination-cont"
+                     class="pagination-cont"
                      data-enable-hot-keys=""></div>
 
                 <div class="loggedin-filter-link-cont">

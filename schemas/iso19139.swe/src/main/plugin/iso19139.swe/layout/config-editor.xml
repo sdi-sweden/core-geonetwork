@@ -576,13 +576,13 @@
                 <key label="beginPosition"
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition"
                      use="gn-date-picker"
-                     tooltip="gmd:extent|gmd:EX_TemporalExtent">
+                     tooltip="gml:beginPosition">
                   <directiveAttributes data-tag-name="gml:beginPosition"/>
                 </key>
                 <key label="endPosition"
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition"
                      use="gn-date-picker"
-                     tooltip="gmd:extent|gmd:EX_TemporalExtent"
+                     tooltip="gml:endPosition"
                 >
                   <directiveAttributes
                           data-tag-name="gml:endPosition"
@@ -616,11 +616,12 @@
 
                 <key label="vertical_crs_maximum_value"
                      xpath="gmd:EX_VerticalExtent/gmd:maximumValue/gco:Real"
-                     tooltip="gmd:minimumValue"
+                     tooltip="gmd:maximumValue"
                      use="number"/>
 
                 <key label="vertical_crs_datum"
-                     xpath="gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title">
+                     xpath="gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title"
+                     tooltip="gmd:verticalCRS">>
                   <helper name="gmd:verticalCRS" />
                 </key>
               </values>
@@ -886,10 +887,12 @@
                 <key label="conformity_date"
                      xpath="gmd:DQ_ConformanceResult/
                           gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date"
+                     tooltip="gmd:date"
                      use="date"/>
                 <key label="explanation"
                      xpath="gmd:DQ_ConformanceResult/
                           gmd:explanation/gco:CharacterString"
+                     tooltip="gmd:explanation|gmd:DQ_ConformanceResult"
                      use="textarea"/>
                 <key label="pass"
                      xpath="gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean"

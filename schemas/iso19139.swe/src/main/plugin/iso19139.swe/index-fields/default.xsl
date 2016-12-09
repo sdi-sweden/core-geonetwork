@@ -206,8 +206,11 @@
 
         <!-- Resource date: SWE profile custom field for date search queries: Max creation or revision date -->
         <xsl:variable name="resourceDates">
-          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/*">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date/*">
             <xsl:choose>
+              <xsl:when test="string-length(.) > 10">
+                <d><xsl:value-of select="substring(., 1, 10)" /></d>
+              </xsl:when>
               <xsl:when test="string-length(.) = 10">
                 <d><xsl:value-of select="." /></d>
               </xsl:when>
@@ -422,6 +425,9 @@
 
         <Field name="orgName" string="{string(.)}" store="true" index="true"/>
         <Field name="orgNameTree" string="{string(.)}" store="true" index="true"/>
+
+        <Field name="orgNameSuggestion" string="{string(.)}" store="true" index="true"/>
+        <Field name="myOrgName" string="{string(.)}" store="true" index="true"/>
 
         <xsl:variable name="role"    select="../../gmd:role/*/@codeListValue"/>
         <xsl:variable name="roleTranslation" select="util:getCodelistTranslation('gmd:CI_RoleCode', string($role), string($isoLangId))"/>
