@@ -545,9 +545,16 @@
 								<xsl:value-of select="normalize-space($name)"/>
 							</td>
 							<td class="view-metadata-table-td-3">
-								<a href="{$url}" target="_blank">
-									<xsl:value-of select="normalize-space($url)"/>
-								</a>
+								<xsl:choose>
+									<xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
+										<a href="{$url}" target="_blank">
+											<xsl:value-of select="normalize-space($url)"/>
+										</a>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="normalize-space($url)"/>
+									</xsl:otherwise>
+								</xsl:choose>
 							</td>
 						</tr>
 					</xsl:for-each>	
@@ -771,7 +778,7 @@
   <xsl:template mode="render-field"
                 match="gmd:topicCategory[1]|gmd:obligation[1]|gmd:pointInPixel[1]"
                 priority="100">
-    <dl class="gn-date">
+    <dl>
       <dt>
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
       </dt>
