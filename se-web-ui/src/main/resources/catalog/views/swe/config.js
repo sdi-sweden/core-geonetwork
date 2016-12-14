@@ -71,7 +71,6 @@
           color: 'rgba(255,0,0,0.3)'
         })
       });
-
       gnSearchSettings.olStyles = {
         drawBbox: bboxStyle,
         mdExtent: new ol.style.Style({
@@ -159,22 +158,16 @@
       gnViewerSettings.bgLayers = wmts;
       gnViewerSettings.servicesUrl = {};
 
-      var interactions = ol.interaction.defaults({
-        altShiftDragRotate: false,
-        pinchRotate: false
-      });
-
       var viewerMap = new ol.Map({
         controls: [],
-        interactions: interactions,
         view: new ol.View(mapsConfig)
       });
 
       var searchMap = new ol.Map({
-        controls: [],
-        interactions: interactions,
+        controls:[],
         view: new ol.View(mapsConfig)
       });
+
 
       /** Facets configuration */
       gnSearchSettings.facetsSummaryType = 'swe-details';
