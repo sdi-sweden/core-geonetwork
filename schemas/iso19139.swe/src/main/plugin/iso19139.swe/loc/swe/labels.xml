@@ -10,6 +10,11 @@
 		<help>alphanumeric value identifying an instance in the namespace</help>
 	</element>
 
+	<element context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
+		<label>Identifierare för resurs</label>
+        <description>Identifierare för resurs</description>
+	</element>
+	
 	<element context="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
 		<label>Identifierare för geografiskt referenssystem</label>
 		<description>Namn för geografiskt referenssystem, oftast SWEREF 99 TM</description>
@@ -1354,8 +1359,9 @@ Exempelvis: datamängd, datamängdserie eller tjänst.…</description>
             National Stock Number (NSN)</description>
     </element>
     <element context="gmd:CI_Citation" id="573.0" name="gmd:identifier">
-        <label>Identifierare för resursen</label>
-        <description>Identifierare för resursen</description>
+        <label></label>
+        <description></description>
+	<!--Removed label-description and kept empty as it is not required to be shown in fieldset header in editor form. Didn't find its use at any other place. Will revist if found -->
     </element>
     <element context="gmd:MD_Authority" id="575.0" name="gmd:identifier">
         <label>Identifier</label>
