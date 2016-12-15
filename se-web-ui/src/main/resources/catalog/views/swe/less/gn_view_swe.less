@@ -4818,3 +4818,119 @@ a.link-btn[disabled] {
   border-top: 1px solid #d0d0d0;
 }
 
+/* layout for smaller devices (e.g. iPad in portrait)  */
+@media screen and (max-width: 768px) {
+
+  body {
+    min-width: 0;
+    max-width: 768px;
+  }
+
+  /* pre defined maps */
+  .site-image-filter {
+    padding: 0 20px;
+    .img-list li {
+      margin: 0 12px 12px 0px;
+    }
+  }
+  .site-geo-type-filter {
+    max-width: 728px;
+    margin: 0;
+    .filter-label {
+      display: block;
+    }
+    .type-filter-list {
+      max-width: 720px;
+      margin: 0;
+      padding: 0;
+      li {
+        margin: 10px 0;
+      }
+      a {
+        padding: 0 10px 0 0;
+      }
+    }
+    .other-filters {
+      padding-top: 15px;
+      padding-bottom: 10px;
+      margin-right: 28px;
+    }
+    .other-filter-help-icn {
+      top: 56px;
+      right: 3px;
+    }
+    .advance-link {
+      margin-left: 8px;
+    }
+  }
+
+  /* advanced filters */
+  .advance-filters-cont {
+    .advance-filter {
+      max-width: 728px;
+    }
+    .custom-fld-cont {
+      margin-right: 15px;
+    }
+    .till-date-colm {
+      display: block;
+      clear: none; 
+      margin-top: 0;
+      margin-left: 0;
+    }
+    .left-side-filter .filter-colm {
+      label {
+        width: 140px;
+      }
+      input[type="text"] {
+        width: 180px !important;
+      }
+      .other-filter-help-icn {
+        top: 8px;
+        right: -4px;
+      }
+    }
+    .live-search-query {
+      width: 151px !important;
+    }
+    .right-side-filter {
+      max-width: none;
+      width: 100%;
+      margin-left: 0;
+      margin-top: 20px;
+      margin-bottom: 0;
+      float: left;
+    }
+    .draw-map-link-colm {
+      position: relative;
+      right: 8px; 
+      margin-top: 7px;
+      .draw-map-link {
+        top: -3px;
+      }
+      .help-icn-cont {
+        top: 0px;
+        right: -20px;
+      }
+    }
+  }
+  /* categories */
+  .geo-categories {
+    padding: 24px 0 23px;
+    columns: 3;
+  }
+
+  .site-content {
+    padding: 0 20px;
+  }
+  /* search box */
+  .geo-data-serach-filter {
+    padding: 0;
+    margin: 30px 0;
+  }
+
+  /* map */
+  .floating-map {
+    display: none;
+  }
+}
