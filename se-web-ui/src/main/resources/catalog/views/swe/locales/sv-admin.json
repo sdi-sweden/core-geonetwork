@@ -1,0 +1,12 @@
+{
+    "map/isMyPositionEnabled": "Display a button to zoom to My Position",
+    "map/isMyPositionEnabled-help": "From the map viewer, a tool to zoom to the user position is displayed.",
+    "system/site/googleTagManagerKey": "Google Tag Manager key",
+    "system/site/googleTagManagerKey-help": "If this value is filled, the Google Tag Manager javascript tracking code will be added in the application pages",
+    "map/predefinedMaps": "Predefined maps:",
+    "map/predefinedMaps/url": "Predefined maps url:",
+    "map/predefinedMaps/url-help": "URL to the json containing the prefefined maps configuration.",
+    "map/geotechnics": "Geoteknik:",
+    "map/geotechnics/url": "Geoteknik url:"
+}
+}
