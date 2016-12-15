@@ -77,6 +77,23 @@
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
 
+      $scope.vectorLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: []
+        }),
+        style: gnSearchSettings.olStyles.mdExtentHighlight,
+        map: searchMap
+      });
+
+
+      $scope.vectorLayerBM = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: []
+        }),
+        style: gnSearchSettings.olStyles.mdExtentHighlight,
+        map: viewerMap
+      });
+
       $scope.viewMode = 'full';
 
       $scope.formatter = gnSearchSettings.formatter;
@@ -110,6 +127,27 @@
         $scope.showMetadata($scope.mdView.current.index,
             $scope.mdView.current.record,
             $scope.mdView.current.records);
+      });
+
+      $scope.$on('selectPolygon', function(event, polygonFeature) {
+        console.log(polygonFeature);
+
+        delete $scope.searchObj.namesearch;
+
+        $scope.vectorLayer.getSource().clear();
+        $scope.vectorLayer.getSource().addFeature(polygonFeature.clone());
+
+        $scope.vectorLayerBM.getSource().clear();
+        $scope.vectorLayerBM.getSource().addFeature(polygonFeature.clone());
+
+        proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+
+        var geom = polygonFeature.getGeometry().clone().transform('EPSG:3006', 'EPSG:4326');
+        var format = new ol.format.WKT();
+        var geom_wkt =format.writeGeometry(geom);
+
+        $scope.searchObj.params.geometry = geom_wkt;
+        $scope.triggerSearch();
       });
 
       // prevent the floating map from positioning on top of the footer
@@ -442,23 +480,8 @@
         var feature = gnMap.getBboxFeatureFromMd(md,
             $scope.searchObj.searchMap.getView().getProjection());
 
-
-        if (angular.isUndefined($scope.vectorLayer)) {
-          var vectorSource = new ol.source.Vector({
-            features: []
-          });
-
-          $scope.vectorLayer = new ol.layer.Vector({
-            source: vectorSource,
-            style: gnSearchSettings.olStyles.mdExtentHighlight
-          });
-
-          $scope.searchObj.searchMap.addLayer($scope.vectorLayer);
-        }
-
         $scope.vectorLayer.getSource().clear();
         $scope.vectorLayer.getSource().addFeature(feature);
-
       };
 
      
@@ -963,6 +986,17 @@
         $scope.triggerSearch();
       };
 
+      /**
+       * Unselects the geometry filter.
+       */
+      $scope.unselectGeoResources = function() {
+        $scope.vectorLayer.getSource().clear();
+        $scope.vectorLayerBM.getSource().clear();
+
+        delete $scope.searchObj.params.geometry;
+        $scope.triggerSearch();
+      };
+
       $scope.translatedTopicCat = function(p) {
         return $filter('translate')(p);
       }
@@ -982,6 +1016,9 @@
         delete $scope.searchObj.params.resourceDateTo;
         delete $scope.searchObj.params.geometry;
         delete $scope.searchObj.namesearch;
+
+        $scope.vectorLayer.getSource().clear();
+        $scope.vectorLayerBM.getSource().clear();
 
         $scope.triggerSearch();
       };
@@ -1100,17 +1137,6 @@
 
           feature.setGeometry(geometry);
 
-          if (angular.isUndefined($scope.vectorLayer)) {
-            var vectorSource = new ol.source.Vector();
-
-            $scope.vectorLayer = new ol.layer.Vector({
-              source: vectorSource,
-              style: gnSearchSettings.olStyles.mdExtentHighlight
-            });
-
-            $scope.searchObj.viewerMap.addLayer($scope.vectorLayer);
-            $scope.searchObj.searchMap.addLayer($scope.vectorLayer);
-          }
           //$scope.searchObj.searchMap.addLayer($scope.vectorLayer);
            var wfsurl = gnConfig['map.wfsServer.url'];
             var params = {
@@ -1128,10 +1154,14 @@
               params: params
             }).then(function(result) {
               $scope.vectorLayer.getSource().clear();
-              $scope.searchObj.viewerMap.getLayers().getArray()[1].getSource().clear()
+              //$scope.searchObj.viewerMap.getLayers().getArray()[1].getSource().clear()
               $scope.vectorLayer.getSource().addFeatures(geoJson.readFeatures(result.data));
-              $scope.searchObj.searchMap.getView().setCenter([extent[0],extent[1]])
-              $scope.triggerSearch()
+              $scope.searchObj.searchMap.getView().setCenter([extent[0],extent[1]]);
+
+              $scope.vectorLayerBM.getSource().clear();
+              $scope.vectorLayerBM.getSource().addFeatures(geoJson.readFeatures(result.data));
+
+              $scope.triggerSearch();
             });
 
           return true; // always return true so search query is fired.

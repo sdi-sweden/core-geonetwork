@@ -180,6 +180,12 @@
           <span class="icon-cancel"></span>
         </a>
       </li>
+      <li data-ng-show="(searchObj.params.geometry != '') && (searchObj.params.geometry != undefined)">
+        <a href="" data-ng-click="unselectGeoResources()">
+          <span>Geometry</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
       <li data-ng-repeat="topic in selectedTopicCategories | orderBy: translatedTopicCat">
         <a href="" data-ng-click="unselectTopicCategory(topic)">
           <span data-translate="">{{topic}}</span>
