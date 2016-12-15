@@ -87,7 +87,7 @@
     "chooseAProj": "Välj en kartprojektion för att visa koordinater (notera: koordinater sparas alltid i metadatat som WGS84)",
     "chooseAType": "Välj typ",
     "chooseOnlinesrc": "Bläddra för att välja filer eller dra och släpp dem här",
-    "chooseRegion": "Välj region",
+    "chooseRegion": "Skriv/välj område",
     "clickToDrawABox": "Klicka en gång för att kunna rita en ruta. Klicka igen för att sluta rita.",
     "closeEditor": "Spara och stäng",
 	"inspireValidation": "Inspire-validering",
