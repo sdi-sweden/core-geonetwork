@@ -15,19 +15,20 @@
         <input data-ng-model="extent.md[3]" name="{{htopRef}}"/>
         <input data-ng-model="dcExtent" name="{{dcRef}}"/>
       </div>
+      <div class="input-group">
+              <input type="text" name="regionpicker" class="form-control"
+               data-ng-model="search.namesearch"                          
+               data-typeahead="namesearch as (namesearch.Name + ', ' + namesearch.Type) for namesearch in getNameSearch($viewValue) "
+               data-typeahead-on-select="onCountySelect()"
+               data-typeahead-loading="anyLoading"
+               data-typeahead-min-length="1"
+               data-typeahead-focus-first="false"
+               placeholder="{{'chooseRegion' | translate}}"/>
+      </div>
       <table class="text-center">
         <tr align="center">
-          <td>
-            <select data-ng-model="projs.form"
-                    title="{{'chooseAProj' | translate}}">
-              <option data-ng-repeat="proj in projs.list"
-                      value="{{proj.code}}"
-                      data-ng-selected="proj.code == projs.form">{{proj.label}}
-              </option>
-            </select>
-          </td>
-          <td>
-            <div class="form-group">
+          <td colspan="2">
+            <div class="form-group" style="margin-left: 35%;">
               <input
                 data-ng-model="extent.form[3]" type="number"
                 id="drawbbox-top" placeholder="{{'north' | translate}}"
