@@ -4826,9 +4826,17 @@ a.link-btn[disabled] {
     max-width: 768px;
   }
 
+  /* header */
+  .header-cont .header-right-cont {
+    margin-top: 17px;
+  }
+
   /* pre defined maps */
   .site-image-filter {
     padding: 0 20px;
+    .image-filter-container {
+      overflow: auto;
+    }
     .img-list {
       white-space: nowrap;
       display: inline-block;
@@ -4922,6 +4930,9 @@ a.link-btn[disabled] {
     .category-filter {
       padding-bottom: 15px;
     }
+    .category-filter-colm {
+      max-height: 358px;
+    }
   }
   /* categories */
   .geo-categories {
@@ -4941,5 +4952,60 @@ a.link-btn[disabled] {
   /* map */
   .floating-map {
     display: none;
+  }
+
+  /* popups */
+  .popup {
+    top: 0;
+    min-width: 728px;
+  }
+  .popup-cont .geo-data-row .update-tag {
+    position: relative;
+    float: none;
+    right: 0px;
+    max-width: 100%
+  }
+  /* tabs */
+
+  /* ----- header */
+  .geo-data-tab-nav {
+    height: auto !important; 
+    text-align: left !important;
+    padding-left: 40px !important;
+  }
+  .geo-data-tab-nav li {
+     margin: 0; 
+  }
+  /* ----- content */
+  .gn-metadata-view .gn-link dt {
+    width: 100%;
+  }
+  .gn-metadata-view .gn-link dd {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  .advance-filters-cont .till-date-colm label {
+    margin-right: 10px; 
+  }
+  .advance-filters-cont .draw-map-link-colm {
+    right: auto;
+  }
+  .advance-filters-cont .till-date-colm {
+    margin-top: 10px;
+  }
+
+  /* tabs */
+
+  /* ----- content */
+  .gn-metadata-view dt {
+    width: 100%;
+  }
+  .gn-metadata-view dd {
+    width: 100%;
+    margin-top: 10px;
   }
 }
