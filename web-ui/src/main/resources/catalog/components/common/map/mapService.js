@@ -570,7 +570,7 @@
                       tileEvent.currentTarget.getParams().LAYERS :
                       layerParams.LAYERS;
 
-                  var msg = $translate('layerTileLoadError', {
+                  var msg = $translate.instant('layerTileLoadError', {
                     url: url,
                     layer: layer
                   });
@@ -628,12 +628,12 @@
                   }
                 }
               } else {
-                errors.push($translate('layerCRSNotFound'));
-                console.warn($translate('layerCRSNotFound'));
+                errors.push($translate.instant('layerCRSNotFound'));
+                console.warn($translate.instant('layerCRSNotFound'));
               }
               if (!isLayerAvailableInMapProjection) {
-                errors.push($translate('layerNotAvailableInMapProj'));
-                console.warn($translate('layerNotAvailableInMapProj'));
+                errors.push($translate.instant('layerNotAvailableInMapProj'));
+                console.warn($translate.instant('layerNotAvailableInMapProj'));
               }
               */
 
@@ -755,13 +755,13 @@
                   }
                 }
               } else {
-                errors.push($translate('layerCRSNotFound'));
-                console.warn($translate('layerCRSNotFound'));
+                errors.push($translate.instant('layerCRSNotFound'));
+                console.warn($translate.instant('layerCRSNotFound'));
               }
 
               if (!isLayerAvailableInMapProjection) {
-                errors.push($translate('layerNotAvailableInMapProj'));
-                console.warn($translate('layerNotAvailableInMapProj'));
+                errors.push($translate.instant('layerNotAvailableInMapProj'));
+                console.warn($translate.instant('layerNotAvailableInMapProj'));
               }
 
               // TODO: parse better legend & attribution
@@ -1008,7 +1008,7 @@
                   if (!angular.isArray(olL.get('errors'))) {
                     olL.set('errors', []);
                   }
-                  var errormsg = $translate('layerNotfoundInCapability', {
+                  var errormsg = $translate.instant('layerNotfoundInCapability', {
                     layer: name,
                     url: url
                   });
@@ -1200,7 +1200,7 @@
                 if (!angular.isArray(olL.get('errors'))) {
                   olL.set('errors', []);
                 }
-                var errormsg = $translate('layerNotfoundInCapability', {
+                var errormsg = $translate.instant('layerNotfoundInCapability', {
                   layer: name,
                   url: url
                 });
