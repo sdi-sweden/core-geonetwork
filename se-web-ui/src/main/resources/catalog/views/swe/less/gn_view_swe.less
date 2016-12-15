@@ -4829,8 +4829,13 @@ a.link-btn[disabled] {
   /* pre defined maps */
   .site-image-filter {
     padding: 0 20px;
-    .img-list li {
-      margin: 0 12px 12px 0px;
+    .img-list {
+      white-space: nowrap;
+      display: inline-block;
+      li {
+        margin: 0 12px 12px 0px;
+        display: inline-block;
+      }
     }
   }
   .site-geo-type-filter {
@@ -4840,11 +4845,11 @@ a.link-btn[disabled] {
       display: block;
     }
     .type-filter-list {
-      max-width: 720px;
-      margin: 0;
+      // max-width: 720px;
+      margin: 0 0 10px 0;
       padding: 0;
       li {
-        margin: 10px 0;
+        margin: 10px 0 0 0;
       }
       a {
         padding: 0 10px 0 0;
@@ -4856,7 +4861,7 @@ a.link-btn[disabled] {
       margin-right: 28px;
     }
     .other-filter-help-icn {
-      top: 56px;
+      top: 56px !important;
       right: 3px;
     }
     .advance-link {
@@ -4900,6 +4905,7 @@ a.link-btn[disabled] {
       margin-top: 20px;
       margin-bottom: 0;
       float: left;
+      padding-bottom: 5px;
     }
     .draw-map-link-colm {
       position: relative;
@@ -4912,6 +4918,9 @@ a.link-btn[disabled] {
         top: 0px;
         right: -20px;
       }
+    }
+    .category-filter {
+      padding-bottom: 15px;
     }
   }
   /* categories */
