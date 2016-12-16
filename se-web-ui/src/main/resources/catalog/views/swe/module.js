@@ -1156,6 +1156,8 @@
               $scope.searchObj.searchMap.getView().setCenter([extent[0],extent[1]]);
               $scope.vectorLayerBM.getSource().clear();
               $scope.vectorLayerBM.getSource().addFeatures(geoJson.readFeatures(result.data));
+              $scope.searchObj.searchMap.getView().fit(extent, $scope.searchObj.searchMap.getSize());
+              $scope.searchObj.viewerMap.getView().fit(extent, $scope.searchObj.viewerMap.getSize());
               $scope.triggerSearch();
             });
 

@@ -13,7 +13,7 @@
   <div gn-localisation-input map="map"></div>
 
   <!--Top right buttons - Tools-->
-  <div class="tools" gi-btn-group gnv-close-panel>
+  <div class="tools" gi-btn-group gnv-close-panel data-ng-controller="toolsController">
     <button class="btn btn-default" ng-model="activeTools.addLayers" type="submit"
             rel="#addLayers" gi-btn gnv-tools-btn>
       <span class="fa-stack gn-stack">
