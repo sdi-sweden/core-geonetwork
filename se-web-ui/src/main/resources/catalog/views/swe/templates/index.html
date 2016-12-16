@@ -17,8 +17,8 @@
           <div class="mail-data">
             <div class="mail-section-cont">
               <div class="mail-section">
-                <h1>Tyck Till</h1>
-                <p>Tyck Till ...</p>
+                <h1>Tyck till</h1>
+                <p>Tyck till ...</p>
 
                 <div id="mail-feedback-result" data-ng-show="(feedbackResult != null) && (feedbackResultError == false)">
                   <p>{{feedbackResult}}</p>
@@ -36,21 +36,21 @@
 
                     <!-- NAME -->
                     <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.name.$invalid && !feedbackForm.name.$pristine }">
-                      <label>Name</label>
+                      <label>Namn</label>
                       <input type="text" class="input" name="name" ng-model="user.username" required>
                       <span class="errorField" data-ng-show="feedbackForm.name.$invalid && !feedbackForm.name.$pristine" class="help-block">You name is required.</span>
                     </div>
 
                     <!-- EMAIL -->
                     <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.email.$invalid && !feedbackForm.email.$pristine }">
-                      <label>Email</label>
+                      <label>E-post</label>
                       <input type="email" class="input" name="email" ng-model="user.email" required>
                       <span class="errorField" data-ng-show="feedbackForm.email.$invalid && !feedbackForm.email.$pristine" class="help-block">Enter a valid email.</span>
                     </div>
 
                     <!-- COMMENT -->
                     <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.comment.$invalid && !feedbackForm.comment.$pristine }">
-                      <label class="label-text-area">Comment</label>
+                      <label class="label-text-area">Kommentar</label>
                       <textarea class="textarea" name="comment" ng-model="user.comments" required></textarea>
                       <span class="errorField" data-ng-show="feedbackForm.comment.$invalid && !feedbackForm.comment.$pristine" class="help-block">Your comment is required.</span>
                     </div>
@@ -58,8 +58,8 @@
 
                   <div class="btn-cont">
                     <div class="mail-actions-cont">
-                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="sendMail()" data-ng-disabled="!feedbackForm.$valid">Send comment</a>
-                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()">cancel</a>
+                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="sendMail()" data-ng-disabled="!feedbackForm.$valid">Skicka kommentar</a>
+                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()">avbryt</a>
                     </div>
                   </div>
                 </div>
@@ -147,8 +147,7 @@
           <!-- Search form -->
           <div data-ng-include="'../../catalog/views/swe/templates/searchForm.html'"></div>
 
-          <div class="geo-data-list-cont"
-               data-ng-show="searchResults.count > 0">
+          <div class="geo-data-list-cont">
               <!-- Sort and change view -->
               <div class="list-filter-cont">
                 <div class="sort-filter-cont">
@@ -165,7 +164,7 @@
                 </div>
                 <div data-gn-pagination="paginationInfo"
                      data-hits-values="searchObj.hitsperpageValues"
-                     class="pagination-cont"
+                    class="pagination-cont"
                      data-enable-hot-keys=""></div>
 
                 <div class="loggedin-filter-link-cont">

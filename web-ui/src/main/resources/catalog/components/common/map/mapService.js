@@ -61,11 +61,10 @@
       'gnWfsService',
       'gnGlobalSettings',
       'gnViewerSettings',
-      'gnSearchSettings',
       function(ngeoDecorateLayer, gnOwsCapabilities, gnConfig, $log,
           gnSearchLocation, $rootScope, gnUrlUtils, $q, $translate,
           gnWmsQueue, gnSearchManagerService, Metadata, gnWfsService,
-          gnGlobalSettings, viewerSettings, gnSearchSettings) {
+          gnGlobalSettings, viewerSettings) {
 
         var defaultMapConfig = {
           'useOSM': 'true',

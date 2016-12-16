@@ -4,10 +4,10 @@
     <div class="site-image-filter">
 
       <span class="image-filter-text">Exempel på datasamlingar</span>
-		<div> 
+		  <div class="image-filter-container"> 
 		    <a href="" data-ng-click="collapsed=!collapsed" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
-			<swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showMapPanel"></swe-predefined-maps-filter>
-		</div>
+			  <swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showMapPanel"></swe-predefined-maps-filter>
+		  </div>
     </div>
 
     <!-- Search filters -->
@@ -177,6 +177,12 @@
       <li data-ng-show="(searchObj.params._id != '') && (searchObj.params._id != undefined)">
         <a href="" data-ng-click="unselectFavoriteResources()">
           <span>favoriter</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="(searchObj.params.geometry != '') && (searchObj.params.geometry != undefined)">
+        <a href="" data-ng-click="unselectGeoResources()">
+          <span>Geometry</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
