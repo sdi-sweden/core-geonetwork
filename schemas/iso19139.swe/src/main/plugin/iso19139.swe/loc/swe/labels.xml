@@ -15,6 +15,11 @@
         <description>Identifierare för resurs</description>
 	</element>
 	
+	<element context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
+		<label>Identifierare för resurs</label>
+        <description>Identifierare för resurs</description>
+	</element>
+	
 	<element context="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
 		<label>Identifierare för geografiskt referenssystem</label>
 		<description>Namn för geografiskt referenssystem, oftast SWEREF 99 TM</description>
