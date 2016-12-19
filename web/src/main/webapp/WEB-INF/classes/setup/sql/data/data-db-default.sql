@@ -673,8 +673,15 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/wf
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/wfsServer/workspace', 'metagis', 0, 9597, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/wfsServer/layer', 'metagis_gazetter', 0, 9598, 'n');
 
+
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metadata/validator/inspireUrl', 'https://www.geodata.se/InspireValidation/Service', 0, 100006, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metadata/validator/inspireXml', '<?xml version="1.0" encoding="UTF-8"?><INSPIREVALIDATION><SCANMODE>METADATA</SCANMODE><SCANDETAILS><METADATAXML><![CDATA[INPUTMETADATAXML]]></METADATAXML></SCANDETAILS><SCANFORSERVICE>true</SCANFORSERVICE><OUTPUTFORMAT>html</OUTPUTFORMAT></INSPIREVALIDATION>', 0, 100007, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metadata/validator/mdrelationUrl', 'https://www.geodata.se/MDRelationCheck/Service', 0, 100008, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metadata/validator/mdrelationXml', '<?xml version="1.0" encoding="UTF-8"?><CSWQualityCheck><SCANMODE>METADATA</SCANMODE><SCANDETAILS><METADATAXML><![CDATA[INPUTMETADATAXML]]></METADATAXML></SCANDETAILS></CSWQualityCheck>', 0, 100009, 'n');
+
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/predefinedMaps/url', 'https://ver.geodata.se/geodataportalens-hjalpsidor/datasamlingar-rotsida', 0, 10200, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/geotechnics/url', 'https://ver.geodata.se/geodataportalens-hjalpsidor/geoteknik-rotsida', 0, 10210, 'n');
+
 
 INSERT INTO HarvesterSettings (id, parentid, name, value) VALUES  (1,NULL,'harvesting',NULL);
 

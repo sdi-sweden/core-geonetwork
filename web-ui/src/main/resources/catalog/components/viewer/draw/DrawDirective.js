@@ -74,7 +74,6 @@
         link: function(scope, element, attrs) {
           var map = scope.map;
           var source = new ol.source.Vector();
-
           /**
            * Style function of the drawn features vector.
            * The feature styles are stored in a `_style` attribute instead of
@@ -490,6 +489,7 @@
               if (val) {
                 map.addLayer(vector);
               } else {
+                map.removeLayer(vector);
                 drawPolygon.active = false;
                 drawPoint.active = false;
                 drawLine.active = false;

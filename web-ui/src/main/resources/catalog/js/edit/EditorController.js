@@ -267,7 +267,7 @@
                 window.onbeforeunload = function() {
                   // TODO: could be better to provide
                   // cancelAndClose and saveAndClose button
-                  return $translate('beforeUnloadEditor',
+                  return $translate.instant('beforeUnloadEditor',
                       {timeAgo: moment(gnCurrentEdit.savedTime).fromNow()});
                 };
               }
@@ -426,7 +426,7 @@
               $scope.savedStatus = gnCurrentEdit.savedStatus;
               $scope.saveError = true;
               $rootScope.$broadcast('StatusUpdated', {
-                title: $translate('saveMetadataError'),
+                title: $translate.instant('saveMetadataError'),
                 error: error,
                 timeout: 0,
                 type: 'danger'});
@@ -434,6 +434,31 @@
         $scope.savedStatus = gnCurrentEdit.savedStatus;
         return promise;
       };
+	  
+	  // Inspire and MDRelation validation : Start
+	  $scope.inspireValidateMetadata = function() {
+        var promise = gnEditor.inspireValidate()
+            .then(function(response) {
+				var win = window.open();
+				win.document.write(response.htmlResponse);
+            }, function(error) {
+				//alert('failed'+error);
+            });
+        return promise;
+      };
+	  
+	  $scope.mdRelationValidateMetadata = function(refreshForm) {
+        var promise = gnEditor.mdRelationValidate()
+            .then(function(response) {
+				var win = window.open();
+				win.document.write(response.htmlResponse);
+            }, function(error) {
+				//alert('failed'+error);
+            });
+        return promise;
+      };
+	  // Inspire and MDRelation validation : End
+	  
       var closeEditor = function() {
         $scope.layout.hideTopToolBar = false;
         // Close the editor tab
@@ -454,14 +479,14 @@
               // Refresh editor form after cancel
               //  $scope.savedStatus = gnCurrentEdit.savedStatus;
               //  $rootScope.$broadcast('StatusUpdated', {
-              //    title: $translate('cancelMetadataSuccess')
+              //    title: $translate.instant('cancelMetadataSuccess')
               //  });
               //  gnEditor.refreshEditorForm(null, true);
               closeEditor();
             }, function(error) {
               $scope.savedStatus = gnCurrentEdit.savedStatus;
               $rootScope.$broadcast('StatusUpdated', {
-                title: $translate('cancelMetadataError'),
+                title: $translate.instant('cancelMetadataError'),
                 error: error,
                 timeout: 0,
                 type: 'danger'});
@@ -474,7 +499,7 @@
               closeEditor();
             }, function(error) {
               $rootScope.$broadcast('StatusUpdated', {
-                title: $translate('saveMetadataError'),
+                title: $translate.instant('saveMetadataError'),
                 error: error,
                 timeout: 0,
                 type: 'danger'});
@@ -484,14 +509,14 @@
       };
       $scope.getSaveStatus = function() {
         if (gnCurrentEdit.savedTime) {
-          return $scope.saveStatus = $translate('saveAtimeAgo',
+          return $scope.saveStatus = $translate.instant('saveAtimeAgo',
               {timeAgo: moment(gnCurrentEdit.savedTime).fromNow()});
         }
       };
       $scope.getCancelStatus = function() {
         if (gnCurrentEdit.sessionStartTime) {
           return $scope.cancelStatus =
-              $translate('cancelChangesFromNow', {
+              $translate.instant('cancelChangesFromNow', {
                 timeAgo: moment(gnCurrentEdit.sessionStartTime).fromNow()
               });
         }
@@ -506,6 +531,15 @@
         $('#showvalidationerrors')[0].value = 'true';
         return $scope.save(true);
       };
+	  // Inspire and MDRelation validation : Start
+	  $scope.inspireValidate = function() {
+        return $scope.inspireValidateMetadata();
+      };
+	  
+	  $scope.mdRelationValidate = function() {
+        return $scope.mdRelationValidateMetadata(false);
+      };
+	  // Inspire and MDRelation validation : End
 
       init();
 

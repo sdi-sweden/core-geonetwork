@@ -77,7 +77,6 @@
    */
   module.service('gnMeasure', [
     function() {
-
       var mInteraction, updateMeasuresFn, distFeature, areaFeature;
       var options = {
         waitClass: '',
@@ -153,10 +152,8 @@
         }
       })();
 
-      var initInteraction = function(map) {
-
+      var initInteraction = function(map, measureObj) {
         var deregisterFeature;
-
         var featureOverlay = new ol.layer.Vector({
           source: new ol.source.Vector(),
           map: map,
@@ -180,6 +177,8 @@
             } else {
               map.removeInteraction(mInteraction);
               featureOverlay.getSource().clear();
+              measureObj.distance = 0;
+              measureObj.surface = 0;
             }
           }
         });
@@ -217,7 +216,6 @@
       };
 
       this.create = function(map, measureObj, scope) {
-
         // Update values of measures from features
         updateMeasuresFn = function() {
           scope.$apply(function() {
@@ -225,8 +223,7 @@
             measureObj.surface = areaFeature.getGeometry().getArea();
           });
         };
-        initInteraction(map);
-
+        initInteraction(map, measureObj);
         return mInteraction;
       };
     }]);
