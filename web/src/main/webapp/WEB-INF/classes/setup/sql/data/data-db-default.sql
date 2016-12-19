@@ -675,8 +675,11 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/wf
 
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/predefinedMaps/url', 'https://ver.geodata.se/geodataportalens-hjalpsidor/datasamlingar-rotsida', 0, 10200, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/geotechnics/url', 'https://ver.geodata.se/geodataportalens-hjalpsidor/datasamlingar-rotsida', 0, 10210, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/site/googleTagManagerKey', 'GTM-TZQTH4F', 0, 132, 'n');
 
 INSERT INTO HarvesterSettings (id, parentid, name, value) VALUES  (1,NULL,'harvesting',NULL);
+
+
 
 -- ======================================================================
 -- === Table: Users

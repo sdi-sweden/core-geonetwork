@@ -40,6 +40,16 @@
   <xsl:template match="/">
     <html ng-app="{$angularModule}" lang="{$lang}" id="ng-app">
       <head>
+        <xsl:if test="string($env/system/site/googleTagManagerKey)">
+         <!-- Google Tag Manager, replace GTM-XXXXX with your container ID -->
+          <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+            'http://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','<xsl:value-of select="$env/system/site/googleTagManagerKey" />');</script>
+          <!-- End Google Tag Manager -->
+        </xsl:if>
+      
         <title>
           <xsl:value-of select="concat($env/system/site/name, ' - ', $env/system/site/organization)"
           />
@@ -72,11 +82,6 @@
           <!-- Google Tag Manager, replace GTM-XXXXX with your container ID -->
           <noscript><iframe src="http://www.googletagmanager.com/ns.html?id={$env/system/site/googleTagManagerKey}"
                             height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-          <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
-            'http://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','<xsl:value-of select="$env/system/site/googleTagManagerKey" />');</script>
           <!-- End Google Tag Manager -->
         </xsl:if>
 
