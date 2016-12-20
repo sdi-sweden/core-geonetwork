@@ -25,8 +25,9 @@
                 <span class="icon-down-fat"></span></span>Direktåtkomliga resurser</a>
             </li>
             <li><a href="" data-ng-click="toggleFavorites()"
-                   data-ng-class="{'active': (searchObj.params._id != '') && (searchObj.params._id != undefined)}"><span class="icon-star"></span>favoriter</a></li>
-			<swe-geo-technics-filter data-config-url="{{geotechnicsUrl}}" data-show-map-fn="showMapPanel"></swe-geo-technics-filter>
+                   data-ng-class="{'active': (searchObj.params._id != '') && (searchObj.params._id != undefined)}">
+                <span class="icon-star"></span>favoriter</a>
+            </li>
           </ul>
           <div class="other-filters">
             <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link" data-translate="">viewAllResources</a>
