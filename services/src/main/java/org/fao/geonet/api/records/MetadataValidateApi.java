@@ -23,40 +23,14 @@
 
 package org.fao.geonet.api.records;
 
-import com.google.common.collect.Lists;
+import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
+import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
+import static org.fao.geonet.api.ApiParams.API_PARAM_RECORD_UUID;
+import static org.fao.geonet.api.records.formatters.XsltFormatter.getSchemaLocalization;
 
-import io.swagger.annotations.*;
-import org.fao.geonet.ApplicationContextHolder;
-import org.fao.geonet.api.API;
-import org.fao.geonet.api.ApiParams;
-import org.fao.geonet.api.ApiUtils;
-import org.fao.geonet.api.records.model.validation.Reports;
-import org.fao.geonet.api.tools.i18n.LanguageUtils;
-import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.domain.Metadata;
-import org.fao.geonet.domain.Schematron;
-import org.fao.geonet.exceptions.BadParameterEx;
-import org.fao.geonet.kernel.DataManager;
-import org.fao.geonet.kernel.GeonetworkDataDirectory;
-import org.fao.geonet.kernel.schema.MetadataSchema;
-import org.fao.geonet.repository.SchematronRepository;
-import org.fao.geonet.api.records.editing.AjaxEditUtils;
-import org.fao.geonet.utils.IO;
-import org.fao.geonet.utils.Xml;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.filter.ElementFilter;
-import org.jdom.input.SAXBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -68,14 +42,52 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.fao.geonet.ApplicationContextHolder;
+import org.fao.geonet.api.API;
+import org.fao.geonet.api.ApiParams;
+import org.fao.geonet.api.ApiUtils;
+import org.fao.geonet.api.records.editing.AjaxEditUtils;
+import org.fao.geonet.api.records.model.validation.Reports;
+import org.fao.geonet.api.tools.i18n.LanguageUtils;
+import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.domain.Metadata;
+import org.fao.geonet.domain.Schematron;
+import org.fao.geonet.exceptions.BadParameterEx;
+import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.GeonetworkDataDirectory;
+import org.fao.geonet.kernel.schema.MetadataSchema;
+import org.fao.geonet.kernel.setting.SettingManager;
+import org.fao.geonet.repository.SchematronRepository;
+import org.fao.geonet.utils.IO;
+import org.fao.geonet.utils.Xml;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.filter.ElementFilter;
+import org.jdom.input.SAXBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.google.common.collect.Lists;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import jeeves.server.context.ServiceContext;
 import jeeves.services.ReadWriteController;
 import springfox.documentation.annotations.ApiIgnore;
-
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
-import static org.fao.geonet.api.ApiParams.API_PARAM_RECORD_UUID;
-import static org.fao.geonet.api.records.formatters.XsltFormatter.getSchemaLocalization;
 
 @RequestMapping(value = {
     "/api/records",
@@ -213,7 +225,24 @@ public class MetadataValidateApi {
     public static final String EL_SUCCESS_REPORT = "successful-report";
     public static final String ATT_CONTEXT = "context";
     public static final String DEFAULT_CONTEXT = "??";
-
+    public static final String INSPIRE_URL = "metadata/validator/inspireUrl";
+    public static final String INSPIRE_XML = "metadata/validator/inspireXml";
+    public static final String MDRELATION_URL = "metadata/validator/mdrelationUrl";
+    public static final String MDRELATION_XML = "metadata/validator/mdrelationXml";
+    public static final String INPUTMETADATAXML = "INPUTMETADATAXML";
+    public static final String GMD_COLON_MD_METADATA= "gmd:MD_Metadata";
+    public static final String REQUEST_XML = "requestXML";
+    public static final String HTML_RESPONSE = "htmlResponse";
+    public static final String UTF_8 = "UTF-8";
+    public static final String LINE_SEPARATOR = "line.separator";
+    public static final String VALIDATE_MDRELATION_VALUE = "Validate a record for MDRelation";
+    public static final String VALIDATE_MDRELATION_MESSAGE = "Validation report for MD Relation";
+    public static final String VALIDATE_MDRELATION_NICKNAME = "validateformdrelation";
+    public static final String VALIDATE_MDRELATION_NOTE = "User MUST be able to edit the record to validate it. ";
+    public static final String VALIDATE_INSPIRE_VALUE = "Validate a record for Inspire";
+    public static final String VALIDATE_INSPIRE_MESSAGE = "Validation report for Inspire";
+    public static final String VALIDATE_INSPIRE_NICKNAME = "validateforinspire";
+    public static final String VALIDATE_INSPIRE_NOTE = "User MUST be able to edit the record to validate it. ";
     /**
      * Schematron report has an odd structure:
      * <pre><code>
@@ -268,4 +297,131 @@ public class MetadataValidateApi {
             }
         }
     }
+    
+    @ApiOperation(
+            value = VALIDATE_INSPIRE_VALUE,
+            notes = VALIDATE_INSPIRE_NOTE,
+            nickname = VALIDATE_INSPIRE_NICKNAME)
+        @RequestMapping(value = "/{metadataUuid}/validate/inspire",
+            method = RequestMethod.POST,
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE
+            }
+        )
+        @ResponseStatus(HttpStatus.OK)
+        @PreAuthorize("hasRole('Editor')")
+        @ApiResponses(value = {
+            @ApiResponse(code = 201, message = VALIDATE_INSPIRE_MESSAGE),
+            @ApiResponse(code = 403, message = ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_EDIT)
+        })
+        public
+        @ResponseBody
+        Map<String, Object> validateRecordForInspire(
+            @ApiParam(
+                value = API_PARAM_RECORD_UUID,
+                required = true)
+            @PathVariable
+                String metadataUuid,
+            HttpServletRequest request,
+            @ApiParam(hidden = true)
+            @ApiIgnore
+                HttpSession session
+        )
+            throws Exception {
+            Metadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
+            String xmlString = metadata.getData();
+            String URLforValidation = null; //"https://www.geodata.se/InspireValidation/Service"; // Don't hard code here.
+            ApplicationContext applicationContext = ApplicationContextHolder.get();
+            SettingManager sm = applicationContext.getBean(SettingManager.class);
+            URLforValidation = sm.getValue(INSPIRE_URL);
+            String XMLforValidation = null; //"<?xml version=\"1.0\" encoding=\"UTF-8\"?><INSPIREVALIDATION><SCANMODE>METADATA</SCANMODE><SCANDETAILS><METADATAXML><![CDATA[INPUTMETADATAXML]]></METADATAXML></SCANDETAILS><SCANFORSERVICE>true</SCANFORSERVICE><OUTPUTFORMAT>html</OUTPUTFORMAT></INSPIREVALIDATION>";
+            XMLforValidation = sm.getValue(INSPIRE_XML);
+            if(xmlString != null && xmlString.contains(GMD_COLON_MD_METADATA)) {
+            	XMLforValidation = XMLforValidation.replace(INPUTMETADATAXML, xmlString);
+            }
+            PostMethod post = new PostMethod(URLforValidation);    
+		    post.addParameter(REQUEST_XML, XMLforValidation);
+		    
+		    HttpClient httpClient = new HttpClient();			    
+		    httpClient.executeMethod(post);
+		    String inspireHtmlResponse = null;
+		    if(post.getStatusCode() ==  org.apache.commons.httpclient.HttpStatus.SC_OK){
+		    	inspireHtmlResponse = MetadataValidateApi.getPostResponseAsString(post);
+		    	if(inspireHtmlResponse != null) {
+		    		inspireHtmlResponse = inspireHtmlResponse.replaceAll("&amp;", "&");
+		    	}
+		    }
+		    Map<String, Object> responseMap = new HashMap<String, Object>();
+		    responseMap.put(HTML_RESPONSE, inspireHtmlResponse);
+            return responseMap;
+        }
+    
+    @ApiOperation(
+            value = VALIDATE_MDRELATION_VALUE,
+            notes = VALIDATE_MDRELATION_NOTE,
+            nickname = VALIDATE_MDRELATION_NICKNAME)
+        @RequestMapping(value = "/{metadataUuid}/validate/mdrelation",
+            method = RequestMethod.POST,
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE
+            }
+        )
+        @ResponseStatus(HttpStatus.OK)
+        @PreAuthorize("hasRole('Editor')")
+        @ApiResponses(value = {
+            @ApiResponse(code = 201, message = VALIDATE_MDRELATION_MESSAGE),
+            @ApiResponse(code = 403, message = ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_EDIT)
+        })
+        public
+        @ResponseBody
+        Map<String, Object> validateRecordForMDRelation(
+            @ApiParam(
+                value = API_PARAM_RECORD_UUID,
+                required = true)
+            @PathVariable
+                String metadataUuid,
+            HttpServletRequest request,
+            @ApiParam(hidden = true)
+            @ApiIgnore
+                HttpSession session
+        )
+            throws Exception {
+            Metadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
+            String xmlString = metadata.getData();
+            String URLforValidation = null; //"https://www.geodata.se/MDRelationCheck/Service"; // Don't hard code here.
+            ApplicationContext applicationContext = ApplicationContextHolder.get();
+            SettingManager sm = applicationContext.getBean(SettingManager.class);
+            URLforValidation = sm.getValue(MDRELATION_URL);
+            String XMLforValidation = null; //"<?xml version=\"1.0\" encoding=\"UTF-8\"?><CSWQualityCheck><SCANMODE>METADATA</SCANMODE><SCANDETAILS><METADATAXML><![CDATA[INPUTMETADATAXML]]></METADATAXML></SCANDETAILS></CSWQualityCheck>";
+            XMLforValidation = sm.getValue(MDRELATION_XML);
+            if(xmlString != null && xmlString.contains(GMD_COLON_MD_METADATA)) {
+            	XMLforValidation = XMLforValidation.replace(INPUTMETADATAXML, xmlString);
+            }
+            PostMethod post = new PostMethod(URLforValidation);    
+		    post.addParameter(REQUEST_XML, XMLforValidation);
+		    
+		    HttpClient httpClient = new HttpClient();			    
+		    httpClient.executeMethod(post);
+		    String mdRelationHtmlResponse = null;
+		    if(post.getStatusCode() ==  org.apache.commons.httpclient.HttpStatus.SC_OK){
+		    	mdRelationHtmlResponse = MetadataValidateApi.getPostResponseAsString(post);
+		    	if(mdRelationHtmlResponse != null) {
+		    		mdRelationHtmlResponse = mdRelationHtmlResponse.replaceAll("&amp;", "&");
+		    	}
+		    }
+		    Map<String, Object> responseMap = new HashMap<String, Object>();
+		    responseMap.put(HTML_RESPONSE, mdRelationHtmlResponse);
+            return responseMap;
+        }
+    
+		private static String getPostResponseAsString(PostMethod post) throws Exception {
+			BufferedReader br = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream(), UTF_8));
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+				sb.append(System.getProperty(LINE_SEPARATOR));
+			}
+			return sb.toString();
+		}
 }

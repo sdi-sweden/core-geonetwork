@@ -90,6 +90,8 @@
     "chooseRegion": "Valitse alue",
     "clickToDrawABox": "Paina kerran aktivoidaksesi työkalun ja piirtääksesi suorakulmion. Paina uudelleen lopettaaksesi piirtämisen.",
     "closeEditor": "Tallenna & sulje",
+	"inspireValidation": "Inspire-validering",
+	"mdRelationValidation": "Kontroll av länkar",
     "continent": "Manner",
     "copyPaste": "Kopioi/Liitä",
     "country": "Maa",

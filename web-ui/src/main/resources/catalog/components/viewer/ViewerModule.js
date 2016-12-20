@@ -88,6 +88,7 @@
   goog.require('gn_wfsfilter');
   goog.require('gn_wmsimport');
   goog.require('gn_wps');
+  goog.require('gn_select_polygon');
 
   /**
    * @ngdoc overview
@@ -119,7 +120,8 @@
     'gn_wfsfilter',
     'gn_solr',
     'gn_wps',
-    'gn_featurestable'
+    'gn_featurestable',
+    'gn_select_polygon'
   ]);
 
   module.controller('gnViewerController', [
@@ -198,10 +200,10 @@
     }]);
 
   module.controller('toolsController',
-      ['$scope', 'gnMeasure',
-        function($scope, gnMeasure) {
-          $scope.mInteraction = gnMeasure.create($scope.map,
-              $scope.measureObj, $scope);
+      ['$scope', 'gnSelectPolygon',
+        function($scope, gnSelectPolygon) {
+          $scope.mInteractionSelectPolygon = gnSelectPolygon.create($scope.map,
+              $scope);
         }
       ]);
 

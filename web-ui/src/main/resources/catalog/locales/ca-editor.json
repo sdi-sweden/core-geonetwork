@@ -90,6 +90,8 @@
     "chooseRegion": "Seleccioneu una regió",
     "clickToDrawABox": "Premeu una vegada per habilitar el control i pintar una caixa. Torneu a prémer per deixar de dibuixar.",
     "closeEditor": "Desa i tanca",
+	"inspireValidation": "Inspire-validering",
+	"mdRelationValidation": "Kontroll av länkar",
     "continent": "Continent",
     "copyPaste": "Copiar/enganxar",
     "country": "País",

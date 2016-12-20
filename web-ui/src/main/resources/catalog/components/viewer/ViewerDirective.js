@@ -34,8 +34,8 @@
    * @description
    */
   module.directive('gnMainViewer', [
-    'gnMap', 'gnConfig', 'gnSearchLocation', 'gnSearchSettings',
-    function(gnMap, gnConfig, gnSearchLocation, gnSearchSettings) {
+    'gnMap', 'gnConfig', 'gnSearchLocation', 'gnSearchSettings', 'gnMeasure',
+    function(gnMap, gnConfig, gnSearchLocation, gnSearchSettings, gnMeasure) {
       return {
         restrict: 'A',
         require: '^ngSearchForm',
@@ -62,6 +62,8 @@
 
               /** print definition */
               scope.activeTools = {};
+              /** Measure tool interaction*/
+              scope.mInteraction = gnMeasure.create(scope.map,scope.measureObj, scope);
 
               scope.toggle = false
 
@@ -72,13 +74,7 @@
                 map.getView().fit(map.getView().
                     getProjection().getExtent(), map.getSize());
               };
-              scope.drawFreeHandPolygonInMap = function(){
-                scope.toggle = !scope.toggle
-                   var scope_var = scope.searchObj;
-                   var trigger = controller
-                   var toggle = scope.toggle
-                   gnMap.drawFreeHandPolygonInMap(scope_var, trigger, toggle);               
-              }
+
               scope.ol3d = null;
 
 
@@ -248,12 +244,9 @@
           element.bind('click', function() {
             if (element.hasClass('active')) {
               element.removeClass('active');
-              $(element.attr('rel')).addClass('force-hide');
             } else {
               $('.btn').removeClass('active');
               element.addClass('active');
-              $('.panel-tools').addClass('force-hide');
-              $(element.attr('rel')).removeClass('force-hide');
             }
           });
         }
@@ -281,7 +274,6 @@
         link: function(scope, element, attrs, btngroupCtrl) {
           $('.close').click(function() {
             var t = $(this).parents('.panel-tools');
-            t.addClass('force-hide');
             $('[rel=#' + t.attr('id') + ']').removeClass('active');
             scope.$apply(function() {
               btngroupCtrl.activate();

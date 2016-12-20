@@ -20,17 +20,12 @@
         <i class="fa fa-stack-1x fa-tasks"></i>
         <i class="fa fa-stack-1x fa-plus-circle"></i>
       </span>
-      <span role="tooltip" data-translate="">addLayers</span>
+      <span role="tooltip" data-translate="">AddALayer</span>
     </button>
     <button class="btn btn-default" ng-model="activeTools.layers" type="submit"
             rel="#layers" gi-btn gnv-tools-btn>
       <span class="fa fa-tasks"></span>
-      <span role="tooltip" data-translate="">Layers</span>
-    </button>
-    <button gi-btn class="btn btn-default" type="submit"
-            rel="#filterData" ng-model="activeTools.filter" gnv-tools-btn>
-      <span class="fa fa-filter"></span>
-      <span role="tooltip" data-translate="">filterData</span>
+      <span role="tooltip" data-translate="">ManageLayers</span>
     </button>
     <button class="btn btn-default" ng-model="activeTools.contexts" type="submit"
             rel="#contexts" gi-btn gnv-tools-btn>
@@ -41,7 +36,7 @@
             data-ng-hide="is3dEnabled"
             rel="#print" gi-btn gnv-tools-btn>
       <span class="fa fa-print"></span>
-      <span role="tooltip" data-translate="">Skriv ut</span>
+      <span role="tooltip" data-translate="">PrintTheMap</span>
     </button>
 
     <button class="btn btn-default" type="submit"
@@ -55,19 +50,27 @@
             data-ng-hide="is3dEnabled"
             rel="#measures" gnv-tools-btn>
       <span class="fa fa-expand"></span>
-      <span role="tooltip" data-translate="">Measure</span>
+      <span role="tooltip" data-translate="">Measures</span>
     </button>
-    <button gi-btn class="btn btn-default" type="submit"
+    <button gi-btn class="btn btn-default" type="submit" ng-model="drawVector.inmap"
             data-ng-hide="is3dEnabled"
-            rel="#draw" ng-model="drawVector.inmap" gnv-tools-btn>
+            rel="#draw" gnv-tools-btn>
       <span class="fa fa-pencil"></span>
-      <span role="tooltip" data-translate="">Anteckningar</span>
+      <span role="tooltip" data-translate="">Annotations</span>
     </button>
-       <button class="btn btn-default" type="submit" data-ng-click="drawFreeHandPolygonInMap()"
+    <button gi-btn class="btn btn-default" type="submit" ng-model="mInteractionSelectPolygon.active"
+            data-ng-hide="is3dEnabled"
+            rel="#selectpolygon" gnv-tools-btn>
+      <span class="fa fa-expand"></span>
+      <span role="tooltip" data-translate="">drawFreeHandPolygonInMap</span>
+    </button>
+
+    <!--<button class="btn btn-default" type="submit" data-ng-click="drawFreeHandPolygonInMap()"
             data-ng-hide="is3dEnabled" gnv-tools-btn>
       <span class="fa fa-pencil-square-o"></span>
       <span role="tooltip" data-translate="">drawFreeHandPolygonInMap</span>
-    </button>
+    </button>-->
+
   </div>
   <!--Bottom right buttons - Navigation-->
   <div class="tools control-tools">
@@ -99,8 +102,9 @@
   </div>
 
 
-  <div class="panel panel-default force-hide panel-tools"
+  <div class="panel panel-default panel-tools"
        id="addLayers"
+       ng-show="activeTools.addLayers"
        gnv-layermanager-btn="false">
     <div class="panel-heading">
       <h3>{{'AddALayer' | translate}}
@@ -135,8 +139,9 @@
   </div>
 
 
-  <div class="panel panel-default force-hide panel-tools"
+  <div class="panel panel-default panel-tools"
        id="layers"
+       ng-show="activeTools.layers"
        gnv-layermanager-btn="false">
     <div class="panel-heading">
       <h3>{{'ManageLayers' | translate}}
@@ -160,16 +165,7 @@
     <br/>
   </div>
 
-
-  <div class="panel panel-default force-hide panel-tools gn-data-filter-view"
-       id="filterData">
-    <div class="panel-body">
-      <div data-gn-data-filter-view="map"/>
-    </div>
-  </div>
-
-
-  <div class="panel panel-default force-hide panel-tools" id="contexts">
+  <div class="panel panel-default panel-tools" id="contexts" ng-show="activeTools.contexts">
     <div class="panel-heading">
       <h3>{{'MapContexts' | translate}}
         <button type="button" class="btn btn-default close">
@@ -184,7 +180,7 @@
 
 
   <!--Measure Info Panel-->
-  <div class="panel panel-default force-hide panel-tools" id="measures">
+  <div class="panel panel-default panel-tools" id="measures" ng-show="mInteraction.active">
     <div class="panel-heading">
       <h3>{{'Measures' | translate}}
         <button type="button" class="btn btn-default close">
@@ -207,7 +203,7 @@
 
 
   <!--Draw Panel-->
-  <div class="panel panel-default force-hide panel-tools" id="draw">
+  <div class="panel panel-default panel-tools" id="draw" ng-show="drawVector.inmap" >
     <div class="panel-heading">
       <h3>{{'Annotations' | translate}}
         <button type="button" class="btn btn-default close">
@@ -222,7 +218,7 @@
   </div>
 
 
-  <div class="panel panel-default force-hide panel-tools" id="print">
+  <div class="panel panel-default panel-tools" id="print" ng-show="activeTools.print">
     <div class="panel-heading">
       <h3>{{'PrintTheMap' | translate}}
         <button type="button" class="btn btn-default close">
