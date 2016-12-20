@@ -44,6 +44,9 @@
   border-radius: 50%;
   padding: 1px 1px 0px 1px;
 }
+[gn-main-viewer] .tools button.active .gn-stack .fa-plus-circle:before {
+  background: #27605d;
+}
 
 /* Buttons */
  
@@ -1000,7 +1003,7 @@ html, body {
   padding-top: 0;
 }
 .nav-tabs > li {
-  float: none;
+  // float: none;
 }
 .nav-tabs > li > a {
   display: inline-block;
@@ -1296,7 +1299,7 @@ button:focus [role=tooltip], button:hover [role=tooltip] {
   max-width: none; 
   overflow-y: auto;
   transition: opacity .3s ease;
-  z-index: 10000;
+  z-index: 1000;
   background: #fff;
   border-radius: 0;
   border: 0;
@@ -1328,6 +1331,32 @@ button:focus [role=tooltip], button:hover [role=tooltip] {
 [gn-main-viewer] .panel-tools .flux, .gn-main-viewer .panel-tools .flux,
 [gn-main-viewer] .panel-tools .context, .gn-main-viewer .panel-tools .context {
   margin: 0;
+}
+/* layer manager */
+[gn-main-viewer] .panel-tools, .gn-main-viewer .panel-tools {
+  [gn-layermanager] {
+    .gn-layer-remove-all {
+      margin-left: 17px;
+      a {
+        color: #5d8886;
+        font-size: 14px;
+        .fa {
+          margin-right: 2px;
+        }
+      }
+    }
+  }
+  .list-group-item .btn-cog-left {
+    padding: 6px 14px 6px 0;
+  }
+  .list-group-item:first-child {
+    border-top-right-radius: 0; 
+    border-top-left-radius: 0; 
+  }
+  .list-group-item:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 }
 
 /* search */
