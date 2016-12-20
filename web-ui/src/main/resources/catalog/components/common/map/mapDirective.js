@@ -33,7 +33,8 @@
       [
        'gnMap',
        'gnOwsContextService',
-       function(gnMap, gnOwsContextService) {
+       '$http',
+       function(gnMap, gnOwsContextService, $http) {
          return {
            restrict: 'A',
            replace: true,
@@ -132,15 +133,15 @@
                list: gnMap.getMapConfig().projectionList,
                md: 'EPSG:4326',
                map: gnMap.getMapConfig().projection,
-               form: gnMap.getMapConfig().projectionList[0].code
+               form: gnMap.getMapConfig().projectionList[0].code,
+               county: 'EPSG:3006'
              };
-
              scope.extent = {
                md: null,
                map: [],
-               form: []
+               form: [],
+               county: []
              };
-
              if (attrs.hleft !== '' && attrs.hbottom !== '' &&
                  attrs.hright !== '' && attrs.htop !== '') {
                scope.extent.md = [
@@ -160,12 +161,6 @@
              reprojExtent('md', 'map');
              reprojExtent('md', 'form');
              setDcOutput();
-
-             scope.$watch('projs.form', function(newValue, oldValue) {
-               scope.extent.form = gnMap.reprojExtent(
-                   scope.extent.form, oldValue, newValue
-               );
-             });
 
              // TODO: move style in db config
              var boxStyle = new ol.style.Style({
@@ -225,6 +220,9 @@
              });
 
              dragbox.on('boxend', function(mapBrowserEvent) {
+              if (angular.isDefined(scope.search)) {
+                 delete scope.search.namesearch
+              }            
                scope.extent.map = dragbox.getGeometry().getExtent();
                feature.setGeometry(dragbox.getGeometry());
 
@@ -297,6 +295,56 @@
                drawBbox();
                map.getView().fit(scope.extent.map, map.getSize());
              };
+
+             /**
+              * Called on for showing geo suggestions.
+              */
+             scope.getNameSearch = function(val) {
+               var posturl = 'https://www.geodata.se/NameWebService/search';
+                val = encodeURIComponent(val);
+                var params = {
+                  'searchstring': val,
+                  'callback': 'JSON_CALLBACK'
+                };
+                return $http({
+                  method: 'JSONP',
+                  url: posturl,
+                  params: params
+                }).then(function(res) {
+                  var data = res.data;
+                  var status = res.status;
+                  var headers = res.headers;
+                  var config = res.config;
+                  var statusText = res.statusText;
+                  return data;
+                });
+            };
+
+             /**
+              * Called on county input change.
+              * Set map and md extent from form reprojection, and draw
+              * the bbox from the map extent.
+              */
+            scope.onCountySelect = function() {
+              var namesearch = scope.search.namesearch;
+              var coordinates = namesearch.Coordinates;
+              var geoJson = new ol.format.GeoJSON();
+              if (coordinates) {
+                //var proj = $scope.searchObj.searchMap.getView().getProjection();
+                var xy0 = coordinates[0];
+                var xy1 = coordinates[1];
+                var extent = []; // geoBox=10.59|55.15|24.18|69.05
+                extent.push(parseFloat(xy0.X), parseFloat(xy0.Y),
+                  parseFloat(xy1.X), parseFloat(xy1.Y));
+                //To transform projection
+                proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+                scope.extent.county = extent
+                reprojExtent('county', 'form');
+                scope.updateBbox();
+              } else {
+                return false; // always return false if cooridinates are absent. Not sure if we shall still return true.
+              }
+            };
 
              /**
               * Callback sent to gn-country-picker directive.
