@@ -42,5 +42,8 @@
     "createMetadata-desc": "Välj typ av metadata som ska skapas",
     "createMetadata-create": "Skapa",
     "createMetadata-group": "Grupp",
-    "createMetadata-cancel": "Avbryt"
+    "createMetadata-cancel": "Avbryt",
+    "searchKeyword": "Nyckelord",
+    "searchTopicCategory" : "Ämneskategori",
+    "searchOrganisation" : "Organisation"
 }
