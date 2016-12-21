@@ -56,4 +56,11 @@
     "drawFreeHandPolygonInMap": "Rita polygon i karta",
     "Add" : "Lägg till",
     "layersDelete":"Radera alla lager",
+    "searchOrganisation" : "Organisation",
+    "searchTopicCategory": "Ämneskategori",
+    "searchKeyword": "Nyckelord",
+    "exampleDatasets": "Exempel på datasamlingar",
+    "graticule" : "gradnätt",
+    "print_legend": "skriv teckenförklaring",
+    "print_legend_field": "skriv teckenförklaring ämne"
 }
