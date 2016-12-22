@@ -5004,3 +5004,38 @@ a.link-btn[disabled] {
     margin-top: 10px;
   }
 }
+
+// floating map
+.floating-map-cont.small {
+  width: 110px;
+  height: 235px;
+}
+.floating-map-cont .cursor-close {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
+}
+.floating-map-cont .fa {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  color: #5d8886;
+  font-size: 18px;
+}
+/* minimized floating map */
+.floating-map-cont.small .fa-compress {
+  display: none;
+}
+.floating-map-cont.small .fa-expand {
+  display: block;
+}
+/* maximized floating map */
+.floating-map-cont .fa-compress {
+  display: block;
+}
+.floating-map-cont .fa-expand {
+  display: none;
+}
