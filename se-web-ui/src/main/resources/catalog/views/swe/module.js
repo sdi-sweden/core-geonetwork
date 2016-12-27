@@ -581,6 +581,11 @@
         $timeout(function() {
           viewerMap.updateSize();
           viewerMap.renderSync();
+
+          $("div.bootstrap-table div.fixed-table-container div.fixed-table-body table").each(function( ) {
+            $( this ).bootstrapTable('resetView');
+          });
+
         }, 500);
 
         return false;
