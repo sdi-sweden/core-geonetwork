@@ -156,8 +156,8 @@
           <xsl:apply-templates select="gmd:deliveryPoint" />
           <xsl:apply-templates select="gmd:city" />
           <xsl:apply-templates select="gmd:administrativeArea" />
-          <xsl:apply-templates select="gmd:country" />
           <xsl:apply-templates select="gmd:postalCode" />
+          <xsl:apply-templates select="gmd:country" />
           <xsl:apply-templates select="gmd:electronicMailAddress" />
 
           <xsl:if test="not(gmd:electronicMailAddress)">
