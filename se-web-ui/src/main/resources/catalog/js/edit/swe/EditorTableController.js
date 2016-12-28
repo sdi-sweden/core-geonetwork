@@ -63,11 +63,11 @@
       /**
      * Shows the edit dialog for the selected row.
      */
-      $scope.editRow = function() {
+      $scope.editSelectedRow = function() {
         if ($scope.selectedRow == null) return;
 
         $scope.mode = 'edit';
-        angular.copy($scope.selectedRow, $scope.editRow);
+        $scope.editRow = angular.copy($scope.selectedRow);
 
         $($scope.dialog).modal('show');
       };
@@ -105,10 +105,11 @@
           }
           $scope.editRow.xmlSnippet = template;
 
-          $scope.selectedRow = $scope.editRow;
+          $scope.selectedRow = angular.copy($scope.editRow);
           $scope.rows.push($scope.selectedRow);
         } else {
-          angular.copy($scope.editRow, $scope.selectedRow);
+          $scope.selectedRow = angular.copy($scope.editRow);
+          $scope.rows[$scope.selectedRowIndex] = $scope.selectedRow;
         }
 
 

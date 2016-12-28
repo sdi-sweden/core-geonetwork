@@ -46,6 +46,8 @@
   goog.require('gn_share');
   goog.require('gn_thesaurus');
   goog.require('gn_utility_directive');
+  goog.require('swe_editor_table_controller');
+  goog.require('swe_editor_table_directive');
 
   var module = angular.module('gn_editor_controller',
       ['gn_fields', 'gn_new_metadata_controller',
@@ -53,6 +55,8 @@
        'gn_editorboard_controller', 'gn_share',
        'gn_directory_controller', 'gn_utility_directive',
        'gn_scroll_spy', 'gn_thesaurus', 'ui.bootstrap.datetimepicker',
+       'swe_editor_table_controller',
+       'swe_editor_table_directive',
        'ngRoute', 'gn_mdactions_service']);
 
   var tplFolder = '../../catalog/templates/editor/';
