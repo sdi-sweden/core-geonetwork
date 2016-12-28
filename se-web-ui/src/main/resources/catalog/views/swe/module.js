@@ -128,27 +128,6 @@
             $scope.mdView.current.records);
       });
 
-      $scope.$on('selectPolygon', function(event, polygonFeature) {
-        console.log(polygonFeature);
-
-        delete $scope.searchObj.namesearch;
-
-        $scope.vectorLayer.getSource().clear();
-        $scope.vectorLayer.getSource().addFeature(polygonFeature.clone());
-
-        $scope.vectorLayerBM.getSource().clear();
-        $scope.vectorLayerBM.getSource().addFeature(polygonFeature.clone());
-
-        proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
-
-        var geom = polygonFeature.getGeometry().clone().transform('EPSG:3006', 'EPSG:4326');
-        var format = new ol.format.WKT();
-        var geom_wkt =format.writeGeometry(geom);
-
-        $scope.searchObj.params.geometry = geom_wkt;
-        $scope.triggerSearch();
-      });
-
       // prevent the floating map from positioning on top of the footer
       $scope.affixFloatingMap = function() {
         
@@ -1186,6 +1165,56 @@
     
 
   }]);
+
+  module.controller('SweGeoFreeHandPolygonController', ['$scope', '$http', '$timeout', 'gnSearchSettings', 'gnMap',
+    function($scope, $http, $timeout, gnSearchSettings, gnMap) {
+      $scope.drawFreeHandPolygonInMap = function(){
+
+        $scope.showMapPanel();
+
+        var features = new ol.Collection();
+        draw = new ol.interaction.Draw({
+          features: features,
+          type: 'Polygon'
+        });
+
+        $scope.searchObj.viewerMap.addInteraction(draw);
+
+        draw.on('drawstart', function (e) {
+          $scope.vectorLayer.getSource().clear();
+          $scope.vectorLayerBM.getSource().clear();
+        });
+
+        draw.on('drawend', function (e) {
+          var polygonFeature = e.feature;
+
+          delete $scope.searchObj.namesearch;
+
+          $scope.vectorLayer.getSource().clear();
+          $scope.vectorLayer.getSource().addFeature(polygonFeature.clone());
+
+          $scope.vectorLayerBM.getSource().clear();
+          $scope.vectorLayerBM.getSource().addFeature(polygonFeature.clone());
+
+          proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+
+          var geom = polygonFeature.getGeometry().clone().transform('EPSG:3006', 'EPSG:4326');
+          var format = new ol.format.WKT();
+          var geom_wkt =format.writeGeometry(geom);
+
+          $scope.hideMapPanel();
+
+          $scope.searchObj.params.geometry = geom_wkt;
+          $scope.triggerSearch();
+
+          $timeout(function() {
+            $scope.searchObj.viewerMap.removeInteraction(draw);
+          }, 500);
+
+        });
+      }
+
+    }]);
 
   /**
    * orderByTranslated Filter
