@@ -1030,6 +1030,7 @@
         delete $scope.searchObj.params.resourceDateTo;
         delete $scope.searchObj.params.geometry;
         delete $scope.searchObj.namesearch;
+        delete $scope.searchObj.params['facet.q'];
         $scope.vectorLayer.getSource().clear();
         $scope.vectorLayerBM.getSource().clear();
         $scope.triggerSearch();
