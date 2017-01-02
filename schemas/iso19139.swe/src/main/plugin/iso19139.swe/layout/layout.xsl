@@ -633,14 +633,14 @@
         <div data-swe-date-dialog="">
           <div>
             <label class="col-sm-2 control-label">
-              Organisation
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:organisationName', $labels, name(..), '', '')/label" />
             </label>
             <input type="text" class="form-control" data-ng-model="editRow.organisation" />
           </div>
 
           <div>
             <label class="col-sm-2 control-label">
-              Phone
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:voice', $labels, name(..), '', '')/label" />
             </label>
 
             <input type="text" class="form-control" data-ng-model="editRow.phone" />
@@ -649,7 +649,7 @@
 
           <div>
             <label class="col-sm-2 control-label">
-              E-mail
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:electronicMailAddress', $labels, name(..), '', '')/label" />
             </label>
 
             <input type="text" class="form-control" data-ng-model="editRow.email" />
@@ -658,7 +658,7 @@
 
           <div>
             <label class="col-sm-2 control-label">
-              Role
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:role', $labels, name(..), '', '')/label" />
             </label>
 
             <xsl:variable name="codelist"
