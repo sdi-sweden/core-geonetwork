@@ -647,6 +647,32 @@ input[type=range]:focus::-ms-fill-upper {
     }
   }
 }
+
+// feature info
+.gn-features-table {
+  .nav-tabs li {
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    margin-right: 3px;;
+    a {
+      background: transparent;  
+    }
+  }
+  .nav-tabs li.active, .nav-tabs li:hover{
+    background: #fff;
+    border-bottom-color: #5d8886;
+  }
+  /* pagination */
+  .pagination > li > a, .pagination > li > span {
+    color: #5d8886;
+  }
+  .pagination > .active > a, .pagination > .active > a:hover {
+    background-color: #5d8886;
+    border-color: #5d8886;
+    color: #fff;
+  }
+}
+
 /*
     Place bottom-bar at the bottom of page; approach is based on http://matthewjamestaylor.com/blog/bottom-footer-demo.htm
 */
