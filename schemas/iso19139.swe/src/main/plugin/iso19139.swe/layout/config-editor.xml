@@ -394,6 +394,7 @@
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
           <action type="add"
                   name="inspireTheme"
+                  btnLabel="addInspireTheme"
                   or="descriptiveKeywords"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
