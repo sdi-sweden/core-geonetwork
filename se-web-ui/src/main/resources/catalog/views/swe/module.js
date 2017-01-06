@@ -987,6 +987,7 @@
         $scope.vectorLayerBM.getSource().clear();
 
         delete $scope.searchObj.params.geometry;
+        delete $scope.searchObj.namesearch;
         $scope.triggerSearch();
       };
 
