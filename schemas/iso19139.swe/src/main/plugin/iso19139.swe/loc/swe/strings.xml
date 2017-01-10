@@ -150,4 +150,6 @@
   <roleLabel>Ansvarsområde</roleLabel>
   <otherConstraints>Övriga restriktioner</otherConstraints>
   <scales>Rumslig upplösning</scales>
+
+  <addInspireTheme>add Nyckelord</addInspireTheme>
 </strings>

@@ -67,7 +67,7 @@
           gnGlobalSettings, viewerSettings) {
 
         var defaultMapConfig = {
-          'useOSM': 'true',
+          //'useOSM': 'true',
           'projection': 'EPSG:3857',
           'projectionList': [{
             'code': 'EPSG:4326',
@@ -77,6 +77,7 @@
             'label': 'Google mercator (EPSG:3857)'
           }]
         };
+        proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
 
         /**
          * @description
@@ -325,12 +326,13 @@
           getMapConfig: function() {
             if (gnConfig['map.config'] &&
                 angular.isObject(gnConfig['map.config'])) {
-              return gnConfig['map.config'];
+              return gnConfig['map.config'];           
             } else {
               return defaultMapConfig;
             }
           },
 
+          //Commented out code to add OSM map.Since we are not using OSM map in editor
           /**
            * @ngdoc method
            * @methodOf gn_map.service:gnMap
@@ -342,7 +344,7 @@
            *
            * @return {Object} defaultMapConfig layers config
            */
-          getLayersFromConfig: function() {
+          /*getLayersFromConfig: function() {
             var conf = this.getMapConfig();
             var source;
 
@@ -359,7 +361,7 @@
             return new ol.layer.Tile({
               source: source
             });
-          },
+          },*/
 
           /**
            * @ngdoc method

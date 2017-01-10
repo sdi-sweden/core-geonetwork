@@ -81,9 +81,11 @@
           <div class="-label"><span class="icon-doc-text"></span>{{ 'manageMetadata' | translate }} <span class="icon-down-dir"></span></div>
           <div data-swe-md-actions-menu="" />
         </div>
+
         <div class="link-cont" data-ng-show="md.geoBox !== undefined">
           <a class="-label-link" href="" data-ng-click="showMetadataGeometry(md)"><div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span></div>{{ 'showBBOX' | translate }}</a>
         </div>
+
       </div>
       <div class="toolbar-right-list tool-bar-list">
 
@@ -103,7 +105,7 @@
 
         <!-- Map links -->
         <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="::layers.length > 1">
-          <div class="-label"><span class="icon-map"></span>Visa på karta <span class="icon-down-dir"></span></div>
+          <div class="-label"><span class="icon-map"></span><span class="hidden-xs hidden-sm">Visa på karta </span><span class="icon-down-dir"></span></div>
           <ul class="-list">
             <li data-ng-repeat="l in ::layers">
               <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l.url, md)">{{l.desc || l.url}}</a>
