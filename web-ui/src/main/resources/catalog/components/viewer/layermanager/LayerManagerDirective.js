@@ -121,12 +121,10 @@
             var layerList = [];
             scope.map.getLayers().forEach(function (layer) {
               var layerGroup = layer.get('group') || '';
-
               if (layerGroup.toLowerCase() != 'background layers') {
                 layerList.push(layer);
               }
             });
-
             for(var i = 0; i < layerList.length; i++) {
               scope.map.removeLayer(layerList[i]);
             }

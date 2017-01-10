@@ -232,8 +232,22 @@
 
     <dl class="gn-contact">
       <dt>
-        <xsl:apply-templates mode="render-value"
-                             select="*/gmd:role/*/@codeListValue"/>
+        <!-- <xsl:apply-templates mode="render-value"
+                             select="*/gmd:role/*/@codeListValue"/> -->
+		<xsl:variable name="parentNodeNameForCI_ResponsibleParty">
+			<xsl:value-of select="name(.)"/>
+		</xsl:variable>
+		<xsl:choose>
+			<xsl:when test="normalize-space($parentNodeNameForCI_ResponsibleParty) = 'gmd:contact'">
+				<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'metadataContactView')"/>
+			</xsl:when>
+			<xsl:when test="normalize-space($parentNodeNameForCI_ResponsibleParty) = 'gmd:distributorContact'">
+				<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'distributorContactView')"/>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:apply-templates mode="render-value" select="*/gmd:role/*/@codeListValue"/>
+			</xsl:otherwise>
+		</xsl:choose>
       </dt>
       <dd>
         <div class="col-md-6">
@@ -301,7 +315,19 @@
       </dd>
     </dl>
   </xsl:template>
-
+  <!-- LI_Lineage part -->
+  <xsl:template mode="render-field" 
+				match="gmd:lineage/gmd:LI_Lineage" 
+				priority="100">
+	<dl>
+		<dt>
+			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'LI_LineageView')"/>
+		</dt>
+		<dd>
+			<xsl:apply-templates mode="render-value" select="gmd:statement"/>
+		</dd>
+	</dl>
+  </xsl:template>
   <!-- A Resursetyp is displayed with its translated codeListValue -->
   <xsl:template mode="render-field"
                 match="gmd:hierarchyLevel"
@@ -483,6 +509,28 @@
 						<xsl:variable name="protocol">
 							<xsl:apply-templates mode="render-value" select="*/gmd:protocol"/>
 						</xsl:variable>
+						<xsl:variable name="aliasProtocol">
+							<xsl:choose>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:OGC:WFS'">
+									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_ogc_wfs')"/>
+								</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:OGC:WMS'">
+									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_ogc_wms')"/>
+								</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
+									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_information')"/>
+								</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:Nedladdning'">
+									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_nedladdning')"/>
+								</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:Nedladdning:ATOM'">
+									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_nedladdning_atom')"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$protocol"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
 						<xsl:variable name="name">
 							<xsl:apply-templates mode="render-value" select="*/gmd:name"/>
 						</xsl:variable>
@@ -491,15 +539,22 @@
 						</xsl:variable>
 						<tr>
 							<td class="view-metadata-table-td-1">
-								<xsl:value-of select="normalize-space($protocol)"/>
+								<xsl:value-of select="normalize-space($aliasProtocol)"/>
 							</td>
 							<td class="view-metadata-table-td-2">
 								<xsl:value-of select="normalize-space($name)"/>
 							</td>
 							<td class="view-metadata-table-td-3">
-								<a href="{$url}" target="_blank">
-									<xsl:value-of select="normalize-space($url)"/>
-								</a>
+								<xsl:choose>
+									<xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
+										<a href="{$url}" target="_blank">
+											<xsl:value-of select="normalize-space($url)"/>
+										</a>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="normalize-space($url)"/>
+									</xsl:otherwise>
+								</xsl:choose>
 							</td>
 						</tr>
 					</xsl:for-each>	
@@ -723,7 +778,7 @@
   <xsl:template mode="render-field"
                 match="gmd:topicCategory[1]|gmd:obligation[1]|gmd:pointInPixel[1]"
                 priority="100">
-    <dl class="gn-date">
+    <dl>
       <dt>
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
       </dt>

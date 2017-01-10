@@ -33,24 +33,36 @@
       'gnUrlUtils', 'gnGlobalSettings',
       function($http, $q, gnUrlUtils, gnGlobalSettings) {
 
-        var displayFileContent = function(data) {
+        var displayFileContent = function(wmsUrl,data) {
           var parser = new ol.format.WMSCapabilities();
           var result = parser.read(data);
 
           var layers = [];
           var url = result.Capability.Request.GetMap.
               DCPType[0].HTTP.Get.OnlineResource;
-
           // Push all leaves into a flat array of Layers.
           var getFlatLayers = function(layer) {
             if (angular.isArray(layer)) {
-              for (var i = 0, len = layer.length; i < len; i++) {
-                getFlatLayers(layer[i]);
+              for (var i = 0, len = layer.length; i < len; i++) { 
+                  getFlatLayers(layer[i]);
               }
             } else if (angular.isDefined(layer)) {
-              layer.url = url;
-              layers.push(layer);
-              getFlatLayers(layer.Layer);
+                if (wmsUrl.indexOf("layers=") >= 0){
+                var wmsLayers = wmsUrl.substring(wmsUrl.indexOf("layers="));
+                var splitLayer = wmsLayers.substring(wmsLayers.indexOf("=") + 1).split(",");
+                for (var i = 0, len = layer.Layer.length; i < len; i++) {
+                  if(splitLayer.indexOf(layer.Layer[i].Name) > -1){
+                    layer.Layer[i].url = url;
+                    layers.push(layer.Layer[i]);
+                  }
+                }
+            
+              }
+              else{
+                layer.url = url;
+                layers.push(layer);
+                getFlatLayers(layer.Layer);
+              }
             }
           };
 
@@ -69,9 +81,13 @@
               }
             }
           };
+          
           getFlatLayers(result.Capability.Layer);
           setLayerAsArray(result.Capability);
           result.Capability.layers = layers;
+          if (wmsUrl.indexOf("layers=") >= 0){
+            result.Capability.Layer[0].Layer = layers;
+          }          
           return result.Capability;
         };
 
@@ -121,7 +137,7 @@
                 })
                     .success(function(data) {
                       try {
-                        defer.resolve(displayFileContent(data));
+                        defer.resolve(displayFileContent(url,data));
                       } catch (e) {
                         defer.reject('capabilitiesParseError');
                       }

@@ -77,6 +77,22 @@
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
 
+      $scope.vectorLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: []
+        }),
+        style: gnSearchSettings.olStyles.mdExtentHighlight,
+        map: searchMap
+      });
+
+
+      $scope.vectorLayerBM = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: []
+        }),
+        style: gnSearchSettings.olStyles.mdExtentHighlight,
+        map: viewerMap
+      });
       $scope.viewMode = 'full';
 
       $scope.formatter = gnSearchSettings.formatter;
@@ -110,6 +126,27 @@
         $scope.showMetadata($scope.mdView.current.index,
             $scope.mdView.current.record,
             $scope.mdView.current.records);
+      });
+
+      $scope.$on('selectPolygon', function(event, polygonFeature) {
+        console.log(polygonFeature);
+
+        delete $scope.searchObj.namesearch;
+
+        $scope.vectorLayer.getSource().clear();
+        $scope.vectorLayer.getSource().addFeature(polygonFeature.clone());
+
+        $scope.vectorLayerBM.getSource().clear();
+        $scope.vectorLayerBM.getSource().addFeature(polygonFeature.clone());
+
+        proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+
+        var geom = polygonFeature.getGeometry().clone().transform('EPSG:3006', 'EPSG:4326');
+        var format = new ol.format.WKT();
+        var geom_wkt =format.writeGeometry(geom);
+
+        $scope.searchObj.params.geometry = geom_wkt;
+        $scope.triggerSearch();
       });
 
       // prevent the floating map from positioning on top of the footer
@@ -442,23 +479,8 @@
         var feature = gnMap.getBboxFeatureFromMd(md,
             $scope.searchObj.searchMap.getView().getProjection());
 
-
-        if (angular.isUndefined($scope.vectorLayer)) {
-          var vectorSource = new ol.source.Vector({
-            features: []
-          });
-
-          $scope.vectorLayer = new ol.layer.Vector({
-            source: vectorSource,
-            style: gnSearchSettings.olStyles.mdExtentHighlight
-          });
-
-          $scope.searchObj.searchMap.addLayer($scope.vectorLayer);
-        }
-
         $scope.vectorLayer.getSource().clear();
         $scope.vectorLayer.getSource().addFeature(feature);
-
       };
 
      
@@ -963,6 +985,17 @@
         $scope.triggerSearch();
       };
 
+      /**
+       * Unselects the geometry filter.
+       */
+      $scope.unselectGeoResources = function() {
+        $scope.vectorLayer.getSource().clear();
+        $scope.vectorLayerBM.getSource().clear();
+
+        delete $scope.searchObj.params.geometry;
+        $scope.triggerSearch();
+      };
+
       $scope.translatedTopicCat = function(p) {
         return $filter('translate')(p);
       }
@@ -982,7 +1015,8 @@
         delete $scope.searchObj.params.resourceDateTo;
         delete $scope.searchObj.params.geometry;
         delete $scope.searchObj.namesearch;
-
+        $scope.vectorLayer.getSource().clear();
+        $scope.vectorLayerBM.getSource().clear();
         $scope.triggerSearch();
       };
 
@@ -1088,50 +1122,43 @@
           //To transform projection for metadata list based on polygon drawn
           proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
           //proj4.defs("EPSG:4258","+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs");
-          var geom = gnMap.reprojExtent(extent , 'EPSG:3006', 'EPSG:4326')
+          var geom = gnMap.reprojExtent(extent , 'EPSG:3006', 'EPSG:4326');
           var geom_wkt = "POLYGON((" + geom[0] + " " + geom[1] + "," + geom[2] + " " + geom[1] + "," + geom[2] + " " + geom[3] + "," + geom[2] + " " + geom[1] + "," + geom[0] + " " + geom[1] + "))";
           $scope.searchObj.params.geometry = geom_wkt;
           var feature = new ol.Feature();
           //var feature = gnMap.getPolygonFeature(namesearch, $scope.searchObj.searchMap.getView().getProjection());
 
           // Build multipolygon from the set of bboxes
-          geometry = new ol.geom.MultiPolygon(null);
-       
-
+          geometry = new ol.geom.MultiPolygon(null);    
           feature.setGeometry(geometry);
 
-          if (angular.isUndefined($scope.vectorLayer)) {
-            var vectorSource = new ol.source.Vector();
-
-            $scope.vectorLayer = new ol.layer.Vector({
-              source: vectorSource,
-              style: gnSearchSettings.olStyles.mdExtentHighlight
-            });
-
-            $scope.searchObj.viewerMap.addLayer($scope.vectorLayer);
-            $scope.searchObj.searchMap.addLayer($scope.vectorLayer);
-          }
           //$scope.searchObj.searchMap.addLayer($scope.vectorLayer);
            var wfsurl = gnConfig['map.wfsServer.url'];
+           var CQL_FILTER = "Name='" + encodeURIComponent(namesearch.Name) + "'";
             var params = {
               'request': 'GetFeature',
               'service': 'WFS',
               'srs': 'EPSG:3006',
               'version': '1.0.0',
               'typeName': gnConfig['map.wfsServer.workspace'] + ":" + gnConfig['map.wfsServer.layer'],
-              'bbox': extent[0] + "," + extent[1] + "," + extent[2] + "," + extent[3],
-              'outputFormat': 'application/json',
-              'callback': 'JSON_CALLBACK'
+              'outputFormat': 'json',
+              'callback': 'JSON_CALLBACK',
+              'CQL_FILTER': CQL_FILTER
             };
             return $http({
+              method: 'POST',
               url: wfsurl,
               params: params
             }).then(function(result) {
               $scope.vectorLayer.getSource().clear();
-              $scope.searchObj.viewerMap.getLayers().getArray()[1].getSource().clear()
+              //$scope.searchObj.viewerMap.getLayers().getArray()[1].getSource().clear()
               $scope.vectorLayer.getSource().addFeatures(geoJson.readFeatures(result.data));
-              $scope.searchObj.searchMap.getView().setCenter([extent[0],extent[1]])
-              $scope.triggerSearch()
+              $scope.searchObj.searchMap.getView().setCenter([extent[0],extent[1]]);
+              $scope.vectorLayerBM.getSource().clear();
+              $scope.vectorLayerBM.getSource().addFeatures(geoJson.readFeatures(result.data));
+              $scope.searchObj.searchMap.getView().fit(extent, $scope.searchObj.searchMap.getSize());
+              $scope.searchObj.viewerMap.getView().fit(extent, $scope.searchObj.viewerMap.getSize());
+              $scope.triggerSearch();
             });
 
           return true; // always return true so search query is fired.
@@ -1141,10 +1168,8 @@
         }
     };
     
+
   }]);
-
-
-   
 
   /**
    * orderByTranslated Filter
