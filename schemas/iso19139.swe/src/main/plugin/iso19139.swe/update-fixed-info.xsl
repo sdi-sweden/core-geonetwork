@@ -471,6 +471,30 @@
 		</xsl:copy>
 	</xsl:template>
 
+	<xsl:template match="gmd:MD_Distributor">
+		<xsl:copy>
+			<xsl:copy-of select="@*" />
+
+			<xsl:apply-templates select="gmd:distributorContact" />
+			<xsl:apply-templates select="gmd:distributionOrderProcess" />
+
+			<xsl:for-each select="gmd:distributorFormat">
+				<xsl:variable name="hasInfo" select="string(gmd:MD_Format/gmd:name/*) or
+																						 string(gmd:MD_Format/gmd:version/*) or
+																						 string(gmd:MD_Format/gmd:amendmentNumber/*) or
+																						 string(gmd:MD_Format/gmd:specification/*) or
+																						 string(gmd:MD_Format/gmd:fileDecompressionTechnique/*) or
+																						 gmd:MD_Format/gmd:formatDistributor" />
+
+				<xsl:if test="$hasInfo">
+					<xsl:apply-templates select="." />
+				</xsl:if>
+			</xsl:for-each>
+
+			<xsl:apply-templates select="gmd:distributorTransferOptions" />
+		</xsl:copy>
+	</xsl:template>
+
 
   <!-- ================================================================= -->
 	<!-- Adjust the namespace declaration - In some cases name() is used to get the

@@ -40,6 +40,7 @@
   <default>Standard</default>
   <simple>Enkel</simple>
   <inspire>INSPIRE</inspire>
+  <inspire_sds>SDS</inspire_sds>
   <resource>Resurs</resource>
   <xml>XML</xml>
   <metadata>Metadata</metadata>
@@ -152,4 +153,8 @@
   <scales>Rumslig upplösning</scales>
 
   <addInspireTheme>add Nyckelord</addInspireTheme>
+  <accessConstraintsBtn>Åtkomstrestriktioner</accessConstraintsBtn>
+  <legalConstraintsBtn>Legal constraints</legalConstraintsBtn>
+  <UseRestrictionsBtn>Use Restrictions</UseRestrictionsBtn>
+  <AccessRestrictionsBtn>Access Restrictions</AccessRestrictionsBtn>
 </strings>

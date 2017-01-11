@@ -193,6 +193,30 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- Inflate format -->
+  <xsl:template match="gmd:MD_Distributor">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:distributorContact" />
+      <xsl:apply-templates select="gmd:distributionOrderProcess" />
+      <xsl:apply-templates select="gmd:distributorFormat" />
+      <xsl:if test="not(gmd:distributorFormat)">
+        <gmd:distributorFormat>
+          <gmd:MD_Format>
+            <gmd:name gco:nilReason='missing'>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:name>
+            <gmd:version gco:nilReason='missing'>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:version>
+          </gmd:MD_Format>
+        </gmd:distributorFormat>
+      </xsl:if>
+      <xsl:apply-templates select="gmd:distributorTransferOptions" />
+    </xsl:copy>
+  </xsl:template>
+
   <!-- ================================================================= -->
   <!-- copy everything else as is -->
 
