@@ -51,5 +51,10 @@
     "forPublishers":"för publicerare",
     "administrationMenu":"administration",
     "logout":"logout",
-    "menu":"meny"
+    "menu":"meny",
+    "predefinedMapsTitle":"Exempel på datasamlingar",
+    "mapServices":"karttjänster",
+    "downloadableResources":"Direktåtkomliga resurser",
+    "drawingOnMap":"Rita på karta",
+    "favourites":"favoriter"
 }
