@@ -798,9 +798,9 @@ presentationsregler som används</description>
         <condition>mandatory</condition>
     </element>
     <element context="gmd:MD_Metadata" id="8.0" name="gmd:contact">
-        <condition>mandatory</condition>
         <label>Metadatakontakt</label>
         <description>ansvarig för metadatamängden</description>
+        <condition>mandatory</condition>
     </element>
     <element context="gmd:MD_MaintenanceInformation" id="148.1" name="gmd:contact">
         <label>Ansvarig</label>
@@ -1094,7 +1094,7 @@ resursen.</description>
         <label>Format</label>
         <description>Information om format som kan tillhandahållas av
 distributören.</description>
-        <condition>conditional</condition>
+        <condition>mandatory</condition>
     </element>
     <element id="283.0" name="gmd:distributorTransferOptions">
         <label>Överföringsalternativ</label>
@@ -1259,6 +1259,7 @@ komprimerade data</description>
         <label>Identifierare för
 metadatamängd</label>
         <description>Unik identifierare för metadatamängden.</description>
+        <condition>mandatory</condition>
     </element>
     <element id="49.0" name="gmd:fileName">
         <label>Filnamn</label>
@@ -1344,6 +1345,7 @@ angivna skyddsklassen.</description>
         <label>Hierarkisk nivå</label>
         <description>Hierarkisk nivå för den resurs som metadatamängden beskriver
 Exempelvis: datamängd, datamängdserie eller tjänst.…</description>
+      <condition>mandatory</condition>
     </element>
     <element id="7.0" name="gmd:hierarchyLevelName">
         <label>Beskrivning av hierarkisk nivå</label>
@@ -1558,6 +1560,7 @@ intervall och omfattning av uppdateringar.</description>
         <description>Namn på den standard som metadatamängden följer
 inklusive namn på eventuell profil
 Ex. SS-EN ISO 19115.</description>
+      <condition>mandatory</condition>
     </element>
     <element id="11.0" name="gmd:metadataStandardVersion">
         <label>Version av metadatastandard</label>
@@ -1818,6 +1821,7 @@ Ex. SS-EN ISO 19115.</description>
     <element id="277.0" name="gmd:onLine">
         <label>Online-källa</label>
         <description>Referens till onlinekälla som kan användas för att få tillgång till resursen</description>
+        <condition>mandatory</condition>
     </element>
     <element id="390.0" name="gmd:onlineResource">
         <help>Define URL to access the website</help>
