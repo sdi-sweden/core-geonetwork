@@ -308,7 +308,7 @@
     "sourceRecord": "Källpost",
     "deleteField": "Radera detta fält",
     "deleteFieldSet": "Delete this fields set",
-    "onlyMyRecord": "Bara min post",
+    "onlyMyRecord": "Endast mina poster",
     "toggleSection": "Toggle expand / collapse",
     "editorBoardInfo": "Skapa eller importera en ny post från denna sida. Snabb åtkomst till, och hantering av, alla metadataposter.",
     "minorEditHelp": "Uppdatera inte tidsstämpeln när man sparar",
