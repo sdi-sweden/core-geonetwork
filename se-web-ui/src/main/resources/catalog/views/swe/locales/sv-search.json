@@ -70,5 +70,7 @@
     "cancel":"Avbryt",
     "leaveComment": "Lämna kommentar",
     "comments": "Kommentarer",
-    "sortBy": "Sortera efter"
+    "sortBy": "Sortera efter",
+    "print_legend": "Skriv ut teckenförklaring",
+    "print_legend_field": "Teckenförklaring"
 }
