@@ -1,4 +1,4 @@
-{
+﻿{
     "geographicalFilterTooltip-title": "Geografiskt filter",
     "geographicalFilterTooltip-desc": "Geografiskt filter ...",
     "geographicalFilterTooltip-link": "https://ver.geodata.se/geodataportalens-hjalpsidor/forstasidan/#chapter1",
@@ -52,6 +52,9 @@
     "Surface": "Yta",
     "drawFreeHandPolygonInMap": "Rita polygon i karta",
     "Add" : "Lägg till",
+    "searchKeyword": "Nyckelord",
+    "searchTopicCategory" : "Ämneskategori",
+    "searchOrganisation" : "Organisation"
     "organisation": "Organisation",
     "topicCategory": "Ämneskategori",
     "keyword": "Nyckelord",
