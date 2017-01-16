@@ -50,5 +50,11 @@
     "layersDelete":"Radera alla lager",
     "Distance": "Avstånd",
     "Surface": "Yta",
-    "drawFreeHandPolygonInMap": "Rita polygon i karta"
+    "drawFreeHandPolygonInMap": "Rita polygon i karta",
+    "Add" : "Lägg till",
+    "layersDelete":"Radera alla lager",    
+    "createMetadata-cancel": "Avbryt",
+    "searchKeyword": "Nyckelord",
+    "searchTopicCategory" : "Ämneskategori",
+    "searchOrganisation" : "Organisation"
 }
