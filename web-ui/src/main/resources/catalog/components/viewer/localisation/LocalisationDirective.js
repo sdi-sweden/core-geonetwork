@@ -109,6 +109,10 @@
                   type: 'json',
                   maxRows: 10,
                   name_startsWith: query,
+                  east: 24.1633,
+                  west: 10.9614,
+                  north: 69.059,
+                  south: 55.3363,
                   username: 'georchestra'
                 }
               }).

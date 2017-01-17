@@ -10,9 +10,6 @@
 		<dc:description>Initiativ vocabulary.</dc:description>
 		<dcterms:issued>2011-04-04 12:00:00</dcterms:issued>
 		<dcterms:modified>2011-04-04 12:00:00</dcterms:modified>
-		<skos:hasTopConcept rdf:resource="http://www.geodata.com/thesaurus#inspire"/>
-		<skos:hasTopConcept rdf:resource="http://www.geodata.com/thesaurus#geodatasamverkan"/>
-		<skos:hasTopConcept rdf:resource="http://www.geodata.com/thesaurus#oppnadata"/>
 	</skos:ConceptScheme>
 	
 	<skos:Concept rdf:about="http://www.geodata.com/thesaurus#inspire">

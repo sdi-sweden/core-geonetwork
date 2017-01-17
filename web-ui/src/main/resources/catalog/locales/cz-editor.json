@@ -90,6 +90,8 @@
     "chooseRegion": "Vybrat kraj",
     "clickToDrawABox": "Prvním kliknutím spusťte kreslení a nakreslete okénko. Následujícím kliknutím kreslení ukončíte.",
     "closeEditor": "Uložit a zavřít",
+	"inspireValidation": "Inspire-validering",
+	"mdRelationValidation": "Kontroll av länkar",
     "continent": "Kontinent",
     "copyPaste": "Zkopírovat/vložit",
     "country": "Země",

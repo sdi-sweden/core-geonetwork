@@ -125,7 +125,7 @@
            }
          };
          var setStatus = function(status) {
-           gnCurrentEdit.savedStatus = $translate(status.msg);
+           gnCurrentEdit.savedStatus = $translate.instant(status.msg);
            gnCurrentEdit.savedTime = moment();
            gnCurrentEdit.saving = status.saving;
          };
@@ -215,6 +215,34 @@
              return defer.promise;
            },
 
+		   /**
+           * Inspire Validation.
+           */
+           inspireValidate: function() {
+			 var defer = $q.defer();
+             $http.post('../api/records/' + gnCurrentEdit.id + '/validate/inspire')
+			 .success(function(data) {
+                defer.resolve(data);
+              }).error(function(data, status, header, config) {
+                defer.reject(data);
+              });
+             return defer.promise;
+           },
+		   
+		   /**
+           * MDRelation Validation.
+           */
+           mdRelationValidate: function() {
+             var defer = $q.defer();
+             $http.post('../api/records/' + gnCurrentEdit.id + '/validate/mdrelation')
+			 .success(function(data) {
+                defer.resolve(data);
+              }).error(function(data, status, header, config) {
+                defer.reject(data);
+              });
+             return defer.promise;
+           },
+		   
            /**
            * Reload editor with the html snippet given
            * in parameter. If no snippet is provided, then

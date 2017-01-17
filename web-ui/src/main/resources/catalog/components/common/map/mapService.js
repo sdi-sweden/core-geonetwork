@@ -61,14 +61,13 @@
       'gnWfsService',
       'gnGlobalSettings',
       'gnViewerSettings',
-      'gnSearchSettings',
       function(ngeoDecorateLayer, gnOwsCapabilities, gnConfig, $log,
           gnSearchLocation, $rootScope, gnUrlUtils, $q, $translate,
           gnWmsQueue, gnSearchManagerService, Metadata, gnWfsService,
-          gnGlobalSettings, viewerSettings, gnSearchSettings) {
+          gnGlobalSettings, viewerSettings) {
 
         var defaultMapConfig = {
-          'useOSM': 'true',
+          //'useOSM': 'true',
           'projection': 'EPSG:3857',
           'projectionList': [{
             'code': 'EPSG:4326',
@@ -78,6 +77,7 @@
             'label': 'Google mercator (EPSG:3857)'
           }]
         };
+        proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
 
         /**
          * @description
@@ -118,8 +118,6 @@
           return Math.min(1.5, Math.max(1, ratio));
         };
 
-        var initialize = false;
-        var draw;
         return {
 
           /**
@@ -328,12 +326,13 @@
           getMapConfig: function() {
             if (gnConfig['map.config'] &&
                 angular.isObject(gnConfig['map.config'])) {
-              return gnConfig['map.config'];
+              return gnConfig['map.config'];           
             } else {
               return defaultMapConfig;
             }
           },
 
+          //Commented out code to add OSM map.Since we are not using OSM map in editor
           /**
            * @ngdoc method
            * @methodOf gn_map.service:gnMap
@@ -345,7 +344,7 @@
            *
            * @return {Object} defaultMapConfig layers config
            */
-          getLayersFromConfig: function() {
+          /*getLayersFromConfig: function() {
             var conf = this.getMapConfig();
             var source;
 
@@ -362,7 +361,7 @@
             return new ol.layer.Tile({
               source: source
             });
-          },
+          },*/
 
           /**
            * @ngdoc method
@@ -572,7 +571,7 @@
                       tileEvent.currentTarget.getParams().LAYERS :
                       layerParams.LAYERS;
 
-                  var msg = $translate('layerTileLoadError', {
+                  var msg = $translate.instant('layerTileLoadError', {
                     url: url,
                     layer: layer
                   });
@@ -630,12 +629,12 @@
                   }
                 }
               } else {
-                errors.push($translate('layerCRSNotFound'));
-                console.warn($translate('layerCRSNotFound'));
+                errors.push($translate.instant('layerCRSNotFound'));
+                console.warn($translate.instant('layerCRSNotFound'));
               }
               if (!isLayerAvailableInMapProjection) {
-                errors.push($translate('layerNotAvailableInMapProj'));
-                console.warn($translate('layerNotAvailableInMapProj'));
+                errors.push($translate.instant('layerNotAvailableInMapProj'));
+                console.warn($translate.instant('layerNotAvailableInMapProj'));
               }
               */
 
@@ -757,13 +756,13 @@
                   }
                 }
               } else {
-                errors.push($translate('layerCRSNotFound'));
-                console.warn($translate('layerCRSNotFound'));
+                errors.push($translate.instant('layerCRSNotFound'));
+                console.warn($translate.instant('layerCRSNotFound'));
               }
 
               if (!isLayerAvailableInMapProjection) {
-                errors.push($translate('layerNotAvailableInMapProj'));
-                console.warn($translate('layerNotAvailableInMapProj'));
+                errors.push($translate.instant('layerNotAvailableInMapProj'));
+                console.warn($translate.instant('layerNotAvailableInMapProj'));
               }
 
               // TODO: parse better legend & attribution
@@ -1010,7 +1009,7 @@
                   if (!angular.isArray(olL.get('errors'))) {
                     olL.set('errors', []);
                   }
-                  var errormsg = $translate('layerNotfoundInCapability', {
+                  var errormsg = $translate.instant('layerNotfoundInCapability', {
                     layer: name,
                     url: url
                   });
@@ -1202,7 +1201,7 @@
                 if (!angular.isArray(olL.get('errors'))) {
                   olL.set('errors', []);
                 }
-                var errormsg = $translate('layerNotfoundInCapability', {
+                var errormsg = $translate.instant('layerNotfoundInCapability', {
                   layer: name,
                   url: url
                 });
@@ -1404,58 +1403,6 @@
             }
           },
 
-
-             /**
-           * @ngdoc method
-           * @methodOf gn_map.service:gnMap
-           * @name gnMap#drawpolygon
-           *
-           * @description
-           * Draw Free hand polygon in map
-           
-           */
-
-          drawFreeHandPolygonInMap: function(scope, trigger, toggle) {
-
-            var self = this              
-            if(!initialize){
-              scope.viewerMap.getLayers().getArray()[1].setStyle(gnSearchSettings.olStyles.mdExtentHighlight)
-              scope.viewerMap.getLayers().getArray()[1].setMap(scope.searchMap);
-              var features = new ol.Collection();
-              var extent;
-              draw = new ol.interaction.Draw({
-                features: features,
-                type: 'Polygon'
-              });
-              initialize = true;
-            }
- 
-            if(toggle){               
-            scope.viewerMap.addInteraction(draw);
-            scope.searchMap.addInteraction(draw);
-             draw.on('drawend', function (e) {
-                delete scope.namesearch;
-                len = scope.viewerMap.getLayers().getLength();
-                for(i=1;i<len;i++){
-                  scope.viewerMap.getLayers().getArray()[i].getSource().clear()
-                }
-                scope.viewerMap.getLayers().getArray()[1].getSource().addFeature(e.feature)
-                var extent = scope.viewerMap.getLayers().getArray()[1].getSource().getExtent()
-                var geoJson = new ol.format.GeoJSON();
-                proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
-              //proj4.defs("EPSG:4258","+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs");
-                var geom = self.reprojExtent(extent , 'EPSG:3006', 'EPSG:4326');
-                var geom_wkt = "POLYGON((" + geom[0] + " " + geom[1] + "," + geom[2] + " " + geom[1] + "," + geom[2] + " " + geom[3] + "," + geom[2] + " " + geom[1] + "," + geom[0] + " " + geom[1] + "))";
-                scope.params.geometry = geom_wkt;
-                trigger.triggerSearch()
-                })
-            }
-              
-             else{
-                  scope.viewerMap.removeInteraction(draw);
-                  scope.searchMap.removeInteraction(draw);
-             }   
-        },
 
           /**
            * @ngdoc method

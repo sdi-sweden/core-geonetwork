@@ -114,6 +114,109 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- Inflate organisation name and role if required -->
+  <xsl:template match="gmd:CI_ResponsibleParty">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:individualName" />
+
+      <xsl:apply-templates select="gmd:organisationName" />
+
+      <xsl:if test="not(gmd:organisationName)">
+        <gmd:organisationName gco:nilReason='missing'>
+          <gco:CharacterString></gco:CharacterString>
+        </gmd:organisationName>
+      </xsl:if>
+
+      <xsl:apply-templates select="gmd:positionName" />
+      <xsl:apply-templates select="gmd:contactInfo" />
+
+      <xsl:apply-templates select="gmd:role" />
+
+      <xsl:if test="not(gmd:role)">
+        <gmd:role>
+          <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                           codeListValue=""/>
+        </gmd:role>
+      </xsl:if>
+    </xsl:copy>
+  </xsl:template>
+
+
+  <!-- Inflate electronic mail address if required -->
+  <xsl:template match="gmd:address">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:for-each select="gmd:CI_Address">
+        <xsl:copy>
+          <xsl:copy-of select="@*" />
+
+          <xsl:apply-templates select="gmd:deliveryPoint" />
+          <xsl:apply-templates select="gmd:city" />
+          <xsl:apply-templates select="gmd:administrativeArea" />
+          <xsl:apply-templates select="gmd:postalCode" />
+          <xsl:apply-templates select="gmd:country" />
+          <xsl:apply-templates select="gmd:electronicMailAddress" />
+
+          <xsl:if test="not(gmd:electronicMailAddress)">
+            <gmd:electronicMailAddress gco:nilReason='missing'>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:electronicMailAddress>
+          </xsl:if>
+        </xsl:copy>
+      </xsl:for-each>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- Inflate voice phone if required -->
+  <xsl:template match="gmd:phone">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:for-each select="gmd:CI_Telephone">
+        <xsl:copy>
+          <xsl:copy-of select="@*" />
+
+          <xsl:apply-templates select="gmd:voice" />
+
+          <xsl:if test="not(gmd:voice)">
+            <gmd:voice gco:nilReason='missing'>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:voice>
+          </xsl:if>
+
+          <xsl:apply-templates select="gmd:facsimile" />
+        </xsl:copy>
+      </xsl:for-each>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- Inflate format -->
+  <xsl:template match="gmd:MD_Distributor">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:distributorContact" />
+      <xsl:apply-templates select="gmd:distributionOrderProcess" />
+      <xsl:apply-templates select="gmd:distributorFormat" />
+      <xsl:if test="not(gmd:distributorFormat)">
+        <gmd:distributorFormat>
+          <gmd:MD_Format>
+            <gmd:name gco:nilReason='missing'>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:name>
+            <gmd:version gco:nilReason='missing'>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:version>
+          </gmd:MD_Format>
+        </gmd:distributorFormat>
+      </xsl:if>
+      <xsl:apply-templates select="gmd:distributorTransferOptions" />
+    </xsl:copy>
+  </xsl:template>
+
   <!-- ================================================================= -->
   <!-- copy everything else as is -->
 

@@ -6,30 +6,32 @@
     </a>
   </div>
 
-  <div class="header-middle-cont">
+  <div class="header-middle-cont clearfix">
     <a href="" data-swe-show-dialog="" data-dialog="#mail-popup" data-focus-control="#inputName" class="header-leave-comment header-text">
-      <span class="text">tyck till</span>
+      <span class="text hidden-xs hidden-sm">tyck till</span>
     </a>
     <div class="dropdown-cont other-geodata-cont" data-swe-toggle-style="">
-      <div class="-label"><span class="icon-dot-3"></span> <span data-translate="">otherGeodata</span><span class="icon-down-dir"></span></div>
+      <div class="-label"><span class="icon-dot-3"></span>
+        <span class="hidden-xs hidden-sm" data-translate="">otherGeodata</span><span class="icon-down-dir"></span>
+      </div>
       <ul class="-list">
         <li><a href="geodata_row_popup.html" class="-text-link">get-tjänster</a></li>
       </ul>
     </div>
     <a data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="../../login" class="header-login header-text">
-      för publicerare
+      <span class="hidden-xs hidden-sm">för publicerare</span>
     </a>
 
     <a data-swe-show-dialog="" data-dialog="#newmetadata-popup" data-ng-show="authenticated" href="" class="header-login header-text login-popup-link">
-       <span data-translate="">createMetadata-menu</span>
+       <span class="hidden-xs hidden-sm" data-translate="">createMetadata-menu</span>
     </a>
 
     <a data-ng-show="authenticated" href="admin.console" class="header-admin header-text">
-      administration
+      <span class="hidden-xs hidden-sm">administration</span>
     </a>
 
     <a data-ng-show="authenticated" href="/AGLogout" class="header-logout header-text">
-      logout
+      <span class="hidden-xs hidden-sm">logout</span>
     </a>
   </div>
 

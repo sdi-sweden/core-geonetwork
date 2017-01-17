@@ -40,6 +40,7 @@
   <default>Standard</default>
   <simple>Enkel</simple>
   <inspire>INSPIRE</inspire>
+  <inspire_sds>SDS</inspire_sds>
   <resource>Resurs</resource>
   <xml>XML</xml>
   <metadata>Metadata</metadata>
@@ -90,6 +91,9 @@
   <pass>Överensstämmer</pass>
   <indeterminatePosition>Obestämbar position</indeterminatePosition>
   <pointOfContact>Resurskontakt</pointOfContact>
+  <distributorContactView>Distributionskontakt</distributorContactView>
+  <LI_LineageView>Tillkomsthistorik</LI_LineageView>
+  <metadataContactView>Metadatakontakt</metadataContactView>
   <metadataPointOfContact>Metadatakontakt</metadataPointOfContact>
   <organisationName>Organisationsnamn</organisationName>
   <electronicMailAddress>ePost</electronicMailAddress>
@@ -136,10 +140,21 @@
   
   <restriktionerInfo>Restriktioner</restriktionerInfo>
   <onLinkLinks>Online-länkar</onLinkLinks>
-  <onLineLinkProtocol>Protokoll</onLineLinkProtocol>
+  <onLineLinkProtocol>Länktyp</onLineLinkProtocol>
   <onLineLinkName>Namn</onLineLinkName>
   <onLineLinkUrl>Url</onLineLinkUrl>
+  <http_ogc_wfs>Kartjänst (WFS)</http_ogc_wfs>
+  <http_ogc_wms>Kartjänst (WMS)</http_ogc_wms>
+  <http_information>Informationssida</http_information>
+  <http_nedladdning>Nedladdningslänk</http_nedladdning>
+  <http_nedladdning_atom>Nedladdningslänk (ATOM)</http_nedladdning_atom>
   <roleLabel>Ansvarsområde</roleLabel>
   <otherConstraints>Övriga restriktioner</otherConstraints>
   <scales>Rumslig upplösning</scales>
+
+  <addInspireTheme>add Nyckelord</addInspireTheme>
+  <accessConstraintsBtn>Åtkomstrestriktioner</accessConstraintsBtn>
+  <legalConstraintsBtn>Legal constraints</legalConstraintsBtn>
+  <UseRestrictionsBtn>Use Restrictions</UseRestrictionsBtn>
+  <AccessRestrictionsBtn>Access Restrictions</AccessRestrictionsBtn>
 </strings>

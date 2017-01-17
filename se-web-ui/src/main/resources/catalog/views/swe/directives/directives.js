@@ -311,6 +311,39 @@
         }
       };
   }]);
+  
+  /**
+   * @ngdoc directive
+   * @name sweGeoTechnic
+   * @function
+   *
+   * @description
+   * Shows geotechnics on home page.
+   *
+   */
+  module.directive('sweGeoTechnicsFilter', ['$http', 'gnOwsContextService', 'gnSearchSettings',
+    function($http, gnOwsContextService, gnSearchSettings) {
+      return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: '../../catalog/views/swe/directives/' +
+          'partials/geoTechnics.html',
+        scope: {
+          geoTechnics: '@',
+          showMapFn: '&',
+          configUrl: '@'
+        },
+        link: function(scope, element, attrs) {
+          $http.get(scope.configUrl).success(function(data) {
+            scope.geoTechnics = data[0];
+          });
+          scope.doView = function(geoTechnic) {
+            gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
+            scope.showMapFn()();
+          };
+        }
+      };
+  }]);
 
 
   module.directive('sweFacetDimensionList', [

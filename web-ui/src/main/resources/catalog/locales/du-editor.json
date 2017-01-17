@@ -90,6 +90,8 @@
     "chooseRegion": "Kies een regio",
     "clickToDrawABox": "Klik eenmaal om in te schakelen en selecteer een gebied . Klik nogmaals om te stoppen met tekenen.",
     "closeEditor": "Opslaan en sluiten",
+	"inspireValidation": "Inspire-validering",
+	"mdRelationValidation": "Kontroll av länkar",
     "continent": "continent",
     "copyPaste": "Kopieer/Plak",
     "country": "land",

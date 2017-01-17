@@ -332,7 +332,7 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$refSystemModel}, {$refSystemTableModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '{local-name()}', '#refsystem-popup', '{$labelConfig/label}')" >
+         data-ng-init="init({$refSystemModel}, {$refSystemTableModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '{local-name()}', '#refsystem-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -442,7 +442,7 @@
 
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$dateModel},  {$dateTableModel}, '{$dateXmlSnippet}', {../gn:element/@ref}, '{local-name()}',  '#date-popup', '{$labelConfig/label}')" >
+         data-ng-init="init({$dateModel},  {$dateTableModel}, '{$dateXmlSnippet}', {../gn:element/@ref}, '{local-name()}',  '#date-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -513,6 +513,8 @@
 
     <xsl:variable name="elementName" select="name()"/>
 
+    <xsl:message>NAME: <xsl:value-of select="name()" /></xsl:message>
+    <xsl:message>NAME ..: <xsl:value-of select="name(..)" /></xsl:message>
     <xsl:variable name="labelConfig"
                   select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
 
@@ -621,7 +623,7 @@
 
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$contactModel}, {$contactTableModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#contact-popup-{local-name()}', '{$labelConfig/label}')" >
+         data-ng-init="init({$contactModel}, {$contactTableModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#contact-popup-{local-name()}', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -633,14 +635,14 @@
         <div data-swe-date-dialog="">
           <div>
             <label class="col-sm-2 control-label">
-              Organisation
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:organisationName', $labels, name(..), '', '')/label" />
             </label>
             <input type="text" class="form-control" data-ng-model="editRow.organisation" />
           </div>
 
           <div>
             <label class="col-sm-2 control-label">
-              Phone
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:voice', $labels, name(..), '', '')/label" />
             </label>
 
             <input type="text" class="form-control" data-ng-model="editRow.phone" />
@@ -649,7 +651,7 @@
 
           <div>
             <label class="col-sm-2 control-label">
-              E-mail
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:electronicMailAddress', $labels, name(..), '', '')/label" />
             </label>
 
             <input type="text" class="form-control" data-ng-model="editRow.email" />
@@ -658,7 +660,7 @@
 
           <div>
             <label class="col-sm-2 control-label">
-              Role
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:role', $labels, name(..), '', '')/label" />
             </label>
 
             <xsl:variable name="codelist"
@@ -756,7 +758,7 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#format-popup', '{$labelConfig/label}')" >
+         data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#format-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -866,7 +868,7 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$thumbnailModel}, {$thumbnailTableModel}, '{$thumbnailXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#thumbnail-popup', '{$labelConfig/label}')" >
+         data-ng-init="init({$thumbnailModel}, {$thumbnailTableModel}, '{$thumbnailXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#thumbnail-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -986,7 +988,7 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup', '{$labelConfig/label}')" >
+         data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -1055,5 +1057,38 @@
 
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[position() &gt; 1]" priority="1000" />
 
+  <!-- Other constraints with gmx:Anchor -->
+  <xsl:template mode="mode-iso19139" priority="200" match="gmd:otherConstraints[$schema='iso19139.swe' and gmx:Anchor]">
+    <xsl:variable name="name" select="name(.)"/>
 
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, $name, $labels)"/>
+    <xsl:variable name="helper" select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
+
+
+    <xsl:variable name="attributes">
+      <!-- Create form for all existing attribute (not in gn namespace)
+      and all non existing attributes not already present. -->
+      <xsl:apply-templates mode="render-for-field-for-attribute"
+                           select="
+        gmx:Anchor/@*|
+        gmx:Anchor/gn:attribute[not(@name = parent::node()/@*/name())]">
+        <xsl:with-param name="ref" select="gmx:Anchor/gn:element/@ref"/>
+        <xsl:with-param name="insertRef" select="gmx:Anchor/gn:element/@ref"/>
+      </xsl:apply-templates>
+    </xsl:variable>
+
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label" select="$labelConfig/label"/>
+      <xsl:with-param name="value" select="gmx:Anchor" />
+      <xsl:with-param name="name" select="gmx:Anchor/gn:element/@ref" />
+      <xsl:with-param name="cls" select="local-name()" />
+      <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+      <xsl:with-param name="editInfo" select="gmx:Anchor/gn:element" />
+      <xsl:with-param name="isDisabled" select="false()" />
+      <xsl:with-param name="attributesSnippet" select="$attributes" />
+      <xsl:with-param name="forceDisplayAttributes" select="true()" />
+      <xsl:with-param name="directive" select="'swe-anchor-list-directive'"/>
+
+    </xsl:call-template>
+  </xsl:template>
 </xsl:stylesheet>
