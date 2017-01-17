@@ -115,9 +115,9 @@
       <field name="_download" tagName="download"/>
       <field name="_dynamic" tagName="dynamic"/>
       <field name="_featured" tagName="featured"/>
-      <field name="_owner" tagName="owner"/>
+      <field name="_owner" tagName="owner"  multilingualSortField="true"/>
       <field name="_userinfo" tagName="userinfo"/>
-      <field name="_ownername" tagName="ownername"/>
+      <field name="_ownername" tagName="ownername"  multilingualSortField="true"/>
       <field name="_cat" tagName="category"/>
       <field name="topicCat" tagName="topicCat"/>
       <field name="inspirethemewithac" tagName="inspirethemewithac"/>
@@ -134,7 +134,7 @@
       <field name="_title" tagName="title" multilingualSortField="true"/>
       <field name="_docLocale" tagName="docLocale"/>
       <field name="_locale" tagName="_locale"/>
-      <field name="_defaultTitle" tagName="defaultTitle"/>
+      <field name="_defaultTitle" tagName="defaultTitle"  multilingualSortField="true"/>
       <field name="createDate" tagName="creationDate"/>
       <field name="revisionDate" tagName="revisionDate"/>
       <field name="publicationDate" tagName="publicationDate"/>
@@ -155,7 +155,7 @@
       <field name="cl_status_text" tagName="status_text"/>
       <field name="updateFrequency" tagName="updateFrequency"/>
       <field name="lineage" tagName="lineage"/>
-      <field name="responsibleParty" tagName="responsibleParty"/>
+      <field name="responsibleParty" tagName="responsibleParty"  multilingualSortField="true"/>
       <field name="MD_LegalConstraintsOtherConstraints" tagName="legalConstraints"/>
       <field name="MD_LegalConstraintsUseLimitation" tagName="legalConstraints"/>
       <field name="MD_SecurityConstraintsUseLimitation" tagName="securityConstraints"/>
@@ -249,11 +249,18 @@
     <Field name="_cat" analyzer="org.apache.lucene.analysis.core.KeywordAnalyzer"/>
 
 
-    <Field name="keyword" analyzer="org.apache.lucene.analysis.core.KeywordAnalyzer"/>
+    <Field name="keyword" analyzer="org.apache.lucene.analysis.sv.SwedishAnalyzer"/>
     <Field name="inspirerelated" analyzer="org.apache.lucene.analysis.core.KeywordAnalyzer"/>
     <Field name="_groupPublished" analyzer="org.apache.lucene.analysis.core.KeywordAnalyzer"/>
     <Field name="_source" analyzer="org.apache.lucene.analysis.core.KeywordAnalyzer"/>
 
+    <Field name="_title" analyzer="org.apache.lucene.analysis.sv.SwedishAnalyzer" />
+    <Field name="_defaultTitle" analyzer="org.apache.lucene.analysis.sv.SwedishAnalyzer" />
+    <Field name="_owner" analyzer="org.apache.lucene.analysis.sv.SwedishAnalyzer" />
+    <Field name="_ownername" analyzer="org.apache.lucene.analysis.sv.SwedishAnalyzer" />
+    <Field name="responsibleParty" analyzer="org.apache.lucene.analysis.sv.SwedishAnalyzer" />
+    <Field name="abstract" analyzer="org.apache.lucene.analysis.sv.SwedishAnalyzer" />    
+    
   </fieldSpecificAnalyzer>
 
   <fieldSpecificSearchAnalyzer>
