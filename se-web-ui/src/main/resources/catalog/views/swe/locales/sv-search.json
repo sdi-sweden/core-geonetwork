@@ -50,5 +50,6 @@
     "layersDelete":"Radera alla lager",
     "Distance": "Avstånd",
     "Surface": "Yta",
-    "drawFreeHandPolygonInMap": "Rita polygon i karta"
+    "drawFreeHandPolygonInMap": "Rita polygon i karta",
+    "geotechnic": "Geoteknik"
 }
