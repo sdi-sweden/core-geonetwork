@@ -8,37 +8,37 @@
 
   <div class="header-middle-cont clearfix">
     <a href="" data-swe-show-dialog="" data-dialog="#mail-popup" data-focus-control="#inputName" class="header-leave-comment header-text">
-      <span class="text hidden-xs hidden-sm">tyck till</span>
+      <span class="text" data-translate="">leaveComment</span>
     </a>
     <div class="dropdown-cont other-geodata-cont" data-swe-toggle-style="">
       <div class="-label"><span class="icon-dot-3"></span>
         <span class="hidden-xs hidden-sm" data-translate="">otherGeodata</span><span class="icon-down-dir"></span>
       </div>
       <ul class="-list">
-        <li><a href="geodata_row_popup.html" class="-text-link">get-tjänster</a></li>
+        <li><a href="geodata_row_popup.html" class="-text-link"><span data-translate="">getService</span></a></li>
       </ul>
     </div>
 	<swe-geo-technics-filter data-config-url="{{geotechnicsUrl}}" data-show-map-fn="showMapPanel"></swe-geo-technics-filter>
     <a data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="../../login" class="header-login header-text">
-      <span class="hidden-xs hidden-sm">för publicerare</span>
+      <span data-translate="">forPublishers</span>
     </a>
 
     <a data-swe-show-dialog="" data-dialog="#newmetadata-popup" data-ng-show="authenticated" href="" class="header-login header-text login-popup-link">
-       <span class="hidden-xs hidden-sm" data-translate="">createMetadata-menu</span>
+       <span data-translate="">createMetadata-menu</span>
     </a>
 
     <a data-ng-show="authenticated" href="admin.console" class="header-admin header-text">
-      <span class="hidden-xs hidden-sm">administration</span>
+      <span data-translate="">administrationMenu</span>
     </a>
 
-    <a data-ng-show="authenticated" href="" data-ng-click="logout()" data-ng-controller="SweLogoutController" class="header-logout header-text">
-      <span class="hidden-xs hidden-sm">logout</span>
+    <a data-ng-show="authenticated" href="/AGLogout" class="header-logout header-text">
+      <span data-translate="">logout</span>
     </a>
   </div>
 
   <div class="header-right-cont">
     <a href="" class="header-menu header-text">      
-      meny
+      <span data-translate="">menu</span>
     </a>
   </div>
 </div>
