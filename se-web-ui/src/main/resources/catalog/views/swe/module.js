@@ -506,6 +506,20 @@
           viewerMap.renderSync();
         }, 500);
       };
+      
+      /**
+       * Show large map panel.
+       */
+      $scope.showLargeMapPanel = function() {
+        angular.element('.floating-map-cont').hide();
+        $scope.$emit('body:class:add', 'large-map-view');
+          $timeout(function() {
+          viewerMap.updateSize();
+          viewerMap.renderSync();
+        }, 500);
+          $obj = angular.element('#map-panel-resize');
+          $obj.removeClass('full').addClass('small');
+      };
 
       /**
        * Hide map panel.
@@ -515,60 +529,75 @@
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:remove', 'full-map-view');
         $scope.$emit('body:class:remove', 'medium-map-view');
+        $scope.$emit('body:class:remove', 'large-map-view');
       };
-
+      
       $scope.resizeMapPanel = function() {
-        var $b = angular.element(document).find('body');
-        window_width = angular.element($window).width(),
-        $map_data_list_cont = angular.element('.map-data-list-cont'),
-        is_side_data_bar_open =
-            ($map_data_list_cont.hasClass('open')) ? true : false,
-        is_full_view_map = ($b.hasClass('full-map-view')) ? true : false,
-        $data_list_cont = angular.element('.data-list-cont'),
-        $map_cont = angular.element('.map-cont'),
-        $obj = angular.element('#map-panel-resize');
+          var $b = angular.element(document).find('body');
+          window_width = angular.element($window).width(),
+          $map_data_list_cont = angular.element('.map-data-list-cont'),
+          is_side_data_bar_open =
+              ($map_data_list_cont.hasClass('open')) ? true : false,
+          is_full_view_map = ($b.hasClass('full-map-view')) ? true : false,
+          is_large_view_map = ($b.hasClass('large-map-view')) ? true : false,
+          $data_list_cont = angular.element('.data-list-cont'),
+          $map_cont = angular.element('.map-cont'),
+          $obj = angular.element('#map-panel-resize');
 
-        if (is_full_view_map) {
-          if (is_side_data_bar_open) {
-            $scope.$emit('body:class:remove', 'full-map-view');
-            $scope.$emit('body:class:add', 'medium-map-view');
-          } else {
-            $scope.$emit('body:class:remove', 'full-map-view');
-            $scope.$emit('body:class:add', 'small-map-view');
+          if (is_full_view_map) {
+            if (is_side_data_bar_open) {
+              $scope.$emit('body:class:remove', 'full-map-view');
+              $scope.$emit('body:class:add', 'medium-map-view');
+            } else {
+              $scope.$emit('body:class:remove', 'full-map-view');
+              $scope.$emit('body:class:add', 'small-map-view');
+            }
+
+            $obj.removeClass('small').addClass('full');
+          }
+          else if (is_large_view_map) {
+          	if (is_side_data_bar_open) {
+                $scope.$emit('body:class:remove', 'large-map-view');
+                $scope.$emit('body:class:add', 'medium-map-view');
+              } else {
+                $scope.$emit('body:class:remove', 'large-map-view');
+                $scope.$emit('body:class:add', 'small-map-view');
+              }
+              $obj.removeClass('small').addClass('full');
+    		}
+          else {
+            $scope.$emit('body:class:remove', 'large-map-view');
+            $scope.$emit('body:class:remove', 'medium-map-view');
+            $scope.$emit('body:class:remove', 'small-map-view');
+            $scope.$emit('body:class:add', 'full-map-view');
+
+            if (is_side_data_bar_open) {
+              $map_cont.css({
+                width: (window_width - $data_list_cont.width())
+              });
+            } else {
+              $map_cont.css({
+                width: window_width
+              });
+            }
+            $obj.removeClass('full').addClass('small');
           }
 
-          $obj.removeClass('small').addClass('full');
-        } else {
-          $scope.$emit('body:class:remove', 'medium-map-view');
-          $scope.$emit('body:class:remove', 'small-map-view');
-          $scope.$emit('body:class:add', 'full-map-view');
+          // Refresh the viewer map
 
-          if (is_side_data_bar_open) {
-            $map_cont.css({
-              width: (window_width - $data_list_cont.width())
+          $timeout(function() {
+            viewerMap.updateSize();
+            viewerMap.renderSync();
+
+            $("div.bootstrap-table div.fixed-table-container div.fixed-table-body table").each(function( ) {
+              $( this ).bootstrapTable('resetView');
             });
-          } else {
-            $map_cont.css({
-              width: window_width
-            });
-          }
-          $obj.removeClass('full').addClass('small');
-        }
 
-        // Refresh the viewer map
+          }, 500);
 
-        $timeout(function() {
-          viewerMap.updateSize();
-          viewerMap.renderSync();
+          return false;
+        };
 
-          $("div.bootstrap-table div.fixed-table-container div.fixed-table-body table").each(function( ) {
-            $( this ).bootstrapTable('resetView');
-          });
-
-        }, 500);
-
-        return false;
-      };
 
       $scope.$on('$locationChangeSuccess', function(next, current) {
         $scope.activeTab = $location.path().
