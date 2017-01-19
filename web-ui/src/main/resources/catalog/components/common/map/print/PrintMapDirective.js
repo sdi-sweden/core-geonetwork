@@ -233,6 +233,10 @@
       var scales = $scope.config.scales.map(function(scale) {
         return parseInt(scale.value);
       });
+      //Check to avoid blank page on print
+      if (angular.isUndefined(encLegends)){
+        $scope.enableLegends = false;
+      }
       var spec = {
         layout: $scope.config.layout.name,
         srs: proj.getCode(),
@@ -264,6 +268,7 @@
         for (var i = 0; i < pdfLegendsToDownload.length; i++) {
           $window.open(pdfLegendsToDownload[i]);
         }
+        $scope.enableLegends = true;
       });
       http.error(function() {
         $scope.printing = false;
