@@ -48,6 +48,7 @@
             hitsPerPage: 10
           };
           angular.extend(defaultConfig, scope.config);
+          scope.config = defaultConfig;
           delete defaultConfig;
 
           /**
