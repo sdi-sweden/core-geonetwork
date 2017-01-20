@@ -254,15 +254,17 @@
         }
 
         gnSchematronAdminService.group.add(newGroup, groups, function(group) {
-          $scope.selection.group = group;
-          updateGroupCount(group, 1);
-          var i, criteria = group.criteria;
-          group.criteria = [];
-          for (i = 0; i < criteria.length; i++) {
-            var template = angular.copy(criteria[i]);
-            gnSchematronAdminService.criteria.add(criteria[i],
-                group.criteria[i], group);
-          }
+            $scope.selection.group = group;
+            updateGroupCount(group, 1);
+            var i, criteria = group.criteria;
+            group.criteria = [];
+            if (criteria) {
+                for (i = 0; i < criteria.length; i++) {
+                    var template = angular.copy(criteria[i]);
+                    gnSchematronAdminService.criteria.add(criteria[i],
+                        group.criteria[i], group);
+                }
+            }
         });
       };
       $scope.duplicateSchematronGroup = function() {
