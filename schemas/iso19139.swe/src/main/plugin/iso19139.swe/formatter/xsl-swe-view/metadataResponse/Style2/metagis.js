@@ -104,7 +104,7 @@ function fnTaskSubmit(img, j, i) {
 }
 
 
-function $(something) {
+function $id(something) {
     if (typeof (something) == "string") {
         var elm = document.getElementById(something);
     } else {
@@ -112,7 +112,7 @@ function $(something) {
     }
     if (something instanceof Array) {
         var elm = [];
-        for (var i = 0; i < something.length; i++) { elm.push($(something[i])); }
+        for (var i = 0; i < something.length; i++) { elm.push($id(something[i])); }
     }
     if (!elm) return false;
     return elm;
@@ -210,34 +210,40 @@ function fix2(id) {
 /*
 * Extended Strings
 */
-String.prototype.trim = function () {
-    var result = this.match(/^(\s*|\n*)*(.*?)(\W*)$/);
-    return (result ? result[2] : this);
-};
 
-String.prototype.repeat = function (times) {
-    var ret = '';
-    for (var i = 0; i < times; i++) { ret += this; }
-    return ret;
-};
+if (!String.prototype.repeat) {
+    String.prototype.repeat = function (times) {
+        var ret = '';
+        for (var i = 0; i < times; i++) { ret += this; }
+        return ret;
+    };
+}
 
-String.prototype.startsWith = function (str) {
-    return (this.indexOf(str) === 0);
-};
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function (str) {
+        return (this.indexOf(str) === 0);
+    };
+}
 
-String.prototype.endsWith = function (str) {
-    var reg = new RegExp(str + "$");
-    return reg.test(this);
-};
-String.prototype.mid = function (start, len) {
-    if (start < 0 || len < 0) return "";
-    var iEnd, iLen = String(this).length;
-    if (start + len > iLen)
-        iEnd = iLen;
-    else
-        iEnd = start + len;
-    return String(this).substring(start, iEnd);
-};
+if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function (str) {
+        var reg = new RegExp(str + "$");
+        return reg.test(this);
+    };
+}
+
+if (!String.prototype.mid) {
+    String.prototype.mid = function (start, len) {
+        if (start < 0 || len < 0) return "";
+        var iEnd, iLen = String(this).length;
+        if (start + len > iLen)
+            iEnd = iLen;
+        else
+            iEnd = start + len;
+        return String(this).substring(start, iEnd);
+    };
+}
+
 
 function setLinkClickable(id) {    
     var e = document.getElementById(id);
