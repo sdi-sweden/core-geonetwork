@@ -131,7 +131,10 @@
     <value>hierarchy_view</value>
   </util:list>
 
-  <util:set id="formatterRemoteFormatAllowedHosts" value-type="java.lang.String"></util:set>
+  <util:set id="formatterRemoteFormatAllowedHosts" value-type="java.lang.String">
+	<value>localhost</value>
+	<value>geodataportalendev.metagis.se</value>
+  </util:set>
   <bean id="threadResources" class="org.mapfish.print.ThreadResources">
     <property name="connectionTimeout" value="30000"/>
     <property name="socketTimeout" value="30000"/>
