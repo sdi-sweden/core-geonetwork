@@ -3,7 +3,7 @@
         <a href data-ng-mouseenter="hovering=true" data-ng-mouseleave="hovering=false" data-ng-click="doView($index, map)">
 <!--             <div data-ng-class="{'bg-img': selected === 0, 'selected': selectedItem === $index, 'unselected' : selectedItem !== $index}" 
 			data-ng-style="{'background-image':'url({{map.link}})'}"></div> -->
-			<div class ="predefMap" data-ng-class="selected === 0 ? 'bg-img': (selectedItem === $index ? 'selected-img' : 'unselected-img')" data-ng-style="{'background-image':'url({{map.link}})'}"></div>
+			<div class ="predefMap" data-ng-class="selectedItem === $index ? 'selected-img' : 'unselected-img'" data-ng-style="{'background-image':'url({{map.link}})'}"></div>
 <!--             <div class="tool-tip-cont">
                 <div class="tool-tip">
                     <span class="triangle"></span>
