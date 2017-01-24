@@ -525,6 +525,9 @@
        * Hide map panel.
        */
       $scope.hideMapPanel = function() {
+		$predefMap = angular.element('.predefMap');
+		$predefMap.removeClass('selected-img').addClass('bg-img');
+		$predefMap.removeClass('unselected-img').addClass('bg-img');
         angular.element('.floating-map-cont').show();
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:remove', 'full-map-view');

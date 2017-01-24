@@ -298,16 +298,25 @@
         scope: {
           predefinedMaps: '@',
           showMapFn: '&',
-          configUrl: '@'
+          configUrl: '@',
+          selectedItem: '@',
+          selected: '@'
         },
         link: function(scope, element, attrs) {
           $http.get(scope.configUrl).success(function(data) {
             scope.predefinedMaps = data;
+            scope.setSelected(0);
           });
-          scope.doView = function(predefinedMap) {
+          scope.doView = function(index, predefinedMap) {
+			scope.setSelected(1);
+			scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();
           };
+		  scope.setSelected = function(value){
+			scope.selected = value;
+			console.log(scope.selected);
+		  };
         }
       };
   }]);
