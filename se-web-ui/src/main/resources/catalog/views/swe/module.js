@@ -67,12 +67,13 @@
     'gnGlobalSettings',
     'gnMdFormatter',
     'gnConfig',
+    'is_map_maximized',
     function($rootScope, $scope, $localStorage, $location, suggestService,
              $http, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig) {
+             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, is_map_maximized) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -364,7 +365,6 @@
         addWmsLayersFromCap: function(url, md) {
           // Open the map panel
           $scope.showMapPanel();
-
           var name = 'layers';
           var match = RegExp('[?&]' + name + '=([^&]*)').exec(url);
           var layersList = match &&
@@ -543,7 +543,8 @@
           $data_list_cont = angular.element('.data-list-cont'),
           $map_cont = angular.element('.map-cont'),
           $obj = angular.element('#map-panel-resize');
-
+          //To restrict GFI only when map are maximized
+          is_map_maximized.data = !is_full_view_map;
           if (is_full_view_map) {
             if (is_side_data_bar_open) {
               $scope.$emit('body:class:remove', 'full-map-view');
@@ -1277,5 +1278,10 @@
         return result;
       };
     }]);
+
+  //To restrict GFI only when map are maximized
+  module.factory("is_map_maximized", function() {
+    return {data: false};
+});
 
 })();

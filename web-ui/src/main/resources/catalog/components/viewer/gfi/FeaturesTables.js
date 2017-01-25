@@ -46,7 +46,7 @@
 
   }]);
 
-  var GnFeaturesTablesController = function(gnFeaturesTableManager) {
+  var GnFeaturesTablesController = function(gnFeaturesTableManager,is_map_maximized) {
     this.tm = gnFeaturesTableManager;
 
     this.tables = gnFeaturesTableManager.tables;
@@ -59,7 +59,7 @@
       updateWhileInteracting: true,
       map: this.map
     });
-
+    this.gfi = is_map_maximized;
   };
 
   GnFeaturesTablesController.prototype.clear = function() {
@@ -69,6 +69,7 @@
 
   module.controller('gnFeaturesTablesController', [
     'gnFeaturesTableManager',
+    'is_map_maximized',
     GnFeaturesTablesController
   ]);
 
