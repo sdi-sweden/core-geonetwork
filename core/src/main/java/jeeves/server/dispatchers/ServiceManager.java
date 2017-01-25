@@ -919,7 +919,7 @@ public class ServiceManager {
             .addContent(new Element("language").setText(req.getLanguage()))
             .addContent(new Element("service").setText(req.getService()));
 
-        Element error = JeevesException.toElement(t)
+        Element error = JeevesException.toElement(t, isDebug())
             .addContent(params);
 
         //--- add response (if any)
