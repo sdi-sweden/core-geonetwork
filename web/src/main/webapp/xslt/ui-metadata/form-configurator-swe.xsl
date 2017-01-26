@@ -23,10 +23,10 @@
   -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gn="http://www.fao.org/geonetwork"
-  xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
-  xmlns:saxon="http://saxon.sf.net/" extension-element-prefixes="saxon"
-  exclude-result-prefixes="#all" version="2.0">
+                xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gn="http://www.fao.org/geonetwork"
+                xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
+                xmlns:saxon="http://saxon.sf.net/" extension-element-prefixes="saxon"
+                exclude-result-prefixes="#all" version="2.0">
   <!--
     Build the form from the schema plugin form configuration.
     -->
@@ -40,32 +40,46 @@
 
     <xsl:variable name="sectionName" select="@name"/>
 
-    <xsl:choose>
-      <xsl:when test="$sectionName">
-        <!-- Use panels instead of fieldsets for editor sections -->
-        <div class="panel panel-default" data-gn-field-highlight="">
-          <div class="panel-heading" data-gn-slide-toggle="">
-            <span class="ng-scope">
-            <xsl:value-of
-              select="if (contains($sectionName, ':'))
-                then gn-fn-metadata:getLabel($schema, $sectionName, $labels)/label
-                else $strings/*[name() = $sectionName]"
-            />
-            </span>
+    <xsl:variable name="display">
+      <xsl:choose>
+        <xsl:when test="string(@displayIfRecord)">
+          <saxon:call-template name="{concat('evaluate-', $schema, '-boolean')}">
+            <xsl:with-param name="base" select="$metadata"/>
+            <xsl:with-param name="in" select="concat('/../', @displayIfRecord)"/>
+          </saxon:call-template>
+        </xsl:when>
+        <xsl:otherwise>  <xsl:value-of select="true()"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:if test="$display = true()">
+      <xsl:choose>
+        <xsl:when test="$sectionName">
+          <!-- Use panels instead of fieldsets for editor sections -->
+          <div class="panel panel-default" data-gn-field-highlight="">
+            <div class="panel-heading" data-gn-slide-toggle="">
+              <span class="ng-scope">
+                <xsl:value-of
+                        select="if (contains($sectionName, ':'))
+                  then gn-fn-metadata:getLabel($schema, $sectionName, $labels)/label
+                  else $strings/*[name() = $sectionName]"
+                />
+              </span>
+            </div>
+            <div class="panel-body">
+              <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord']|*">
+                <xsl:with-param name="base" select="$base"/>
+              </xsl:apply-templates>
+            </div>
           </div>
-          <div class="panel-body">
-            <xsl:apply-templates mode="form-builder" select="@*|*">
-              <xsl:with-param name="base" select="$base"/>
-            </xsl:apply-templates>
-          </div>
-        </div>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates mode="form-builder" select="@*|*">
-          <xsl:with-param name="base" select="$base"/>
-        </xsl:apply-templates>
-      </xsl:otherwise>
-    </xsl:choose>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates mode="form-builder" select="@*|*">
+            <xsl:with-param name="base" select="$base"/>
+          </xsl:apply-templates>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>
