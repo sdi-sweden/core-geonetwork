@@ -108,6 +108,13 @@ form.gn-editor {
   .fixed-table-container .table {
     margin-bottom: inherit !important;
   }
+
+  // no padding for nested col-* classes in a field
+  div[class^="col-"], div[class*=" col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
 }
 
 [data-gn-slide-toggle] {
