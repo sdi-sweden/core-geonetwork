@@ -79,9 +79,9 @@ form.gn-editor {
    .field-bg {
     background: #fff;
   }
-  // hide the delete button
-  .gn-control a.btn {
-    //display: none !important;
+  // less width for the date field
+  input[type="date"] {
+    width: 50%;
   }
 
   .gn-required > label:after {
@@ -115,6 +115,21 @@ form.gn-editor {
     padding-left: 0;
   }
 
+  // smaller width for the date(picker)
+  .gn-field {
+    [data-gn-date-picker] {
+      width: 80%;
+    }
+  }
+  .gn-date-picker > input[type=date] {
+    padding-right: 6px;
+  }
+  .gn-date-picker.gn-time-with-ind-position > select.gn-indeterminate-position {
+    width: 15%;
+  }
+  .gn-date-picker.gn-time-with-ind-position > input[type=date] {
+    width: 45%;
+  }
 }
 
 [data-gn-slide-toggle] {
