@@ -1285,7 +1285,7 @@
 
 
     <!--Turn off INSPIRE view by default -->
-    <view name="inspire" upAndDownControlHidden="true">
+    <view name="inspire" upAndDownControlHidden="true" disabled="true">
       <tab id="inspire" default="true" mode="flat">
         <section name="resource">
           <field
@@ -2889,7 +2889,7 @@
 
     </view>
 
-    <view name="advanced">
+    <view name="advanced"  disabled="true">
       <tab id="identificationInfo" default="true">
         <section xpath="/gmd:MD_Metadata/gmd:identificationInfo" or="identificationInfo"
                  in="/gmd:MD_Metadata"/>
@@ -3095,7 +3095,7 @@
 		<!-- INFORMATION OM METADATA - End -->
       </tab>
     </view>
-    <view name="xml">
+    <view name="xml" disabled="true">
       <tab id="xml" default="true"/>
     </view>
   </views>
