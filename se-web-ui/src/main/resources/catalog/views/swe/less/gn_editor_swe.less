@@ -1,12 +1,66 @@
 @import "gn_search_swe.less";
 @import "../../../style/gn_editor";
-@import "gn_view_swe.less";
+// @import "gn_view_swe.less";
 
 body {
   padding-top: 0;
 }
 .navbar {
   position: initial;
+}
+
+// editor board
+.gn-editor-board {
+  [data-ng-search-form] {
+    background: #fff;
+    padding-top: 20px;
+    .gn-sort-by .btn-group > button, .gn-sort-by .btn-group > button:hover,
+    .gn-sort-by .btn-group > button:focus, .gn-sort-by .btn-group > button:active {
+      border-color: transparent;
+      text-transform: uppercase;
+      font-weight: normal;
+      font-family: 'Roboto', sans-serif;
+      font-weight: bold;
+      font-size: 12px;
+      color: #5d8886;
+      line-height: 12px;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      text-decoration: none;
+    }
+  }
+  // facets
+  .gn-search-facet {
+    .gn-facet {
+      h4 {
+        margin-bottom: 5px;
+        border-bottom: 0;
+      }
+      label {
+        font-weight: normal;
+      }
+      .list-group-item:hover {
+        color: #5d8886;
+      }
+    }
+    button {
+      color: #5d8886;
+      &:hover {
+        color: #5d8886;
+      }
+    }
+  }
+}
+
+
+// my metadata result list
+.gn-results-editor {
+  a {
+    color: #5d8886;
+    &:hover {
+      color: #5d8886;
+    }
+  }
 }
 
 form.gn-editor {
@@ -27,7 +81,7 @@ form.gn-editor {
   }
   // hide the delete button
   .gn-control a.btn {
-    display: none !important;
+    //display: none !important;
   }
 
   .gn-required > label:after {
