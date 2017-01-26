@@ -108,6 +108,7 @@
   <spatialDistance>Rumslig upplösning (distans)</spatialDistance>
   <accessConstraints>Åtkomst begränsningar</accessConstraints>
   <useLimitation>Användningsbegräsningar</useLimitation>
+  <useConstraints>Use constraints</useConstraints>
   <add-resource-id>Skapa ny identifierare för resurs</add-resource-id>
   <add-resource-idHelp>Skapa en identifierare baserat på katalogens adress (ex. http://www.organization.org/catalogue/5391bf69-44bc-4ea0-8cc0-6cf6c3bc81ae).</add-resource-idHelp>
   <add-extent-from-geokeywords>Beräkna utsträckning från nyckelord</add-extent-from-geokeywords>
