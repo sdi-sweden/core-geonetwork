@@ -511,6 +511,8 @@
        * Show large map panel.
        */
       $scope.showLargeMapPanel = function() {
+  		$tools = angular.element('.tools');
+		$tools.removeClass('control-tools').addClass('control-tools-largemap');
         angular.element('.floating-map-cont').hide();
         $scope.$emit('body:class:add', 'large-map-view');
           $timeout(function() {
@@ -527,6 +529,8 @@
       $scope.hideMapPanel = function() {
 		$predefMap = angular.element('.predefMap');
 		$predefMap.removeClass('selected-img').addClass('unselected-img');
+		$tools = angular.element('.tools');
+		$tools.removeClass('control-tools-largemap').addClass('control-tools');
         angular.element('.floating-map-cont').show();
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:remove', 'full-map-view');
@@ -535,6 +539,8 @@
       };
       
       $scope.resizeMapPanel = function() {
+		  $tools = angular.element('.tools');
+		  $tools.removeClass('control-tools-largemap').addClass('control-tools');
           var $b = angular.element(document).find('body');
           window_width = angular.element($window).width(),
           $map_data_list_cont = angular.element('.map-data-list-cont'),
