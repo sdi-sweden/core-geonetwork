@@ -4,18 +4,17 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"
-                    aria-hidden="true">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">{{'confirmDialogTitle' | translate}}</h4>
           </div>
           <div class="modal-body">
             <p>{{confirmationDialog.message}}</p>
           </div>
           <div class="modal-footer">
-            <button data-dismiss="modal" data-ng-click="confirmationDialog.deleteConfirmed()">
-              {{'confirm' | translate}}
+            <button data-dismiss="modal" data-ng-click="confirmationDialog.deleteConfirmed()"
+                    class="btn btn-warning">{{'confirm' | translate}}
             </button>
-            <button data-dismiss="modal">{{'cancel' | translate}}</button>
+            <button data-dismiss="modal" class="btn btn-default">{{'cancel' | translate}}</button>
           </div>
         </div>
       </div>
@@ -53,8 +52,7 @@
             <i id="schematronCriteriaGroupsQuestion" class="fa fa-question-circle"
                data-ng-mouseover="isShowSchematronGroupHelp = true"
                data-ng-mouseleave="isShowSchematronGroupHelp = false"></i>
-            <div style="padding-left: 2em; padding-top: 1em"
-                 data-ng-show="isShowSchematronGroupHelp">
+            <div style="padding-left: 2em; padding-top: 1em" data-ng-show="isShowSchematronGroupHelp">
               {{'schematronInfo' | translate}}
             </div>
           </div>
@@ -65,8 +63,7 @@
                     data-ng-click="selectGroup(group)"
                     data-ng-repeat="group in schematronGroups">
                   <a data-ng-click="startGroupEditing(group)">
-                    <span
-                      data-ng-hide="editGroup.group === group">{{group.id.name}}&NonBreakingSpace;</span>
+                    <span data-ng-hide="editGroup.group === group">{{group.id.name}}&NonBreakingSpace;</span>
                     <input data-ng-show="editGroup.group === group"
                            data-ng-blur="cancelGroupEdit()"
                            data-ng-model="editGroup.updatedGroup.id.name"
@@ -94,8 +91,7 @@
                 </li>
               </ul>
               <div class="well-sm">
-                <div class="dropdown"
-                     data-ng-hide="!schematronGroups || schematronGroups.length == 0">
+                <div class="dropdown" data-ng-hide="!schematronGroups || schematronGroups.length == 0">
                   <h5 data-toggle="dropdown" style="cursor: pointer">
                     <small>{{'requirement'+selection.group.requirement | translate}}</small>
                     <i class="fa fa-caret-down"></i>
@@ -103,25 +99,25 @@
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                     <li role="presentation" data-ng-repeat="requirement in requirements"
                         data-ng-hide="selection.group.requirement === requirement">
-                      <a role="menuitem" data-ng-click="setRequirement(requirement)" tabindex="-1">{{'requirement'+requirement
-                        | translate}}</a></li>
+                      <a role="menuitem" data-ng-click="setRequirement(requirement)"
+                         tabindex="-1">{{'requirement'+requirement | translate}}</a></li>
                   </ul>
                 </div>
               </div>
-              <ul class="list-group" data-ng-if="selection.group">
+              <ul class="criteria-list-group" data-ng-if="selection.group">
                 <gn-criteria-editor
-                  criteria="criteria"
-                  schema="selection.schema"
-                  group="selection.group"
-                  lang="lang"
-                  confirmation-dialog="confirmationDialog"
-                  data-ng-repeat="criteria in selection.group.criteria"></gn-criteria-editor>
+                        criteria="criteria"
+                        schema="selection.schema"
+                        group="selection.group"
+                        lang="lang"
+                        confirmation-dialog="confirmationDialog"
+                        data-ng-repeat="criteria in selection.group.criteria"></gn-criteria-editor>
                 <gn-criteria-editor
-                  criteria="{id: null, type: 'NEW', uitype:'NEW', value: '', uivalue: ''}"
-                  schema="selection.schema"
-                  lang="lang"
-                  confirmation-dialog="confirmationDialog"
-                  group="selection.group"></gn-criteria-editor>
+                        criteria="{id: null, type: 'NEW', uitype:'NEW', value: '', uivalue: ''}"
+                        schema="selection.schema"
+                        lang="lang"
+                        confirmation-dialog="confirmationDialog"
+                        group="selection.group"></gn-criteria-editor>
 
               </ul>
             </div>

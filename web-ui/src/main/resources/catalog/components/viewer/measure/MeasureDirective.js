@@ -206,7 +206,7 @@
         mInteraction.on('drawend',
             function(evt) {
               var lineCoords = evt.feature.getGeometry().getCoordinates()[0];
-              lineCoords.pop();
+              //lineCoords.pop();
               distFeature.getGeometry().setCoordinates(lineCoords);
 
               updateMeasuresFn();

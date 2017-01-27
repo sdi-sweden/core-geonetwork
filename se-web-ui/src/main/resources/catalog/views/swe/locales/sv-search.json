@@ -54,7 +54,7 @@
     "Add" : "Lägg till",
     "searchKeyword": "Nyckelord",
     "searchTopicCategory" : "Ämneskategori",
-    "searchOrganisation" : "Organisation"
+    "searchOrganisation" : "Organisation",
     "organisation": "Organisation",
     "topicCategory": "Ämneskategori",
     "keyword": "Nyckelord",
@@ -84,5 +84,6 @@
     "sortBy": "Sortera efter",
     "print_legend": "Skriv ut teckenförklaring",
     "print_legend_field": "Teckenförklaring",
-    "geotechnic": "Geoteknik"
+    "geotechnic": "Geoteknik",
+    "layer": "Lager"
 }

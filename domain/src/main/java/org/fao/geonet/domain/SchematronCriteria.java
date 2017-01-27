@@ -97,7 +97,7 @@ public class SchematronCriteria extends GeonetEntity {
     /**
      * @return the value
      */
-    @Column(nullable = false, name = "value")
+    @Column(nullable = false, name = "value", length = 1024)
     public String getValue() {
         return value;
     }
@@ -135,6 +135,7 @@ public class SchematronCriteria extends GeonetEntity {
      *
      * @return
      */
+    @Column(length = 1024)
     public String getUiValue() {
         return uiValue;
     }

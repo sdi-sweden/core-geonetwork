@@ -299,7 +299,11 @@
 
           <!--Alternative title -->
           <field
-                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle"/>
+                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle"
+                  or="alternateTitle"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"
+                  del="."/>
+
 
           <!-- Dates -->
           <field
