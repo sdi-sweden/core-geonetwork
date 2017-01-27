@@ -67,12 +67,13 @@
     'gnGlobalSettings',
     'gnMdFormatter',
     'gnConfig',
+    'gnConfigService',
     function($rootScope, $scope, $localStorage, $location, suggestService,
              $http, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig) {
+             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, gnConfigService) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -105,12 +106,13 @@
       $scope.resultTemplate = gnSearchSettings.resultTemplate;
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
+      
+      gnConfigService.load().then(function(c){
+          // config loaded
+          $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl + gnConfig['map.predefinedMaps.url'];
+          $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl + gnConfig['map.geotechnics.url']; 
+      });
 
-      $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl +
-          gnConfig['map.predefinedMaps.url'];
-
-      $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl + 
-          gnConfig['map.geotechnics.url'];
 
       $scope.$on('someEvent', function(event, map) {
         alert('event received. url is: ' + map.url);
