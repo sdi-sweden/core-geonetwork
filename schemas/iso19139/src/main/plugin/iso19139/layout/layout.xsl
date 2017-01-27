@@ -69,11 +69,14 @@
 
       <xsl:variable name="directive"
                     select="gn-fn-metadata:getFieldAddDirective($editorConfig, $name)"/>
+      <xsl:variable name="label"
+                    select="gn-fn-metadata:getLabel($schema, $name, $labels, name(..), '', '')"/>
 
       <xsl:call-template name="render-element-to-add">
         <!-- TODO: add xpath and isoType to get label ? -->
-        <xsl:with-param name="label"
-                        select="gn-fn-metadata:getLabel($schema, $name, $labels, name(..), '', '')/label"/>
+        <xsl:with-param name="label" select="$label/label"/>
+        <xsl:with-param name="btnLabel" select="if ($label/btnLabel) then $label/btnLabel else ''"/>
+        <xsl:with-param name="btnClass" select="if ($label/btnClass) then $label/btnClass else ''"/>
         <xsl:with-param name="directive" select="$directive"/>
         <xsl:with-param name="childEditInfo" select="."/>
         <xsl:with-param name="parentEditInfo" select="../gn:element"/>

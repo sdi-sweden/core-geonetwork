@@ -871,7 +871,7 @@
     "metadata/workflow/draftWhenInGroup": "Aktivera arbetsflöde för poster skapade i följande grupper",
     "metadata/workflow/draftWhenInGroup-help": "Söksträng för att matcha grupper där posterna behöver ställas in automatiskt i utkastet, t.ex. MYOCEAN-.* matchar alla grupper som börjar med MYOCEAN-, GROUP1|GROUP2 matchar GROUP1 eller GROUP2.",
     "metadata/workflow/forceValidationOnMdSave": "Kräv validering vid sparande av metadata",
-    "metadata/workflow/forceValidationOnMdSave-help": "Kräv en valideringskontroll när metadatat sparas",
+    "metadata/workflow/forceValidationOnMdSave-help": "Kräv valideringskontroll när metadata sparas",
     "systemInformation": "Systeminformation",
     "criticalSystemStatus": "Kritiska systemkontroller",
     "warningSystemStatus": "Icke-kritiska systemkontroller",
@@ -1038,7 +1038,7 @@
     "manageSources": "Källor",
     "threadStatus": "Processtatus",
     "doSaveConfirm": "Vill du spara dina ändringar?",
-    "unsavedChangesWarning": "Du har ändringar du inte sparat\n\nVill du fortfarande lämna sidan och förlora dina förändringar?",
+    "unsavedChangesWarning": "Du har ändringar du inte sparat\n\nVill du ändå lämna sidan och förlora dina förändringar?",
     "selectForError": "Klicka för att se felmeddelande",
     "map/config": "Konfiguration för kartor",
     "map/proj4js": "CRS - lista",
@@ -1079,5 +1079,9 @@
     "map/predefinedMaps/url": "Predefined maps url:",
     "map/predefinedMaps/url-help": "URL to the json containing the prefefined maps configuration.",
     "map/geotechnics": "Geoteknik:",
-    "map/geotechnics/url": "Geoteknik url:"
+    "map/geotechnics/url": "Geoteknik url:",
+    "map/wfsServer": "Geoserver - konfiguration",
+    "map/wfsServer/url": "Geoserver - URL",
+    "map/wfsServer/workspace": "Geoserver - workspace",
+    "map/wfsServer/layer": "Geoserver - lager"
 }

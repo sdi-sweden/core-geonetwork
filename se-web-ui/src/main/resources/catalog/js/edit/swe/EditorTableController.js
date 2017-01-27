@@ -29,7 +29,7 @@
 
 
   module.controller('SweEditorTableController', ['$scope', '$document',
-    '$compile', function($scope, $document, $compile) {
+    '$compile', 'gnHttp', 'Metadata', function($scope, $document, $compile, gnHttp, Metadata) {
 
       // Selected row index in the table
       $scope.selectedRowIndex = null;
@@ -48,6 +48,85 @@
         $scope.name = name;
         $scope.dialog = dialog;
         $scope.title = title;
+		$scope.organisationNames = null;
+		//if(name === 'distributorContact' || name === 'contact' || name === 'pointOfContact') {
+		if(name === 'pointOfContact') {
+			var userIdInScope = $scope.user.id;
+			var userGroupArray = [];
+			var userGrpUrl = '../api/0.1/users/' + userIdInScope + '/groups';
+			gnHttp.callService(userGrpUrl).success(function(data) {
+				if(data) {
+					for(var prop in data) {
+						var node = data[prop];
+						if(node) {
+							var idNode = node.id;
+							if(idNode) {
+								var userId = idNode.userId + ''; // userId fetch is number i.e typeof number
+								if(userId === userIdInScope) { // userIdInScope is string i.e typeof string
+									var groupId = idNode.groupId;
+									if(userGroupArray.indexOf(groupId) === -1) {
+										userGroupArray.push(groupId);
+									}
+								}
+							}
+						}
+					}
+					// Now call "q" service.
+					$scope.organisationNames = [];
+					$scope.showResourceContactDD = true;
+					var params = [];
+					params['resultType'] = 'swe-details';
+					params['fast'] = 'index';
+					params['_content_type'] = 'json';
+					params['buildSummary'] = 'false';
+					for(var prop in userGroupArray) {
+						params['_groupOwner'] = userGroupArray[prop]; // Populate groupOwners here
+					}
+					gnHttp.callService('search',params).success(function(data) {
+						var organisationsArray = [];
+						var uiMetaDataArray = [];
+						if(data && data.metadata) {
+							if(data.metadata.length) {
+								for(var i = 0; i < data.metadata.length; i++) {
+									uiMetaDataArray.push(data.metadata[i]);
+								}
+							} else {
+								uiMetaDataArray.push(data.metadata);
+							}
+						}
+						if(uiMetaDataArray) {
+							for (var i = 0; i < uiMetaDataArray.length; i++) {
+								var metadata = new Metadata(uiMetaDataArray[i]);
+								if(metadata) {
+									var allContacts = metadata.getAllContacts();
+									if(allContacts) {
+										var resourceContacts = allContacts.resource;
+										if(resourceContacts) {
+											for(var j = 0; j < resourceContacts.length; j++) {
+												var contact = resourceContacts[j];
+												var ctcFieldValue = contact.org + '~' + contact.email + '~' + contact.phone; // ~ is used as a separator
+												var ctcDisplayValue = '( ' +contact.org + ' ) - ( ' + contact.email + ' ) - ( ' + contact.phone + ' )';// - is used as a separator
+												if(ctcFieldValue && ctcFieldValue.trim().length > 2) {// 2 for 2 tilde
+													var valueArr = organisationsArray.map(function(item){ return item.fieldValue });
+													if(valueArr && valueArr.indexOf(ctcFieldValue) == -1) {
+														var organisation = {};
+														organisation['fieldValue'] = ctcFieldValue;
+														organisation['displayValue'] = ctcDisplayValue;
+														organisationsArray.push(organisation);
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						$scope.organisationNames = organisationsArray;
+					});
+				}
+			});
+				
+		}
       };
 
       /**
@@ -63,11 +142,11 @@
       /**
      * Shows the edit dialog for the selected row.
      */
-      $scope.editRow = function() {
+      $scope.editSelectedRow = function() {
         if ($scope.selectedRow == null) return;
 
         $scope.mode = 'edit';
-        angular.copy($scope.selectedRow, $scope.editRow);
+        $scope.editRow = angular.copy($scope.selectedRow);
 
         $($scope.dialog).modal('show');
       };
@@ -105,10 +184,11 @@
           }
           $scope.editRow.xmlSnippet = template;
 
-          $scope.selectedRow = $scope.editRow;
+          $scope.selectedRow = angular.copy($scope.editRow);
           $scope.rows.push($scope.selectedRow);
         } else {
-          angular.copy($scope.editRow, $scope.selectedRow);
+          $scope.selectedRow = angular.copy($scope.editRow);
+          $scope.rows[$scope.selectedRowIndex] = $scope.selectedRow;
         }
 
 
@@ -153,6 +233,20 @@
       $scope.cancel = function() {
         $($scope.dialog).modal('hide');
       };
+	  
+	  /**
+     * Put the selected record from drop down into table-grid.
+     */
+	  $scope.populateResourseContactFields = function(selectedOrganisation) {
+		$scope.mode = 'add'; // set the mode to 'add' always.
+		$scope.editRow = {ref: ''}; // reset the editRow reference.
+		$scope.editRow.organisation = selectedOrganisation.split('~')[0]; // 0 always org
+		$scope.editRow.email = selectedOrganisation.split('~')[1]; // 1 always email
+		$scope.editRow.phone = selectedOrganisation.split('~')[2]; // 2 always phone
+		$scope.editRow.role = ''; // Role is always empty
+		
+		$scope.saveRow(); // Put the selected record from drop down into table-grid
+	  };
 
     }]);
 })();
