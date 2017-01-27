@@ -1,4 +1,4 @@
-{
+﻿{
     "Administrator": "Administratör",
     "NEW": "Ny",
     "abstract": "Sammanfattning",
@@ -45,7 +45,7 @@
     "batchreplacer-replacementsConfig": "Ersättningskonfiguration",
     "batchreplacer-downloadReplacementConfig": "Ladda ned konfiguration",
     "batchreplacer-loadReplacementConfig": "Ladda konfiguration",
-    "batchreplacer-replacementsConfig-help": "Definiera ett antal ersättningar att utföra. När denna laddas tas existerande ersättningar bort. Namnet på elementet och sökvärdet kan vara ett vanligt uttryck. Använd t.ex. 'iso19139\\..*\\.organisationName' för att matcha vilket organisationsnamn som helst eller 'dublin-core.simpledc.publisher' för att matcha dublin-core publicerare.",
+    "batchreplacer-replacementsConfig-help": "Definiera ett antal ersättningar att utföra. När denna laddas tas existerande ersättningar bort. Namnet på elementet och sökvärdet kan vara ett reguljärt uttryck. Använd t.ex. 'iso19139\\..*\\.organisationName' för att matcha vilket organisationsnamn som helst eller 'dublin-core.simpledc.publisher' för att matcha dublin-core publicerare.",
     "batchreplacer-case-insensitive": "Ej skiftlägeskänslig sökning",
     "batchreplacer-el-ci.citation.address": "Objekttypskatalogshänvisning > Leveransadress",
     "batchreplacer-el-ci.citation.city": "Objekttypskatalogshänvisning > Stad",
