@@ -127,6 +127,7 @@
     "Clear": "Clear",
     "ClearTitle": "Clear current search query, filters and sorts.",
     "hitsPerPage": "Records per page",
+	"of": "of",
     "chooseRecordsPerPage": "Click to choose the number of records per page",
     "sortedBy": "Sorted by {{field}}",
     "relevance": "relevancy",
