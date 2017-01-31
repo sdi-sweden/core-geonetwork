@@ -1412,7 +1412,12 @@ button:focus [role=tooltip], button:hover [role=tooltip] {
 }
 
 /* search */
-
+.geo-data-serach-filter {
+  /* remove input cross for IE */
+  input::-ms-clear {
+    display: none;
+  }
+}
 /* for IE */
 .live-search-dd-cont .custom-fld-cont, .live-search-dd-cont .custom-fld-cont .live-search-query {
   height: 40px;
