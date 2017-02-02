@@ -455,11 +455,22 @@
        * @param {object} md  Metadata
          */
       $scope.showMetadataGeometry = function(md) {
-        var feature = gnMap.getBboxFeatureFromMd(md,
-            $scope.searchObj.searchMap.getView().getProjection());
-
         $scope.vectorLayer.getSource().clear();
-        $scope.vectorLayer.getSource().addFeature(feature);
+        $scope.vectorLayerBM.getSource().clear();
+        //To toggle or remove the added extent from map
+        if (md.defaultTitle == $scope.vectorLayer.get("defaultTitle")){
+             $scope.vectorLayer.set("defaultTitle",null);
+             $scope.vectorLayerBM.set("defaultTitle",null);
+        }       
+        else{
+          var feature = gnMap.getBboxFeatureFromMd(md,
+            $scope.searchObj.searchMap.getView().getProjection());
+          $scope.vectorLayer.set("defaultTitle",md.defaultTitle);
+          $scope.vectorLayerBM.set("defaultTitle",md.defaultTitle);
+          $scope.vectorLayer.getSource().addFeature(feature);
+          $scope.vectorLayerBM.getSource().addFeature(feature);
+        }
+        
       };
 
       /**
@@ -1042,6 +1053,8 @@
         delete $scope.searchObj.params['facet.q'];
         $scope.vectorLayer.getSource().clear();
         $scope.vectorLayerBM.getSource().clear();
+        $scope.vectorLayer.unset("defaultTitle");
+        $scope.vectorLayerBM.unset("defaultTitle");
         $scope.triggerSearch();
       };
 
