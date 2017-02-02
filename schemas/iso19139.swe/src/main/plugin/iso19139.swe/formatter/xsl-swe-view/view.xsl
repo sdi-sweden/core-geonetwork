@@ -27,6 +27,12 @@
 				<script type="text/javascript" src="{$resourceUrl}metadataResponse/Style2/AnchorPosition.js"><![CDATA[.]]></script>
 				<script type="text/javascript" src="{$resourceUrl}metadataResponse/Style2/PopupWindow.js"><![CDATA[.]]></script>
 				<script type="text/javascript" src="{$resourceUrl}metadataResponse/Style2/TreeJS.js"><![CDATA[.]]></script>
+				<script type="text/javascript">
+					var fromInBuiltStyleSheet=false;
+					if(fromInBuiltStyleSheet!==false) {
+						window.onload = printBtnClickEventFromInBuiltStyleSheet;
+					}
+				</script>
 				<title>
 					<xsl:value-of select="//gmd:MD_Metadata/gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString[text()]"/>
 				</title>

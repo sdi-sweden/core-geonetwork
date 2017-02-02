@@ -50,6 +50,7 @@
     '$location',
     'suggestService',
     '$http',
+	'$sce',
     '$compile',
     '$window',
     '$translate',
@@ -68,7 +69,7 @@
     'gnMdFormatter',
     'gnConfig',
     function($rootScope, $scope, $localStorage, $location, suggestService,
-             $http, $compile, $window, $translate, $timeout,
+             $http, $sce, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
@@ -302,6 +303,30 @@
 
         return downloads;
       };
+	  
+		$scope.printPdf = function(mdView) {
+			var uuid = mdView.current.record['geonet:info'].uuid;
+			var config = {
+				url: '../../GetMetaDataById',
+				params: {'id':uuid},
+				headers:{'Accept': 'text/html, application/xhtml+xml, */*'},
+				method: 'GET'
+			};
+			$http(config).success(function(htmlString) {
+				var frame = document.getElementById('iframe');
+				var theFrameDocument = frame.contentDocument || frame.contentWindow.document;
+				if(htmlString) {
+					htmlString = htmlString.replace('fromInBuiltStyleSheet!==false','fromInBuiltStyleSheet!==true');
+				}
+				var htmlStr = $sce.trustAsHtml(htmlString);
+				theFrameDocument.open();
+				theFrameDocument.write(htmlStr);
+				theFrameDocument.close();
+			})
+			.error(function(data) {
+				alert('Error. Unable to print');
+			});
+		};
 
 
       /**
