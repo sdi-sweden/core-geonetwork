@@ -173,6 +173,13 @@
               $scope.metadataNotFoundId = $routeParams.id;
 
               $scope.mdSchema = data.metadata[0]['geonet:info'].schema;
+
+              // Custom SWE: Editable metadata in SWE should be in iso19139.swe schema
+              if ($scope.mdSchema == 'iso19139') {
+                  $scope.mdSchema = 'iso19139.swe';
+              }
+              // Custom SWE
+
               $scope.mdCategories = [];
               var categories = data.metadata[0].category;
               if (categories) {

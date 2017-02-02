@@ -127,6 +127,7 @@
     "Clear": "Cancellare",
     "ClearTitle": "Cancellare query di ricerca corrente, filtri e ordinamenti.",
     "hitsPerPage": "Numero per pagina",
+	"of": "of",
     "chooseRecordsPerPage": "Scegliere il numero di record per pagina",
     "sortedBy": "Ordina per {{field}}",
     "relevance": "Rilevanza",

@@ -127,6 +127,7 @@
     "Clear": "Tyhjennä",
     "ClearTitle": "Tyhjennä nykyinen hakuehto, suotimet ja lajitteluehdot.",
     "hitsPerPage": "Tietueita sivulla",
+	"of": "of",
     "chooseRecordsPerPage": "Valitse tietueiden määrä sivulla",
     "sortedBy": "Lajittelukenttä: {{field}}",
     "relevance": "relevanssi",

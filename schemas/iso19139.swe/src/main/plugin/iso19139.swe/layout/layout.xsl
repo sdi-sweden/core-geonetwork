@@ -633,6 +633,13 @@
            id="contact-popup-{local-name()}" class="gn-modal-lg">
 
         <div data-swe-date-dialog="">
+			<div data-ng-show="showResourceContactDD">
+				<select class="form-control" data-ng-model="organisation" data-ng-change="populateResourseContactFields(organisation)">
+					<option data-ng-repeat="org in organisationNames" title="{{org.displayValue}}" data-ng-value="org.fieldValue">
+						{{org.displayValue}}
+					</option>
+				</select>
+			</div>
           <div>
             <label class="col-sm-2 control-label">
               <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:organisationName', $labels, name(..), '', '')/label" />

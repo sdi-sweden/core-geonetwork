@@ -62,6 +62,16 @@
   color: #fff;
 }
 
+// disabled state
+.disabled {
+  pointer-events: none;
+  color: #ccc !important;
+  text-decoration: none !important;
+  span {
+    color: #ccc !important;
+  }
+}
+
 /* Pagination */
 .gn-pager {
   /* Hide the first/last page button */
@@ -390,18 +400,12 @@ ul.gn-resultview {
   }
 }
 
-
-
-
-
 // IE11 needs the height
 .geo-data-serach-filter input[type='text'] {
   height: 56px;
 }
 
-
 // IE custom opacity slider
-
 input[type=range]::-ms-track {
     width: 300px;
     height: 5px;
@@ -649,27 +653,31 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 // feature info
-.gn-features-table {
-  .nav-tabs li {
-    border-bottom: 3px solid transparent;
-    background: transparent;
-    margin-right: 3px;;
-    a {
-      background: transparent;  
+gn-features-tables {
+  background: rgba(255,255,255,0.9);
+  .gn-features-table {
+    padding: 0;
+    .nav-tabs li {
+      border-bottom: 3px solid transparent;
+      background: transparent;
+      margin-right: 3px;;
+      a {
+        background: transparent;  
+      }
     }
-  }
-  .nav-tabs li.active, .nav-tabs li:hover{
-    background: #fff;
-    border-bottom-color: #5d8886;
-  }
-  /* pagination */
-  .pagination > li > a, .pagination > li > span {
-    color: #5d8886;
-  }
-  .pagination > .active > a, .pagination > .active > a:hover {
-    background-color: #5d8886;
-    border-color: #5d8886;
-    color: #fff;
+    .nav-tabs li.active, .nav-tabs li:hover{
+      background: #fff;
+      border-bottom-color: #5d8886;
+    }
+    /* pagination */
+    .pagination > li > a, .pagination > li > span {
+      color: #5d8886;
+    }
+    .pagination > .active > a, .pagination > .active > a:hover {
+      background-color: #5d8886;
+      border-color: #5d8886;
+      color: #fff;
+    }
   }
 }
 
@@ -886,7 +894,7 @@ html, body {
   font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
-  line-height: 18px;
+  line-height: 1.9em;
   letter-spacing: 1px;
   padding-left: 0;
 }
@@ -1404,7 +1412,12 @@ button:focus [role=tooltip], button:hover [role=tooltip] {
 }
 
 /* search */
-
+.geo-data-serach-filter {
+  /* remove input cross for IE */
+  input::-ms-clear {
+    display: none;
+  }
+}
 /* for IE */
 .live-search-dd-cont .custom-fld-cont, .live-search-dd-cont .custom-fld-cont .live-search-query {
   height: 40px;

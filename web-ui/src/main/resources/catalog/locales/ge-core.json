@@ -127,6 +127,7 @@
     "Clear": "Löschen",
     "ClearTitle": "Aktuelle Suchkriterien, Filter und Sortierung löschen",
     "hitsPerPage": "Treffer pro Seite",
+	"of": "of",
     "chooseRecordsPerPage": "Anzahl der Datensätze pro Seite wählen",
     "sortedBy": "Sortieren nach {{field}}",
     "relevance": "Relevanz",

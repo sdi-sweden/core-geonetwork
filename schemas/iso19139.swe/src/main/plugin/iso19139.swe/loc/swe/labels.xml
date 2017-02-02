@@ -1362,7 +1362,7 @@ Exempelvis: datamängd, datamängdserie eller tjänst.…</description>
         <condition>mandatory</condition>
     </element>
     <element id="573.0" name="gmd:identifier">
-        <label>Identifier</label>
+        <label>Identifierare för resurs</label>
         <description>Unique identifier for the resource. EXAMPLE: Universal Product Code (UPC),
             National Stock Number (NSN)</description>
     </element>
@@ -1929,7 +1929,7 @@ Ex. SS-EN ISO 19115.</description>
         <description>annan information som är nödvändig för att göra referensen fullständig och som inte kan beskrivas på annat ställe</description>
     </element>
     <element id="72.0" name="gmd:otherConstraints">
-        <label>Övriga restriktioner</label>
+        <label>Andra restriktioner</label>
         <description>Andra restriktioner och rättsliga förutsättningar för åtkomst och nyttjande av resursen (eller metadata)</description>
         <condition>conditional</condition>
 		<helper sort="false">
@@ -2070,8 +2070,7 @@ finns tillgängliga</description>
         <description>orsak till att metadataelementet har lagts till</description>
     </element>
     <element id="187.0" name="gmd:referenceSystemIdentifier">
-        <label>Identifierare för
-referenssystem</label>
+        <label>Rumsligt referenssystem</label>
         <description>Namn som identifierar referenssystem</description>
         <condition>conditional</condition>
     </element>
@@ -2337,7 +2336,7 @@ Ex. “under produktion” eller ”färdigställd”.</description>
 Ex. antal gråtoner i en rasterbild</description>
     </element>
     <element id="41.0" name="gmd:topicCategory">
-        <label>Ämneskategori</label>
+        <label>Ämnesområden</label>
         <description>Ämneskategori(er) som beskriver huvudsakligt innehåll
 i resursen</description>
         <condition>mandatory</condition>
@@ -2622,7 +2621,7 @@ Detta undvikar vi att ange.</description>
 		<description></description>
 	</element>
     <element name="gml:TimePeriod">
-        <label>Time period</label>
+        <label>Temporal Utstäckning</label>
         <description></description>
     </element>
     <element name="gml:TimeNode">
