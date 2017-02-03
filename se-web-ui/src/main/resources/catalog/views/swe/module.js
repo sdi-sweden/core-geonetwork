@@ -48,6 +48,7 @@
     '$scope',
     '$localStorage',
     '$location',
+    '$analytics',
     'suggestService',
     '$http',
 	'$sce',
@@ -68,7 +69,7 @@
     'gnGlobalSettings',
     'gnMdFormatter',
     'gnConfig',
-    function($rootScope, $scope, $localStorage, $location, suggestService,
+    function($rootScope, $scope, $localStorage, $location, $analytics, suggestService,
              $http, $sce, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
@@ -122,6 +123,10 @@
         $scope.triggerSearch();
       });
 
+      $scope.$on('aftersearch', function() {
+          $analytics.eventTrack('siteSearch', {  searchQuery: $scope.searchObj.params.or,
+              searchQueryResult: ($scope.searchResults.count > 0)?'hit':'no-hit' });
+      });
 
       $scope.$on('layerView', function(event) {
         $scope.showMetadata($scope.mdView.current.index,
