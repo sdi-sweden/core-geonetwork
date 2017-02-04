@@ -633,7 +633,7 @@
                 >
                   <directiveAttributes
                           data-tag-name="gml:endPosition"
-                          data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition/@indeterminatePosition"/>
+                         />
                 </key>
               </values>
               <snippet>
@@ -670,8 +670,7 @@
                      tooltip="gml:endPosition"
                 >
                   <directiveAttributes
-                          data-tag-name="gml:endPosition"
-                          data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition/@indeterminatePosition"/>
+                          data-tag-name="gml:endPosition" />
                 </key>
               </values>
               <snippet>
@@ -2409,8 +2408,7 @@
                      tooltip="gmd:extent|gmd:EX_TemporalExtent"
                 >
                   <directiveAttributes
-                          data-tag-name="gml:endPosition"
-                          data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition/@indeterminatePosition"/>
+                          data-tag-name="gml:endPosition" />
                 </key>
               </values>
               <snippet>
