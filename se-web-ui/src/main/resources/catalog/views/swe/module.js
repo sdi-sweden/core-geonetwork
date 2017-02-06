@@ -446,7 +446,24 @@
         });
         // show the first
         $('#tab-result-nav a:first').tab('show');
-      };   
+      };
+
+
+      /**
+       * Checks the metadata schema and if not Swedish schema,
+       * confirms that the user wants to continue.
+       *
+       * @param {object} md  Metadata
+       */
+      $scope.editMetadata = function(md) {
+        var schema = md['geonet:info'].schema;
+
+        if (schema != 'iso19139.swe') {
+          if (confirm($translate.instant('nonSweMetadata'))) {
+              $location.path("catalog.edit#/metadata/" + md['geonet:info'].id);
+          }
+        }
+      };
 
       $scope.showMetadata = function(index, md, records) {
         angular.element('.geodata-row-popup').addClass('show');

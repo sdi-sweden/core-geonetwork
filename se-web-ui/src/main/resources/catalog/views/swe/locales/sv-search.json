@@ -85,5 +85,6 @@
     "print_legend": "Skriv ut teckenförklaring",
     "print_legend_field": "Teckenförklaring",
     "geotechnic": "Geoteknik",
-    "layer": "Lager"
+    "layer": "Lager",
+    "nonSweMetadata": "The metadata is not in not compliant to the latest Swedish schema. Editing it will upgrade it. Do you want to continue?"
 }
