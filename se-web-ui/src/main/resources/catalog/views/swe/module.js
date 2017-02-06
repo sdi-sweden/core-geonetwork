@@ -459,10 +459,12 @@
         var schema = md['geonet:info'].schema;
 
         if (schema != 'iso19139.swe') {
-          if (confirm($translate.instant('nonSweMetadata'))) {
-              $location.path("catalog.edit#/metadata/" + md['geonet:info'].id);
+          if (!confirm($translate.instant('nonSweMetadata'))) {
+            return;
           }
         }
+
+        $window.location.href = "catalog.edit#/metadata/" + md['geonet:info'].id;
       };
 
       $scope.showMetadata = function(index, md, records) {
