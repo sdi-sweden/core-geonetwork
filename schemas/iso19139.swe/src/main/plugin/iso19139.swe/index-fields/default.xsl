@@ -86,6 +86,8 @@
     <xsl:call-template name="langId19139"/>
   </xsl:variable>
 
+ 
+  
   <!-- ========================================================================================= -->
   <xsl:template match="/">
     <Document locale="{$isoLangId}">
@@ -154,6 +156,9 @@
 
     <!-- the double // here seems needed to index MD_DataIdentification when
          it is nested in a SV_ServiceIdentification class -->
+	<xsl:variable name="fid" select="//gmd:fileIdentifier/gco:CharacterString/text()"/>
+	<xsl:variable name="title" select="//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString/text()"/>
+	<xsl:message>I INDEX-FIELDS TITEL: <xsl:value-of select="$fid" />   ----- <xsl:value-of select="$title" /></xsl:message>			 
 
     <xsl:for-each select="gmd:identificationInfo//gmd:MD_DataIdentification|
                 gmd:identificationInfo//*[contains(@gco:isoType, 'MD_DataIdentification')]|
@@ -385,6 +390,23 @@
                    string="{gmd:title/gco:CharacterString/text()}"
                    store="true" index="true"/>
           </xsl:if>
+      <!-- SDI-Sweden extension -->
+		   <xsl:if test="gmd:title/gco:CharacterString/text() != ''">
+				<xsl:variable name="thesaurusTitle" select="gmd:title/gco:CharacterString/text()"/>
+				<xsl:if test="$thesaurusTitle='Initiativ'  or $thesaurusTitle='Initiative'">
+                   <xsl:for-each select="//gmd:MD_Keywords/gmd:keyword/gco:CharacterString/text()">
+                       <xsl:variable name="keywordLower"  select="lower-case(.)"/>					
+                       <xsl:if test="$keywordLower='inspire'">
+							<Field name="inspireinitiativ" string="true" store="false" index="true"/>
+							<xsl:message>IsInspireTheme: <xsl:value-of select="$thesaurusTitle" /></xsl:message>
+						</xsl:if>	
+		              <xsl:message>keyword: <xsl:value-of select="$keywordLower" /></xsl:message>	
+					</xsl:for-each>					  
+				</xsl:if>
+				<xsl:message>Thesaurus namme (index): <xsl:value-of select="$thesaurusTitle" /></xsl:message>
+		 </xsl:if>
+		  <!-- //SDI-Sweden extension -->
+
 
 
           <xsl:if test="$indexAllKeywordDetails and $thesaurusIdentifier != ''">
