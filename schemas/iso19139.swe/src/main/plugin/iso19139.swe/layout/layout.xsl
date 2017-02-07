@@ -1093,8 +1093,8 @@
       <xsl:with-param name="editInfo" select="gmx:Anchor/gn:element" />
       <xsl:with-param name="isDisabled" select="false()" />
       <xsl:with-param name="attributesSnippet" select="$attributes" />
-      <xsl:with-param name="forceDisplayAttributes" select="true()" />
-      <xsl:with-param name="directive" select="'swe-anchor-list-directive'"/>
+      <xsl:with-param name="listOfValues" select="$helper"/>
+      <!--<xsl:with-param name="forceDisplayAttributes" select="true()" />-->
 
     </xsl:call-template>
   </xsl:template>
