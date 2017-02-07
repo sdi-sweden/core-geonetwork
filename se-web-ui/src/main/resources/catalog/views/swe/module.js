@@ -464,7 +464,7 @@
           }
         }
 
-        $window.location.href = "catalog.edit#/metadata/" + md['geonet:info'].id;
+        $window.open("catalog.edit#/metadata/" + md['geonet:info'].id, '_blank');
       };
 
       $scope.showMetadata = function(index, md, records) {
