@@ -42,6 +42,11 @@
 -->
 <urlrewrite use-query-string="true" use-context="false">
 
+    <rule>
+        <from>^/login$</from>
+        <to type="forward" last="true">/home</to>
+    </rule>
+
   <!-- Rule to redirect old deprecated @json requests -->
   <rule>
     <condition name="content-type" operator="notequal">multipart/form-data</condition>
