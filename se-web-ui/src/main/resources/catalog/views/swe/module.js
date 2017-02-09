@@ -426,8 +426,10 @@
 
       // Manage route at start and on $location change
       if (!$location.path()) {
-        $location.path('/search');
+        // default to filter dataset and series metadata
+        $location.path('/search').search({'type': 'dataset or series'});
       }
+
       $scope.activeTab = $location.path().
           match(/^(\/[a-zA-Z0-9]*)($|\/.*)/)[1];
 
@@ -933,6 +935,8 @@
       // Selected topic categories
       $scope.selectedTopicCategories = [];
 
+      // Selected metadata types
+      $scope.selectedMetadataTypes = ['dataset', 'series'];
 
       /**
        * Toggles a topic category selection.
@@ -953,6 +957,29 @@
         $scope.triggerSearch();
       };
 
+      /**
+       * Toggles a metadata type selection.
+       *
+       * @param {array} types
+       */
+      $scope.toggleMetadataType = function(types) {
+        for(var i = 0; i < types.length; i++) {
+          var type = types[i];
+
+          var pos = $scope.selectedMetadataTypes.indexOf(type);
+
+          if (pos > -1) {
+              $scope.selectedMetadataTypes.splice(pos, 1);
+          } else {
+              $scope.selectedMetadataTypes.push(type);
+          }
+        }
+
+        $scope.searchObj.params.type =
+            $scope.selectedMetadataTypes.join(' or ');
+        $scope.triggerSearch();
+      };
+
 
       /**
        * Unselects a topic category.
@@ -968,6 +995,27 @@
 
         $scope.searchObj.params.topicCat =
             $scope.selectedTopicCategories.join(' or ');
+        $scope.triggerSearch();
+      };
+
+      /**
+       * Toggles a metadata type selection.
+       *
+       * @param {array} types
+       */
+      $scope.unselectMetadataType = function(types) {
+        for(var i = 0; i < types.length; i++) {
+            var type = types[i];
+
+            var pos = $scope.selectedMetadataTypes.indexOf(type);
+
+            if (pos > -1) {
+                $scope.selectedMetadataTypes.splice(pos, 1);
+            }
+        }
+
+        $scope.searchObj.params.type =
+            $scope.selectedMetadataTypes.join(' or ');
         $scope.triggerSearch();
       };
 
@@ -990,6 +1038,14 @@
       $scope.toggleMapResources = function() {
         $scope.searchObj.params.dynamic =
             ($scope.searchObj.params.dynamic == 'true' ? '' : 'true');
+
+        if ($scope.searchObj.params.dynamic == 'true') {
+            $scope.selectedMetadataTypes = ['dataset', 'series', 'service'];
+
+            $scope.searchObj.params.type =
+                $scope.selectedMetadataTypes.join(' or ');
+        }
+
         $scope.triggerSearch();
       };
 
@@ -1091,6 +1147,10 @@
       $scope.viewAllMetadata = function() {
 
         $scope.selectedTopicCategories = [];
+        $scope.selectedMetadataTypes = ['dataset', 'series'];
+        $scope.searchObj.params.type =
+            $scope.selectedMetadataTypes.join(' or ');
+
         delete $scope.searchObj.params.topicCat;
         delete $scope.searchObj.params.download;
         delete $scope.searchObj.params.dynamic;

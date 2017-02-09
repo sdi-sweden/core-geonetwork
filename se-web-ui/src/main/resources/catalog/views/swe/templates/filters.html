@@ -17,6 +17,16 @@
           <span class="filter-label" data-translate="">searchShowOnly</span>
           <ul class="type-filter-list">
             <li>
+              <a href="" data-ng-click="toggleMetadataType(['service'])"
+                 data-ng-class="{'active': (searchObj.params.type.indexOf('service') > -1)}">
+                <span class="icon-share"></span><span data-translate="">showServices</span></a>
+            </li>
+            <li>
+              <a href="" data-ng-click="toggleMetadataType(['dataset', 'series'])"
+                 data-ng-class="{'active': (searchObj.params.type.indexOf('dataset') > -1)}">
+                <span class="icon-buffer"></span><span data-translate="">showDatasets</span></a>
+            </li>
+            <li>
               <a href="" data-ng-click="toggleMapResources()"
                  data-ng-class="{'active': (searchObj.params.dynamic == 'true')}">
                 <span class="icon-map"></span><span data-translate="">mapServices</span></a>
@@ -161,6 +171,18 @@
       <li data-ng-show="searchObj.params.resourceDateTo != undefined">
         <a href="" data-ng-click="unselectResourceDateTo()">
           <span>till datum {{searchObj.params.resourceDateTo | date : 'yyyy-MM-dd'}}</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="searchObj.params.type.indexOf('dataset') > -1">
+        <a href="" data-ng-click="unselectMetadataType(['dataset', 'series'])">
+          <span data-translate="">showDatasets</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="searchObj.params.type.indexOf('service') > -1">
+        <a href="" data-ng-click="unselectMetadataType(['service'])">
+          <span data-translate="">showServices</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
