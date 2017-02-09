@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
   ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
@@ -721,6 +722,26 @@
                                                 $linkage, '|OGC:WMS|application/vnd.ogc.wms_xml', '|', $tPosition)}" store="true" index="false"/>
           </xsl:if>
         </xsl:for-each>
+      </xsl:for-each>
+
+
+      <xsl:for-each select="gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/*/gmd:organisationName/gco:CharacterString|gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/*/gmd:organisationName/gmx:Anchor">
+        <Field name="metadataPOC" string="{string(.)}" store="true" index="true"/>
+
+        <xsl:variable name="role" select="../../gmd:role/*/@codeListValue"/>
+        <xsl:variable name="roleTranslation" select="util:getCodelistTranslation('gmd:CI_RoleCode', string($role), string($isoLangId))"/>
+        <xsl:variable name="logo" select="../..//gmx:FileName/@src"/>
+        <xsl:variable name="email" select="../../gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString"/>
+        <xsl:variable name="phone" select="../../gmd:contactInfo/*/gmd:phone/*/gmd:voice[normalize-space(.) != '']/*/text()"/>
+        <xsl:variable name="individualName" select="../../gmd:individualName/gco:CharacterString/text()"/>
+        <xsl:variable name="positionName" select="../../gmd:positionName/gco:CharacterString/text()"/>
+        <xsl:variable name="address" select="string-join(../../gmd:contactInfo/*/gmd:address/*/(
+                                          gmd:deliveryPoint|gmd:postalCode|gmd:city|
+                                          gmd:administrativeArea|gmd:country)/gco:CharacterString/text(), ', ')"/>
+
+        <Field name="responsibleParty"
+               string="{concat($roleTranslation, '|distribution|', ., '|', $logo, '|', string-join($email, ','), '|', $individualName, '|', $positionName, '|', $address, '|', string-join($phone, ','))}"
+               store="true" index="false"/>
       </xsl:for-each>
 
       <xsl:for-each select="gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions">
