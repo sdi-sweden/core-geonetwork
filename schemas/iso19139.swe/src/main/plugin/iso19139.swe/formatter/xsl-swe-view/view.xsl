@@ -6,9 +6,15 @@
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" 
 	xmlns:gts="http://www.isotc211.org/2005/gts" 
 	xmlns:GSE="http://www.geodata.se/gse" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:saxon="http://saxon.sf.net/"
+    extension-element-prefixes="saxon"
+	xmlns:gn-fn-render="http://geonetwork-opensource.org/xsl/functions/render"
 	xmlns:srv="http://www.isotc211.org/2005/srv" 
 	xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns="http://www.w3.org/1999/xhtml">	
+	xmlns="http://www.w3.org/1999/xhtml">
+	
+	<xsl:import href="render-functions.xsl"/>
 	<xsl:output omit-xml-declaration="yes" method="html" indent="yes" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
 	<xsl:param name="language" select="'Swedish'"/>
 	<xsl:variable name="resourceUrl" select="/root/resourceUrl" />
@@ -22,6 +28,20 @@
 				<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 				<link id="link1" rel="stylesheet" type="text/css" href="{$resourceUrl}metadataResponse/Style2/styles.css"/>
 				<link id="link2" rel="stylesheet" type="text/css" href="{$resourceUrl}metadataResponse/Style2/TreeFromXMLUsingXSLT.css"/>
+				<link id="link3" rel="stylesheet" type="text/css" href="{$resourceUrl}metadataResponse/Style2/font-awesome/css/custom-font-awesome.css"/>
+				<style id="custom-font-awesome-id">
+					@font-face {
+					  font-family: 'FontAwesome';
+					  src: url(<xsl:value-of select="concat('&quot;', $resourceUrl, 'metadataResponse/Style2/font-awesome/fonts/fontawesome-webfont.eot', '&quot;')" disable-output-escaping="yes" />);
+					  src: url(<xsl:value-of select="concat('&quot;', $resourceUrl, 'metadataResponse/Style2/font-awesome/fonts/fontawesome-webfont.eot', '&quot;')" disable-output-escaping="yes" />) format('embedded-opentype'),
+						   url(<xsl:value-of select="concat('&quot;', $resourceUrl, 'metadataResponse/Style2/font-awesome/fonts/fontawesome-webfont.woff2', '&quot;')" disable-output-escaping="yes" />) format('woff2'), 
+						   url(<xsl:value-of select="concat('&quot;', $resourceUrl, 'metadataResponse/Style2/font-awesome/fonts/fontawesome-webfont.woff', '&quot;')" disable-output-escaping="yes" />) format('woff'), 
+						   url(<xsl:value-of select="concat('&quot;', $resourceUrl, 'metadataResponse/Style2/font-awesome/fonts/fontawesome-webfont.ttf', '&quot;')" disable-output-escaping="yes" />) format('truetype'), 
+						   url(<xsl:value-of select="concat('&quot;', $resourceUrl, 'metadataResponse/Style2/font-awesome/fonts/fontawesome-webfont.svg', '&quot;')" disable-output-escaping="yes" />) format('svg');
+					  font-weight: normal;
+					  font-style: normal;
+					}
+				</style>
 				<script type="text/javascript" src="{$resourceUrl}metadataResponse/Style2/tabs.js"><![CDATA[.]]></script>
 				<script type="text/javascript" src="{$resourceUrl}metadataResponse/Style2/metagis.js"><![CDATA[.]]></script>
 				<script type="text/javascript" src="{$resourceUrl}metadataResponse/Style2/AnchorPosition.js"><![CDATA[.]]></script>
@@ -47,71 +67,6 @@
 					<xsl:value-of select="//gmd:MD_Metadata/gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString[text()]"/>
 				</span>
 				<br/>
-				<!--comment date : 04-11-10 
-                it had match to 115_v2 xsl-->
-				<!--<div id = "divserviceiteminfo" style = "display: block; visibility: hidden;height: 250px;width: 720px;position: absolute; z-index: 1">
-                    <table
-                        id = "tblServiceInfo"
-                        class = "box"
-                        style = "background-color: #fafafa; width: 720px; height: 250px"
-                        border = "0">
-                        <tr style = "height: 20px">
-                            <td
-                                id = "tdTitleInfo"
-                                colspan = "2"
-                                class = "sectionheader">Service Information</td>
-                        </tr>
-                        <tr>
-                            <td
-                                id = "tdTitle"
-                                class = "Level-0-Header"
-                                style = "width:20%;">Title:</td>
-                            <td id = "tdTitleData">-</td>
-                        </tr>
-                        <tr>
-                            <td
-                                id = "tdName"
-                                class = "Level-0-Header"
-                                style = "width:20%;">Name:</td>
-                            <td id = "tdNameData">-</td>
-                        </tr>
-                        <tr>
-                            <td
-                                id = "tdMinScale"
-                                class = "Level-0-Header "
-                                style = "width:50px;">MinScale:</td>
-                            <td id = "tdMinScaleData">-</td>
-                        </tr>
-                        <tr>
-                            <td
-                                id = "tdMaxScale"
-                                class = "Level-0-Header "
-                                style = "width:50px;">MaxScale:</td>
-                            <td id = "tdMaxScaleData">-</td>
-                        </tr>
-                        <tr>
-                            <td
-                                id = "tdLegendURL"
-                                class = "Level-0-Header "
-                                style = "width:50px;">LegendURL:</td>
-                            <td id = "tdLegendURLData">-</td>
-                        </tr>
-                        <tr>
-                            <td
-                                id = "tdMetadateURL"
-                                class = "Level-0-Header "
-                                style = "width:50px;">MetadateURL:</td>
-                            <td id = "tdMetadateURLData">-</td>
-                        </tr>
-                        <tr>
-                            <td
-                                id = "tdSRS"
-                                class = "Level-0-Header "
-                                style = "width:50px;">SRS:</td>
-                            <td id = "tdSRSData">-</td>
-                        </tr>
-                    </table>
-                </div>-->
 					<div id="metadataTabberDiv" class="tabber" style="width:99%;">
 					<div class="tabbertab">
 						<h2>Översikt</h2>
@@ -124,6 +79,7 @@
 					<div class="tabbertab">
 						<h2>Information om data</h2>
 						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:identificationInfo"/>
+						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:referenceSystemInfo" />
 						<!--change by Ashlesh [/metadata/dataIdInfo] -->
 					</div>									
 					<div class="tabbertab">
@@ -142,17 +98,27 @@
 					</div>					
 					<div id="allMetadataTab" class="tabbertab">
 						<h2>Alla metadata</h2>						
-						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString[text()] | //gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString[text()]"/>
 						<br/>
-						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:identificationInfo"/>						
+						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:identificationInfo">
+							<xsl:with-param name="showHeader" select="'true'"/>
+						</xsl:apply-templates>
+						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:referenceSystemInfo"/> <!-- No header for referense system info. It is a part of identificationinfo -->
 						<br/>
-						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:distributionInfo"/>						
+						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:distributionInfo">
+							<xsl:with-param name="showHeader" select="'true'"/>
+						</xsl:apply-templates>
 						<br/>
-						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"/>
+						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+							<xsl:with-param name="showHeader" select="'true'"/>
+						</xsl:apply-templates>
 						<br/>
-						<xsl:apply-templates select="/metadata/serviceInfo"/>						
-						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:contentInfo"/>						
-						<xsl:apply-templates select="//gmd:MD_Metadata"/>
+						<xsl:apply-templates select="//gmd:MD_Metadata/gmd:identificationInfo" mode="Restriktioner">
+							<xsl:with-param name="showHeader" select="'true'"/>
+						</xsl:apply-templates>
+						<br/>
+						<xsl:apply-templates select="//gmd:MD_Metadata">
+							<xsl:with-param name="showHeader" select="'true'"/>
+						</xsl:apply-templates>
 					</div>
 				</div>
 				</span>
@@ -170,15 +136,6 @@
 			<br/>
 			<span id="msgSuccessErrorBox"/>
 		</div>
-		<!-- 
-        <table class="mytabtable" border="1" bordercolor="#D3D3D3">
-            <tr>
-                <td colspan="2" class="sectionheader">
-                    <a style="cursor:pointer;text-decoration:underline;" onClick="mdContactFormTitleClick()">Tyck til </a>
-                </td>
-            </tr>
-        </table>
-        -->
 		<div id="metadataContactDiv" style="display:none; width:95%; border-top:2px solid #ABABAB">
 			<form id="metadataContactForm" name="metadataContactForm" style="padding:0px 0 0 50px;" method="post" onsubmit="return mdContactFormValidation()">
 				<p>Här kan du ge synpunkter på data och metadata. Fält märkta med * är obligatoriska uppgifter.</p>
@@ -227,10 +184,10 @@
 		</div>
 		<br/>
 		<table class="mytabtable" >
-			<tr>
+			<!-- <tr>
 				<td colspan="3" class="sectionheader">Översiktlig sammanställning</td>
-			</tr>
-			<tr>
+			</tr> -->
+			<!-- <tr>
 				<td class="Level-1-element">Titel:</td>
 				<td colspan="2">
 					<span itemprop="name" property="dct:title">
@@ -246,38 +203,24 @@
 						<xsl:if test="position()!=last()">,</xsl:if>
 					</xsl:for-each>
 				</td>
-			</tr>
+			</tr> -->
 			<tr width="33%" align="left" valign="upper">
 				<xsl:for-each select="//gmd:MD_Metadata/gmd:hierarchyLevel">
 					<tr>
 						<xsl:if test="gmd:MD_ScopeCode[@Sync = 'TRUE']">
 							<span class="s"><![CDATA[ ]]></span>
 						</xsl:if>
-						<td class="Level-1-element">Resurstyp:</td>
+						<td class="Level-1-element">Resurstyp</td>
 						<td colspan="2">
 							<xsl:apply-templates select="gmd:MD_ScopeCode"/>
 						</td>
 					</tr>
 				</xsl:for-each>
-				<xsl:for-each select="//gmd:MD_Metadata/gmd:contact">
-					<tr>
-						<td class="Level-1-element">Organisation:</td>
-						<td colspan="2">
-							<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
-						</td>
-					</tr>
-					<tr>
-						<td class="Level-1-element">E-post:</td>
-						<td colspan="2">
-							<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/>
-						</td>
-					</tr>
-				</xsl:for-each>
 				<tr>
-					<td class="Level-1-element">Datum för metadata:</td>
+					<td class="Level-1-element">Datum för metadata</td>
 					<td colspan="2">
-						<xsl:value-of select="//gmd:MD_Metadata/gmd:dateStamp/gco:Date"/>
-						<xsl:value-of select="//gmd:MD_Metadata/gmd:dateStamp/gco:DateTime"/>
+						<xsl:apply-templates mode="render-value" select="//gmd:MD_Metadata/gmd:dateStamp/gco:Date"/>
+						<xsl:apply-templates mode="render-value" select="//gmd:MD_Metadata/gmd:dateStamp/gco:DateTime"/>
 					</td>
 				</tr>
 				<!-- <tr>
@@ -290,185 +233,54 @@
 				<!--                <th width="33%" align="left" valign="upper"> -->
 				<xsl:apply-templates select="//gmd:MD_Metadata//gmd:abstract"/>
 				<!--                </th> -->
-				<xsl:for-each select="//gmd:MD_Metadata/gmd:dataQualityInfo">
+				
+				<xsl:if test="//gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory | //gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:topicCategory">
 					<tr>
-						<td class="Level-1-element">Tillkomsthistorik:</td>
+						<td class="Level-1-element">Ämnesområden</td>
 						<td colspan="2">
-							<xsl:value-of select="gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString/text()"/>
-						</td>
-					</tr>
-				</xsl:for-each>
-				<!-- Status -->
-				<xsl:for-each select="//gmd:MD_Metadata/gmd:identificationInfo//gmd:status">
-					<tr>
-						<td class="Level-1-element">Status:</td>
-						<td colspan="2">
-							<xsl:for-each select="gmd:MD_ProgressCode">
+							<!--                            <xsl:for-each select="/gmd:MD_Metadata[gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory]"> -->
+							<xsl:for-each select="//gmd:MD_Metadata/gmd:identificationInfo//gmd:topicCategory/gmd:MD_TopicCategoryCode">
+								<!--                                        <xsl:value-of select="gmd:MD_TopicCategoryCode/text()"/> -->
 								<xsl:choose>
-									<xsl:when test="@codeListValue = 'completed'">Slutförd</xsl:when>
-									<xsl:when test="@codeListValue = 'historicalArchive'">Historiskt arkiv</xsl:when>
-									<xsl:when test="@codeListValue = 'obsolete'">Inte längre i bruk</xsl:when>
-									<xsl:when test="@codeListValue = 'onGoing'">Pågående</xsl:when>
-									<xsl:when test="@codeListValue = 'planned'">Planerad</xsl:when>
-									<xsl:when test="@codeListValue = 'required'">Behövd</xsl:when>
-									<xsl:when test="@codeListValue = 'underDevelopment'">Under framställning</xsl:when>
+									<xsl:when test="text() = 'farming'">Areela näringar</xsl:when>
+									<xsl:when test="text() = 'biota'">Biologi och ekologi</xsl:when>
+									<xsl:when test="text() = 'boundaries'">Administrativa gränser</xsl:when>
+									<xsl:when test="text() = 'climatologyMeteorologyAtmosphere'">Atmosfär, klimatologi och meteorologi</xsl:when>
+									<xsl:when test="text() = 'economy'">Ekonomi</xsl:when>
+									<xsl:when test="text() = 'elevation'">Höjddata</xsl:when>
+									<xsl:when test="text() = 'environment'">Miljö</xsl:when>
+									<xsl:when test="text() = 'geoscientificInformation'">Geovetenskap</xsl:when>
+									<xsl:when test="text() = 'health'">Hälsa</xsl:when>
+									<xsl:when test="text() = 'imageryBaseMapsEarthCover'">Arealtäckande bilder ocxh baskartor</xsl:when>
+									<xsl:when test="text() = 'intelligenceMilitary'">Försvar</xsl:when>
+									<xsl:when test="text() = 'inlandWaters'">Insjövatten</xsl:when>
+									<xsl:when test="text() = 'location'">Positionering</xsl:when>
+									<xsl:when test="text() = 'oceans'">Kust och hav</xsl:when>
+									<xsl:when test="text() = 'planningCadastre'">Fastigheter och fysisk planering</xsl:when>
+									<xsl:when test="text() = 'society'">Samhälle och kultur</xsl:when>
+									<xsl:when test="text() = 'structure'">Byggnader och konstruktioner</xsl:when>
+									<xsl:when test="text() = 'transportation'">Transporter</xsl:when>
+									<xsl:when test="text() = 'utilitiesCommunication'">Tekniska försörjningssystem</xsl:when>
 									<xsl:otherwise>
-										<xsl:value-of select="@value"/>
+										<xsl:value-of select="text()"/>
 									</xsl:otherwise>
 								</xsl:choose>
+								<xsl:if test="position()!=last()">,</xsl:if>
 							</xsl:for-each>
+							<!--                            </xsl:for-each> -->
 						</td>
 					</tr>
-				</xsl:for-each>
-				<!-- Other Restrictions -->
-				<xsl:for-each select="//gmd:MD_Metadata/gmd:identificationInfo//gmd:resourceConstraints">
-					<xsl:for-each select="gmd:MD_LegalConstraints/gmd:otherConstraints">
-						<tr>
-							<td class="Level-1-element">Villkor för nyttjande:</td>
-							<td colspan="2">
-								<xsl:value-of select="gco:CharacterString/text()"/>
-							</td>
-						</tr>
-					</xsl:for-each>
-				</xsl:for-each>
-				<!-- Online Links -->				
-				<tr>
-					<td class="Level-1-element">Online-länkar</td>
-					<td colspan="2">
-                        </td>
-				</tr>
-				<tr>
-					<td class="Level-2-element">Typ av länk</td>
-					<!--		<td class="Level-2-element">Name</td>-->
-					<td colspan="2" style="padding-left:35px;font-size:13px;font-weight:bold;color:#9e9e9e;">URL</td>
-				</tr>
+				</xsl:if>
 				
-				<xsl:for-each select="//gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions">
-					<xsl:for-each select="gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
-						<tr>
-							<td class="Level-3-text">
-								<xsl:choose>
-									<xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Information'">
-											  Informationssida											</xsl:when>
-									<xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Nedladdning'">
-											  Nedladdning av data
-											</xsl:when>
-									<!--<xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Information'">
-											  <dcat:landingPage rdf:resource="{gmd:linkage/gmd:URL}"/>
-											</xsl:when>-->
-									<xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:OGC:WMS'">
-											  WMS-tjänst (Visningstjänst)
-											</xsl:when>
-									<xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:OGC:WFS'">
-											 WFS-tjänst (Nedladdningstjänst)
-											</xsl:when>
-									<xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Nedladdning:Atom'">
-											  ATOM-fil (För nedladdning av data)
-											</xsl:when>
-									<xsl:otherwise>
-										<xsl:value-of select="gmd:protocol/gco:CharacterString/text()"/>
-									</xsl:otherwise>
-								</xsl:choose>
-							</td>
-							<!-- <td class="Level-3-text">
-								<xsl:value-of select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString/text()"/>
-							</td> -->
-							<td colspan="2">
-								<a target="_blank" property="dcat:accessURL" itemprop='url'>									
-									<xsl:attribute name="href"><xsl:value-of select="gmd:linkage/gmd:URL/text()"/></xsl:attribute>
-									<xsl:value-of select="gmd:linkage/gmd:URL/text()"/>
-								</a>
-							</td>
-						</tr>
-					</xsl:for-each>
-				</xsl:for-each>
-				
-					<!--<xsl:if test="/gmd:MD_Metadata[gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory/gmd:MD_TopicCategoryCode/text()] | /gmd:MD_Metadata[gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:topicCategory/gmd:MD_TopicCategoryCode/text()]">
-                        <tr>
-                            <td class="Level-1-element">Ämnesområde:</td>
-                            <td colspan="2">
-                                <!-\-        <xsl:for-each select="/gmd:MD_Metadata[gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory]"> -\->
-                                <xsl:for-each select="/gmd:MD_Metadata/gmd:identificationInfo//gmd:topicCategory/gmd:MD_TopicCategoryCode">
-                                    <!-\-                                        <xsl:value-of select="gmd:MD_TopicCategoryCode/text()"/> -\->
-                                    <xsl:choose>
-                                        <xsl:when test="text() = 'farming'">Areela näringar</xsl:when>
-                                        <xsl:when test="text() = 'biota'">Biologi och ekologi</xsl:when>
-                                        <xsl:when test="text() = 'boundaries'">Administrativa gränser</xsl:when>
-                                        <xsl:when test="text() = 'climatologyMeteorologyAtmosphere'">Atmosfär, klimatologi och meteorologi</xsl:when>
-                                        <xsl:when test="text() = 'economy'">Ekonomi</xsl:when>
-                                        <xsl:when test="text() = 'elevation'">Höjddata</xsl:when>
-                                        <xsl:when test="text() = 'environment'">Miljö</xsl:when>
-                                        <xsl:when test="text() = 'geoscientificInformation'">Geovetenskap</xsl:when>
-                                        <xsl:when test="text() = 'health'">Hälsa</xsl:when>
-                                        <xsl:when test="text() = 'imageryBaseMapsEarthCover'">Arealtäckande bilder ocxh baskartor</xsl:when>
-                                        <xsl:when test="text() = 'intelligenceMilitary'">Försvar</xsl:when>
-                                        <xsl:when test="text() = 'inlandWaters'">Insjövatten</xsl:when>
-                                        <xsl:when test="text() = 'location'">Positionering</xsl:when>
-                                        <xsl:when test="text() = 'oceans'">Kust och hav</xsl:when>
-                                        <xsl:when test="text() = 'planningCadastre'">Fastigheter och fysisk planering</xsl:when>
-                                        <xsl:when test="text() = 'society'">Samhälle och kultur</xsl:when>
-                                        <xsl:when test="text() = 'structure'">Byggnader och konstruktioner</xsl:when>
-                                        <xsl:when test="text() = 'transportation'">Transporter</xsl:when>
-                                        <xsl:when test="text() = 'utilitiesCommunication'">Tekniska försörjningssystem</xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="text()"/>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                    <xsl:if test="position()!=last()">,</xsl:if>
-                                </xsl:for-each>
-                                <!-\-\-                               </xsl:for-each> -\->
-                            </td>
-                        </tr>
-                        <xsl:if test="position()=last()"/>
-                    </xsl:if>
-                    <xsl:if test="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceFormat/gmd:MD_Format">
-                        <tr>
-                            <td colspan="3" class="Level-1-Header">
-                Resursens format:
-              </td>
-                        </tr>
-                    </xsl:if>
-                    <xsl:if test="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceFormat/gmd:MD_Format/gmd:name">
-                        <tr>
-                            <td class="Level-1-element">
-               Beteckning:
-              </td>
-                            <td colspan="2">
-                                <xsl:value-of select="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceFormat/gmd:MD_Format/gmd:name/gco:CharacterString"/>
-                            </td>
-                        </tr>
-                    </xsl:if>
-                    <xsl:if test="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceFormat/gmd:MD_Format/gmd:version">
-                        <tr>
-                            <td class="Level-1-element">
-                Version:
-              </td>
-                            <td colspan="2">
-                                <xsl:value-of select="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceFormat/gmd:MD_Format/gmd:version/gco:CharacterString"/>
-                            </td>
-                        </tr>
-                    </xsl:if>
-                    <xsl:if test="/gmd:MD_Metadata/gmd:identificationInfo//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString">
-                        <!-\-                        <xsl:if test="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'custodian']/gmd:organisationName/gco:CharacterString[text()]"> -\->
-                        <tr>
-                            <td class="Level-1-element">Ansvarig part:</td>
-                            <td colspan="2">
-                                <xsl:value-of select="/gmd:MD_Metadata/gmd:identificationInfo//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
-                            </td>
-                        </tr>
-                    </xsl:if>-->
-				<!--<xsl:for-each select = "/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty">
-                        <tr>
-            <td class = "Level-1-element">Upphovsman:</td>
-            <td>
-              <xsl:value-of select = "/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'custodian']/gmd:organisationName/gco:CharacterString[text()]"/>
-            </td>
-          </tr>
-                    </xsl:for-each>-->
+				<xsl:apply-templates mode="Overview" select="//gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact | //gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact"/>
+				<xsl:apply-templates mode="maxDate" select="//gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date"/>
+				<!-- Online Links -->
+				<xsl:apply-templates mode="online" select="//gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine"/>
+	
 				<!--Not found element as name gmd:status-->
 				<!--End Date : 04-11-10 -->
 				<!-- Exempelbild and Bildtext -->						
-				<xsl:for-each select="//gmd:MD_Metadata/gmd:identificationInfo//gmd:graphicOverview">
+				<!-- <xsl:for-each select="//gmd:MD_Metadata/gmd:identificationInfo//gmd:graphicOverview">
 					<tr>
 						<td class="Level-1-element">Exempelbild:</td>
 						<td colspan="2">
@@ -485,7 +297,7 @@
 							<xsl:value-of select="gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString"/>
 						</td>
 					</tr>
-				</xsl:for-each>
+				</xsl:for-each> -->
 			</tr>
 			<!-- <xsl:for-each select="//gmd:MD_Metadata/gmd:identificationInfo"> -->
 				<!--Comment Date: 12-11-10-->
@@ -508,19 +320,20 @@
 	<xsl:template match="gmd:MD_Metadata/gmd:metadataStandardName">
         
     </xsl:template>
-	<!--TEMPLATES FOR METADATA UML CLASSES -->
-	<!--Metadata Information (B.2.1 MD_Metadata - line1) -->
-	<!--XML files created by ArcCatalog always have the root "metadata" rather than "Metadata" -->
+
 	<xsl:template match="gmd:MD_Metadata">
+		<xsl:param name="showHeader"/>
 		<a name="Metadata_Information"><![CDATA[ ]]></a>
 		<table class="mytabtable" >
 			<tbody>
-				<tr>
-					<td colspan="2" class="sectionheader">Information om metadatamängden</td>
-				</tr>
+				<xsl:if test="$showHeader = 'true'">
+					<tr>
+						<td colspan="2" class="sectionheader">Information om metadata</td>
+					</tr>
+				</xsl:if>
 				<xsl:for-each select="gmd:language">
 					<tr>
-						<td class="Level-1-element">Språk i metadata:</td>
+						<td class="Level-1-element">Språk i metadata</td>
 						<xsl:apply-templates select="gmd:LanguageCode"/>
 					</tr>
 				</xsl:for-each>
@@ -538,11 +351,11 @@
 							<xsl:if test="@Sync = 'TRUE'">
 								<span class="s"><![CDATA[ ]]></span>
 							</xsl:if>
-                            Datum för metadata:
+                            Datum för metadata
                         </td>
 						<td>
-							<xsl:value-of select="gco:Date/text()"/>
-							<xsl:value-of select="gco:DateTime/text()"/>
+							<xsl:apply-templates mode="render-value" select="gco:Date"/>
+							<xsl:apply-templates mode="render-value" select="gco:DateTime"/>
 						</td>
 					</tr>
 				</xsl:for-each>
@@ -564,7 +377,7 @@
 						<xsl:if test="gmd:MD_ScopeCode[@Sync = 'TRUE']">
 							<span class="s"><![CDATA[ ]]></span>
 						</xsl:if>
-						<td class="Level-1-element">Hierarkisk nivå (Resurstyp):</td>
+						<td class="Level-1-element">Resurstyp</td>
 						<td>
 							<xsl:apply-templates select="gmd:MD_ScopeCode"/>
 						</td>
@@ -585,15 +398,15 @@
 				</xsl:for-each>
 				<xsl:for-each select="gmd:metadataStandardName">
 					<tr>
-						<td class="Level-1-element">Metadatastandard:</td>
+						<td class="Level-1-element">Metadatastandard</td>
 						<td>
 							<xsl:value-of select="//gmd:MD_Metadata/gmd:metadataStandardName/gco:CharacterString/text()"/>
 						</td>
 					</tr>
 				</xsl:for-each>
-				<xsl:for-each select="mdStanVer">
+				<xsl:for-each select="gmd:metadataStandardVersion">
 					<tr>
-						<td class="Level-1-element">Version av metadatastandard:</td>
+						<td class="Level-1-element">Version av metadatastandard</td>
 						<td>
 							<xsl:value-of select="."/>
 						</td>
@@ -605,7 +418,7 @@
 							<xsl:if test="@Sync = 'TRUE'">
 								<span class="s"><![CDATA[ ]]></span>
 							</xsl:if>
-                            Identifierare för metadatamängden:
+                            Identifierare för metadatamängden
                         </td>
 						<td>
 							<xsl:value-of select="//gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString/text()"/>
@@ -620,7 +433,7 @@
 						</td>
 					</tr>
 				</xsl:for-each>
-				<xsl:apply-templates select="gmd:contact"/>
+				<xsl:apply-templates mode="contact" select="//gmd:MD_Metadata/gmd:contact"/>
 			</tbody>
 		</table>
 	</xsl:template>
@@ -807,8 +620,8 @@
 			<xsl:when test="@codeListValue = '002'">attributtyp</xsl:when>
 			<xsl:when test="@codeListValue = '003'">samling hardware</xsl:when>
 			<xsl:when test="@codeListValue = '004'">samling session</xsl:when>
-			<xsl:when test="@codeListValue = 'dataset'">datamängd</xsl:when>
-			<xsl:when test="@codeListValue = 'series'">serie</xsl:when>
+			<xsl:when test="@codeListValue = 'dataset'">Datamängd</xsl:when>
+			<xsl:when test="@codeListValue = 'series'">Serie</xsl:when>
 			<xsl:when test="@codeListValue = '007'">ej geografiska data</xsl:when>
 			<xsl:when test="@codeListValue = '008'">dimensions grupp</xsl:when>
 			<xsl:when test="@codeListValue = '009'">objekt</xsl:when>
@@ -816,7 +629,7 @@
 			<xsl:when test="@codeListValue = '011'">property type</xsl:when>
 			<xsl:when test="@codeListValue = '012'">fält session</xsl:when>
 			<xsl:when test="@codeListValue = 'software'">Programvara</xsl:when>
-			<xsl:when test="@codeListValue = 'service'">tjänst</xsl:when>
+			<xsl:when test="@codeListValue = 'service'">Tjänst</xsl:when>
 			<xsl:when test="@codeListValue = '015'">modell</xsl:when>
 			<xsl:when test="@codeListValue = '101'">Mxd-dokument</xsl:when>
 			<xsl:when test="@codeListValue = '102'">ArcIMS-tjänst</xsl:when>
@@ -826,8 +639,8 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	<xsl:template match="gmd:MD_DataIdentification/gmd:resourceMaintenance | gmd:MD_DataIdentification/gmd:MD_MaintenanceInformation ">
-		<xsl:choose>
+	<xsl:template match="*/gmd:resourceMaintenance | gmd:MD_DataIdentification/gmd:MD_MaintenanceInformation ">
+		<!-- <xsl:choose>
 			<xsl:when test="gmd:MD_MaintenanceInformation">
 				<tr>
 					<td colspan="2" class="Level-1-Header">Underhåll av resurs:</td>
@@ -838,7 +651,7 @@
 					<td class="Level-1-element">Underhåll:</td>
 				</tr>
 			</xsl:otherwise>
-		</xsl:choose>
+		</xsl:choose> -->
 		<xsl:for-each select="dateNext">
 			<tr>
 				<td class="Level-1-element">Datum för nästa uppdatering:</td>
@@ -848,7 +661,7 @@
 			</tr>
 		</xsl:for-each>
 		<!--<xsl:for-each select = "maintFreq">-->
-		<xsl:for-each select="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency">
+		<!-- <xsl:for-each select="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency">
 			<tr>
 				<td class="Level-2-element">Underhållsfrekvens:</td>
 				<td>
@@ -873,7 +686,7 @@
 					</xsl:for-each>
 				</td>
 			</tr>
-		</xsl:for-each>
+		</xsl:for-each> -->
 		<xsl:apply-templates select="usrDefFreq"/>
 		<xsl:for-each select="maintScp">
 			<tr>
@@ -885,7 +698,7 @@
 		<xsl:for-each select="gmd:MD_MaintenanceInformation/gmd:maintenanceNote/gco:CharacterString[text()]">
 			<tr>
 				<!--<td class = "Level-1-element">Andra krav på underhåll:</td>-->
-				<td class="Level-2-element">Beskrivning av underhåll:</td>
+				<td class="Level-1-element">Anmärkning</td>
 				<td>
 					<xsl:value-of select="."/>
 				</td>
@@ -1017,17 +830,10 @@
 			</tr>
 		</xsl:for-each>
 	</xsl:template>
-	<!--General Constraint Information (B.2.3 MD_Constraints - line67) -->
 	<xsl:template match="gmd:MD_Constraints">
-		<!--Header Commented : 02-11-10-->
-		<!--<tr>
-            <td class = "Level-1-header" colspan = "2">Begränsningar:</td>
-        </tr>-->
 		<xsl:for-each select="gmd:useLimitation">
 			<tr>
-				<!--<td class = "Level-2-element">Begränsningar i användning:</td>-->
-				<!--Changed : 02-11-10-->
-				<td class="Level-2-element">Användbarhetsbegränsningar:</td>
+				<td class="Level-1-element">Användbarhetsbegränsningar</td>
 				<td>
 					<xsl:value-of select="gco:CharacterString/text()"/>
 				</td>
@@ -1039,16 +845,19 @@
 	<!--<xsl:template match = "LegConsts">-->
 	<xsl:template match="gmd:resourceConstraints/gmd:MD_LegalConstraints">
 		<xsl:variable name="preId" select="generate-id()"/>
-		<tr>
-			<td colspan="2" class="Level-1-EmptyRow">-</td>
-		</tr>
-		<tr>
-			<!--<td colspan = "2" class = "Level-1-Header">Juridiska begränsningar:</td>-->
-			<td colspan="2" class="Level-1-Header">Rättsliga restriktioner:</td>
-		</tr>
+		<xsl:for-each select="gmd:otherConstraints">
+			<tr>
+				<td class="Level-1-element">Andra restriktioner</td>
+				<td>
+					<div id="otherConst">
+						<xsl:value-of select="gco:CharacterString"/>
+					</div>
+				</td>
+			</tr>
+		</xsl:for-each>
 		<xsl:if test="gmd:accessConstraints">
 			<tr>
-				<td class="Level-2-element">Åtkomstrestriktioner:</td>
+				<td class="Level-1-element">Åtkomst begränsningar</td>
 				<td>
 					<xsl:for-each select="gmd:accessConstraints">
 						<xsl:value-of select="text()"/>
@@ -1058,10 +867,9 @@
 				</td>
 			</tr>
 		</xsl:if>
-		<xsl:if test="gmd:useConstraints">
+		<!-- <xsl:if test="gmd:useConstraints">
 			<tr>
-				<!--<td class = "Level-2-element">Användingsrestriktioner:</td>-->
-				<td class="Level-2-element">Nyttjanderestriktioner:</td>
+				<td class="Level-1-element">Nyttjanderestriktioner:</td>
 				<td>
 					<xsl:for-each select="gmd:useConstraints">
 						<xsl:value-of select="text()"/>
@@ -1070,35 +878,10 @@
 					</xsl:for-each>
 				</td>
 			</tr>
-		</xsl:if>
-		<xsl:for-each select="gmd:otherConstraints">
-			<tr>
-				<td class="Level-2-element">Andra restriktioner:</td>
-				<td>
-					<div id="otherConst">
-						<xsl:value-of select="gco:CharacterString"/>
-					</div>
-					<script type="text/javascript">setLinkClickable('otherConst');</script>
-					<!--<pre>
-                        <xsl:attribute name = "id">
-                            pre
-                            <xsl:value-of select = "$preId"/>
-                            <xsl:value-of select = "position()"/>
-                        </xsl:attribute>
-                        <xsl:value-of select = "."/>
-                    </pre>
-                    <script type = "text/javascript">
-                        fix('pre
-                        <xsl:value-of select = "$preId"/>
-                        <xsl:value-of select = "position()"/>
-                        ');
-                    </script>-->
-				</td>
-			</tr>
-		</xsl:for-each>
+		</xsl:if> -->
 		<xsl:for-each select="gmd:useLimitation/gco:CharacterString">
 			<tr>
-				<td class="Level-2-element">Begränsningar i användning:</td>
+				<td class="Level-1-element">Begränsningar i användning</td>
 				<td>
 					<div id="useLimitation">
 						<xsl:value-of select="text()"/>
@@ -1114,10 +897,10 @@
 		<!--<td>-->
 		<xsl:choose>
 			<xsl:when test="@codeListValue = 'copyright'">Upphovsrätt</xsl:when>
-			<xsl:when test="@codeListValue = 'patent'">patent</xsl:when>
+			<xsl:when test="@codeListValue = 'patent'">Patent</xsl:when>
 			<xsl:when test="@codeListValue = 'patentPending'">Avvaktar patent</xsl:when>
 			<xsl:when test="@codeListValue = 'trademark'">Varumärke</xsl:when>
-			<xsl:when test="@codeListValue = 'license'">licens</xsl:when>
+			<xsl:when test="@codeListValue = 'license'">Licens</xsl:when>
 			<xsl:when test="@codeListValue = 'intellectualPropertyRights'">Immaterialrätt</xsl:when>
 			<xsl:when test="@codeListValue = 'restricted'">Begränsad</xsl:when>
 			<xsl:when test="@codeListValue = 'otherRestrictions'">Andra begränsningar</xsl:when>
@@ -1236,41 +1019,30 @@
 	<!--Resource Identification Information (B.2.2 MD_Identification - line23, including MD_DataIdentification - line36) -->
 	<!--DTD doesn't account for data and service subclasses of MD_Identification -->
 	<xsl:template match="gmd:MD_Metadata/gmd:identificationInfo">
+		<xsl:param name="showHeader"/>
 		<xsl:variable name="preId" select="generate-id()"/>
 		<a>
 			<xsl:attribute name="name"><xsl:value-of select="generate-id()"/></xsl:attribute>
 		</a>
-		<br/>
 		<table id="dataInfo" class="mytabtable" >
 			<tbody>
-				<xsl:if test="count(//gmd:MD_Metadata/gmd:identificationInfo)=1">
+				<xsl:if test="$showHeader = 'true'">
 					<tr>
-						<td colspan="2" class="sectionheader">Resursbeskrivning</td>
+						<td colspan="2" class="sectionheader">Information om data</td>
 					</tr>
 				</xsl:if>
-				<xsl:if test="count(//gmd:MD_Metadata/gmd:identificationInfo) &gt; 1">
-					<tr>
-						<td>
-                            Identifiering av resurs
-                            <xsl:value-of select="position()"/>
-                            :
-                        </td>
-					</tr>
-				</xsl:if>
-				<!--<DD>-->
-				<tr>
-					<td colspan="2" class="Level-0-Header">Identifiering av resurs:</td>
-				</tr>
 				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation | srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation"/>
 				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty | srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty"/>
 				<!--<xsl:apply-templates select = "gmd:MD_DataIdentification/gmd:pointOfContact"/>-->
-				<tr>
+				<!-- <tr>
 					<td colspan="2" class="Level-1-EmptyRow">-</td>
-				</tr>
-				<tr>
+				</tr> -->
+				<!-- <tr>
 					<td colspan="2" class="Level-0-Header">Beskrivning av resurs:</td>
-				</tr>
+				</tr> -->
 				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:abstract | srv:SV_ServiceIdentification/gmd:abstract "/>
+				<xsl:apply-templates mode="Overview" select="//gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact | //gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact"/>
+				<xsl:apply-templates select="//gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceMaintenance | gmd:MD_DataIdentification/gmd:MD_MaintenanceInformation "/>
 				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:purpose"/>
 				<xsl:if test="../gmd:abstract | idAbsENG">					
 					<tr>
@@ -1309,49 +1081,36 @@
 					
 					<!--</xsl:for-each>-->
 				</xsl:if>
-				<xsl:if test="gmd:MD_DataIdentification/gmd:topicCategory | srv:SV_ServiceIdentification/gmd:topicCategory">
+				
+				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:graphicOverview |  srv:SV_ServiceIdentification/gmd:graphicOverview"/>
+				
+				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:descriptiveKeywords | srv:SV_ServiceIdentification/gmd:descriptiveKeywords "/>
+				
+				<xsl:for-each select="gmd:MD_DataIdentification/gmd:resourceConstraints | srv:SV_ServiceIdentification/gmd:resourceConstraints">
+					<xsl:apply-templates select="gmd:MD_Constraints"/>
+					<xsl:apply-templates select="gmd:MD_LegalConstraints"/>
+					<!-- <xsl:apply-templates select="gmd:MD_SecurityConstraints/gmd:classification"/> -->
+				</xsl:for-each>
+				
+				<xsl:for-each select="srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName">
 					<tr>
-						<td class="Level-1-element">Ämnesområde:</td>
-						<td colspan="2">
-							<!--                            <xsl:for-each select="/gmd:MD_Metadata[gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory]"> -->
-							<xsl:for-each select="//gmd:MD_Metadata/gmd:identificationInfo//gmd:topicCategory/gmd:MD_TopicCategoryCode">
-								<!--                                        <xsl:value-of select="gmd:MD_TopicCategoryCode/text()"/> -->
-								<xsl:choose>
-									<xsl:when test="text() = 'farming'">Areela näringar</xsl:when>
-									<xsl:when test="text() = 'biota'">Biologi och ekologi</xsl:when>
-									<xsl:when test="text() = 'boundaries'">Administrativa gränser</xsl:when>
-									<xsl:when test="text() = 'climatologyMeteorologyAtmosphere'">Atmosfär, klimatologi och meteorologi</xsl:when>
-									<xsl:when test="text() = 'economy'">Ekonomi</xsl:when>
-									<xsl:when test="text() = 'elevation'">Höjddata</xsl:when>
-									<xsl:when test="text() = 'environment'">Miljö</xsl:when>
-									<xsl:when test="text() = 'geoscientificInformation'">Geovetenskap</xsl:when>
-									<xsl:when test="text() = 'health'">Hälsa</xsl:when>
-									<xsl:when test="text() = 'imageryBaseMapsEarthCover'">Arealtäckande bilder ocxh baskartor</xsl:when>
-									<xsl:when test="text() = 'intelligenceMilitary'">Försvar</xsl:when>
-									<xsl:when test="text() = 'inlandWaters'">Insjövatten</xsl:when>
-									<xsl:when test="text() = 'location'">Positionering</xsl:when>
-									<xsl:when test="text() = 'oceans'">Kust och hav</xsl:when>
-									<xsl:when test="text() = 'planningCadastre'">Fastigheter och fysisk planering</xsl:when>
-									<xsl:when test="text() = 'society'">Samhälle och kultur</xsl:when>
-									<xsl:when test="text() = 'structure'">Byggnader och konstruktioner</xsl:when>
-									<xsl:when test="text() = 'transportation'">Transporter</xsl:when>
-									<xsl:when test="text() = 'utilitiesCommunication'">Tekniska försörjningssystem</xsl:when>
-									<xsl:otherwise>
-										<xsl:value-of select="text()"/>
-									</xsl:otherwise>
-								</xsl:choose>
-								<xsl:if test="position()!=last()">,</xsl:if>
-							</xsl:for-each>
-							<!--                            </xsl:for-each> -->
+						<td class="Level-1-element">TYP AV TJÄNST</td>
+						<td>
+							<xsl:choose>
+								<xsl:when test="text() = 'view'">Visning</xsl:when>
+								<xsl:when test="text() = 'download'">Nedladdningstjänst</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="."/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</td>
 					</tr>
-				</xsl:if>
-				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:descriptiveKeywords | srv:SV_ServiceIdentification/gmd:descriptiveKeywords "/>
-				<!-- <tr>
-                    <td colspan="3" class="Level-1-EmptyRow">-</td>
-                </tr>-->
-				<!--<xsl:for-each select="idAbs">-->
-				<!--<xsl:for-each select="idPurp">-->
+				</xsl:for-each>
+				
+				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator"/>
+				
+				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance"/>
+				
 				<xsl:if test="idPurp | idPurpENG ">
 					<tr>
 						<td class="Level-1-element">Syfte:</td>
@@ -1381,17 +1140,50 @@
 					</tr>
 					<!--</xsl:for-each>-->
 				</xsl:if>
-				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic |  srv:SV_ServiceIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic"/>
 				<xsl:for-each select="gmd:MD_DataIdentification/gmd:language">
 					<tr>
-						<!--<xsl:if test="languageCode/@Sync = 'TRUE']">
-                        <FONT color="#006400">*</FONT>
-                        </xsl:if>-->
-						<!--<td class = "Level-1-element">Attributdataspråk:</td>-->
-						<td class="Level-1-element">Språk i resurs:</td>
+						<td class="Level-1-element">Språk i metadata</td>
 						<xsl:apply-templates select="gmd:LanguageCode"/>
 					</tr>
 				</xsl:for-each>
+				
+				<xsl:if test="gmd:MD_DataIdentification/gmd:topicCategory | srv:SV_ServiceIdentification/gmd:topicCategory">
+					<tr>
+						<td class="Level-1-element">Ämnesområden</td>
+						<td colspan="2">
+							<xsl:for-each select="//gmd:MD_Metadata/gmd:identificationInfo//gmd:topicCategory/gmd:MD_TopicCategoryCode">
+								<xsl:choose>
+									<xsl:when test="text() = 'farming'">Areela näringar</xsl:when>
+									<xsl:when test="text() = 'biota'">Biologi och ekologi</xsl:when>
+									<xsl:when test="text() = 'boundaries'">Administrativa gränser</xsl:when>
+									<xsl:when test="text() = 'climatologyMeteorologyAtmosphere'">Atmosfär, klimatologi och meteorologi</xsl:when>
+									<xsl:when test="text() = 'economy'">Ekonomi</xsl:when>
+									<xsl:when test="text() = 'elevation'">Höjddata</xsl:when>
+									<xsl:when test="text() = 'environment'">Miljö</xsl:when>
+									<xsl:when test="text() = 'geoscientificInformation'">Geovetenskap</xsl:when>
+									<xsl:when test="text() = 'health'">Hälsa</xsl:when>
+									<xsl:when test="text() = 'imageryBaseMapsEarthCover'">Arealtäckande bilder ocxh baskartor</xsl:when>
+									<xsl:when test="text() = 'intelligenceMilitary'">Försvar</xsl:when>
+									<xsl:when test="text() = 'inlandWaters'">Insjövatten</xsl:when>
+									<xsl:when test="text() = 'location'">Positionering</xsl:when>
+									<xsl:when test="text() = 'oceans'">Kust och hav</xsl:when>
+									<xsl:when test="text() = 'planningCadastre'">Fastigheter och fysisk planering</xsl:when>
+									<xsl:when test="text() = 'society'">Samhälle och kultur</xsl:when>
+									<xsl:when test="text() = 'structure'">Byggnader och konstruktioner</xsl:when>
+									<xsl:when test="text() = 'transportation'">Transporter</xsl:when>
+									<xsl:when test="text() = 'utilitiesCommunication'">Tekniska försörjningssystem</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="text()"/>
+									</xsl:otherwise>
+								</xsl:choose>
+								<xsl:if test="position()!=last()">,</xsl:if>
+							</xsl:for-each>
+						</td>
+					</tr>
+				</xsl:if>
+				
+				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:extent  | srv:SV_ServiceIdentification/srv:extent"/>
+								
 				<!--Date : 01-11-10-->
 				<!--completed-->
 				<xsl:for-each select="dataChar">
@@ -1422,7 +1214,7 @@
 						</td>
 					</tr>
 				</xsl:for-each>
-				<xsl:for-each select="//gmd:MD_Metadata/gmd:identificationInfo//gmd:status">
+				<!-- <xsl:for-each select="//gmd:MD_Metadata/gmd:identificationInfo//gmd:status">
 					<tr>
 						<td class="Level-1-element">Status:</td>
 						<td colspan="2">
@@ -1442,44 +1234,16 @@
 							</xsl:for-each>
 						</td>
 					</tr>
-				</xsl:for-each>
-				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:resourceMaintenance | gmd:MD_DataIdentification/gmd:MD_MaintenanceInformation "/>
-				<!--added: Restriktioner och begränsningar: key-->
-				<!--added : 01-11-10-->
-				<tr>
-					<tr>
-						<td colspan="2" class="Level-1-EmptyRow">-</td>
-					</tr>
-					<td colspan="2" class="Level-0-Header">Restriktioner och begränsningar:</td>
-				</tr>
-				<!--end added : 01-11-10-->
-				<xsl:for-each select="gmd:MD_DataIdentification/gmd:resourceConstraints | srv:SV_ServiceIdentification/gmd:resourceConstraints">
-					<xsl:apply-templates select="gmd:MD_Constraints"/>
-					<xsl:apply-templates select="gmd:MD_LegalConstraints"/>
-					<!--<xsl:apply-templates select = "gmd:MD_SecurityConstraints"/>-->
-					<xsl:apply-templates select="gmd:MD_SecurityConstraints/gmd:classification"/>
-				</xsl:for-each>
+				</xsl:for-each> -->
+				
 				<xsl:apply-templates select="idSpecUse"/>
 				<!--added : 01-11-10-->
-				<xsl:if test="srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName or srv:SV_ServiceIdentification/srv:operatesOn">
+				<!-- <xsl:if test="srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName or srv:SV_ServiceIdentification/srv:operatesOn">
 					<tr>
 						<td class="Level-0-Header" colspan="2">Information on tjänst:</td>
 					</tr>
-				</xsl:if>
-				<xsl:for-each select="srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName">
-					<tr>
-						<td class="Level-2-element">Tjänstetyp:</td>
-						<td>
-							<xsl:choose>
-								<xsl:when test="text() = 'view'">Visningstjänst</xsl:when>
-								<xsl:when test="text() = 'download'">Nedladdningstjänst</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="."/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</td>
-					</tr>
-				</xsl:for-each>
+				</xsl:if> -->
+				
 				<xsl:for-each select="srv:SV_ServiceIdentification/srv:operatesOn">
 					<tr>
 						<xsl:variable name="urlLink" select="@xlink:href"/>
@@ -1498,17 +1262,11 @@
 						</td>
 					</tr>
 				</xsl:for-each>
-				<tr>
+				<!-- <tr>
 					<td colspan="2" class="Level-0-Header">Rumslig representation:</td>
-				</tr>
-				<!--End : added : 01-11-10-->
-				<!--<xsl:for-each select = "spatRpType">-->
-				<xsl:for-each select="gmd:MD_DataIdentification/gmd:spatialRepresentationType">
+				</tr> -->
+				<!-- <xsl:for-each select="gmd:MD_DataIdentification/gmd:spatialRepresentationType">
 					<tr>
-						<!--<xsl:if test="SpatRepTypCd/@Sync = 'TRUE']">
-
-                        <FONT color="#006400">*</FONT>
-                        </xsl:if>-->
 						<td class="Level-1-element">Rumslig representation:</td>
 						<td>
 							<xsl:for-each select="gmd:MD_SpatialRepresentationTypeCode">
@@ -1522,7 +1280,7 @@
 							</xsl:for-each>
 						</td>
 					</tr>
-				</xsl:for-each>
+				</xsl:for-each> -->
 				<xsl:apply-templates select="gmd:MD_Format"/>
 				<!--<xsl:for-each select = "envirDesc">-->
 				<xsl:for-each select="gmd:MD_DataIdentification/gmd:resourceFormat/gmd:MD_Format/gmd:name">
@@ -1546,22 +1304,22 @@
 						</td>
 					</tr>
 				</xsl:for-each>
-				<xsl:for-each select="gmd:MD_DataIdentification/gmd:environmentDescription">
+				<xsl:for-each select="*/gmd:environmentDescription">
 					<tr>
 						<!--<xsl:if test="@Sync = 'TRUE']">
                         <FONT color="#006400">*</FONT>
                         </xsl:if>-->
-						<td class="Level-1-element">Databearbetningsmiljö:</td>
+						<td class="Level-1-element">SYSTEMMILJÖ</td>
 						<td>
 							<xsl:value-of select="gco:CharacterString"/>
 						</td>
 					</tr>
 				</xsl:for-each>
 				<!--<xsl:apply-templates select = "gmd:MD_DataIdentification/dataScale"/>-->
-				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator"/>
+				
 				<xsl:apply-templates select="geoBox"/>
 				<xsl:apply-templates select="geoDesc"/>
-				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:extent  | srv:SV_ServiceIdentification/srv:extent"/>
+
 				<!--<xsl:for-each select = "suppInfo">-->
 				<xsl:for-each select="gmd:MD_DataIdentification/gmd:supplementalInformation">
 					<tr>
@@ -1605,10 +1363,11 @@
 					</tr>
 				</xsl:for-each>
 				<!--<xsl:apply-templates select = "idPoC"/>-->
-				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:pointOfContact | srv:SV_ServiceIdentification/gmd:pointOfContact"/>
-				<tr>
+				<!-- <xsl:apply-templates select="gmd:MD_DataIdentification/gmd:pointOfContact | srv:SV_ServiceIdentification/gmd:pointOfContact"/> -->
+				<!-- <tr>
 					<td colspan="2" class="Level-1-EmptyRow">-</td>
-				</tr>
+				</tr> -->
+				
 				<xsl:if test="//gmd:MD_Metadata/gmd:identificationInfo//gmd:aggregationInfo">
 					<tr>
 						<td colspan="2" class="Level-0-Header">Relaterade resurser:</td>
@@ -1671,155 +1430,242 @@
 	</xsl:template>
 	<!-- Restrictions #222 -->
 	<xsl:template match="gmd:MD_Metadata/gmd:identificationInfo" mode="Restriktioner">
+		<xsl:param name="showHeader"/>
 		<a>
 			<xsl:attribute name="name"><xsl:value-of select="generate-id()"/></xsl:attribute>
 		</a>
 		<table id="resConst" class="mytabtable" >
-			<tr>
-				<td colspan="3" class="sectionheader">Restriktioner</td>
-			</tr>
-			<tr>
-				<td colspan="2" class="Level-0-Header">Restriktioner och begränsningar:</td>
-			</tr>
+			<xsl:if test="$showHeader = 'true'">
+				<tr>
+					<td colspan="2" class="sectionheader">Restriktioner</td>
+				</tr>
+			</xsl:if>
 			<xsl:for-each select="gmd:MD_DataIdentification/gmd:resourceConstraints | srv:SV_ServiceIdentification/gmd:resourceConstraints">
 				<xsl:apply-templates select="gmd:MD_Constraints"/>
 				<xsl:apply-templates select="gmd:MD_LegalConstraints"/>
-				<xsl:apply-templates select="gmd:MD_SecurityConstraints/gmd:classification"/>
+				<!-- <xsl:apply-templates select="gmd:MD_SecurityConstraints/gmd:classification"/> -->
 			</xsl:for-each>
 		</table>
 	</xsl:template>
 	<!-- #238 -->
-	<xsl:template match="gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'owner']" mode="Overview">
+	<xsl:template match="gmd:pointOfContact" mode="Overview">
+		<xsl:variable name="role" select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue"/>
+		<xsl:if test="$role='owner'">
+				<xsl:variable name="orgName">
+					<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
+				</xsl:variable>
+				<xsl:variable name="email">
+					<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/>
+				</xsl:variable>
+			<tr>
+				<td class="Level-1-element">Resurskontakt</td>
+				<td colspan="2" class="address">
+					<xsl:value-of select="$orgName"/>,
+					<i class="fa fa-envelope"></i>
+					<a class="bold" href="mailto:{normalize-space($email)}">
+						<xsl:value-of select="$email"/>
+					</a>
+				</td>
+			</tr>
+		</xsl:if>
+	</xsl:template>
+	<xsl:template match="gmd:distributorContact" mode="distributorContact">
+			<xsl:variable name="displayName">
+		  <xsl:choose>
+			<xsl:when
+					test="normalize-space(*/gmd:organisationName) != '' and normalize-space(*/gmd:individualName) != ''">
+			  <!-- Org name may be multilingual -->
+			  <xsl:apply-templates mode="render-value"
+								   select="*/gmd:organisationName"/>
+			  -
+			  <xsl:value-of select="*/gmd:individualName"/>
+			  <xsl:if test="normalize-space(*/gmd:positionName) != ''">
+				(<xsl:apply-templates mode="render-value"
+									  select="*/gmd:positionName"/>)
+			  </xsl:if>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:value-of select="*/gmd:organisationName|*/gmd:individualName"/>
+			</xsl:otherwise>
+		  </xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="email">
+			<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/>
+		</xsl:variable>
+		<xsl:variable name="phoneNumber">
+			<xsl:apply-templates mode="render-value" select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice"/>
+		</xsl:variable>
+		<xsl:variable name="faxNumber">
+			<xsl:apply-templates mode="render-value" select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile"/>
+		</xsl:variable>
+		<xsl:variable name="website">
+			<xsl:apply-templates mode="render-value" select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+		</xsl:variable>
 		<tr>
-			<td colspan="3" class="Level-2-element">Kontaktinformation:</td>
-		</tr>
-		<xsl:for-each select="gmd:CI_ResponsibleParty/gmd:individualName">
-			<tr>
-				<td class="Level-3-element">Person:</td>
-				<td colspan="2">
-					<xsl:value-of select="gco:CharacterString/text()"/>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<xsl:for-each select="gmd:CI_ResponsibleParty/gmd:organisationName">
-			<tr>
-				<td class="Level-3-element">Organisation:</td>
-				<td colspan="2">
-					<xsl:value-of select="gco:CharacterString/text()"/>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<xsl:for-each select="gmd:CI_ResponsibleParty/gmd:role">
-			<tr>
-				<td class="Level-3-element">Ansvarsområde:</td>
-				<td colspan="2">Ansvarig</td>
-			</tr>
-		</xsl:for-each>
-		<!--<xsl:apply-templates select="gmd:CI_ResponsibleParty/gmd:contactInfo"/>-->
-		<xsl:for-each select="gmd:CI_ResponsibleParty/gmd:contactInfo">
-			<xsl:for-each select="gmd:CI_Contact">
-				<tr>
-					<td class="Level-3-element">Telefonnummer:</td>
-					<xsl:for-each select="gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString">
-						<td colspan="2">
-							<xsl:value-of select="."/>
-						</td>
-					</xsl:for-each>
-				</tr>
-				<xsl:for-each select="gmd:address">
-					<xsl:for-each select="gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
-						<tr>
-							<td class="Level-3-element">Epost:</td>
-							<td colspan="2">
-								<a>
-									<xsl:attribute name="href">
-                                    mailto:
-                                    <xsl:value-of select="text()"/></xsl:attribute>
-									<xsl:value-of select="text()"/>
-								</a>
-							</td>
-						</tr>
+			<td class="Level-1-element">Distributionskontakt</td>
+			<td colspan="2" class="address">
+				<xsl:if test="normalize-space($displayName) !=''">
+					<i class="fa fa-envelope"></i>
+					<a class="bold" href="mailto:{normalize-space($email)}"><xsl:value-of select="$displayName"/></a>
+				</xsl:if>
+				<xsl:for-each select="gmd:CI_ResponsibleParty/gmd:contactInfo/*">
+					<xsl:for-each select="gmd:address/*/(
+                                          gmd:deliveryPoint|gmd:city|
+                                          gmd:administrativeArea|gmd:postalCode|gmd:country)">
+						<span class="nonbold"><xsl:apply-templates mode="render-value" select="."/></span>
 					</xsl:for-each>
 				</xsl:for-each>
-			</xsl:for-each>
-		</xsl:for-each>
+				<br/><br/>
+				<xsl:if test="normalize-space($phoneNumber) !=''">
+					<i class="fa fa-phone"></i>
+					<a class="nonbold" href="tel:{normalize-space($phoneNumber)}"><xsl:value-of select="$phoneNumber"/></a>
+				</xsl:if>
+				<xsl:if test="normalize-space($faxNumber) !=''">
+					<i class="fa fa-fax"></i>
+					<a class="nonbold" href="tel:{normalize-space($phoneNumber)}"><xsl:value-of select="$faxNumber"/></a>
+				</xsl:if>
+				<xsl:if test="normalize-space($website) !=''">
+					-
+					<a class="nonbold" href="http://{$website}" target="_blank">
+					<xsl:value-of select="normalize-space($website)"/>
+					</a>
+			  </xsl:if>	
+			</td>
+		</tr>
+	</xsl:template>
+	
+	<xsl:template match="gmd:contact" mode="contact">
+		<xsl:variable name="displayName">
+		  <xsl:choose>
+			<xsl:when
+					test="normalize-space(*/gmd:organisationName) != '' and normalize-space(*/gmd:individualName) != ''">
+			  <!-- Org name may be multilingual -->
+			  <xsl:apply-templates mode="render-value"
+								   select="*/gmd:organisationName"/>
+			  -
+			  <xsl:value-of select="*/gmd:individualName"/>
+			  <xsl:if test="normalize-space(*/gmd:positionName) != ''">
+				(<xsl:apply-templates mode="render-value"
+									  select="*/gmd:positionName"/>)
+			  </xsl:if>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:value-of select="*/gmd:organisationName|*/gmd:individualName"/>
+			</xsl:otherwise>
+		  </xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="email">
+			<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/>
+		</xsl:variable>
+		<xsl:variable name="phoneNumber">
+			<xsl:apply-templates mode="render-value" select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice"/>
+		</xsl:variable>
+		<xsl:variable name="faxNumber">
+			<xsl:apply-templates mode="render-value" select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile"/>
+		</xsl:variable>
+		<xsl:variable name="website">
+					<xsl:apply-templates mode="render-value" select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+		</xsl:variable>
+		<tr>
+			<td class="Level-1-element">Metadatakontakt</td>
+			<td colspan="2" class="address">
+				<xsl:if test="normalize-space($displayName) !=''">
+					<i class="fa fa-envelope"></i>
+					<a class="bold" href="mailto:{normalize-space($email)}"><xsl:value-of select="$displayName"/></a>
+				</xsl:if>
+				<xsl:for-each select="gmd:CI_ResponsibleParty/gmd:contactInfo/*">
+					<xsl:for-each select="gmd:address/*/(
+                                          gmd:deliveryPoint|gmd:city|
+                                          gmd:administrativeArea|gmd:postalCode|gmd:country)">
+						<span class="nonbold"><xsl:apply-templates mode="render-value" select="."/></span>
+					</xsl:for-each>
+				</xsl:for-each>
+				<br/><br/>
+				<xsl:if test="normalize-space($phoneNumber) !=''">
+					<i class="fa fa-phone"></i>
+					<a class="nonbold" href="tel:{normalize-space($phoneNumber)}"><xsl:value-of select="$phoneNumber"/></a>
+				</xsl:if>
+				<xsl:if test="normalize-space($faxNumber) !=''">
+					<i class="fa fa-fax"></i>
+					<a class="nonbold" href="tel:{normalize-space($phoneNumber)}"><xsl:value-of select="$faxNumber"/></a>
+				</xsl:if>
+				<xsl:if test="normalize-space($website) !=''">
+					-
+					<a class="nonbold" href="http://{$website}" target="_blank">
+					<xsl:value-of select="normalize-space($website)"/>
+					</a>
+			  </xsl:if>	
+			</td>
+		</tr>
 	</xsl:template>
 	<!--Keyword Information (B.2.2.2 MD_Keywords - line52)-->
-	<xsl:template match="gmd:MD_DataIdentification/gmd:descriptiveKeywords | srv:SV_ServiceIdentification/gmd:descriptiveKeywords">
+	<xsl:template match="gmd:MD_DataIdentification/gmd:descriptiveKeywords[*/gmd:thesaurusName/gmd:CI_Citation/gmd:title] | 
+				srv:SV_ServiceIdentification/gmd:descriptiveKeywords[*/gmd:thesaurusName/gmd:CI_Citation/gmd:title]">
 		<tr>
-			<td colspan="2" class="Level-1-Header">Beskrivande nyckelord:</td>
+			<td class="Level-1-element">
+					<xsl:value-of select="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString[text()]"/>
+					<xsl:if test="*/gmd:type/*[@codeListValue != '']">
+						<xsl:variable name="mdKeywordTypeCode">
+							<xsl:value-of select="*/gmd:type/*/@codeListValue" />
+						</xsl:variable>
+						<xsl:apply-templates mode="mdKeywordTypeCode" select="*/gmd:type/*/@codeListValue" />
+					</xsl:if>
+			</td>
+			<td>
+				<xsl:value-of select="*/gmd:keyword/*"/>
+			</td>
 		</tr>
+	  </xsl:template>
+	<xsl:template mode="mdKeywordTypeCode" match="*/gmd:type/*/@codeListValue">
+		<xsl:choose>
+			<xsl:when test=". = 'discipline' "> ( Disciplin )</xsl:when>
+			<xsl:when test=". = 'place' "> ( Plats )</xsl:when>
+			<xsl:when test=". = 'stratum' "> ( Lager )</xsl:when>
+			<xsl:when test=". = 'temporal' "> ( Tidsperiod )</xsl:when>
+			<xsl:when test=". = 'theme' "> ( Tema )</xsl:when>
+			<xsl:otherwise> ( <xsl:value-of select="." /> )</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	<!-- <xsl:template match="gmd:MD_DataIdentification/gmd:descriptiveKeywords | srv:SV_ServiceIdentification/gmd:descriptiveKeywords">
 		<tr>
-			<xsl:choose>
-				<xsl:when test="gmd:MD_Keywords/gmd:type[@value = '001']">
-					<td class="Level-2-element">Discipline keywords:</td>
-				</xsl:when>
-				<xsl:when test="gmd:MD_Keywords/gmd:type[@value = '002']">
-					<td class="Level-2-element">Geografiskt område:</td>
-				</xsl:when>
-				<xsl:when test="gmd:MD_Keywords/gmd:type[@value = '003']">
-					<td class="Level-2-element">Stratum keywords:</td>
-				</xsl:when>
-				<xsl:when test="gmd:MD_Keywords/gmd:type[@value = '004']">
-					<td class="Level-2-element">Temporal keywords:</td>
-				</xsl:when>
-				<xsl:when test="gmd:MD_Keywords/gmd:type[@value = '005']">
-					<td class="Level-2-element">ISO Tema:</td>
-				</xsl:when>
-				<xsl:when test="gmd:MD_Keywords/gmd:type[@value = '006']">
-					<td class="Level-2-element">Parameter:</td>
-				</xsl:when>
-				<xsl:when test="gmd:MD_Keywords/gmd:type[@value = '009']">
-					<td class="Level-2-element">Projekt:</td>
-				</xsl:when>
-				<xsl:when test="gmd:MD_Keywords/gmd:type[@value = '012']">
-					<td class="Level-2-element">Produkt:</td>
-				</xsl:when>
-				<xsl:when test="gmd:MD_Keywords/gmd:type[@value = '013']">
-					<td class="Level-2-element">Verksamhetsområde:</td>
-				</xsl:when>
-				<xsl:when test="gmd:MD_Keywords/gmd:type[@value = '012']">
-					<td class="Level-2-element">Sökobjekt i tjänst:</td>
-				</xsl:when>
-				<xsl:when test="gmd:MD_Keywords/gmd:type[@value = '091']">
-					<td class="Level-2-element">Producent:</td>
-				</xsl:when>
-				<xsl:when test="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title">
-					<td class="Level-2-element">
-						<xsl:value-of select="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString[text()]"/>:
-                  </td>
-				</xsl:when>
-				<!--<xsl:otherwise>
-                    <td class = "Level-2-element">Nyckelord:</td>
-                </xsl:otherwise>-->
-			</xsl:choose>
-			<!--<DD>-->
-			<!--<DL>  -->
-			<!--<xsl:if test="keyTyp/KeyTypCd[(@value != '001') and (@value != '002') and (@value != '003') and (@value != '004') and (@value != '005')]">
-            <DT><FONT color="#0000AA"><B>Type of keywords:</B></FONT><xsl:value-of select="@value"/></DT>
-            <br /><br />
-            </xsl:if>-->
+			<td class="Level-1-element">
+					<xsl:value-of select="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString[text()]"/>
+			</td>
 			<xsl:if test="gmd:MD_Keywords/gmd:keyword/gco:CharacterString[text()]">
-				<!--<DT>-->
 				<td itemprop="keywords" property="dcat:keyword">
 					<xsl:for-each select="gmd:MD_Keywords/gmd:keyword/gco:CharacterString[text()]">
 						<xsl:if test="text()=0">
-							<!--<B>Keywords:</B>   -->
+
 						</xsl:if>
 						<xsl:value-of select="text()"/>
 						<xsl:if test="position()!=last()">,</xsl:if>
 					</xsl:for-each>
 				</td>
-				<!--</DT>-->
 			</xsl:if>
 		</tr>
-		<!--<xsl:apply-templates select="thesaName"/>
-        -->
-		<!--</DL>  -->
-		<!--</DD>-->
-	</xsl:template>
+	</xsl:template> -->
+	<xsl:template match="gmd:graphicOverview[1]">
+		<tr>
+			<td class="Level-1-element">Exempelbild</td>
+			<td colspan="2">
+				<ul style="list-style-type: none;padding-left:2px;">
+				  <xsl:for-each select="parent::node()/gmd:graphicOverview">
+					<xsl:variable name="label">
+					  <xsl:value-of select="gmd:MD_BrowseGraphic/gmd:fileDescription"/>
+					</xsl:variable>
+					<li style="display:block;">
+					  <img src="{gmd:MD_BrowseGraphic/gmd:fileName/*}"
+						   alt="{$label}"
+						   class="img-thumbnail"/>
+					</li>
+				  </xsl:for-each>
+				</ul>
+			</td>
+		</tr>
+  </xsl:template>
+  <xsl:template match="gmd:graphicOverview[position() > 1]"/>
 	<!--Browse Graphic Information (B.2.2.1 MD_BrowGraph - line48) -->
-	<xsl:template match="gmd:graphicOverview/gmd:MD_BrowseGraphic">
+	<!-- <xsl:template match="gmd:graphicOverview/gmd:MD_BrowseGraphic">
 		<tr>
 			<td colspan="2" class="Level-1-Header">Exempelbild:</td>
 		</tr>
@@ -1849,7 +1695,6 @@
 		</xsl:for-each>
 		<xsl:for-each select="gmd:fileName">
 			<tr>
-				<!-- <td class="Level-2-element"/> -->
 				<td colspan="2">
 					<IMG ID="thumbnail" ALIGN="absmiddle" style="border:'2 outset #ffffff'; position:relative">
 						<xsl:attribute name="SRC"><xsl:value-of select="gco:CharacterString"/></xsl:attribute>
@@ -1857,7 +1702,7 @@
 				</td>
 			</tr>
 		</xsl:for-each>
-	</xsl:template>
+	</xsl:template> -->
 	<!--Usage Information (B.2.2.5 MD_Usage - line62) -->
 	<xsl:template match="idSpecUse">
 		<tr>
@@ -1890,17 +1735,12 @@
 		<xsl:apply-templates select="usrCntInfo"/>
 		<!--</DD> -->
 	</xsl:template>
-	<!--Resolution Information (B.2.2.4 MD_Resolution - line59) -->
-	<!--<xsl:template match = "dataScale | srcScale">-->
+
 	<xsl:template match="gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator | gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator">
-		<!--<DD> -->
 		<tr>
 			<xsl:choose>
-				<!--<xsl:when test = "../dataScale">-->
 				<xsl:when test="../gmd:denominator">
-					<!--<FONT color="#0000AA"> -->
-					<td class="Level-1-element">Skala:</td>
-					<!--</FONT>-->
+					<td class="Level-1-element">Skalfaktor</td>
 				</xsl:when>
 				<xsl:when test="../srcScale">
 					<td class="Level-1-element">Upplösning på källdata:</td>
@@ -1909,12 +1749,6 @@
 					<td class="Level-1-element">Upplösning:</td>
 				</xsl:otherwise>
 			</xsl:choose>
-			<!--<DD>
-            <DL>-->
-			<!--<xsl:apply-templates select="equScale"/>-->
-			<!--<td>
-                <xsl:value-of select = "equScale"/>
-            </td>-->
 			<td>
 				<xsl:value-of select="gco:Integer"/>
 			</td>
@@ -1938,6 +1772,16 @@
         </DD>-->
 		<!--</DD> -->
 	</xsl:template>
+	
+	<xsl:template match="gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance">
+		<tr>
+			<td class="Level-1-element">Avstånd</td>
+			<td>
+				<xsl:value-of select="gco:Distance"/><!-- <xsl:value-of select="gco:Distance/@uom"/> -->
+			</td>
+		</tr>
+	</xsl:template>
+	
 	<!--Representative Fraction Information (B.2.2.3 MD_RepresentativeFraction - line56) -->
 	<xsl:template match="equScale">
 		<FONT color="#0000AA">
@@ -2405,64 +2249,10 @@
 	<!--Identifier Information (B.2.7.2 MD_Identifier - line205) -->
 	<!--start from here : 03-11-10 end-->
 	<xsl:template match="gmd:geographicIdentifier | gmd:referenceSystemIdentifier | projection | ellipsoid | datum | refSysName | MdIdent | RS_Identifier | datumID ">
-		<!--<DD>-->
-		<xsl:choose>
-			<!--<xsl:when test = "../gmd:MD_ReferenceSystem">-->
-			<xsl:when test="gmd:MD_Identifier">
-				<tr>
-					<td colspan="2" class="Level-2-Header">Rumslig identifierare:</td>
-				</tr>
-			</xsl:when>
-			<!--can't use this method to add headings for refSysID, projection, ellipsoid, and datum
-            because all exist together inside MdCoRefSys - also affects RefSystem -->
-			<xsl:when test="../refSysName">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Namn på referenssystem:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../datumID">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Vertical datum:</td>
-				</tr>
-			</xsl:when>
-			<!--don't include an xsl:otherwise so the identCode value will appear correctly indented under the heading -->
-		</xsl:choose>
-		<!--<DD>
-        <DL>-->
-		<xsl:for-each select="identCode[../identAuth/resTitle/text()='Referenssystem i plan']">
-			<tr>
-				<td class="Level-2-element">Referenssystem i plan</td>
-				<!--<xsl:if test="@Sync = 'TRUE']">
-                <FONT color="#006400">*</FONT>
-                </xsl:if>
-                <FONT color="#0000AA">
-                <B>Value:</B>
-                </FONT>-->
-				<td>
-					<xsl:value-of select="."/>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<xsl:for-each select="identCode[../identAuth/resTitle/text()='Referenssystem i höjd']">
-			<tr>
-				<td class="Level-2-element">Referenssystem i höjd</td>
-				<!--<xsl:if test="@Sync = 'TRUE']">
-                <FONT color="#006400">*</FONT>
-                </xsl:if>
-                <FONT color="#0000AA">
-                <B>Value:</B>
-                </FONT>-->
-				<td>
-					<xsl:value-of select="."/>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<!--MEtaGIS special -->
-		<!--changes : 03-11-10-->
 		<xsl:apply-templates select="gmd:MD_Identifier/gmd:code"/>
 		<xsl:for-each select="gmd:MD_Identifier/gmd:code/gco:CharacterString">
 			<tr>
-				<td class="Level-2-element">Namn:</td>
+				<td class="Level-1-element">Identifierare för geografiskt område</td>
 				<td>
 					<xsl:value-of select="."/>
 				</td>
@@ -2470,16 +2260,12 @@
 		</xsl:for-each>
 		<xsl:for-each select="gmd:RS_Identifier/gmd:code/gco:CharacterString">
 			<tr>
-				<td class="Level-2-element">Namn:</td>
+				<td class="Level-1-element">Rumsligt referenssystem</td>
 				<td>
 					<xsl:value-of select="."/>
 				</td>
 			</tr>
 		</xsl:for-each>
-		<xsl:apply-templates select="identAuth"/>
-		<!--</DL>
-        </DD>
-        </DD>-->
 	</xsl:template>
 	<!--CONTENT INFORMATION -->
 	<!--Content Information (B.2.8 MD_ContentInformation - line232) -->
@@ -2918,31 +2704,11 @@
 	<!--REFERENCE SYSTEM -->
 	<!--Reference System Information (B.2.7 MD_ReferenceSystem - line186) -->
 	<xsl:template match="gmd:MD_Metadata/gmd:referenceSystemInfo">
-		<a>
-			<xsl:attribute name="NAME"><xsl:value-of select="generate-id()"/></xsl:attribute>
-		</a>
-		<table class="mytabtable" border="1" bordercolor="#D3D3D3">
+		<table id="referenceSystemInfo" class="mytabtable" >
 			<tbody>
-				<xsl:if test="count(//gmd:MD_Metadata/gmd:referenceSystemInfo) = 1">
-					<tr>
-						<td colspan="2" class="sectionheader">Rumsligt referenssystem</td>
-					</tr>
-				</xsl:if>
-				<xsl:if test="count(//gmd:MD_Metadata/gmd:referenceSystemInfo) &gt; 1">
-					<tr>
-						<td>
-                            Reference System Information - System
-                            <xsl:value-of select="position()"/>
-                            :
-                        </td>
-					</tr>
-				</xsl:if>
-				<xsl:apply-templates select="gmd:MD_ReferenceSystem"/>
-				<!-- RefSystem  -->
-				<xsl:apply-templates select="MdCoRefSys"/>
+				<xsl:apply-templates select="gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"/>
 			</tbody>
 		</table>
-		<!--no support in the DIS DTD for RS_ReferenceSystem information and TMRefSys, SIRefSys, SCRefSys -->
 	</xsl:template>
 	<!--Reference System Information (B.2.7 MD_ReferenceSystem - line186) -->
 	<xsl:template match="gmd:MD_ReferenceSystem">
@@ -3178,38 +2944,31 @@
 	<!--DATA QUALITY -->
 	<!--Data Quality Information  (B.2.4 DQ_DataQuality - line78) -->
 	<xsl:template match="gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+		<xsl:param name="showHeader"/>
 		<xsl:variable name="preId" select="generate-id()"/>
 		<a>
 			<xsl:attribute name="name"><xsl:value-of select="generate-id()"/></xsl:attribute>
 		</a>
-		<br/>
 		<table class="mytabtable" border="1" bordercolor="#D3D3D3">
-			<xsl:if test="count(//gmd:MD_Metadata/gmd:dataQualityInfo) = 1">
+			<xsl:if test="$showHeader = 'true'">
 				<tr>
-					<td colspan="2" class="sectionheader">Datakvalitet</td>
+					<td colspan="2" class="sectionheader">Kvalitet</td>
 				</tr>
 			</xsl:if>
-			<xsl:if test="count(//gmd:MD_Metadata/gmd:dataQualityInfo) &gt; 1">
-				<tr>
-					<td colspan="2" class="sectionheader">
-                        Datakvalitet - Beskrivning
-                        <xsl:value-of select="position()"/>
-					</td>
-				</tr>
-			</xsl:if>
-			<xsl:apply-templates select="gmd:scope/gmd:DQ_Scope"/>
-			<xsl:apply-templates select="gmd:lineage/gmd:LI_Lineage"/>
+			<!-- <xsl:apply-templates select="gmd:scope/gmd:DQ_Scope"/> -->
 			<!--<xsl:for-each select = "dqReport"> need to check with this elements gmd:report-->
 			<xsl:for-each select="gmd:report">
 				<xsl:apply-templates select="node()"/>
 			</xsl:for-each>
+			
+			<xsl:apply-templates select="gmd:lineage/gmd:LI_Lineage"/>
 		</table>
 	</xsl:template>
 	<!--Scope Information (B.2.4.4 DQ_Scope - line138)-->
 	<xsl:template match="gmd:scope/gmd:DQ_Scope">
-		<tr>
+		<!-- <tr>
 			<td colspan="2" class="Level-1-Header">Omfattning:</td>
-		</tr>
+		</tr> -->
 		<xsl:for-each select="gmd:level">
 			<tr>
 				<td class="Level-2-element">Hierarkisk nivå på data:</td>
@@ -3230,17 +2989,10 @@
 	<xsl:template match="gmd:lineage/gmd:LI_Lineage">
 		<xsl:variable name="preId" select="generate-id()"/>
 		<xsl:if test="gmd:statement/gco:CharacterString[text()]">
-			<tr>
-				<!--<td colspan = "2" class = "Level-1-Header">Historik:</td>-->
-				<td colspan="2" class="Level-1-element">Tillkomsthistorik:</td>
-			</tr>
 			<xsl:for-each select="gmd:statement">
 				<tr>
-					<!--<td class = "Level-2-element">Översiktlig historikbeskrivning:</td>-->
-					<td class="Level-2-element">Redogörelse:</td>
+					<td class="Level-1-element">Tillkomsthistorik</td>
 					<td>
-						<!--Commented : pre tag 02-11-10-->
-						<!--  Changed to div class="pre" because of browser issues with layout MI 24-11-10 -->
 						<div class="pre">
 							<xsl:attribute name="id">pre<xsl:value-of select="$preId"/><xsl:value-of select="position()"/></xsl:attribute>
 							<xsl:value-of select="gco:CharacterString/text()"/>
@@ -3259,7 +3011,6 @@
 		</xsl:if>
 		<xsl:apply-templates select="gmd:processStep"/>
 		<xsl:apply-templates select="dataSource"/>
-		<!-- <xsl:apply-templates select="../../gmd:report/gmd:DQ_DomainConsistency"/> -->
 	</xsl:template>
 	<!--<xsl:template match = "gmd:dataQualityInfo/gmd:DQ_DataQuality">
         <xsl:apply-templates select = "gmd:report/gmd:DQ_DomainConsistency"/>
@@ -3344,203 +3095,43 @@
 	<!--Data Quality Element Information (B.2.4.2 DQ_Element - line99) -->
 	<!--    <xsl:template match = "DQComplete | DQCompComm | DQCompOm | DQLogConsis | DQConcConsis | DQDomConsis | DQFormConsis | DQTopConsis | DQPosAcc | DQAbsExtPosAcc |        DQGridDataPosAcc | DQRelIntPosAcc | DQTempAcc | DQAccTimeMeas | DQTempConsis | DQTempValid | DQThemAcc | DQThemClassCor | DQNonQuanAttAcc | DQQuanAttAcc"> -->
 	<xsl:template match="gmd:DQ_Completeness | gmd:DQ_CompletenessCommission | gmd:DQ_CompletenessOmission | DQ_LogicalConsistency | gmd:DQ_ConceptualConsistency | gmd:DQ_DomainConsistency | gmd:DQ_FormatConsistency | gmd:DQ_TopologicalConsistency | gmd:DQ_PositionalAccuracy | gmd:DQ_AbsoluteExternalPositionalAccuracy |        DQGridDataPosAcc | gmd:DQ_RelativeInternalPositionalAccuracy | DQTempAcc | gmd:DQ_AccuracyOfATimeMeasurement | gmd:DQ_TemporalConsistency | gmd:DQ_TemporalValidity | gmd:DQ_ThematicAccuracy | gmd:DQ_ThematicClassificationCorrectness | gmd:DQ_NonQuantitativeAttributeAccuracy | gmd:DQ_QuantitativeAttributeAccuracy|gmd:DQ_UsabilityElement">
-		<xsl:choose>
-			<xsl:when test="../gmd:DQ_Completeness">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - Fullständighet:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_CompletenessCommission">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - fullständighet övertalighet:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_CompletenessOmission">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - fullständighet brist:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../DQ_LogicalConsistency">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport -logisk konsistens:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_ConceptualConsistency">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - om datamodellen överensstämmer med begreppsmodellen:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_DomainConsistency">
-				<tr>
-					<!--<td colspan="2" class="Level-1-Header">Data quality report - Domain consistency:</td>-->
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - om alla värden ligger inom domänen:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_FormatConsistency">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - formatkonsistens - om alla data är lagrade enligt den fastställd struktur:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_TopologicalConsistency">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - topologisk konsistens - om de topologiska egenskaperna är korrekta:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../DQ_PositionalAccuracy">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport- Positionsnoggrannhet:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_GriddedDataPositionalAccuracy">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - lägesnoggrannhet hos rasterdata:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_AbsoluteExternalPositionalAccuracy">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - absolut extern lägesnoggrannhet - noggrannhet i förhållande till övergripande system:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_RelativeInternalPositionalAccuracy">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - relative intern lägesnoggrannhet - noggrannhet i förhållande till närliggande objekt av samma dignitet:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../DQ_TemporalAccuracy">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - noggrannhet hos tidsangivelser:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_AccuracyOfATimeMeasurement">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - noggrannhet hos tidsangivelser - tidsmätningar:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_TemporalConsistency">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - noggrannhet hos tidsangivelser - ordningsföljd:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_TemporalValidity">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - noggrannhet hos tidsangivelser - om tidsangivelser är giltiga:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_ThematicAccuracy">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - tematisk noggrannhet:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_ThematicClassificationCorrectness">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - klassificering - om korrekt typ är angiven::</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_NonQuantitativeAttributeAccuracy">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - om attributet är korrekt angivet:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_QuantitativeAttributeAccuracy">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - tematisk noggrannhet - kvantitativa attribut - om attributet har rätt värde:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:DQ_UsabilityElement">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Datakvalitetsrapport - Specifikationsöverensstämmelse - Om en en resurs överensstämmer med specifikationen:</td>
-				</tr>
-			</xsl:when>
-			<xsl:otherwise>
-				<tr>
-					<td colspan="2" class="Level-1-Header">Data quality report:</td>
-				</tr>
-			</xsl:otherwise>
-		</xsl:choose>
 		<xsl:for-each select="gmd:nameOfMeasure">
 			<tr>
-				<td class="Level-1-element">Namn på test:</td>
+				<td class="Level-1-element">Måttbenämning</td>
 				<td>
 					<xsl:value-of select="gco:CharacterString/text()"/>
 				</td>
 			</tr>
-		</xsl:for-each>
-		<xsl:for-each select="evalMethType">
-			<tr>
-				<td class="Level-1-element">Typ av test:</td>
-				<td>
-					<xsl:for-each select="EvalMethTypeCd">
-						<xsl:choose>
-							<xsl:when test="@value = '001'">direkt intern</xsl:when>
-							<xsl:when test="@value = '002'">direkt extern</xsl:when>
-							<xsl:when test="@value = '003'">indirekt</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="@value"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:for-each>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<xsl:for-each select="measDateTm">
-			<tr>
-				<td class="Level-2-element">Datum för test:</td>
-				<td>
-					<xsl:value-of select="text()"/>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<xsl:for-each select="measDesc">
-			<tr>
-				<td class="Level-2-Header">Kvalitetsmått som anges:</td>
-				<td>
-					<xsl:value-of select="text()"/>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<xsl:for-each select="evalMethDesc">
-			<tr>
-				<td class="Level-1-element">Utvärderingsmetod:</td>
-				<td>
-					<xsl:value-of select="text()"/>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<xsl:for-each select="measId">
-			<tr>
-				<td class="Level-1-element">Registered standard procedure:</td>
-			</tr>
-			<xsl:apply-templates select="node()"/>
-		</xsl:for-each>
-		<xsl:apply-templates select="evalProc"/>
+		</xsl:for-each>		
 		<xsl:for-each select="gmd:result">
-			<xsl:for-each select="Result">
-				<tr>
-					<td class="Level-2-element">Resultat:</td>
-					<td>
-						<xsl:value-of select="text()"/>
-					</td>
-				</tr>
-			</xsl:for-each>
 			<xsl:apply-templates select="../gmd:result/gmd:DQ_ConformanceResult"/>
 			<xsl:apply-templates select="../gmd:result/gmd:DQ_QuantitativeResult"/>
 		</xsl:for-each>
 	</xsl:template>
 	<!--Conformance Result Information (B.2.4.3 DQ_ConformanceResult - line129) -->
 	<xsl:template match="gmd:result/gmd:DQ_ConformanceResult">
-		<tr>
+		<!-- <tr>
 			<td colspan="2" class="Level-2-Header">Resultat av överensstämmelsetester:</td>
-		</tr>
+		</tr> -->
+		<xsl:apply-templates select="gmd:specification/gmd:CI_Citation"/>
+		<xsl:for-each select="gmd:explanation/gco:CharacterString">
+			<tr>
+				<td class="Level-1-element">Beskrivning</td>
+				<td>
+					<xsl:value-of select="text()"/>
+				</td>
+			</tr>
+		</xsl:for-each>
 		<xsl:for-each select="gmd:pass/gco:Boolean">
 			<tr>
 				<!--<td class = "Level-2-element">Test passed:</td>-->
-				<td class="Level-2-element">Testen genomförd med godkänt resultat:</td>
+				<td class="Level-1-element">Överensstämmelse</td>
 				<td>
 					<xsl:choose>
-						<xsl:when test="normalize-space(text()) = '1'">Ja</xsl:when>
-						<xsl:when test="normalize-space(text())= '0'">Nej</xsl:when>
-						<xsl:when test="normalize-space(text()) = 'true'">Ja</xsl:when>
-						<xsl:when test="normalize-space(text()) = 'false'">Nej</xsl:when>
+						<xsl:when test="normalize-space(text()) = '1'">true</xsl:when>
+						<xsl:when test="normalize-space(text())= '0'">false</xsl:when>
+						<xsl:when test="normalize-space(text()) = 'true'">true</xsl:when>
+						<xsl:when test="normalize-space(text()) = 'false'">false</xsl:when>
 						<xsl:otherwise>
 							<xsl:value-of select="text()"/>
 						</xsl:otherwise>
@@ -3548,45 +3139,14 @@
 				</td>
 			</tr>
 		</xsl:for-each>
-		<xsl:for-each select="gmd:explanation/gco:CharacterString">
-			<tr>
-				<td class="Level-2-element">Förklaring av resultatet:</td>
-				<td>
-					<xsl:value-of select="text()"/>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<xsl:apply-templates select="gmd:specification/gmd:CI_Citation"/>
 	</xsl:template>
 	<xsl:template match="gmd:DQ_QuantitativeResult">
-		<tr>
+		<!-- <tr>
 			<td colspan="2" class="Level-2-Header">Resultat från kvalitetskontroll:</td>
-		</tr>
+		</tr> -->
 		<xsl:for-each select="gmd:valueType/gco:RecordType">
 			<tr>
-				<td class="Level-2-element">Värdetyp:</td>
-				<td>
-					<xsl:value-of select="text()"/>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<!--    <xsl:for-each select="valueUnit/gco:Measure">
-            <tr>
-                <td class="Level-2-element">Enhet</td>
-            </tr>
-                <xsl:for-each select="value">
-                <tr>
-                            <td class="Level-2-element">precision:</td>
-                    <td>
-                        <xsl:value-of select="text()"/>
-                    </td>
-                </tr>
-            </xsl:for-each>
-            <xsl:apply-templates select="uom"/>
-        </xsl:for-each>  -->
-		<xsl:for-each select="errStat">
-			<tr>
-				<td class="Level-2-element">Statistisk metod som använts:</td>
+				<td class="Level-1-element">Värdetyp</td>
 				<td>
 					<xsl:value-of select="text()"/>
 				</td>
@@ -3594,7 +3154,7 @@
 		</xsl:for-each>
 		<xsl:for-each select="gmd:value/gco:Record">
 			<tr>
-				<td class="Level-2-element">Resultat:</td>
+				<td class="Level-1-element">Value</td>
 				<td>
 					<xsl:value-of select="text()"/>
 				</td>
@@ -3602,21 +3162,24 @@
 		</xsl:for-each>
 	</xsl:template>
 	<xsl:template match="gmd:MD_Metadata/gmd:distributionInfo">
+		<xsl:param name="showHeader"/>
 		<a>
 			<xsl:attribute name="NAME"><xsl:value-of select="generate-id()"/></xsl:attribute>
 		</a>
 		<table class="mytabtable" border="1" bordercolor="#D3D3D3">
 			<tbody>
-				<tr>
-					<td colspan="2" class="sectionheader">Tillhandahållande av resursen</td>
-				</tr>
+				<xsl:if test="$showHeader = 'true'">
+					<tr>
+						<td colspan="2" class="sectionheader">Distribution</td>
+					</tr>
+				</xsl:if>
 				<xsl:apply-templates select="gmd:MD_Distribution/gmd:distributor"/>
 				<!--distributor"/> -->
 				<xsl:apply-templates select="distFormat"/>
 				<xsl:if test="gmd:MD_Distribution/gmd:transferOptions">
-					<tr>
+					<!-- <tr>
 						<td colspan="2" class="sectionheader">OBS: nedanstående Online länkar motsvarar krav från Inspire <br/> dvs, länkar anges utan att det finns en koppling till specifika distributörer</td>
-					</tr>
+					</tr> -->
 					<xsl:apply-templates select="gmd:MD_Distribution/gmd:transferOptions"/>
 				</xsl:if>
 			</tbody>
@@ -3624,42 +3187,34 @@
 	</xsl:template>
 	<!--Distributor Information (B.2.10.2 MD_Distributor - line279) -->
 	<xsl:template match="gmd:MD_Distribution/gmd:distributor | formatDist">
-		<tr>
+		<!-- <tr>
 			<td colspan="2" class="Level-1-Header">Distributör:</td>
-		</tr>
-		<xsl:apply-templates select="gmd:MD_Distributor/gmd:distributorContact"/>
+		</tr> -->
+		<xsl:apply-templates mode="distributorContact" select="gmd:MD_Distributor/gmd:distributorContact"/>
 		<xsl:if test="not ((../../dsFormat) or (../../gmd:distributorFormat) or (../../distFormat))">
-			<xsl:apply-templates select="gmd:MD_Distributor/gmd:distributorFormat"/>
+			<xsl:apply-templates mode="distributorFormat" select="gmd:MD_Distributor/gmd:distributorFormat"/>
 		</xsl:if>
 		<!--<xsl:apply-templates select = "distorOrdPrc"/>-->
 		<xsl:apply-templates select="gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess"/>
 		<xsl:apply-templates select="distorTran"/>
-		<xsl:apply-templates select=" gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine"/>
+		<xsl:apply-templates mode="online" select=" gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine"/>
 	</xsl:template>
+	<xsl:template mode="distributorFormat" match="gmd:MD_Distributor/gmd:distributorFormat[1]">
+		<tr>
+			<td class="Level-1-element">Format</td>
+			<td colspan="2">
+			  <xsl:for-each select="parent::node()/gmd:distributorFormat">
+				<xsl:value-of select="*/gmd:name/gco:CharacterString/text()"/>
+				(<xsl:value-of select="*/gmd:version/gco:CharacterString/text()"/>)
+				<xsl:if test="position()!=last()">,</xsl:if>
+			  </xsl:for-each>
+			</td>
+		</tr>
+	</xsl:template>
+	<xsl:template mode="distributorFormat" match="gmd:distributorFormat[position() > 1]"/>
+	
 	<!--Format Information (B.2.10.3 MD_Format - line284) -->
 	<xsl:template match="gmd:MD_Format | gmd:MD_Distributor/gmd:distributorFormat | distFormat ">
-		<xsl:choose>
-			<xsl:when test="../dsFormat">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Resursens format:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../gmd:distributorFormat">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Distributionsformat:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../distFormat">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Distribution format:</td>
-				</tr>
-			</xsl:when>
-			<xsl:otherwise>
-				<tr>
-					<td colspan="2" class="Level-1-Header">Format:</td>
-				</tr>
-			</xsl:otherwise>
-		</xsl:choose>
 		<xsl:for-each select="gmd:MD_Format/gmd:name">
 			<tr>
 				<td class="Level-2-element">
@@ -3771,24 +3326,9 @@
 	<!--Digital Transfer Options Information (B.2.10.1 MD_DigitalTransferOptions - line274) -->
 	<!--<xsl:template match = "distorTran | distTranOps">-->
 	<xsl:template match="distorTran | gmd:MD_Distribution/gmd:transferOptions">
-		<tr>
-			<!--<td colspan = "2" class = "Level-1-Header">Överföringsmöjligheter för digital info:</td>-->
+		<!-- <tr>
 			<td colspan="2" class="Level-1-Header">Onlinekälla:</td>
-		</tr>
-		<!--<xsl:for-each select="transSize">
-        <tr>
-        <td class="Level-2-element">
-        <xsl:if test="@Sync = 'TRUE']">
-        <span class="s"></span>
-        </xsl:if>
-        Storlek:
-        </td>
-        <td>
-        <xsl:value-of select="."/>
-        </td>
-        </tr>
-        </xsl:for-each>
-        -->
+		</tr> -->
 		<xsl:for-each select="unitsODist">
 			<tr>
 				<td class="Level-2-element">Antal enheter:</td>
@@ -3797,7 +3337,7 @@
 				</td>
 			</tr>
 		</xsl:for-each>
-		<xsl:apply-templates select="gmd:MD_DigitalTransferOptions/gmd:onLine"/>
+		<xsl:apply-templates mode="online" select="gmd:MD_DigitalTransferOptions/gmd:onLine"/>
 		<xsl:apply-templates select="gmd:MD_DigitalTransferOptions/gmd:offLine"/>
 		<xsl:apply-templates select="offLineMed"/>
 	</xsl:template>
@@ -4232,31 +3772,39 @@
 				</tr>
 			</xsl:when>
 			<xsl:otherwise>
-				<tr>
+				<!-- <tr> -->
 					<!--<td colspan = "2" class = "Level-1-Header">Citation:</td>-->
-					<td colspan="2" class="Level-1-Header">Hänvisning till specifikation:</td>
-				</tr>
+				<!--	<td colspan="2" class="Level-1-Header">Hänvisning till specifikation:</td>
+				</tr> -->
 			</xsl:otherwise>
 		</xsl:choose>
 		<!-- Jwalin-->
 		<xsl:for-each select="gmd:title">
 			<tr>
-				<td class="Level-2-element">Titel:</td>
+				<td class="Level-1-element">Titel</td>
 				<td>
 					<xsl:value-of select="gco:CharacterString/text()"/>
 				</td>
 			</tr>
 		</xsl:for-each>
 		<xsl:if test="gmd:alternateTitle">
-			<tr>
-				<td class="Level-2-element">Alternativ titel:</td>
+			<!-- <tr>
+				<td class="Level-2-element">Alternativ titel</td>
 				<td>
 					<xsl:for-each select="gmd:alternateTitle">
 						<xsl:value-of select="gco:CharacterString/text()"/>
 						<xsl:if test="position()!=last()">,</xsl:if>
 					</xsl:for-each>
 				</td>
-			</tr>
+			</tr> -->
+			<xsl:for-each select="gmd:alternateTitle">
+				<tr>
+					<td class="Level-1-element">Alternativ titel</td>
+					<td>
+						<xsl:apply-templates mode="render-value" select="gco:CharacterString"/>
+					</td>
+				</tr>
+			</xsl:for-each>
 		</xsl:if>
 		<xsl:apply-templates select="gmd:date"/>
 		<xsl:for-each select="resEd">
@@ -4332,37 +3880,6 @@
 				</td>
 			</tr>
 		</xsl:for-each>
-		<!--<xsl:for-each select="presForm">
-        <tr>
-        <td class="Level-1-element">    
-        <xsl:if test="presFormCd/@Sync = 'TRUE']">
-        <span class="s">*</span>
-        </xsl:if>
-        presentation format:
-        <xsl:for-each select="presFormCd">
-        <xsl:choose>
-        <xsl:when test="@value = '001']">digital document</xsl:when>
-        <xsl:when test="@value = '002']">hardcopy document</xsl:when>
-        <xsl:when test="@value = '003']">digital image</xsl:when>
-        <xsl:when test="@value = '004']">hardcopy image</xsl:when>
-        <xsl:when test="@value = '005']">digital map</xsl:when>
-        <xsl:when test="@value = '006']">hardcopy map</xsl:when>
-        <xsl:when test="@value = '007']">digital model</xsl:when>
-        <xsl:when test="@value = '008']">hardcopy model</xsl:when>
-        <xsl:when test="@value = '009']">digital profile</xsl:when>
-        <xsl:when test="@value = '010']">hardcopy profile</xsl:when>
-        <xsl:when test="@value = '011']">digital table</xsl:when>
-        <xsl:when test="@value = '012']">hardcopy table</xsl:when>
-        <xsl:when test="@value = '013']">digital video</xsl:when>
-        <xsl:when test="@value = '014']">hardcopy video</xsl:when>
-        <xsl:otherwise>
-        <xsl:value-of select="@value"/>
-        </xsl:otherwise>
-        </xsl:choose>
-        </xsl:for-each>
-        <td>
-        </tr>
-        </xsl:for-each>-->
 		<xsl:for-each select="collTitle">
 			<tr>
 				<td class="Level-2-element">Collection title:</td>
@@ -4388,10 +3905,10 @@
 				</td>
 			</tr>
 		</xsl:for-each>
-		<xsl:for-each select="gmd:identifier/gmd:RS_Identifier/gmd:code">
+		<xsl:for-each select="gmd:identifier/(gmd:RS_Identifier | gmd:MD_Identifier)/gmd:code">
 			<tr>
 				<!--<td class = "Level-2-element">Unik identifierare för resurs:</td>-->
-				<td class="Level-2-element">Identifierare för resursen:</td>
+				<td class="Level-1-element">Identifierare för resurs</td>
 				<td>
 					<xsl:value-of select="gco:CharacterString/text()"/>
 				</td>
@@ -4421,14 +3938,14 @@
 	<!--Date Information (B.3.2.3 CI_Date) -->
 	<xsl:template match="gmd:date">
 		<tr>
-			<td class="Level-2-element">
+			<td class="Level-1-element">
 				<xsl:for-each select="gmd:CI_Date">
 					<xsl:for-each select="gmd:dateType">
 						<xsl:for-each select="gmd:CI_DateTypeCode">
 							<xsl:choose>
-								<xsl:when test="@codeListValue = 'creation'">Produktionsdatum:</xsl:when>
-								<xsl:when test="@codeListValue = 'publication'">Publiceringsdatum:</xsl:when>
-								<xsl:when test="@codeListValue = 'revision'">Revideringsdatum:</xsl:when>
+								<xsl:when test="@codeListValue = 'creation'">Datum ( Skapande )</xsl:when>
+								<xsl:when test="@codeListValue = 'publication'">Datum ( Publicering )</xsl:when>
+								<xsl:when test="@codeListValue = 'revision'">Datum ( Revision )</xsl:when>
 								<!--Extension MetaGIS/Michael Östling 2003-03-06-->
 								<xsl:when test="@codeListValue = '004'">Leveransdatum:</xsl:when>
 								<xsl:when test="@codeListValue = '091'">Granskningsdatum:</xsl:when>
@@ -4480,7 +3997,7 @@
 				<xsl:for-each select="gmd:CI_Date">
 					<xsl:for-each select="gmd:date">
 						<!--<DT>-->
-						<xsl:value-of select="gco:Date"/>
+						<xsl:apply-templates mode="render-value" select="gco:Date"/>
 						<!--</DT>-->
 					</xsl:for-each>
 				</xsl:for-each>
@@ -4489,11 +4006,36 @@
 		</tr>
 		<!--Date : 30.10.2010-->
 	</xsl:template>
+	<xsl:template mode="maxDate" match="gmd:date[1]">
+		<xsl:variable name="dates">
+			<xsl:for-each select="parent::node()/gmd:date">
+				<xsl:value-of  select="*/gmd:date/gco:Date[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}')]"/>
+				<xsl:if test="position() != last()">,</xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="dateList" select="tokenize(normalize-space($dates), ',')" />
+		<xsl:variable name="latestDate" select="max($dateList)" />
+		<xsl:for-each select="parent::node()/gmd:date[gmd:CI_Date/gmd:date/gco:Date=$latestDate]">
+			<tr>
+			  <td class="Level-1-element">
+				  <xsl:choose>					
+					<xsl:when test="gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation'">Datum ( Skapande )</xsl:when>
+					<xsl:when test="gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication'">Datum ( Publicering )</xsl:when>					
+					<xsl:when test="gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision'">Datum ( Revision )</xsl:when>
+				</xsl:choose>
+			  </td>
+			  <td colspan="2">
+				<xsl:apply-templates mode="render-value" select="*/gmd:date/*"/>
+			  </td>
+			</tr>
+		</xsl:for-each>
+	</xsl:template>
+	<xsl:template mode="maxDate" match="gmd:date[position() > 1]" priority="100"/>
 	<!--Responsible Party Information (B.3.2 CI_ResponsibleParty - line374) -->
 	<!---->
 	<!--<xsl:template match = "gmd:contact | idPoC | usrCntInfo | stepProc | gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact | citRespParty | extEleSrc ">-->
 	<!--gmd:contact/gmd:CI_ResponsibleParty-->
-	<xsl:template match="gmd:contact | usrCntInfo | gmd:LI_ProcessStep/gmd:processor | gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact | extEleSrc | gmd:MD_Distributor/gmd:distributorContact | gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact">
+	<xsl:template match="usrCntInfo | gmd:LI_ProcessStep/gmd:processor | gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact | extEleSrc | gmd:MD_Distributor/gmd:distributorContact | gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact">
 		<xsl:choose>
 			<xsl:when test="../gmd:contact">
 				<tr>
@@ -4665,22 +4207,19 @@
 	</xsl:template>
 	<xsl:template match="gmd:MD_DataIdentification/gmd:abstract | srv:SV_ServiceIdentification/gmd:abstract ">
 		<tr>
-			<td class="Level-1-element">Sammanfattning:</td>
+			<td class="Level-1-element">Sammanfattning</td>
 			<td colspan="2">
 				<div id="abstract">
 					<xsl:variable name="preId" select="generate-id()"/>					
 					<pre>
 						<xsl:attribute name="id">pre<xsl:value-of select="$preId"/><xsl:value-of select="position()"/></xsl:attribute>
-						<xsl:attribute name="property">
-									<xsl:value-of select="'dct:description'"/>
-								</xsl:attribute>
-								<xsl:attribute name="itemprop">
-									<xsl:value-of select="'description'"/>
-								</xsl:attribute>
-						<xsl:value-of select="gco:CharacterString/text()" disable-output-escaping="yes"/>								
+						<xsl:attribute name="property"><xsl:value-of select="'dct:description'"/></xsl:attribute>
+						<xsl:attribute name="itemprop"><xsl:value-of select="'description'"/></xsl:attribute>
+						<xsl:value-of select="gco:CharacterString/text()" disable-output-escaping="yes"/>
 					</pre>
 					<script type="text/javascript">fix2('pre<xsl:value-of select="$preId"/>
-						<xsl:value-of select="position()"/>');</script>
+						<xsl:value-of select="position()"/>');
+						</script>
 				</div>
 				<script type="text/javascript">setLinkClickable('abstract');</script>
 			</td>
@@ -5367,97 +4906,31 @@
 	<!--Extent Information (B.3.1 EX_Extent - line334) -->
 	<xsl:template match="gmd:MD_DataIdentification/gmd:extent |  srv:SV_ServiceIdentification/srv:extent | gmd:extent | srcExt ">
 		<xsl:choose>
-			<xsl:when test="../dataExt">
-				<!--<tr>
-                <td colspan="2" class="Level-1-Header">Utsträckning:</td>
-                </tr>
-                -->
-			</xsl:when>
-			<xsl:when test="../scpExt">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Scope extent:</td>
-				</tr>
-			</xsl:when>
-			<xsl:when test="../srcExt">
-				<tr>
-					<td colspan="2" class="Level-1-Header">Extent of the source data:</td>
-				</tr>
-			</xsl:when>
-			<xsl:otherwise>
-				<tr>
-					<td colspan="2" class="Level-1-Header">Extent:</td>
-				</tr>
-			</xsl:otherwise>
-		</xsl:choose>
-		<xsl:choose>
-			<!--<xsl:when test ="Extent">-->
 			<xsl:when test=".">
-				<!--When xml-file is of Newer Version then execute below lines -->
-				<!--<xsl:for-each select ="Extent">-->
 				<xsl:for-each select=".">
 					<tr>
-						<td colspan="2" class="Level-0-Header">Utsträckning:</td>
 						<xsl:for-each select="gmd:EX_Extent/gmd:description/gco:CharacterString">
 							<tr>
-								<!--<td class = "Level-2-element">Extent description:</td>-->
-								<!--changed : 03-11-10-->
-								<td class="Level-2-element">Textbeskrivning:</td>
+								<td class="Level-1-element">Beskriving av utsträckning</td>
 								<td>
 									<xsl:value-of select="."/>
 								</td>
 							</tr>
 						</xsl:for-each>
 						<xsl:for-each select="gmd:EX_Extent/gmd:geographicElement">
-							<!--
-                            <xsl:apply-templates select = "gmd:Ex_geographicExtent/gmd:EX_GeographicDescription"/>
-                            <xsl:apply-templates select = "gmd:Ex_geographicExtent/gmd:EX_BoundingPolygon"/>
-                            <xsl:apply-templates select = "gmd:Ex_geographicExtent/gmd:EX_GeographicBoundingBox"/>-->
 							<xsl:apply-templates select="gmd:EX_GeographicDescription"/>
-							<xsl:apply-templates select="gmd:EX_BoundingPolygon"/>
+							<!-- Need to fix how to show map. For now commenting out gmd:EX_BoundingPolygon template-->
+							<!-- <xsl:apply-templates select="gmd:EX_BoundingPolygon"/> -->
 							<xsl:apply-templates select="gmd:EX_GeographicBoundingBox"/>
 						</xsl:for-each>
 						<xsl:for-each select="gmd:EX_Extent/gmd:temporalElement">
 							<xsl:apply-templates select="gmd:temporalElement/gmd:EX_TemporalExtent"/>
 							<xsl:apply-templates select="gmd:EX_TemporalExtent/gmd:extent"/>
-							<!--<xsl:apply-templates select="SpatTempEx"/> -->
 						</xsl:for-each>
 						<xsl:apply-templates select="gmd:EX_Extent/gmd:verticalElement"/>
 					</tr>
 				</xsl:for-each>
 			</xsl:when>
-			<xsl:otherwise>
-				<!--When xml-file is of Older Version then execute below lines 
-                <tr>
-                    <td colspan="2" class="Level-1-Header">Utsträckning (Geografisk, temporal och vertikal):</td>
-                    <xsl:for-each select="exDesc">
-                        <tr>
-                            <td class="Level-2-element">Extent description:</td>
-                            <td>
-                                <xsl:value-of select="."/>
-                            </td>
-                        </tr>
-                    </xsl:for-each>
-                    <xsl:for-each select="gmd:EX_Extent/gmd:geographicElement">
-                        <tr>
-                            <td colspan="2" class="Level-2-Header">Geografisk utsträckning:</td>
-                        </tr>
-                        <xsl:apply-templates select = "gmd:Ex_geographicExtent/gmd:EX_GeographicDescription"/>
-                        <xsl:apply-templates select = "gmd:Ex_geographicExtent/gmd:EX_BoundingPolygon"/>
-                        <xsl:apply-templates select = "gmd:Ex_geographicExtent/gmd:EX_GeographicBoundingBox"/>-->
-				<!-- <xsl:apply-templates select="gmd:EX_GeographicDescription"/>
-                        <xsl:apply-templates select="gmd:EX_BoundingPolygon"/>
-                        <xsl:apply-templates select="gmd:EX_GeographicBoundingBox"/>
-                    </xsl:for-each>
-                    <xsl:for-each select="gmd:temporalElement/gmd:EX_TemporalExtent">
-                        <xsl:apply-templates select="TempExtent"/>-->
-				<!--    <xsl:apply-templates select="gmd:extent"/>
-                        -<xsl:apply-templates select="SpatTempEx"/>-->
-				<!--    </xsl:for-each>
-                    <xsl:apply-templates select = "gmd:verticalElement/gmd:EX_VerticalExtent"/>-->
-				<!--        <xsl:apply-templates select="gmd:extent/gmd:EX_Extent"/>
-                </tr>
-                -->
-			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 	<!--<xsl:template match = "exTypeCode">-->
@@ -5484,23 +4957,6 @@
 			<!--<td colspan="2" class="Level-3-Header">Bounding polygon:</td>-->
 			<td colspan="2" class="Level-2-Header">Omskrivande polygon:</td>
 		</tr>
-		<!--<xsl:for-each select="exTypeCode">
-        <tr>
-        <td class="Level-2-element">Extent contains the resource:</td>
-        <td>
-        <xsl:choose>
-        <xsl:when test="text() = '1'">Yes</xsl:when>
-        <xsl:when test="text() = '0'">No</xsl:when>
-        <xsl:otherwise>
-        <xsl:value-of select="text()"/>
-        </xsl:otherwise>
-        </xsl:choose>
-        </td>
-        </tr>
-        </xsl:for-each>
-        -->
-		<!--<xsl:for-each select="polygon/GM_Polygon/coordinates">-->
-		<!--<xsl:for-each select="polygon/Polygon/exterior/LinearRing">-->
 		<xsl:for-each select="gmd:polygon/gml:Polygon/gml:exterior/gml:Ring/gml:curveMember/gml:LineString">
 			<xsl:for-each select="gml:coordinates">
 				<tr>
@@ -5511,70 +4967,13 @@
 				</tr>
 			</xsl:for-each>
 		</xsl:for-each>
-		<!--<xsl:if test="polygon/GM_Polygon/MdCoRefSys">
-        <tr>
-        <td colspan="2" class="Level-1-Header">Polygon coordinate system:</td>
-        </tr>
-        <xsl:apply-templates select="polygon/GM_Polygon/MdCoRefSys"/>
-        </xsl:if>
-        -->
 	</xsl:template>
 	<!--Bounding Box Information (B.3.1.1 EX_GeographicBoundingBox - line343) -->
 	<!--<xsl:template match = "geoBox | gmd:Ex_geographicExtent/gmd:EX_GeographicBoundingBox">-->
 	<xsl:template match="geoBox | gmd:EX_GeographicBoundingBox">
-		<xsl:choose>
-			<xsl:when test="../geoBox">
-				<tr>
-					<td colspan="2" class="Level-2-Header">Rektangel som visar datas utbredning:</td>
-				</tr>
-			</xsl:when>
-			<xsl:otherwise>
-				<tr>
-					<td colspan="2" class="Level-2-Header">Omskrivande rektangel:</td>
-				</tr>
-			</xsl:otherwise>
-		</xsl:choose>
-		<xsl:apply-templates select="exTypeCode"/>
-		<xsl:for-each select="@esriExtentType">
-			<tr>
-				<!--<FONT color="#006400">*</FONT>-->
-				<td class="Level-1-element">Utsnittsyp:</td>
-				<td>
-					<xsl:choose>
-						<xsl:when test=". = 'native'">Full utbredning i datamängdens koordinatsystem</xsl:when>
-						<xsl:when test=". = 'decdegrees'">Full utbredning i decimalgrader</xsl:when>
-						<xsl:otherwise>
-							<xsl:value-of select="."/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<!--<xsl:for-each select="exTypeCode">
-        <tr>
-        <xsl:if test="@Sync = 'TRUE']">
-        <FONT color="#006400">*</FONT>
-        </xsl:if>
-        
-        <td class="Level-2-element">Utbredningen innesluter data:</td>
-        <td>
-        <xsl:choose>
-        <xsl:when test="text() = '1'">Ja</xsl:when>
-        <xsl:when test="text() = '0'">Nej</xsl:when>
-        <xsl:otherwise>
-        <xsl:value-of select="text()"/>
-        </xsl:otherwise>
-        </xsl:choose>
-        </td>
-        </tr>
-        </xsl:for-each>
-        -->
 		<xsl:for-each select="gmd:westBoundLongitude/gco:Decimal">
 			<tr>
-				<!--<xsl:if test="@Sync = 'TRUE']">
-                <FONT color="#006400">*</FONT>
-                </xsl:if>-->
-				<td class="Level-3-element">Longitud väst:</td>
+				<td class="Level-1-element">Västligaste longitud</td>
 				<td>
 					<xsl:value-of select="text()"/>
 				</td>
@@ -5582,21 +4981,7 @@
 		</xsl:for-each>
 		<xsl:for-each select="gmd:eastBoundLongitude/gco:Decimal">
 			<tr>
-				<!--<xsl:if test="@Sync = 'TRUE']">
-                <FONT color="#006400">*</FONT>
-                </xsl:if>-->
-				<td class="Level-3-element">Longitud öst:</td>
-				<td>
-					<xsl:value-of select="text()"/>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<xsl:for-each select="gmd:northBoundLatitude/gco:Decimal">
-			<tr>
-				<!--<xsl:if test="@Sync = 'TRUE']">
-                <FONT color="#006400">*</FONT>
-                </xsl:if>-->
-				<td class="Level-3-element">Latitud norr:</td>
+				<td class="Level-1-element">Östligaste longitud</td>
 				<td>
 					<xsl:value-of select="text()"/>
 				</td>
@@ -5604,46 +4989,43 @@
 		</xsl:for-each>
 		<xsl:for-each select="gmd:southBoundLatitude/gco:Decimal">
 			<tr>
-				<!--<xsl:if test="@Sync = 'TRUE']">
-                <FONT color="#006400">*</FONT>
-                </xsl:if>-->
-				<td class="Level-3-element">Latitud söder:</td>
+				<td class="Level-1-element">Sydligaste latitud</td>
 				<td>
 					<xsl:value-of select="text()"/>
 				</td>
 			</tr>
 		</xsl:for-each>
+		<xsl:for-each select="gmd:northBoundLatitude/gco:Decimal">
+			<tr>
+				<td class="Level-1-element">Nordligaste latitud</td>
+				<td>
+					<xsl:value-of select="text()"/>
+				</td>
+			</tr>
+		</xsl:for-each>
+		<xsl:variable name="west">
+			<xsl:value-of select="xs:double(gmd:westBoundLongitude/gco:Decimal)"/>
+		</xsl:variable>
+		<xsl:variable name="north">
+			<xsl:value-of select="xs:double(gmd:northBoundLatitude/gco:Decimal)"/>
+		</xsl:variable>
+		<xsl:variable name="east">
+			<xsl:value-of select="xs:double(gmd:eastBoundLongitude/gco:Decimal)"/>
+		</xsl:variable>
+		<xsl:variable name="south">
+			<xsl:value-of select="xs:double(gmd:southBoundLatitude/gco:Decimal)"/>
+		</xsl:variable>
+		<!-- <xsl:if test="$west != 0 and $north != 0 and $east != 0 and $south != 0">
+			<xsl:copy-of select="gn-fn-render:bbox(
+                            xs:double(gmd:westBoundLongitude/gco:Decimal),
+                            xs:double(gmd:southBoundLatitude/gco:Decimal),
+                            xs:double(gmd:eastBoundLongitude/gco:Decimal),
+                            xs:double(gmd:northBoundLatitude/gco:Decimal))"/>
+		</xsl:if> -->
 	</xsl:template>
 	<!--Geographic Description Information (B.3.1.1 EX_GeographicDescription - line348) -->
 	<!--<xsl:template match = "gmd:Ex_geographicExtent/gmd:EX_GeographicDescription | GeoDesc">-->
 	<xsl:template match="gmd:EX_GeographicDescription | GeoDesc">
-		<xsl:choose>
-			<xsl:when test="../geoDesc">
-				<tr>
-					<td colspan="2" class="Level-2-element">Description of the resource's location:</td>
-				</tr>
-			</xsl:when>
-			<xsl:otherwise>
-				<tr>
-					<td colspan="2" class="Level-1-Header">Rumslig beskrivning:</td>
-				</tr>
-			</xsl:otherwise>
-		</xsl:choose>
-		<!--<xsl:for-each select="exTypeCode">
-        <tr>
-        <td class="Level-2-element">Extent contains the resource:</td>
-        <td>
-        <xsl:choose>
-        <xsl:when test="text() = '1'">Yes</xsl:when>
-        <xsl:when test="text() = '0'">No</xsl:when>
-        <xsl:otherwise>
-        <xsl:value-of select="text()"/>
-        </xsl:otherwise>
-        </xsl:choose>
-        </td>
-        </tr>
-        </xsl:for-each>
-        -->
 		<xsl:apply-templates select="gmd:geographicIdentifier"/>
 	</xsl:template>
 	<!--Temporal Extent Information (B.3.1.2 EX_TemporalExtent - line350) -->
@@ -5661,9 +5043,12 @@
 	<xsl:template match="gmd:extent">
 		<xsl:for-each select="gml:TimePeriod">
 			<tr>
-				<td colspan="2" class="Level-2-Header">Tidsperiod:</td>
+				<td class="Level-1-element">Temporal Utstäckning</td>
+				<td>
+					<xsl:value-of select="gml:beginPosition"/><xsl:text>&#160;</xsl:text><xsl:value-of select="gml:endPosition"/>
+				</td>
 			</tr>
-			<xsl:for-each select="gml:beginPosition">
+			<!-- <xsl:for-each select="gml:beginPosition">
 				<tr>
 					<td class="Level-3-element">Startdatum:</td>
 					<td>
@@ -5679,24 +5064,7 @@
 					</td>
 				</tr>
 			</xsl:for-each>
-		</xsl:for-each>
-		<xsl:for-each select="TM_Instant">
-			<xsl:for-each select=".//calDate">
-				<tr>
-					<td class="Level-2-element">Calendar date:</td>
-					<td>
-						<xsl:value-of select="text()"/>
-					</td>
-				</tr>
-			</xsl:for-each>
-			<xsl:for-each select=".//clkTime">
-				<tr>
-					<td class="Level-2-element">Clock time:</td>
-					<td>
-						<xsl:value-of select="text()"/>
-					</td>
-				</tr>
-			</xsl:for-each>
+			-->
 		</xsl:for-each>
 	</xsl:template>
 	<!--Spatial Temporal Extent Information (B.3.1.2 EX_SpatialTemporalExtent - line352) -->
@@ -5725,19 +5093,13 @@
 	<!--Vertical Extent Information (B.3.1.3 EX_VerticalExtent - line354) -->
 	<!--changed at : 02-11-10-->
 	<xsl:template match="gmd:verticalElement/gmd:EX_VerticalExtent">
-		<!-- <xsl:template match="gmd:EX_Extent"> -->
-		<tr>
-			<!--Commented : 02-11-10 type text mismatch -->
-			<!--<td colspan = "2" class = "Level-1-Header">Vertical extent:</td>-->
-			<td colspan="2" class="Level-1-Header">Vertikal utsträckning:</td>
-		</tr>
 		<xsl:for-each select="gmd:minimumValue">
 			<tr>
-				<td class="Level-2-element">
+				<td class="Level-1-element">
 					<xsl:if test="@Sync = 'TRUE'">
 						<span class="s">*</span>
 					</xsl:if>
-                    Lägsta värde:
+                    Lägsta höjd
                 </td>
 				<td>
 					<xsl:value-of select="gco:Real/text()"/>
@@ -5746,35 +5108,16 @@
 		</xsl:for-each>
 		<xsl:for-each select="gmd:maximumValue">
 			<tr>
-				<td class="Level-2-element">
+				<td class="Level-1-element">
 					<xsl:if test="@Sync = 'TRUE'">
 						<span class="s">*</span>
 					</xsl:if>
-                    Högsta värde:
+                    Högsta höjd
                 </td>
 				<td>
 					<xsl:value-of select="gco:Real/text()"/>
 				</td>
 			</tr>
-		</xsl:for-each>
-		<xsl:for-each select="gmd:verticalCRS">
-			<tr>
-				<td class="Level-2-element">
-                                    Vertikalt refenssystem:
-                </td>
-				<td>
-					<xsl:value-of select="@xlink:title"/>
-				</td>
-			</tr>
-		</xsl:for-each>
-		<xsl:if test="vertUoM">
-			<tr>
-				<td class="Level-1-Header">Units of measure, length:</td>
-			</tr>
-			<xsl:apply-templates select="gmd:unitOfMeasure"/>
-		</xsl:if>
-		<xsl:for-each select="vertDatum">
-			<xsl:apply-templates select="datumID"/>
 		</xsl:for-each>
 	</xsl:template>
 	<!--ESRI EXTENDED ELEMENTS -->
@@ -6765,6 +6108,118 @@
 			<xsl:otherwise>
 				<xsl:value-of select="$text"/>
 			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<!-- ... Dates - formatting is made on the client side by the directive  -->
+	  <xsl:template mode="render-value"
+					match="gco:Date[matches(., '[0-9]{4}')]">
+		<xsl:value-of select="."/>
+	  </xsl:template>
+
+	  <xsl:template mode="render-value"
+					match="gco:Date[matches(., '[0-9]{4}-[0-9]{2}')]">
+		<xsl:value-of select="format-date(.,'[MN,*-3]-[Y0001]')"/>
+	  </xsl:template>
+
+	  <xsl:template mode="render-value"
+					match="gco:Date[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}')]">
+		<xsl:value-of select="format-date(.,'[Y0001]-[M01]-[D01]')"/>
+	  </xsl:template>
+
+	  <xsl:template mode="render-value"
+					match="gco:DateTime[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}')]">
+		<xsl:value-of select="format-dateTime(.,'[Y0001]-[M01]-[D01] [h01]:[m01]')"/>
+	  </xsl:template>
+
+	  <xsl:template mode="render-value"
+					match="gco:Date[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}')]">
+		<xsl:value-of select="format-dateTime(.,'[Y0001]-[M01]-[D01]')"/>
+	  </xsl:template>
+	  
+	  <xsl:template mode="render-value"
+					match="gco:Date|gco:DateTime">
+		<xsl:value-of select="format-date(.,'[Y0001]-[M01]-[D01]')"/>
+	  </xsl:template>
+	  
+	  <xsl:template mode="online" match="gmd:onLine[1]" >
+		<tr>
+			<td class="Level-1-element online-table-td">Online-länkar</td>
+			<td colspan="2">
+				<table class="view-metadata-table">
+					<tr>
+						<th class="view-metadata-table-th-1">Länktyp</th>
+						<th class="view-metadata-table-th-2">Namn</th>
+						<th class="view-metadata-table-th-3">Url</th>
+					</tr>
+					<xsl:for-each select="parent::node()/gmd:onLine">
+						<xsl:variable name="protocol">
+							<xsl:apply-templates mode="render-value" select="*/gmd:protocol"/>
+						</xsl:variable>
+						<xsl:variable name="aliasProtocol">
+							<xsl:choose>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:OGC:WFS'">Karttjänst (WFS)</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:OGC:WMS'">Karttjänst (WMS)</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:Information'">Informationssida</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:Nedladdning'">Nedladdningslänk</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:Nedladdning:ATOM'">Nedladdningslänk (ATOM)</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$protocol"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						<xsl:variable name="name">
+							<xsl:apply-templates mode="render-value" select="*/gmd:name"/>
+						</xsl:variable>
+						<xsl:variable name="url">
+							<xsl:apply-templates mode="render-value" select="*/gmd:linkage/gmd:URL"/>
+						</xsl:variable>
+						<tr>
+							<td class="view-metadata-table-td-1">
+								<xsl:value-of select="normalize-space($aliasProtocol)"/>
+							</td>
+							<td class="view-metadata-table-td-2">
+								<xsl:value-of select="normalize-space($name)"/>
+							</td>
+							<td class="view-metadata-table-td-3">
+								<xsl:choose>
+									<xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
+										<a href="{$url}" target="_blank">
+											<xsl:value-of select="normalize-space($url)"/>
+										</a>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="normalize-space($url)"/>
+									</xsl:otherwise>
+								</xsl:choose>
+							</td>
+						</tr>
+					</xsl:for-each>
+				</table>
+			</td>
+		</tr>
+	</xsl:template>
+
+	<xsl:template mode="online" match="gmd:onLine[position() > 1]"/>
+	
+	<xsl:template mode="render-value" match="gco:CharacterString|gmd:URL">
+		<xsl:choose>
+		  <xsl:when test="contains(., 'http')">
+			<!-- Replace hyperlink in text by an hyperlink -->
+			<xsl:variable name="textWithLinks"
+						  select="replace(., '([a-z][\w-]+:/{1,3}[^\s()&gt;&lt;]+[^\s`!()\[\]{};:'&apos;&quot;.,&gt;&lt;?«»“”‘’])',
+										'&lt;a target=&quot;_blank&quot; href=''$1''&gt;$1&lt;/a&gt;')"/>
+
+			<xsl:if test="$textWithLinks != ''">
+			  <xsl:copy-of select="saxon:parse(
+							  concat('&lt;span&gt;',
+							  replace($textWithLinks, '&amp;', '&amp;amp;'),
+							  '&lt;/span&gt;'))"/>
+			</xsl:if>
+		  </xsl:when>
+		  <xsl:otherwise>
+			<xsl:value-of select="normalize-space(.)"/>
+		  </xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 </xsl:stylesheet>

@@ -189,6 +189,7 @@ function fix2(id) {
     var e = document.getElementById(id);
     var content = e.innerHTML;
     //var content = e.innerHTML.replace(/\n/g, '<br/>');    
+	content = content.trim();
     if (content.indexOf("&lt;") === -1)
     {     
         content = content.replace(/\n/g, '<br/>');
@@ -298,6 +299,12 @@ function printBtnClickEvent() {
 				}
 			}
 		}
+	}
+	var customFontAwesomeIdStyle = document.getElementById('custom-font-awesome-id');
+	if(customFontAwesomeIdStyle) {
+		printWindow.document.write('<style id="' + customFontAwesomeIdStyle.id + '">')
+		printWindow.document.write(customFontAwesomeIdStyle.innerHTML);
+		printWindow.document.write('</style>');
 	}
 	//printWindow.document.write('<link rel="stylesheet" type="text/css" href="metadataResponse/Style2/styles.css"/>');
 	//printWindow.document.write('<link rel="stylesheet" type="text/css" href="metadataResponse/Style2/TreeFromXMLUsingXSLT.css"/></head>');

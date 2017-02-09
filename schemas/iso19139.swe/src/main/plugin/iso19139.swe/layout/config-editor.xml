@@ -3664,7 +3664,7 @@
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract"/>
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:topicCategory"/>
 		  <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"/>
-		  <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:date"/>
+		  <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date"/>
 		  <field xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine"/>
         </section>
       </tab>

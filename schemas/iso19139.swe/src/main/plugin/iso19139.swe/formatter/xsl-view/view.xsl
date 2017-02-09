@@ -442,17 +442,20 @@
 		  </dd>
 		</dl>
 	</xsl:for-each>
-	<xsl:for-each select="gmd:accessConstraints">
+	<xsl:if test="gmd:accessConstraints">
 		<dl class="gn-contact">
 		  <dt>
 			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'accessConstraints')"/>
 		  </dt>
-		  <dd>		  
-			<xsl:value-of select="gco:CharacterString"/>
-			<xsl:apply-templates mode="render-value" select="gmd:MD_RestrictionCode/@codeListValue"/>			
+		   <dd>	
+			  <xsl:for-each select="gmd:accessConstraints">
+					<xsl:value-of select="gco:CharacterString"/>
+					<xsl:apply-templates mode="render-value" select="gmd:MD_RestrictionCode/@codeListValue"/>	
+					<xsl:if test="position()!=last()">,</xsl:if>				
+			  </xsl:for-each>
 		  </dd>
 		</dl>
-	</xsl:for-each>
+	</xsl:if>
   </xsl:template>
   
   <!-- Metadata linkage -->
@@ -694,35 +697,30 @@
 
 
   <xsl:template mode="render-field"
-                match="gmd:distributionFormat[1]"
+                match="gmd:distributorFormat[1]"
                 priority="100">
     <dl class="gn-format">
       <dt>
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
       </dt>
       <dd>
-        <ul>
-          <xsl:for-each select="parent::node()/gmd:distributionFormat">
-            <li>
+          <xsl:for-each select="parent::node()/gmd:distributorFormat">
               <xsl:apply-templates mode="render-value"
                                    select="*/gmd:name"/>
               (<xsl:apply-templates mode="render-value"
                                     select="*/gmd:version"/>)
-              <p>
                 <xsl:apply-templates mode="render-field"
                                      select="*/(gmd:amendmentNumber|gmd:specification|
                               gmd:fileDecompressionTechnique|gmd:formatDistributor)"/>
-              </p>
-            </li>
+ 			  <xsl:if test="position()!=last()">,</xsl:if>
           </xsl:for-each>
-        </ul>
       </dd>
     </dl>
   </xsl:template>
 
 
   <xsl:template mode="render-field"
-                match="gmd:distributionFormat[position() > 1]"
+                match="gmd:distributorFormat[position() > 1]"
                 priority="100"/>
 
   <!-- Date -->
@@ -798,14 +796,10 @@
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
       </dt>
       <dd>
-        <ul style="list-style-type: none;padding-left:2px;">
           <xsl:for-each select="parent::node()/(gmd:topicCategory|gmd:obligation|gmd:pointInPixel)">
-            <li>
-              <xsl:apply-templates mode="render-value"
-                                   select="*"/>
-            </li>
+            <xsl:apply-templates mode="render-value" select="*"/>
+			<xsl:if test="position()!=last()">,</xsl:if>
           </xsl:for-each>
-        </ul>
       </dd>
     </dl>
   </xsl:template>
