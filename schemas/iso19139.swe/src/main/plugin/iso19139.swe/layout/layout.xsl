@@ -634,8 +634,8 @@
 
         <div data-swe-date-dialog="">
 			<div data-ng-show="showResourceContactDD">
-				<select class="form-control" data-ng-model="organisation" data-ng-change="populateResourseContactFields(organisation)">
-					<option data-ng-repeat="org in organisationNames" title="{{org.displayValue}}" data-ng-value="org.fieldValue">
+				<select class="form-control" data-ng-model="organisation" data-ng-change="populateContactFields(organisation)">
+					<option data-ng-repeat="org in organisationNames.{local-name()}" title="{{org.displayValue}}" data-ng-value="org.fieldValue">
 						{{org.displayValue}}
 					</option>
 				</select>
