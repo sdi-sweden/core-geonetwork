@@ -527,13 +527,13 @@
       /**
        * Toggle size of floating map
        */
-      $scope.toggleFloatingMap = function() {
-        angular.element('.floating-map-cont').toggleClass('small');
+     /* $scope.toggleFloatingMap = function() {
+        angular.element('.floating-map-cont').toggleClass('medium');
         // angular.element('.floating-map-cont').show();
         // $scope.$emit('body:class:remove', 'small-map-view');
         // $scope.$emit('body:class:remove', 'full-map-view');
         // $scope.$emit('body:class:remove', 'medium-map-view');
-      };
+      };*/
 
       /**
        * Show full view results.
