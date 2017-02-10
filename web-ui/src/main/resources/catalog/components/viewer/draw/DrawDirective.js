@@ -188,7 +188,7 @@
             style: drawVectorStyleFn
           });
           scope.vector = vector;
-
+          scope.activeAnnotate = false;
           /**
            * Create a `ol.style.Style` object from style config mapped with
            * style form.
@@ -483,18 +483,19 @@
 
           Object.defineProperty(vector, 'inmap', {
             get: function() {
-              return map.getLayers().getArray().indexOf(vector) >= 0;
+             return scope.activeAnnotate         
             },
             set: function(val) {
               if (val) {
+                scope.activeAnnotate = true;
                 map.addLayer(vector);
-              } else {
-                map.removeLayer(vector);
+              } else {                
+                scope.activeAnnotate = false;
                 drawPolygon.active = false;
                 drawPoint.active = false;
                 drawLine.active = false;
                 drawText.active = false;
-                deleteF = false;
+                deleteF.active = false;
                 scope.modifying = false;
               }
             }
