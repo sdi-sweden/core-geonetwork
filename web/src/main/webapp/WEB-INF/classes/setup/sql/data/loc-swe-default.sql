@@ -1,28 +1,28 @@
 INSERT INTO Languages (id, name, isinspire, isdefault) VALUES ('swe','Swedish', 'y', 'y');
 
 -- Take care to table ID (related to other loc files)
-INSERT INTO CswServerCapabilitiesInfo (idfield, langid, field, label) VALUES (65, 'swe', 'title', '');
-INSERT INTO CswServerCapabilitiesInfo (idfield, langid, field, label) VALUES (66, 'swe', 'abstract', '');
-INSERT INTO CswServerCapabilitiesInfo (idfield, langid, field, label) VALUES (67, 'swe', 'fees', '');
-INSERT INTO CswServerCapabilitiesInfo (idfield, langid, field, label) VALUES (68, 'swe', 'accessConstraints', '');
+INSERT INTO CswServerCapabilitiesInfo (idfield, langid, field, label) VALUES (65, 'swe', 'titel', '');
+INSERT INTO CswServerCapabilitiesInfo (idfield, langid, field, label) VALUES (66, 'swe', 'sammanfattning', '');
+INSERT INTO CswServerCapabilitiesInfo (idfield, langid, field, label) VALUES (67, 'swe', 'avgifter', '');
+INSERT INTO CswServerCapabilitiesInfo (idfield, langid, field, label) VALUES (68, 'swe', 'Åtkomstbegränsningar', '');
 
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (1,'swe','Maps & graphics');
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (2,'swe','Datasets');
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (3,'swe','Interactive resources');
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (4,'swe','Applications');
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (5,'swe','Case studies, best practices');
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (6,'swe','Conference proceedings');
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (7,'swe','Photo');
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (8,'swe','Audio/Video');
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (9,'swe','Directories');
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (10,'swe','Other information resources');
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (12,'swe','Registers');
-INSERT INTO CategoriesDes (iddes, langid, label) VALUES (13,'swe','Physical Samples');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (1,'swe','Kartor och grafik');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (2,'swe','Datamängd');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (3,'swe','Interaktiva resurser');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (4,'swe','Applikationer');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (5,'swe','Fallstudier, bästa praxis');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (6,'swe','Konferenspublikationer');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (7,'swe','Foto');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (8,'swe','Ljud/video');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (9,'swe','Kataloger');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (10,'swe','Andra informationskällor');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (12,'swe','Register');
+INSERT INTO CategoriesDes (iddes, langid, label) VALUES (13,'swe','Exempel');
 
-INSERT INTO GroupsDes (iddes, langid, label) VALUES (-1,'swe','Guest');
-INSERT INTO GroupsDes (iddes, langid, label) VALUES (0,'swe','Intranet');
-INSERT INTO GroupsDes (iddes, langid, label) VALUES (1,'swe','All');
-INSERT INTO GroupsDes (iddes, langid, label) VALUES (2,'swe','Sample group');
+INSERT INTO GroupsDes (iddes, langid, label) VALUES (-1,'swe','Gäst');
+INSERT INTO GroupsDes (iddes, langid, label) VALUES (0,'swe','Intranät');
+INSERT INTO GroupsDes (iddes, langid, label) VALUES (1,'swe','Alla');
+INSERT INTO GroupsDes (iddes, langid, label) VALUES (2,'swe','Urvalsgrupp');
 
 INSERT INTO IsoLanguagesDes  (iddes, langid, label) VALUES (1,'swe','Afar');
 INSERT INTO IsoLanguagesDes  (iddes, langid, label) VALUES (2,'swe','Abkhazian');
@@ -509,17 +509,17 @@ INSERT INTO IsoLanguagesDes  (iddes, langid, label) VALUES (482,'swe','No lingui
 INSERT INTO IsoLanguagesDes  (iddes, langid, label) VALUES (483,'swe','N''Ko');
 INSERT INTO IsoLanguagesDes  (iddes, langid, label) VALUES (484,'swe','Zaza; Dimili; Dimli; Kirdki; Kirmanjki');
 
-INSERT INTO OperationsDes  (iddes, langid, label) VALUES (0,'swe','Publish');
-INSERT INTO OperationsDes  (iddes, langid, label) VALUES (1,'swe','Download');
-INSERT INTO OperationsDes  (iddes, langid, label) VALUES (2,'swe','Editing');
-INSERT INTO OperationsDes  (iddes, langid, label) VALUES (3,'swe','Notify');
-INSERT INTO OperationsDes  (iddes, langid, label) VALUES (5,'swe','Interactive Map');
-INSERT INTO OperationsDes  (iddes, langid, label) VALUES (6,'swe','Featured');
+INSERT INTO OperationsDes  (iddes, langid, label) VALUES (0,'swe','Publicera');
+INSERT INTO OperationsDes  (iddes, langid, label) VALUES (1,'swe','Ladda ner');
+INSERT INTO OperationsDes  (iddes, langid, label) VALUES (2,'swe','Redigering');
+INSERT INTO OperationsDes  (iddes, langid, label) VALUES (3,'swe','Avisera');
+INSERT INTO OperationsDes  (iddes, langid, label) VALUES (5,'swe','Interaktiv karta');
+INSERT INTO OperationsDes  (iddes, langid, label) VALUES (6,'swe','Utvalda');
 
-INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (0,'swe','Unknown');
-INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (1,'swe','Draft');
-INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (2,'swe','Approved');
-INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (3,'swe','Retired');
-INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (4,'swe','Submitted');
-INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (5,'swe','Rejected');
+INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (0,'swe','Okänd');
+INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (1,'swe','Utkast');
+INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (2,'swe','Godkända');
+INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (3,'swe','Tillbakadragna');
+INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (4,'swe','Inkomna');
+INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (5,'swe','Avvisade');
 

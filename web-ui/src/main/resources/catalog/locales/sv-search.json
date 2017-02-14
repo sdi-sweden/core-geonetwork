@@ -1,4 +1,4 @@
-{
+﻿{
     "rate": "Betyg",
     "clickToRate": "Klicka för att betygsätta",
     "source": "Katalog(er)",
@@ -365,7 +365,7 @@
     "fbCatHarvesting": "Skördning",
     "fbCatValidator": "Validerare",
     "fbCatOthers": "Andra",
-    "syncAllLayers": "Synkronisera alla lager",
+    "syncAllLayers": "Synkronisera lager",
     "Add" : "Lägg till",
     "layersDelete":"Radera alla lager",
     "mdvalid": "Metadatat är giltigt",

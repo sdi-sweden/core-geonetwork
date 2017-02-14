@@ -2,6 +2,8 @@
    which has to be applied for all apps
    (ie. admin, search, login, editor). */
 
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 .hide-text {
   font: 0/0 a;
   color: transparent;
@@ -1715,70 +1717,22 @@ https://github.com/yahoo/pure/blob/master/LICENSE.md
 }
 /* '' */
 #fonts .sans .regular {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
 }
 #fonts .sans .bold {
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
 }
 #fonts .sans .italic {
-  font-family: 'robotoitalic', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
+  font-style: italic;
 }
-@font-face {
-  font-family: 'open_sansregular';
-  src: url(../catalog/views/swe/fonts/c4d82460ef260eb1589e73528cbfb257.eot);
-  src: url(../catalog/views/swe/fonts/c4d82460ef260eb1589e73528cbfb257.eot?#iefix) format('embedded-opentype'), url(../catalog/views/swe/fonts/79515ad0788973c533405f7012dfeccd.woff) format('woff'), url(../catalog/views/swe/fonts/488d5cc145299ba07b75495100419ee6.ttf) format('truetype'), url(../catalog/views/swe/fonts/8185eb3059c46e4169ce107dfcf85950.svg#open_sansregular) format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'open_sansitalic';
-  src: url(../catalog/views/swe/fonts/43d5342998f3607bd61a8239e98b1160.eot);
-  src: url(../catalog/views/swe/fonts/43d5342998f3607bd61a8239e98b1160.eot?#iefix) format('embedded-opentype'), url(../catalog/views/swe/fonts/f42641eed834f7b97a9499362c6c8855.woff) format('woff'), url(../catalog/views/swe/fonts/de7ef31e6295902347c5c3643b2d82da.ttf) format('truetype'), url(../catalog/views/swe/fonts/5b774c25787e0a52c013463c9e3c4219.svg#open_sansitalic) format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'open_sansbold';
-  src: url(../catalog/views/swe/fonts/1d9c7945c7bc7dd0909105119bfbc191.eot);
-  src: url(../catalog/views/swe/fonts/1d9c7945c7bc7dd0909105119bfbc191.eot?#iefix) format('embedded-opentype'), url(../catalog/views/swe/fonts/2e90d5152ce92858b62ba053c7b9d2cb.woff) format('woff'), url(../catalog/views/swe/fonts/76cc6be5d8a231dc012fef4bdb86f79c.ttf) format('truetype'), url(../catalog/views/swe/fonts/93349923b5274a36ac93cb3168d09123.svg#open_sansbold) format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'robotoregular';
-  src: url('../catalog/views/swe/fonts/Roboto-Regular-webfont.eot');
-  src: url('../catalog/views/swe/fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-       url('../catalog/views/swe/fonts/Roboto-Regular-webfont.woff') format('woff'),
-       url('../catalog/views/swe/fonts/Roboto-Regular-webfont.ttf') format('truetype'),
-       url('../catalog/views/swe/fonts/Roboto-Regular-webfont.svg#robotoregular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'robotobold';
-  src: url('../catalog/views/swe/fonts/Roboto-Bold-webfont.eot');
-  src: url('../catalog/views/swe/fonts/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
-       url('../catalog/views/swe/fonts/Roboto-Bold-webfont.woff') format('woff'),
-       url('../catalog/views/swe/fonts/Roboto-Bold-webfont.ttf') format('truetype'),
-       url('../catalog/views/swe/fonts/Roboto-Bold-webfont.svg#robotobold') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'robotoitalic';
-  src: url('../catalog/views/swe/fonts/Roboto-Italic-webfont.eot');
-  src: url('../catalog/views/swe/fonts/Roboto-Italic-webfont.eot?#iefix') format('embedded-opentype'),
-       url('../catalog/views/swe/fonts/Roboto-Italic-webfont.woff') format('woff'),
-       url('../catalog/views/swe/fonts/Roboto-Italic-webfont.ttf') format('truetype'),
-       url('../catalog/views/swe/fonts/Roboto-Italic-webfont.svg#robotoitalic') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
+
 body {
   background-color: #e3ebea;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   min-width: 940px;
   background-image: url(../catalog/views/swe/images/bg.jpg);
@@ -1880,7 +1834,7 @@ body.loggedin-user .header-logout {
 }
 .filter-cont .-label,
 .dropdown-cont .-label {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   color: #000;
   text-transform: uppercase;
@@ -1913,7 +1867,7 @@ body.loggedin-user .header-logout {
 .filter-cont .-text-link,
 .dropdown-cont .-text-link {
   display: inline-block;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   color: #000;
   font-size: 12px;
@@ -1968,13 +1922,14 @@ body.loggedin-user .header-logout {
 .tool-tip-cont h2 {
   color: #fff;
   margin: 0 0 10px;
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   font-size: 14px;
 }
 .tool-tip-cont p {
   color: #fff;
   margin: 0 0 14px;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
 }
@@ -2003,7 +1958,8 @@ body.loggedin-user .header-logout {
   display: inline-block;
   text-transform: uppercase;
   color: #6c9290;
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   font-size: 10px;
   text-decoration: none;
 }
@@ -2047,7 +2003,7 @@ body.loggedin-user .header-logout {
 }
 .cb-cont .text {
   display: inline-block;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 13px;
   color: #000;
@@ -2077,7 +2033,8 @@ body.loggedin-user .header-logout {
   display: inline-block;
   color: #fff;
   text-transform: uppercase;
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   font-size: 12px;
   line-height: 40px;
   background-color: #27605d;
@@ -2136,7 +2093,7 @@ body.loggedin-user .header-logout {
   clear: both;
 }
 .header-cont .header-text {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 10px;
   color: #000000;
@@ -2158,38 +2115,14 @@ body.loggedin-user .header-logout {
   left: 26px;
   top: 26px;
 }
-.header-leave-comment {
-  padding-left: 30px;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAOCAYAAAAi2ky3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjNFOUNERjlEMzE0MTFFNUExRDdERERCRkMxRjQzMzIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjNFOUNERkFEMzE0MTFFNUExRDdERERCRkMxRjQzMzIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyM0U5Q0RGN0QzMTQxMUU1QTFEN0REREJGQzFGNDMzMiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyM0U5Q0RGOEQzMTQxMUU1QTFEN0REREJGQzFGNDMzMiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pn6VB1cAAAB5SURBVHjaYoztaFvIwMAQCcSsDOSDy0xUMAQEtJnINKQQiB2h+AIQM7GQ6YLjQHwSyn4LIpgYqATIddEMIP4AZRtQYpABIRdlAPFZHC4wJsVr8UDsg0WdAqlhZEmtwMblNYJeJNZrBL1INa+BEuRlIP5HYXp8DRBgANvREud+NYxOAAAAAElFTkSuQmCC);
-  color: #000000;
-}
-.header-help {
-  margin-left: 30px;
-}
-.header-right-cont {
-  position: absolute;
-  right: 26px;
-  top: 26px;
-}
-.header-login {
-  padding-left: 25px;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NUUyMkI2OTREMzE0MTFFNUExRDdERERCRkMxRjQzMzIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NUUyMkI2OTVEMzE0MTFFNUExRDdERERCRkMxRjQzMzIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1RTIyQjY5MkQzMTQxMUU1QTFEN0REREJGQzFGNDMzMiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1RTIyQjY5M0QzMTQxMUU1QTFEN0REREJGQzFGNDMzMiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pm1VfQgAAADwSURBVHjaYoztaLNhYGCYDcQaDNjBTCDOwCbBAsRzgFgJiO8C8V8gZkSSB7Gf4jAUrFkdiO8DsQMQf8Ci+Rc+zSDwD4jfA/FXBtxAHogfIgswYTEIF5gBxIUMBDRwADEbEP9HEgO5TBCI+4BYHIirQeGDTXMJEMdBNSBrloeyy4FYGYjTsGmWBmJVAl4IAWIJJiwSTAyEwXcgXoLN5iVAfBnN2X+g3gG56BkQJwDxbmyaD0MxOkgB4itAHArEN4h1IgwsB2I3mEb0RPKVgOZ+XClMGIjzgfgbWvIEuewiDm+ANXdAc00PDhtn4dIMEGAA1QAt0xERO2QAAAAASUVORK5CYII=);
-}
-.header-logout {
-  padding-left: 25px;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MEU5NUE3ODNERUFGMTFFNTkyNEU5MUEwQjIzNkNBQjciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MEU5NUE3ODRERUFGMTFFNTkyNEU5MUEwQjIzNkNBQjciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowRTk1QTc4MURFQUYxMUU1OTI0RTkxQTBCMjM2Q0FCNyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowRTk1QTc4MkRFQUYxMUU1OTI0RTkxQTBCMjM2Q0FCNyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pm9VFX0AAADxSURBVHjaYoztaGPAAdSB+DIQs+KQb2VhwA1+QjXzoon/A2IhIM7Cp/kREDsAMSMQ/0fTnAXEXdg08wMxSPwtEH/GYfA3EMGEJigFxFuB2IgBPwDrQ7bZFIgXAbEGNJC4kQyHOf0r1NkMyJoDgHg+EAtA+TOA+AuaZpAXgoH4IbLmWiBuQnOWLI7QZ0d3+zYg3slAGDBDXcCAbPNZIA4E4klAnAIVnwDE15G8xQi1+QW6ZhD4DsSpQHwbiDuBeB0QHybkFPR47gLil1DDGEjVDAILidD3E5dm5JQWCg1h5OT5B4hdCGmWAOLpeNTsAQgwAOs+LG+Nccj2AAAAAElFTkSuQmCC);
-}
-.header-admin {
-  padding-left: 25px;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAMAAAAMCGV4AAAAqFBMVEUAAABdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIZdiIY8QqPtAAAAN3RSTlMAAQIDBAUGBwoLDA0ODxASHiUmKSw7Q0VJUlVrc3uOoqiqsre5ury+xczOz9XX2dze6e319/v91oit4gAAAH5JREFUCFttz0cKwgAARNEfjb3E3nvvNfrvfzNXoqBvNzAwDAAkYg+8ldpEajLopQDKN6dbdblxFwItPyoAEzXeP9UBEDXO2g9IjnRezaJ6BQhVVz+5UDt9+vUcMFbj/UMdAjS/9qpA/upspy7WHtMAhQ5FNQy6mfeF4O6Fv14GKhgEaCOP+AAAAABJRU5ErkJggg==);
-  margin-right: 10px;
-}
+
 .mobile-menu-link {
   display: none;
 }
 .other-geodata-cont {
-  padding: 0 20px;
-  margin-right: 38px;
+  padding: 0 0px;
+  margin-right: 0px;
+  margin-left: 20px;
 }
 .other-geodata-cont .icon-dot-3 {
   color: #5d8886;
@@ -2216,10 +2149,37 @@ body.loggedin-user .header-logout {
   font-size: 10px;
 }
 .other-geodata-cont .-label {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 10px;
   letter-spacing: 1px;
+}
+.geotechnic-cont{
+	display: inline-block;
+	margin-right: 38px;
+}
+.geotechnic-cont-li{
+	display: inline-block;
+}
+.geotechnic-cont .text{
+  font-family: 'robotoregular', sans-serif;
+  font-weight: normal;
+  font-size: 10px;
+  color: #000000;
+  line-height: 14px;
+  text-transform: uppercase;
+  background-position: left center;
+  background-repeat: no-repeat;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.geotechnic-cont .icon-eye {
+  color: #5d8886;
+  margin-right: 5px;
+  font-size: 16px;
+  margin-top: 2px;
+  position: relative;
+  top: 2px;
 }
 .logo {
   display: inline-block;
@@ -2246,7 +2206,7 @@ body.loggedin-user .header-logout {
 }
 .footer-cont .text {
   text-transform: uppercase;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   color: #000;
@@ -2298,7 +2258,7 @@ body.loggedin-user .header-logout {
 .geo-data-serach-filter input[type='text'] {
   border: none;
   line-height: 56px;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 13px;
   color: #b8b8b8;
@@ -2321,7 +2281,8 @@ body.loggedin-user .header-logout {
   display: inline-block;
   text-transform: uppercase;
   color: #5d8886;
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   font-size: 11px;
   text-decoration: none;
   margin-left: 20px;
@@ -2358,7 +2319,7 @@ body.loggedin-user .header-logout {
 .geo-data-list-cont .sort-filter-label {
   display: inline-block;
   text-transform: uppercase;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   color: #000000;
@@ -2384,7 +2345,8 @@ body.loggedin-user .header-logout {
   color: #fff;
 }
 .geo-data-list-cont .sort-filter .filter-cont .-label {
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   font-size: 12px;
   color: #5d8886;
 }
@@ -2392,7 +2354,8 @@ body.loggedin-user .header-logout {
   font-size: 11px;
 }
 .geo-data-list-cont .sort-filter .filter-cont .-link {
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   padding-bottom: 3px;
   color: #5d8886;
 }
@@ -2644,7 +2607,8 @@ body.loggedin-user .header-logout {
 }
 .geo-data-row .meta-data h1 {
   margin: 0 0 4px;
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   font-size: 16px;
   line-height: 20px;
   color: #000;
@@ -2710,7 +2674,7 @@ body.loggedin-user .header-logout {
   position: absolute;
   right: -6px;
   top: 0;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   color: #a2a2a2;
@@ -2743,7 +2707,7 @@ body.loggedin-user .header-logout {
   width: 50%;
 }
 .geo-data-row .data-timelog-table span {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 10px;
   color: #a2a2a2;
@@ -2775,7 +2739,7 @@ body.loggedin-user .header-logout {
 .geo-data-row .excerpt-table .topic {
   text-transform: uppercase;
   color: #9e9e9e;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   line-height: 18px;
@@ -2788,7 +2752,7 @@ body.loggedin-user .header-logout {
 }
 .geo-data-row .excerpt-table p {
   margin: 0 0 8px;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   line-height: 18px;
@@ -2800,7 +2764,8 @@ body.loggedin-user .header-logout {
 .geo-data-row .excerpt-table p a {
   color: #5d8886;
   text-decoration: none !important;
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
 }
 .geo-data-row .excerpt-table p a.external-link {
   padding-right: 16px;
@@ -2973,7 +2938,8 @@ body.loggedin-user .header-logout {
 }
 .geo-data-tab-nav li.active a {
   color: #5d8886;
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
 }
 .geo-data-tab-nav li:hover {
   border-bottom: 4px solid #5d8886;
@@ -2988,7 +2954,7 @@ body.loggedin-user .header-logout {
   color: #000000;
   padding: 0 13px;
   text-transform: uppercase;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   -webkit-transition: all 300ms linear;
@@ -3198,7 +3164,7 @@ body.loggedin-user .header-logout {
   top: 5px;
 }
 .popup-cont .data-repo-status span {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   line-height: 18px;
@@ -3310,7 +3276,7 @@ body.loggedin-user .header-logout {
 }
 .site-image-filter .image-filter-text {
   text-transform: uppercase;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   color: #fff;
@@ -3340,7 +3306,7 @@ body.loggedin-user .header-logout {
   box-sizing: border-box;
 }
 .site-image-filter .img-list li .filter-text {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   color: #fff;
@@ -3378,7 +3344,7 @@ body.loggedin-user .header-logout {
   display: inline-block;
   text-transform: uppercase;
   color: #000;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 11px;
 }
@@ -3396,7 +3362,7 @@ body.loggedin-user .header-logout {
 }
 .site-geo-type-filter .type-filter-list a {
   display: inline-block;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 11px;
   color: #000;
@@ -3511,7 +3477,7 @@ body.loggedin-user .header-logout {
   border-radius: 20px;
   background-color: transparent;
   padding: 8px 21px 8px;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 11px;
   color: #000;
@@ -3564,16 +3530,18 @@ body.loggedin-user .header-logout {
   top: 20px;
   left: 5px;
   font-size: 10px;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 .data-result-cont .result-text b {
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
 }
 .data-result-cont .filter-toggle-link {
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   font-size: 10px;
   text-transform: uppercase;
   color: #5d8886;
@@ -3618,7 +3586,7 @@ body.loggedin-user .header-logout {
   padding: 0 26px 0 16px;
   line-height: 26px;
   text-transform: uppercase;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 10px;
   color: #fff;
@@ -3753,7 +3721,7 @@ body.loggedin-user .header-logout {
 .advance-filters-cont .filter-colm label {
   display: inline-block;
   margin-right: 10px;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 10px;
   color: #000;
@@ -3816,7 +3784,7 @@ body.loggedin-user .header-logout {
 .advance-filters-cont .live-search-cont a {
   text-decoration: none;
   text-transform: uppercase;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 10px;
   color: #000000;
@@ -3918,7 +3886,7 @@ body.loggedin-user .header-logout {
 }
 .advance-filters-cont .filter-header {
   text-transform: uppercase;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 10px;
   color: #000;
@@ -3971,7 +3939,7 @@ body.loggedin-user .header-logout {
   color: #fff;
 }
 .advance-filters-cont .category-list p {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 10px;
   line-height: 16px;
@@ -3985,7 +3953,7 @@ body.loggedin-user .header-logout {
   position: absolute;
   right: 16px;
   top: 50%;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 10px;
   color: #000;
@@ -4231,7 +4199,8 @@ body.loggedin-user .header-logout {
   background-color: #f1f5f5;
 }
 .site-side-map-cont .data-list-cont .folder .text {
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
 }
 .site-side-map-cont .data-list-cont .folder.first-level .text {
   width: 262px;
@@ -4284,7 +4253,7 @@ body.loggedin-user .header-logout {
 }
 .site-side-map-cont .data-list-cont .text {
   display: inline-block;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 11px;
   color: #414141;
@@ -4313,7 +4282,7 @@ body.loggedin-user .header-logout {
 }
 .site-side-map-cont .data-list-cont .node-list .text {
   max-width: 217px;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
 }
 .site-side-map-cont .sub-folder {
@@ -4333,7 +4302,7 @@ body.loggedin-user .header-logout {
   line-height: 66px;
   display: inline-block;
   text-transform: uppercase;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   color: #000000;
   font-size: 10px;
@@ -4391,14 +4360,15 @@ body.loggedin-user .header-logout {
   clear: both;
 }
 .landing-data-cont .landing-data h1 {
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   font-size: 20px;
   color: #000;
   line-height: 24px;
   margin: 0 0 20px;
 }
 .landing-data-cont .landing-data p {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 14px;
   color: #000;
@@ -4424,7 +4394,8 @@ body.loggedin-user .header-logout {
   text-transform: uppercase;
   text-decoration: none;
   color: #5d8886;
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   font-size: 12px;
   line-height: 20px;
   letter-spacing: 1px;
@@ -4483,14 +4454,15 @@ body.loggedin-user .header-logout {
   padding: 35px 40px 0;
 }
 .login-section h1 {
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   font-size: 20px;
   line-height: 26px;
   color: #000;
   margin: 0 0 15px;
 }
 .login-section p {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   color: #000;
@@ -4551,7 +4523,7 @@ body.loggedin-user .header-logout {
   padding: 0 15px;
   line-height: 36px;
   color: #000;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   width: 100%;
@@ -4574,14 +4546,15 @@ body.loggedin-user .header-logout {
   padding: 35px 40px 0;
 }
 .mail-section h1 {
-  font-family: 'robotobold', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   font-size: 20px;
   line-height: 26px;
   color: #000;
   margin: 0 0 15px;
 }
 .mail-section p {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   color: #000;
@@ -4641,7 +4614,7 @@ body.loggedin-user .header-logout {
   padding: 0 15px;
   line-height: 36px;
   color: #000;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   width: 100%;
@@ -4685,7 +4658,7 @@ body.loggedin-user .header-logout {
 .login-footer a {
   text-transform: uppercase;
   color: #000000;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 10px;
   line-height: 18px;
@@ -4715,7 +4688,7 @@ body.loggedin-user .header-logout {
 }
 .map-search-cont .text {
   display: inline-block;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 11px;
   color: #000;
@@ -4749,7 +4722,7 @@ body.loggedin-user .header-logout {
   text-decoration: none;
   color: #000;
   font-size: 10px;
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   text-transform: uppercase;
   margin-left: 20px;
@@ -4770,7 +4743,7 @@ a.link-btn[disabled] {
 }
 
 .errorField {
-  font-family: 'robotoregular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: normal;
   font-size: 12px;
   color: #ff0000;
@@ -4917,7 +4890,7 @@ a.link-btn[disabled] {
     }
     .till-date-colm {
       display: block;
-      clear: none; 
+      clear: none;
       margin-top: 0;
       margin-left: 0;
     }
@@ -4947,7 +4920,7 @@ a.link-btn[disabled] {
     }
     .draw-map-link-colm {
       position: relative;
-      right: 8px; 
+      right: 8px;
       margin-top: 7px;
       .draw-map-link {
         top: -3px;
@@ -4994,12 +4967,12 @@ a.link-btn[disabled] {
 
   /* ----- header */
   .geo-data-tab-nav {
-    height: auto !important; 
+    height: auto !important;
     text-align: left !important;
     padding-left: 40px !important;
   }
   .geo-data-tab-nav li {
-     margin: 0; 
+     margin: 0;
   }
   /* ----- content */
   .gn-metadata-view .gn-link dt {
@@ -5014,7 +4987,7 @@ a.link-btn[disabled] {
 
 @media screen and (max-width: 500px) {
   .advance-filters-cont .till-date-colm label {
-    margin-right: 10px; 
+    margin-right: 10px;
   }
   .advance-filters-cont .draw-map-link-colm {
     right: auto;

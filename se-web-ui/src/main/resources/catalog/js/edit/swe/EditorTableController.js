@@ -40,7 +40,7 @@
 
 
       $scope.init = function(rows, rowsModel, xmlSnippet, parent, 
-                             name, dialog, title) {
+                             name, dialog, title, mandatory) {
         $scope.rows = rows;
         $scope.rowsModel = rowsModel;
         $scope.xmlSnippet = xmlSnippet;
@@ -48,6 +48,7 @@
         $scope.name = name;
         $scope.dialog = dialog;
         $scope.title = title;
+        $scope.mandatory = mandatory;
 		$scope.organisationNames = null;
 		//if(name === 'distributorContact' || name === 'contact' || name === 'pointOfContact') {
 		if(name === 'pointOfContact') {

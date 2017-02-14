@@ -1,8 +1,8 @@
-<div class="site-filter-cont open" >
+﻿<div class="site-filter-cont open" >
   <div class="site-filter-wrapper">
     <!-- Predefined search filters -->
     <div class="site-image-filter">
-      <span class="image-filter-text">Exempel på datasamlingar</span>
+ 	<span class="image-filter-text" data-translate="">predefinedMapsTitle</span>
 		  <div class="image-filter-container"> 
 		    <a href="" data-ng-click="collapsed=!collapsed" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
 			  <swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showMapPanel"></swe-predefined-maps-filter>
@@ -17,16 +17,17 @@
             <li>
               <a href="" data-ng-click="toggleMapResources()"
                  data-ng-class="{'active': (searchObj.params.dynamic == 'true')}">
-                <span class="icon-map"></span>karttjänster</a>
+                <span class="icon-map"></span><span data-translate="">mapServices</span></a>
             </li>
             <li>
               <a href="" data-ng-click="toggleDownloadResources()"
                  data-ng-class="{'active': (searchObj.params.download == 'true')}"><span class="download-icn-cont">
-                <span class="icon-down-fat"></span></span>Direktåtkomliga resurser</a>
+                <span class="icon-down-fat"></span></span><span data-translate="">downloadableResources</span></a>
             </li>
             <li><a href="" data-ng-click="toggleFavorites()"
-                   data-ng-class="{'active': (searchObj.params._id != '') && (searchObj.params._id != undefined)}"><span class="icon-star"></span>favoriter</a></li>
-			<swe-geo-technics-filter data-config-url="{{geotechnicsUrl}}" data-show-map-fn="showMapPanel"></swe-geo-technics-filter>
+                   data-ng-class="{'active': (searchObj.params._id != '')&&(searchObj.params._id != undefined)}">
+                <span class="icon-star"></span>favoriter</a>
+            </li>
           </ul>
           <div class="other-filters">
             <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link" data-translate="">viewAllResources</a>
@@ -95,7 +96,8 @@
                         <span class="icon-search"></span>
                         <input id="namesearch-id" type="text" placeholder="" class="live-search-query"
                                data-ng-model="searchObj.namesearch"
-                               data-ng-model-options="modelOptionsFormGeo"                            
+                               data-ng-model-options="modelOptionsFormGeo"  
+                                                         
                                data-typeahead="namesearch as (namesearch.Name + ', ' + namesearch.Type) for namesearch in getNameSearch($viewValue) "
                                data-typeahead-on-select="drawPolygonInMap()"
                                data-typeahead-loading="anyLoading"
@@ -114,7 +116,7 @@
                     </div>
                   </div>
                   <div class="filter-colm draw-map-link-colm" data-ng-controller="SweGeoFreeHandPolygonController" data-ng-click="drawFreeHandPolygonInMap()">
-                  <a href="" class="fltr-link draw-map-link">Rita på karta</a>
+                  <a href="" class="fltr-link draw-map-link"><span data-translate="">drawingOnMap</span></a>
                     <div data-swe-tooltip=""
                          data-title="{{ 'geographicalFilterTooltip-title' | translate }}"
                          data-text="{{ 'geographicalFilterTooltip-desc' | translate }}"
@@ -150,37 +152,37 @@
     <ul class="selected-filter-list">
       <li data-ng-show="searchObj.params.resourceDateFrom">
         <a href="" data-ng-click="unselectResourceDateFrom()">
-          <span>from date {{searchObj.params.resourceDateFrom | date : 'yyyy-MM-dd'}}</span>
+          <span>från datum {{searchObj.params.resourceDateFrom | date : 'yyyy-MM-dd'}}</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
       <li data-ng-show="searchObj.params.resourceDateTo != undefined">
         <a href="" data-ng-click="unselectResourceDateTo()">
-          <span>to date {{searchObj.params.resourceDateTo | date : 'yyyy-MM-dd'}}</span>
+          <span>till datum {{searchObj.params.resourceDateTo | date : 'yyyy-MM-dd'}}</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
       <li data-ng-show="searchObj.params.dynamic == 'true'">
         <a href="" data-ng-click="unselectMapResources()">
-          <span>karttjänster</span>
+          <span data-translate="">mapServices</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
       <li data-ng-show="searchObj.params.download == 'true'">
         <a href="" data-ng-click="unselectDownloadResources()">
-          <span>Direktåtkomliga resurser</span>
+          <span data-translate="">downloadableResources</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
       <li data-ng-show="(searchObj.params._id != '') && (searchObj.params._id != undefined)">
         <a href="" data-ng-click="unselectFavoriteResources()">
-          <span>favoriter</span>
+          <span data-translate="">favourites</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
       <li data-ng-show="(searchObj.params.geometry != '') && (searchObj.params.geometry != undefined)">
         <a href="" data-ng-click="unselectGeoResources()">
-          <span>Geometry</span>
+          <span>Geometri</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
