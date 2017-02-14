@@ -108,7 +108,10 @@
           <div class="-label"><span class="icon-map"></span><span class="hidden-xs hidden-sm">Visa på karta </span><span class="icon-down-dir"></span></div>
           <ul class="-list">
             <li data-ng-repeat="l in ::layers">
-              <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l.url, md)">{{l.desc || l.url}}</a>
+              <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l.url, md)">
+                <span data-ng-show="l.desc !== ''">{{l.desc}}</span>
+                <span data-ng-show="l.desc == ''">{{ 'layer' | translate }} {{$index + 1}}</span>
+              </a>
             </li>
           </ul>
         </div>

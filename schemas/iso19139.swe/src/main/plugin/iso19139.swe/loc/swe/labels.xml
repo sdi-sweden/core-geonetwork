@@ -1602,15 +1602,18 @@ Ex. SS-EN ISO 19115.</description>
       <option value="ESRI Shape">ESRI Shape</option>
       <option value="ESRI ArcSDE">ESRI ArcSDE</option>
       <option value="ESRI Personlig Geodatabas">ESRI Personlig Geodatabas</option>
+      <option value="GeoJSON">GeoJSON</option>
       <option value="GEOTIFF">GEOTIFF</option>
       <option value="GEOTIFF - LZW">GEOTIFF - LZW</option>
       <option value="GEOTIFF - packbits">GEOTIFF - packbits</option>
       <option value="GML">GML</option>
       <option value="GML 2.0">GML 2.0</option>
       <option value="GML 3.1">GML 3.1</option>
+      <option value="JSON">JSON</option>
       <option value="JPEG">JPEG</option>
       <option value="KML">KML</option>
       <option value="LAS">LAS</option>
+      <option value="LAZ">LAZ</option>
       <option value="Match-AT">Match-AT</option>
       <option value="MS Access">MS Access</option>
       <option value="MapInfo MIF">MapInfo MIF</option>
@@ -1619,9 +1622,11 @@ Ex. SS-EN ISO 19115.</description>
       <option value="ORACLE">ORACLE</option>
       <option value="RIK3">RIK3</option>
       <option value="SQL Server">SQL Server</option>
+      <option value="SVG">SVG</option>
       <option value="TIFF">TIFF</option>
       <option value="TIFF - LZW">TIFF - LZW</option>
       <option value="TIFF - packbits">TIFF - packbits</option>
+      <option value="TIFF8">TIFF8</option>
       <option value="Svensk standard SS637006, XML-format">Svensk standard SS637006, XML-format</option>
       <option value="Svensk standard SS637007, XML-format">Svensk standard SS637007, XML-format</option>
 		</helper>
