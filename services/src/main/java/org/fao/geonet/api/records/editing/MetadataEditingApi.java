@@ -32,6 +32,8 @@ import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.API;
 import org.fao.geonet.api.ApiParams;
 import org.fao.geonet.api.ApiUtils;
+import org.fao.geonet.api.processing.XslProcessUtils;
+import org.fao.geonet.api.processing.report.XsltMetadataProcessingReport;
 import org.fao.geonet.api.records.model.Direction;
 import org.fao.geonet.api.tools.i18n.LanguageUtils;
 import org.fao.geonet.constants.Geonet;
@@ -48,12 +50,14 @@ import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.MetadataValidationRepository;
 import org.fao.geonet.repository.OperationAllowedRepository;
 import org.fao.geonet.repository.specification.MetadataValidationSpecs;
+import org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -144,13 +148,42 @@ public class MetadataEditingApi {
         ) throws Exception {
         Metadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
 
+
         boolean showValidationErrors = false;
         boolean starteditingsession = true;
 
         ServiceContext context = ApiUtils.createServiceContext(request);
         ApplicationContext applicationContext = ApplicationContextHolder.get();
+        DataManager dm = applicationContext.getBean(DataManager.class);
+
+        if (metadata.getDataInfo().getSchemaId().equals(ISO19139SchemaPlugin.IDENTIFIER)) {
+            // Change to iso19139.swe schema
+            MetadataRepository mdRepository = applicationContext.getBean(MetadataRepository.class);
+            metadata.getDataInfo().setSchemaId("iso19139.swe");
+            mdRepository.save(metadata);
+
+            // Update the metadata standard name
+            try {
+                SettingManager sm = applicationContext.getBean(SettingManager.class);
+                final String siteURL = sm.getSiteURL(context);
+                final String process = "update-metadatastandard";
+                XsltMetadataProcessingReport report = new XsltMetadataProcessingReport(process);
+
+                Element processedMetadata = XslProcessUtils.process(
+                        context, String.valueOf(metadata.getId()),
+                        process, true,
+                        report, siteURL, request.getParameterMap());
+
+                metadata.setData(Xml.getString(processedMetadata));
+                mdRepository.save(metadata);
+                dm.indexMetadata(metadata.getId() + "", true);
+
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+
         if (starteditingsession) {
-            DataManager dm = applicationContext.getBean(DataManager.class);
             dm.startEditingSession(context, String.valueOf(metadata.getId()));
         }
 
