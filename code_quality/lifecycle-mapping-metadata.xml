@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lifecycleMappingMetadata>
+  <pluginExecutions>
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <groupId>org.zeroturnaround</groupId>
+        <artifactId>jrebel-maven-plugin</artifactId>
+        <versionRange>[1.1.5,)</versionRange>
+        <goals>
+          <goal>generate</goal>
+        </goals>
+      </pluginExecutionFilter>
+      <action>
+        <execute>
+        	<runOnIncremental>false|true</runOnIncremental>
+        </execute>
+      </action>
+    </pluginExecution>
+  </pluginExecutions>
+</lifecycleMappingMetadata>
