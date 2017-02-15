@@ -67,12 +67,13 @@
     'gnGlobalSettings',
     'gnMdFormatter',
     'gnConfig',
+    'gnConfigService',
     function($rootScope, $scope, $localStorage, $location, suggestService,
              $http, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig) {
+             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, gnConfigService) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -106,11 +107,11 @@
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
 
-      $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl +
-          gnConfig['map.predefinedMaps.url'];
+      gnConfigService.load().then(function(c){
+          // config loaded
+          $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl + gnConfig['map.predefinedMaps.url'];
+          $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl + gnConfig['map.geotechnics.url']; });
 
-      $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl + 
-          gnConfig['map.geotechnics.url'];
 
       $scope.$on('someEvent', function(event, map) {
         alert('event received. url is: ' + map.url);
@@ -527,8 +528,8 @@
        * Hide map panel.
        */
       $scope.hideMapPanel = function() {
-		$predefMap = angular.element('.predefMap');
-		$predefMap.removeClass('selected-img').addClass('unselected-img');
+		$predefMap = angular.element('.selected-img');
+		$predefMap.removeClass('selected-img').addClass('bg-img');
 		$tools = angular.element('.tools');
 		$tools.removeClass('control-tools-largemap').addClass('control-tools');
         angular.element('.floating-map-cont').show();
