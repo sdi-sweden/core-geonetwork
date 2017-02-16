@@ -33,7 +33,9 @@
 	<xsl:include href="../iso19139/convert/thesaurus-transformation.xsl"/>
 
   <xsl:variable name="serviceUrl" select="/root/env/siteURL" />
-  
+	<xsl:variable name="schemaTranslationsDir" select="/root/env/schemaTranslationsDir" />
+	<xsl:variable name="labelsFile" select="document(concat('file:///', $schemaTranslationsDir, '/labels.xml'))"/>
+
 	<!-- ================================================================= -->
 
 	<xsl:template match="/root">
@@ -544,6 +546,34 @@
 		</xsl:call-template>
 	</xsl:template>
 
+
+	<!-- If the value is defined in the labels helper (contains the value in the helper) and contains
+			 a title value (related attribute), it's stored as gmx:Anchor. Otherwise is stored as gco:CharacterString
+	-->
+	<xsl:template match="gmd:otherConstraints" priority="1000">
+		<xsl:variable name="value" select="*/text()" />
+
+		<xsl:variable name="valueInHelper" select="$labelsFile/labels/element[@name='gmd:otherConstraints']/helper/option[contains($value, @value)]/@title" />
+
+		<!--<xsl:message>value: <xsl:value-of select="$value" /></xsl:message>
+		<xsl:message>valueInHelper: <xsl:value-of select="$valueInHelper" /></xsl:message>-->
+
+		<xsl:choose>
+			<xsl:when test="string($valueInHelper)">
+				<gmd:otherConstraints>
+					<xsl:copy-of select="@*" />
+					<gmx:Anchor xlink:href="{$valueInHelper}"><xsl:value-of select="$value" /></gmx:Anchor>
+				</gmd:otherConstraints>
+
+			</xsl:when>
+			<xsl:otherwise>
+				<gmd:otherConstraints>
+					<xsl:copy-of select="@*" />
+					<gco:CharacterString><xsl:value-of select="$value" /></gco:CharacterString>
+				</gmd:otherConstraints>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 <!-- ================================================================= -->
 	<!-- copy everything else as is -->
 	

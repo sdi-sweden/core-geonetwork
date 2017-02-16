@@ -669,7 +669,7 @@
       getAllContacts: function() {
         if (angular.isUndefined(this.allContacts) &&
             angular.isDefined(this.responsibleParty)) {
-          this.allContacts = {metadata: [], resource: []};
+          this.allContacts = {metadata: [], resource: [], metadata: [], distribution: []};
           for (var i = 0; i < this.responsibleParty.length; i++) {
             var s = this.responsibleParty[i].split('|');
             var contact = {
@@ -686,6 +686,8 @@
               this.allContacts.resource.push(contact);
             } else if (s[1] === 'metadata') {
               this.allContacts.metadata.push(contact);
+            } else if (s[1] === 'distribution') {
+              this.allContacts.distribution.push(contact);
             }
           }
         }

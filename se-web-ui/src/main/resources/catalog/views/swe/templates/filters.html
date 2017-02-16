@@ -2,20 +2,28 @@
   <div class="site-filter-wrapper">
     <!-- Predefined search filters -->
     <div class="site-image-filter">
-
  	<span class="image-filter-text" data-translate="">predefinedMapsTitle</span>
 		  <div class="image-filter-container"> 
 		    <a href="" data-ng-click="collapsed=!collapsed" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
 			  <swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showLargeMapPanel"></swe-predefined-maps-filter>
 		  </div>
     </div>
-
     <!-- Search filters -->
     <div class="site-filter-section-wrapper">
       <div class="site-filter-section">
         <div class="site-geo-type-filter">
           <span class="filter-label" data-translate="">searchShowOnly</span>
           <ul class="type-filter-list">
+            <li>
+              <a href="" data-ng-click="toggleMetadataType(['service'])"
+                 data-ng-class="{'active': (searchObj.params.type.indexOf('service') > -1)}">
+                <span class="icon-share"></span><span data-translate="">showServices</span></a>
+            </li>
+            <li>
+              <a href="" data-ng-click="toggleMetadataType(['dataset', 'series'])"
+                 data-ng-class="{'active': (searchObj.params.type.indexOf('dataset') > -1)}">
+                <span class="icon-buffer"></span><span data-translate="">showDatasets</span></a>
+            </li>
             <li>
               <a href="" data-ng-click="toggleMapResources()"
                  data-ng-class="{'active': (searchObj.params.dynamic == 'true')}">
@@ -161,6 +169,18 @@
       <li data-ng-show="searchObj.params.resourceDateTo != undefined">
         <a href="" data-ng-click="unselectResourceDateTo()">
           <span>till datum {{searchObj.params.resourceDateTo | date : 'yyyy-MM-dd'}}</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="searchObj.params.type.indexOf('dataset') > -1">
+        <a href="" data-ng-click="unselectMetadataType(['dataset', 'series'])">
+          <span data-translate="">showDatasets</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="searchObj.params.type.indexOf('service') > -1">
+        <a href="" data-ng-click="unselectMetadataType(['service'])">
+          <span data-translate="">showServices</span>
           <span class="icon-cancel"></span>
         </a>
       </li>
