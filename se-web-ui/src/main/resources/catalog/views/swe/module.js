@@ -112,8 +112,10 @@
       $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl +
           gnConfig['map.predefinedMaps.url'];
 
-      $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl + 
-          gnConfig['map.geotechnics.url'];
+      $scope.selectedPredefinedMap = gnGlobalSettings.predefinedSelectedMap;
+
+      $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl +
+        gnConfig['map.geotechnics.url'];
 
       $scope.$on('someEvent', function(event, map) {
         alert('event received. url is: ' + map.url);
