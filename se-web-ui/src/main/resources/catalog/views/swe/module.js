@@ -935,8 +935,63 @@
       // Selected topic categories
       $scope.selectedTopicCategories = [];
 
-      // Selected metadata types
-      $scope.selectedMetadataTypes = ['dataset', 'series'];
+      $scope.selectedExclusiveFilter = 'type';
+
+      // Map with search criteria and search param related
+      $scope.exclusiveFilterSeachParams = {
+        'type': 'type',
+        'map': 'dynamic',
+        'download': 'download',
+        'favorites': '_id'
+      };
+
+      /**
+       * Toggles between exclusive filters.
+       *
+       * @param {String} param name used in the filter
+       * @param {array} types
+       */
+      $scope.toggleExclusiveFilter = function(type, values) {
+        // Exclusive filters act as radio buttons,
+        // but can be disabled all
+        if ($scope.selectedExclusiveFilter == type) {
+          var paramName = $scope.exclusiveFilterSeachParams[type];
+          $scope.searchObj.params[paramName] = '';
+          $scope.selectedExclusiveFilter = '';
+          $scope.triggerSearch();
+
+          return;
+        }
+
+        $scope.selectedExclusiveFilter = type;
+
+        // Clear the exclusive search filters
+        Object.keys($scope.exclusiveFilterSeachParams).forEach(function(key) {
+            var paramName = $scope.exclusiveFilterSeachParams[key];
+            $scope.searchObj.params[paramName] = "";
+        });
+
+        if (type == 'favorites') {
+          // Use an invalid value -- to manage the case no favorites are selected,
+          // to don't display any metadata
+          if ($localStorage.favoriteMetadata != undefined) {
+            $scope.searchObj.params._id =
+                ($scope.searchObj.params._id ? '' :
+                    ($localStorage.favoriteMetadata.length > 0) ?
+                        $localStorage.favoriteMetadata.join(' or ') : '--');
+          } else {
+            $scope.searchObj.params._id =
+                ($scope.searchObj.params._id ? '' : '--');
+          }
+        } else {
+          var paramName = $scope.exclusiveFilterSeachParams[type];
+          $scope.searchObj.params[paramName] =
+              (values instanceof Array)?values.join(' or '):values;
+        }
+
+        $scope.triggerSearch();
+      };
+
 
       /**
        * Toggles a topic category selection.
@@ -954,29 +1009,6 @@
 
         $scope.searchObj.params.topicCat =
             $scope.selectedTopicCategories.join(' or ');
-        $scope.triggerSearch();
-      };
-
-      /**
-       * Toggles a metadata type selection.
-       *
-       * @param {array} types
-       */
-      $scope.toggleMetadataType = function(types) {
-        for(var i = 0; i < types.length; i++) {
-          var type = types[i];
-
-          var pos = $scope.selectedMetadataTypes.indexOf(type);
-
-          if (pos > -1) {
-              $scope.selectedMetadataTypes.splice(pos, 1);
-          } else {
-              $scope.selectedMetadataTypes.push(type);
-          }
-        }
-
-        $scope.searchObj.params.type =
-            $scope.selectedMetadataTypes.join(' or ');
         $scope.triggerSearch();
       };
 
@@ -998,27 +1030,6 @@
         $scope.triggerSearch();
       };
 
-      /**
-       * Toggles a metadata type selection.
-       *
-       * @param {array} types
-       */
-      $scope.unselectMetadataType = function(types) {
-        for(var i = 0; i < types.length; i++) {
-            var type = types[i];
-
-            var pos = $scope.selectedMetadataTypes.indexOf(type);
-
-            if (pos > -1) {
-                $scope.selectedMetadataTypes.splice(pos, 1);
-            }
-        }
-
-        $scope.searchObj.params.type =
-            $scope.selectedMetadataTypes.join(' or ');
-        $scope.triggerSearch();
-      };
-
 
       /**
        * Checks if a topic category is selected.
@@ -1028,53 +1039,6 @@
          */
       $scope.isTopicCategorySelected = function(topic) {
         return ($scope.selectedTopicCategories.indexOf(topic) > -1);
-      };
-
-
-      /**
-       * Toggles the map resources filter.
-       *
-       */
-      $scope.toggleMapResources = function() {
-        $scope.searchObj.params.dynamic =
-            ($scope.searchObj.params.dynamic == 'true' ? '' : 'true');
-
-        if ($scope.searchObj.params.dynamic == 'true') {
-            $scope.selectedMetadataTypes = ['dataset', 'series', 'service'];
-
-            $scope.searchObj.params.type =
-                $scope.selectedMetadataTypes.join(' or ');
-        }
-
-        $scope.triggerSearch();
-      };
-
-
-      /**
-       * Unselects the map resources filter.
-       */
-      $scope.unselectMapResources = function() {
-        delete $scope.searchObj.params.dynamic;
-        $scope.triggerSearch();
-      };
-
-
-      /**
-       * Toggles the download resources filter.
-       */
-      $scope.toggleDownloadResources = function() {
-        $scope.searchObj.params.download =
-            ($scope.searchObj.params.download == 'true' ? '' : 'true');
-        $scope.triggerSearch();
-      };
-
-
-      /**
-       * Unselects the download resources filter.
-       */
-      $scope.unselectDownloadResources = function() {
-        delete $scope.searchObj.params.download;
-        $scope.triggerSearch();
       };
 
 
@@ -1095,35 +1059,6 @@
         $scope.triggerSearch();
       };
 
-
-      /**
-       * Toggles a the favorites selection.
-       *
-       * @param {string} topic
-       */
-      $scope.toggleFavorites = function() {
-        // Use an invalid value -- to manage the case no favorites are selected,
-        // to don't display any metadata
-        if ($localStorage.favoriteMetadata != undefined) {
-          $scope.searchObj.params._id =
-              ($scope.searchObj.params._id ? '' :
-              ($localStorage.favoriteMetadata.length > 0) ?
-              $localStorage.favoriteMetadata.join(' or ') : '--');
-        } else {
-          $scope.searchObj.params._id =
-              ($scope.searchObj.params._id ? '' : '--');
-        }
-        $scope.triggerSearch();
-      };
-
-
-      /**
-       * Unselects the favorites filter.
-       */
-      $scope.unselectFavoriteResources = function() {
-        delete $scope.searchObj.params._id;
-        $scope.triggerSearch();
-      };
 
       /**
        * Unselects the geometry filter.
@@ -1147,9 +1082,9 @@
       $scope.viewAllMetadata = function() {
 
         $scope.selectedTopicCategories = [];
-        $scope.selectedMetadataTypes = ['dataset', 'series'];
+        $scope.selectedExclusiveFilter = 'type';
         $scope.searchObj.params.type =
-            $scope.selectedMetadataTypes.join(' or ');
+            ['dataset', 'series'].join(' or ');
 
         delete $scope.searchObj.params.topicCat;
         delete $scope.searchObj.params.download;
