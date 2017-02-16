@@ -297,6 +297,7 @@
           'partials/predefinedMaps.html',
         scope: {
           predefinedMaps: '@',
+          selectedMap: '@',
           showMapFn: '&',
           configUrl: '@',
           selectedItem: '@'
@@ -304,6 +305,17 @@
         link: function(scope, element, attrs) {
           $http.get(scope.configUrl).success(function(data) {
             scope.predefinedMaps = data;
+
+            if (scope.selectedMap != undefined) {
+              var predefinedMapsFiltered =
+                  scope.predefinedMaps.filter(function(x) {
+                    return x['title'] === scope.selectedMap
+                  });
+
+              if (predefinedMapsFiltered.length > 0) {
+                  scope.doView(predefinedMapsFiltered[0]);
+              }
+            }
           });
           scope.doView = function(index, predefinedMap) {
 			scope.selectedItem = index;

@@ -633,7 +633,7 @@
                 >
                   <directiveAttributes
                           data-tag-name="gml:endPosition"
-                          data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition/@indeterminatePosition"/>
+                         />
                 </key>
               </values>
               <snippet>
@@ -670,8 +670,7 @@
                      tooltip="gml:endPosition"
                 >
                   <directiveAttributes
-                          data-tag-name="gml:endPosition"
-                          data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition/@indeterminatePosition"/>
+                          data-tag-name="gml:endPosition" />
                 </key>
               </values>
               <snippet>
@@ -1861,69 +1860,10 @@
             <section name="sds-section-custodian">
 
               <field name="pointOfContact"
-                     templateModeOnly="true"
                      xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue='custodian']"
-                     del=".">
+                     />
 
-                <template>
-                  <values readonlyIf="count(@xlink:href) > 0">
-                    <key label="organisationName"
-                         xpath="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
-                    <key label="electronicMailAddress"
-                         xpath="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"
-                         use="email"/>
-                  </values>
-                  <snippet>
-                    <gmd:pointOfContact>
-                      <gmd:CI_ResponsibleParty>
-                        <gn:copy select="gmd:individualName"/>
-                        <gmd:organisationName>
-                          <gco:CharacterString>{{organisationName}}</gco:CharacterString>
-                          <gn:copy select="gmd:PT_FreeText"/>
-                        </gmd:organisationName>
-                        <gn:copy select="gmd:positionName"/>
-                        <gmd:contactInfo>
-                          <gmd:CI_Contact>
-                            <gn:copy select="gmd:phone"/>
-                            <gmd:address>
-                              <gmd:CI_Address>
-                                <gn:copy select="gmd:deliveryPoint"/>
-                                <gn:copy select="gmd:city"/>
-                                <gn:copy select="gmd:administrativeArea"/>
-                                <gn:copy select="gmd:postalCode"/>
-                                <gn:copy select="gmd:country"/>
-                                <gmd:electronicMailAddress>
-                                  <gco:CharacterString>{{electronicMailAddress}}</gco:CharacterString>
-                                  <gn:copy select="gmd:PT_FreeText"/>
-                                </gmd:electronicMailAddress>
-                              </gmd:CI_Address>
-                            </gmd:address>
-                            <gn:copy select="gmd:onlineResource"/>
-                            <gn:copy select="gmd:hoursOfService"/>
-                            <gn:copy select="gmd:contactInstructions"/>
-                          </gmd:CI_Contact>
-                        </gmd:contactInfo>
-                        <gmd:role>
-                          <gmd:CI_RoleCode
-                                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
-                                  codeListValue="custodian"/>
-                        </gmd:role>
-                      </gmd:CI_ResponsibleParty>
-                    </gmd:pointOfContact>
-                  </snippet>
-                </template>
-              </field>
-
-
-              <action type="add" name="pointOfContact"
-                      addDirective="data-gn-directory-entry-selector"
-                      or="pointOfContact"
-                      in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification">
-                <directiveAttributes
-                        data-template-add-action="true"
-                        data-template-type="contact"
-                        data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
-              </action>
+                
             </section>
 
           </section>
@@ -2409,8 +2349,7 @@
                      tooltip="gmd:extent|gmd:EX_TemporalExtent"
                 >
                   <directiveAttributes
-                          data-tag-name="gml:endPosition"
-                          data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition/@indeterminatePosition"/>
+                          data-tag-name="gml:endPosition" />
                 </key>
               </values>
               <snippet>
@@ -3666,7 +3605,7 @@
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract"/>
           <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:topicCategory"/>
 		  <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"/>
-		  <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:date"/>
+		  <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date"/>
 		  <field xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine"/>
         </section>
       </tab>
