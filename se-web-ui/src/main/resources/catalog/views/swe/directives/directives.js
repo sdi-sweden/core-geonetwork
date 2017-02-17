@@ -310,10 +310,10 @@
   			  var indexPredef;
                 var predefinedMapsFiltered =
                     scope.predefinedMaps.filter(function(x) {
-	  					if(x['title'] === scope.selectedMap){
+	  					if(x['id'] == scope.selectedMap){
 	  						indexPredef = scope.predefinedMaps.indexOf(x);
 	  					}
-	  					return x['title'] === scope.selectedMap
+	  					return x['id'] == scope.selectedMap
                     });
 
                 if (predefinedMapsFiltered.length > 0) {
