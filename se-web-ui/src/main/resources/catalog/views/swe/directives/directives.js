@@ -307,15 +307,20 @@
             scope.predefinedMaps = data;
 
             if (scope.selectedMap != undefined) {
-              var predefinedMapsFiltered =
-                  scope.predefinedMaps.filter(function(x) {
-                    return x['title'] === scope.selectedMap
-                  });
+  			  var indexPredef;
+                var predefinedMapsFiltered =
+                    scope.predefinedMaps.filter(function(x) {
+	  					if(x['title'] === scope.selectedMap){
+	  						indexPredef = scope.predefinedMaps.indexOf(x);
+	  					}
+	  					return x['title'] === scope.selectedMap
+                    });
 
-              if (predefinedMapsFiltered.length > 0) {
-                  scope.doView(predefinedMapsFiltered[0]);
+                if (predefinedMapsFiltered.length > 0) {
+  				  
+                    scope.doView(indexPredef, predefinedMapsFiltered[0]);
+                }
               }
-            }
           });
           scope.doView = function(index, predefinedMap) {
 			scope.selectedItem = index;
