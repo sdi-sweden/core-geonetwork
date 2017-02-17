@@ -109,12 +109,12 @@
       $scope.resultTemplate = gnSearchSettings.resultTemplate;
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
-      
 
       gnConfigService.load().then(function(c){
           // config loaded
           $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl + gnConfig['map.predefinedMaps.url'];
-          $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl + gnConfig['map.geotechnics.url']; 
+          $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl + gnConfig['map.geotechnics.url'];
+          $scope.selectedPredefinedMap = gnGlobalSettings.predefinedSelectedMap;
       });
 
       $scope.$on('someEvent', function(event, map) {
@@ -945,8 +945,63 @@
       // Selected topic categories
       $scope.selectedTopicCategories = [];
 
-      // Selected metadata types
-      $scope.selectedMetadataTypes = ['dataset', 'series'];
+      $scope.selectedExclusiveFilter = 'type';
+
+      // Map with search criteria and search param related
+      $scope.exclusiveFilterSeachParams = {
+        'type': 'type',
+        'map': 'dynamic',
+        'download': 'download',
+        'favorites': '_id'
+      };
+
+      /**
+       * Toggles between exclusive filters.
+       *
+       * @param {String} param name used in the filter
+       * @param {array} types
+       */
+      $scope.toggleExclusiveFilter = function(type, values) {
+        // Exclusive filters act as radio buttons,
+        // but can be disabled all
+        if ($scope.selectedExclusiveFilter == type) {
+          var paramName = $scope.exclusiveFilterSeachParams[type];
+          $scope.searchObj.params[paramName] = '';
+          $scope.selectedExclusiveFilter = '';
+          $scope.triggerSearch();
+
+          return;
+        }
+
+        $scope.selectedExclusiveFilter = type;
+
+        // Clear the exclusive search filters
+        Object.keys($scope.exclusiveFilterSeachParams).forEach(function(key) {
+            var paramName = $scope.exclusiveFilterSeachParams[key];
+            $scope.searchObj.params[paramName] = "";
+        });
+
+        if (type == 'favorites') {
+          // Use an invalid value -- to manage the case no favorites are selected,
+          // to don't display any metadata
+          if ($localStorage.favoriteMetadata != undefined) {
+            $scope.searchObj.params._id =
+                ($scope.searchObj.params._id ? '' :
+                    ($localStorage.favoriteMetadata.length > 0) ?
+                        $localStorage.favoriteMetadata.join(' or ') : '--');
+          } else {
+            $scope.searchObj.params._id =
+                ($scope.searchObj.params._id ? '' : '--');
+          }
+        } else {
+          var paramName = $scope.exclusiveFilterSeachParams[type];
+          $scope.searchObj.params[paramName] =
+              (values instanceof Array)?values.join(' or '):values;
+        }
+
+        $scope.triggerSearch();
+      };
+
 
       /**
        * Toggles a topic category selection.
@@ -967,29 +1022,6 @@
         $scope.triggerSearch();
       };
 
-      /**
-       * Toggles a metadata type selection.
-       *
-       * @param {array} types
-       */
-      $scope.toggleMetadataType = function(types) {
-        for(var i = 0; i < types.length; i++) {
-          var type = types[i];
-
-          var pos = $scope.selectedMetadataTypes.indexOf(type);
-
-          if (pos > -1) {
-              $scope.selectedMetadataTypes.splice(pos, 1);
-          } else {
-              $scope.selectedMetadataTypes.push(type);
-          }
-        }
-
-        $scope.searchObj.params.type =
-            $scope.selectedMetadataTypes.join(' or ');
-        $scope.triggerSearch();
-      };
-
 
       /**
        * Unselects a topic category.
@@ -1005,27 +1037,6 @@
 
         $scope.searchObj.params.topicCat =
             $scope.selectedTopicCategories.join(' or ');
-        $scope.triggerSearch();
-      };
-
-      /**
-       * Toggles a metadata type selection.
-       *
-       * @param {array} types
-       */
-      $scope.unselectMetadataType = function(types) {
-        for(var i = 0; i < types.length; i++) {
-            var type = types[i];
-
-            var pos = $scope.selectedMetadataTypes.indexOf(type);
-
-            if (pos > -1) {
-                $scope.selectedMetadataTypes.splice(pos, 1);
-            }
-        }
-
-        $scope.searchObj.params.type =
-            $scope.selectedMetadataTypes.join(' or ');
         $scope.triggerSearch();
       };
 
@@ -1157,9 +1168,9 @@
       $scope.viewAllMetadata = function() {
 
         $scope.selectedTopicCategories = [];
-        $scope.selectedMetadataTypes = ['dataset', 'series'];
+        $scope.selectedExclusiveFilter = 'type';
         $scope.searchObj.params.type =
-            $scope.selectedMetadataTypes.join(' or ');
+            ['dataset', 'series'].join(' or ');
 
         delete $scope.searchObj.params.topicCat;
         delete $scope.searchObj.params.download;
