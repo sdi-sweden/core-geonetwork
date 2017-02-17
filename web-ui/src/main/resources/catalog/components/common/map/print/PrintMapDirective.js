@@ -46,7 +46,6 @@
     var updatePrintConfig = function() {
       var http = $http.get(options.printConfigUrl);
       http.success(function(data) {
-
         // default values:
         var layout = data.layouts[0];
         if ($scope.defaultLayout) {
@@ -102,7 +101,8 @@
           if (angular.isFunction(deregister[i])) {
             deregister[i]();
           } else {
-            deregister[i].target.unByKey(deregister[i]);
+            //deregister[i].target.unByKey(deregister[i]);
+            ol.Observable.unByKey(deregister[i]);
           }
         }
       }

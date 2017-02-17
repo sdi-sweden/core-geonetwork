@@ -143,6 +143,37 @@
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="gmd:contactInfo/gmd:CI_Contact">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:phone" />
+      <xsl:if test="not(gmd:phone)">
+        <gmd:phone>
+          <gmd:CI_Telephone>
+            <gmd:voice gco:nilReason='missing'>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:voice>
+          </gmd:CI_Telephone>
+        </gmd:phone>
+      </xsl:if>
+
+      <xsl:apply-templates select="gmd:address" />
+      <xsl:if test="not(gmd:address)">
+        <gmd:address>
+          <gmd:CI_Address>
+            <gmd:electronicMailAddress gco:nilReason='missing'>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:electronicMailAddress>
+          </gmd:CI_Address>
+        </gmd:address>
+      </xsl:if>
+
+      <xsl:apply-templates select="gmd:onlineResource" />
+      <xsl:apply-templates select="gmd:hoursOfService" />
+      <xsl:apply-templates select="gmd:contactInstructions" />
+    </xsl:copy>
+  </xsl:template>
 
   <!-- Inflate electronic mail address if required -->
   <xsl:template match="gmd:address">

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -48,8 +48,10 @@
     '$scope',
     '$localStorage',
     '$location',
+    '$analytics',
     'suggestService',
     '$http',
+	'$sce',
     '$compile',
     '$window',
     '$translate',
@@ -67,13 +69,14 @@
     'gnGlobalSettings',
     'gnMdFormatter',
     'gnConfig',
+    'is_map_maximized',
     'gnConfigService',
-    function($rootScope, $scope, $localStorage, $location, suggestService,
-             $http, $compile, $window, $translate, $timeout,
+    function($rootScope, $scope, $localStorage, $location, $analytics, suggestService,
+             $http, $sce, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, gnConfigService) {
+             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, is_map_maximized, gnConfigService) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -107,12 +110,12 @@
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
       
+
       gnConfigService.load().then(function(c){
           // config loaded
           $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl + gnConfig['map.predefinedMaps.url'];
           $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl + gnConfig['map.geotechnics.url']; 
       });
-
 
       $scope.$on('someEvent', function(event, map) {
         alert('event received. url is: ' + map.url);
@@ -123,6 +126,10 @@
         $scope.triggerSearch();
       });
 
+      $scope.$on('aftersearch', function() {
+          $analytics.eventTrack('siteSearch', {  searchQuery: $scope.searchObj.params.or,
+              searchQueryResult: ($scope.searchResults.count > 0)?'hit':'no-hit' });
+      });
 
       $scope.$on('layerView', function(event) {
         $scope.showMetadata($scope.mdView.current.index,
@@ -304,6 +311,30 @@
 
         return downloads;
       };
+	  
+		$scope.printPdf = function(mdView) {
+			var uuid = mdView.current.record['geonet:info'].uuid;
+			var config = {
+				url: '../../GetMetaDataById',
+				params: {'id':uuid},
+				headers:{'Accept': 'text/html, application/xhtml+xml, */*'},
+				method: 'GET'
+			};
+			$http(config).success(function(htmlString) {
+				var frame = document.getElementById('iframe');
+				var theFrameDocument = frame.contentDocument || frame.contentWindow.document;
+				if(htmlString) {
+					htmlString = htmlString.replace('fromInBuiltStyleSheet!==false','fromInBuiltStyleSheet!==true');
+				}
+				var htmlStr = $sce.trustAsHtml(htmlString);
+				theFrameDocument.open();
+				theFrameDocument.write(htmlStr);
+				theFrameDocument.close();
+			})
+			.error(function(data) {
+				alert('Error. Unable to print');
+			});
+		};
 
 
       /**
@@ -366,7 +397,6 @@
         addWmsLayersFromCap: function(url, md) {
           // Open the map panel
           $scope.showMapPanel();
-
           var name = 'layers';
           var match = RegExp('[?&]' + name + '=([^&]*)').exec(url);
           var layersList = match &&
@@ -398,8 +428,10 @@
 
       // Manage route at start and on $location change
       if (!$location.path()) {
-        $location.path('/search');
+        // default to filter dataset and series metadata
+        $location.path('/search').search({'type': 'dataset or series'});
       }
+
       $scope.activeTab = $location.path().
           match(/^(\/[a-zA-Z0-9]*)($|\/.*)/)[1];
 
@@ -418,7 +450,26 @@
         });
         // show the first
         $('#tab-result-nav a:first').tab('show');
-      };   
+      };
+
+
+      /**
+       * Checks the metadata schema and if not Swedish schema,
+       * confirms that the user wants to continue.
+       *
+       * @param {object} md  Metadata
+       */
+      $scope.editMetadata = function(md) {
+        var schema = md['geonet:info'].schema;
+
+        if (schema != 'iso19139.swe') {
+          if (!confirm($translate.instant('nonSweMetadata'))) {
+            return;
+          }
+        }
+
+        $window.open("catalog.edit#/metadata/" + md['geonet:info'].id, '_blank');
+      };
 
       $scope.showMetadata = function(index, md, records) {
         angular.element('.geodata-row-popup').addClass('show');
@@ -457,11 +508,22 @@
        * @param {object} md  Metadata
          */
       $scope.showMetadataGeometry = function(md) {
-        var feature = gnMap.getBboxFeatureFromMd(md,
-            $scope.searchObj.searchMap.getView().getProjection());
-
         $scope.vectorLayer.getSource().clear();
-        $scope.vectorLayer.getSource().addFeature(feature);
+        $scope.vectorLayerBM.getSource().clear();
+        //To toggle or remove the added extent from map
+        if (md.defaultTitle == $scope.vectorLayer.get("defaultTitle")){
+             $scope.vectorLayer.set("defaultTitle",null);
+             $scope.vectorLayerBM.set("defaultTitle",null);
+        }       
+        else{
+          var feature = gnMap.getBboxFeatureFromMd(md,
+            $scope.searchObj.searchMap.getView().getProjection());
+          $scope.vectorLayer.set("defaultTitle",md.defaultTitle);
+          $scope.vectorLayerBM.set("defaultTitle",md.defaultTitle);
+          $scope.vectorLayer.getSource().addFeature(feature);
+          $scope.vectorLayerBM.getSource().addFeature(feature);
+        }
+        
       };
 
       /**
@@ -513,6 +575,8 @@
        * Show large map panel.
        */
       $scope.showLargeMapPanel = function() {
+  		$tools = angular.element('.tools');
+		$tools.removeClass('control-tools').addClass('control-tools-largemap');
         angular.element('.floating-map-cont').hide();
         $scope.$emit('body:class:add', 'large-map-view');
           $timeout(function() {
@@ -527,6 +591,10 @@
        * Hide map panel.
        */
       $scope.hideMapPanel = function() {
+		$predefMap = angular.element('.selected-img');
+		$predefMap.removeClass('selected-img').addClass('bg-img');
+		$tools = angular.element('.tools');
+		$tools.removeClass('control-tools-largemap').addClass('control-tools');
         angular.element('.floating-map-cont').show();
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:remove', 'full-map-view');
@@ -535,6 +603,8 @@
       };
       
       $scope.resizeMapPanel = function() {
+		  $tools = angular.element('.tools');
+		  $tools.removeClass('control-tools-largemap').addClass('control-tools');
           var $b = angular.element(document).find('body');
           window_width = angular.element($window).width(),
           $map_data_list_cont = angular.element('.map-data-list-cont'),
@@ -545,7 +615,8 @@
           $data_list_cont = angular.element('.data-list-cont'),
           $map_cont = angular.element('.map-cont'),
           $obj = angular.element('#map-panel-resize');
-
+          //To restrict GFI only when map are maximized
+          is_map_maximized.data = !is_full_view_map;
           if (is_full_view_map) {
             if (is_side_data_bar_open) {
               $scope.$emit('body:class:remove', 'full-map-view');
@@ -874,6 +945,8 @@
       // Selected topic categories
       $scope.selectedTopicCategories = [];
 
+      // Selected metadata types
+      $scope.selectedMetadataTypes = ['dataset', 'series'];
 
       /**
        * Toggles a topic category selection.
@@ -894,6 +967,29 @@
         $scope.triggerSearch();
       };
 
+      /**
+       * Toggles a metadata type selection.
+       *
+       * @param {array} types
+       */
+      $scope.toggleMetadataType = function(types) {
+        for(var i = 0; i < types.length; i++) {
+          var type = types[i];
+
+          var pos = $scope.selectedMetadataTypes.indexOf(type);
+
+          if (pos > -1) {
+              $scope.selectedMetadataTypes.splice(pos, 1);
+          } else {
+              $scope.selectedMetadataTypes.push(type);
+          }
+        }
+
+        $scope.searchObj.params.type =
+            $scope.selectedMetadataTypes.join(' or ');
+        $scope.triggerSearch();
+      };
+
 
       /**
        * Unselects a topic category.
@@ -909,6 +1005,27 @@
 
         $scope.searchObj.params.topicCat =
             $scope.selectedTopicCategories.join(' or ');
+        $scope.triggerSearch();
+      };
+
+      /**
+       * Toggles a metadata type selection.
+       *
+       * @param {array} types
+       */
+      $scope.unselectMetadataType = function(types) {
+        for(var i = 0; i < types.length; i++) {
+            var type = types[i];
+
+            var pos = $scope.selectedMetadataTypes.indexOf(type);
+
+            if (pos > -1) {
+                $scope.selectedMetadataTypes.splice(pos, 1);
+            }
+        }
+
+        $scope.searchObj.params.type =
+            $scope.selectedMetadataTypes.join(' or ');
         $scope.triggerSearch();
       };
 
@@ -931,6 +1048,14 @@
       $scope.toggleMapResources = function() {
         $scope.searchObj.params.dynamic =
             ($scope.searchObj.params.dynamic == 'true' ? '' : 'true');
+
+        if ($scope.searchObj.params.dynamic == 'true') {
+            $scope.selectedMetadataTypes = ['dataset', 'series', 'service'];
+
+            $scope.searchObj.params.type =
+                $scope.selectedMetadataTypes.join(' or ');
+        }
+
         $scope.triggerSearch();
       };
 
@@ -1032,6 +1157,10 @@
       $scope.viewAllMetadata = function() {
 
         $scope.selectedTopicCategories = [];
+        $scope.selectedMetadataTypes = ['dataset', 'series'];
+        $scope.searchObj.params.type =
+            $scope.selectedMetadataTypes.join(' or ');
+
         delete $scope.searchObj.params.topicCat;
         delete $scope.searchObj.params.download;
         delete $scope.searchObj.params.dynamic;
@@ -1044,6 +1173,8 @@
         delete $scope.searchObj.params['facet.q'];
         $scope.vectorLayer.getSource().clear();
         $scope.vectorLayerBM.getSource().clear();
+        $scope.vectorLayer.unset("defaultTitle");
+        $scope.vectorLayerBM.unset("defaultTitle");
         $scope.triggerSearch();
       };
 
@@ -1279,5 +1410,10 @@
         return result;
       };
     }]);
+
+  //To restrict GFI only when map are maximized
+  module.factory("is_map_maximized", function() {
+    return {data: false};
+});
 
 })();

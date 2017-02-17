@@ -189,6 +189,7 @@ function fix2(id) {
     var e = document.getElementById(id);
     var content = e.innerHTML;
     //var content = e.innerHTML.replace(/\n/g, '<br/>');    
+	content = content.trim();
     if (content.indexOf("&lt;") === -1)
     {     
         content = content.replace(/\n/g, '<br/>');
@@ -279,6 +280,58 @@ function printBtnClickEvent() {
 		}
 	}
 	
+	//Open the Alla metadata tab items in a window for display the standard printing dialog		
+	var printWindow = window.open('', 'metadata_all', 'scrollbars=yes,height=550,width=800');
+	printWindow.document.open();
+	printWindow.document.write('<html><head><title>Alla metadata</title>');
+	printWindow.document.write('<style>#in {display:none}</style>');
+	// Construct the dynamic link tags. Don't hard code css imports. Will not work for GN3.0
+	var links = document.getElementsByTagName('link');
+	if(links) {
+		var length = links.length;
+		for(var i = 0; i < length; i++) {
+			var link = links[i];
+			if(link) {
+				var id = link.id;
+				if(id && id.startsWith('link')) {
+					var href = link.href;
+					printWindow.document.write('<link id="' + id + '"rel="stylesheet" type="text/css" href="' + href + '"/>');
+				}
+			}
+		}
+	}
+	var customFontAwesomeIdStyle = document.getElementById('custom-font-awesome-id');
+	if(customFontAwesomeIdStyle) {
+		printWindow.document.write('<style id="' + customFontAwesomeIdStyle.id + '">')
+		printWindow.document.write(customFontAwesomeIdStyle.innerHTML);
+		printWindow.document.write('</style>');
+	}
+	//printWindow.document.write('<link rel="stylesheet" type="text/css" href="metadataResponse/Style2/styles.css"/>');
+	//printWindow.document.write('<link rel="stylesheet" type="text/css" href="metadataResponse/Style2/TreeFromXMLUsingXSLT.css"/></head>');
+	printWindow.document.write('<body onload="window.print()">');		
+	
+	var allMetadataTabEle = document.getElementById("allMetadataTab");
+	var allMetadataTabInnerHtml = '';
+	if(allMetadataTabEle) {
+		allMetadataTabInnerHtml = allMetadataTabEle.innerHTML;
+	}
+	printWindow.document.write(allMetadataTabInnerHtml);
+	printWindow.document.write('</body></html>');
+	printWindow.document.close();
+	printWindow.focus();
+	
+	//Change the image width for control the font size change on printing.
+	var thumbnail = printWindow.document.getElementById("thumbnail");
+	var newWidth = 600;
+	if(thumbnail != undefined && thumbnail != null){
+		if(thumbnail.clientWidth > newWidth) {
+			thumbnail.style.width = newWidth + "px";
+		}
+	}
+    return true;
+}
+
+function printBtnClickEventFromInBuiltStyleSheet() {	
 	//Open the Alla metadata tab items in a window for display the standard printing dialog		
 	var printWindow = window.open('', 'metadata_all', 'scrollbars=yes,height=550,width=800');
 	printWindow.document.open();

@@ -506,15 +506,13 @@
 
   <!-- Metadata contact,  Metadata point of contact, Distributor contact -->
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[1]|
-                                            gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact[1]|
+                                            gmd:MD_Metadata/gmd:identificationInfo//gmd:pointOfContact[1]|
                                             gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact[1]" priority="3000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
     <xsl:variable name="elementName" select="name()"/>
 
-    <xsl:message>NAME: <xsl:value-of select="name()" /></xsl:message>
-    <xsl:message>NAME ..: <xsl:value-of select="name(..)" /></xsl:message>
     <xsl:variable name="labelConfig"
                   select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
 
@@ -634,8 +632,8 @@
 
         <div data-swe-date-dialog="">
 			<div data-ng-show="showResourceContactDD">
-				<select class="form-control" data-ng-model="organisation" data-ng-change="populateResourseContactFields(organisation)">
-					<option data-ng-repeat="org in organisationNames" title="{{org.displayValue}}" data-ng-value="org.fieldValue">
+				<select class="form-control" data-ng-model="organisation" data-ng-change="populateContactFields(organisation)">
+					<option data-ng-repeat="org in organisationNames.{local-name()}" title="{{org.displayValue}}" data-ng-value="org.fieldValue">
 						{{org.displayValue}}
 					</option>
 				</select>
@@ -703,7 +701,7 @@
   </xsl:template>
 
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[position() &gt; 1]|
-                                            gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact[position() &gt; 1]|
+                                            gmd:MD_Metadata/gmd:identificationInfo//gmd:pointOfContact[position() &gt; 1]|
                                             gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact[position() &gt; 1]" priority="3000" />
 
   <!-- Distributor format -->
@@ -1093,8 +1091,8 @@
       <xsl:with-param name="editInfo" select="gmx:Anchor/gn:element" />
       <xsl:with-param name="isDisabled" select="false()" />
       <xsl:with-param name="attributesSnippet" select="$attributes" />
-      <xsl:with-param name="forceDisplayAttributes" select="true()" />
-      <xsl:with-param name="directive" select="'swe-anchor-list-directive'"/>
+      <xsl:with-param name="listOfValues" select="$helper"/>
+      <!--<xsl:with-param name="forceDisplayAttributes" select="true()" />-->
 
     </xsl:call-template>
   </xsl:template>

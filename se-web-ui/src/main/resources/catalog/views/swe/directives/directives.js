@@ -298,13 +298,15 @@
         scope: {
           predefinedMaps: '@',
           showMapFn: '&',
-          configUrl: '@'
+          configUrl: '@',
+          selectedItem: '@'
         },
         link: function(scope, element, attrs) {
           $http.get(scope.configUrl).success(function(data) {
             scope.predefinedMaps = data;
           });
-          scope.doView = function(predefinedMap) {
+          scope.doView = function(index, predefinedMap) {
+			scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();
           };
