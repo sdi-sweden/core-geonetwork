@@ -130,7 +130,7 @@
       });
 
       $scope.$on('aftersearch', function() {
-          $analytics.eventTrack('siteSearch', {  searchQuery: $scope.searchObj.params.or,
+          $analytics.eventTrack('siteSearch', {  searchQuery: $location.search(),
               searchQueryResult: ($scope.searchResults.count > 0)?'hit':'no-hit' });
       });
 
