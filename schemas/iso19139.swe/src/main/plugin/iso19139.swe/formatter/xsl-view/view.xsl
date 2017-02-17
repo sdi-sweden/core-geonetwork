@@ -196,6 +196,10 @@
                             xs:double(gmd:eastBoundLongitude/gco:Decimal),
                             xs:double(gmd:northBoundLatitude/gco:Decimal))"/>
 	</xsl:if>
+	<xsl:apply-templates mode="render-field" select="gmd:westBoundLongitude"/>
+	<xsl:apply-templates mode="render-field" select="gmd:eastBoundLongitude"/>
+	<xsl:apply-templates mode="render-field" select="gmd:southBoundLatitude"/>
+	<xsl:apply-templates mode="render-field" select="gmd:northBoundLatitude"/>
   </xsl:template>
 
 
@@ -438,6 +442,17 @@
 		  </dd>
 		</dl>
 	</xsl:for-each>
+	<xsl:for-each select="gmd:accessConstraints">
+		<dl class="gn-contact">
+		  <dt>
+			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'accessConstraints')"/>
+		  </dt>
+		  <dd>		  
+			<xsl:value-of select="gco:CharacterString"/>
+			<xsl:apply-templates mode="render-value" select="gmd:MD_RestrictionCode/@codeListValue"/>			
+		  </dd>
+		</dl>
+	</xsl:for-each>
   </xsl:template>
   
   <!-- Metadata linkage -->
@@ -657,7 +672,7 @@
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
       </dt>
       <dd>
-        <ul>
+        <ul style="list-style-type: none;padding-left:2px;">
           <xsl:for-each select="parent::node()/gmd:graphicOverview">
             <xsl:variable name="label">
               <xsl:apply-templates mode="localised"
@@ -783,7 +798,7 @@
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
       </dt>
       <dd>
-        <ul>
+        <ul style="list-style-type: none;padding-left:2px;">
           <xsl:for-each select="parent::node()/(gmd:topicCategory|gmd:obligation|gmd:pointInPixel)">
             <li>
               <xsl:apply-templates mode="render-value"

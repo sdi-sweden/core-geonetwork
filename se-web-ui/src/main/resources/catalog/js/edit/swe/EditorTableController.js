@@ -239,14 +239,14 @@
      * Put the selected record from drop down into table-grid.
      */
 	  $scope.populateResourseContactFields = function(selectedOrganisation) {
-		$scope.mode = 'add'; // set the mode to 'add' always.
+		//$scope.mode = 'add'; // set the mode to 'add' always.
 		$scope.editRow = {ref: ''}; // reset the editRow reference.
 		$scope.editRow.organisation = selectedOrganisation.split('~')[0]; // 0 always org
 		$scope.editRow.email = selectedOrganisation.split('~')[1]; // 1 always email
 		$scope.editRow.phone = selectedOrganisation.split('~')[2]; // 2 always phone
 		$scope.editRow.role = ''; // Role is always empty
 		
-		$scope.saveRow(); // Put the selected record from drop down into table-grid
+		//$scope.saveRow(); // Put the selected record from drop down into table-grid
 	  };
 
     }]);

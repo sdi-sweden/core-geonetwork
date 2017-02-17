@@ -127,6 +127,7 @@
     "Clear": "Odstranit",
     "ClearTitle": "Odstranit aktuální požadavek na vyhledávání, filtry a třídicí programy.",
     "hitsPerPage": "Počet záznamů na stránku",
+	"of": "of",
     "chooseRecordsPerPage": "Kliknutím zvolte počet záznamů na stránku",
     "sortedBy": "Tříděno dle {{field}}",
     "relevance": "důležitost",

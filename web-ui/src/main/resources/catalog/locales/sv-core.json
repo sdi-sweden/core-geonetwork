@@ -131,6 +131,7 @@
     "Clear": "Rensa",
     "ClearTitle": "Rensa aktuell sökning, filtrering och sortering.",
     "hitsPerPage": "Antal poster per sida",
+	"of": "av",
     "chooseRecordsPerPage": "Klicka för att välja hur många poster som skall visas per sida",
     "sortedBy": "Sorterat på {{field}}",
     "relevance": "relevans",

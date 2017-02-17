@@ -388,7 +388,7 @@
                                         <xsl:when test="text() = 'farming'">Areela näringar</xsl:when>
                                         <xsl:when test="text() = 'biota'">Biologi och ekologi</xsl:when>
                                         <xsl:when test="text() = 'boundaries'">Administrativa gränser</xsl:when>
-                                        <xsl:when test="text() = 'climatologyMeteorologyAtmosphere'">Klimatologi och meteorologi</xsl:when>
+                                        <xsl:when test="text() = 'climatologyMeteorologyAtmosphere'">Atmosfär, klimatologi och meteorologi</xsl:when>
                                         <xsl:when test="text() = 'economy'">Ekonomi</xsl:when>
                                         <xsl:when test="text() = 'elevation'">Höjddata</xsl:when>
                                         <xsl:when test="text() = 'environment'">Miljö</xsl:when>
@@ -1314,7 +1314,7 @@
 									<xsl:when test="text() = 'farming'">Areela näringar</xsl:when>
 									<xsl:when test="text() = 'biota'">Biologi och ekologi</xsl:when>
 									<xsl:when test="text() = 'boundaries'">Administrativa gränser</xsl:when>
-									<xsl:when test="text() = 'climatologyMeteorologyAtmosphere'">Klimatologi och meteorologi</xsl:when>
+									<xsl:when test="text() = 'climatologyMeteorologyAtmosphere'">Atmosfär, klimatologi och meteorologi</xsl:when>
 									<xsl:when test="text() = 'economy'">Ekonomi</xsl:when>
 									<xsl:when test="text() = 'elevation'">Höjddata</xsl:when>
 									<xsl:when test="text() = 'environment'">Miljö</xsl:when>

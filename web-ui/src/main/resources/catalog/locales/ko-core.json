@@ -127,6 +127,7 @@
     "Clear": "지우기",
     "ClearTitle": "최근에 검색 쿼리, 필터, 정렬 지우기",
     "hitsPerPage": "페이지 당 레코드",
+	"of": "of",
     "chooseRecordsPerPage": "클릭하여 페이지당 레코드 수를 선택하십시오.",
     "sortedBy": " {{field}} 정렬",
     "relevance": "연관",
