@@ -147,6 +147,8 @@
               delete defaultParams[p.toLowerCase()];
             }
           }
+          console.log('Adding proxyURL to ' gnGlobalSettings.proxyUrl + gnUrlUtils.append(parts[0],
+                  gnUrlUtils.toKeyValue(defaultParams))
 
           return gnUrlUtils.append(parts[0],
               gnUrlUtils.toKeyValue(defaultParams));
