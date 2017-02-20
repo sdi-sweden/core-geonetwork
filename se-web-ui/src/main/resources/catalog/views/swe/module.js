@@ -77,7 +77,7 @@
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, is_map_maximized, exampleResize) {
+             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, gnConfigService, is_map_maximized, exampleResize) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
