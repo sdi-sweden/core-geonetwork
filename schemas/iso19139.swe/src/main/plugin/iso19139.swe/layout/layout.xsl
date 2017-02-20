@@ -506,15 +506,13 @@
 
   <!-- Metadata contact,  Metadata point of contact, Distributor contact -->
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[1]|
-                                            gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact[1]|
+                                            gmd:MD_Metadata/gmd:identificationInfo//gmd:pointOfContact[1]|
                                             gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact[1]" priority="3000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
     <xsl:variable name="elementName" select="name()"/>
 
-    <xsl:message>NAME: <xsl:value-of select="name()" /></xsl:message>
-    <xsl:message>NAME ..: <xsl:value-of select="name(..)" /></xsl:message>
     <xsl:variable name="labelConfig"
                   select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')"/>
 
@@ -703,7 +701,7 @@
   </xsl:template>
 
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[position() &gt; 1]|
-                                            gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact[position() &gt; 1]|
+                                            gmd:MD_Metadata/gmd:identificationInfo//gmd:pointOfContact[position() &gt; 1]|
                                             gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact[position() &gt; 1]" priority="3000" />
 
   <!-- Distributor format -->

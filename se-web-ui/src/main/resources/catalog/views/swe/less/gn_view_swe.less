@@ -403,7 +403,7 @@ body.loggedin-user .header-logout {
   transition: width 300ms linear;
 }
 .small-map-view .main-wrapper {
-  padding-right: 360px;
+    padding-right: 0;
 }
 .small-map-view .site-side-map-cont {
   width: 360px;
@@ -411,6 +411,26 @@ body.loggedin-user .header-logout {
 .small-map-view .site-side-map-cont .map-cont {
   width: 360px !important;
 }
+//For map dock
+.geodata-examples-expanded-with-cookie-alert .site-side-map-cont {
+  top: 409px;
+}
+.geodata-examples-collapsed-with-cookie-alert .site-side-map-cont {
+  top: 238px;
+}
+.geodata-examples-expanded-larger-with-cookie-alert .site-side-map-cont {
+  top: 582px;
+}
+.geodata-examples-expanded-without-cookie-alert .site-side-map-cont {
+  top: 287px;
+}
+.geodata-examples-collapsed-without-cookie-alert .site-side-map-cont {
+  top: 115px;
+}
+.geodata-examples-expanded-larger-without-cookie-alert .site-side-map-cont {
+  top: 460px;
+}
+
 .medium-map-view .main-wrapper {
   padding-right: 710px;
 }
@@ -675,11 +695,7 @@ body.loggedin-user .header-logout {
   width: 15px;
   height: 15px;
 }
-@media screen and (max-width: 1400px) {
-  .small-map-view .main-wrapper {
-    padding-right: 0;
-  }
-}
+
 @media screen and (max-width: 1762px) {
   .medium-map-view .main-wrapper {
     padding-right: 0;
@@ -1974,7 +1990,7 @@ body.loggedin-user .header-logout {
   margin: 0 0 20px 18px;
   padding: 0;
   list-style: none;
-  max-width: 626px;
+  max-width: 690px;
 }
 .site-geo-type-filter .type-filter-list li {
   margin: 0 0 0 10px;
@@ -2260,7 +2276,7 @@ body.loggedin-user .header-logout {
     margin-top: 5px;
   }
   .site-geo-type-filter .type-filter-list {
-    max-width: 580px;
+    max-width: 680px;
     margin-bottom: 0;
     margin-top: -6px;
   }
@@ -2673,7 +2689,7 @@ body.loggedin-user .header-logout {
 }
 .site-side-map-cont {
   position: fixed;
-  top: 238px;
+  top: 409px;
   right: -1px;
   height: 100%;
   z-index: 500;

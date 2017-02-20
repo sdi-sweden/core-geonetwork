@@ -297,13 +297,30 @@
           'partials/predefinedMaps.html',
         scope: {
           predefinedMaps: '@',
+          selectedMap: '@',
           showMapFn: '&',
           configUrl: '@'
         },
         link: function(scope, element, attrs) {
-          $http.get(scope.configUrl).success(function(data) {
-            scope.predefinedMaps = data;
+          scope.$watch("configUrl", function(value) {
+            if (value) {
+              $http.get(scope.configUrl).success(function(data) {
+                  scope.predefinedMaps = data;
+
+                  if (scope.selectedMap != undefined) {
+                      var predefinedMapsFiltered =
+                          scope.predefinedMaps.filter(function(x) {
+                              return x['title'] === scope.selectedMap
+                          });
+
+                      if (predefinedMapsFiltered.length > 0) {
+                          scope.doView(predefinedMapsFiltered[0]);
+                      }
+                  }
+              });
+            }
           });
+
           scope.doView = function(predefinedMap) {
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();
@@ -334,9 +351,15 @@
           configUrl: '@'
         },
         link: function(scope, element, attrs) {
-          $http.get(scope.configUrl).success(function(data) {
-            scope.geoTechnics = data[0];
+
+          scope.$watch("configUrl", function(value) {
+            if (value) {
+              $http.get(scope.configUrl).success(function(data) {
+                  scope.geoTechnics = data[0];
+              });
+            }
           });
+
           scope.doView = function(geoTechnic) {
             gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();
