@@ -76,7 +76,6 @@
 
                   if ($.inArray(url, gnGlobalSettings.requireProxy) == -1) {
                     gnGlobalSettings.requireProxy.push(url);
-                    //console.log('CORSInterceptor - adding to config : ' + url)
                   }
 
                   $injector.invoke(['$http', function($http) {
@@ -85,7 +84,6 @@
 
                     config.nointercept = true;
 
-                    //console.log('CORSInterceptor - calling again : ' + url)
                     // retry again
                     $http(config).then(function(resp) {
                       defer.resolve(resp);
