@@ -77,7 +77,7 @@
    */
   module.service('gnMeasure', [
     function() {
-      var mInteraction, updateMeasuresFn, distFeature, areaFeature;
+      var lineInteraction, polygonInteraction, updateMeasureAreaFn, distFeature, areaFeature;
       var options = {
         waitClass: '',
         styleFunction: (function() {
@@ -152,7 +152,8 @@
         }
       })();
 
-      var initInteraction = function(map, measureObj) {
+      var initPolygonInteraction = function(map, measureObj) {
+        //For measure area
         var deregisterFeature;
         var featureOverlay = new ol.layer.Vector({
           source: new ol.source.Vector(),
@@ -160,33 +161,31 @@
           style: options.drawStyleFunction
         });
 
-        // define the draw interaction used for measure
-        mInteraction = new ol.interaction.Draw({
+        // define the draw interaction used for measure area
+        polygonInteraction = new ol.interaction.Draw({
           type: 'Polygon',
           features: featureOverlay.getSource().getFeatures(),
           style: options.drawStyleFunction
         });
 
-        Object.defineProperty(mInteraction, 'active', {
+        Object.defineProperty(polygonInteraction, 'active', {
           get: function() {
-            return map.getInteractions().getArray().indexOf(mInteraction) >= 0;
+            return map.getInteractions().getArray().indexOf(polygonInteraction) >= 0;
           },
           set: function(val) {
             if (val) {
-              map.addInteraction(mInteraction);
+              map.addInteraction(polygonInteraction);
             } else {
-              map.removeInteraction(mInteraction);
+              map.removeInteraction(polygonInteraction);
               featureOverlay.getSource().clear();
-              measureObj.distance = 0;
               measureObj.surface = 0;
             }
           }
         });
 
-        mInteraction.on('drawstart',
+        polygonInteraction.on('drawstart',
             function(evt) {
               featureOverlay.getSource().clear();
-
               areaFeature = evt.feature;
               var firstPoint = areaFeature.getGeometry().getCoordinates()[0][0];
               distFeature = new ol.Feature(
@@ -196,35 +195,101 @@
                   function(evt) {
                     var feature = evt.target;
                     var lineCoords = feature.getGeometry().getCoordinates()[0];
-
                     distFeature.getGeometry().setCoordinates(lineCoords);
-                    updateMeasuresFn();
+                    updateMeasureAreaFn();
                   }
                   );
             }, this);
 
-        mInteraction.on('drawend',
+        polygonInteraction.on('drawend',
             function(evt) {
               var lineCoords = evt.feature.getGeometry().getCoordinates()[0];
-              //lineCoords.pop();
               distFeature.getGeometry().setCoordinates(lineCoords);
-
-              updateMeasuresFn();
+              updateMeasureAreaFn();
               featureOverlay.getSource().addFeature(distFeature);
               areaFeature.unByKey(deregisterFeature);
             }, this);
+
+      
       };
 
-      this.create = function(map, measureObj, scope) {
+      var initLineInteraction = function(map, measureObj){
+        //For measure line 
+        var deregisterFeature;
+        var featureOverlay = new ol.layer.Vector({
+          source: new ol.source.Vector(),
+          map: map,
+          style: options.drawStyleFunction
+        });
+        // define the draw interaction used for measure length
+        lineInteraction = new ol.interaction.Draw({
+          type: 'LineString',
+          features: featureOverlay.getSource().getFeatures(),
+          style: options.drawStyleFunction
+        });
+
+        Object.defineProperty(lineInteraction, 'active', {
+          get: function() {
+            return map.getInteractions().getArray().indexOf(lineInteraction) >= 0;
+          },
+          set: function(val) {
+            if (val) {
+              map.addInteraction(lineInteraction);
+            } else {
+              map.removeInteraction(lineInteraction);
+              featureOverlay.getSource().clear();
+              measureObj.distance = 0;
+            }
+          }
+        });
+
+        lineInteraction.on('drawstart',
+            function(evt) {
+              featureOverlay.getSource().clear();
+              LineFeature = evt.feature;
+              var firstPoint = LineFeature.getGeometry().getCoordinates()[0][0];
+              distFeature = new ol.Feature(
+                  new ol.geom.LineString([firstPoint]));
+              deregisterFeature = LineFeature.on('change',
+                  function(evt) {
+                    var feature = evt.target;
+                    var lineCoords = feature.getGeometry().getCoordinates();
+                    distFeature.getGeometry().setCoordinates(lineCoords);
+                    updateMeasureDistanceFn();
+                  });
+            }, this);
+
+         lineInteraction.on('drawend',
+            function(evt) {
+              var lineCoords = evt.feature.getGeometry().getCoordinates();
+              distFeature.getGeometry().setCoordinates(lineCoords);
+              updateMeasureDistanceFn();
+              featureOverlay.getSource().addFeature(distFeature);
+              LineFeature.unByKey(deregisterFeature);
+            }, this);
+
+      }
+
+      this.calculateArea = function(map, measureObj, scope) {
         // Update values of measures from features
-        updateMeasuresFn = function() {
+        updateMeasureAreaFn = function() {
           scope.$apply(function() {
-            measureObj.distance = distFeature.getGeometry().getLength();
             measureObj.surface = areaFeature.getGeometry().getArea();
           });
         };
-        initInteraction(map, measureObj);
-        return mInteraction;
+        initPolygonInteraction(map, measureObj);
+        return polygonInteraction;
       };
+      this.calculateLength = function(map, measureObj, scope){
+        // Update values of measures from features
+        updateMeasureDistanceFn = function() {
+          scope.$apply(function() {
+            measureObj.distance = distFeature.getGeometry().getLength();
+          });
+        };
+        initLineInteraction(map, measureObj);
+        return lineInteraction;
+      }
+
     }]);
 })();

@@ -63,8 +63,9 @@
               /** print definition */
               scope.activeTools = {};
               /** Measure tool interaction*/
-              scope.mInteraction = gnMeasure.create(scope.map,scope.measureObj, scope);
-
+              scope.polygonInteraction = gnMeasure.calculateArea(scope.map,scope.measureObj, scope);
+              scope.lineInteraction = gnMeasure.calculateLength(scope.map,scope.measureObj, scope);
+              
               scope.toggle = false
 
               scope.zoom = function(map, delta) {
