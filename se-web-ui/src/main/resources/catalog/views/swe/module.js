@@ -69,13 +69,15 @@
     'gnGlobalSettings',
     'gnMdFormatter',
     'gnConfig',
+    'gnConfigService',
     'is_map_maximized',
+    'exampleResize',
     function($rootScope, $scope, $localStorage, $location, $analytics, suggestService,
              $http, $sce, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, is_map_maximized) {
+             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, gnConfigService, is_map_maximized, exampleResize) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -109,13 +111,16 @@
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.location = gnSearchLocation;
 
-      $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl +
-          gnConfig['map.predefinedMaps.url'];
+      gnConfigService.loadPromise.then(function() {
+        $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl +
+            gnConfig['map.predefinedMaps.url'];
+
+        $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl +
+            gnConfig['map.geotechnics.url'];
+      });
 
       $scope.selectedPredefinedMap = gnGlobalSettings.predefinedSelectedMap;
-
-      $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl +
-        gnConfig['map.geotechnics.url'];
+      $scope.collapsed = false;
 
       $scope.$on('someEvent', function(event, map) {
         alert('event received. url is: ' + map.url);
@@ -127,7 +132,7 @@
       });
 
       $scope.$on('aftersearch', function() {
-          $analytics.eventTrack('siteSearch', {  searchQuery: $scope.searchObj.params.or,
+          $analytics.eventTrack('siteSearch', {  searchQuery: $location.search(),
               searchQueryResult: ($scope.searchResults.count > 0)?'hit':'no-hit' });
       });
 
@@ -529,13 +534,13 @@
       /**
        * Toggle size of floating map
        */
-      $scope.toggleFloatingMap = function() {
-        angular.element('.floating-map-cont').toggleClass('small');
+     /* $scope.toggleFloatingMap = function() {
+        angular.element('.floating-map-cont').toggleClass('medium');
         // angular.element('.floating-map-cont').show();
         // $scope.$emit('body:class:remove', 'small-map-view');
         // $scope.$emit('body:class:remove', 'full-map-view');
         // $scope.$emit('body:class:remove', 'medium-map-view');
-      };
+      };*/
 
       /**
        * Show full view results.
@@ -559,16 +564,33 @@
         $scope.viewMode = 'compact';
       };
 
+       //For collapsible
+      $scope.image_filter_height = $('.site-image-filter').height();
+      $scope.actual_height = $scope.image_filter_height;
+        $scope.$watch('image_filter_height', function (newValue, oldValue, scope) {
+        $scope.actual_height = oldValue;
+        exampleResize.onResize($rootScope, $scope);
+        
+      });
+
       /**
        * Show map panel.
        */
       $scope.showMapPanel = function() {
         angular.element('.floating-map-cont').hide();
         $scope.$emit('body:class:add', 'small-map-view');
-          $timeout(function() {
+        $scope.actual_height = $('.site-image-filter').height()
+        exampleResize.onResize($rootScope, $scope);
+         $timeout(function() {
           viewerMap.updateSize();
           viewerMap.renderSync();
-        }, 500);
+        }, 500); 
+      };
+     
+      $scope.resizeCheck = function(){
+        $scope.image_filter_height = $('.site-image-filter').height(); 
+        $scope.collapsed =! $scope.collapsed;
+        
       };
       
       /**
@@ -1342,5 +1364,59 @@
   module.factory("is_map_maximized", function() {
     return {data: false};
 });
+
+  //
+    module.factory('exampleResize', function(){
+    return{
+      onResize: function($rootScope, $scope){
+        cookieCheck = $rootScope.showCookieWarning;
+        var $b = angular.element(document).find('body');
+        is_full_view_map = ($b.hasClass('full-map-view')) ? true : false;
+        is_small_view_map = ($b.hasClass('small-map-view')) ? true : false;
+        if(is_small_view_map || is_full_view_map){
+              $scope.$emit('body:class:remove', 'geodata-examples-collapsed-with-cookie-alert');
+              $scope.$emit('body:class:remove', 'geodata-examples-expanded-with-cookie-alert');
+              $scope.$emit('body:class:remove', 'geodata-examples-expanded-larger-with-cookie-alert');
+              $scope.$emit('body:class:remove', 'geodata-examples-collapsed-without-cookie-alert');
+              $scope.$emit('body:class:remove', 'geodata-examples-expanded-without-cookie-alert');
+              $scope.$emit('body:class:remove', 'geodata-examples-expanded-larger-without-cookie-alert');
+          if(cookieCheck){
+             if($scope.collapsed){
+              $scope.$emit('body:class:add', 'geodata-examples-collapsed-with-cookie-alert');
+          }
+              else{
+                 if($scope.actual_height < 60){
+                  $scope.$emit('body:class:add', 'geodata-examples-collapsed-with-cookie-alert');
+                }
+                else if($scope.actual_height < 300){
+                  $scope.$emit('body:class:add', 'geodata-examples-expanded-with-cookie-alert');
+                }
+                else{
+                  $scope.$emit('body:class:add', 'geodata-examples-expanded-larger-with-cookie-alert');
+                }
+            }
+          }
+          else{
+              if($scope.collapsed){
+                $scope.$emit('body:class:add', 'geodata-examples-collapsed-without-cookie-alert');
+            }
+              else{
+                if($scope.actual_height < 60){
+                  $scope.$emit('body:class:add', 'geodata-examples-collapsed-without-cookie-alert');
+                }
+                else if($scope.actual_height < 300){
+                  $scope.$emit('body:class:add', 'geodata-examples-expanded-without-cookie-alert');
+                }
+                else{
+                  $scope.$emit('body:class:add', 'geodata-examples-expanded-larger-without-cookie-alert');
+                }
+              }
+          }        
+        }
+
+      }
+    }
+      
+  })
 
 })();

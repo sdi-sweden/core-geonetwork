@@ -136,7 +136,8 @@ public class HttpProxyServlet extends HttpServlet {
         try {
 
             String url = RequestUtil.getParameter(request, PARAM_URL, defaultProxyUrl);
-            String host = url.split("/")[2];
+            URL urlValue = new URL(url);
+            String host = urlValue.getHost();
             final String uri = createURI(request, url);
 
 
@@ -222,9 +223,9 @@ public class HttpProxyServlet extends HttpServlet {
 
         try {
             String url = RequestUtil.getParameter(request, PARAM_URL, defaultProxyUrl);
-            String host = url.split("/")[2];
+            URL urlValue = new URL(url);
+            String host = urlValue.getHost();
             final String uri = createURI(request, url);
-
 
             // Checks if allowed host
             if (!isAllowedHost(host)) {
@@ -328,7 +329,8 @@ public class HttpProxyServlet extends HttpServlet {
 
         try {
             String url = RequestUtil.getParameter(request, PARAM_URL, defaultProxyUrl);
-            String host = url.split("/")[2];
+            URL urlValue = new URL(url);
+            String host = urlValue.getHost();
 
             String uri = createURI(request, url);
 
