@@ -501,6 +501,9 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
 
 
     private String getXmlFromUrl(ServiceContext context, String lang, String url, WebRequest request) throws IOException, URISyntaxException {
+    	if(url != null) {
+    		url = url.replace("!!!", "&");
+    	}
         String adjustedUrl = url;
         if (!url.startsWith("http")) {
             adjustedUrl = context.getBean(SettingManager.class).getSiteURL(lang) + url;
@@ -509,17 +512,18 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
             Set allowedRemoteHosts = context.getApplicationContext().getBean("formatterRemoteFormatAllowedHosts", Set.class);
             Assert.isTrue(allowedRemoteHosts.contains(uri.getHost()), "xml.format is not allowed to make requests to " + uri.getHost());
         }
-
+        boolean skipHeadersAddition = skipHeadersAddition(url, request);
         HttpUriRequest getXmlRequest = new HttpGet(adjustedUrl);
-        final Iterator<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasNext()) {
-            String headerName = headerNames.next();
-            final String[] headers = request.getHeaderValues(headerName);
-            for (String header : headers) {
-                getXmlRequest.addHeader(headerName, header);
-            }
+        if(!skipHeadersAddition) { 
+	        final Iterator<String> headerNames = request.getHeaderNames();
+	        while (headerNames.hasNext()) {
+	            String headerName = headerNames.next();
+	            final String[] headers = request.getHeaderValues(headerName);
+	            for (String header : headers) {
+	                getXmlRequest.addHeader(headerName, header);
+	            }
+	        }
         }
-
         GeonetHttpRequestFactory requestFactory = context.getBean(GeonetHttpRequestFactory.class);
         final ClientHttpResponse execute = requestFactory.execute(getXmlRequest);
         if (execute.getRawStatusCode() != 200) {
@@ -528,7 +532,23 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
         return new String(ByteStreams.toByteArray(execute.getBody()), Constants.CHARSET);
     }
 
-    private void writerAsPDF(ServiceContext context, HttpServletResponse response, byte[] bytes, String lang) throws IOException, com.itextpdf.text.DocumentException {
+    private boolean skipHeadersAddition(String url, WebRequest request) {
+    	boolean skipHeadersAddition = false;
+    	if(url != null) {
+    		// I see lot of string literals used. We should instead move them to some constants file.
+    		String hostFromHeader = request.getHeader("host");
+    		if(hostFromHeader != null) {
+    			String[] hostFromHeaderArr = hostFromHeader.split(":");
+    			String host = hostFromHeaderArr[0]; // Don't try to access hostFromHeaderArr[1]. It may not be available.
+    			if(!url.contains(host)) {
+        			skipHeadersAddition = true;
+        		}
+    		}
+    	}
+		return skipHeadersAddition;
+	}
+
+	private void writerAsPDF(ServiceContext context, HttpServletResponse response, byte[] bytes, String lang) throws IOException, com.itextpdf.text.DocumentException {
         final String htmlContent = new String(bytes, Constants.CHARSET);
         try {
             XslUtil.setNoScript();

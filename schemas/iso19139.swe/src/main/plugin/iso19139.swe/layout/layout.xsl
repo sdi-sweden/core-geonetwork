@@ -339,11 +339,11 @@
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="refsystem-popup" class="gn-modal-lg">
+           id="refsystem-popup" class="gn-modal-lg gn-modal-lg-refsystem-popup">
 
         <div data-swe-date-dialog="">
           <div>
-            <label class="col-sm-2 control-label">
+            <label class="col-sm-8 control-label">
               <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:code', $labels, name(gmd:RS_Identifier), '', $codexpath)/label" />
             </label>
 
@@ -370,10 +370,10 @@
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-              Save
+              Spara
             </button>&#160;
             <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-              Cancel
+              Stäng
             </button>
 
           </div>
@@ -449,24 +449,24 @@
       <!-- Dialog to edit the dates -->
       <div data-gn-modal=""
          data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-         id="date-popup" class="gn-modal-lg">
+         id="date-popup" class="gn-modal-lg gn-modal-lg-date-popup">
 
       <div data-swe-date-dialog="">
         <div>
           <label class="col-sm-2 control-label">
-            Date
+            Datum
           </label>
           <!--<input name="date" type="text" class="form-control" data-ng-model="selectedRow.date" />-->
           <div data-gn-date-picker="{{editRow.date}}"
                data-label=""
                data-tag-name=""
-               data-element-ref="datevalue">>
+               data-element-ref="datevalue">
           </div>
         </div>
 
         <div>
-          <label class="col-sm-2 control-label">
-            Date type
+          <label class="col-sm-3 control-label">
+            Händelse
           </label>
 
           <xsl:variable name="codelist"
@@ -488,10 +488,10 @@
 
         <div class="">
           <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-            Save
+            Spara
           </button>&#160;
           <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-            Cancel
+            Stäng
           </button>
 
         </div>
@@ -628,7 +628,7 @@
       <!-- Dialog to edit the dates -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="contact-popup-{local-name()}" class="gn-modal-lg">
+           id="contact-popup-{local-name()}" class="gn-modal-lg gn-modal-lg-contact-popup">
 
         <div data-swe-date-dialog="">
 			<div data-ng-show="showResourceContactDD">
@@ -686,10 +686,10 @@
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-              Save
+              Spara
             </button>&#160;
             <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-              Cancel
+              Stäng
             </button>
 
           </div>
@@ -770,7 +770,7 @@
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="format-popup" class="gn-modal-lg">
+           id="format-popup" class="gn-modal-lg gn-modal-lg-format-popup">
 
         <div data-swe-date-dialog="">
           <div>
@@ -801,10 +801,10 @@
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-              Save
+              Spara
             </button>&#160;
             <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-              Cancel
+              Stäng
             </button>
 
           </div>
@@ -880,7 +880,7 @@
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="thumbnail-popup" class="gn-modal-lg">
+           id="thumbnail-popup" class="gn-modal-lg gn-modal-lg-thumbnail-popup">
 
         <div data-swe-date-dialog="">
           <div>
@@ -900,10 +900,10 @@
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-              Save
+              Spara
             </button>&#160;
             <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-              Cancel
+              Stäng
             </button>
 
           </div>
@@ -1000,7 +1000,7 @@
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="onlineres-popup" class="gn-modal-lg">
+           id="onlineres-popup" class="gn-modal-lg gn-modal-lg-onlineres-popup">
 
         <div data-swe-date-dialog="">
 
@@ -1032,14 +1032,14 @@
           </div>
 
           <div>
-            <label class="col-sm-2 control-label">
+            <label class="col-sm-4 control-label">
               <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:name', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
             </label>
             <input type="text" class="form-control" data-ng-model="editRow.fname" />
           </div>
 
           <div>
-            <label class="col-sm-2 control-label">
+            <label class="col-sm-6 control-label">
               <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:description', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
             </label>
 
@@ -1048,10 +1048,10 @@
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-              Save
+              Spara
             </button>&#160;
             <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-              Cancel
+              Stäng
             </button>
 
           </div>
