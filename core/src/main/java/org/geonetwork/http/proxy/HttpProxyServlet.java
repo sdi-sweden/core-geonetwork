@@ -53,6 +53,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -265,6 +266,9 @@ public class HttpProxyServlet extends HttpServlet {
 
                     // Sets response contentType
                     response.setContentType(getResponseContentType(contentTypesReturned));
+
+                    // Sets the characterEncoding
+                    response.setCharacterEncoding(Constants.ENCODING);
 
                     String responseBody = IOUtils.toString(httpResponse.getEntity().getContent(), response.getCharacterEncoding()).trim();
 
