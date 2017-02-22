@@ -5,10 +5,59 @@
       <div class="meta-data-cont">
         <img src="../../catalog/views/swe/images/open-repo.png" class="repo-img">
         <ul class="tools-list">
-          <li><a href="" data-ng-click="showMetadata($index, md, searchResults.records)"><span class="icon-doc-text"></span></a></li>
-          <li><a href=""><div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span></div></a></li>
-          <li data-ng-show="::layers.length > 0"><a href="" data-ng-click="resultviewFns.addWmsLayersFromCap(layers[0], md)"><span class="icon-map"></span></a></li>
-          <li data-ng-show="::downloads.length > 0"><a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}"><span class="download-icn-cont"><span class="icon-down-fat"></span></span></a></li>
+        <!-- Manage Metadata Compact view-->
+          <li ng-if="!user.isEditorOrMore()">
+             <a href="" data-ng-click="showMetadata($index, md, searchResults.records)" class="-label-link" ><span class="icon-doc-text"></span></a>
+          </li> 
+          <li ng-if="user.isEditorOrMore()">
+             <div data-swe-toggle-style="" class="dropdown-compact meta-dropdown"><span class="icon-doc-text"></span>
+            <div data-swe-md-actions-menu="" /></div>
+          </li> 
+          <!-- Show geobox Compact view-->
+          <li data-ng-show="md.geoBox !== undefined">
+            <a href="" data-ng-click="showMetadataGeometry(md)" >
+            <div class="mix-icon-cont"><span class="icon-location"></span><span class="icon-myspace"></span>
+            </div>
+            </a>
+          </li>
+          <!-- Metadata links Compact view-->
+          <li data-swe-toggle-style="" class="dropdown-compact meta-dropdown" data-ng-show="::links.length == 1">
+              <a href="{{::links[0].url}}" target="_blank"><span class="icon-info"></span></a>
+          </li>
+          <li data-swe-toggle-style="" class="dropdown-compact more-info-dropdown" data-ng-show="::links.length > 1">
+            <span class="icon-info"></span>
+            <ul class="-list">
+              <li data-ng-repeat="l in ::links">
+                <a href="{{l.url}}"  class="-text-link" target="_blank">{{l.desc || l.url}}</a>
+              </li>
+            </ul>
+          </li>
+          <!-- Map links Compact view-->
+          <li data-ng-show="::layers.length == 1">
+            <a href="" data-ng-click="resultviewFns.addWmsLayersFromCap(layers[0].url, md)"><span class="icon-map"></span></a>
+          </li>
+          <li data-swe-toggle-style="" class="dropdown-compact more-info-dropdown" data-ng-show="::layers.length > 1"><span class="icon-map"></span>
+            <ul class="-list">
+            <li data-ng-repeat="l in ::layers">
+                  <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l.url, md)">
+                    <span data-ng-show="l.desc !== ''">{{l.desc}}</span>
+                    <span data-ng-show="l.desc == ''">{{ 'layer' | translate }} {{$index + 1}}</span>
+                  </a>
+            </li>
+            </ul>
+          </li>
+          <!-- Download links Compact view-->
+          <li data-ng-show="::downloads.length == 1">
+            <a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}"><span class="download-icn-cont"><span class="icon-down-fat"></span></span></a>
+          </li>
+    
+          <li data-swe-toggle-style="" class="dropdown-compact more-info-dropdown" data-ng-show="::downloads.length > 1"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>
+                <ul class="-list">
+                  <li data-ng-repeat="l in ::downloads">
+                    <a href="{{l.url}}" download="{{l.desc}}" class="-text-link">{{l.desc || l.url}}</a>
+                  </li>
+                </ul>
+          </li>
         </ul>
         <div class="meta-data">
           <h1><img src="../../catalog/views/swe/images/open-repo.png" class="mobile-repo-img">{{md.title || md.defaultTitle}}
