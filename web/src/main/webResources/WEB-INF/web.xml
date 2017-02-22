@@ -420,6 +420,12 @@
     <welcome-file>home</welcome-file>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
+  
+  <error-page>
+     <!-- Missing resource -->
+	 <error-code>404</error-code>
+	 <location>/catalog/views/swe/templates/404page.html</location>
+  </error-page>
 
   <session-config>
     <session-timeout>${sessionTimeout}</session-timeout>
