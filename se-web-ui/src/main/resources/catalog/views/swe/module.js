@@ -118,7 +118,6 @@
         $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl +
             gnConfig['map.geotechnics.url'];
       });
-
       $scope.selectedPredefinedMap = gnGlobalSettings.predefinedSelectedMap;
       $scope.collapsed = false;
 
@@ -402,7 +401,6 @@
         addWmsLayersFromCap: function(url, md) {
           // Open the map panel
           $scope.showMapPanel();
-
           var name = 'layers';
           var match = RegExp('[?&]' + name + '=([^&]*)').exec(url);
           var layersList = match &&
