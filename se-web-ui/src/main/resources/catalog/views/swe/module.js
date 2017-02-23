@@ -402,6 +402,7 @@
         addWmsLayersFromCap: function(url, md) {
           // Open the map panel
           $scope.showMapPanel();
+
           var name = 'layers';
           var match = RegExp('[?&]' + name + '=([^&]*)').exec(url);
           var layersList = match &&
