@@ -19,7 +19,7 @@
     "results": "resultat",
     "showFiltering": "Visa filtrering",
     "hideFiltering": "Dölj Filtering",
-    "viewAllResources": "visa alla resurser",
+    "viewAllResources": "Återställ",
     "viewAdvance": "Avancerad vy",
     "hideAdvance": "Enkel vy",
     "freeTextPlaceholder": "fritextsök",
@@ -67,7 +67,7 @@
     "Printing": "Skriver ut",
     "predefinedMapsTitle": "Goda exempel på användning av geodata",
     "mapServices": "karttjänster",
-    "downloadableResources": "Direktåtkomliga resurser",
+    "downloadableResources": "Nedladdningsbart",
     "drawingOnMap": "Rita på karta",
     "favourites":"favoriter",
     "aboutLm": "Nationell samordnare för geodataområdet och Sveriges kontaktpunkt för Inspire-genomförandet.",
@@ -88,6 +88,6 @@
     "layer": "Lager",
     "nonSweMetadata": "The metadata is not in not compliant to the latest Swedish schema. Editing it will upgrade it. Do you want to continue?",
     "showServices": "Visa tjänster",
-    "showDatasets": "Visa datamängder"
+    "showDatasets": "Dataset"
 
 }
