@@ -147,9 +147,9 @@
               delete defaultParams[p.toLowerCase()];
             }
           }
-
-          return gnUrlUtils.append(parts[0],
-              gnUrlUtils.toKeyValue(defaultParams));
+          // force calls through the proxy
+          return gnGlobalSettings.proxyUrl + encodeURIComponent(gnUrlUtils.append(parts[0],
+              gnUrlUtils.toKeyValue(defaultParams)));
 
 
         };
