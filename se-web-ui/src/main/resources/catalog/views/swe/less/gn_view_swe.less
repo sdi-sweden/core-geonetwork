@@ -574,6 +574,70 @@ body.loggedin-user .header-logout {
   font-weight: normal;
   font-size: 12px;
 }
+
+.tool-tip-cont-large {
+  position: absolute;
+  width: 260px;
+  padding: 0 30px;
+  box-sizing: border-box;
+  background-color: #27605d;
+  left: -80px;
+  margin-left: -130px;
+  top: 178px;
+  z-index: 1000;
+  display: none;
+}
+
+.tool-tip-cont-large.open {
+  display: block;
+}
+.tool-tip-cont-large .tool-tip {
+  *zoom: 1;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  position: relative;
+}
+.tool-tip-cont-large .tool-tip:before,
+.tool-tip-cont-large .tool-tip:after {
+  display: table;
+  content: "";
+}
+.tool-tip-cont-large .tool-tip:after {
+  clear: both;
+}
+.tool-tip-cont-large .triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-bottom: 9px solid #27605d;
+  border-right: 9px solid transparent;
+  top: -38px;
+  left: 95px;
+}
+.tool-tip-cont-large h2 {
+  color: #fff;
+  margin: 0 0 10px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+}
+.tool-tip-cont-large p {
+  color: #fff;
+  margin: 0 0 14px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+
+.predef-map-help {
+  top:25px;
+  left:86%;
+  position: relative;
+}
+
 .help-icn-cont {
   display: inline-block;
   cursor: pointer;
@@ -2093,6 +2157,29 @@ body.loggedin-user .header-logout {
   left: -1px;
 }*/
 
+.map-view .help-icn-cont {
+  position: relative;
+  right: 10px;
+  top: 0px;
+}
+
+.map-view .tool-tip-cont {
+  margin-left: -240px;
+}
+
+.map-view .tool-tip-cont p {
+  white-space: pre-wrap;
+}
+
+.map-view .tool-tip-cont .triangle {
+  left: 204px;
+}
+
+.btn-map-help{
+  border-radius:0px;
+  border-color:white;
+}
+
 .geo-categories {
   max-width: 1270px;
   width: 100%;
@@ -3431,7 +3518,7 @@ a.link-btn[disabled] {
 }
 /* pre defined maps*/
 .site-image-filter .image-filter-text {
-  margin: 19px 0 19px;
+  margin: 19px 0 0px;
 }
 .site-image-filter .img-list li {
   margin: 0 0 12px 12px;
