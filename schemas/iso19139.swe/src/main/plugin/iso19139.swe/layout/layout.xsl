@@ -457,7 +457,7 @@
             Datum
           </label>
           <!--<input name="date" type="text" class="form-control" data-ng-model="selectedRow.date" />-->
-          <div data-gn-date-picker="{{editRow.date}}"
+          <div data-gn-date-picker="{{{{editRow.date}}}}"
                data-label=""
                data-tag-name=""
                data-element-ref="datevalue">

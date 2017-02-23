@@ -1120,6 +1120,7 @@
         delete $scope.searchObj.params.geometry;
         delete $scope.searchObj.namesearch;
         delete $scope.searchObj.params['facet.q'];
+		delete $scope.searchObj.params.or;
         $scope.vectorLayer.getSource().clear();
         $scope.vectorLayerBM.getSource().clear();
         $scope.vectorLayer.unset("defaultTitle");
