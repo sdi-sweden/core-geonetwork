@@ -148,8 +148,12 @@
             }
           }
           // force all calls through the proxy
-          return gnGlobalSettings.proxyUrl + encodeURIComponent(gnUrlUtils.append(parts[0],
-              gnUrlUtils.toKeyValue(defaultParams)));			  
+//          console.log('OWSService (proposed): ' + gnGlobalSettings.proxyUrl + encodeURIComponent(gnUrlUtils.append(parts[0],
+//                  gnUrlUtils.toKeyValue(defaultParams))))
+//          console.log('OWSService (actual): ' + gnUrlUtils.append(parts[0],
+//                  gnUrlUtils.toKeyValue(defaultParams)))
+          return gnUrlUtils.append(parts[0],
+              gnUrlUtils.toKeyValue(defaultParams));			  
 
         };
         return {
