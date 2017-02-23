@@ -299,7 +299,8 @@
           predefinedMaps: '@',
           selectedMap: '@',
           showMapFn: '&',
-          configUrl: '@'
+          configUrl: '@',
+          selectedItem: '@'
         },
         link: function(scope, element, attrs) {
           scope.$watch("configUrl", function(value) {
@@ -320,8 +321,8 @@
               });
             }
           });
-
-          scope.doView = function(predefinedMap) {
+          scope.doView = function(index, predefinedMap) {
+			scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();
           };
@@ -359,7 +360,6 @@
               });
             }
           });
-
           scope.doView = function(geoTechnic) {
             gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();

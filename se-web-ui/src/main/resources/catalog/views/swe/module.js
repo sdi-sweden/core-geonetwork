@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -597,6 +597,8 @@
        * Show large map panel.
        */
       $scope.showLargeMapPanel = function() {
+  		$tools = angular.element('.tools');
+		$tools.removeClass('control-tools').addClass('control-tools-largemap');
         angular.element('.floating-map-cont').hide();
         $scope.$emit('body:class:add', 'large-map-view');
           $timeout(function() {
@@ -611,6 +613,10 @@
        * Hide map panel.
        */
       $scope.hideMapPanel = function() {
+		$predefMap = angular.element('.selected-img');
+		$predefMap.removeClass('selected-img').addClass('bg-img');
+		$tools = angular.element('.tools');
+		$tools.removeClass('control-tools-largemap').addClass('control-tools');
         angular.element('.floating-map-cont').show();
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:remove', 'full-map-view');
@@ -619,6 +625,8 @@
       };
       
       $scope.resizeMapPanel = function() {
+		  $tools = angular.element('.tools');
+		  $tools.removeClass('control-tools-largemap').addClass('control-tools');
           var $b = angular.element(document).find('body');
           window_width = angular.element($window).width(),
           $map_data_list_cont = angular.element('.map-data-list-cont'),
