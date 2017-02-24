@@ -50,7 +50,7 @@
               <span class="hide-advanced" data-translate="">hideAdvance</span>
             </a>
 
-            <div class="show-advanced" data-swe-tooltip=""
+            <div data-swe-tooltip=""
                  data-title="{{ 'advancedSearchTooltip-title' | translate }}"
                  data-text="{{ 'advancedSearchTooltip-desc' | translate }}"
                  data-link="{{ 'advancedSearchTooltip-link' | translate }}"></div>
@@ -59,6 +59,13 @@
         <div class="filter-options-cont">
           <div class="basic-filters-cont active">
             <ul class="geo-categories">
+                <div class="geo-cat">
+					<div data-swe-tooltip=""
+						data-title="{{ 'search-title' | translate }}"
+						data-text="{{ 'search-desc' | translate }}"
+						data-link="{{ 'search-link' | translate }}">
+					</div>
+				</div>
               <li data-ng-repeat="topic in topicCategories | orderBy: translatedTopicCat"
                   data-ng-click="toggleTopicCategory(topic)"
                   data-ng-class="{'active': isTopicCategorySelected(topic)}"><a href="" data-translate="">{{topic}}</a></li>
@@ -147,10 +154,10 @@
                    data-current-facets="currentFacets">
               </div>
 
-              <div data-swe-tooltip=""
+<!--               <div data-swe-tooltip=""
                    data-title="{{ 'facetsFilterTooltip-title' | translate }}"
                    data-text="{{ 'facetsFilterTooltip-desc' | translate }}"
-                   data-link="{{ 'facetsFilterTooltip-link' | translate }}"></div>
+                   data-link="{{ 'facetsFilterTooltip-link' | translate }}"></div> -->
             </div>
           </div>
         </div>

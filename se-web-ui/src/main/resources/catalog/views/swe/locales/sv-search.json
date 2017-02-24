@@ -18,6 +18,12 @@
     "searchShowOnlyTooltip-title": "Visa enbart",
     "searchShowOnlyTooltip-desc": "Förfina sökning genom att välja datatyp",
     "searchShowOnlyTooltip-link": "https://ver.geodata.se/geodataportalens-hjalpsidor/forstasidan#VisaE",
+    "search-title": "Söka metadata",
+	"search-desc": "Förfina sökning genom att välja data från de olika kategorierna. Flera kategorier kan kombineras.",
+	"search-link": "https://ver.geodata.se/geodataportalens-hjalpsidor/forstasidan#VisaE",
+    "searchResult-title": "Resultat",
+	"searchResult-desc": "Nedan visas resultat från sökningen",
+	"searchResult-link": "https://ver.geodata.se/geodataportalens-hjalpsidor/forstasidan/resultat",
     "map-title": "Karta",
 	"map-desc": "I kartan kan datamängder och tjänster presenteras. Med hjälp av kartverktygen kan du bl.a. hantera kartlager, söka efter platser, eller ladda upp en karta.",
 	"map-link": "https://ver.geodata.se/geodataportalens-hjalpsidor/forstasidan/kartan",
@@ -94,6 +100,7 @@
     "layer": "Lager",
     "nonSweMetadata": "The metadata is not in not compliant to the latest Swedish schema. Editing it will upgrade it. Do you want to continue?",
     "showServices": "Visa tjänster",
-    "showDatasets": "Dataset"
+    "showDatasets": "Dataset",
+    "seeMore": "Läs mer"
 
 }
