@@ -2,11 +2,10 @@
   <div class="site-filter-wrapper">
     <!-- Predefined search filters -->
     <div class="site-image-filter">
-
  	<span class="image-filter-text" data-translate="">predefinedMapsTitle</span>
 		  <div class="image-filter-container"> 
-		    <a href="" data-ng-click="collapsed=!collapsed" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
-			  <swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-selected-map="{{selectedPredefinedMap}}" data-show-map-fn="showLargeMapPanel"></swe-predefined-maps-filter>
+		    <a href="" data-ng-click="resizeCheck()" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
+			  <swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showLargeMapPanel"></swe-predefined-maps-filter>
 		  </div>
     </div>
 
@@ -14,7 +13,14 @@
     <div class="site-filter-section-wrapper">
       <div class="site-filter-section">
         <div class="site-geo-type-filter">
-          <span class="filter-label" data-translate="">searchShowOnly</span>
+          <div class="clearfix pull-left">
+            <span class="filter-label" data-translate="">searchShowOnly</span>
+
+            <div data-swe-tooltip=""
+                 data-title="{{ 'searchShowOnlyTooltip-title' | translate }}"
+                 data-text="{{ 'searchShowOnlyTooltip-desc' | translate }}"
+                 data-link="{{ 'searchShowOnlyTooltip-link' | translate }}"></div>
+          </div>
           <ul class="type-filter-list">
             <li>
               <a href="" data-ng-click="toggleExclusiveFilter('type', ['dataset', 'series'])"
@@ -35,9 +41,18 @@
                    data-ng-class="{'active': (searchObj.params._id != '')&&(searchObj.params._id != undefined)}">
                 <span class="icon-star"></span>favoriter</a>
             </li>
+			<li>
+				 <span>|</span>
+			</li>
+			<li>
+				<a href="" data-ng-click="viewAllMetadata()">
+				  <span class="home fa fa-home"></span> <!-- Not able to use icon-home like other class icon-star, icon-map, icon-buffer so using fa fa-home. Seem fontello doesn't contain home icon -->
+				  <span data-translate="">viewAllResources</span>
+				</a>
+			</li>
           </ul>
           <div class="other-filters">
-            <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link" data-translate="">viewAllResources</a>
+            <!-- <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link" data-translate="">viewAllResources</a> -->
             <a href="" data-ng-click="toggleAdvancedOptions()" class="fltr-link advance-link">
               <span class="show-advanced" data-translate="">viewAdvance</span>
               <span class="hide-advanced" data-translate="">hideAdvance</span>
