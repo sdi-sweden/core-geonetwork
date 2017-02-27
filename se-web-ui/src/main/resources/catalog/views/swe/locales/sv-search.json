@@ -50,7 +50,7 @@
     "createMetadata-cancel": "Avbryt",
     "welcomeTitle": "{{orgName}} dataportal",
     "getstarted": "Kom igång",
-    "layersDelete":"Radera alla lager",
+    "layersDelete":"Ta bort alla lager",
     "Distance": "Avstånd",
     "Surface": "Yta",
     "drawFreeHandPolygonInMap": "Rita polygon i karta",
