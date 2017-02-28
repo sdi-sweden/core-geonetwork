@@ -87,11 +87,13 @@
          * @param {ol.layer} layer
          */
           this.showInfo = function(layer) {
+            /* Commented out so that legends are shown for all layers without closing previously opened one*/
+            /*
             angular.forEach($scope.layers, function(l) {
               if (l != layer) {
                 l.showInfo = false;
               }
-            });
+            });*/
             layer.showInfo = !layer.showInfo;
           };
 
@@ -159,10 +161,9 @@
         link: function(scope, element, attrs, ctrl) {
           scope.layer = scope.$eval(attrs['gnLayermanagerItem']);
           var layer = scope.layer;
-
+          layer.showInfo = true;
           scope.showInfo = ctrl.showInfo;
           scope.moveLayer = ctrl.moveLayer;
-
           scope.showMetadata = function() {
             gnMdView.openMdFromLayer(scope.layer);
           };

@@ -121,7 +121,7 @@
 
       $scope.selectedPredefinedMap = gnGlobalSettings.predefinedSelectedMap;
       $scope.collapsed = false;
-
+      $scope.mapFullView = false;
       $scope.$on('someEvent', function(event, map) {
         alert('event received. url is: ' + map.url);
 
@@ -635,6 +635,7 @@
       };
       
       $scope.resizeMapPanel = function() {
+          $scope.mapFullView =! $scope.mapFullView;
           var $b = angular.element(document).find('body');
           window_width = angular.element($window).width(),
           $map_data_list_cont = angular.element('.map-data-list-cont'),
