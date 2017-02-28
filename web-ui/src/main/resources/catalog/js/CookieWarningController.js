@@ -35,6 +35,8 @@
         $rootScope.showCookieWarning = false;
         window.localStorage.setItem('cookiesAccepted', true);
         angular.element('.cookie-warning').hide();
+		angular.element('.header-cont').css('top','0px');
+		angular.element('body').css('padding-top','60px');
       };
 
       $rootScope.goAway = function($event) {
@@ -46,6 +48,13 @@
         });
         window.history.back();
       };
+	  
+	  $rootScope.init = function () {
+		if(window.localStorage.getItem('cookiesAccepted')) {
+			angular.element('.header-cont').css('top','0px');
+			angular.element('body').css('padding-top','60px');
+		}
+	  };
     }]);
 
 })();
