@@ -530,6 +530,22 @@
         }
         
       };
+	  
+	  $scope.fetchInitiativKeyword = function(md) {
+		var imgPath = '../../catalog/views/swe/images/noto.png';
+		if(md) {
+			var initiativKeyword = md.initiativKeyword;
+			if(initiativKeyword) {
+				var initiativKeywordString = initiativKeyword.toString();
+				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using 'Ö' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
+					imgPath = '../../catalog/views/swe/images/opendata.png';
+				} else if(initiativKeywordString.indexOf('Geodatasamverkan') > -1) {
+					imgPath = '../../catalog/views/swe/images/geodatacooperation.png';
+				}
+			}
+		}
+        return imgPath;     
+      };
 
       /**
        * Toggle size of floating map

@@ -3,7 +3,7 @@
     <div class="cb-cont checked login-cb-cont"><div class="cb"><span class="icon-ok"></span><input type="checkbox"></div></div>
     <div class="meta-data-wrapper">
       <div class="meta-data-cont">
-        <img src="../../catalog/views/swe/images/open-repo.png" class="repo-img">
+        <img data-ng-src="{{fetchInitiativKeyword(md)}}" class="repo-img">
         <ul class="tools-list">
         <!-- Manage Metadata Compact view-->
           <li ng-if="!user.isEditorOrMore()">
