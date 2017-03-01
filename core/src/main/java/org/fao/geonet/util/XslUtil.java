@@ -335,8 +335,7 @@ public final class XslUtil {
         if (codeListValue != null && codelist != null && langCode != null) {
             String translation = codeListValue;
             try {
-                final GeonetContext gc = (GeonetContext) ServiceContext.get().getHandlerContext(Geonet.CONTEXT_NAME);
-                Translator t = new CodeListTranslator(gc.getBean(SchemaManager.class),
+                Translator t = new CodeListTranslator(ApplicationContextHolder.get().getBean(SchemaManager.class),
                     (String) langCode,
                     (String) codelist);
                 translation = t.translate(codeListValue);
@@ -389,10 +388,8 @@ public final class XslUtil {
                 if (iso3LangCode.length() == 2) {
                     iso2LangCode = iso3LangCode;
                 } else {
-                    if (ServiceContext.get() != null) {
-                        final IsoLanguagesMapper mapper = ServiceContext.get().getBean(IsoLanguagesMapper.class);
-                        iso2LangCode = mapper.iso639_2_to_iso639_1(iso3LangCode);
-                    }
+                    final IsoLanguagesMapper mapper = ApplicationContextHolder.get().getBean(IsoLanguagesMapper.class);
+                    iso2LangCode = mapper.iso639_2_to_iso639_1(iso3LangCode);
                 }
             } catch (Exception ex) {
                 Log.error(Geonet.GEONETWORK, "Failed to get iso 2 language code for " + iso3LangCode + " caused by " + ex.getMessage());
@@ -456,15 +453,9 @@ public final class XslUtil {
             return langCode;
         }
 
-        final ServiceContext serviceContext = ServiceContext.get();
-        if (serviceContext != null) {
-            final IsoLanguagesMapper mapper;
-            mapper = serviceContext.getBean(IsoLanguagesMapper.class);
-            return mapper.iso639_1_to_iso639_2(langCode);
-        } else {
-            return langCode;
-        }
-
+        final IsoLanguagesMapper mapper;
+        mapper = ApplicationContextHolder.get().getBean(IsoLanguagesMapper.class);
+        return mapper.iso639_1_to_iso639_2(langCode);
     }
 
     public static boolean match(Object src, Object pattern) {

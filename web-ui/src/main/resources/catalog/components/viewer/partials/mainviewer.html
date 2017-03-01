@@ -45,13 +45,19 @@
             data-ng-class="synAllLayers ? 'fa-lock' : 'fa-unlock'"/>
       <span role="tooltip" data-translate="">syncAllLayers</span>
     </button>
-
-    <button gi-btn class="btn btn-default" type="submit" ng-model="mInteraction.active"
+    <button gi-btn class="btn btn-default" type="submit" ng-model="lineInteraction.active"
             data-ng-hide="is3dEnabled"
             rel="#measures" gnv-tools-btn>
       <span class="fa fa-expand"></span>
-      <span role="tooltip" data-translate="">Measures</span>
+      <span role="tooltip" data-translate="">measureLength</span>
     </button>
+    <button gi-btn class="btn btn-default" type="submit" ng-model="polygonInteraction.active"
+            data-ng-hide="is3dEnabled"
+            rel="#measures" gnv-tools-btn>
+      <span class="fa fa-square"></span>
+      <span role="tooltip" data-translate="">measureArea</span>
+    </button>
+    
     <button gi-btn class="btn btn-default" type="submit" ng-model="drawVector.inmap"
             data-ng-hide="is3dEnabled"
             rel="#draw" gnv-tools-btn>
@@ -167,7 +173,7 @@
 
 
   <!--Measure Info Panel-->
-  <div class="panel panel-default panel-tools" id="measures" ng-show="mInteraction.active">
+  <div class="panel panel-default panel-tools" id="measures" ng-show="polygonInteraction.active || lineInteraction.active">
     <div class="panel-heading">
       <h3>{{'Measures' | translate}}
         <button type="button" class="btn btn-default close">
@@ -177,12 +183,17 @@
     </div>
     <div class="panel-body panel-sm">
       <div class="gn-measure-text">
-        <div class="alert alert-warning hidden-print" translate>measure_instruction</div>
+        <div ng-show="lineInteraction.active" class="alert alert-warning hidden-print" translate>measure_length_instruction</div>
+        <div ng-show="polygonInteraction.active" class="alert alert-warning hidden-print" translate>measure_area_instruction</div>
         <dl class="dl-horizontal">
+        <div ng-show="lineInteraction.active">
           <dt>{{'Distance' | translate}}</dt>
           <dd>{{measureObj.distance | measure}}</dd>
+        </div>
+        <div ng-show="polygonInteraction.active">  
           <dt>{{'Surface' | translate}}</dt>
           <dd>{{measureObj.surface | measure:'area':['km&sup2', ' m&sup2']}}</dd>
+        </div>
         </dl>
       </div>
     </div>

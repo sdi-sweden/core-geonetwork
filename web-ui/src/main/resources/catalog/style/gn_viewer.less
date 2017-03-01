@@ -112,13 +112,14 @@
   }
   .control-tools {
     top: auto;
-    bottom: @viewport-padding;
+    bottom: 22em;
   }
   
   .control-tools-largemap {
   	top: auto;
     bottom: 15em;
   }
+
   .panel {
     background: rgba(255,255,255,.8);
   }
@@ -606,7 +607,38 @@ gn-features-tables {
   }
 }
 
+gn-wps-process-form {
+  .popover-parent {
+    position: relative;
+    .dropdown-menu {
+      padding:5px;
+    }
+  }
+
+  ul {
+    list-style: none;
+  }
+}
+
 .ol-dragbox, .gnbbox-dragbox {
    background-color: rgba(255,255,255,0.4);
    border: solid 2px red;
  }
+
+  //For map dock
+  .geodata-examples-expanded-with-cookie-alert .control-tools {
+    //bottom: 22em;
+    bottom: 24em;
+  }
+  .geodata-examples-collapsed-with-cookie-alert .control-tools{
+    //bottom: 11em;
+    bottom: 13em;
+  }
+  .geodata-examples-expanded-without-cookie-alert .control-tools {
+    //bottom: 14em;
+    bottom: 16em;
+  }
+  .geodata-examples-collapsed-without-cookie-alert .control-tools {
+    //bottom: 1em;
+    bottom: 4em;
+  }
