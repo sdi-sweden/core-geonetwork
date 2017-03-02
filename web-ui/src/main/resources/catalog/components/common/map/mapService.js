@@ -646,7 +646,33 @@
                     getCapLayer.Style[getCapLayer.
                         Style.length - 1].LegendURL[0] : undefined;
                 if (legendUrl) {
-                  legend = legendUrl.OnlineResource;
+                  default_legend = legendUrl.OnlineResource;
+                  var legend_size = "width=30&height=30&"
+                  /* To increase legend size 50% larger */
+                  if(default_legend.indexOf("width=") > -1){
+
+                    parse_url = default_legend.slice(default_legend.indexOf("width="))
+                    parse_params = parse_url.split("&")
+                    default_width = parse_params[0].split("=")
+                    default_height = parse_params[1].split("=")
+                    custom_width = default_width[1]*1.5;
+                    custom_height = default_height[1]*1.5;
+                    custom_params = "width=" + Math.round(custom_width) + "&height=" + Math.round(custom_height)
+                      if(parse_params.length <= 2){
+                        replace_legend = default_legend.replace(default_legend.slice(default_legend.indexOf("width=")), custom_params)
+                        legend = replace_legend
+                      }
+                      else{
+                       replace_legend = default_legend.replace(default_legend.slice(default_legend.indexOf("width="), default_legend.indexOf("layer=") - 1),custom_params)
+                       legend = replace_legend
+                      }
+                      
+                  }
+                  else{
+
+                    legend = (default_legend.slice(0, default_legend.indexOf("layer=")) + legend_size) + 
+                    default_legend.slice(default_legend.indexOf("layer="), default_legend.length)
+                  }
                 }
               }
               if (angular.isDefined(getCapLayer.Attribution)) {

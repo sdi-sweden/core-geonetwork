@@ -1615,8 +1615,8 @@ body.loggedin-user .header-logout {
   -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
   position: fixed;
-  width: 160px;
-  height: 160px;
+  width: 110px;
+  height: 235px;
   z-index: 100;
   right: 20px;
   bottom: 25px;
@@ -1985,12 +1985,15 @@ body.loggedin-user .header-logout {
   font-weight: normal;
   font-size: 11px;
 }
+.site-geo-type-filter .search-show-only {
+    padding-top: 5px;
+}
 .site-geo-type-filter .type-filter-list {
   display: inline-block;
   margin: 0 0 20px 18px;
   padding: 0;
   list-style: none;
-  max-width: 690px;
+  max-width: 730px;
 }
 .site-geo-type-filter .type-filter-list li {
   margin: 0 0 0 10px;
@@ -2038,6 +2041,13 @@ body.loggedin-user .header-logout {
   position: relative;
   top: 2px;
 }
+.site-geo-type-filter .type-filter-list .home {
+  color: #5d8886;
+  font-size: 17px;
+  margin-right: 4px;
+  position: relative;
+  top: 1px;
+}
 .site-geo-type-filter .type-filter-list .download-icn-cont {
   position: relative;
   margin-right: 5px;
@@ -2070,11 +2080,12 @@ body.loggedin-user .header-logout {
   margin-left: 40px;
   letter-spacing: 1px;
 }
-.site-geo-type-filter .help-icn-cont {
+/*.site-geo-type-filter .help-icn-cont {
   position: absolute;
   right: -38px;
   top: 38px;
 }
+
 .site-geo-type-filter .help-icn-cont .help-icn-circle {
   width: 16px;
   height: 16px;
@@ -2083,7 +2094,8 @@ body.loggedin-user .header-logout {
   font-size: 12px;
   top: -4px;
   left: -1px;
-}
+}*/
+
 .geo-categories {
   max-width: 1270px;
   width: 100%;
@@ -2255,7 +2267,7 @@ body.loggedin-user .header-logout {
   }
   .site-geo-type-filter .other-filter-help-icn {
     right: 0px;
-    top: 70px;
+    top: 0px;
   }
 }
 @media screen and (max-width: 1236px) {
@@ -2276,7 +2288,7 @@ body.loggedin-user .header-logout {
     margin-top: 5px;
   }
   .site-geo-type-filter .type-filter-list {
-    max-width: 680px;
+    max-width: 670px;
     margin-bottom: 0;
     margin-top: -6px;
   }
@@ -2288,7 +2300,7 @@ body.loggedin-user .header-logout {
 @media screen and (max-width: 1024px) {
   .site-geo-type-filter .type-filter-list {
     margin-bottom: 0px;
-    max-width: 420px;
+    max-width: 590px;
   }
   .site-geo-type-filter .type-filter-list li {
     margin-left: 15px;
@@ -3434,9 +3446,11 @@ a.link-btn[disabled] {
 .site-geo-type-filter .other-filters {
   padding-top: 5px;
 }
-.site-geo-type-filter .help-icn-cont {
+
+/*.site-geo-type-filter .help-icn-cont {
   top: 27px;
-}
+}*/
+
 /* advanced filter */
 .advance-filters-cont .date-filter {
   padding: 25px 0 25px;
@@ -3757,4 +3771,30 @@ a.link-btn[disabled] {
   font-size: 16px;
   position: relative;
   top: -3px;
+}
+/* For custom resize map icon */
+.site-side-map-cont .map-tool-list li.resize.full .icon-cursor {
+  display: block;
+}
+.site-side-map-cont .map-tool-list li.resize.small .icon-cursor {
+  display: none;
+}
+.site-side-map-cont .map-tool-list li .icon-cursor {
+  font-size: 12px;
+}
+.site-side-map-cont .map-tool-list li .onMediumSized{
+   height: 25px;
+   width: 25px; 
+   display: block;
+   background-image : url(../catalog/views/swe/images/arrow-pointing-down-right.png);
+}
+.site-side-map-cont .map-tool-list li .onMaximised{
+   height: 25px;
+   width: 25px; 
+   display: block;
+   background-image : url(../catalog/views/swe/images/arrow.png);
+}
+
+.site-side-map-cont .map-tool-list li .onMediumSized:hover{
+   background-image : url(../catalog/views/swe/images/arrow.png);
 }

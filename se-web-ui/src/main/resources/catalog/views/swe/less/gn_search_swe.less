@@ -1,4 +1,4 @@
-@import "../../../style/gn_search.less";
+﻿@import "../../../style/gn_search.less";
 @import "../../../style/gn_metadata.less";
 
 /* Hide the tabset selector because tab
@@ -442,7 +442,10 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
     background: #ccc;
 }
-
+//Chrome background color
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
 // filter block arrows
 
 // filter block arrows and text
@@ -697,6 +700,10 @@ gn-features-tables {
 .cookie-warning {
   .alert;
   .alert-info;
+	position: fixed;
+    top: 0px;
+    height: 90px;
+	z-index: 501;
 }
 
 .gn-full {
@@ -1002,7 +1009,7 @@ html, body {
 /* ----- smaller screens */
 @media screen and (max-width: 1300px) {
   .site-geo-type-filter .other-filter-help-icn {
-    top: 38px; 
+    top: 0px;
   }
   .site-geo-type-filter .other-filters {
     margin-right: 22px;
@@ -1088,13 +1095,13 @@ html, body {
 
 // header
 body {
-  padding-top: 60px;
+  padding-top: 150px; // 60 + 90 = 150
   -ms-overflow-style:scrollbar;
 }
 .header-cont {
   position: fixed;
   height: 60px;
-  top: 0;
+  top: 90px;
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
 
   .header-left-cont {
