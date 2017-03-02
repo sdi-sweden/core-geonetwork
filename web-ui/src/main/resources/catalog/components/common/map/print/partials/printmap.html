@@ -12,6 +12,7 @@
     <div class="">
       <select class="form-control"
               data-ng-model="config.layout"
+              data-ng-change="refreshComp()"
               data-ng-options="l.name for l in config.layouts"></select>
     </div>
   </div>

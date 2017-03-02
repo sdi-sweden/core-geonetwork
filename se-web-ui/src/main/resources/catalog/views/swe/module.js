@@ -121,7 +121,7 @@
 
       $scope.selectedPredefinedMap = gnGlobalSettings.predefinedSelectedMap;
       $scope.collapsed = false;
-
+      $scope.mapFullView = false;
       $scope.$on('someEvent', function(event, map) {
         alert('event received. url is: ' + map.url);
 
@@ -530,6 +530,22 @@
         }
         
       };
+	  
+	  $scope.fetchInitiativKeyword = function(md) {
+		var imgPath = '../../catalog/views/swe/images/noto.png';
+		if(md) {
+			var initiativKeyword = md.initiativKeyword;
+			if(initiativKeyword) {
+				var initiativKeywordString = initiativKeyword.toString();
+				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using 'Ö' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
+					imgPath = '../../catalog/views/swe/images/opendata.png';
+				} else if(initiativKeywordString.indexOf('Geodatasamverkan') > -1) {
+					imgPath = '../../catalog/views/swe/images/geodatacooperation.png';
+				}
+			}
+		}
+        return imgPath;     
+      };
 
       /**
        * Toggle size of floating map
@@ -619,6 +635,7 @@
       };
       
       $scope.resizeMapPanel = function() {
+          $scope.mapFullView =! $scope.mapFullView;
           var $b = angular.element(document).find('body');
           window_width = angular.element($window).width(),
           $map_data_list_cont = angular.element('.map-data-list-cont'),

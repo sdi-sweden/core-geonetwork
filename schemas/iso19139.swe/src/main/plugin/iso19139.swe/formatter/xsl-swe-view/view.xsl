@@ -1032,7 +1032,7 @@
 					</tr>
 				</xsl:if>
 				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation | srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation"/>
-				<xsl:apply-templates select="gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty | srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty"/>
+				<!-- <xsl:apply-templates select="gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty | srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty"/> -->
 				<!--<xsl:apply-templates select = "gmd:MD_DataIdentification/gmd:pointOfContact"/>-->
 				<!-- <tr>
 					<td colspan="2" class="Level-1-EmptyRow">-</td>
