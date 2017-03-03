@@ -8,18 +8,16 @@
 			  <swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showLargeMapPanel"></swe-predefined-maps-filter>
 		  </div>
     </div>
-
     <!-- Search filters -->
     <div class="site-filter-section-wrapper">
       <div class="site-filter-section">
         <div class="site-geo-type-filter">
-          <div class="clearfix pull-left">
-            <span class="filter-label" data-translate="">searchShowOnly</span>
-
-            <div data-swe-tooltip=""
+          <div class="clearfix pull-left search-show-only">
+			<div data-swe-tooltip=""
                  data-title="{{ 'searchShowOnlyTooltip-title' | translate }}"
                  data-text="{{ 'searchShowOnlyTooltip-desc' | translate }}"
                  data-link="{{ 'searchShowOnlyTooltip-link' | translate }}"></div>
+            <span class="filter-label" data-translate="">searchShowOnly</span>
           </div>
           <ul class="type-filter-list">
             <li>
