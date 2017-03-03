@@ -147,9 +147,7 @@
               delete defaultParams[p.toLowerCase()];
             }
           }
-          // force all calls through the proxy
-          return gnGlobalSettings.proxyUrl + encodeURIComponent(gnUrlUtils.append(parts[0],
-              gnUrlUtils.toKeyValue(defaultParams)));			  
+    	  return gnUrlUtils.append(parts[0], gnUrlUtils.toKeyValue(defaultParams));
 
         };
         return {
@@ -163,12 +161,12 @@
                 request: 'GetCapabilities'
               });
 
-              //send request and decode result
               if (gnUrlUtils.isValid(url)) {
-            	    //redirect http request via proxy
+            	//redirect http request via proxy
               	if (!url.includes("https://")) {
               		url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
               	}  
+              	//send request and decode result
                 $http.get(url, {
                   cache: true
                 })
@@ -197,9 +195,9 @@
 
               if (gnUrlUtils.isValid(url)) {
           	    //redirect http request via proxy
-                	if (!url.includes("https://")) {
-                		url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                	}  
+                if (!url.includes("https://")) {
+                	url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                }  
                 $http.get(url, {
                   cache: true
                 })
