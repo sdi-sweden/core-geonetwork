@@ -58,6 +58,13 @@
         <div class="filter-options-cont">
           <div class="basic-filters-cont active">
             <ul class="geo-categories">
+              <div class="geo-cat">
+			    <div data-swe-tooltip=""
+				  data-title="{{ 'search-title' | translate }}"
+				  data-text="{{ 'search-desc' | translate }}"
+				  data-link="{{ 'search-link' | translate }}">
+				</div>
+			  </div>
               <li data-ng-repeat="topic in topicCategories | orderBy: translatedTopicCat"
                   data-ng-click="toggleTopicCategory(topic)"
                   data-ng-class="{'active': isTopicCategorySelected(topic)}"><a href="" data-translate="">{{topic}}</a></li>
