@@ -15,9 +15,25 @@
         <span class="hidden-xs hidden-sm" data-translate="">otherGeodata</span><span class="icon-down-dir"></span>
       </div>
       <ul class="-list">
-        <li><a href="geodata_row_popup.html" class="-text-link"><span data-translate="">getService</span></a></li>
+        <li><a class="-text-link" target="_blank" href="https://md.nordu.net/role/idp.ds?entityID=https%3A%2F%2Fzeus.slu.se%2Fshibboleth&return=https%3A%2F%2Fzeus.slu.se%2FShibboleth.sso%2FLogin%3FSAMLDS%3D1%26target%3Dss%253Amem%253Abee2d400bb2bcf73625857e3ebfafb2d8fda423ff3df56c3eaa9db9d861e1b6e">
+              <span data-translate="">getService</span>
+            </a>
+        </li>
       </ul>
     </div>
+    <ul class="geotechnic-cont">
+		<li class="geotechnic-cont-li">
+	    	<a class="-text-link" target="_blank" href="http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/">
+    			<span class="icon-folder"></span>
+	    		<span class="text hidden-xs hidden-sm" data-translate="">NorwegianMetadata</span>
+	    	</a>
+			<div data-swe-tooltip=""
+                data-title="{{ 'NorksaDataTooltip-title' | translate }}"
+                data-text="{{ 'NorksaDataTooltip-desc' | translate }}"
+                data-link="{{ 'NorksaDataTooltip-link' | translate }}">
+	      	</div>
+	    </li>
+	</ul>            
 	<swe-geo-technics-filter data-config-url="{{geotechnicsUrl}}" data-show-map-fn="showMapPanel"></swe-geo-technics-filter>
     <a data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="../../login" class="header-login header-text">
       <span class="hidden-xs hidden-sm" data-translate="">forPublishers</span>

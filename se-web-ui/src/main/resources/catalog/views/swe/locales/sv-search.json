@@ -91,6 +91,9 @@
     "layer": "Lager",
     "nonSweMetadata": "Metadata följer inte den senaste Nationella metadataprofilen. När metadata redigeras uppgraderas metadata till denna nya profil. Vill du göra detta ?",
     "showServices": "Visa tjänster",
-    "showDatasets": "Dataset"
-
+    "showDatasets": "Dataset",
+    "NorwegianMetadata": "Norska Data",
+    "NorksaDataTooltip-title": "Norska Data",
+    "NorksaDataTooltip-desc": "Access to Norwegian metadata services",
+    "NorksaDataTooltip-link": "http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/"
 }
