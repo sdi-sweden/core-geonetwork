@@ -1362,7 +1362,7 @@ Exempelvis: datamängd, datamängdserie eller tjänst.…</description>
         <condition>mandatory</condition>
     </element>
     <element id="573.0" name="gmd:identifier">
-        <label>Identifier</label>
+        <label>Identifierare för resurs</label>
         <description>Unique identifier for the resource. EXAMPLE: Universal Product Code (UPC),
             National Stock Number (NSN)</description>
     </element>
@@ -1929,20 +1929,21 @@ Ex. SS-EN ISO 19115.</description>
         <description>annan information som är nödvändig för att göra referensen fullständig och som inte kan beskrivas på annat ställe</description>
     </element>
     <element id="72.0" name="gmd:otherConstraints">
-        <label>Övriga restriktioner</label>
+        <label>Andra restriktioner</label>
         <description>Andra restriktioner och rättsliga förutsättningar för åtkomst och nyttjande av resursen (eller metadata)</description>
         <condition>conditional</condition>
-		<helper sort="false">
-			<option show="y" title="Inga begransningar" value="inga begransningar">Inga begränsningar</option>
+		<helper sort="false"  relAtt="xlink:href">
+
+			<option show="y" value="inga begransningar">Inga begränsningar</option>
 			<option show="y" value="-----Restriktioner tillämpliga för Inspire">-----Restriktioner tillämpliga för Inspire</option>
-			<option show="y" value="Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag">Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag</option>
-			<option show="y" value="Internationella förbindelser, allmän säkerhet eller nationellt försvar">Internationella förbindelser, allmän säkerhet eller nationellt försvar</option>
-			<option show="y" value="Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.">Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.</option>
-			<option show="y" value="Sekretess som omfattar kommersiell eller industriell information, där sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning i syfte att skydda legitima ekonomiska intressen, inbegripet det allmänna intresset att upprätthålla sekretess för statistiska uppgifter och skattesekretess">Sekretess som omfattar kommersiell eller industriell information, där sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning i syfte att skydda legitima ekonomiska intressen, inbegripet det allmänna intresset att upprätthålla sekretess för statistiska uppgifter och skattesekretess</option>
-			<option show="y" value="Immateriella rättigheter">Immateriella rättigheter</option>
-			<option show="y" value="Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning">Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning</option>
-			<option show="y" value="En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.">En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.</option>
-			<option show="y" value="Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter">Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter</option>
+			<option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a" value="Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag">Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b" value="Internationella förbindelser, allmän säkerhet eller nationellt försvar">Internationella förbindelser, allmän säkerhet eller nationellt försvar</option>
+			<option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c" value="Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.">Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.</option>
+			<option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1d" value="Sekretess som omfattar kommersiell eller industriell information, där sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning i syfte att skydda legitima ekonomiska intressen, inbegripet det allmänna intresset att upprätthålla sekretess för statistiska uppgifter och skattesekretess">Sekretess som omfattar kommersiell eller industriell information, där sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning i syfte att skydda legitima ekonomiska intressen, inbegripet det allmänna intresset att upprätthålla sekretess för statistiska uppgifter och skattesekretess</option>
+			<option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1e" value="Immateriella rättigheter">Immateriella rättigheter</option>
+			<option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1f" value="Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning">Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning</option>
+			<option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g" value="En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.">En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.</option>
+			<option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h" value="Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter">Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter</option>
 		</helper>
     </element>
     <element id="406.0" name="gmd:page">
@@ -2070,8 +2071,7 @@ finns tillgängliga</description>
         <description>orsak till att metadataelementet har lagts till</description>
     </element>
     <element id="187.0" name="gmd:referenceSystemIdentifier">
-        <label>Identifierare för
-referenssystem</label>
+        <label>Rumsligt referenssystem</label>
         <description>Namn som identifierar referenssystem</description>
         <condition>conditional</condition>
     </element>
@@ -2337,7 +2337,7 @@ Ex. “under produktion” eller ”färdigställd”.</description>
 Ex. antal gråtoner i en rasterbild</description>
     </element>
     <element id="41.0" name="gmd:topicCategory">
-        <label>Ämneskategori</label>
+        <label>Ämnesområden</label>
         <description>Ämneskategori(er) som beskriver huvudsakligt innehåll
 i resursen</description>
         <condition>mandatory</condition>
@@ -2622,7 +2622,7 @@ Detta undvikar vi att ange.</description>
 		<description></description>
 	</element>
     <element name="gml:TimePeriod">
-        <label>Time period</label>
+        <label>Temporal Utstäckning</label>
         <description></description>
     </element>
     <element name="gml:TimeNode">

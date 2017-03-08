@@ -155,6 +155,9 @@
 
     <!-- the double // here seems needed to index MD_DataIdentification when
          it is nested in a SV_ServiceIdentification class -->
+	<xsl:variable name="fid" select="//gmd:fileIdentifier/gco:CharacterString/text()"/>
+	<xsl:variable name="title" select="//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString/text()"/>
+	<!--<xsl:message>I INDEX-FIELDS TITEL: <xsl:value-of select="$fid" />  <xsl:value-of select="$title" /></xsl:message>-->
 
     <xsl:for-each select="gmd:identificationInfo//gmd:MD_DataIdentification|
                 gmd:identificationInfo//*[contains(@gco:isoType, 'MD_DataIdentification')]|
@@ -217,8 +220,46 @@
           <Field name="publicationDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
                  store="true" index="true"/>
           <xsl:if test="$useDateAsTemporalExtent">
-            <Field name="tempExtentBegin" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
-                   store="true" index="true"/>
+            <Field name="tempExtentBegin" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>
+          </xsl:if>
+        </xsl:for-each>
+
+        <!-- Resource date: SWE profile custom field for date search queries: Max creation or revision date -->
+        <xsl:variable name="resourceDates">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date/*">
+            <xsl:choose>
+              <xsl:when test="string-length(.) > 10">
+                <d><xsl:value-of select="substring(., 1, 10)" /></d>
+              </xsl:when>
+              <xsl:when test="string-length(.) = 10">
+                <d><xsl:value-of select="." /></d>
+              </xsl:when>
+              <xsl:when test="string-length(.) = 7">
+                <xsl:variable name="aux"><xsl:call-template name="dateWithLastDayOfMonth"><xsl:with-param name="given-date"><xsl:value-of select="." />-01</xsl:with-param></xsl:call-template></xsl:variable>
+                <d><xsl:value-of select="." />-<xsl:value-of select="substring($aux, 9, 2)" /></d>
+              </xsl:when>
+
+              <xsl:when test="string-length(.) = 4">
+                <d><xsl:value-of select="." />-12-31</d>
+              </xsl:when>
+            </xsl:choose>
+            <xsl:if test="position() != last()">,</xsl:if>
+          </xsl:for-each>
+
+        </xsl:variable>
+        <xsl:variable name="resourceDateList" select="tokenize(normalize-space($resourceDates), ',')" />
+
+        <xsl:variable name="resourceDate" select="max($resourceDateList)" />
+
+        <xsl:if test="string($resourceDate)">
+          <Field name="resourceDate" string="{string($resourceDate)}" store="true" index="true"/>
+        </xsl:if>
+        <!-- Resource date: SWE profile custom field for date search queries: Max creation or revision date -->
+
+        <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
+          <Field name="publicationDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>
+          <xsl:if test="$useDateAsTemporalExtent">
+            <Field name="tempExtentBegin" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}" store="true" index="true"/>
           </xsl:if>
         </xsl:for-each>
 
@@ -365,6 +406,22 @@
                    string="{gmd:title/gco:CharacterString/text()}"
                    store="true" index="true"/>
           </xsl:if>
+      <!-- SDI-Sweden extension -->
+		   <xsl:if test="gmd:title/gco:CharacterString/text() != ''">
+				<xsl:variable name="thesaurusTitle" select="gmd:title/gco:CharacterString/text()"/>
+				<xsl:if test="$thesaurusTitle='Initiativ'  or $thesaurusTitle='Initiative'">
+                   <xsl:for-each select="//gmd:MD_Keywords/gmd:keyword/gco:CharacterString/text()">
+                       <xsl:variable name="keywordLower"  select="lower-case(.)"/>					
+                       <xsl:if test="$keywordLower='inspire'">
+							<Field name="inspireinitiativ" string="true" store="false" index="true"/>
+							<!--<xsl:message>IsInspireTheme: <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
+						</xsl:if>	
+		              <!--<xsl:message>keyword: <xsl:value-of select="$keywordLower" /></xsl:message>-->
+					</xsl:for-each>					  
+				</xsl:if>
+				<!--<xsl:message>Thesaurus namme (index): <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
+		 </xsl:if>
+		  <!-- //SDI-Sweden extension -->
 
 
           <xsl:if test="$indexAllKeywordDetails and $thesaurusIdentifier != ''">
@@ -432,11 +489,43 @@
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-      <xsl:apply-templates mode="index-contact"
+      <xsl:variable name="email" select="/gmd:MD_Metadata/gmd:contact[1]/gmd:CI_ResponsibleParty[1]/gmd:contactInfo[1]/gmd:CI_Contact[1]/gmd:address[1]/gmd:CI_Address[1]/gmd:electronicMailAddress[1]/gco:CharacterString[1]"/>
+
+      <xsl:for-each select="gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString|gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gmx:Anchor">
+
+        <Field name="orgName" string="{string(.)}" store="true" index="true"/>
+        <Field name="orgNameTree" string="{string(.)}" store="true" index="true"/>
+
+        <Field name="orgNameSuggestion" string="{string(.)}" store="true" index="true"/>
+        <Field name="myOrgName" string="{string(.)}" store="true" index="true"/>
+
+        <xsl:variable name="role"    select="../../gmd:role/*/@codeListValue"/>
+        <xsl:variable name="roleTranslation" select="util:getCodelistTranslation('gmd:CI_RoleCode', string($role), string($isoLangId))"/>
+        <xsl:variable name="logo"    select="../..//gmx:FileName/@src"/>
+        <xsl:variable name="email"   select="../../gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString"/>
+        <xsl:variable name="phone"   select="../../gmd:contactInfo/*/gmd:phone/*/gmd:voice[normalize-space(.) != '']/*/text()"/>
+        <xsl:variable name="individualName" select="../../gmd:individualName/gco:CharacterString/text()"/>
+        <xsl:variable name="positionName"   select="../../gmd:positionName/gco:CharacterString/text()"/>
+        <xsl:variable name="address" select="string-join(../../gmd:contactInfo/*/gmd:address/*/(
+                                          gmd:deliveryPoint|gmd:postalCode|gmd:city|
+                                          gmd:administrativeArea|gmd:country)/gco:CharacterString/text(), ', ')"/>
+
+        <Field name="responsibleParty"
+               string="{concat($roleTranslation, '|resource|', ., '|', $logo, '|',  string-join($email, ','), '|', $individualName, '|', $positionName, '|', $address, '|', string-join($phone, ','))}"
+               store="true" index="false"/>
+
+        <xsl:if test="$role = 'owner'">
+          <Field name="orgNameOwner" string="{string(.)}" store="true" index="true"/>
+        </xsl:if>
+      </xsl:for-each>
+
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+      <!--<xsl:apply-templates mode="index-contact"
                            select="gmd:pointOfContact/gmd:CI_ResponsibleParty">
         <xsl:with-param name="type" select="'resource'"/>
         <xsl:with-param name="fieldPrefix" select="'responsibleParty'"/>
-      </xsl:apply-templates>
+      </xsl:apply-templates>-->
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -665,11 +754,13 @@
             <Field name="mimetype" string="{$mimetype}" store="true" index="true"/>
           </xsl:if>
 
-          <xsl:if test="contains($protocol, 'WWW:DOWNLOAD')">
+          <!-- SWE customisation -->
+          <xsl:if test="lower-case($protocol) = 'http:ogc:wfs' or starts-with(lower-case($protocol), 'http:nedladdning')">
             <Field name="download" string="true" store="false" index="true"/>
           </xsl:if>
 
-          <xsl:if test="contains($protocol, 'OGC:WMS') or $wmsLinkNoProtocol">
+          <!-- SWE customisation -->
+          <xsl:if test="lower-case($protocol) = 'http:ogc:wms'">
             <Field name="dynamic" string="true" store="false" index="true"/>
           </xsl:if>
 
@@ -681,8 +772,8 @@
           </xsl:if>
 
           <!-- Add KML link if WMS -->
-          <xsl:if
-            test="starts-with($protocol,'OGC:WMS') and string($linkage)!='' and string($title)!=''">
+          <!-- SWE customisation -->
+          <xsl:if test="lower-case($protocol) = 'http:ogc:wms' and string($linkage)!='' and string($title)!=''">
             <!-- FIXME : relative path -->
             <Field name="link" string="{concat($title, '|', $desc, '|',
                                                 '../../srv/en/google.kml?uuid=', /gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString, '&amp;layers=', $title,
@@ -705,8 +796,97 @@
 
           <xsl:if test="$wmsLinkNoProtocol">
             <Field name="link" string="{concat($title, '|', $desc, '|',
-                                                $linkage, '|OGC:WMS|application/vnd.ogc.wms_xml', '|', $tPosition)}"
+                                                $linkage, '|OGC:WMS|application/vnd.ogc.wms_xml', '|', $tPosition)}" store="true" index="false"/>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:for-each>
+
+
+      <xsl:for-each select="gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/*/gmd:organisationName/gco:CharacterString|gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/*/gmd:organisationName/gmx:Anchor">
+        <Field name="metadataPOC" string="{string(.)}" store="true" index="true"/>
+
+        <xsl:variable name="role" select="../../gmd:role/*/@codeListValue"/>
+        <xsl:variable name="roleTranslation" select="util:getCodelistTranslation('gmd:CI_RoleCode', string($role), string($isoLangId))"/>
+        <xsl:variable name="logo" select="../..//gmx:FileName/@src"/>
+        <xsl:variable name="email" select="../../gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString"/>
+        <xsl:variable name="phone" select="../../gmd:contactInfo/*/gmd:phone/*/gmd:voice[normalize-space(.) != '']/*/text()"/>
+        <xsl:variable name="individualName" select="../../gmd:individualName/gco:CharacterString/text()"/>
+        <xsl:variable name="positionName" select="../../gmd:positionName/gco:CharacterString/text()"/>
+        <xsl:variable name="address" select="string-join(../../gmd:contactInfo/*/gmd:address/*/(
+                                          gmd:deliveryPoint|gmd:postalCode|gmd:city|
+                                          gmd:administrativeArea|gmd:country)/gco:CharacterString/text(), ', ')"/>
+
+        <Field name="responsibleParty"
+               string="{concat($roleTranslation, '|distribution|', ., '|', $logo, '|', string-join($email, ','), '|', $individualName, '|', $positionName, '|', $address, '|', string-join($phone, ','))}"
                    store="true" index="false"/>
+      </xsl:for-each>
+
+      <xsl:for-each select="gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions">
+        <xsl:variable name="tPosition" select="position()"></xsl:variable>
+        <xsl:for-each select="gmd:onLine/gmd:CI_OnlineResource[gmd:linkage/gmd:URL!='']">
+          <xsl:variable name="download_check">
+            <xsl:text>&amp;fname=&amp;access</xsl:text>
+          </xsl:variable>
+          <xsl:variable name="linkage" select="gmd:linkage/gmd:URL" />
+          <xsl:variable name="title" select="normalize-space(gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType)"/>
+          <xsl:variable name="desc" select="normalize-space(gmd:description/gco:CharacterString)"/>
+          <xsl:variable name="protocol" select="normalize-space(gmd:protocol/gco:CharacterString)"/>
+          <xsl:variable name="mimetype" select="geonet:protocolMimeType($linkage, $protocol, gmd:name/gmx:MimeFileType/@type)"/>
+
+          <!-- If the linkage points to WMS service and no protocol specified, manage as protocol OGC:WMS -->
+          <xsl:variable name="wmsLinkNoProtocol" select="contains(lower-case($linkage), 'service=wms') and not(string($protocol))" />
+
+          <!-- ignore empty downloads -->
+          <xsl:if test="string($linkage)!='' and not(contains($linkage,$download_check))">
+            <Field name="protocol" string="{string($protocol)}" store="true" index="true"/>
+          </xsl:if>
+
+          <xsl:if test="string($title)!='' and string($desc)!='' and not(contains($linkage,$download_check))">
+            <Field name="linkage_name_des" string="{string(concat($title, ':::', $desc))}" store="true" index="true"/>
+          </xsl:if>
+
+          <xsl:if test="normalize-space($mimetype)!=''">
+            <Field name="mimetype" string="{$mimetype}" store="true" index="true"/>
+          </xsl:if>
+
+          <!-- SWE customisation -->
+          <xsl:if test="lower-case($protocol) = 'http:ogc:wfs' or lower-case($protocol) = 'http:nedladdning'">
+            <Field name="download" string="true" store="false" index="true"/>
+          </xsl:if>
+
+          <!-- SWE customisation -->
+          <xsl:if test="lower-case($protocol) = 'http:ogc:wms'">
+            <Field name="dynamic" string="true" store="false" index="true"/>
+          </xsl:if>
+
+          <!-- ignore WMS links without protocol (are indexed below with mimetype application/vnd.ogc.wms_xml) -->
+          <xsl:if test="not($wmsLinkNoProtocol)">
+            <Field name="link" string="{concat($title, '|', $desc, '|', $linkage, '|', $protocol, '|', $mimetype, '|', $tPosition)}" store="true" index="false"/>
+          </xsl:if>
+
+          <!-- Add KML link if WMS -->
+          <!-- SWE customisation -->
+          <xsl:if test="lower-case($protocol) = 'http:ogc:wms' and string($linkage)!='' and string($title)!=''">
+            <!-- FIXME : relative path -->
+            <Field name="link" string="{concat($title, '|', $desc, '|',
+                                                '../../srv/en/google.kml?uuid=', /gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString, '&amp;layers=', $title,
+                                                '|application/vnd.google-earth.kml+xml|application/vnd.google-earth.kml+xml', '|', $tPosition)}" store="true" index="false"/>
+          </xsl:if>
+
+          <!-- Try to detect Web Map Context by checking protocol or file extension -->
+          <xsl:if test="starts-with($protocol,'OGC:WMC') or contains($linkage,'.wmc')">
+            <Field name="link" string="{concat($title, '|', $desc, '|',
+                                                $linkage, '|application/vnd.ogc.wmc|application/vnd.ogc.wmc', '|', $tPosition)}" store="true" index="false"/>
+          </xsl:if>
+          <!-- Try to detect OWS Context by checking protocol or file extension -->
+          <xsl:if test="starts-with($protocol,'OGC:OWS-C') or contains($linkage,'.ows')">
+            <Field name="link" string="{concat($title, '|', $desc, '|',
+                                                $linkage, '|application/vnd.ogc.ows|application/vnd.ogc.ows', '|', $tPosition)}" store="true" index="false"/>
+          </xsl:if>
+
+          <xsl:if test="$wmsLinkNoProtocol">
+            <Field name="link" string="{concat($title, '|', $desc, '|',
+                                                $linkage, '|OGC:WMS|application/vnd.ogc.wms_xml', '|', $tPosition)}" store="true" index="false"/>
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
@@ -862,14 +1042,23 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <xsl:for-each select="gmd:contact/*">
-      <Field name="metadataPOC"
-             string="{string(gmd:organisationName/(gco:CharacterString|gmx:Anchor))}"
-             store="true" index="true"/>
-      <xsl:apply-templates mode="index-contact" select=".">
-        <xsl:with-param name="type" select="'metadata'"/>
-        <xsl:with-param name="fieldPrefix" select="'responsibleParty'"/>
-      </xsl:apply-templates>
+    <xsl:for-each select="gmd:contact/*/gmd:organisationName/gco:CharacterString|gmd:contact/*/gmd:organisationName/gmx:Anchor">
+      <Field name="metadataPOC" string="{string(.)}" store="true" index="true"/>
+
+      <xsl:variable name="role" select="../../gmd:role/*/@codeListValue"/>
+      <xsl:variable name="roleTranslation" select="util:getCodelistTranslation('gmd:CI_RoleCode', string($role), string($isoLangId))"/>
+      <xsl:variable name="logo" select="../..//gmx:FileName/@src"/>
+      <xsl:variable name="email" select="../../gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString"/>
+      <xsl:variable name="phone" select="../../gmd:contactInfo/*/gmd:phone/*/gmd:voice[normalize-space(.) != '']/*/text()"/>
+      <xsl:variable name="individualName" select="../../gmd:individualName/gco:CharacterString/text()"/>
+      <xsl:variable name="positionName" select="../../gmd:positionName/gco:CharacterString/text()"/>
+      <xsl:variable name="address" select="string-join(../../gmd:contactInfo/*/gmd:address/*/(
+                                          gmd:deliveryPoint|gmd:postalCode|gmd:city|
+                                          gmd:administrativeArea|gmd:country)/gco:CharacterString/text(), ', ')"/>
+
+      <Field name="responsibleParty"
+             string="{concat($roleTranslation, '|metadata|', ., '|', $logo, '|', string-join($email, ','), '|', $individualName, '|', $positionName, '|', $address, '|', string-join($phone, ','))}"
+             store="true" index="false"/>
     </xsl:for-each>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -944,7 +1133,7 @@
   </xsl:template>
 
 
-  <xsl:template mode="index-contact" match="gmd:CI_ResponsibleParty">
+  <!--<xsl:template mode="index-contact" match="gmd:CI_ResponsibleParty">
     <xsl:param name="type"/>
     <xsl:param name="fieldPrefix"/>
 
@@ -988,7 +1177,7 @@
       <Field name="{$fieldPrefix}Uuid" string="{string(.)}" store="true" index="true"/>
       <Field name="{$fieldPrefix}RoleAndUuid" string="{$role}|{string(.)}" store="true" index="true"/>
     </xsl:for-each>
-  </xsl:template>
+  </xsl:template>-->
 
   <!-- ========================================================================================= -->
 

@@ -53,7 +53,8 @@
               <a class="-label-link" href=""><span class="icon-pencil"></span>{{ 'edit' | translate }}</a>
             </div>
             <div class="link-cont">
-              <a class="-label-link" href="pdf?uuid={{mdView.current.record['geonet:info'].uuid}}"><span class="icon-print"></span>{{ 'Print' | translate }}</a>
+              <a class="-label-link" href="" data-ng-click="printPdf(mdView)"><span class="icon-print"></span>{{ 'Print' | translate }}</a>
+			  <iframe id="iframe" style="width:0px;height:0px;display:block;visibility:hidden"/>
             </div>
 
             <!-- Metadata links -->

@@ -107,7 +107,7 @@
   <spatialResolution>Rumslig upplösning (skala)</spatialResolution>
   <spatialDistance>Rumslig upplösning (distans)</spatialDistance>
   <accessConstraints>Åtkomst begränsningar</accessConstraints>
-  <useLimitation>Användningsbegräsningar</useLimitation>
+  <useLimitation>Användbarhetsbegränsningar</useLimitation>
   <useConstraints>Use constraints</useConstraints>
   <add-resource-id>Skapa ny identifierare för resurs</add-resource-id>
   <add-resource-idHelp>Skapa en identifierare baserat på katalogens adress (ex. http://www.organization.org/catalogue/5391bf69-44bc-4ea0-8cc0-6cf6c3bc81ae).</add-resource-idHelp>
@@ -144,13 +144,13 @@
   <onLineLinkProtocol>Länktyp</onLineLinkProtocol>
   <onLineLinkName>Namn</onLineLinkName>
   <onLineLinkUrl>Url</onLineLinkUrl>
-  <http_ogc_wfs>Kartjänst (WFS)</http_ogc_wfs>
-  <http_ogc_wms>Kartjänst (WMS)</http_ogc_wms>
+  <http_ogc_wfs>Karttjänst (WFS)</http_ogc_wfs>
+  <http_ogc_wms>Karttjänst (WMS)</http_ogc_wms>
   <http_information>Informationssida</http_information>
   <http_nedladdning>Nedladdningslänk</http_nedladdning>
   <http_nedladdning_atom>Nedladdningslänk (ATOM)</http_nedladdning_atom>
   <roleLabel>Ansvarsområde</roleLabel>
-  <otherConstraints>Övriga restriktioner</otherConstraints>
+  <otherConstraints>Andra restriktioner</otherConstraints>
   <scales>Rumslig upplösning</scales>
 
   <addInspireTheme>add Nyckelord</addInspireTheme>

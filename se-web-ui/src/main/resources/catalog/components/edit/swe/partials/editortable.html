@@ -16,13 +16,13 @@
     </div>
   </div>
 
-	<div data-ng-show="showResourceContactDD">
+	<!-- <div data-ng-show="showResourceContactDD">
 		<select class="form-control" data-ng-model="organisation" data-ng-change="populateResourseContactFields(organisation)">
 			<option data-ng-repeat="org in organisationNames" title="{{org.displayValue}}" data-ng-value="org.fieldValue">
 				{{org.displayValue}}
 			</option>
 		</select>
-	</div>
+	</div> -->
   <span data-ng-repeat="row in rows | filter: isExistingItem">
   <input type="hidden" data-ng-repeat="m in rowsModel" data-ng-value="row[m.name]" name="_{{row.refChildren[m.name]}}" data-ng-if="m.codelist == false"/>
   <input type="hidden" data-ng-repeat="m in rowsModel" data-ng-value="row[m.name]" name="_{{row.refChildren[m.name]}}_codeListValue" data-ng-if="m.codelist == true"/>

@@ -127,6 +127,7 @@
     "Clear": "Netejar",
     "ClearTitle": "Netejar cerca actual, filtres i ordenació.",
     "hitsPerPage": "Entrades per pàgina",
+	"of": "of",
     "chooseRecordsPerPage": "Prem per seleccionar el nombre d'entrades per pàgina",
     "sortedBy": "Ordenat per {{field}}",
     "relevance": "rellevància",

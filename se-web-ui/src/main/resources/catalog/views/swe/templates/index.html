@@ -10,7 +10,7 @@
 	</div>
   </div>
 
-  <div data-gn-alert-manager=""></div><cookiewarning></cookiewarning>
+  <div data-gn-alert-manager="" data-ng-init="init()"></div><cookiewarning></cookiewarning>
 
   <div class="overlay"></div> 
 
@@ -199,9 +199,18 @@
           <!-- Full map -->
           <div class="map-cont">
             <ul class="map-tool-list" style="z-index: 1000">
-              <li><a href="" data-ng-click="hideMapPanel()" class="icon-cancel"></a></li>
               <!--<li class=""><a href="" class="icon-buffer"></a></li>-->
-              <li id="map-panel-resize" class="resize full"><a href="" data-ng-click="resizeMapPanel()"><span class="icon-resize-full"></span><span class="icon-resize-small"></span></a></li>
+              <li data-ng-show="!mapFullView" id="map-panel-resize" class="resize full"><a href="" data-ng-click="resizeMapPanel()"><span class="icon-cursor"></span></a></li>
+              <li data-ng-show="mapFullView">
+              <a href="" data-ng-click="resizeMapPanel()">
+              <span class="onMaximised">
+              </span>
+              </a></li>
+              <li data-ng-show="!mapFullView">
+              <a href="" data-ng-click="hideMapPanel()">
+              <span class="onMediumSized">
+              </span>
+              </a></li>
             </ul>
             <div gn-main-viewer=""
                  data-map="searchObj.viewerMap">

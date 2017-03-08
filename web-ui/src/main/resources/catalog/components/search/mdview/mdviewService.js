@@ -184,6 +184,7 @@
        * @param {ol.layer} layer
        */
       this.openMdFromLayer = function(layer) {
+		var appUrl = gnSearchLocation.appUrl();
         var md = layer.get('md');
         if (!md && layer.get('metadataUrl')) {
 
@@ -191,13 +192,19 @@
           if (mdUrl.host == gnSearchLocation.host()) {
             gnSearchLocation.setUuid(layer.get('metadataUuid'));
           } else {
-            window.open(layer.get('metadataUrl'), '_blank');
+			var url = layer.get('metadataUrl');
+			url = url.replace(/&/g, "!!!");
+			var finalUrl = appUrl + '/GetMetaDataURL?url=' + url;
+            window.open(finalUrl, '_blank');
           }
         }
         else {
-          this.feedMd(0, md, [md]);
+			var uuid = md.getUuid();
+			var finalUrl = appUrl + '/GetMetaDataById?id=' + uuid;
+			window.open(finalUrl, '_blank');
+          //this.feedMd(0, md, [md]);
 
-          $rootScope.$broadcast('layerView');
+          //$rootScope.$broadcast('layerView');
         }
       };
     }

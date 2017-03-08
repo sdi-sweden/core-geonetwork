@@ -186,6 +186,39 @@
                }
              };
 
+             attrs.$observe('gnDatePicker', function(value) {
+                 scope.value = value;
+
+                 scope.mode = scope.year = scope.month = scope.time =
+                     scope.date = scope.dateDropDownInput = '';
+                 scope.withIndeterminatePosition =
+                     attrs.indeterminatePosition !== undefined;
+
+                 if (!scope.value) {
+                     scope.value = '';
+                 } else if (scope.value.length === 4) {
+                     scope.year = parseInt(scope.value);
+                     scope.mode = 'year';
+                 } else if (scope.value.length === 7) {
+                     scope.month = moment(scope.value, 'yyyy-MM').toDate();
+                     scope.mode = 'month';
+                 } else {
+                     var isDateTime = scope.value.indexOf('T') !== -1;
+                     var tokens = scope.value.split('T');
+                     scope.date = new Date(isDateTime ? tokens[0] : scope.value);
+                     scope.time = isDateTime ?
+                         moment(tokens[1], 'HH:mm:ss').toDate() :
+                         undefined;
+                 }
+                 if (scope.dateTypeSupported !== true) {
+                     scope.dateInput = scope.value;
+                     scope.dateDropDownInput = scope.value;
+                 }
+
+             });
+
+
+
              scope.$watch('date', buildDate);
              scope.$watch('time', buildDate);
              scope.$watch('year', buildDate);

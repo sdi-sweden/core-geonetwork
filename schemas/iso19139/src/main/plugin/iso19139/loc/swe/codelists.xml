@@ -1497,11 +1497,11 @@
 			<description>information om informationsinsamlingen</description>
 		</entry>
 		-->
-		<entry>
+		<!--<entry>
 			<code>document</code>
 			<label>Dokument</label>
 			<description>Dokument</description>
-		</entry>
+		</entry>-->
 		<entry>
 			<code>dataset</code>
 			<label>Datamängd</label>
@@ -1554,7 +1554,7 @@
 			<code>fieldSession</code>
 			<label>Fältarbete</label>
 			<description>information om fältarbete</description>
-		</entry>
+		</entry>-->
 		
 		<entry>
 			<code>software</code>
@@ -1562,7 +1562,7 @@
 			<description>information om en programvara eller enskild funktion</description>
 		</entry>
 			
-		<entry>
+		<!--<entry>
 			<code>publication</code>
 			<label>Publikation</label>
 			<description>Publicerat dokument</description>
@@ -1674,8 +1674,7 @@
 		<!-- === -->
 		<entry>
 			<code>climatologyMeteorologyAtmosphere</code>
-			<label>Klimatologi och
-			meteorolog</label>
+			<label>Atmosfär, klimatologi och meteorologi</label>
 			<description>processer och fenomen i atmosfären
 			Ex. molntäcke, väder, klimat, atmosfäriska förhållanden,
 			klimatförändringar, nederbörd.</description>

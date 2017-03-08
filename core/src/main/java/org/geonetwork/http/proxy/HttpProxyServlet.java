@@ -53,6 +53,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -136,7 +137,8 @@ public class HttpProxyServlet extends HttpServlet {
         try {
 
             String url = RequestUtil.getParameter(request, PARAM_URL, defaultProxyUrl);
-            String host = url.split("/")[2];
+            URL urlValue = new URL(url);
+            String host = urlValue.getHost();
             final String uri = createURI(request, url);
 
 
@@ -222,9 +224,9 @@ public class HttpProxyServlet extends HttpServlet {
 
         try {
             String url = RequestUtil.getParameter(request, PARAM_URL, defaultProxyUrl);
-            String host = url.split("/")[2];
+            URL urlValue = new URL(url);
+            String host = urlValue.getHost();
             final String uri = createURI(request, url);
-
 
             // Checks if allowed host
             if (!isAllowedHost(host)) {
@@ -264,6 +266,9 @@ public class HttpProxyServlet extends HttpServlet {
 
                     // Sets response contentType
                     response.setContentType(getResponseContentType(contentTypesReturned));
+
+                    // Sets the characterEncoding
+                    response.setCharacterEncoding(Constants.ENCODING);
 
                     String responseBody = IOUtils.toString(httpResponse.getEntity().getContent(), response.getCharacterEncoding()).trim();
 
@@ -328,7 +333,8 @@ public class HttpProxyServlet extends HttpServlet {
 
         try {
             String url = RequestUtil.getParameter(request, PARAM_URL, defaultProxyUrl);
-            String host = url.split("/")[2];
+            URL urlValue = new URL(url);
+            String host = urlValue.getHost();
 
             String uri = createURI(request, url);
 

@@ -49,9 +49,9 @@
         $scope.dialog = dialog;
         $scope.title = title;
         $scope.mandatory = mandatory;
-		$scope.organisationNames = null;
+		//$scope.organisationNames = null;
 		//if(name === 'distributorContact' || name === 'contact' || name === 'pointOfContact') {
-		if(name === 'pointOfContact') {
+		if(name === 'pointOfContact' || name === 'contact' || name === 'distributorContact') {
 			var userIdInScope = $scope.user.id;
 			var userGroupArray = [];
 			var userGrpUrl = '../api/0.1/users/' + userIdInScope + '/groups';
@@ -101,10 +101,17 @@
 								if(metadata) {
 									var allContacts = metadata.getAllContacts();
 									if(allContacts) {
-										var resourceContacts = allContacts.resource;
-										if(resourceContacts) {
-											for(var j = 0; j < resourceContacts.length; j++) {
-												var contact = resourceContacts[j];
+										var contacts = null;
+										if(name === 'pointOfContact') {
+											contacts = allContacts.resource;
+										} else if(name === 'distributorContact') {
+											contacts = allContacts.distribution;
+										} else if(name === 'contact') {
+											contacts = allContacts.metadata;
+										}
+										if(contacts) {
+											for(var j = 0; j < contacts.length; j++) {
+												var contact = contacts[j];
 												var ctcFieldValue = contact.org + '~' + contact.email + '~' + contact.phone; // ~ is used as a separator
 												var ctcDisplayValue = '( ' +contact.org + ' ) - ( ' + contact.email + ' ) - ( ' + contact.phone + ' )';// - is used as a separator
 												if(ctcFieldValue && ctcFieldValue.trim().length > 2) {// 2 for 2 tilde
@@ -122,7 +129,13 @@
 								}
 							}
 						}
-						$scope.organisationNames = organisationsArray;
+						if(name === 'pointOfContact') {
+							$scope.organisationNames.pointOfContact = organisationsArray;
+						} else if(name === 'contact') {
+							$scope.organisationNames.contact = organisationsArray;
+						} else if(name === 'distributorContact') {
+							$scope.organisationNames.distributorContact = organisationsArray;
+						}
 					});
 				}
 			});
@@ -238,15 +251,15 @@
 	  /**
      * Put the selected record from drop down into table-grid.
      */
-	  $scope.populateResourseContactFields = function(selectedOrganisation) {
-		$scope.mode = 'add'; // set the mode to 'add' always.
+	  $scope.populateContactFields = function(selectedOrganisation) {
+		//$scope.mode = 'add'; // set the mode to 'add' always.
 		$scope.editRow = {ref: ''}; // reset the editRow reference.
 		$scope.editRow.organisation = selectedOrganisation.split('~')[0]; // 0 always org
 		$scope.editRow.email = selectedOrganisation.split('~')[1]; // 1 always email
 		$scope.editRow.phone = selectedOrganisation.split('~')[2]; // 2 always phone
 		$scope.editRow.role = ''; // Role is always empty
 		
-		$scope.saveRow(); // Put the selected record from drop down into table-grid
+		//$scope.saveRow(); // Put the selected record from drop down into table-grid
 	  };
 
     }]);

@@ -127,6 +127,7 @@
     "Clear": "Effacer",
     "ClearTitle": "Effacer la recherche et les filtres en cours.",
     "hitsPerPage": "Fiches par page",
+	"of": "of",
     "chooseRecordsPerPage": "Choisir le nombre de fiches par page",
     "sortedBy": "Trier par {{field}}",
     "relevance": "pertinence",
