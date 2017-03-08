@@ -19,21 +19,17 @@
               <span data-translate="">getService</span>
             </a>
         </li>
+        <li><a class="-text-link" target="_blank" href="http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/">
+              <span data-translate="">norwegianMetadata</span>
+            </a>
+ 			<div data-swe-tooltip=""
+                data-title="{{ 'norksaDataTooltip-title' | translate }}"
+                data-text="{{ 'norksaDataTooltip-desc' | translate }}"
+                data-link="{{ 'norksaDataTooltip-link' | translate }}">
+	      	</div>
+        </li>
       </ul>
     </div>
-    <ul class="geotechnic-cont">
-		<li class="geotechnic-cont-li">
-	    	<a class="-text-link" target="_blank" href="http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/">
-    			<span class="icon-folder"></span>
-	    		<span class="text hidden-xs hidden-sm" data-translate="">NorwegianMetadata</span>
-	    	</a>
-			<div data-swe-tooltip=""
-                data-title="{{ 'NorksaDataTooltip-title' | translate }}"
-                data-text="{{ 'NorksaDataTooltip-desc' | translate }}"
-                data-link="{{ 'NorksaDataTooltip-link' | translate }}">
-	      	</div>
-	    </li>
-	</ul>            
 	<swe-geo-technics-filter data-config-url="{{geotechnicsUrl}}" data-show-map-fn="showMapPanel"></swe-geo-technics-filter>
     <a data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="../../login" class="header-login header-text">
       <span class="hidden-xs hidden-sm" data-translate="">forPublishers</span>
