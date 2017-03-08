@@ -453,6 +453,30 @@
 
 
           var deleteF = new ol.interaction.Select();
+          var selectPointerMove = new ol.interaction.Select({
+            condition: ol.events.condition.pointerMove
+          });
+          selectPointerMove.active = false;
+          scope.selectPointerMove = selectPointerMove;
+
+           Object.defineProperty(scope, 'deleting', {
+            get: function() {
+              return (map.getInteractions().getArray().indexOf(deleteF) >= 0);
+            },
+            set: function(val) {
+              if (val) {
+                deleteF.active = true;
+                selectPointerMove.active = true;
+                map.addInteraction(selectPointerMove);
+                map.addInteraction(deleteF);
+                
+              } else {
+                map.removeInteraction(deleteF);
+                map.removeInteraction(selectPointerMove);
+              }
+            }
+          });
+
           deleteF.getFeatures().on('add',
               function(evt) {
                 vector.getSource().removeFeature(evt.element);
@@ -497,6 +521,7 @@
                 drawText.active = false;
                 deleteF.active = false;
                 scope.modifying = false;
+                scope.deleting = false;
               }
             }
           });
