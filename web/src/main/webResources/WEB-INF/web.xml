@@ -482,11 +482,6 @@
     <url-pattern>/proxy</url-pattern>
   </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>LmProxy</servlet-name>
-    <url-pattern>/proxy</url-pattern>
-  </servlet-mapping>
-
   <!-- Web map context servlet -->
   <servlet>
     <servlet-name>wmc</servlet-name>
