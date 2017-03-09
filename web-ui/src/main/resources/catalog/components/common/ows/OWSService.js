@@ -114,8 +114,15 @@
                 request: 'GetCapabilities'
               });
 
-              //send request and decode result
               if (gnUrlUtils.isValid(url)) {
+             	  if (url.includes("maps.lantmateriet.se")) {
+                	  url = "../../lm-proxy?url=" + encodeURIComponent(url);
+                  }  else {
+               	    if (!url.includes("https://")) {
+                 	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                    }  
+                  }
+           	  //send request and decode result
                 $http.get(url, {
                   cache: true
                 })
@@ -143,8 +150,14 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-
-                $http.get(url, {
+             	  if (url.includes("maps.lantmateriet.se")) {
+                	  url = "../../lm-proxy?url=" + encodeURIComponent(url);
+                  }  else {
+               	    if (!url.includes("https://")) {
+                 	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                    }  
+                  }
+                  $http.get(url, {
                   cache: true
                 })
                     .success(function(data, status, headers, config) {
