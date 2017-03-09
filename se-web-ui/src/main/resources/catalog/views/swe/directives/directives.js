@@ -268,8 +268,8 @@
    * Displays a large tooltip element.
    *
    */
-  module.directive('sweTooltipLarge', ['$timeout',
-    function($timeout) {
+  module.directive('sweTooltipLarge', ['$timeout', '$rootScope',
+    function($timeout, $rootScope) {
       return {
         restrict: 'A',
         replace: true,
@@ -291,7 +291,10 @@
                 tooltipElem.addClass('open');
               }
             })
-          })
+          });
+          scope.openPopup = function(link) {
+        	  $rootScope.$emit('openhelppopup', scope.link);
+		  }
         }
       };
     }
