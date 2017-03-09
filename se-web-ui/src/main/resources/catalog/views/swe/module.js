@@ -1457,6 +1457,13 @@
       }
     }
       
-  })
+  });
+
+//To get GetFeatureInfo output format from GetCapabilities
+    module.factory("gfiOutputFormatCheck", function() {
+      return{
+         result: ""
+      };
+    });
 
 })();
