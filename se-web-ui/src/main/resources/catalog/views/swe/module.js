@@ -51,7 +51,7 @@
     '$analytics',
     'suggestService',
     '$http',
-	'$sce',
+    '$sce',
     '$compile',
     '$window',
     '$translate',
@@ -537,7 +537,7 @@
 			var initiativKeyword = md.initiativKeyword;
 			if(initiativKeyword) {
 				var initiativKeywordString = initiativKeyword.toString();
-				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using 'Ö' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
+				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using 'ï¿½' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
 					imgPath = '../../catalog/views/swe/images/opendata.png';
 				} else if(initiativKeywordString.indexOf('Geodatasamverkan') > -1) {
 					imgPath = '../../catalog/views/swe/images/geodatacooperation.png';
@@ -546,17 +546,6 @@
 		}
         return imgPath;     
       };
-
-      /**
-       * Toggle size of floating map
-       */
-     /* $scope.toggleFloatingMap = function() {
-        angular.element('.floating-map-cont').toggleClass('medium');
-        // angular.element('.floating-map-cont').show();
-        // $scope.$emit('body:class:remove', 'small-map-view');
-        // $scope.$emit('body:class:remove', 'full-map-view');
-        // $scope.$emit('body:class:remove', 'medium-map-view');
-      };*/
 
       /**
        * Show full view results.
@@ -613,6 +602,8 @@
        * Show large map panel.
        */
       $scope.showLargeMapPanel = function() {
+  		$tools = angular.element('.tools');
+		$tools.removeClass('control-tools').addClass('control-tools-largemap');
         angular.element('.floating-map-cont').hide();
         $scope.$emit('body:class:add', 'large-map-view');
           $timeout(function() {
@@ -627,6 +618,10 @@
        * Hide map panel.
        */
       $scope.hideMapPanel = function() {
+		$predefMap = angular.element('.selected-img');
+		$predefMap.removeClass('selected-img').addClass('bg-img');
+		$tools = angular.element('.tools');
+		$tools.removeClass('control-tools-largemap').addClass('control-tools');
         angular.element('.floating-map-cont').show();
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:remove', 'full-map-view');
@@ -635,6 +630,8 @@
       };
       
       $scope.resizeMapPanel = function() {
+		  $tools = angular.element('.tools');
+		  $tools.removeClass('control-tools-largemap').addClass('control-tools');
           $scope.mapFullView =! $scope.mapFullView;
           var $b = angular.element(document).find('body');
           window_width = angular.element($window).width(),
