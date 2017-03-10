@@ -91,6 +91,9 @@
     "layer": "Lager",
     "nonSweMetadata": "Metadata följer inte den senaste Nationella metadataprofilen. När metadata redigeras uppgraderas metadata till denna nya profil. Vill du göra detta ?",
     "showServices": "Visa tjänster",
-    "showDatasets": "Dataset"
-
+    "showDatasets": "Dataset",
+    "norwegianMetadata": "Norska Data",
+    "norksaDataTooltip-title": "Norska Data",
+    "norksaDataTooltip-desc": "Access to Norwegian metadata services",
+    "norksaDataTooltip-link": "https://ver.geodata.se/geodataportalens-hjalpsidor/forstasidan"
 }
