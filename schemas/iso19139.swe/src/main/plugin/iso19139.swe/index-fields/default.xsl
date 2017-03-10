@@ -158,7 +158,7 @@
          it is nested in a SV_ServiceIdentification class -->
 	<xsl:variable name="fid" select="//gmd:fileIdentifier/gco:CharacterString/text()"/>
 	<xsl:variable name="title" select="//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString/text()"/>
-	<xsl:message>I INDEX-FIELDS TITEL: <xsl:value-of select="$fid" />   ----- <xsl:value-of select="$title" /></xsl:message>			 
+	<!--<xsl:message>I INDEX-FIELDS TITEL: <xsl:value-of select="$fid" />  <xsl:value-of select="$title" /></xsl:message>-->
 
     <xsl:for-each select="gmd:identificationInfo//gmd:MD_DataIdentification|
                 gmd:identificationInfo//*[contains(@gco:isoType, 'MD_DataIdentification')]|
@@ -398,12 +398,12 @@
                        <xsl:variable name="keywordLower"  select="lower-case(.)"/>					
                        <xsl:if test="$keywordLower='inspire'">
 							<Field name="inspireinitiativ" string="true" store="false" index="true"/>
-							<xsl:message>IsInspireTheme: <xsl:value-of select="$thesaurusTitle" /></xsl:message>
-						</xsl:if>	
-		              <xsl:message>keyword: <xsl:value-of select="$keywordLower" /></xsl:message>	
+							<!--<xsl:message>IsInspireTheme: <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
+						</xsl:if>
+		              <!--<xsl:message>keyword: <xsl:value-of select="$keywordLower" /></xsl:message>-->
 					</xsl:for-each>					  
 				</xsl:if>
-				<xsl:message>Thesaurus namme (index): <xsl:value-of select="$thesaurusTitle" /></xsl:message>
+				<!--<xsl:message>Thesaurus namme (index): <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
 		 </xsl:if>
 		  <!-- //SDI-Sweden extension -->
 

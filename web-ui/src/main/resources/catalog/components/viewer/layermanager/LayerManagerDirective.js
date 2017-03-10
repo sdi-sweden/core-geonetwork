@@ -150,7 +150,8 @@
    */
   module.directive('gnLayermanagerItem', [
     'gnMdView',
-    function(gnMdView) {
+    'gfiOutputFormatCheck',
+    function(gnMdView, gfiOutputFormatCheck) {
       return {
         require: '^gnLayermanager',
         restrict: 'A',
@@ -164,6 +165,23 @@
           layer.showInfo = true;
           scope.showInfo = ctrl.showInfo;
           scope.moveLayer = ctrl.moveLayer;
+          gml_format_check = gfiOutputFormatCheck.result;
+          var GML_2 = "text/xml; subtype=gml/2.1.2";
+          var GML_3 = "application/vnd.ogc.gml/3.1.1";
+          var GML = "application/vnd.ogc.gml";
+          if(gml_format_check.indexOf(GML_2) > -1){
+            layer.gfiOutputFormat = "GML2";
+          }
+          else if(gml_format_check.indexOf(GML_3) > -1){
+            layer.gfiOutputFormat = "GML3";
+          }
+          else if(gml_format_check.indexOf(GML) > -1){
+            layer.gfiOutputFormat = "GML3";
+          }
+          else{
+              layer.gfiOutputFormat = "XML";
+          }
+
           scope.showMetadata = function() {
             gnMdView.openMdFromLayer(scope.layer);
           };

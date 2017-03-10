@@ -639,4 +639,28 @@
       };
     }]);
 
+
+    /**
+     * Directive used to close the typeahead suggestions
+     * list when clicking ENTER key.
+     *
+     * The solution is a bit "special": to add extra element that
+     * is focus so the popup with suggestions gets closed.
+     */
+    module.directive('allowPostOnEnter', function($timeout) {
+      return {
+          link: function($scope, elem, attrs) {
+              var hiddenInpt = angular.element('<input class="hide">');
+              elem.parent().append(hiddenInpt);
+              elem.bind('keydown', function(evt) {
+                  if (evt.which === 13) {
+                          $timeout(function() {
+                              hiddenInpt[0].click();
+                          });
+                  }
+              })
+          } //end of link
+      }
+    });
+
 }());

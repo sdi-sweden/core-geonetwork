@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -30,13 +30,12 @@
 
   module.provider('gnOwsCapabilities', function() {
     this.$get = ['$http', '$q',
-      'gnUrlUtils', 'gnGlobalSettings',
-      function($http, $q, gnUrlUtils, gnGlobalSettings) {
+      'gnUrlUtils', 'gnGlobalSettings', 'gfiOutputFormatCheck',
+      function($http, $q, gnUrlUtils, gnGlobalSettings, gfiOutputFormatCheck) {
 
         var displayFileContent = function(wmsUrl,data) {
           var parser = new ol.format.WMSCapabilities();
           var result = parser.read(data);
-
           var layers = [];
           var layerCheck = [];
           var layerGroupCheck = [];
@@ -173,6 +172,7 @@
                     .success(function(data) {
                       try {
                         defer.resolve(displayFileContent(url,data));
+                        gfiOutputFormatCheck.result = defer.promise.$$state.value.Request.GetFeatureInfo.Format
                       } catch (e) {
                         defer.reject('capabilitiesParseError');
                       }

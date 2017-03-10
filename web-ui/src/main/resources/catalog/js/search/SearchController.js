@@ -67,6 +67,12 @@
           gnSearchSettings.resultViewTpls[0].tplUrl;
 
       $scope.getAnySuggestions = function(val) {
+	   // 8-Mar-2017: Today's suggestionlist behaves very strange in FriText. Find observation in ticket #3943
+	   // I am adding here "*" at the end if not added explictly by user in UI. This fetches correct result.
+	   // The * also makes sense because we should get a list of suggestion where the user entered word matches in a stored values.
+		if(val) {
+			val = val.endsWith('*') ? val : val + '*';
+		}
         return suggestService.getAnySuggestions(val);
       };
 

@@ -24,6 +24,7 @@
 <xsl:stylesheet xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:date="http://exslt.org/dates-and-times"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:java="java:org.fao.geonet.util.XslUtil"
                 xmlns:joda="java:org.fao.geonet.domain.ISODate"
                 xmlns:mime="java:org.fao.geonet.util.MimeTypeFinder"
@@ -194,5 +195,14 @@
   </xsl:template>
 
   <!-- ================================================================== -->
+
+  <!--
+  From a given date calculates the date for the last day of the month.
+  -->
+  <xsl:template name="dateWithLastDayOfMonth">
+    <xsl:param name="given-date"></xsl:param>
+
+    <xsl:value-of select="xs:date($given-date) - xs:dayTimeDuration(concat('P', day-from-date($given-date) - 1, 'D')) + xs:yearMonthDuration('P1M') - xs:dayTimeDuration('P1D')" />
+  </xsl:template>
 
 </xsl:stylesheet>
