@@ -116,7 +116,7 @@
 
               if (gnUrlUtils.isValid(url)) {
              	  if (url.includes("maps.lantmateriet.se")) {
-                	  url = "../../lm-proxy?url=" + encodeURIComponent(url);
+                	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
                   }  else {
                	    if (!url.includes("https://")) {
                  	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
@@ -151,7 +151,7 @@
 
               if (gnUrlUtils.isValid(url)) {
              	  if (url.includes("maps.lantmateriet.se")) {
-                	  url = "../../lm-proxy?url=" + encodeURIComponent(url);
+                	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
                   }  else {
                	    if (!url.includes("https://")) {
                  	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
