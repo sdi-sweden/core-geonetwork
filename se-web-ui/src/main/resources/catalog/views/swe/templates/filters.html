@@ -5,7 +5,11 @@
  	<span class="image-filter-text" data-translate="">predefinedMapsTitle</span>
 		  <div class="image-filter-container"> 
 		    <a href="" data-ng-click="resizeCheck()" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
-			  <swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showLargeMapPanel"></swe-predefined-maps-filter>
+			  <swe-predefined-maps-filter ng-hide="collapsed" 
+			    data-config-url="{{predefinedMapsUrl}}" 
+			    data-show-map-fn="showLargeMapPanel"
+			    data-selected-map="{{selectedPredefinedMap}}">
+			  </swe-predefined-maps-filter>
 		  </div>
     </div>
     <!-- Search filters -->
