@@ -88,7 +88,8 @@
             scope.sortByOrder(scope.params.sortOrder);
           };
 
-          if (angular.isUndefined(scope.params.sortOrder)) {
+          if (angular.isUndefined(scope.params.sortOrder) || 
+              (scope.params.sortOrder == '')) {
             scope.sortOrder = 'descending';
           } else {
             scope.sortOrder = 'ascending';
