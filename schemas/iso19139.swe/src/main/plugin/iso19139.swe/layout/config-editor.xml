@@ -527,7 +527,7 @@
 
           <!-- Point of contact -->
           <field name="pointOfContact"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact" />
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact" />
 
           <!-- Thumbnails -->
           <field name="graphicOverview"
