@@ -125,6 +125,7 @@
   <restrictions>Restriktioner</restrictions>
   <dataQualityInfo2>Kvaliteinformation</dataQualityInfo2>
   <service>Beskrivning av tjänst</service>
+  <dataset>Beskrivning av datamängd</dataset>
   <resources>Tillhandahållande av resurser</resources>
 
   <verticalElementSection>Vertikal utsträckning</verticalElementSection>
