@@ -1220,7 +1220,7 @@
 
         </section>
 
-        <section name="referenceSystemInfo2">
+        <section name="referenceSystemInfo2" displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
           <field name="rsIdentifier"
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../.." />
