@@ -147,15 +147,13 @@
           //For arcgis wms service
           var featureInfo = [];
           var doc = ol.xml.parse(response.data);
-          var props;
-          var node = doc.getElementsByTagName("FeatureInfoResponse");
-          props = node[0].children;
-           Array.prototype.slice.call(props).forEach(function(item) {
-                Array.prototype.slice.call(item.attributes).forEach(function(i) {
-                      obj[i.name] = i.value;
-                });
-                featureInfo.push(new ol.Feature(obj));
-          });
+          var props = doc.getElementsByTagName("FIELDS");
+           for(i = 0; i < props.length; i++){
+              for(j = 0; j < props[i].attributes.length; j++){
+                obj[props[i].attributes[j].name] = props[i].attributes[j].value;
+              }
+              featureInfo.push(new ol.Feature(obj));
+           }
           this.features = featureInfo;
         }
       }
