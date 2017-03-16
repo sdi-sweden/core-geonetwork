@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -537,7 +537,7 @@
 			var initiativKeyword = md.initiativKeyword;
 			if(initiativKeyword) {
 				var initiativKeywordString = initiativKeyword.toString();
-				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using '�' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
+				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using 'Ö' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
 					imgPath = '../../catalog/views/swe/images/opendata.png';
 				} else if(initiativKeywordString.indexOf('Geodatasamverkan') > -1) {
 					imgPath = '../../catalog/views/swe/images/geodatacooperation.png';
@@ -826,6 +826,28 @@
         $scope.$emit('body:class:remove', 'show-overlay');
       };
     }]);
+  
+  /**
+   * Controller for help popup.
+   *
+   */
+  module.controller('SweHelpController', [
+    '$cookies', '$scope', '$http', '$rootScope', '$sce',
+    function($cookies, $scope, $http, $rootScope, $sce) {
+	  
+	  $rootScope.$on('openhelppopup', function (event, data) {
+		  $scope.link = data;
+		  });
+	  $scope.trustSrc = function(link) {
+		   return $sce.trustAsResourceUrl(link);
+		};
+      $scope.close = function() {
+        // Cleanup and close the dialog
+        angular.element('#help-popup').removeClass('show');
+        $scope.$emit('body:class:remove', 'show-overlay');
+      };
+    }]);
+
 
 
   /**

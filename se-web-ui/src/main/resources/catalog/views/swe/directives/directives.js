@@ -228,8 +228,8 @@
    * Displays a tooltip element.
    *
    */
-  module.directive('sweTooltip', ['$timeout',
-    function($timeout) {
+  module.directive('sweTooltip', ['$timeout', '$rootScope',
+    function($timeout, $rootScope) {
       return {
         restrict: 'A',
         replace: true,
@@ -251,7 +251,10 @@
                 tooltipElem.addClass('open');
               }
             })
-          })
+          });
+          scope.openPopup = function(link) {
+        	  $rootScope.$emit('openhelppopup', scope.link);
+		  }
         }
       };
     }
@@ -266,8 +269,8 @@
    * Displays a large tooltip element.
    *
    */
-  module.directive('sweTooltipLarge', ['$timeout',
-    function($timeout) {
+  module.directive('sweTooltipLarge', ['$timeout', '$rootScope',
+    function($timeout, $rootScope) {
       return {
         restrict: 'A',
         replace: true,
@@ -289,7 +292,10 @@
                 tooltipElem.addClass('open');
               }
             })
-          })
+          });
+          scope.openPopup = function(link) {
+        	  $rootScope.$emit('openhelppopup', scope.link);
+		  }
         }
       };
     }
