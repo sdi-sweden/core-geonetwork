@@ -98,7 +98,7 @@
           scope.sortByOrder = function(v) {
             scope.params.sortOrder = v;
 
-            if (angular.isUndefined(v) || (v == '')) {
+            if (angular.isUndefined(v) || (v == '')) {
               delete scope.params.sortOrder;
               scope.sortOrder = 'descending';
             } else {
@@ -339,7 +339,8 @@
           predefinedMaps: '@',
           selectedMap: '@',
           showMapFn: '&',
-          configUrl: '@'
+          configUrl: '@',
+          selectedItem: '@'
         },
         link: function(scope, element, attrs) {
           scope.$watch("configUrl", function(value) {
@@ -348,20 +349,25 @@
                   scope.predefinedMaps = data;
 
                   if (scope.selectedMap != undefined) {
+                	  var indexPredef;
                       var predefinedMapsFiltered =
                           scope.predefinedMaps.filter(function(x) {
-                              return x['title'] === scope.selectedMap
+                            if(x['id'] == scope.selectedMap){
+                        	  indexPredef = scope.predefinedMaps.indexOf(x);
+                        	}
+                            return x['id'] == scope.selectedMap
                           });
 
                       if (predefinedMapsFiltered.length > 0) {
-                          scope.doView(predefinedMapsFiltered[0]);
+                          scope.doView(indexPredef, predefinedMapsFiltered[0]);
                       }
                   }
               });
             }
           });
 
-          scope.doView = function(predefinedMap) {
+          scope.doView = function(index, predefinedMap) {
+        	scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();
           };
@@ -452,7 +458,7 @@
               then(function(data) {
                 scope.facetConfig = {
                   config: data,
-                  map:  {}
+                  map: {}
                 };
 
                 angular.forEach(scope.facetConfig.config, function(key) {

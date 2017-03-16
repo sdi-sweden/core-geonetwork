@@ -133,15 +133,19 @@
     <div class="main-wrapper" data-ng-controller="gnsSwe">
       <div class="site-wrapper" data-ng-search-form=""
            data-runSearch="true">
-        <!-- Filters -->
-            <!-- Predefined search filters -->
+        <!-- Filters -->        
+        <!-- Predefined search filters -->
         <div class="site-image-filter">
  	      <span class="image-filter-text" data-translate="">predefinedMapsTitle</span>
 		  <div class="image-filter-container"> 
 		    <a href="" data-ng-click="resizeCheck()" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
-	        <swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showLargeMapPanel"></swe-predefined-maps-filter>
-		  </div>
-        </div>
+			  <swe-predefined-maps-filter ng-hide="collapsed" 
+			    data-config-url="{{predefinedMapsUrl}}" 
+			    data-show-map-fn="showFullMapPanel"
+			    data-selected-map="{{selectedPredefinedMap}}">
+			  </swe-predefined-maps-filter>
+		</div>
+		</div>
         <div data-ng-include="'../../catalog/views/swe/templates/filters.html'" data-ng-controller="SweFilterPanelController"></div>
 
         <div class="site-content">
