@@ -648,7 +648,7 @@
      * The solution is a bit "special": to add extra element that
      * is focus so the popup with suggestions gets closed.
      */
-    module.directive('allowPostOnEnter', function($timeout) {
+    module.directive('allowPostOnEnter', ['$timeout' ,function($timeout) {
       return {
           link: function($scope, elem, attrs) {
               var hiddenInpt = angular.element('<input class="hide">');
@@ -662,6 +662,6 @@
               })
           } //end of link
       }
-    });
+    }]);
 
 }());
