@@ -345,6 +345,7 @@
           predefinedMaps: '@',
           selectedMap: '@',
           showMapFn: '&',
+          showMapFnApi: '&',
           configUrl: '@',
           selectedItem: '@'
         },
@@ -375,7 +376,7 @@
           scope.doView = function(index, predefinedMap) {
         	scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
-            scope.showMapFn()();
+            scope.showMapFnApi()();
           };
         }
       };
