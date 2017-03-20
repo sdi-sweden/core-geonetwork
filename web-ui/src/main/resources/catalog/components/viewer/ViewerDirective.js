@@ -34,8 +34,8 @@
    * @description
    */
   module.directive('gnMainViewer', [
-    'gnMap', 'gnConfig', 'gnSearchLocation', 'gnSearchSettings', 'gnMeasure',
-    function(gnMap, gnConfig, gnSearchLocation, gnSearchSettings, gnMeasure) {
+    'gnMap', 'gnConfig', 'gnSearchLocation', 'gnSearchSettings', 'gnMeasure', '$window',
+    function(gnMap, gnConfig, gnSearchLocation, gnSearchSettings, gnMeasure, $window) {
       return {
         restrict: 'A',
         require: '^ngSearchForm',
@@ -67,7 +67,9 @@
               scope.lineInteraction = gnMeasure.calculateLength(scope.map,scope.measureObj, scope);
               
               scope.toggle = false
-
+              //For show or hide map tools
+              gnMap.hideOrShowMapTool(scope);
+                 
               scope.zoom = function(map, delta) {
                 gnMap.zoom(map, delta);
               };
@@ -175,6 +177,12 @@
               setTimeout(function() {
                 scope.map.updateSize();
               }, 100);
+                //Manage map toolbars on window resize
+              var w = angular.element($window);
+              w.bind('resize', function () {
+                 gnMap.hideOrShowMapTool(scope);
+                  
+              });
             }
           };
         }
