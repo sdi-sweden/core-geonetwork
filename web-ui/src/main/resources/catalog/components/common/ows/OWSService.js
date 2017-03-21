@@ -41,6 +41,10 @@
           var url = result.Capability.Request.GetCapabilities.
               DCPType[0].HTTP.Get.OnlineResource;
 
+          if (url.includes("maps.lantmateriet.se")) {
+            url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+          }
+
           // Push all leaves into a flat array of Layers.
           var getFlatLayers = function(layer) {
             if (angular.isArray(layer)) {
@@ -120,7 +124,7 @@
                   }  else {
                	    if (!url.includes("https://")) {
                  	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                    }  
+                    }
                   }
            	  //send request and decode result
                 $http.get(url, {
@@ -155,7 +159,7 @@
                   }  else {
                	    if (!url.includes("https://")) {
                  	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                    }  
+                    }
                   }
                   $http.get(url, {
                   cache: true
