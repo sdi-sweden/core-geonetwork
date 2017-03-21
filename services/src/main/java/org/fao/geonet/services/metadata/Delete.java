@@ -41,6 +41,7 @@ import org.fao.geonet.kernel.mef.MEFLib;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.services.Utils;
+import org.fao.geonet.util.XslUtil;
 import org.fao.geonet.utils.IO;
 import org.jdom.Element;
 
@@ -78,7 +79,8 @@ public class Delete extends BackupFileService {
         Metadata metadata = context.getBean(MetadataRepository.class).findOne(id);
 
         if (metadata == null)
-            throw new IllegalArgumentException("Metadata with identifier " + id + " not found.");
+            throw new IllegalArgumentException("Metadata with identifier " +
+                    XslUtil.encodeForJavaScript(id) + " not found.");
 
         if (!accessMan.canEdit(context, id))
             throw new OperationNotAllowedEx();

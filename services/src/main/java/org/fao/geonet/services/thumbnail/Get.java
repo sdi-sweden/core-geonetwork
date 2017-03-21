@@ -33,6 +33,7 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.services.metadata.Update;
+import org.fao.geonet.util.XslUtil;
 import org.jdom.Element;
 
 import java.nio.file.Path;
@@ -80,7 +81,8 @@ public class Get implements Service {
         Element result = dataMan.getThumbnails(context, id);
 
         if (result == null)
-            throw new IllegalArgumentException("Metadata not found --> " + id);
+            throw new IllegalArgumentException("Metadata not found --> " +
+                    XslUtil.encodeForJavaScript(id));
 
         result.addContent(new Element("version").setText(dataMan.getNewVersion(id)));
 
