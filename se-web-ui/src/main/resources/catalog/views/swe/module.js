@@ -870,6 +870,26 @@
       };
     }]);
 
+  /**
+   * Controller for help popup.
+   *
+   */
+  module.controller('SweHelpController', [
+    '$cookies', '$scope', '$http', '$rootScope', '$sce',
+    function($cookies, $scope, $http, $rootScope, $sce) {
+	  
+	  $rootScope.$on('openhelppopup', function (event, data) {
+		  $scope.link = data;
+		  });
+	  $scope.trustSrc = function(link) {
+		   return $sce.trustAsResourceUrl(link);
+		};
+      $scope.close = function() {
+        // Cleanup and close the dialog
+        angular.element('#help-popup').removeClass('show');
+        $scope.$emit('body:class:remove', 'show-overlay');
+      };
+    }]);
 
   /**
    * Controller for new metadata popup.
