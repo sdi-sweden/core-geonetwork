@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -88,8 +88,7 @@
             scope.sortByOrder(scope.params.sortOrder);
           };
 
-          if (angular.isUndefined(scope.params.sortOrder) || 
-              (scope.params.sortOrder == '')) {
+          if (angular.isUndefined(scope.params.sortOrder)) {
             scope.sortOrder = 'descending';
           } else {
             scope.sortOrder = 'ascending';
@@ -98,7 +97,7 @@
           scope.sortByOrder = function(v) {
             scope.params.sortOrder = v;
 
-            if (angular.isUndefined(v) || (v == '')) {
+            if (angular.isUndefined(v) || (v == '')) {
               delete scope.params.sortOrder;
               scope.sortOrder = 'descending';
             } else {
@@ -310,20 +309,24 @@
                   scope.predefinedMaps = data;
 
                   if (scope.selectedMap != undefined) {
+                	  var indexPredef;
                       var predefinedMapsFiltered =
                           scope.predefinedMaps.filter(function(x) {
-                              return x['title'] === scope.selectedMap
+                            if(x['id'] == scope.selectedMap){
+                        	  indexPredef = scope.predefinedMaps.indexOf(x);
+                        	}
+                            return x['id'] == scope.selectedMap
                           });
 
                       if (predefinedMapsFiltered.length > 0) {
-                          scope.doView(predefinedMapsFiltered[0]);
+                          scope.doView(indexPredef, predefinedMapsFiltered[0]);
                       }
                   }
               });
             }
           });
-          scope.doView = function(index, predefinedMap) {
-			scope.selectedItem = index;
+
+          scope.doView = function($index, predefinedMap) {
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();
           };
@@ -414,7 +417,7 @@
               then(function(data) {
                 scope.facetConfig = {
                   config: data,
-                  map:  {}
+                  map: {}
                 };
 
                 angular.forEach(scope.facetConfig.config, function(key) {
