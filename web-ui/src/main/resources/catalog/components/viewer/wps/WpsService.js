@@ -102,6 +102,7 @@
        	    if (!url.includes("https://")) {
          	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
             }  
+          }
           return $http.get(url, {
             cache: true
           }).then(
