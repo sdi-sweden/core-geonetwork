@@ -717,9 +717,9 @@
         if (gnSearchLocation.isSearch() && (!angular.isArray(
             searchMap.getSize()) || searchMap.getSize()[0] < 0)) {
 
-          setTimeout(function() {
+          $timeout(function() {
             searchMap.updateSize();
-            searchMap.renderSync(1000);
+            searchMap.renderSync();
 
             // TODO: load custom context to the search map
             //gnOwsContextService.loadContextFromUrl(
@@ -755,15 +755,20 @@
         }
       }, gnSearchSettings.sortbyDefault);
 
-
       // Refreshes the map in the initial load, otherwise no map displayed
       // until the window is resize or the user clicks the map.
       // Tried other options, but not working.
-      setTimeout(function() {
+      searchMap.once('postrender', function(){
         searchMap.updateSize();
         searchMap.renderSync();
+      });
 
-      }, 2000);
+      //If postrender fails to refresh map.It will refresh the map in specific time interval
+      $timeout(function() {
+        searchMap.updateSize();
+        searchMap.renderSync();
+      }, 5000);
+
     }]);
 
   module.controller('SweLogoutController',
