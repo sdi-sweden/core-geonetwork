@@ -72,12 +72,13 @@
     'gnConfigService',
     'is_map_maximized',
     'exampleResize',
+    'shareGnMainViewerScope',
     function($rootScope, $scope, $localStorage, $location, $analytics, suggestService,
              $http, $sce, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, gnConfigService, is_map_maximized, exampleResize) {
+             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, gnConfigService, is_map_maximized, exampleResize, shareGnMainViewerScope) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -597,15 +598,21 @@
         $scope.$emit('body:class:add', 'small-map-view');
         $scope.actual_height = $('.site-image-filter').height()
         exampleResize.onResize($rootScope, $scope);
+        scope = shareGnMainViewerScope.sharedScope;
          $timeout(function() {
           viewerMap.updateSize();
           viewerMap.renderSync();
+          gnMap.hideOrShowMapTool(scope);
         }, 500); 
       };
      
       $scope.resizeCheck = function(){
         $scope.image_filter_height = $('.site-image-filter').height(); 
         $scope.collapsed =! $scope.collapsed;
+        scope = shareGnMainViewerScope.sharedScope;
+         $timeout(function() {
+            gnMap.hideOrShowMapTool(scope);
+          }, 500); 
         
       };
       
