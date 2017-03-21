@@ -61,10 +61,11 @@
       'gnWfsService',
       'gnGlobalSettings',
       'gnViewerSettings',
+      '$window',
       function(ngeoDecorateLayer, gnOwsCapabilities, gnConfig, $log,
           gnSearchLocation, $rootScope, gnUrlUtils, $q, $translate,
           gnWmsQueue, gnSearchManagerService, Metadata, gnWfsService,
-          gnGlobalSettings, viewerSettings) {
+          gnGlobalSettings, viewerSettings, $window) {
 
         var defaultMapConfig = {
           //'useOSM': 'true',
@@ -1589,6 +1590,69 @@
               var process = md && md.getLinksByType(linkGroup, 'OGC:WPS');
               layer.set('processes', process);
             }
+               },    
+          /**
+           * To manage map toolbars on map resize
+           *
+           * @param scope object from gnMainViewer directive
+           */
+          hideOrShowMapTool: function(scope){
+                  window_height = angular.element($window).height();
+                  top_margin = parseInt(angular.element('.site-side-map-cont').css('top'),10);
+                  map_height = (window_height - top_margin);         
+                  scope.addLayersTool = true;
+                  scope.manageLayersTool = true;
+                  scope.contextsTool = true;
+                  scope.printTool = true;
+                  scope.syncLayersTool = true;
+                  scope.measureLengthTool = true;
+                  scope.measureAreaTool = true; 
+                  scope.annotationTool = true;
+                 if(map_height < 450){
+                    if(map_height < 240){
+                      scope.manageLayersTool = false;
+                      scope.contextsTool = false;
+                      scope.printTool = false;
+                      scope.syncLayersTool = false;
+                      scope.measureLengthTool = false;
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                    else if(map_height < 270){
+                      scope.contextsTool = false;
+                      scope.printTool = false;
+                      scope.syncLayersTool = false;
+                      scope.measureLengthTool = false;
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                    else if(map_height < 300){
+                      scope.printTool = false;
+                      scope.syncLayersTool = false;
+                      scope.measureLengthTool = false;
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                     else if(map_height < 330){
+                      scope.syncLayersTool = false;
+                      scope.measureLengthTool = false;
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                    else if(map_height < 360){
+                      scope.measureLengthTool = false;
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                    else if(map_height < 390){
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                    else if(map_height < 420){
+                      scope.annotationTool = false;
+                    }                                                         
+                 }
+                
           }
         };
       }];
