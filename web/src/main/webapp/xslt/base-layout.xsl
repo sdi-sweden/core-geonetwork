@@ -80,7 +80,7 @@
       <body data-ng-controller="GnCatController">
         <xsl:if test="string($env/system/site/googleTagManagerKey)">
           <!-- Google Tag Manager, replace GTM-XXXXX with your container ID -->
-          <noscript><iframe src="//www.googletagmanager.com/ns.html?id={$env/system/site/googleTagManagerKey}"
+          <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={$env/system/site/googleTagManagerKey}"
                             height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <!-- End Google Tag Manager -->
         </xsl:if>
