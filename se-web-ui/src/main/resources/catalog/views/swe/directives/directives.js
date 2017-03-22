@@ -344,6 +344,7 @@
           predefinedMaps: '@',
           selectedMap: '@',
           showMapFn: '&',
+          showMapFnApi: '&',
           configUrl: '@',
           selectedItem: '@'
         },
@@ -364,18 +365,24 @@
                           });
 
                       if (predefinedMapsFiltered.length > 0) {
-                          scope.doView(indexPredef, predefinedMapsFiltered[0]);
+                          scope.doViewFromUrl(indexPredef, predefinedMapsFiltered[0]);
                       }
                   }
               });
             }
           });
 
-          scope.doView = function(index, predefinedMap) {
+          scope.doViewFromUrl = function(index, predefinedMap) {
         	scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
-            scope.showMapFn()();
+            scope.showMapFnApi()();
           };
+          
+          scope.doView = function(index, predefinedMap) {
+          	scope.selectedItem = index;
+              gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+              scope.showMapFn()();
+            };
         }
       };
   }]);
