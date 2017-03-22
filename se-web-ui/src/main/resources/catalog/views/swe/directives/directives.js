@@ -371,7 +371,8 @@
             }
           });
 
-          scope.doView = function($index, predefinedMap) {
+          scope.doView = function(index, predefinedMap) {
+        	scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();
           };
