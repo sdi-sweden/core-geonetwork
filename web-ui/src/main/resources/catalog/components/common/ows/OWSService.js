@@ -58,7 +58,7 @@
             }
           };
 
-          // Make sur Layer property is an array even if
+          // Make sure Layer property is an array even if
           // there is only one element.
           var setLayerAsArray = function(node) {
             if (node) {
@@ -73,8 +73,29 @@
               }
             }
           };
+          
+          // Check if the Style OnlineReource URL needs to go through proxy
+          var checkOnlineResourceURL = function(layers) {
+        	  if(layers) {
+        		  for (var j = 0; j < layers.length; j++) {
+        			  if (angular.isDefined(layers[j].Style)) {
+        				  for (var k = 0; k < layers[j].Style.length; k++) {
+        					  if (angular.isDefined(layers[j].Style[k].LegendURL)) {
+        						  for (var l = 0; l < layers[j].Style[k].LegendURL.length; l++) {
+        							  if (layers[j].Style[k].LegendURL[l].OnlineResource.includes("maps.lantmateriet.se")) {
+        								  layers[j].Style[k].LegendURL[l].OnlineResource = gnGlobalSettings.lmProxyUrl + encodeURIComponent(layers[j].Style[k].LegendURL[l].OnlineResource);
+            				            }
+        						  }
+        					  } 
+        				  }
+        			  }
+        			  
+        		  }
+        	  }
+          };
           getFlatLayers(result.Capability.Layer);
           setLayerAsArray(result.Capability);
+          checkOnlineResourceURL(layers);
           result.Capability.layers = layers;
           return result.Capability;
         };
