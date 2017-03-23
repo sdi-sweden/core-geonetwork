@@ -639,6 +639,10 @@
         $scope.$emit('body:class:remove', 'full-map-view');
         $scope.$emit('body:class:remove', 'medium-map-view');
         $scope.$emit('body:class:remove', 'large-map-view');
+        $timeout(function() {
+        searchMap.updateSize();
+        searchMap.renderSync();
+      }, 500);
       };
       
       $scope.resizeMapPanel = function() {
