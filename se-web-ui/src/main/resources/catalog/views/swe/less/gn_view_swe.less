@@ -430,8 +430,17 @@ body.loggedin-user .header-logout {
 .geodata-examples-expanded-larger-without-cookie-alert .site-side-map-cont {
   top: 305px;
 }
-/*For Chrome scrollbar height differs.So Changed Top margin for map dock*/
-@media screen and (-webkit-min-device-pixel-ratio:0) {
+/*For IE edge horizontal scrollbar height differs.So Changed margin top to make map dock*/
+@supports (-ms-ime-align:auto) {
+  .geodata-examples-expanded-larger-without-cookie-alert .site-side-map-cont {
+  top: 301px;
+}
+.geodata-examples-expanded-larger-with-cookie-alert .site-side-map-cont {
+  top: 390px;
+}
+}
+/*For Chrome horizontal crollbar height differs.So Changed margin top to make map dock*/
+@media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) {
 .geodata-examples-expanded-larger-without-cookie-alert .site-side-map-cont {
   top: 295px;
 }
