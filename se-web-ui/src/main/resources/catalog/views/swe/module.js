@@ -72,12 +72,13 @@
     'gnConfigService',
     'is_map_maximized',
     'exampleResize',
+    'shareGnMainViewerScope',
     function($rootScope, $scope, $localStorage, $location, $analytics, suggestService,
              $http, $sce, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, gnConfigService, is_map_maximized, exampleResize) {
+             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, gnConfigService, is_map_maximized, exampleResize, shareGnMainViewerScope) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -537,7 +538,7 @@
 			var initiativKeyword = md.initiativKeyword;
 			if(initiativKeyword) {
 				var initiativKeywordString = initiativKeyword.toString();
-				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using '�' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
+				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using 'Ö' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
 					imgPath = '../../catalog/views/swe/images/opendata.png';
 				} else if(initiativKeywordString.indexOf('Geodatasamverkan') > -1) {
 					imgPath = '../../catalog/views/swe/images/geodatacooperation.png';
@@ -584,34 +585,94 @@
       $scope.showMapPanel = function() {
         angular.element('.floating-map-cont').hide();
         $scope.$emit('body:class:add', 'small-map-view');
-        $scope.actual_height = $('.site-image-filter').height()
+        $scope.actual_height = $('.site-image-filter').height();
         exampleResize.onResize($rootScope, $scope);
+        scope = shareGnMainViewerScope.sharedScope;
          $timeout(function() {
           viewerMap.updateSize();
           viewerMap.renderSync();
+          gnMap.hideOrShowMapTool(scope);
         }, 500); 
       };
      
       $scope.resizeCheck = function(){
         $scope.image_filter_height = $('.site-image-filter').height(); 
         $scope.collapsed =! $scope.collapsed;
+        scope = shareGnMainViewerScope.sharedScope;
+         $timeout(function() {
+            gnMap.hideOrShowMapTool(scope);
+          }, 500); 
         
       };
       
       /**
-       * Show large map panel.
+       * Show full map panel.
        */
-      $scope.showLargeMapPanel = function() {
-  		$tools = angular.element('.tools');
-		$tools.removeClass('control-tools').addClass('control-tools-largemap');
+      $scope.showFullMapPanel = function() {
         angular.element('.floating-map-cont').hide();
-        $scope.$emit('body:class:add', 'large-map-view');
-          $timeout(function() {
-          viewerMap.updateSize();
-          viewerMap.renderSync();
-        }, 500);
-          $obj = angular.element('#map-panel-resize');
-          $obj.removeClass('full').addClass('small');
+        $scope.$emit('body:class:remove', 'medium-map-view');
+        $scope.$emit('body:class:remove', 'small-map-view');
+        $scope.$emit('body:class:add', 'full-map-view');
+		$scope.mapFullView = true;
+        window_width = angular.element($window).width();
+		$map_data_list_cont = angular.element('.map-data-list-cont');
+        is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false;
+        $data_list_cont = angular.element('.data-list-cont');
+        $map_cont = angular.element('.map-cont');
+        $obj = angular.element('#map-panel-resize');
+		  
+        if (is_side_data_bar_open) {
+          $map_cont.css({
+            width: (window_width - $data_list_cont.width())
+          });
+        } else {
+          $map_cont.css({
+            width: window_width
+          });
+        }
+        
+        $obj.removeClass('full').addClass('small');
+		$scope.actual_height = $('.site-image-filter').height();
+	    exampleResize.onResize($rootScope, $scope);
+        $timeout(function() {
+         viewerMap.updateSize();
+         viewerMap.renderSync();
+       }, 500); 
+      };
+      
+      /**
+       * Show full map panel from url.
+       */
+      $scope.showFullMapPanelApi = function() {
+        angular.element('.floating-map-cont').hide();
+        $scope.$emit('body:class:remove', 'medium-map-view');
+        $scope.$emit('body:class:remove', 'small-map-view');
+        $scope.$emit('body:class:add', 'full-map-view');
+		$scope.mapFullView = true;
+        window_width = angular.element($window).width();
+		$map_data_list_cont = angular.element('.map-data-list-cont');
+        is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false;
+        $data_list_cont = angular.element('.data-list-cont');
+        $map_cont = angular.element('.map-cont');
+        $obj = angular.element('#map-panel-resize');
+		  
+        if (is_side_data_bar_open) {
+          $map_cont.css({
+            width: (window_width - $data_list_cont.width())
+          });
+        } else {
+          $map_cont.css({
+            width: window_width
+          });
+        }
+        
+        $obj.removeClass('full').addClass('small');
+		$scope.actual_height = 260;
+	    exampleResize.onResize($rootScope, $scope);
+        $timeout(function() {
+         viewerMap.updateSize();
+         viewerMap.renderSync();
+       }, 500); 
       };
 
       /**
@@ -620,84 +681,72 @@
       $scope.hideMapPanel = function() {
 		$predefMap = angular.element('.selected-img');
 		$predefMap.removeClass('selected-img').addClass('bg-img');
-		$tools = angular.element('.tools');
-		$tools.removeClass('control-tools-largemap').addClass('control-tools');
         angular.element('.floating-map-cont').show();
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:remove', 'full-map-view');
         $scope.$emit('body:class:remove', 'medium-map-view');
-        $scope.$emit('body:class:remove', 'large-map-view');
       };
       
       $scope.resizeMapPanel = function() {
-		  $tools = angular.element('.tools');
-		  $tools.removeClass('control-tools-largemap').addClass('control-tools');
-          $scope.mapFullView =! $scope.mapFullView;
-          var $b = angular.element(document).find('body');
-          window_width = angular.element($window).width(),
-          $map_data_list_cont = angular.element('.map-data-list-cont'),
-          is_side_data_bar_open =
-              ($map_data_list_cont.hasClass('open')) ? true : false,
-          is_full_view_map = ($b.hasClass('full-map-view')) ? true : false,
-          is_large_view_map = ($b.hasClass('large-map-view')) ? true : false,
-          $data_list_cont = angular.element('.data-list-cont'),
-          $map_cont = angular.element('.map-cont'),
-          $obj = angular.element('#map-panel-resize');
-          //To restrict GFI only when map are maximized
-          is_map_maximized.data = !is_full_view_map;
-          if (is_full_view_map) {
-            if (is_side_data_bar_open) {
-              $scope.$emit('body:class:remove', 'full-map-view');
-              $scope.$emit('body:class:add', 'medium-map-view');
-            } else {
-              $scope.$emit('body:class:remove', 'full-map-view');
-              $scope.$emit('body:class:add', 'small-map-view');
-            }
-
-            $obj.removeClass('small').addClass('full');
-          }
-          else if (is_large_view_map) {
-          	if (is_side_data_bar_open) {
-                $scope.$emit('body:class:remove', 'large-map-view');
-                $scope.$emit('body:class:add', 'medium-map-view');
-              } else {
-                $scope.$emit('body:class:remove', 'large-map-view');
-                $scope.$emit('body:class:add', 'small-map-view');
-              }
-              $obj.removeClass('small').addClass('full');
-    		}
+  		$predefMap = angular.element('.selected-img');
+		$predefMap.removeClass('selected-img').addClass('bg-img');
+        $scope.mapFullView =! $scope.mapFullView;
+        var $b = angular.element(document).find('body');
+        window_width = angular.element($window).width(),
+        $map_data_list_cont = angular.element('.map-data-list-cont'),
+        is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false,
+        is_full_view_map = ($b.hasClass('full-map-view')) ? true : false,
+        $data_list_cont = angular.element('.data-list-cont'),
+        $map_cont = angular.element('.map-cont'),
+        $obj = angular.element('#map-panel-resize');
+        //To restrict GFI only when map are maximized
+        is_map_maximized.data = !is_full_view_map;
+        if (is_full_view_map) {
+          if (is_side_data_bar_open) {
+            $scope.$emit('body:class:remove', 'full-map-view');
+            $scope.$emit('body:class:add', 'medium-map-view');
+          } 
           else {
-            $scope.$emit('body:class:remove', 'large-map-view');
-            $scope.$emit('body:class:remove', 'medium-map-view');
-            $scope.$emit('body:class:remove', 'small-map-view');
-            $scope.$emit('body:class:add', 'full-map-view');
-
-            if (is_side_data_bar_open) {
-              $map_cont.css({
-                width: (window_width - $data_list_cont.width())
-              });
-            } else {
-              $map_cont.css({
-                width: window_width
-              });
-            }
-            $obj.removeClass('full').addClass('small');
+            $scope.$emit('body:class:remove', 'full-map-view');
+            $scope.$emit('body:class:add', 'small-map-view');
           }
+          $obj.removeClass('small').addClass('full');
+        }
+        else {
+          $scope.$emit('body:class:remove', 'medium-map-view');
+          $scope.$emit('body:class:remove', 'small-map-view');
+          $scope.$emit('body:class:add', 'full-map-view');
 
-          // Refresh the viewer map
-
-          $timeout(function() {
-            viewerMap.updateSize();
-            viewerMap.renderSync();
-
-            $("div.bootstrap-table div.fixed-table-container div.fixed-table-body table").each(function( ) {
-              $( this ).bootstrapTable('resetView');
+          if (is_side_data_bar_open) {
+            $map_cont.css({
+              width: (window_width - $data_list_cont.width())
             });
+            }
+          else {
+            $map_cont.css({
+              width: window_width
+              });
+          }
+         $obj.removeClass('full').addClass('small');
+        }
+        
+        // Refresh the viewer map
+        
+		$scope.actual_height = $('.site-image-filter').height();
+        exampleResize.onResize($rootScope, $scope);
 
-          }, 500);
+        $timeout(function() {
+          viewerMap.updateSize();
+          viewerMap.renderSync();
 
-          return false;
-        };
+          $("div.bootstrap-table div.fixed-table-container div.fixed-table-body table").each(function( ) {
+            $( this ).bootstrapTable('resetView');
+          });
+
+        }, 500);
+
+        return false;
+      };
 
 
       $scope.$on('$locationChangeSuccess', function(next, current) {
@@ -707,7 +756,7 @@
         if (gnSearchLocation.isSearch() && (!angular.isArray(
             searchMap.getSize()) || searchMap.getSize()[0] < 0)) {
 
-          setTimeout(function() {
+          $timeout(function() {
             searchMap.updateSize();
             searchMap.renderSync(1000);
 
@@ -745,15 +794,20 @@
         }
       }, gnSearchSettings.sortbyDefault);
 
-
       // Refreshes the map in the initial load, otherwise no map displayed
       // until the window is resize or the user clicks the map.
       // Tried other options, but not working.
-      setTimeout(function() {
+      searchMap.once('postrender', function(){
         searchMap.updateSize();
         searchMap.renderSync();
+      });
 
+      //If postrender fails to refresh map.It will refresh the map in specific time interval
+      $timeout(function() {
+        searchMap.updateSize();
+        searchMap.renderSync();
       }, 2000);
+
     }]);
 
   module.controller('SweLogoutController',
@@ -815,6 +869,28 @@
         $scope.$emit('body:class:remove', 'show-overlay');
       };
     }]);
+  
+  /**
+   * Controller for help popup.
+   *
+   */
+  module.controller('SweHelpController', [
+    '$cookies', '$scope', '$http', '$rootScope', '$sce',
+    function($cookies, $scope, $http, $rootScope, $sce) {
+	  
+	  $rootScope.$on('openhelppopup', function (event, data) {
+		  $scope.link = data;
+		  });
+	  $scope.trustSrc = function(link) {
+		   return $sce.trustAsResourceUrl(link);
+		};
+      $scope.close = function() {
+        // Cleanup and close the dialog
+        angular.element('#help-popup').removeClass('show');
+        $scope.$emit('body:class:remove', 'show-overlay');
+      };
+    }]);
+
 
 
   /**
@@ -1403,7 +1479,7 @@
                  if($scope.actual_height < 60){
                   $scope.$emit('body:class:add', 'geodata-examples-collapsed-with-cookie-alert');
                 }
-                else if($scope.actual_height < 300){
+                else if($scope.actual_height < 250){
                   $scope.$emit('body:class:add', 'geodata-examples-expanded-with-cookie-alert');
                 }
                 else{
@@ -1419,7 +1495,7 @@
                 if($scope.actual_height < 60){
                   $scope.$emit('body:class:add', 'geodata-examples-collapsed-without-cookie-alert');
                 }
-                else if($scope.actual_height < 300){
+                else if($scope.actual_height < 250){
                   $scope.$emit('body:class:add', 'geodata-examples-expanded-without-cookie-alert');
                 }
                 else{
@@ -1433,12 +1509,5 @@
     }
       
   });
-
-//To get GetFeatureInfo output format from GetCapabilities
-    module.factory("gfiOutputFormatCheck", function() {
-      return{
-         result: ""
-      };
-    });
 
 })();

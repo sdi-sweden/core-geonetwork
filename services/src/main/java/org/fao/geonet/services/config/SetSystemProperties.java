@@ -30,6 +30,7 @@ import jeeves.server.context.ServiceContext;
 import org.fao.geonet.Util;
 import org.fao.geonet.kernel.search.LuceneConfig;
 import org.fao.geonet.util.ThreadPool;
+import org.fao.geonet.util.XslUtil;
 import org.jdom.Element;
 
 import java.nio.file.Path;
@@ -56,7 +57,8 @@ public class SetSystemProperties implements Service {
         } else if (propertyName.equalsIgnoreCase(LuceneConfig.USE_NRT_MANAGER_REOPEN_THREAD)) {
             System.setProperty(LuceneConfig.USE_NRT_MANAGER_REOPEN_THREAD, Boolean.toString(newValue));
         } else {
-            throw new IllegalArgumentException("system property: " + propertyName + " is not permitted to be set via web API");
+            throw new IllegalArgumentException("system property: " +
+                    XslUtil.encodeForJavaScript(propertyName) + " is not permitted to be set via web API");
         }
         return new Element("response").setText("ok");
     }

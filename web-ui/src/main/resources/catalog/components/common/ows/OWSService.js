@@ -260,14 +260,22 @@
           getLayerInfoFromCap: function(name, capObj, uuid) {
             var needles = [];
             var layers = capObj.layers || capObj.Layer;
-
+            var parse_name = name.split(":");
+            var parsed_name = parse_name[1];
             for (var i = 0, len = layers.length; i < len; i++) {
               //check layername
               if (name == layers[i].Name || name == layers[i].Identifier) {
                 layers[i].nameToUse = name;
                 return layers[i];
               }
-
+              //check layername with workspace name
+              if(parsed_name){
+                if (parsed_name == layers[i].Name || parsed_name == layers[i].Identifier) {
+                layers[i].nameToUse = parsed_name;
+                return layers[i];
+              }
+              }
+              
               //check dataset identifer match
               if (uuid != null) {
                 if (angular.isArray(layers[i].Identifier)) {

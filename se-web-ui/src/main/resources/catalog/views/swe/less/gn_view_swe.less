@@ -413,22 +413,22 @@ body.loggedin-user .header-logout {
 }
 //For map dock
 .geodata-examples-expanded-with-cookie-alert .site-side-map-cont {
-  top: 409px;
+  top: 381px;
 }
 .geodata-examples-collapsed-with-cookie-alert .site-side-map-cont {
-  top: 238px;
+  top: 175px;
 }
 .geodata-examples-expanded-larger-with-cookie-alert .site-side-map-cont {
-  top: 582px;
+  top: 405px;
 }
 .geodata-examples-expanded-without-cookie-alert .site-side-map-cont {
-  top: 287px;
+  top: 291px;
 }
 .geodata-examples-collapsed-without-cookie-alert .site-side-map-cont {
-  top: 115px;
+  top: 85px;
 }
 .geodata-examples-expanded-larger-without-cookie-alert .site-side-map-cont {
-  top: 460px;
+  top: 316px;
 }
 
 .medium-map-view .main-wrapper {
@@ -439,16 +439,6 @@ body.loggedin-user .header-logout {
 }
 .medium-map-view .site-side-map-cont .map-cont {
   width: 359px !important;
-}
-.large-map-view .main-wrapper {
-  padding-right: 0px;
-}
-.large-map-view .site-side-map-cont {
-  width: 100%;
-  top:298px;
-}
-.large-map-view .site-side-map-cont .map-cont {
-  width: 100% !important;
 }
 .full-map-view .main-wrapper {
   padding-right: 0 !important;
@@ -670,9 +660,9 @@ body.loggedin-user .header-logout {
 .cls-btn {
   position: absolute;
   right: 8px;
-  top: 8px;
+  top: 0px;
   color: #fff;
-  font-size: 12px;
+  font-size: 20px;
   text-decoration: none;
   font-weight: normal;
   z-index: 100;
@@ -1965,6 +1955,7 @@ body.loggedin-user .header-logout {
   padding: 0 26px;
   box-sizing: border-box;
   background-color: #27605d;
+  min-height:25px;
 }
 .site-image-filter:before,
 .site-image-filter:after {
@@ -2833,7 +2824,7 @@ body.loggedin-user .header-logout {
 }
 .site-side-map-cont {
   position: fixed;
-  top: 409px;
+  top: 287px;
   right: -1px;
   height: 100%;
   z-index: 500;
@@ -3312,6 +3303,8 @@ body.loggedin-user .header-logout {
   width: 100%;
   max-width: 319px;
 }
+
+
 .mail-section-cont {
   *zoom: 1;
 }
@@ -3327,6 +3320,10 @@ body.loggedin-user .header-logout {
   width: 100%;
   box-sizing: border-box;
   padding: 35px 40px 0;
+}
+.mail-section iframe {
+	width: 100%;
+	height: 100vh; 
 }
 .mail-section h1 {
   font-family: 'Roboto', sans-serif;
@@ -3566,7 +3563,7 @@ a.link-btn[disabled] {
 }
 /* pre defined maps*/
 .site-image-filter .image-filter-text {
-  margin: 19px 0 19px;
+  margin: 19px 0 0px;
 }
 .site-image-filter .img-list li {
   margin: 0 0 12px 12px;

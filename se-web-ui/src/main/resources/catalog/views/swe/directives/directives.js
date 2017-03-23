@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -97,7 +97,7 @@
           scope.sortByOrder = function(v) {
             scope.params.sortOrder = v;
 
-            if (angular.isUndefined(v) || (v == '')) {
+            if (angular.isUndefined(v) || (v == '')) {
               delete scope.params.sortOrder;
               scope.sortOrder = 'descending';
             } else {
@@ -227,8 +227,8 @@
    * Displays a tooltip element.
    *
    */
-  module.directive('sweTooltip', ['$timeout',
-    function($timeout) {
+  module.directive('sweTooltip', ['$timeout', '$rootScope',
+    function($timeout, $rootScope) {
       return {
         restrict: 'A',
         replace: true,
@@ -250,7 +250,10 @@
                 tooltipElem.addClass('open');
               }
             })
-          })
+          });
+          scope.openPopup = function(link) {
+        	  $rootScope.$emit('openhelppopup', scope.link);
+		  }
         }
       };
     }
@@ -265,8 +268,8 @@
    * Displays a large tooltip element.
    *
    */
-  module.directive('sweTooltipLarge', ['$timeout',
-    function($timeout) {
+  module.directive('sweTooltipLarge', ['$timeout', '$rootScope',
+    function($timeout, $rootScope) {
       return {
         restrict: 'A',
         replace: true,
@@ -288,7 +291,10 @@
                 tooltipElem.addClass('open');
               }
             })
-          })
+          });
+          scope.openPopup = function(link) {
+        	  $rootScope.$emit('openhelppopup', scope.link);
+		  }
         }
       };
     }
@@ -338,6 +344,7 @@
           predefinedMaps: '@',
           selectedMap: '@',
           showMapFn: '&',
+          showMapFnApi: '&',
           configUrl: '@',
           selectedItem: '@'
         },
@@ -348,23 +355,34 @@
                   scope.predefinedMaps = data;
 
                   if (scope.selectedMap != undefined) {
+                	  var indexPredef;
                       var predefinedMapsFiltered =
                           scope.predefinedMaps.filter(function(x) {
-                              return x['title'] === scope.selectedMap
+                            if(x['id'] == scope.selectedMap){
+                        	  indexPredef = scope.predefinedMaps.indexOf(x);
+                        	}
+                            return x['id'] == scope.selectedMap
                           });
 
                       if (predefinedMapsFiltered.length > 0) {
-                          scope.doView(predefinedMapsFiltered[0]);
+                          scope.doViewFromUrl(indexPredef, predefinedMapsFiltered[0]);
                       }
                   }
               });
             }
           });
-          scope.doView = function(index, predefinedMap) {
-			scope.selectedItem = index;
+
+          scope.doViewFromUrl = function(index, predefinedMap) {
+        	scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
-            scope.showMapFn()();
+            scope.showMapFnApi()();
           };
+          
+          scope.doView = function(index, predefinedMap) {
+          	scope.selectedItem = index;
+              gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+              scope.showMapFn()();
+            };
         }
       };
   }]);
@@ -452,7 +470,7 @@
               then(function(data) {
                 scope.facetConfig = {
                   config: data,
-                  map:  {}
+                  map: {}
                 };
 
                 angular.forEach(scope.facetConfig.config, function(key) {
@@ -687,7 +705,7 @@
      * The solution is a bit "special": to add extra element that
      * is focus so the popup with suggestions gets closed.
      */
-    module.directive('allowPostOnEnter', function($timeout) {
+    module.directive('allowPostOnEnter', ['$timeout' ,function($timeout) {
       return {
           link: function($scope, elem, attrs) {
               var hiddenInpt = angular.element('<input class="hide">');
@@ -701,6 +719,6 @@
               })
           } //end of link
       }
-    });
+    }]);
 
 }());

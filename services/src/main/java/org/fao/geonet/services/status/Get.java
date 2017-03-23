@@ -32,6 +32,7 @@ import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.services.Utils;
+import org.fao.geonet.util.XslUtil;
 import org.jdom.Element;
 
 import java.nio.file.Path;
@@ -69,7 +70,8 @@ public class Get implements Service {
         int iLocalId = Integer.parseInt(id);
 
         if (!dataMan.existsMetadata(iLocalId))
-            throw new IllegalArgumentException("Metadata not found --> " + id);
+            throw new IllegalArgumentException("Metadata not found --> " +
+                    XslUtil.encodeForJavaScript(id));
 
         //-----------------------------------------------------------------------
         //--- retrieve metadata status

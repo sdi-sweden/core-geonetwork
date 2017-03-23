@@ -41,6 +41,7 @@ import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.fao.geonet.services.Utils;
+import org.fao.geonet.util.XslUtil;
 import org.fao.geonet.utils.GeonetHttpRequestFactory;
 import org.fao.geonet.utils.XmlRequest;
 import org.jdom.Element;
@@ -94,7 +95,8 @@ public class Rate extends NotInReadOnlyModeService {
 
         int iLocalId = Integer.parseInt(id);
         if (!dm.existsMetadata(iLocalId))
-            throw new IllegalArgumentException("Metadata not found --> " + id);
+            throw new IllegalArgumentException("Metadata not found --> " +
+                    XslUtil.encodeForJavaScript(id));
 
         if (ip == null)
             ip = "???.???.???.???";
