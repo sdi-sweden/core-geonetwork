@@ -76,7 +76,29 @@
       </div>
     </div>
   </div>
-
+  
+  <!-- Help page popup -->
+  <div id="help-popup" class="popup mail-popup" data-ng-controller="SweHelpController">
+    <div class="popup-cont">
+      <a href="" data-ng-click="close()" class="cls-btn icon-cancel"></a>
+      <div class="popup-data">
+        <div class="mail-data-cont">
+          <div class="mail-data">
+            <div class="mail-section-cont">
+              <div class="mail-section">
+			   <div>
+			   <iframe src="{{trustSrc(link)}}">
+				<p>Your browser does not support iframes.</p>
+			   </iframe>
+			   </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <!-- Create metadata popup -->
   <div id="newmetadata-popup" class="popup mail-popup" data-ng-controller="SweNewMetadataController">
     <div class="popup-cont">
@@ -134,6 +156,14 @@
       <div class="site-wrapper" data-ng-search-form=""
            data-runSearch="true">
         <!-- Filters -->
+            <!-- Predefined search filters -->
+        <div class="site-image-filter">
+ 	      <span class="image-filter-text" data-translate="">predefinedMapsTitle</span>
+		  <div class="image-filter-container"> 
+		    <a href="" data-ng-click="resizeCheck()" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
+	        <swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showLargeMapPanel"></swe-predefined-maps-filter>
+		  </div>
+        </div>
         <div data-ng-include="'../../catalog/views/swe/templates/filters.html'" data-ng-controller="SweFilterPanelController"></div>
 
         <div class="site-content">

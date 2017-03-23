@@ -228,8 +228,8 @@
    * Displays a tooltip element.
    *
    */
-  module.directive('sweTooltip', ['$timeout',
-    function($timeout) {
+  module.directive('sweTooltip', ['$timeout', '$rootScope',
+    function($timeout, $rootScope) {
       return {
         restrict: 'A',
         replace: true,
@@ -251,11 +251,56 @@
                 tooltipElem.addClass('open');
               }
             })
-          })
+          });
+          scope.openPopup = function(link) {
+        	  $rootScope.$emit('openhelppopup', scope.link);
+		  }
         }
       };
     }
   ]);
+  
+  /**
+   * @ngdoc directive
+   * @name sweTooltipLarge
+   * @function
+   *
+   * @description
+   * Displays a large tooltip element.
+   *
+   */
+  module.directive('sweTooltipLarge', ['$timeout', '$rootScope',
+    function($timeout, $rootScope) {
+      return {
+        restrict: 'A',
+        replace: true,
+        templateUrl: '../../catalog/views/swe/directives/' +
+          'partials/tooltipLarge.html',
+        scope: {
+          title: '@',
+          text: '@',
+          link: '@'
+        },
+        link: function(scope, elem) {
+          $timeout(function () {
+            elem.on('click', '.help-icn-circle', function () {
+              var tooltipElem = elem.find('.tool-tip-cont-large');
+              
+              if (tooltipElem.hasClass('open')) {
+                tooltipElem.removeClass('open'); 
+              } else {
+                tooltipElem.addClass('open');
+              }
+            })
+          });
+          scope.openPopup = function(link) {
+        	  $rootScope.$emit('openhelppopup', scope.link);
+		  }
+        }
+      };
+    }
+  ]);
+  
 
   /**
    * @ngdoc directive
