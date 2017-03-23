@@ -1418,7 +1418,7 @@
                  if($scope.actual_height < 60){
                   $scope.$emit('body:class:add', 'geodata-examples-collapsed-with-cookie-alert');
                 }
-                else if($scope.actual_height < 300){
+                else if($scope.actual_height < 230){
                   $scope.$emit('body:class:add', 'geodata-examples-expanded-with-cookie-alert');
                 }
                 else{
@@ -1434,7 +1434,7 @@
                 if($scope.actual_height < 60){
                   $scope.$emit('body:class:add', 'geodata-examples-collapsed-without-cookie-alert');
                 }
-                else if($scope.actual_height < 300){
+                else if($scope.actual_height < 230){
                   $scope.$emit('body:class:add', 'geodata-examples-expanded-without-cookie-alert');
                 }
                 else{

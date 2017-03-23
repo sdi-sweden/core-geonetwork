@@ -413,13 +413,13 @@ body.loggedin-user .header-logout {
 }
 //For map dock
 .geodata-examples-expanded-with-cookie-alert .site-side-map-cont {
-  top: 409px;
+  top: 377px;
 }
 .geodata-examples-collapsed-with-cookie-alert .site-side-map-cont {
   top: 238px;
 }
 .geodata-examples-expanded-larger-with-cookie-alert .site-side-map-cont {
-  top: 582px;
+  top: 397px;
 }
 .geodata-examples-expanded-without-cookie-alert .site-side-map-cont {
   top: 287px;
@@ -428,7 +428,16 @@ body.loggedin-user .header-logout {
   top: 115px;
 }
 .geodata-examples-expanded-larger-without-cookie-alert .site-side-map-cont {
-  top: 460px;
+  top: 305px;
+}
+/*For Chrome scrollbar height differs.So Changed Top margin for map dock*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.geodata-examples-expanded-larger-without-cookie-alert .site-side-map-cont {
+  top: 295px;
+}
+.geodata-examples-expanded-larger-with-cookie-alert .site-side-map-cont {
+  top: 387px;
+}
 }
 
 .medium-map-view .main-wrapper {
@@ -826,6 +835,27 @@ body.loggedin-user .header-logout {
   }
 }
 @media screen and (max-width: 1200px) {
+  body {
+    min-width: 0;
+    max-width: 1200px;
+  }
+
+  /* pre defined maps */
+  .site-image-filter {
+    padding: 0 20px;
+    .image-filter-container {
+      overflow: auto;
+    }
+    .img-list {
+      white-space: nowrap;
+      display: inline-block;
+      li {
+        margin: 0 12px 12px 0px;
+        display: inline-block;
+      }
+    }
+  }
+  
   .other-geodata-cont {
     margin-right: 0px;
   }
