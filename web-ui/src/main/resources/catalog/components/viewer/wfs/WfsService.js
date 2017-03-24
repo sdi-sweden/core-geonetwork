@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -97,10 +97,13 @@
           });
 
           if (gnUrlUtils.isValid(url)) {
-          	//redirect http request via proxy
-           	if (!url.includes("https://")) {
-           		url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-           	}  
+         	  if (url.includes("maps.lantmateriet.se")) {
+            	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+            }  else {
+           	    if (!url.includes("https://")) {
+             	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                }
+            }
             $http.get(url, {
               cache: true
             }).then(function(response) {
