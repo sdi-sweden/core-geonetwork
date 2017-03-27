@@ -45,6 +45,50 @@
       org.apache.jcs.utils.servlet.JCSServletContextListener
     </listener-class>
   </listener>
+
+  <!--
+Context listener that creates endpoint cache and validator required by EndpointProxyFilter.
+ -->
+    <listener>
+        <listener-class>se.lantmateriet.geonet.LmConfigContextListener</listener-class>
+    </listener>
+
+<filter>
+         <filter-name>LmProxyFilter</filter-name>
+        <filter-class>
+            se.lantmateriet.geonet.LmProxyFilter
+        </filter-class>
+        <init-param>
+            <param-name>endpointproxyfilter.endpoint.parameter</param-name>
+            <param-value>url</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>LmProxyFilter</filter-name>
+        <url-pattern>/lm-proxy</url-pattern>        
+        <!-- url-pattern>/proxy</url-pattern -->
+    </filter-mapping>
+
+    <filter>
+        <display-name>Proxy Endpoint Filter</display-name>
+        <filter-name>ProxyEndpointFilter</filter-name>
+        <filter-class>
+            org.lmv.geodata.common.server.servlet.filter.proxy.endpoint.EndpointProxyFilter
+        </filter-class>
+        <init-param>
+            <param-name>endpointproxyfilter.endpoint.parameter</param-name>
+            <param-value>url</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ProxyEndpointFilter</filter-name>
+        <url-pattern>/lm-proxy</url-pattern>
+        <!-- url-pattern>/proxy</url-pattern -->
+    </filter-mapping>
+
+
   <filter>
     <filter-name>characterEncodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
