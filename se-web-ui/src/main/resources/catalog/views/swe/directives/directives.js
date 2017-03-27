@@ -161,6 +161,43 @@
       };
     }
   ]);
+  
+  /**
+   * @ngdoc directive
+   * @name sweShowDialog
+   * @function
+   *
+   * @description
+   * Adds "show" class for the dialog referenced in scope.dialog.
+   *
+   */
+  module.directive('sweShowDialogForHelp', [
+    function() {
+      return {
+        restrict: 'A',
+        scope: { dialog: '@dialog', focusControl: '@focusControl'},
+        link: function(scope, elem) {
+          elem.on('click', function() {
+            angular.element(scope.dialog).addClass('show');
+            if (scope.focusControl) {
+              angular.element(scope.focusControl).focus();
+            }
+          });
+        }
+      };
+    }
+  ]);
+  
+  module.directive('dragable', function(){   
+	  return {
+	    restrict: 'A',
+	    link : function(scope,elem,attr){
+	    	$(elem).draggable({
+	    		containment: "window"
+	        });
+	    }
+	  }  
+	});
 
   /**
    * @ngdoc directive

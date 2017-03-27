@@ -77,27 +77,36 @@
     </div>
   </div>
   
-  <!-- Help page popup -->
-  <div id="help-popup" class="popup mail-popup" data-ng-controller="SweHelpController">
+ <!--    <!-- Help page popup -->
+<!--   <div style="height:300px" dragable id="help-popup" role="dialog" class="popupHelp help-popup" data-ng-controller="SweHelpController">
     <div class="popup-cont">
-      <a href="" data-ng-click="close()" class="cls-btn icon-cancel"></a>
-      <div class="popup-data">
-        <div class="mail-data-cont">
-          <div class="mail-data">
-            <div class="mail-section-cont">
-              <div class="mail-section">
-			   <div>
-			   <iframe src="{{trustSrc(link)}}">
-				<p>Your browser does not support iframes.</p>
-			   </iframe>
-			   </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div style="height:50px">
+         <a href="" data-ng-click="close()" class="cls-btn icon-cancel"></a>
       </div>
+      <div>
+        <iframe width="100%" style="height:300px" src="{{trustSrc(link)}}">
+		  <p>Your browser does not support iframes.</p>
+	    </iframe>
+	  </div>
+	  <button data-ng-click="close()" class="btn">Close</button>
+    </div> -->
+    
+        <!-- Help page popup -->
+  <div id="help-popup" class="popupHelp help-popup" dragable="" data-ng-controller="SweHelpController">
+    <div class="popup-cont">
+      <div class="popup-cont-header">
+         <a href="" data-ng-click="close()" class="cls-btn icon-cancel"></a>
+      </div>
+      <div>
+        <iframe src="{{trustSrc(link)}}">
+		  <p>Your browser does not support iframes.</p>
+	    </iframe>
+	  </div>
+	  <button data-ng-click="close()" class="btn">Close</button>
     </div>
   </div>
+
+
   
   <!-- Create metadata popup -->
   <div id="newmetadata-popup" class="popup mail-popup" data-ng-controller="SweNewMetadataController">
