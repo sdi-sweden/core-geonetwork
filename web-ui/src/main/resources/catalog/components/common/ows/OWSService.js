@@ -30,16 +30,39 @@
 
   module.provider('gnOwsCapabilities', function() {
     this.$get = ['$http', '$q',
-      'gnUrlUtils', 'gnGlobalSettings',
-      function($http, $q, gnUrlUtils, gnGlobalSettings) {
+      'gnUrlUtils', 'gnGlobalSettings', 'gfiOutputFormatCheck',
+      function($http, $q, gnUrlUtils, gnGlobalSettings, gfiOutputFormatCheck) {
 
-        var displayFileContent = function(data) {
+        var displayFileContent = function(wmsUrl,data) {
           var parser = new ol.format.WMSCapabilities();
           var result = parser.read(data);
-
           var layers = [];
-          var url = result.Capability.Request.GetCapabilities.
+          var layerCheck = [];
+          var layerGroupCheck = [];
+          var url = result.Capability.Request.GetMap.
               DCPType[0].HTTP.Get.OnlineResource;
+          //layer case insenstive
+          var parseUrl = wmsUrl.substring(wmsUrl.indexOf("&") + 1).split("&") 
+          if (parseUrl.length > 1) {
+             var wmsLayers = parseUrl[1].split("=")
+          }
+          
+          //Function to parse layers inside each layergroup 
+          var parseLayerGroup = function(layer){
+            for  (var l in layer) {
+                if("Layer" in layer[l]){
+                   layerGroupCheck.push({
+                      layergroup: layer[l].Name,
+                      Layer: layer[l]
+                  });
+                  parseLayerGroup(layer[l].Layer)
+                }
+                else{
+                  layerCheck.push(layer[l])
+                }
+            }
+            return layerCheck;
+          }
 
           if (url.includes("maps.lantmateriet.se")) {
             url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
@@ -48,15 +71,38 @@
           // Push all leaves into a flat array of Layers.
           var getFlatLayers = function(layer) {
             if (angular.isArray(layer)) {
-              for (var i = 0, len = layer.length; i < len; i++) {
-                getFlatLayers(layer[i]);
+              for (var i = 0, len = layer.length; i < len; i++) { 
+                  getFlatLayers(layer[i]);
               }
             } else if (angular.isDefined(layer)) {
+              if(parseUrl.length > 1 && wmsLayers[0].toLowerCase() == "layers"){
+                  var splitLayer = wmsLayers[1].split(",")
+                  parseLayerGroup([layer]);
+              //To check whether given layer is layer    
+                for (var i in layerCheck) {
+                  if(splitLayer.indexOf(layerCheck[i].Name) > -1){
+                    layerCheck[i].url = url;
+                    layers.push(layerCheck[i]);
+                  }
+                } 
+              //To check whether given layer is layergroup     
+                for (var l in layerGroupCheck){
+                  if(splitLayer.indexOf(layerGroupCheck[l].layergroup) > -1){
+                    layerGroupCheck[l].layergroup.url = url;
+                    layers.push(layerGroupCheck[l].Layer);
+                  }
+                }
+            }       
+            else{
               layer.url = url;
-              layers.push(layer);
+              if(!layer.Layer){
+                layers.push(layer);
+              }
               getFlatLayers(layer.Layer);
             }
-          };
+                         
+          }
+        };
 
           // Make sure Layer property is an array even if
           // there is only one element.
@@ -97,6 +143,9 @@
           setLayerAsArray(result.Capability);
           checkOnlineResourceURL(layers);
           result.Capability.layers = layers;
+          if(parseUrl.length > 1 && wmsLayers[0].toLowerCase() == "layers"){
+              result.Capability.Layer[0].Layer = layers;
+          }
           return result.Capability;
         };
 
@@ -153,7 +202,8 @@
                 })
                     .success(function(data) {
                       try {
-                        defer.resolve(displayFileContent(data));
+                        defer.resolve(displayFileContent(url,data));
+                        gfiOutputFormatCheck.result = defer.promise.$$state.value.Request.GetFeatureInfo.Format
                       } catch (e) {
                         defer.reject('capabilitiesParseError');
                       }
@@ -244,14 +294,22 @@
           getLayerInfoFromCap: function(name, capObj, uuid) {
             var needles = [];
             var layers = capObj.layers || capObj.Layer;
-
+            var parse_name = name.split(":");
+            var parsed_name = parse_name[1];
             for (var i = 0, len = layers.length; i < len; i++) {
               //check layername
               if (name == layers[i].Name || name == layers[i].Identifier) {
                 layers[i].nameToUse = name;
                 return layers[i];
               }
-
+              //check layername with workspace name
+              if(parsed_name){
+                if (parsed_name == layers[i].Name || parsed_name == layers[i].Identifier) {
+                layers[i].nameToUse = parsed_name;
+                return layers[i];
+              }
+              }
+              
               //check dataset identifer match
               if (uuid != null) {
                 if (angular.isArray(layers[i].Identifier)) {

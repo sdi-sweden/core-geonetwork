@@ -87,11 +87,13 @@
          * @param {ol.layer} layer
          */
           this.showInfo = function(layer) {
+            /* Commented out so that legends are shown for all layers without closing previously opened one*/
+            /*
             angular.forEach($scope.layers, function(l) {
               if (l != layer) {
                 l.showInfo = false;
               }
-            });
+            });*/
             layer.showInfo = !layer.showInfo;
           };
 
@@ -120,11 +122,11 @@
           scope.removeLayers = function() {
             var layerList = [];
             scope.map.getLayers().forEach(function (layer) {
-              if (layer.get('group') != 'Background Layers') {
+              var layerGroup = layer.get('group') || '';
+              if (layerGroup.toLowerCase() != 'background layers') {
                 layerList.push(layer);
               }
             });
-
             for(var i = 0; i < layerList.length; i++) {
               scope.map.removeLayer(layerList[i]);
             }
@@ -148,7 +150,8 @@
    */
   module.directive('gnLayermanagerItem', [
     'gnMdView',
-    function(gnMdView) {
+    'gfiOutputFormatCheck',
+    function(gnMdView, gfiOutputFormatCheck) {
       return {
         require: '^gnLayermanager',
         restrict: 'A',
@@ -159,9 +162,25 @@
         link: function(scope, element, attrs, ctrl) {
           scope.layer = scope.$eval(attrs['gnLayermanagerItem']);
           var layer = scope.layer;
-
+          layer.showInfo = true;
           scope.showInfo = ctrl.showInfo;
           scope.moveLayer = ctrl.moveLayer;
+          gml_format_check = gfiOutputFormatCheck.result;
+          var GML_2 = "text/xml; subtype=gml/2.1.2";
+          var GML_3 = "application/vnd.ogc.gml/3.1.1";
+          var GML = "application/vnd.ogc.gml";
+          if(gml_format_check.indexOf(GML_2) > -1){
+            layer.gfiOutputFormat = "GML2";
+          }
+          else if(gml_format_check.indexOf(GML_3) > -1){
+            layer.gfiOutputFormat = "GML3";
+          }
+          else if(gml_format_check.indexOf(GML) > -1){
+            layer.gfiOutputFormat = "GML3";
+          }
+          else{
+              layer.gfiOutputFormat = "XML";
+          }
 
           scope.showMetadata = function() {
             gnMdView.openMdFromLayer(scope.layer);

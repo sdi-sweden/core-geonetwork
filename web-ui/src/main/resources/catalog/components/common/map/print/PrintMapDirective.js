@@ -46,7 +46,6 @@
     var updatePrintConfig = function() {
       var http = $http.get(options.printConfigUrl);
       http.success(function(data) {
-
         // default values:
         var layout = data.layouts[0];
         if ($scope.defaultLayout) {
@@ -102,7 +101,8 @@
           if (angular.isFunction(deregister[i])) {
             deregister[i]();
           } else {
-            deregister[i].target.unByKey(deregister[i]);
+            //deregister[i].target.unByKey(deregister[i]);
+            ol.Observable.unByKey(deregister[i]);
           }
         }
       }
@@ -194,7 +194,7 @@
       // http://mapfish.org/doc/print/protocol.html#print-pdf
       var view = $scope.map.getView();
       var proj = view.getProjection();
-      var lang = $translate.uses();
+      var lang = $translate.use();
       var defaultPage = {
         comment: $scope.mapComment || '',
         title: $scope.mapTitle || ''
@@ -233,6 +233,10 @@
       var scales = $scope.config.scales.map(function(scale) {
         return parseInt(scale.value);
       });
+      //Check to avoid blank page on print
+      if (angular.isUndefined(encLegends)){
+        $scope.enableLegends = false;
+      }
       var spec = {
         layout: $scope.config.layout.name,
         srs: proj.getCode(),
@@ -264,6 +268,7 @@
         for (var i = 0; i < pdfLegendsToDownload.length; i++) {
           $window.open(pdfLegendsToDownload[i]);
         }
+        $scope.enableLegends = true;
       });
       http.error(function() {
         $scope.printing = false;

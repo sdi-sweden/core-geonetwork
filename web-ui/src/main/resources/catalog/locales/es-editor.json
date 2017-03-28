@@ -90,6 +90,8 @@
     "chooseRegion": "Selecciona una región",
     "clickToDrawABox": "Pulsa una vez para habilitar el control y pintar una caja. Vuelve a pulsar para parar de dibujar.",
     "closeEditor": "Salvar y guardar",
+	"inspireValidation": "Inspire-validering",
+	"mdRelationValidation": "Kontroll av länkar",
     "continent": "Continente",
     "copyPaste": "Copiar/Pegar",
     "country": "País",

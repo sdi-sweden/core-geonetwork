@@ -46,6 +46,12 @@
         </service>
 
     -->
+	
+	 <service name="csw-inspire">
+      <class name=".services.main.CswDiscoveryDispatcher">
+        <param name="filter" value="+inspireinitiativ"/>
+      </class>
+    </service>
     <service name="csw-integration-test">
       <class name=".services.main.CswDiscoveryDispatcher">
         <param name="filter" value="+spatialRepresentationType:vector"/>

@@ -106,7 +106,9 @@ public class UserQueryInput {
         SearchParameter.DENOMINATORTO,
         SearchParameter.DENOMINATOR,
         SearchParameter.CREATIONDATEFROM,
-        SearchParameter.CREATIONDATETO);
+        SearchParameter.CREATIONDATETO,
+        SearchParameter.RESOURCEDATEFROM,
+        SearchParameter.RESOURCEDATETO);
     /**
      * TODO : use enum instead ?
      */

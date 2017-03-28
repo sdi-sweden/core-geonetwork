@@ -74,7 +74,6 @@
         link: function(scope, element, attrs) {
           var map = scope.map;
           var source = new ol.source.Vector();
-
           /**
            * Style function of the drawn features vector.
            * The feature styles are stored in a `_style` attribute instead of
@@ -189,7 +188,7 @@
             style: drawVectorStyleFn
           });
           scope.vector = vector;
-
+          scope.activeAnnotate = false;
           /**
            * Create a `ol.style.Style` object from style config mapped with
            * style form.
@@ -454,6 +453,30 @@
 
 
           var deleteF = new ol.interaction.Select();
+          var selectPointerMove = new ol.interaction.Select({
+            condition: ol.events.condition.pointerMove
+          });
+          selectPointerMove.active = false;
+          scope.selectPointerMove = selectPointerMove;
+
+           Object.defineProperty(scope, 'deleting', {
+            get: function() {
+              return (map.getInteractions().getArray().indexOf(deleteF) >= 0);
+            },
+            set: function(val) {
+              if (val) {
+                deleteF.active = true;
+                selectPointerMove.active = true;
+                map.addInteraction(selectPointerMove);
+                map.addInteraction(deleteF);
+                
+              } else {
+                map.removeInteraction(deleteF);
+                map.removeInteraction(selectPointerMove);
+              }
+            }
+          });
+
           deleteF.getFeatures().on('add',
               function(evt) {
                 vector.getSource().removeFeature(evt.element);
@@ -484,18 +507,21 @@
 
           Object.defineProperty(vector, 'inmap', {
             get: function() {
-              return map.getLayers().getArray().indexOf(vector) >= 0;
+             return scope.activeAnnotate         
             },
             set: function(val) {
               if (val) {
+                scope.activeAnnotate = true;
                 map.addLayer(vector);
-              } else {
+              } else {                
+                scope.activeAnnotate = false;
                 drawPolygon.active = false;
                 drawPoint.active = false;
                 drawLine.active = false;
                 drawText.active = false;
-                deleteF = false;
+                deleteF.active = false;
                 scope.modifying = false;
+                scope.deleting = false;
               }
             }
           });

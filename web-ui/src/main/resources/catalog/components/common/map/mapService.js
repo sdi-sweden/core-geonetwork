@@ -61,14 +61,14 @@
       'gnWfsService',
       'gnGlobalSettings',
       'gnViewerSettings',
-      'gnSearchSettings',
+      '$window',
       function(ngeoDecorateLayer, gnOwsCapabilities, gnConfig, $log,
           gnSearchLocation, $rootScope, gnUrlUtils, $q, $translate,
           gnWmsQueue, gnSearchManagerService, Metadata, gnWfsService,
-          gnGlobalSettings, viewerSettings, gnSearchSettings) {
+          gnGlobalSettings, viewerSettings, $window) {
 
         var defaultMapConfig = {
-          'useOSM': 'true',
+          //'useOSM': 'true',
           'projection': 'EPSG:3857',
           'projectionList': [{
             'code': 'EPSG:4326',
@@ -78,6 +78,7 @@
             'label': 'Google mercator (EPSG:3857)'
           }]
         };
+        proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
 
         /**
          * @description
@@ -118,8 +119,6 @@
           return Math.min(1.5, Math.max(1, ratio));
         };
 
-        var initialize = false;
-        var draw;
         return {
 
           /**
@@ -328,12 +327,13 @@
           getMapConfig: function() {
             if (gnConfig['map.config'] &&
                 angular.isObject(gnConfig['map.config'])) {
-              return gnConfig['map.config'];
+              return gnConfig['map.config'];           
             } else {
               return defaultMapConfig;
             }
           },
 
+          //Commented out code to add OSM map.Since we are not using OSM map in editor
           /**
            * @ngdoc method
            * @methodOf gn_map.service:gnMap
@@ -345,7 +345,7 @@
            *
            * @return {Object} defaultMapConfig layers config
            */
-          getLayersFromConfig: function() {
+          /*getLayersFromConfig: function() {
             var conf = this.getMapConfig();
             var source;
 
@@ -362,7 +362,7 @@
             return new ol.layer.Tile({
               source: source
             });
-          },
+          },*/
 
           /**
            * @ngdoc method
@@ -572,7 +572,7 @@
                       tileEvent.currentTarget.getParams().LAYERS :
                       layerParams.LAYERS;
 
-                  var msg = $translate('layerTileLoadError', {
+                  var msg = $translate.instant('layerTileLoadError', {
                     url: url,
                     layer: layer
                   });
@@ -630,24 +630,48 @@
                   }
                 }
               } else {
-                errors.push($translate('layerCRSNotFound'));
-                console.warn($translate('layerCRSNotFound'));
+                errors.push($translate.instant('layerCRSNotFound'));
+                console.warn($translate.instant('layerCRSNotFound'));
               }
               if (!isLayerAvailableInMapProjection) {
-                errors.push($translate('layerNotAvailableInMapProj'));
-                console.warn($translate('layerNotAvailableInMapProj'));
+                errors.push($translate.instant('layerNotAvailableInMapProj'));
+                console.warn($translate.instant('layerNotAvailableInMapProj'));
               }
               */
 
               // TODO: parse better legend & attribution
               if (angular.isArray(getCapLayer.Style) &&
                   getCapLayer.Style.length > 0) {
-                var legendUrl = (getCapLayer.Style[getCapLayer.
-                    Style.length - 1].LegendURL) ?
-                    getCapLayer.Style[getCapLayer.
-                        Style.length - 1].LegendURL[0] : undefined;
+                var legendUrl = (getCapLayer.Style[0].LegendURL) ?
+                    getCapLayer.Style[0].LegendURL[0] : undefined;
                 if (legendUrl) {
-                  legend = legendUrl.OnlineResource;
+                  default_legend = legendUrl.OnlineResource;
+                  var legend_size = "width=30&height=30&"
+                  /* To increase legend size 50% larger */
+                  if(default_legend.indexOf("width=") > -1){
+
+                    parse_url = default_legend.slice(default_legend.indexOf("width="))
+                    parse_params = parse_url.split("&")
+                    default_width = parse_params[0].split("=")
+                    default_height = parse_params[1].split("=")
+                    custom_width = default_width[1]*1.5;
+                    custom_height = default_height[1]*1.5;
+                    custom_params = "width=" + Math.round(custom_width) + "&height=" + Math.round(custom_height)
+                      if(parse_params.length <= 2){
+                        replace_legend = default_legend.replace(default_legend.slice(default_legend.indexOf("width=")), custom_params)
+                        legend = replace_legend
+                      }
+                      else{
+                       replace_legend = default_legend.replace(default_legend.slice(default_legend.indexOf("width="), default_legend.indexOf("layer=") - 1),custom_params)
+                       legend = replace_legend
+                      }
+                      
+                  }
+                  else{
+
+                    legend = (default_legend.slice(0, default_legend.indexOf("layer=")) + legend_size) + 
+                    default_legend.slice(default_legend.indexOf("layer="), default_legend.length)
+                  }
                 }
               }
               if (angular.isDefined(getCapLayer.Attribution)) {
@@ -757,13 +781,13 @@
                   }
                 }
               } else {
-                errors.push($translate('layerCRSNotFound'));
-                console.warn($translate('layerCRSNotFound'));
+                errors.push($translate.instant('layerCRSNotFound'));
+                console.warn($translate.instant('layerCRSNotFound'));
               }
 
               if (!isLayerAvailableInMapProjection) {
-                errors.push($translate('layerNotAvailableInMapProj'));
-                console.warn($translate('layerNotAvailableInMapProj'));
+                errors.push($translate.instant('layerNotAvailableInMapProj'));
+                console.warn($translate.instant('layerNotAvailableInMapProj'));
               }
 
               // TODO: parse better legend & attribution
@@ -1010,7 +1034,7 @@
                   if (!angular.isArray(olL.get('errors'))) {
                     olL.set('errors', []);
                   }
-                  var errormsg = $translate('layerNotfoundInCapability', {
+                  var errormsg = $translate.instant('layerNotfoundInCapability', {
                     layer: name,
                     url: url
                   });
@@ -1202,7 +1226,7 @@
                 if (!angular.isArray(olL.get('errors'))) {
                   olL.set('errors', []);
                 }
-                var errormsg = $translate('layerNotfoundInCapability', {
+                var errormsg = $translate.instant('layerNotfoundInCapability', {
                   layer: name,
                   url: url
                 });
@@ -1405,58 +1429,6 @@
           },
 
 
-             /**
-           * @ngdoc method
-           * @methodOf gn_map.service:gnMap
-           * @name gnMap#drawpolygon
-           *
-           * @description
-           * Draw Free hand polygon in map
-           
-           */
-
-          drawFreeHandPolygonInMap: function(scope, trigger, toggle) {
-
-            var self = this              
-            if(!initialize){
-              scope.viewerMap.getLayers().getArray()[1].setStyle(gnSearchSettings.olStyles.mdExtentHighlight)
-              scope.viewerMap.getLayers().getArray()[1].setMap(scope.searchMap);
-              var features = new ol.Collection();
-              var extent;
-              draw = new ol.interaction.Draw({
-                features: features,
-                type: 'Polygon'
-              });
-              initialize = true;
-            }
- 
-            if(toggle){               
-            scope.viewerMap.addInteraction(draw);
-            scope.searchMap.addInteraction(draw);
-             draw.on('drawend', function (e) {
-                delete scope.namesearch;
-                len = scope.viewerMap.getLayers().getLength();
-                for(i=1;i<len;i++){
-                  scope.viewerMap.getLayers().getArray()[i].getSource().clear()
-                }
-                scope.viewerMap.getLayers().getArray()[1].getSource().addFeature(e.feature)
-                var extent = scope.viewerMap.getLayers().getArray()[1].getSource().getExtent()
-                var geoJson = new ol.format.GeoJSON();
-                proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
-              //proj4.defs("EPSG:4258","+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs");
-                var geom = self.reprojExtent(extent , 'EPSG:3006', 'EPSG:4326');
-                var geom_wkt = "POLYGON((" + geom[0] + " " + geom[1] + "," + geom[2] + " " + geom[1] + "," + geom[2] + " " + geom[3] + "," + geom[2] + " " + geom[1] + "," + geom[0] + " " + geom[1] + "))";
-                scope.params.geometry = geom_wkt;
-                trigger.triggerSearch()
-                })
-            }
-              
-             else{
-                  scope.viewerMap.removeInteraction(draw);
-                  scope.searchMap.removeInteraction(draw);
-             }   
-        },
-
           /**
            * @ngdoc method
            * @methodOf gn_map.service:gnMap
@@ -1616,6 +1588,69 @@
               var process = md && md.getLinksByType(linkGroup, 'OGC:WPS');
               layer.set('processes', process);
             }
+               },    
+          /**
+           * To manage map toolbars on map resize
+           *
+           * @param scope object from gnMainViewer directive
+           */
+          hideOrShowMapTool: function(scope){
+                  window_height = angular.element($window).height();
+                  top_margin = parseInt(angular.element('.site-side-map-cont').css('top'),10);
+                  map_height = (window_height - top_margin);         
+                  scope.addLayersTool = true;
+                  scope.manageLayersTool = true;
+                  scope.contextsTool = true;
+                  scope.printTool = true;
+                  scope.syncLayersTool = true;
+                  scope.measureLengthTool = true;
+                  scope.measureAreaTool = true; 
+                  scope.annotationTool = true;
+                 if(map_height < 450){
+                    if(map_height < 240){
+                      scope.manageLayersTool = false;
+                      scope.contextsTool = false;
+                      scope.printTool = false;
+                      scope.syncLayersTool = false;
+                      scope.measureLengthTool = false;
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                    else if(map_height < 270){
+                      scope.contextsTool = false;
+                      scope.printTool = false;
+                      scope.syncLayersTool = false;
+                      scope.measureLengthTool = false;
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                    else if(map_height < 300){
+                      scope.printTool = false;
+                      scope.syncLayersTool = false;
+                      scope.measureLengthTool = false;
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                     else if(map_height < 330){
+                      scope.syncLayersTool = false;
+                      scope.measureLengthTool = false;
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                    else if(map_height < 360){
+                      scope.measureLengthTool = false;
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                    else if(map_height < 390){
+                      scope.measureAreaTool = false; 
+                      scope.annotationTool = false;
+                    }
+                    else if(map_height < 420){
+                      scope.annotationTool = false;
+                    }                                                         
+                 }
+                
           }
         };
       }];

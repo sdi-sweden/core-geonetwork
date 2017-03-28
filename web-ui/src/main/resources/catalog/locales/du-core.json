@@ -127,6 +127,7 @@
     "Clear": "Verwijderen",
     "ClearTitle": "Verwijder huidige zoekvraag, filters en sortering",
     "hitsPerPage": "Resultaten per pagina",
+	"of": "of",
     "chooseRecordsPerPage": "Kies het aantal resultaten per pagina",
     "sortedBy": "Gesorteerd op {{field}}",
     "relevance": "relevantie",

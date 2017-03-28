@@ -2,9 +2,15 @@
 
 <div>
 
-  <header data-ng-include="'../../catalog/views/swe/templates/header.html'"></header>
+  <div data-ng-controller="GnSearchController" data-ng-search-form="" data-runSearch="true">
+    <div data-ng-controller="gnsSwe">
+      <div>
+		<header data-ng-include="'../../catalog/views/swe/templates/header.html'" data-ng-controller="SweFilterPanelController"></></header>
+	  </div>
+	</div>
+  </div>
 
-  <div data-gn-alert-manager=""></div><cookiewarning></cookiewarning>
+  <div data-gn-alert-manager="" data-ng-init="init()"></div><cookiewarning></cookiewarning>
 
   <div class="overlay"></div> 
 
@@ -17,15 +23,15 @@
           <div class="mail-data">
             <div class="mail-section-cont">
               <div class="mail-section">
-                <h1>Tyck Till</h1>
-                <p>Tyck Till ...</p>
+                <h1 data-translate="">leaveComment</h1>
+                <!-- <p data-translate="">leaveComment</p> -->
 
                 <div id="mail-feedback-result" data-ng-show="(feedbackResult != null) && (feedbackResultError == false)">
                   <p>{{feedbackResult}}</p>
 
                   <div class="btn-cont">
                     <div class="mail-actions-cont">
-                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()">close</a>
+                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()"data-translate="">cancel</a>
                     </div>
                   </div>
                 </div>
@@ -36,30 +42,30 @@
 
                     <!-- NAME -->
                     <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.name.$invalid && !feedbackForm.name.$pristine }">
-                      <label>Namn</label>
+                      <label data-translate="">name</label>
                       <input type="text" class="input" name="name" ng-model="user.username" required>
-                      <span class="errorField" data-ng-show="feedbackForm.name.$invalid && !feedbackForm.name.$pristine" class="help-block">You name is required.</span>
+                      <span class="errorField" data-ng-show="feedbackForm.name.$invalid && !feedbackForm.name.$pristine" class="help-block" data-translate="">nameMissing</span>
                     </div>
 
                     <!-- EMAIL -->
                     <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.email.$invalid && !feedbackForm.email.$pristine }">
-                      <label>E-post</label>
+                      <label data-translate="">email</label>
                       <input type="email" class="input" name="email" ng-model="user.email" required>
-                      <span class="errorField" data-ng-show="feedbackForm.email.$invalid && !feedbackForm.email.$pristine" class="help-block">Enter a valid email.</span>
+                      <span class="errorField" data-ng-show="feedbackForm.email.$invalid && !feedbackForm.email.$pristine" class="help-block" data-translate="">invalidEmail</span>
                     </div>
 
                     <!-- COMMENT -->
                     <div data-ng-class="{'form-row': true, 'has-error' : feedbackForm.comment.$invalid && !feedbackForm.comment.$pristine }">
-                      <label class="label-text-area">Kommentar</label>
+                      <label class="label-text-area" data-translate="">comments</label>
                       <textarea class="textarea" name="comment" ng-model="user.comments" required></textarea>
-                      <span class="errorField" data-ng-show="feedbackForm.comment.$invalid && !feedbackForm.comment.$pristine" class="help-block">Your comment is required.</span>
+                      <span class="errorField" data-ng-show="feedbackForm.comment.$invalid && !feedbackForm.comment.$pristine" class="help-block" data-translate="">commentMissing</span>
                     </div>
                   </form>
 
                   <div class="btn-cont">
                     <div class="mail-actions-cont">
-                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="sendMail()" data-ng-disabled="!feedbackForm.$valid">Send comment</a>
-                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()">cancel</a>
+                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="sendMail()" data-ng-disabled="!feedbackForm.$valid" data-translate="">sendComment</a>
+                      <a href="" class="link-btn publisher-user-login-btn" data-ng-click="close()"data-translate="">cancel</a>
                     </div>
                   </div>
                 </div>
@@ -123,10 +129,10 @@
     </div>
   </div>
 
-  <div data-ng-controller="GnSearchController" data-ng-search-form=""
-       data-runSearch="true">
+  <div data-ng-controller="GnSearchController">
     <div class="main-wrapper" data-ng-controller="gnsSwe">
-      <div class="site-wrapper">
+      <div class="site-wrapper" data-ng-search-form=""
+           data-runSearch="true">
         <!-- Filters -->
         <div data-ng-include="'../../catalog/views/swe/templates/filters.html'" data-ng-controller="SweFilterPanelController"></div>
 
@@ -152,7 +158,7 @@
               <div class="list-filter-cont">
                 <div class="sort-filter-cont">
                   <div class="sort-filter">
-                    <span class="sort-filter-label">Sortera efter:</span>
+                    <span class="sort-filter-label" data-translate="">sortBy</span>
                     <div class="filter-cont">
 
                        <div data-swe-sortby-combo=""
@@ -193,9 +199,18 @@
           <!-- Full map -->
           <div class="map-cont">
             <ul class="map-tool-list" style="z-index: 1000">
-              <li><a href="" data-ng-click="hideMapPanel()" class="icon-cancel"></a></li>
               <!--<li class=""><a href="" class="icon-buffer"></a></li>-->
-              <li id="map-panel-resize" class="resize full"><a href="" data-ng-click="resizeMapPanel()"><span class="icon-resize-full"></span><span class="icon-resize-small"></span></a></li>
+              <li data-ng-show="!mapFullView" id="map-panel-resize" class="resize full"><a href="" data-ng-click="resizeMapPanel()"><span class="icon-cursor"></span></a></li>
+              <li data-ng-show="mapFullView">
+              <a href="" data-ng-click="resizeMapPanel()">
+              <span class="onMaximised">
+              </span>
+              </a></li>
+              <li data-ng-show="!mapFullView">
+              <a href="" data-ng-click="hideMapPanel()">
+              <span class="onMediumSized">
+              </span>
+              </a></li>
             </ul>
             <div gn-main-viewer=""
                  data-map="searchObj.viewerMap">

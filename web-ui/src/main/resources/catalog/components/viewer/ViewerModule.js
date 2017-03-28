@@ -23,49 +23,6 @@
 
 (function() {
   goog.provide('gn_viewer');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   goog.require('gn_baselayerswitcher');
   goog.require('gn_draw');
   goog.require('gn_featurestable');
@@ -88,6 +45,7 @@
   goog.require('gn_wfsfilter');
   goog.require('gn_wmsimport');
   goog.require('gn_wps');
+  goog.require('gn_select_polygon');
 
   /**
    * @ngdoc overview
@@ -119,7 +77,8 @@
     'gn_wfsfilter',
     'gn_solr',
     'gn_wps',
-    'gn_featurestable'
+    'gn_featurestable',
+    'gn_select_polygon'
   ]);
 
   module.controller('gnViewerController', [
@@ -127,8 +86,9 @@
     '$timeout',
     'gnViewerSettings',
     'gnMap',
-    function($scope, $timeout, gnViewerSettings, gnMap) {
-
+    'shareGnMainViewerScope',
+    function($scope, $timeout, gnViewerSettings, gnMap, shareGnMainViewerScope) {
+      shareGnMainViewerScope.sharedScope = $scope;
       var map = $scope.searchObj.viewerMap;
 
       if (gnViewerSettings.wmsUrl && gnViewerSettings.layerName) {
@@ -198,11 +158,17 @@
     }]);
 
   module.controller('toolsController',
-      ['$scope', 'gnMeasure',
-        function($scope, gnMeasure) {
-          $scope.mInteraction = gnMeasure.create($scope.map,
-              $scope.measureObj, $scope);
+      ['$scope', 'gnSelectPolygon',
+        function($scope, gnSelectPolygon) {
+          $scope.mInteractionSelectPolygon = gnSelectPolygon.create($scope.map,
+              $scope);
         }
       ]);
+
+  module.service('shareGnMainViewerScope', function() {
+    return{
+      sharedScope: ""
+    }              
+    });
 
 })();

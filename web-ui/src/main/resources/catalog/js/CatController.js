@@ -106,6 +106,22 @@
       $scope.socialMediaLink = $location.absUrl();
       $scope.$on('$locationChangeSuccess', function(event) {
         $scope.socialMediaLink = $location.absUrl();
+
+        if (!String.prototype.includes) {
+          String.prototype.includes = function(search, start) {
+            'use strict';
+            if (typeof start !== 'number') {
+              start = 0;
+            }
+
+            if (start + search.length > this.length) {
+              return false;
+            } else {
+              return this.indexOf(search, start) !== -1;
+            }
+          };
+        }
+
         $scope.showSocialMediaLink =
             $scope.socialMediaLink.includes('/metadata/');
       });
@@ -207,8 +223,8 @@
               error(function(data, status, headers, config) {
                 $rootScope.$broadcast('StatusUpdated',
                    {
-                     title: $translate('somethingWrong'),
-                     msg: $translate('msgNoCatalogInfo'),
+                     title: $translate.instant('somethingWrong'),
+                     msg: $translate.instant('msgNoCatalogInfo'),
                      type: 'danger'});
               });
         });

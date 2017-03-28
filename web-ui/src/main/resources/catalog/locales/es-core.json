@@ -127,6 +127,7 @@
     "Clear": "Limpiar",
     "ClearTitle": "Limpiar búsqueda actual, filtros y orden.",
     "hitsPerPage": "Entradas por página",
+	"of": "of",
     "chooseRecordsPerPage": "Pulsa para seleccionar el número de entradas por página",
     "sortedBy": "Ordenado por {{field}}",
     "relevance": "relevancia",

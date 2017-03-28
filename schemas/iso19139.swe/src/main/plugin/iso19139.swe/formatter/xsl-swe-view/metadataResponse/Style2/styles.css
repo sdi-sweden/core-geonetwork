@@ -1,0 +1,602 @@
+﻿@charset "UTF-8";div
+
+* {
+	/*font-family:  Verdana, Geneva, Arial, Helvetica, sans-serif;*/
+    font-family: 'open_sansregular', sans-serif;	
+	/*font-family:'Segoe UI','Segoe UI Web Regular','Segoe UI Symbol','Helvetica Neue','BBAlpha Sans','S60 Sans',Arial,sans-serif;*/	
+	font-size:10.5pt;	
+}
+body {
+	background-color: #ffffff;
+	
+}
+table {
+	vertical-align: top;
+	border-collapse: collapse;
+	
+	color: #2b2b2b;
+	border:0px;
+}
+tr{
+    line-height:18px;
+}
+td {
+	padding: 3px;
+	font-size: 10.5pt;
+	line-height:18px;
+}
+.title {
+	font-size: 24px;
+	font-weight: bold;
+	color:#000000;
+	font-family:'Segoe UI','Segoe UI Web Regular','Segoe UI Symbol','Helvetica Neue','BBAlpha Sans','S60 Sans',Arial,sans-serif;
+	}
+
+h1 {
+	font-size: 24px;	
+	font-family:'Segoe UI','Segoe UI Web Regular','Segoe UI Symbol','Helvetica Neue','BBAlpha Sans','S60 Sans',Arial,sans-serif;
+	}
+
+
+/*
+* Old styles
+*/
+
+.sectionheader {
+	font-weight:normal;
+	font-size:18px;
+    background-color:#f3f2f2;
+    padding:6px;
+    letter-spacing:1px;
+	color:#9e9e9e;
+	margin-top:10px;
+	margin-bottom:10px;
+	text-transform:uppercase;
+	}
+
+.Level-0-Header {
+	padding-left:5px;
+	font-weight:normal;
+	background-color:#f3f2f2;
+	color:#9e9e9e;
+    text-transform:uppercase;	
+    letter-spacing:1px;
+	}
+
+.Level-1-Header {
+	padding-left:20px;
+	font-weight:normal;
+	background-color:#f3f2f2;
+	color:#9e9e9e;
+    text-transform:uppercase;
+    letter-spacing:1px;
+	}
+
+.Level-2-Header {
+	padding-left:35px;
+	font-weight:normal;
+	background-color:#f3f2f2;
+	color:#9e9e9e;
+    text-transform:uppercase;	
+    letter-spacing:1px;
+	}
+
+.Level-3-Header {
+	padding-left:50px;
+	font-weight:normal;
+	background-color:#f3f2f2;
+	color:#9e9e9e;	
+	text-transform:uppercase;
+	letter-spacing:1px;
+	}
+
+.Level-1-EmptyRow {
+	font-size:7pt;
+	padding-left:15px;
+	font-weight:bold;
+	background-color:#ffffff;
+	color:#ffffff;
+	}
+
+.Level-1-element {
+	width:30%;
+	/* padding-left: 20px; */
+	font-weight: normal;
+	line-height:18px;
+	font-size:12px;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	color:#9e9e9e;
+	}	
+
+.Level-2-element {
+	width:30%;
+	padding-left:35px;	
+	font-weight:bold;
+	line-height:18px;
+	font-size:12px;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	color:#9e9e9e;
+	}
+
+.Level-3-element {
+	width:25%;
+	padding-left:50px;
+	font-weight:bold;
+	font-size:12px;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	color:#9e9e9e;
+	}
+	.Level-3-text {
+	width:30%;
+	padding-left:35px;
+	font-size:13px;
+	}
+
+.subtabledata {
+	font-size:11px;
+	color:#000000;
+	background-color:#ffffff;
+	}
+.subtabledata a {
+	font-size:11px;
+	color:#0000FF;
+	background-color:#ffffff;
+	}
+
+.subtabledata2 {
+	font-size:9px;
+	color:#0000AA;
+	padding-left:15px;
+	background-color:#FFFFEE;
+	}
+
+.s {
+	color:#006400;
+	}
+.mytabtable
+	{
+		width:100%;
+		border-collapse:separate; 
+        border-spacing:3px;
+		
+	}
+	
+.mytabtable tr td
+{
+    border:none;
+	line-height:27px;
+}
+
+
+/*--------------------------------------------------
+  REQUIRED to hide the non-active tab content.
+  But do not hide them in the print stylesheet!
+  --------------------------------------------------*/
+.tabberlive .tabbertabhide {
+ display:none;
+}
+
+/*--------------------------------------------------
+  .tabber = before the tabber interface is set up
+  .tabberlive = after the tabber interface is set up
+  --------------------------------------------------*/
+.tabber {
+}
+.tabberlive {
+ margin-top:1em;
+}
+
+/*--------------------------------------------------
+  ul.tabbernav = the tab navigation list
+  li.tabberactive = the active tab
+  --------------------------------------------------*/
+ul.tabbernav
+{
+ margin:0;
+ padding: 3px 6px;
+ /*border-bottom: 1px solid #307ac9;*/
+ height:67px;
+ /*border-bottom:solid 5px #307ac9;*/
+ margin-bottom:27px;
+ background-color:#F1F5F5;
+}
+
+ul.tabbernav li
+{
+ list-style: none;
+ margin: 0;
+ display:inline;
+ vertical-align:middle;
+ margin-left:32px;
+}
+
+ul.tabbernav li a
+{
+ padding: 6px 0.6em;
+ margin-left: 2px;
+
+ /*background: #0E335f;*/
+ background:transparent;
+ text-decoration: none;
+ font-weight:bold;
+ font-size:12px;
+ height:60px;
+ float:left;
+ display:block;
+ white-space:nowrap;
+ vertical-align:middle;
+ text-align:center;
+font-weight:normal;
+line-height:57px;
+text-transform:uppercase;
+font-family:'open_sansregular', sans-serif;
+letter-spacing:1px;
+}
+
+ul.tabbernav li a:link 
+	{
+		color: #000000;
+	}
+
+ul.tabbernav li a:hover
+{
+	/*
+	color: #000;
+	background-color: #ffffff; */	
+	/*background-color: #307ac9;*/
+	/*background-color:#00518C;*/
+	border-bottom:3px solid #5d8886;
+	color:#5d8886;
+	
+}
+
+ul.tabbernav li.tabberactive a
+{ 
+    color:#5d8886;
+    background-color:transparent;
+    cursor:default;
+    border:0;
+    border-bottom:3px solid #5d8886;
+    font-weight:bold;
+}
+
+ul.tabbernav li.tabberactive a:hover
+{
+/*
+ color: #000;
+ background: white; */
+ /*background-color: #307ac9;*/
+ 
+border-bottom:3px solid #5d8886;
+}
+
+/*--------------------------------------------------
+  .tabbertab = the tab content
+  Add style only after the tabber interface is set up (.tabberlive)
+  --------------------------------------------------*/
+.tabberlive .tabbertab {
+ padding:5px;
+ color: #0000aa;
+
+ /* If you don't want the tab size changing whenever a tab is changed
+    you can set a fixed height */
+
+ /* height:200px; */
+
+ /* If you set a fix height set overflow to auto and you will get a
+    scrollbar when necessary */
+
+ /* overflow:auto; */
+}
+
+/* If desired, hide the heading since a heading is provided by the tab */
+.tabberlive .tabbertab h2 {
+ display:none;
+}
+.tabberlive .tabbertab h3 {
+ display:none;
+}
+
+/* Example of using an ID to set different styles for the tabs on the page */
+.tabberlive#tab1 {
+}
+	
+.tabberlive#tab2 {
+}
+.tabberlive#tab2 .tabbertab {
+ height:200px;
+ overflow:auto;
+}
+
+.MYTABLE  
+{
+	
+	width:99.9%;
+	/*border: 1px solid; 
+	border-color:#6495ED;*/ 
+	position:relative; 
+	top:0; 
+	vertical-align:top;
+	background-color:#EEEEEE;
+	margin:0in 0.0in 0.0in 0.0in;
+	font-size:11pt;
+	color:#000000;
+	font-weight:bold;
+	text-align: left; 
+}
+
+.MYTABLE #col1 
+{
+    width:25%;
+}
+
+.mytabledata
+{
+	font-size:9pt;
+	background-color:#ffffff;
+	font-weight:normal;
+	font-style:normal;
+}
+
+
+h2   
+{
+	margin-left:0; 
+	position:relative; 
+	top:-16; 
+	text-align:left;
+    font-size:14pt; 
+    /*font-family:Verdana,sans-serif;*/ 
+    font-family:'Segoe UI','Segoe UI Web Regular','Segoe UI Symbol','Helvetica Neue','BBAlpha Sans','S60 Sans',Arial,sans-serif;
+    color:#006400;
+	
+	
+	
+}
+
+h4   
+{
+	margin-left:0; 
+	position:relative; 
+    text-align:left;
+    font-size:14.5pt; 
+    /*font-family:Verdana,sans-serif;*/
+    font-family:'Segoe UI','Segoe UI Web Regular','Segoe UI Symbol','Helvetica Neue','BBAlpha Sans','S60 Sans',Arial,sans-serif;
+    color:#0000AA;
+}
+
+h5   
+{
+	margin-left:0; 
+	position:relative; 
+	padding-left:25px;
+	text-align:left;
+    font-size:10pt; 
+    /*font-family:Verdana,sans-serif;*/
+    font-family:'Segoe UI','Segoe UI Web Regular','Segoe UI Symbol','Helvetica Neue','BBAlpha Sans','S60 Sans',Arial,sans-serif;
+    color:#006400;
+}
+
+h6   
+{
+	margin-left:0; 
+	position:relative;
+	text-align:left; 
+	padding-left:20px;
+    font-size:8.5pt; 
+    /*font-family:Verdana,sans-serif;*/
+    font-family:'Segoe UI','Segoe UI Web Regular','Segoe UI Symbol','Helvetica Neue','BBAlpha Sans','S60 Sans',Arial,sans-serif;
+    color:#006400;
+}
+
+li   
+{
+	margin-left:0; 
+	position:relative; 
+	top:0; 
+	text-align:left;
+    font-size:11pt; 
+    /*font-family:Verdana,sans-serif;*/
+    font-family:'Segoe UI','Segoe UI Web Regular','Segoe UI Symbol','Helvetica Neue','BBAlpha Sans','S60 Sans',Arial,sans-serif;
+    color:#006400;
+}
+
+da 
+{
+	width:100%;
+	border: 0px solid; 
+	border-color:#6495ED;
+	position:relative; 
+	top:0; 
+	vertical-align:top;
+	background-color:#FFFFFF;
+	margin:0.0in 0.0in 0.0in 0.0in;
+	font-size:11pt;
+	color:#0000AA;
+	font-weight:normal;
+}
+
+div 
+{
+	width:100%;
+	border: 0px solid; 
+	border-color:#6495ED;
+	position:relative; 
+	top:0; 
+	vertical-align:top;
+	background-color:#FFFFFF;
+	margin:0.0in 0.0in 0.0in 0.0in;
+	font-size:10.5pt;
+	color:#000000;
+	font-weight:normal;
+}
+pre
+{
+	clear:both;
+	font-size:11pt;
+	color:#0000AA;
+	/*font-family:"Courier New", Courier, monospace;*/
+}
+
+.box
+{
+	
+	border: 2px solid; border-color:#505050; 
+} 	
+ 
+.tabOverview{
+    width:95%;
+    border: 1px solid #ccc;
+    clear: both;    
+}
+ thead th, tbody th {
+    /*background-color: #e0e0e0;*/
+    background-color: #f3f2f2;
+    border-left: 1px solid #f3f2f2;
+    /*color: #666666;*/
+    color: #9e9e9e;    
+	font-weight:normal;
+	font-size:12px;
+   /* font-variant: small-caps; */
+	/* font-variant:small-caps; */
+    padding: 5px 10px;
+	/*font: small/1.5;*/
+	text-transform:uppercase;
+}
+
+.tabOverview tbody th {
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+}
+.tabOverview tbody tr td, .tabOverview tbody tr td div {
+    color: #666666;
+    padding: 5px 10px;
+    line-height:18px;
+}
+.tabOverview {
+    border: none;
+    border-collapse: collapse;
+}
+
+#abstractDiv{
+    width: 95%;
+}
+
+.SecHeader
+{
+    font-weight:bold;
+}
+
+#metadataTabberDiv ul
+{
+        width:100%;        
+        text-align:center;
+}
+
+#metadataTabberDiv ul li
+{
+        display:inline-block;                
+}
+
+table.view-metadata-table {
+	table-layout:fixed;
+	border:1px solid #D3D3D3;
+	width:100%;
+}
+table.view-metadata-table th.view-metadata-table-th-1 {
+	width:20%;
+	word-wrap:break-word;
+	border:1px solid #D3D3D3;
+	padding-left:15px;
+	font-weight:normal;
+	color: gray;
+	text-align:left;
+	background-color:white;
+	text-transform:none !important;
+	font-size:13px;
+}
+table.view-metadata-table td.view-metadata-table-td-1 {
+	width:20%;
+	word-wrap:break-word;
+	border:1px solid #D3D3D3;
+	padding-left:15px;
+	font-size:13px;
+}
+table.view-metadata-table th.view-metadata-table-th-2 {
+	width:20%;
+	word-wrap:break-word;
+	border:1px solid #D3D3D3;
+	padding-left:15px;
+	font-weight:normal;
+	color: gray;
+	text-align:left;
+	background-color:white;
+	text-transform:none !important;
+	font-size:13px;
+}
+table.view-metadata-table td.view-metadata-table-td-2 {
+	width:20%;
+	word-wrap:break-word;
+	border:1px solid #D3D3D3;
+	padding-left:15px;
+	font-size:13px;
+}
+table.view-metadata-table th.view-metadata-table-th-3 {
+	width:50%;
+	word-wrap:break-word;
+	border:1px solid #D3D3D3;
+	padding-left:15px;
+	font-weight:normal;
+	color: gray;
+	text-align:left;
+	background-color:white;
+	text-transform:none !important;
+	font-size:13px;
+}
+table.view-metadata-table td.view-metadata-table-td-3 {
+	width:50%;
+	word-wrap:break-word;
+	border:1px solid #D3D3D3;
+	padding-left:15px;
+	font-size:13px;
+}
+
+.online-table-td {
+	vertical-align:top
+}
+.address, .address a[class='bold']{
+	color: #5d8886;
+	font-weight: bold;
+	font-style: normal;
+}
+address{
+	color: #5d8886;
+	font-style: normal;
+}
+.address a[class='nonbold'], .address span[class='nonbold']{
+	color: #5d8886;
+	font-style: normal;
+}
+a {
+ text-decoration:none;
+}
+a:hover, a:focus {
+	/*text-decoration: underline;*/
+}
+.img-thumbnail {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  padding: 4px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-bottom: 1em;
+  border-radius: 4px;
+  -webkit-transition: all .2s ease-in-out;
+       -o-transition: all .2s ease-in-out;
+          transition: all .2s ease-in-out;
+}

@@ -99,13 +99,18 @@ public class StandardsUtils {
                 }
             }
 
+            String currContextNs = currContext;
+
             if (currContext != null && (context != null || isoType != null)) {
                 // XPath context are supposed to use same namespace prefix
                 if (!currContext.contains("/")) {
-                    currContext = findNamespace(currContext, scm, schema);
+                    currContextNs = findNamespace(currContext, scm, schema);
                 }
 
-                if ((context != null && context.equals(currContext)) || (isoType != null && isoType.equals(currContext))) {
+                if ((context != null && context.equals(currContext)) ||
+                        (context != null && context.equals(currContextNs)) ||
+                        (isoType != null && isoType.equals(currContext)) ||
+                        (isoType != null && isoType.equals(currContextNs))) {
                     return (Element) currElem.clone();
                 }
             } else if (!requireContextMatch) {

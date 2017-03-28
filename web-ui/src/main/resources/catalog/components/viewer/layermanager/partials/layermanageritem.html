@@ -1,6 +1,6 @@
 <div>
   <button class="btn btn-cog" data-ng-click="showInfo(layer)" title="{{'legend'|translate}}">
-    <span class="fa fa-paint-brush"></span>
+    <span class="fa fa-list"></span>
   </button>
    <span class="gn-layer-ordering">
      <a href="" class="fa fa-arrow-up" ng-if="!$first"
@@ -22,7 +22,7 @@
         </a>
       </li>
 
-
+      <!-- metadata link -->
       <li class="list-group-item"
           data-ng-if="layer.get('md') || layer.get('metadataUrl')">
         <a href="" data-ng-click="showMetadata()">
@@ -30,10 +30,18 @@
         </a>
       </li>
 
+      <!-- disabled link when there is no metadata -->
+      <li class="list-group-item"
+          data-ng-if="!layer.get('md') || !layer.get('metadataUrl')">
+        <a href="" class="disabled">
+          <span translate="">layerMetadata</span>
+        </a>
+      </li>
+
       <li class="list-group-item" title="{{'opacity' | translate}}">
-        <input class="pull-left" type="range"
+        <input  type="range"
                min="0" max="1" step="0.05"
-               ng-model="layer.opacity"/><br/>
+               ng-model="layer.opacity"/>
       </li>
 
       <!--NCWMS-->

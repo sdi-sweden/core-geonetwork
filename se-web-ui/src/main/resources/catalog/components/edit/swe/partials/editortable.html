@@ -1,21 +1,28 @@
-<div class="form-group gn-field">
-  <label class="col-sm-2 control-label">{{title}}</label>
+<div class="form-group gn-field" data-ng-class="{'gn-required': (mandatory == 'mandatory')}">
 
-  <div class="geo-data-toolbar-cont col-sm-10">
+  <label class="control-label">{{title}}</label>
+
+  <div class="geo-data-toolbar-cont">
     <div class="toolbar-right-list tool-bar-list">
       <div class="link-cont ng-scope">
-        <a class="-label-link" href="" data-ng-click="addRow()" ><span class="icon-pencil"></span>Lägg till</a>
+        <a class="-label-link" href="" data-ng-click="addRow()" ><span class="fa fa-plus"></span>Lägg till</a>
       </div>
       <div class="link-cont ng-scope">
-        <a class="-label-link" href="" data-ng-class="{'not-active':selectedRowIndex == null}" data-ng-click="removeRow()" ><span class="icon-pencil"></span>Ta bort</a>
+        <a class="-label-link" href="" data-ng-class="{'not-active':selectedRowIndex == null}" data-ng-click="removeRow()" ><span class="icon-trash"></span>Ta bort</a>
       </div>
       <div class="link-cont ng-scope">
-        <a class="-label-link" href="" data-ng-class="{'not-active':selectedRowIndex == null}" data-ng-click="editRow()" ><span class="icon-pencil"></span>Redigera</a>
+        <a class="-label-link" href="" data-ng-class="{'not-active':selectedRowIndex == null}" data-ng-click="editSelectedRow()" ><span class="icon-pencil"></span>Redigera</a>
       </div>
     </div>
   </div>
 
-
+	<!-- <div data-ng-show="showResourceContactDD">
+		<select class="form-control" data-ng-model="organisation" data-ng-change="populateResourseContactFields(organisation)">
+			<option data-ng-repeat="org in organisationNames" title="{{org.displayValue}}" data-ng-value="org.fieldValue">
+				{{org.displayValue}}
+			</option>
+		</select>
+	</div> -->
   <span data-ng-repeat="row in rows | filter: isExistingItem">
   <input type="hidden" data-ng-repeat="m in rowsModel" data-ng-value="row[m.name]" name="_{{row.refChildren[m.name]}}" data-ng-if="m.codelist == false"/>
   <input type="hidden" data-ng-repeat="m in rowsModel" data-ng-value="row[m.name]" name="_{{row.refChildren[m.name]}}_codeListValue" data-ng-if="m.codelist == true"/>

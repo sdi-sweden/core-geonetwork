@@ -33,7 +33,8 @@
       [
        'gnMap',
        'gnOwsContextService',
-       function(gnMap, gnOwsContextService) {
+       '$http',
+       function(gnMap, gnOwsContextService, $http) {
          return {
            restrict: 'A',
            replace: true,
@@ -124,23 +125,22 @@
               * - md : the proj system in the metadata. It is defined as
               *   4326 by iso19139 schema
               * - map : the projection of the ol3 map, this projection
-              *   is set in GN settings
-              * - form : projection used for the form, it is chosen
-              *   from the combo list.
+              *   is defined as 3006
+              * - form : projection used for the form, it is defined as 4326
+              * - county: projection used for the county select, it is defined as 3006 
               */
              scope.projs = {
-               list: gnMap.getMapConfig().projectionList,
                md: 'EPSG:4326',
-               map: gnMap.getMapConfig().projection,
-               form: gnMap.getMapConfig().projectionList[0].code
+               map: 'EPSG:3006',
+               form: 'EPSG:4326',
+               county: 'EPSG:3006'
              };
-
              scope.extent = {
                md: null,
                map: [],
-               form: []
+               form: [],
+               county: []
              };
-
              if (attrs.hleft !== '' && attrs.hbottom !== '' &&
                  attrs.hright !== '' && attrs.htop !== '') {
                scope.extent.md = [
@@ -160,12 +160,6 @@
              reprojExtent('md', 'map');
              reprojExtent('md', 'form');
              setDcOutput();
-
-             scope.$watch('projs.form', function(newValue, oldValue) {
-               scope.extent.form = gnMap.reprojExtent(
-                   scope.extent.form, oldValue, newValue
-               );
-             });
 
              // TODO: move style in db config
              var boxStyle = new ol.style.Style({
@@ -193,20 +187,69 @@
                style: boxStyle
              });
 
+             //To set base map of editor
+            var extent = [-1200000, 4700000, 2540000, 8500000];
+            var resolutions = [4096.0, 2048.0, 1024.0, 512.0, 256.0,
+              128.0, 64.0, 32.0, 16.0, 8.0];
+            var matrixIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+            proj4.defs(
+                'EPSG:3006',
+                '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 ' +
+                '+units=m +axis=neu +no_defs');
+            ol.proj.get('EPSG:3006').setExtent(extent);
+            ol.proj.get('EPSG:3006').setWorldExtent([-5.05651650131, 40.6662879582,
+              28.0689828648, 71.7832476487]);
+
+            proj4.defs('urn:ogc:def:crs:EPSG::3006', proj4.defs('EPSG:3006'));
+            proj4.defs('http://www.opengis.net/gml/srs/epsg.xml#3006', proj4.defs('EPSG:3006'));
+
+            var projection = ol.proj.get('EPSG:3006');
+
+            var tileGrid = new ol.tilegrid.WMTS({
+              tileSize: 256,
+              extent: extent,
+              resolutions: resolutions,
+              matrixIds: matrixIds
+            });
+
+            var apiKey = 'a9a380d6b6f25f22e232b8640b05ea8';
+
+            var wmts = new ol.layer.Tile({
+              extent: extent,
+              group: 'Background layers',
+              url:  'https://api.lantmateriet.se/open/topowebb-ccby/' +
+              'v1/wmts/token/' + apiKey + '/',
+              source: new ol.source.WMTS({
+                url: 'https://api.lantmateriet.se/open/topowebb-ccby/' +
+                    'v1/wmts/token/' + apiKey + '/',
+                layer: 'topowebb',
+                format: 'image/png',
+                matrixSet: '3006',
+                tileGrid: tileGrid,
+                version: '1.0.0',
+                style: 'default',
+                crossOrigin: 'anonymous'
+              })
+            }); 
+
+            var mapsConfig = {
+              resolutions: resolutions,
+              extent: extent,
+              projection: projection,
+              center: [572087, 6802255],
+              zoom: 0
+            };
+
              var map = new ol.Map({
                layers: [
-                 gnMap.getLayersFromConfig(),
+                 wmts,
                  bboxLayer
                ],
                renderer: 'canvas',
-               view: new ol.View({
-                 center: [0, 0],
-                 projection: scope.projs.map,
-                 zoom: 2
-               })
+               view: new ol.View(mapsConfig)
              });
              element.data('map', map);
-
              //Uses configuration from database
              if (gnMap.getMapConfig().context) {
                gnOwsContextService.
@@ -225,6 +268,9 @@
              });
 
              dragbox.on('boxend', function(mapBrowserEvent) {
+              if (angular.isDefined(scope.search)) {
+                 delete scope.search.namesearch
+              }            
                scope.extent.map = dragbox.getGeometry().getExtent();
                feature.setGeometry(dragbox.getGeometry());
 
@@ -255,7 +301,7 @@
                }
                else {
                  coordinates = gnMap.getPolygonFromExtent(
-                     scope.extent.map);
+                     scope.extent.map);                 
                  geom = new ol.geom.Polygon(coordinates);
                }
                feature.setGeometry(geom);
@@ -297,6 +343,54 @@
                drawBbox();
                map.getView().fit(scope.extent.map, map.getSize());
              };
+
+             /**
+              * Called on for showing geo suggestions.
+              */
+             scope.getNameSearch = function(val) {
+               var posturl = 'https://www.geodata.se/NameWebService/search';
+                val = encodeURIComponent(val);
+                var params = {
+                  'searchstring': val,
+                  'callback': 'JSON_CALLBACK'
+                };
+                return $http({
+                  method: 'JSONP',
+                  url: posturl,
+                  params: params
+                }).then(function(res) {
+                  var data = res.data;
+                  var status = res.status;
+                  var headers = res.headers;
+                  var config = res.config;
+                  var statusText = res.statusText;
+                  return data;
+                });
+            };
+
+             /**
+              * Called on county input change.
+              * Set map and md extent from form reprojection, and draw
+              * the bbox from the map extent.
+              */
+            scope.onCountySelect = function() {
+              var namesearch = scope.search.namesearch;
+              var coordinates = namesearch.Coordinates;
+              var geoJson = new ol.format.GeoJSON();
+              if (coordinates) {
+                //var proj = $scope.searchObj.searchMap.getView().getProjection();
+                var xy0 = coordinates[0];
+                var xy1 = coordinates[1];
+                var extent = []; // geoBox=10.59|55.15|24.18|69.05
+                extent.push(parseFloat(xy0.X), parseFloat(xy0.Y),
+                  parseFloat(xy1.X), parseFloat(xy1.Y));
+                scope.extent.county = extent
+                reprojExtent('county', 'form');
+                scope.updateBbox();
+              } else {
+                return false; // always return false if cooridinates are absent. Not sure if we shall still return true.
+              }
+            };
 
              /**
               * Callback sent to gn-country-picker directive.

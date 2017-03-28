@@ -548,6 +548,14 @@
       <artifactId>schema-iso19139.swe</artifactId>
       <version>${project.version}</version>
     </dependency>
+
+
+    <!-- OWASP Enterprise Security API -->
+    <dependency>
+      <groupId>org.owasp.esapi</groupId>
+      <artifactId>esapi</artifactId>
+    </dependency>
+
   </dependencies>
 
 

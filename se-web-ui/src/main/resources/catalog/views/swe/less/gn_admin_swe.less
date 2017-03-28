@@ -1,10 +1,29 @@
-@import "gn_search_swe.less";
 @import "../../../style/gn_admin";
-@import "gn_view_swe.less";
 
-.navbar {
+body {
+	padding-top: 0;
+  background-color: #e3ebea;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  min-width: 940px;
+  background-image: url(../catalog/views/swe/images/bg.jpg);
+  background-repeat: repeat;
+  background-position: left top;
+}
+
+#navbar {
+	background: #fff;
   margin-bottom: 14px;
+  border-bottom: 1px solid #e7e7e7;
   position: fixed;
   top: 0;
-  width: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  .gn-logo {
+  	max-height: 20px;
+  }
+  .btn {
+  	border: 0;
+  }
 }

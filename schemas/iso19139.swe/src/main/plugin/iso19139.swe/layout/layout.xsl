@@ -332,18 +332,18 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$refSystemModel}, {$refSystemTableModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '{local-name()}', '#refsystem-popup', '{$labelConfig/label}')" >
+         data-ng-init="init({$refSystemModel}, {$refSystemTableModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '{local-name()}', '#refsystem-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="refsystem-popup" class="gn-modal-lg">
+           id="refsystem-popup" class="gn-modal-lg gn-modal-lg-refsystem-popup">
 
         <div data-swe-date-dialog="">
           <div>
-            <label class="col-sm-2 control-label">
+            <label class="col-sm-8 control-label">
               <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:code', $labels, name(gmd:RS_Identifier), '', $codexpath)/label" />
             </label>
 
@@ -370,10 +370,10 @@
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-              Save
+              Spara
             </button>&#160;
             <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-              Cancel
+              Stäng
             </button>
 
           </div>
@@ -442,31 +442,33 @@
 
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$dateModel},  {$dateTableModel}, '{$dateXmlSnippet}', {../gn:element/@ref}, '{local-name()}',  '#date-popup', '{$labelConfig/label}')" >
+         data-ng-init="init({$dateModel},  {$dateTableModel}, '{$dateXmlSnippet}', {../gn:element/@ref}, '{local-name()}',  '#date-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the dates -->
       <div data-gn-modal=""
          data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-         id="date-popup" class="gn-modal-lg">
+         id="date-popup" class="gn-modal-lg gn-modal-lg-date-popup">
 
       <div data-swe-date-dialog="">
         <div>
           <label class="col-sm-2 control-label">
-            Date
+            Datum
           </label>
           <!--<input name="date" type="text" class="form-control" data-ng-model="selectedRow.date" />-->
-          <div data-gn-date-picker="{{editRow.date}}"
+          <div data-gn-date-picker="{{{{editRow.date}}}}"
+               data-hide-time="true"
+               data-hide-date-modes="true"
                data-label=""
                data-tag-name=""
-               data-element-ref="datevalue">>
+               data-element-ref="datevalue">
           </div>
         </div>
 
         <div>
-          <label class="col-sm-2 control-label">
-            Date type
+          <label class="col-sm-3 control-label">
+            Händelse
           </label>
 
           <xsl:variable name="codelist"
@@ -488,10 +490,10 @@
 
         <div class="">
           <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-            Save
+            Spara
           </button>&#160;
           <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-            Cancel
+            Stäng
           </button>
 
         </div>
@@ -506,7 +508,7 @@
 
   <!-- Metadata contact,  Metadata point of contact, Distributor contact -->
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[1]|
-                                            gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact[1]|
+                                            gmd:MD_Metadata/gmd:identificationInfo//gmd:pointOfContact[1]|
                                             gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact[1]" priority="3000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
@@ -621,26 +623,33 @@
 
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$contactModel}, {$contactTableModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#contact-popup-{local-name()}', '{$labelConfig/label}')" >
+         data-ng-init="init({$contactModel}, {$contactTableModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#contact-popup-{local-name()}', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the dates -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="contact-popup-{local-name()}" class="gn-modal-lg">
+           id="contact-popup-{local-name()}" class="gn-modal-lg gn-modal-lg-contact-popup">
 
         <div data-swe-date-dialog="">
+			<div data-ng-show="showResourceContactDD">
+				<select class="form-control" data-ng-model="organisation" data-ng-change="populateContactFields(organisation)">
+					<option data-ng-repeat="org in organisationNames.{local-name()}" title="{{org.displayValue}}" data-ng-value="org.fieldValue">
+						{{org.displayValue}}
+					</option>
+				</select>
+			</div>
           <div>
             <label class="col-sm-2 control-label">
-              Organisation
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:organisationName', $labels, name(..), '', '')/label" />
             </label>
             <input type="text" class="form-control" data-ng-model="editRow.organisation" />
           </div>
 
           <div>
             <label class="col-sm-2 control-label">
-              Phone
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:voice', $labels, name(..), '', '')/label" />
             </label>
 
             <input type="text" class="form-control" data-ng-model="editRow.phone" />
@@ -649,7 +658,7 @@
 
           <div>
             <label class="col-sm-2 control-label">
-              E-mail
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:electronicMailAddress', $labels, name(..), '', '')/label" />
             </label>
 
             <input type="text" class="form-control" data-ng-model="editRow.email" />
@@ -658,7 +667,7 @@
 
           <div>
             <label class="col-sm-2 control-label">
-              Role
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:role', $labels, name(..), '', '')/label" />
             </label>
 
             <xsl:variable name="codelist"
@@ -679,10 +688,10 @@
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-              Save
+              Spara
             </button>&#160;
             <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-              Cancel
+              Stäng
             </button>
 
           </div>
@@ -694,7 +703,7 @@
   </xsl:template>
 
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:contact[position() &gt; 1]|
-                                            gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact[position() &gt; 1]|
+                                            gmd:MD_Metadata/gmd:identificationInfo//gmd:pointOfContact[position() &gt; 1]|
                                             gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact[position() &gt; 1]" priority="3000" />
 
   <!-- Distributor format -->
@@ -756,14 +765,14 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#format-popup', '{$labelConfig/label}')" >
+         data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#format-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="format-popup" class="gn-modal-lg">
+           id="format-popup" class="gn-modal-lg gn-modal-lg-format-popup">
 
         <div data-swe-date-dialog="">
           <div>
@@ -794,10 +803,10 @@
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-              Save
+              Spara
             </button>&#160;
             <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-              Cancel
+              Stäng
             </button>
 
           </div>
@@ -866,14 +875,14 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$thumbnailModel}, {$thumbnailTableModel}, '{$thumbnailXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#thumbnail-popup', '{$labelConfig/label}')" >
+         data-ng-init="init({$thumbnailModel}, {$thumbnailTableModel}, '{$thumbnailXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#thumbnail-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="thumbnail-popup" class="gn-modal-lg">
+           id="thumbnail-popup" class="gn-modal-lg gn-modal-lg-thumbnail-popup">
 
         <div data-swe-date-dialog="">
           <div>
@@ -893,10 +902,10 @@
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-              Save
+              Spara
             </button>&#160;
             <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-              Cancel
+              Stäng
             </button>
 
           </div>
@@ -986,14 +995,14 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup', '{$labelConfig/label}')" >
+         data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
 
       <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="onlineres-popup" class="gn-modal-lg">
+           id="onlineres-popup" class="gn-modal-lg gn-modal-lg-onlineres-popup">
 
         <div data-swe-date-dialog="">
 
@@ -1025,14 +1034,14 @@
           </div>
 
           <div>
-            <label class="col-sm-2 control-label">
+            <label class="col-sm-4 control-label">
               <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:name', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
             </label>
             <input type="text" class="form-control" data-ng-model="editRow.fname" />
           </div>
 
           <div>
-            <label class="col-sm-2 control-label">
+            <label class="col-sm-6 control-label">
               <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:description', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
             </label>
 
@@ -1041,10 +1050,10 @@
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
-              Save
+              Spara
             </button>&#160;
             <button type="button" class="btn navbar-btn btn-default" data-ng-click="cancel()">
-              Cancel
+              Stäng
             </button>
 
           </div>
@@ -1055,5 +1064,38 @@
 
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[position() &gt; 1]" priority="1000" />
 
+  <!-- Other constraints with gmx:Anchor -->
+  <xsl:template mode="mode-iso19139" priority="200" match="gmd:otherConstraints[$schema='iso19139.swe' and gmx:Anchor]">
+    <xsl:variable name="name" select="name(.)"/>
 
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, $name, $labels)"/>
+    <xsl:variable name="helper" select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
+
+
+    <xsl:variable name="attributes">
+      <!-- Create form for all existing attribute (not in gn namespace)
+      and all non existing attributes not already present. -->
+      <xsl:apply-templates mode="render-for-field-for-attribute"
+                           select="
+        gmx:Anchor/@*|
+        gmx:Anchor/gn:attribute[not(@name = parent::node()/@*/name())]">
+        <xsl:with-param name="ref" select="gmx:Anchor/gn:element/@ref"/>
+        <xsl:with-param name="insertRef" select="gmx:Anchor/gn:element/@ref"/>
+      </xsl:apply-templates>
+    </xsl:variable>
+
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label" select="$labelConfig/label"/>
+      <xsl:with-param name="value" select="gmx:Anchor" />
+      <xsl:with-param name="name" select="gmx:Anchor/gn:element/@ref" />
+      <xsl:with-param name="cls" select="local-name()" />
+      <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+      <xsl:with-param name="editInfo" select="gmx:Anchor/gn:element" />
+      <xsl:with-param name="isDisabled" select="false()" />
+      <xsl:with-param name="attributesSnippet" select="$attributes" />
+      <xsl:with-param name="listOfValues" select="$helper"/>
+      <!--<xsl:with-param name="forceDisplayAttributes" select="true()" />-->
+
+    </xsl:call-template>
+  </xsl:template>
 </xsl:stylesheet>

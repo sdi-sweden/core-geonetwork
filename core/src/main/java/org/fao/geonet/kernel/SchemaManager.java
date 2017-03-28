@@ -59,6 +59,7 @@ import org.jdom.*;
 import org.jdom.filter.ElementFilter;
 import org.springframework.context.ApplicationContext;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.*;
@@ -436,6 +437,28 @@ public class SchemaManager {
             Path dir = getSchemaDir(name);
 
             dir = dir.resolve("templates");
+            if (!Files.exists(dir)) {
+                return null;
+            }
+            return dir;
+        } finally {
+            afterRead();
+        }
+    }
+
+    /**
+     * Returns the schema translations directory.
+     *
+     * @param name the metadata schema we want the translations directory for
+     * @return
+     */
+    public Path getSchemaTranslationsDir(String name, String language) {
+
+        beforeRead();
+        try {
+            Path dir = getSchemaDir(name);
+
+            dir = dir.resolve("loc").resolve(language);
             if (!Files.exists(dir)) {
                 return null;
             }

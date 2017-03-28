@@ -1,0 +1,41 @@
+body
+{
+   font-family: Verdana;
+   font-size: x-small;
+}
+.IsVisible
+{
+   display: block;
+}
+.NotVisible
+{
+   display: none;
+}
+.Expander
+{
+   cursor: hand;
+   font-family: Courier;
+}
+.Parent DIV
+{
+   margin-Left: 15px !important;
+}
+.tableLayerStyle
+{
+	width: 100%;
+	border: 1px solid #A59F98;
+	color: #2F1700;
+}
+
+.tableLayerHeaderStyle
+{
+	border: 1px solid #A59F98;
+	color: #2F1700;
+}
+
+.tableDataStyle
+{
+	border: solid 1px #A59F98;
+	color: #0000FF;
+	font-size: small;
+}

@@ -196,6 +196,10 @@
                             xs:double(gmd:eastBoundLongitude/gco:Decimal),
                             xs:double(gmd:northBoundLatitude/gco:Decimal))"/>
 	</xsl:if>
+	<xsl:apply-templates mode="render-field" select="gmd:westBoundLongitude"/>
+	<xsl:apply-templates mode="render-field" select="gmd:eastBoundLongitude"/>
+	<xsl:apply-templates mode="render-field" select="gmd:southBoundLatitude"/>
+	<xsl:apply-templates mode="render-field" select="gmd:northBoundLatitude"/>
   </xsl:template>
 
 
@@ -232,8 +236,22 @@
 
     <dl class="gn-contact">
       <dt>
-        <xsl:apply-templates mode="render-value"
-                             select="*/gmd:role/*/@codeListValue"/>
+        <!-- <xsl:apply-templates mode="render-value"
+                             select="*/gmd:role/*/@codeListValue"/> -->
+		<xsl:variable name="parentNodeNameForCI_ResponsibleParty">
+			<xsl:value-of select="name(.)"/>
+		</xsl:variable>
+		<xsl:choose>
+			<xsl:when test="normalize-space($parentNodeNameForCI_ResponsibleParty) = 'gmd:contact'">
+				<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'metadataContactView')"/>
+			</xsl:when>
+			<xsl:when test="normalize-space($parentNodeNameForCI_ResponsibleParty) = 'gmd:distributorContact'">
+				<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'distributorContactView')"/>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:apply-templates mode="render-value" select="*/gmd:role/*/@codeListValue"/>
+			</xsl:otherwise>
+		</xsl:choose>
       </dt>
       <dd>
         <div class="col-md-6">
@@ -301,7 +319,19 @@
       </dd>
     </dl>
   </xsl:template>
-
+  <!-- LI_Lineage part -->
+  <xsl:template mode="render-field" 
+				match="gmd:lineage/gmd:LI_Lineage" 
+				priority="100">
+	<dl>
+		<dt>
+			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'LI_LineageView')"/>
+		</dt>
+		<dd>
+			<xsl:apply-templates mode="render-value" select="gmd:statement"/>
+		</dd>
+	</dl>
+  </xsl:template>
   <!-- A Resursetyp is displayed with its translated codeListValue -->
   <xsl:template mode="render-field"
                 match="gmd:hierarchyLevel"
@@ -412,6 +442,20 @@
 		  </dd>
 		</dl>
 	</xsl:for-each>
+	<xsl:if test="gmd:accessConstraints">
+		<dl class="gn-contact">
+		  <dt>
+			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'accessConstraints')"/>
+		  </dt>
+		   <dd>	
+			  <xsl:for-each select="gmd:accessConstraints">
+					<xsl:value-of select="gco:CharacterString"/>
+					<xsl:apply-templates mode="render-value" select="gmd:MD_RestrictionCode/@codeListValue"/>	
+					<xsl:if test="position()!=last()">,</xsl:if>				
+			  </xsl:for-each>
+		  </dd>
+		</dl>
+	</xsl:if>
   </xsl:template>
   
   <!-- Metadata linkage -->
@@ -483,6 +527,28 @@
 						<xsl:variable name="protocol">
 							<xsl:apply-templates mode="render-value" select="*/gmd:protocol"/>
 						</xsl:variable>
+						<xsl:variable name="aliasProtocol">
+							<xsl:choose>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:OGC:WFS'">
+									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_ogc_wfs')"/>
+								</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:OGC:WMS'">
+									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_ogc_wms')"/>
+								</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
+									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_information')"/>
+								</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:Nedladdning'">
+									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_nedladdning')"/>
+								</xsl:when>
+								<xsl:when test="normalize-space($protocol) = 'HTTP:Nedladdning:ATOM'">
+									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_nedladdning_atom')"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="$protocol"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
 						<xsl:variable name="name">
 							<xsl:apply-templates mode="render-value" select="*/gmd:name"/>
 						</xsl:variable>
@@ -491,15 +557,22 @@
 						</xsl:variable>
 						<tr>
 							<td class="view-metadata-table-td-1">
-								<xsl:value-of select="normalize-space($protocol)"/>
+								<xsl:value-of select="normalize-space($aliasProtocol)"/>
 							</td>
 							<td class="view-metadata-table-td-2">
 								<xsl:value-of select="normalize-space($name)"/>
 							</td>
 							<td class="view-metadata-table-td-3">
-								<a href="{$url}" target="_blank">
-									<xsl:value-of select="normalize-space($url)"/>
-								</a>
+								<xsl:choose>
+									<xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
+										<a href="{$url}" target="_blank">
+											<xsl:value-of select="normalize-space($url)"/>
+										</a>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="normalize-space($url)"/>
+									</xsl:otherwise>
+								</xsl:choose>
 							</td>
 						</tr>
 					</xsl:for-each>	
@@ -602,7 +675,7 @@
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
       </dt>
       <dd>
-        <ul>
+        <ul style="list-style-type: none;padding-left:2px;">
           <xsl:for-each select="parent::node()/gmd:graphicOverview">
             <xsl:variable name="label">
               <xsl:apply-templates mode="localised"
@@ -624,35 +697,30 @@
 
 
   <xsl:template mode="render-field"
-                match="gmd:distributionFormat[1]"
+                match="gmd:distributorFormat[1]"
                 priority="100">
     <dl class="gn-format">
       <dt>
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
       </dt>
       <dd>
-        <ul>
-          <xsl:for-each select="parent::node()/gmd:distributionFormat">
-            <li>
+          <xsl:for-each select="parent::node()/gmd:distributorFormat">
               <xsl:apply-templates mode="render-value"
                                    select="*/gmd:name"/>
               (<xsl:apply-templates mode="render-value"
                                     select="*/gmd:version"/>)
-              <p>
                 <xsl:apply-templates mode="render-field"
                                      select="*/(gmd:amendmentNumber|gmd:specification|
                               gmd:fileDecompressionTechnique|gmd:formatDistributor)"/>
-              </p>
-            </li>
+ 			  <xsl:if test="position()!=last()">,</xsl:if>
           </xsl:for-each>
-        </ul>
       </dd>
     </dl>
   </xsl:template>
 
 
   <xsl:template mode="render-field"
-                match="gmd:distributionFormat[position() > 1]"
+                match="gmd:distributorFormat[position() > 1]"
                 priority="100"/>
 
   <!-- Date -->
@@ -723,19 +791,15 @@
   <xsl:template mode="render-field"
                 match="gmd:topicCategory[1]|gmd:obligation[1]|gmd:pointInPixel[1]"
                 priority="100">
-    <dl class="gn-date">
+    <dl>
       <dt>
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
       </dt>
       <dd>
-        <ul>
           <xsl:for-each select="parent::node()/(gmd:topicCategory|gmd:obligation|gmd:pointInPixel)">
-            <li>
-              <xsl:apply-templates mode="render-value"
-                                   select="*"/>
-            </li>
+            <xsl:apply-templates mode="render-value" select="*"/>
+			<xsl:if test="position()!=last()">,</xsl:if>
           </xsl:for-each>
-        </ul>
       </dd>
     </dl>
   </xsl:template>
@@ -775,6 +839,17 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template mode="render-field" match="gmd:LanguageCode">
+    <dl>
+      <dt>
+        <xsl:value-of select="tr:node-label(tr:create($schema), name(..), null)"/>
+      </dt>
+      <dd>
+        <xsl:apply-templates mode="render-value" select="."/>
+      </dd>
+    </dl>
+  </xsl:template>
+  
   <!-- Traverse the tree -->
   <xsl:template mode="render-field"
                 match="*">
@@ -800,13 +875,13 @@
         <!-- Replace hyperlink in text by an hyperlink -->
         <xsl:variable name="textWithLinks"
                       select="replace(., '([a-z][\w-]+:/{1,3}[^\s()&gt;&lt;]+[^\s`!()\[\]{};:'&apos;&quot;.,&gt;&lt;?«»“”‘’])',
-                                    '&lt;a href=''$1''&gt;$1&lt;/a&gt;')"/>
+                                    '&lt;a target=&quot;_blank&quot; href=''$1''&gt;$1&lt;/a&gt;')"/>
 
         <xsl:if test="$textWithLinks != ''">
           <xsl:copy-of select="saxon:parse(
-                          concat('&lt;p&gt;',
+                          concat('&lt;span&gt;',
                           replace($textWithLinks, '&amp;', '&amp;amp;'),
-                          '&lt;/p&gt;'))"/>
+                          '&lt;/span&gt;'))"/>
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
@@ -946,9 +1021,154 @@
                               else tr:node-label(tr:create($schema), name(), null)"/>
       </dt>
       <dd>
-        <p><xsl:value-of select="gco:CharacterString"/><xsl:apply-templates mode="render-value" select="@*"/></p>
+        <xsl:apply-templates mode="render-value" select="gco:CharacterString"/>
       </dd>
    </dl>
  </xsl:template>
 
+ <xsl:template mode="render-value" match="gmd:LanguageCode">
+		<xsl:choose>
+			<xsl:when test="@codeListValue = 'aar'">Afar</xsl:when>
+			<xsl:when test="@codeListValue = 'abk'">Abchazien</xsl:when>
+			<xsl:when test="@codeListValue = 'afr'">Afrikaans</xsl:when>
+			<xsl:when test="@codeListValue = 'amh'">Amhariska</xsl:when>
+			<xsl:when test="@codeListValue = 'aao'">Arabiska</xsl:when>
+			<xsl:when test="@codeListValue = 'asm'">Assamesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'ayc'">Aymara</xsl:when>
+			<xsl:when test="@codeListValue = 'azb'">Azerbajdzjanska</xsl:when>
+			<xsl:when test="@codeListValue = 'bak'">Basjkiriska</xsl:when>
+			<xsl:when test="@codeListValue = 'bel'">Vitryska</xsl:when>
+			<xsl:when test="@codeListValue = 'bqn'">Bulgariska</xsl:when>
+			<xsl:when test="@codeListValue = 'bh'">Bihari</xsl:when>
+			<xsl:when test="@codeListValue = 'bis'">Bislama</xsl:when>
+			<xsl:when test="@codeListValue = 'ben'">Bengali, Bangla</xsl:when>
+			<xsl:when test="@codeListValue = 'adx'">Tibetanska</xsl:when>
+			<xsl:when test="@codeListValue = 'bre'">Breton</xsl:when>
+			<xsl:when test="@codeListValue = 'cat'">Katalanska</xsl:when>
+			<xsl:when test="@codeListValue = 'cos'">Korsikanska</xsl:when>
+			<xsl:when test="@codeListValue = 'ces'">Tjeckien</xsl:when>
+			<xsl:when test="@codeListValue = 'cym'">Walesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'dan'">Danska</xsl:when>
+			<xsl:when test="@codeListValue = 'deu'">Tyska</xsl:when>
+			<xsl:when test="@codeListValue = 'dz'">Bhutanesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'cpg'">Grekiska</xsl:when>
+			<xsl:when test="@codeListValue = 'en'">Engelska</xsl:when>
+			<xsl:when test="@codeListValue = 'eng'">Engelska</xsl:when>
+			<xsl:when test="@codeListValue = 'epo'">Esperanto</xsl:when>
+			<xsl:when test="@codeListValue = 'spa'">Spanska</xsl:when>
+			<xsl:when test="@codeListValue = 'ekk'">Estniska</xsl:when>
+			<xsl:when test="@codeListValue = 'eus'">Baskiska</xsl:when>
+			<xsl:when test="@codeListValue = 'psc'">Persiska</xsl:when>
+			<xsl:when test="@codeListValue = 'fin'">Finska</xsl:when>
+			<xsl:when test="@codeListValue = 'fij'">Fiji</xsl:when>
+			<xsl:when test="@codeListValue = 'fao'">Färöiska</xsl:when>
+			<xsl:when test="@codeListValue = 'acf'">Franska</xsl:when>
+			<xsl:when test="@codeListValue = 'frr'">Frisiska</xsl:when>
+			<xsl:when test="@codeListValue = 'gle'">Irländska</xsl:when>
+			<xsl:when test="@codeListValue = 'gla'">Skotsk gaeliska</xsl:when>
+			<xsl:when test="@codeListValue = 'glg'">Galiciska</xsl:when>
+			<xsl:when test="@codeListValue = 'gug'">Guarani</xsl:when>
+			<xsl:when test="@codeListValue = 'guj'">Gujarati</xsl:when>
+			<xsl:when test="@codeListValue = 'hau'">Hausa</xsl:when>
+			<xsl:when test="@codeListValue = 'hca'">Hindi</xsl:when>
+			<xsl:when test="@codeListValue = 'hrv'">Kroatiska</xsl:when>
+			<xsl:when test="@codeListValue = 'hsh'">Ungerska</xsl:when>
+			<xsl:when test="@codeListValue = 'aen'">Armeniska</xsl:when>
+			<xsl:when test="@codeListValue = 'ia'">Interlingua</xsl:when>
+			<xsl:when test="@codeListValue = 'ie'">Interlingua</xsl:when>
+			<xsl:when test="@codeListValue = 'esi'">Inupiak</xsl:when>
+			<xsl:when test="@codeListValue = 'bdl'">Indonesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'icl'">Isländska</xsl:when>
+			<xsl:when test="@codeListValue = 'ise'">Italienska</xsl:when>
+			<xsl:when test="@codeListValue = 'hbo'">Hebreiska</xsl:when>
+			<xsl:when test="@codeListValue = 'jpn'">Japanska</xsl:when>
+			<xsl:when test="@codeListValue = 'ydd'">Jiddisch</xsl:when>
+			<xsl:when test="@codeListValue = 'jas'">Javanesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'jge'">Georgiska</xsl:when>
+			<xsl:when test="@codeListValue = 'kaz'">Kazakiska</xsl:when>
+			<xsl:when test="@codeListValue = 'kal'">Grönländska</xsl:when>
+			<xsl:when test="@codeListValue = 'khm'">Kambodjanska</xsl:when>
+			<xsl:when test="@codeListValue = 'kan'">Kannada</xsl:when>
+			<xsl:when test="@codeListValue = 'kor'">Koreanska</xsl:when>
+			<xsl:when test="@codeListValue = 'kas'">Kashmir</xsl:when>
+			<xsl:when test="@codeListValue = 'ckb'">Kurdiska</xsl:when>
+			<xsl:when test="@codeListValue = 'kir'">Kirgisiska</xsl:when>
+			<xsl:when test="@codeListValue = 'lat'">Latin</xsl:when>
+			<xsl:when test="@codeListValue = 'lin'">Lingala</xsl:when>
+			<xsl:when test="@codeListValue = 'lo'">Laotiska</xsl:when>
+			<xsl:when test="@codeListValue = 'lit'">Litauiska</xsl:when>
+			<xsl:when test="@codeListValue = 'lav'">Lettiska, Lettiska</xsl:when>
+			<xsl:when test="@codeListValue = 'bhr'">Madagaskars</xsl:when>
+			<xsl:when test="@codeListValue = 'mri'">Maori</xsl:when>
+			<xsl:when test="@codeListValue = 'mkd'">Makedonska</xsl:when>
+			<xsl:when test="@codeListValue = 'mal'">Malayalam</xsl:when>
+			<xsl:when test="@codeListValue = 'khk'">Mongoliska</xsl:when>
+			<xsl:when test="@codeListValue = 'ron'">Moldaviska</xsl:when>
+			<xsl:when test="@codeListValue = 'mar'">Marathi</xsl:when>
+			<xsl:when test="@codeListValue = 'abs'">Malay</xsl:when>
+			<xsl:when test="@codeListValue = 'mdl'">Maltesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'mya'">Burmesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'nau'">Nauru</xsl:when>
+			<xsl:when test="@codeListValue = 'kxl'">Nepalesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'brc'">Nederländska</xsl:when>
+			<xsl:when test="@codeListValue = 'nor'">Norska</xsl:when>
+			<xsl:when test="@codeListValue = 'oci'">Occitanska</xsl:when>
+			<xsl:when test="@codeListValue = 'gaz'">(Afan) Oromo</xsl:when>
+			<xsl:when test="@codeListValue = 'ori'">Oriya</xsl:when>
+			<xsl:when test="@codeListValue = 'pnb'">Punjabi</xsl:when>
+			<xsl:when test="@codeListValue = 'pol'">Polska</xsl:when>
+			<xsl:when test="@codeListValue = 'pbt'">Pashto, Pushto</xsl:when>
+			<xsl:when test="@codeListValue = 'por'">Portugisiska</xsl:when>
+			<xsl:when test="@codeListValue = 'cqu'">Quechua</xsl:when>
+			<xsl:when test="@codeListValue = 'lld'">Rhaeto-Romance</xsl:when>
+			<xsl:when test="@codeListValue = 'run'">Kirundi</xsl:when>
+			<xsl:when test="@codeListValue = 'rms'">Rumänska</xsl:when>
+			<xsl:when test="@codeListValue = 'prg'">Ryska</xsl:when>
+			<xsl:when test="@codeListValue = 'kin'">Kinyarwanda</xsl:when>
+			<xsl:when test="@codeListValue = 'san'">Sanskrit</xsl:when>
+			<xsl:when test="@codeListValue = 'sbn'">Sindhi</xsl:when>
+			<xsl:when test="@codeListValue = 'sag'">Sangho</xsl:when>
+			<xsl:when test="@codeListValue = 'hbs'">Serbokroatiska</xsl:when>
+			<xsl:when test="@codeListValue = 'sin'">Singalesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'slk'">Slovakiska</xsl:when>
+			<xsl:when test="@codeListValue = 'slv'">Slovenska</xsl:when>
+			<xsl:when test="@codeListValue = 'smo'">Samoanska</xsl:when>
+			<xsl:when test="@codeListValue = 'sna'">Shona</xsl:when>
+			<xsl:when test="@codeListValue = 'som'">Somali</xsl:when>
+			<xsl:when test="@codeListValue = 'aae'">Albanska</xsl:when>
+			<xsl:when test="@codeListValue = 'rsb'">Serbiska</xsl:when>
+			<xsl:when test="@codeListValue = 'ssw'">Siswati</xsl:when>
+			<xsl:when test="@codeListValue = 'sot'">Sesotho</xsl:when>
+			<xsl:when test="@codeListValue = 'sun'">Sundanesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'swe'">Svenska</xsl:when>
+			<xsl:when test="@codeListValue = 'ccl'">Swahili</xsl:when>
+			<xsl:when test="@codeListValue = 'tam'">Tamil</xsl:when>
+			<xsl:when test="@codeListValue = 'tel'">Telugu</xsl:when>
+			<xsl:when test="@codeListValue = 'abh'">Tadzjikiska</xsl:when>
+			<xsl:when test="@codeListValue = 'nod'">Thai</xsl:when>
+			<xsl:when test="@codeListValue = 'ti'">Tigrinja</xsl:when>
+			<xsl:when test="@codeListValue = 'tuk'">Turkmeniska</xsl:when>
+			<xsl:when test="@codeListValue = 'tgl'">Tagalog</xsl:when>
+			<xsl:when test="@codeListValue = 'tn'">Setswana</xsl:when>
+			<xsl:when test="@codeListValue = 'rar'">Tonga</xsl:when>
+			<xsl:when test="@codeListValue = 'bgx'">Turkiska</xsl:when>
+			<xsl:when test="@codeListValue = 'tso'">Tsonga</xsl:when>
+			<xsl:when test="@codeListValue = 'crh'">Tatariska</xsl:when>
+			<xsl:when test="@codeListValue = 'tw'">TWI</xsl:when>
+			<xsl:when test="@codeListValue = 'ukl'">Ukrainska</xsl:when>
+			<xsl:when test="@codeListValue = 'bxn'">Urdu</xsl:when>
+			<xsl:when test="@codeListValue = 'auz'">Uzbekiska</xsl:when>
+			<xsl:when test="@codeListValue = 'vie'">Vietnamesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'vol'">Volapuk</xsl:when>
+			<xsl:when test="@codeListValue = 'wof'">Wolof</xsl:when>
+			<xsl:when test="@codeListValue = 'xho'">Xhosa</xsl:when>
+			<xsl:when test="@codeListValue = 'yor'">Yoruba</xsl:when>
+			<xsl:when test="@codeListValue = 'cdo'">Kinesiska</xsl:when>
+			<xsl:when test="@codeListValue = 'zul'">Zulu</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="@codeListValue"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
 </xsl:stylesheet>

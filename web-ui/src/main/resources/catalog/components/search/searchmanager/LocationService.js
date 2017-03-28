@@ -48,6 +48,14 @@
       this.host = function() {
         return $location.host();
       };
+	  this.appUrl = function() {
+		var origin = window.location.origin;
+        if (!origin) {
+			origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+			
+		}
+        return origin + '/geonetwork';
+      };
       this.path = function(path) {
         return $location.path(path);
       };

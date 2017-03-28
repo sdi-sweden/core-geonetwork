@@ -131,7 +131,15 @@
     <value>hierarchy_view</value>
   </util:list>
 
-  <util:set id="formatterRemoteFormatAllowedHosts" value-type="java.lang.String"></util:set>
+  <util:set id="formatterRemoteFormatAllowedHosts" value-type="java.lang.String">
+	<value>localhost</value>
+	<value>www.geodata.se</value>
+	<value>geo-inspire.trafikverket.se</value>
+	<value>geo-netinfo.trafikverket.se</value>
+	<value>opendata-catalog.smhi.se</value>
+	<value>mdp.vic-metria.nu</value>
+	<value>geodataportalendev.metagis.se</value>
+  </util:set>
   <bean id="threadResources" class="org.mapfish.print.ThreadResources">
     <property name="connectionTimeout" value="30000"/>
     <property name="socketTimeout" value="30000"/>

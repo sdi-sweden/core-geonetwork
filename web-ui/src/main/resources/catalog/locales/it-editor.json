@@ -90,6 +90,8 @@
     "chooseRegion": "Choose a region",
     "clickToDrawABox": "Click once to enable control and draw a box. Click again to stop drawing.",
     "closeEditor": "Save & close",
+	"inspireValidation": "Inspire-validering",
+	"mdRelationValidation": "Kontroll av länkar",
     "continent": "Continent",
     "copyPaste": "Copy/Paste",
     "country": "Country",
