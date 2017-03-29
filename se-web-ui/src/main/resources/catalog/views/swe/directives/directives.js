@@ -228,8 +228,8 @@
    * Displays a tooltip element.
    *
    */
-  module.directive('sweTooltip', ['$timeout',
-    function($timeout) {
+  module.directive('sweTooltip', ['$timeout', 'gnConfig', 'gnConfigService',
+    function($timeout, gnConfig, gnConfigService) {
       return {
         restrict: 'A',
         replace: true,
@@ -241,12 +241,16 @@
           link: '@'
         },
         link: function(scope, elem) {
+          gnConfigService.loadPromise.then(function() {
+            scope.prefix = gnConfig['system.ui.tooltiphelpurlprefix'];
+          });
+
           $timeout(function () {
             elem.on('click', '.help-icn-circle', function () {
               var tooltipElem = elem.find('.tool-tip-cont');
-              
+
               if (tooltipElem.hasClass('open')) {
-                tooltipElem.removeClass('open'); 
+                tooltipElem.removeClass('open');
               } else {
                 tooltipElem.addClass('open');
               }
@@ -329,7 +333,7 @@
         }
       };
   }]);
-  
+
   /**
    * @ngdoc directive
    * @name sweGeoTechnic
