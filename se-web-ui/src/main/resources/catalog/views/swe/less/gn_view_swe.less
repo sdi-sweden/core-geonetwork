@@ -540,7 +540,7 @@ body.loggedin-user .header-logout {
 }
 .tool-tip-cont {
   position: absolute;
-  width: 260px;
+  width: 250px;
   padding: 0 30px;
   box-sizing: border-box;
   background-color: #27605d;
@@ -780,6 +780,21 @@ body.loggedin-user .header-logout {
 @media screen and (max-width: 1762px) {
   .medium-map-view .main-wrapper {
     padding-right: 0;
+  }
+}
+@media screen and (max-width: 1450px) {
+  //For helpicon tooltip getting out of page
+  .search-show-only .tool-tip-cont .tool-tip{
+    margin-left: 50px;
+  }
+  .search-show-only .tool-tip-cont .triangle{
+    margin-left: -50px;
+  }
+  .other-filters .tool-tip-cont .tool-tip{
+    
+  }
+  .other-filters .tool-tip-cont .triangle{
+    
   }
 }
 @media screen and (max-width: 1300px) {
@@ -2206,6 +2221,7 @@ body.loggedin-user .header-logout {
 }
 .site-geo-type-filter .other-filters {
   float: right;
+  margin-right: 115px;
 }
 .site-geo-type-filter .advance-link {
   margin-left: 40px;
@@ -2432,9 +2448,6 @@ body.loggedin-user .header-logout {
     box-sizing: border-box;
     width: 100%;
   }
-  .site-geo-type-filter .other-filters {
-    padding-bottom: 50px;
-  }
   .site-geo-type-filter .other-filter-help-icn {
     right: 0px;
     top: 0px;
@@ -2459,8 +2472,6 @@ body.loggedin-user .header-logout {
   }
   .site-geo-type-filter .type-filter-list {
     max-width: 670px;
-    margin-bottom: 0;
-    margin-top: -6px;
   }
   .site-geo-type-filter .type-filter-list li {
     margin-bottom: 24px;
@@ -2469,11 +2480,13 @@ body.loggedin-user .header-logout {
 }
 @media screen and (max-width: 1024px) {
   .site-geo-type-filter .type-filter-list {
-    margin-bottom: 0px;
     max-width: 590px;
   }
   .site-geo-type-filter .type-filter-list li {
-    margin-left: 15px;
+    margin: 0 0 10px 0;
+  }
+  .site-geo-type-filter .type-filter-list a {
+    padding: 0 10px 0 0;
   }
   .date-help-icn {
     margin-left: 10px;
@@ -2531,7 +2544,6 @@ body.loggedin-user .header-logout {
 }
 .advance-filters-cont .right-side-filter {
   float: right;
-  margin-left: 10px;
 }
 .advance-filters-cont .till-date-colm {
   margin-left: 20px;
@@ -2808,6 +2820,11 @@ body.loggedin-user .header-logout {
 .advance-filters-cont .geo-filter-cont {
   margin-right: 17px;
 }
+@media screen and (max-width: 1930px) {
+  .advance-filters-cont .right-side-filter {
+    margin-right: 145px;
+  }
+}
 @media screen and (max-width: 1300px) {
   .advance-filters-cont .date-filter {
     padding-left: 20px;
@@ -2820,6 +2837,7 @@ body.loggedin-user .header-logout {
   }
   .advance-filters-cont .right-side-filter {
     padding-bottom: 31px;
+    margin-right: 55px;
   }
   .advance-filters-cont .advance-category-filter-help-icn {
     right: 5px;
@@ -2846,12 +2864,22 @@ body.loggedin-user .header-logout {
   .advance-filters-cont .draw-map-link-colm .help-icn-cont {
     right: 0;
   }
+   .advance-filters-cont .right-side-filter {
+    margin-right: 175px;
+  }
 }
 @media screen and (max-width: 1024px) {
   .advance-filters-cont .right-side-filter {
     max-width: 512px;
     width: 100%;
     margin-left: 0;
+    margin-top: 20px;
+    margin-bottom: 0;
+    float: left;
+    padding-bottom: 5px;
+  }
+  .advance-filters-cont .left-side-filter .filter-colm label{
+   padding-right:80px;
   }
   .advance-filters-cont .geo-filter-cont {
     margin-right: 5px;
@@ -2859,11 +2887,6 @@ body.loggedin-user .header-logout {
   .advance-filters-cont .geo-filter-cont .custom-fld-cont input[type=text] {
     width: 238px;
     padding-left: 0;
-  }
-  .advance-filters-cont .draw-map-link-colm {
-    position: absolute;
-    right: 25px;
-    margin-top: 7px;
   }
   .advance-filters-cont .draw-map-link-colm .help-icn-cont {
     right: 0;

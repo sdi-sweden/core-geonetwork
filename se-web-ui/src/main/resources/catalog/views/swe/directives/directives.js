@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -265,8 +265,8 @@
    * Displays a tooltip element.
    *
    */
-  module.directive('sweTooltip', ['$timeout', '$rootScope',
-    function($timeout, $rootScope) {
+  module.directive('sweTooltip', ['$timeout','$rootScope','gnConfig','gnConfigService',
+    function($timeout, $rootScope, gnConfig, gnConfigService) {
       return {
         restrict: 'A',
         replace: true,
@@ -278,12 +278,16 @@
           link: '@'
         },
         link: function(scope, elem) {
+          gnConfigService.loadPromise.then(function() {
+            scope.prefix = gnConfig['system.ui.tooltiphelpurlprefix'];
+          });
+
           $timeout(function () {
             elem.on('click', '.help-icn-circle', function () {
               var tooltipElem = elem.find('.tool-tip-cont');
-              
+
               if (tooltipElem.hasClass('open')) {
-                tooltipElem.removeClass('open'); 
+                tooltipElem.removeClass('open');
               } else {
                 tooltipElem.addClass('open');
               }
@@ -411,7 +415,7 @@
         }
       };
   }]);
-  
+
   /**
    * @ngdoc directive
    * @name sweGeoTechnic
