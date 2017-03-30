@@ -46,7 +46,7 @@
 
   }]);
 
-  var GnFeaturesTablesController = function(gnFeaturesTableManager,is_map_maximized) {
+  var GnFeaturesTablesController = function(gnFeaturesTableManager, is_map_maximized, $scope) {
     this.tm = gnFeaturesTableManager;
 
     this.tables = gnFeaturesTableManager.tables;
@@ -60,6 +60,13 @@
       map: this.map
     });
     this.gfi = is_map_maximized;
+    this.loading = gnFeaturesTableManager.loading;
+    /* To Add loading symbol icon on GFI table loading time */
+    $scope.$watch(function() {
+      return gnFeaturesTableManager.loadingCheck();
+    }.bind(this), function(newVal, oldVal) {
+      this.loading = newVal;
+    }.bind(this));
   };
 
   GnFeaturesTablesController.prototype.clear = function() {
@@ -70,6 +77,7 @@
   module.controller('gnFeaturesTablesController', [
     'gnFeaturesTableManager',
     'is_map_maximized',
+    '$scope',
     GnFeaturesTablesController
   ]);
 
