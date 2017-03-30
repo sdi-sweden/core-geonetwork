@@ -293,7 +293,8 @@
               }
             })
           });
-          scope.openPopup = function(link) {
+          scope.openPopup = function() {
+        	  var url = scope.prefix + scope.link;
         	  $rootScope.$emit('openhelppopup', scope.link);
 		  }
         }
@@ -386,7 +387,9 @@
           predefinedMaps: '@',
           selectedMap: '@',
           showMapFn: '&',
-          configUrl: '@'
+          showMapFnApi: '&',
+          configUrl: '@',
+          selectedItem: '@'
         },
         link: function(scope, element, attrs) {
           scope.$watch("configUrl", function(value) {
@@ -395,26 +398,38 @@
                   scope.predefinedMaps = data;
 
                   if (scope.selectedMap != undefined) {
+                	  var indexPredef;
                       var predefinedMapsFiltered =
                           scope.predefinedMaps.filter(function(x) {
-                              return x['title'] === scope.selectedMap
+                            if(x['id'] == scope.selectedMap){
+                        	  indexPredef = scope.predefinedMaps.indexOf(x);
+                        	}
+                            return x['id'] == scope.selectedMap
                           });
 
                       if (predefinedMapsFiltered.length > 0) {
-                          scope.doView(predefinedMapsFiltered[0]);
+                          scope.doViewFromApi(indexPredef, predefinedMapsFiltered[0]);
                       }
                   }
               });
             }
           });
+          
+          scope.doView = function(index, predefinedMap) {
+          	  scope.selectedItem = index;
+              gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+              scope.showMapFn()();
+            };
 
-          scope.doView = function(predefinedMap) {
+          scope.doViewFromApi = function(index, predefinedMap) {
+        	scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
-            scope.showMapFn()();
+            scope.showMapFnApi()();
           };
         }
       };
   }]);
+  
 
   /**
    * @ngdoc directive
