@@ -59,6 +59,7 @@ import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.services.Utils;
 import org.fao.geonet.services.metadata.Show;
 import org.fao.geonet.services.relations.Get;
+import org.fao.geonet.util.XslUtil;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Content;
@@ -190,7 +191,8 @@ public class GetRelated implements Service, RelatedMetadata {
             md = metadataRepository.findOneByUuid(uuid);
 
             if (md == null) {
-                throw new IllegalArgumentException("No Metadata found with uuid " + uuid);
+                throw new IllegalArgumentException("No Metadata found with uuid " +
+                        XslUtil.encodeForJavaScript(uuid));
             }
         }
         id = md.getId();

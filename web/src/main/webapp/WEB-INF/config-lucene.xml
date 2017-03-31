@@ -181,6 +181,7 @@
       <field name="standardName" tagName="standardName"/>
       <field name="_groupWebsite" tagName="groupWebsite"/>
       <field name="attributeTable" tagName="attributeTable"/>
+	  <field name="initiativKeyword" tagName="initiativKeyword"/>
     </dumpFields>
   </search>
 

@@ -88,7 +88,8 @@
             scope.sortByOrder(scope.params.sortOrder);
           };
 
-          if (angular.isUndefined(scope.params.sortOrder)) {
+          if (angular.isUndefined(scope.params.sortOrder) || 
+              (scope.params.sortOrder == '')) {
             scope.sortOrder = 'descending';
           } else {
             scope.sortOrder = 'ascending';
@@ -227,8 +228,8 @@
    * Displays a tooltip element.
    *
    */
-  module.directive('sweTooltip', ['$timeout',
-    function($timeout) {
+  module.directive('sweTooltip', ['$timeout', 'gnConfig', 'gnConfigService',
+    function($timeout, gnConfig, gnConfigService) {
       return {
         restrict: 'A',
         replace: true,
@@ -240,12 +241,16 @@
           link: '@'
         },
         link: function(scope, elem) {
+          gnConfigService.loadPromise.then(function() {
+            scope.prefix = gnConfig['system.ui.tooltiphelpurlprefix'];
+          });
+
           $timeout(function () {
             elem.on('click', '.help-icn-circle', function () {
               var tooltipElem = elem.find('.tool-tip-cont');
-              
+
               if (tooltipElem.hasClass('open')) {
-                tooltipElem.removeClass('open'); 
+                tooltipElem.removeClass('open');
               } else {
                 tooltipElem.addClass('open');
               }
@@ -328,7 +333,7 @@
         }
       };
   }]);
-  
+
   /**
    * @ngdoc directive
    * @name sweGeoTechnic
@@ -637,6 +642,30 @@
               });
         }
       };
+    }]);
+
+
+    /**
+     * Directive used to close the typeahead suggestions
+     * list when clicking ENTER key.
+     *
+     * The solution is a bit "special": to add extra element that
+     * is focus so the popup with suggestions gets closed.
+     */
+    module.directive('allowPostOnEnter', ['$timeout' ,function($timeout) {
+      return {
+          link: function($scope, elem, attrs) {
+              var hiddenInpt = angular.element('<input class="hide">');
+              elem.parent().append(hiddenInpt);
+              elem.bind('keydown', function(evt) {
+                  if (evt.which === 13) {
+                          $timeout(function() {
+                              hiddenInpt[0].click();
+                          });
+                  }
+              })
+          } //end of link
+      }
     }]);
 
 }());

@@ -30,13 +30,12 @@
 
   module.provider('gnOwsCapabilities', function() {
     this.$get = ['$http', '$q',
-      'gnUrlUtils', 'gnGlobalSettings',
-      function($http, $q, gnUrlUtils, gnGlobalSettings) {
+      'gnUrlUtils', 'gnGlobalSettings', 'gfiOutputFormatCheck',
+      function($http, $q, gnUrlUtils, gnGlobalSettings, gfiOutputFormatCheck) {
 
         var displayFileContent = function(wmsUrl,data) {
           var parser = new ol.format.WMSCapabilities();
           var result = parser.read(data);
-
           var layers = [];
           var layerCheck = [];
           var layerGroupCheck = [];
@@ -172,6 +171,7 @@
                     .success(function(data) {
                       try {
                         defer.resolve(displayFileContent(url,data));
+                        gfiOutputFormatCheck.result = defer.promise.$$state.value.Request.GetFeatureInfo.Format
                       } catch (e) {
                         defer.reject('capabilitiesParseError');
                       }
@@ -256,14 +256,22 @@
           getLayerInfoFromCap: function(name, capObj, uuid) {
             var needles = [];
             var layers = capObj.layers || capObj.Layer;
-
+            var parse_name = name.split(":");
+            var parsed_name = parse_name[1];
             for (var i = 0, len = layers.length; i < len; i++) {
               //check layername
               if (name == layers[i].Name || name == layers[i].Identifier) {
                 layers[i].nameToUse = name;
                 return layers[i];
               }
-
+              //check layername with workspace name
+              if(parsed_name){
+                if (parsed_name == layers[i].Name || parsed_name == layers[i].Identifier) {
+                layers[i].nameToUse = parsed_name;
+                return layers[i];
+              }
+              }
+              
               //check dataset identifer match
               if (uuid != null) {
                 if (angular.isArray(layers[i].Identifier)) {

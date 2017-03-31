@@ -13,13 +13,12 @@
     <div class="site-filter-section-wrapper">
       <div class="site-filter-section">
         <div class="site-geo-type-filter">
-          <div class="clearfix pull-left">
-            <span class="filter-label" data-translate="">searchShowOnly</span>
-
-            <div data-swe-tooltip=""
+          <div class="clearfix pull-left search-show-only">
+			<div data-swe-tooltip=""
                  data-title="{{ 'searchShowOnlyTooltip-title' | translate }}"
                  data-text="{{ 'searchShowOnlyTooltip-desc' | translate }}"
                  data-link="{{ 'searchShowOnlyTooltip-link' | translate }}"></div>
+            <span class="filter-label" data-translate="">searchShowOnly</span>
           </div>
           <ul class="type-filter-list">
             <li>
@@ -137,8 +136,10 @@
                       </ul>
                     </div>
                   </div>
-                  <div class="filter-colm draw-map-link-colm" data-ng-controller="SweGeoFreeHandPolygonController" data-ng-click="drawFreeHandPolygonInMap()">
+                  <div class="filter-colm draw-map-link-colm" data-ng-controller="SweGeoFreeHandPolygonController" >
+                  <div data-ng-click="drawFreeHandPolygonInMap()">
                   <a href="" class="fltr-link draw-map-link"><span data-translate="">drawingOnMap</span></a>
+                  </div>
                     <div data-swe-tooltip=""
                          data-title="{{ 'geographicalFilterTooltip-title' | translate }}"
                          data-text="{{ 'geographicalFilterTooltip-desc' | translate }}"
