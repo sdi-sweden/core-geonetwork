@@ -1680,6 +1680,7 @@ public class DataManager implements ApplicationEventPublisherAware {
                     //--- setup environment
                     Element env = new Element("env");
                     env.addContent(new Element("lang").setText(srvContext.getLanguage()));
+                    env.addContent(new Element("url").setText(getSettingManager().getSiteURL(srvContext)));
 
                     // add original metadata to result
                     Element result = new Element("root");

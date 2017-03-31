@@ -36,6 +36,7 @@ import org.fao.geonet.Util;
 import org.fao.geonet.domain.Metadata;
 import org.fao.geonet.domain.MetadataType;
 import org.fao.geonet.repository.MetadataRepository;
+import org.fao.geonet.util.XslUtil;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Attribute;
@@ -90,7 +91,8 @@ public class Get implements Service {
         }
 
         if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE) {
-            throw new IllegalArgumentException("Metadata uuid=" + uuid + " is not a subtemplate");
+            throw new IllegalArgumentException("Metadata uuid=" +
+                    XslUtil.encodeForJavaScript(uuid) + " is not a subtemplate");
         }
 
         Element tpl = metadata.getXmlData(false);

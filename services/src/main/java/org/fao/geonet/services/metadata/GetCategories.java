@@ -35,6 +35,7 @@ import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.repository.MetadataCategoryRepository;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.services.Utils;
+import org.fao.geonet.util.XslUtil;
 import org.jdom.Element;
 
 import java.nio.file.Path;
@@ -74,7 +75,8 @@ public class GetCategories implements Service {
 
         final Metadata metadata = context.getBean(MetadataRepository.class).findOne(iLocalId);
         if (metadata == null) {
-            throw new IllegalArgumentException("Metadata not found --> " + id);
+            throw new IllegalArgumentException("Metadata not found --> " +
+                    XslUtil.encodeForJavaScript(id));
         }
 
         Element isOwner = new Element("owner");

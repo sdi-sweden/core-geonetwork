@@ -185,6 +185,11 @@
 
       // after sorting the results go back to the first page of results (with from & to)
       gnSearchSettings.sortbyValues = [{
+          sortBy: 'relevance',
+          sortOrder: '',
+          from: 1,
+          to: gnSearchSettings.hitsperpageValues[0]
+      }, {
         sortBy: 'changeDate',
         sortOrder: '',
         from: 1,

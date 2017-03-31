@@ -33,6 +33,7 @@ import org.fao.geonet.domain.Service;
 import org.fao.geonet.domain.ServiceParam;
 import org.fao.geonet.domain.responses.OkResponse;
 import org.fao.geonet.repository.ServiceRepository;
+import org.fao.geonet.util.XslUtil;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -107,7 +108,7 @@ public class Update {
 
             if (service != null) {
                 throw new IllegalArgumentException("Service with name "
-                    + serviceName + " already exists");
+                    + XslUtil.encodeForJavaScript(serviceName) + " already exists");
             }
 
             service = new org.fao.geonet.domain.Service();
