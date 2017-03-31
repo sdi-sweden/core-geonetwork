@@ -53,7 +53,7 @@ Context listener that creates endpoint cache and validator required by EndpointP
         <listener-class>se.lantmateriet.geonet.LmConfigContextListener</listener-class>
     </listener>
 
-<filter>
+    <filter>
          <filter-name>LmProxyFilter</filter-name>
         <filter-class>
             se.lantmateriet.geonet.LmProxyFilter
@@ -340,6 +340,32 @@ Context listener that creates endpoint cache and validator required by EndpointP
         <servlet-name>LmProxy</servlet-name>
         <url-pattern>/lm-proxy</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+		<display-name>Proxy for topowebb wms service</display-name>
+		<servlet-name>TopoWmsProxy</servlet-name>
+		<servlet-class>
+			org.lmv.geodata.common.server.servlet.proxy.BasicAuthProxy</servlet-class>
+		<init-param>
+			<param-name>proxyEndpoint</param-name>
+			<param-value>http://maps.lantmateriet.se/topowebb/wms/v1</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>userName</param-name>
+			<param-value>lant0087</param-value>
+		</init-param>
+		<init-param>
+			<param-name>pwd</param-name>
+			<param-value>7R76bi3QD7ywsmO</param-value>
+		</init-param>
+	</servlet>
+
+    <servlet-mapping>
+		<servlet-name>TopoWmsProxy</servlet-name>
+		<url-pattern>/topo-wms</url-pattern>
+	</servlet-mapping>
+
 <!-- end added by LM -->
 
   <!-- Print servlet -->
