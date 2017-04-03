@@ -117,7 +117,9 @@
 
       var wms = [new ol.layer.Tile({
           source: new ol.source.TileWMS({
-              url: '../../topo-wms',
+        	  group: 'Background layers',
+        	  crossOrigin: 'anonymous',
+        	  url: '../../topo-wms',
               params: {
                   FORMAT: 'image/png',
                   VERSION: '1.1.1',
@@ -142,6 +144,9 @@
       // Add backgrounds to TOC
       gnViewerSettings.bgLayers = wms;
       gnViewerSettings.servicesUrl = {};
+      gnViewerSettings.wmsUrl = '../../topo-wms'; 
+      gnViewerSettings.layerName = 'Background layers';
+      gnViewerSettings.layerGroup = 'Background layers';
       
       var viewerMap = new ol.Map({
         controls: [],

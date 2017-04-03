@@ -207,6 +207,8 @@
             var projection = ol.proj.get('EPSG:3006');
 
             var wms = new ol.layer.Tile({
+            	group: 'Background layers',
+            	crossOrigin: 'anonymous',
                 source: new ol.source.TileWMS({
                     url: '../../topo-wms',
                     params: {
