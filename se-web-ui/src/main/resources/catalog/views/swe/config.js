@@ -116,9 +116,9 @@
       var projection = ol.proj.get('EPSG:3006');
 
       var wms = [new ol.layer.Tile({
+    	  group: 'Background layers',
+    	  crossOrigin: 'anonymous',
           source: new ol.source.TileWMS({
-        	  group: 'Background layers',
-        	  crossOrigin: 'anonymous',
         	  url: '../../topo-wms',
               params: {
                   FORMAT: 'image/png',
@@ -144,9 +144,6 @@
       // Add backgrounds to TOC
       gnViewerSettings.bgLayers = wms;
       gnViewerSettings.servicesUrl = {};
-      gnViewerSettings.wmsUrl = '../../topo-wms'; 
-      gnViewerSettings.layerName = 'Background layers';
-      gnViewerSettings.layerGroup = 'Background layers';
       
       var viewerMap = new ol.Map({
         controls: [],
