@@ -39,6 +39,7 @@ import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.repository.specification.UserSpecs;
 import org.fao.geonet.util.PasswordUtil;
+import org.fao.geonet.util.XslUtil;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContext;
@@ -295,14 +296,14 @@ public class Update {
 
             if (user != null) {
                 throw new IllegalArgumentException("User with username "
-                    + username + " already exists");
+                    + XslUtil.encodeForJavaScript(username) + " already exists");
             }
             return new User();
         } else {
             User user = repo.findOne(id);
             if (user == null) {
                 throw new IllegalArgumentException("No user found with id: "
-                    + id);
+                    + XslUtil.encodeForJavaScript(id));
             }
             return user;
         }
@@ -336,7 +337,7 @@ public class Update {
                             "Tried to add group id "
                                 + userGroup.getId()
                                 + " to user "
-                                + username
+                                +  XslUtil.encodeForJavaScript(username)
                                 + " - not allowed "
                                 + "because you are not a member of that group!");
                     }

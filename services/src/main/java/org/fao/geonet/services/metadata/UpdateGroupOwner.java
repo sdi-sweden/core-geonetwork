@@ -40,6 +40,7 @@ import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.fao.geonet.services.Utils;
+import org.fao.geonet.util.XslUtil;
 import org.jdom.Element;
 
 import java.nio.file.Path;
@@ -76,7 +77,8 @@ public class UpdateGroupOwner extends NotInReadOnlyModeService {
 
         int iLocalId = Integer.parseInt(id);
         if (!dataMan.existsMetadata(iLocalId)) {
-            throw new IllegalArgumentException("Metadata with identifier '" + id + "' not found.");
+            throw new IllegalArgumentException("Metadata with identifier '" +
+                    XslUtil.encodeForJavaScript(id) + "' not found.");
         }
 
         if (!accessMan.canEdit(context, id)) {
@@ -86,7 +88,8 @@ public class UpdateGroupOwner extends NotInReadOnlyModeService {
         int iGroupOwner = Integer.parseInt(groupOwner);
         Group group = context.getBean(GroupRepository.class).findOne(iGroupOwner);
         if (group == null) {
-            throw new IllegalArgumentException("Group with identifier '" + groupOwner + "' not found.");
+            throw new IllegalArgumentException("Group with identifier '" +
+                    XslUtil.encodeForJavaScript(groupOwner) + "' not found.");
         }
 
         //--- Update groupOwner

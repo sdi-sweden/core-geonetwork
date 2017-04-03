@@ -35,6 +35,7 @@ import org.fao.geonet.kernel.Thesaurus;
 import org.fao.geonet.kernel.ThesaurusManager;
 import org.fao.geonet.repository.ThesaurusActivationRepository;
 import org.fao.geonet.services.NotInReadOnlyModeService;
+import org.fao.geonet.util.XslUtil;
 import org.fao.geonet.utils.IO;
 import org.jdom.Element;
 
@@ -80,7 +81,8 @@ public class Delete extends NotInReadOnlyModeService {
                 repo.delete(thesaurusId);
             }
         } else {
-            throw new IllegalArgumentException("Thesaurus not found --> " + name);
+            throw new IllegalArgumentException("Thesaurus not found --> " +
+                    XslUtil.encodeForJavaScript(name));
         }
 
         return new Element(Jeeves.Elem.RESPONSE)

@@ -23,49 +23,6 @@
 
 (function() {
   goog.provide('gn_viewer');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   goog.require('gn_baselayerswitcher');
   goog.require('gn_draw');
   goog.require('gn_featurestable');
@@ -129,8 +86,9 @@
     '$timeout',
     'gnViewerSettings',
     'gnMap',
-    function($scope, $timeout, gnViewerSettings, gnMap) {
-
+    'shareGnMainViewerScope',
+    function($scope, $timeout, gnViewerSettings, gnMap, shareGnMainViewerScope) {
+      shareGnMainViewerScope.sharedScope = $scope;
       var map = $scope.searchObj.viewerMap;
 
       if (gnViewerSettings.wmsUrl && gnViewerSettings.layerName) {
@@ -206,5 +164,11 @@
               $scope);
         }
       ]);
+
+  module.service('shareGnMainViewerScope', function() {
+    return{
+      sharedScope: ""
+    }              
+    });
 
 })();

@@ -156,8 +156,8 @@
   <addInspireTheme>add Nyckelord</addInspireTheme>
   <accessConstraintsBtn>Åtkomstrestriktioner</accessConstraintsBtn>
   <legalConstraintsBtn>Legal constraints</legalConstraintsBtn>
-  <UseRestrictionsBtn>Use Restrictions</UseRestrictionsBtn>
-  <AccessRestrictionsBtn>Access Restrictions</AccessRestrictionsBtn>
+  <UseRestrictionsBtn>Nyttjanderestriktioner</UseRestrictionsBtn>
+  <AccessRestrictionsBtn>Användningsrestriktioner</AccessRestrictionsBtn>
 
   <!-- String for INSPIRE SDS tab -->
   <inspire_sds_cc1>Conformance class 1: invocable</inspire_sds_cc1>

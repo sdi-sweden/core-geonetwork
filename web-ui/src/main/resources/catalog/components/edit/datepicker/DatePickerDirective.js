@@ -52,7 +52,8 @@
              tagName: '@',
              indeterminatePosition: '@',
              required: '@',
-             hideTime: '@'
+             hideTime: '@',
+             hideDateModes: '@'
            },
            templateUrl: '../../catalog/components/edit/datepicker/partials/' +
            'datepicker.html',
@@ -64,6 +65,7 @@
              scope.dateTypeSupported = Modernizr.inputtypes.date;
              scope.isValidDate = true;
              scope.hideTime = scope.hideTime == 'true';
+             scope.hideDateModes = scope.hideDateModes == 'true';
              var datePattern = new RegExp('^\\d{4}$|' +
              '^\\d{4}-\\d{2}$|' +
              '^\\d{4}-\\d{2}-\\d{2}$|' +
@@ -71,6 +73,10 @@
              // Format date when datetimepicker is used.
              scope.formatFromDatePicker = function(date) {
                var format = 'YYYY-MM-DDTHH:mm:ss';
+               if (scope.hideTime) {
+                format = 'YYYY-MM-DD';
+               }
+
                var dateTime = moment(date);
                scope.dateInput = dateTime.format(format);
              };

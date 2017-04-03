@@ -40,6 +40,7 @@ import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.specification.MetadataSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
+import org.fao.geonet.util.XslUtil;
 import org.jdom.Element;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specifications;
@@ -128,7 +129,7 @@ public class GetByOwner implements Service {
         } else if (sortBy.equals("rating")) {
             order = new Sort(Sort.Direction.DESC, Metadata_.dataInfo + "." + MetadataDataInfo_.rating);
         } else {
-            throw new IllegalArgumentException("Unknown sortBy parameter: " + sortBy);
+            throw new IllegalArgumentException("Unknown sortBy parameter: " + XslUtil.encodeForJavaScript(sortBy));
         }
 
         List<Metadata> metadataList = context.getBean(MetadataRepository.class).findAll(spec, order);

@@ -32,7 +32,7 @@
              data-ng-class="hideTime == 'true' ? 'hidden' : ''"
              data-ng-model="time"
              data-ng-show="mode === ''"/>
-      <div class="input-group-btn">
+      <div class="input-group-btn" data-ng-show="!hideDateModes">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-clock-o"></i>&nbsp;<span class="caret"></span>
         </button>
@@ -55,16 +55,28 @@
            data-gn-schema-info="indeterminatePosition"
            data-allow-blank=""
            lang="lang"></div>
-      <input type="text"
+      <input type="text" data-ng-show="hideTime"
+             placeholder="YYYY-MM-DD"
+             class="form-control"
+             data-ng-model="dateInput"/>
+      <input type="text" data-ng-show="!hideTime"
              placeholder="YYYY-MM-DDTHH:mm:ss"
              class="form-control"
              data-ng-model="dateInput"/>
+
+
+
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle"
                 data-toggle="dropdown">
           <i class="fa fa-calendar"></i>&nbsp;
         </button>
-        <ul class="dropdown-menu pull-right">
+        <ul class="dropdown-menu pull-right"  data-ng-show="hideTime">
+          <datetimepicker data-ng-model="dateDropDownInput"
+                          data-on-set-time="formatFromDatePicker"
+                          data-datetimepicker-config="{minView: 'day', dropdownSelector: '#dropdown2' }"/>
+        </ul>
+        <ul class="dropdown-menu pull-right"  data-ng-show="!hideTime">
           <datetimepicker data-ng-model="dateDropDownInput"
                           data-on-set-time="formatFromDatePicker"
                           data-datetimepicker-config="{minView: 'minute', dropdownSelector: '#dropdown2' }"/>
