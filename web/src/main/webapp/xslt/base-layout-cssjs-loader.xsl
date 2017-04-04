@@ -202,13 +202,17 @@
         var module = angular.module('gn_search');
         module.config(['gnViewerSettings', 'gnGlobalSettings',
         function(gnViewerSettings, gnGlobalSettings) {
+        <xsl:if test="$preMap">
+          gnGlobalSettings.predefinedSelectedMap = '<xsl:value-of select="util:encodeForJavaScript($preMap)"/>';
+        </xsl:if>
+
         <xsl:if test="$owsContext">
-          gnViewerSettings.owsContext = '<xsl:value-of select="$owsContext"/>';
+          gnViewerSettings.owsContext = '<xsl:value-of select="util:encodeForJavaScript($owsContext)"/>';
         </xsl:if>
         <xsl:if test="$wmsUrl and $layerName">
-          gnViewerSettings.wmsUrl = '<xsl:value-of select="$wmsUrl"/>';
-          gnViewerSettings.layerName = '<xsl:value-of select="$layerName"/>';
-          gnViewerSettings.layerGroup = '<xsl:value-of select="$layerGroup"/>';
+          gnViewerSettings.wmsUrl = '<xsl:value-of select="util:encodeForJavaScript($wmsUrl)"/>';
+          gnViewerSettings.layerName = '<xsl:value-of select="util:encodeForJavaScript($layerName)"/>';
+          gnViewerSettings.layerGroup = '<xsl:value-of select="util:encodeForJavaScript($layerGroup)"/>';
         </xsl:if>
         gnViewerSettings.mapConfig = <xsl:value-of select="$mapConfig"/>;
         gnGlobalSettings.isMapViewerEnabled = <xsl:value-of select="$isMapViewerEnabled"/>;

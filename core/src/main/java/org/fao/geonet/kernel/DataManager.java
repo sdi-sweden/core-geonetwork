@@ -1680,6 +1680,7 @@ public class DataManager implements ApplicationEventPublisherAware {
                     //--- setup environment
                     Element env = new Element("env");
                     env.addContent(new Element("lang").setText(srvContext.getLanguage()));
+                    env.addContent(new Element("url").setText(getSettingManager().getSiteURL(srvContext)));
 
                     // add original metadata to result
                     Element result = new Element("root");
@@ -2822,6 +2823,10 @@ public class DataManager implements ApplicationEventPublisherAware {
             result.addContent(md);
             // add 'environment' to result
             env.addContent(new Element("siteURL").setText(getSettingManager().getSiteURL(context)));
+            Path schemaTranslationsDir = getSchemaManager().getSchemaTranslationsDir(schema, context.getLanguage());
+            if (schemaTranslationsDir != null) {
+                env.addContent(new Element("schemaTranslationsDir").setText(schemaTranslationsDir.toString()));
+            }
 
             // Settings were defined as an XML starting with root named config
             // Only second level elements are defined (under system).

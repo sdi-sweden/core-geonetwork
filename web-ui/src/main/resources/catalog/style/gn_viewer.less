@@ -112,8 +112,9 @@
   }
   .control-tools {
     top: auto;
-    bottom: @viewport-padding;
+    bottom: 22em;
   }
+
   .panel {
     background: rgba(255,255,255,.8);
   }
@@ -600,7 +601,10 @@ gn-features-tables {
     margin    : .25em .4em 0 0;
   }
 }
-
+//For GFI table height fix on Example collection getting expanded
+.geodata-examples-expanded-without-cookie-alert gn-features-tables{
+    bottom           : 14em;
+}
 gn-wps-process-form {
   .popover-parent {
     position: relative;
@@ -618,3 +622,20 @@ gn-wps-process-form {
    background-color: rgba(255,255,255,0.4);
    border: solid 2px red;
  }
+
+  //For map dock
+  .geodata-examples-expanded-with-cookie-alert .control-tools {
+    bottom: 24em;
+  }
+  .geodata-examples-collapsed-with-cookie-alert .control-tools{
+    bottom: 13em;
+  }
+  .geodata-examples-expanded-without-cookie-alert .control-tools {
+    bottom: 16em;
+  }
+  .geodata-examples-collapsed-without-cookie-alert .control-tools {
+    bottom: 4em;
+  }
+  .geodata-examples-expanded-larger-without-cookie-alert .control-tools {
+    bottom: 18em;
+  }

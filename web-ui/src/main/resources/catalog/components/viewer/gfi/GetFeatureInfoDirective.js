@@ -134,6 +134,8 @@
     map.addOverlay(this.overlay);
 
     map.on('singleclick', function(e) {
+     var $b = angular.element(document).find('body');
+      is_full_view_map = ($b.hasClass('full-map-view')) ? true : false;
       this.$scope.$apply(function() {
         if (!this.canApply()) {
           return;
@@ -145,8 +147,12 @@
         });
 
         coordinates = e.coordinate;
-        this.registerTables(layers, e.coordinate);
-
+        //for GFI restriction
+        if (is_full_view_map) {
+          this.registerTables(layers, e.coordinate);
+        }
+        /* To Show loading icon on GFI table*/
+        this.gnFeaturesTableManager.loadingCheck();
       }.bind(this));
     }.bind(this));
 

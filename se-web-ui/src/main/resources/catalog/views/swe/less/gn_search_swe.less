@@ -442,7 +442,10 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
     background: #ccc;
 }
-
+//Chrome background color
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
 // filter block arrows
 
 // filter block arrows and text
@@ -697,6 +700,10 @@ gn-features-tables {
 .cookie-warning {
   .alert;
   .alert-info;
+	position: fixed;
+    top: 0px;
+    height: 90px;
+	z-index: 501;
 }
 
 .gn-full {
@@ -1002,13 +1009,16 @@ html, body {
 /* ----- smaller screens */
 @media screen and (max-width: 1300px) {
   .site-geo-type-filter .other-filter-help-icn {
-    top: 38px; 
+    top: 0px;
   }
   .site-geo-type-filter .other-filters {
     margin-right: 22px;
   }
-  .advance-filters-cont .right-side-filter {
-    margin-right: 5px;
+  .search-show-only .tool-tip-cont .tool-tip{
+    margin-left: 80px;
+  }
+  .search-show-only .tool-tip-cont .triangle{
+    margin-left: -80px;
   }
   .advance-filters-cont .draw-map-link-colm .help-icn-cont {
     top: 0px;
@@ -1088,12 +1098,12 @@ html, body {
 
 // header
 body {
-  padding-top: 60px;
+  padding-top: 150px; // 60 + 90 = 150
 }
 .header-cont {
   position: fixed;
   height: 60px;
-  top: 0;
+  top: 90px;
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
 
   .header-left-cont {

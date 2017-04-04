@@ -72,11 +72,13 @@
    *
    * @constructor
    */
-  geonetwork.GnFeaturesGFILoader = function(config, $injector) {
+  geonetwork.GnFeaturesGFILoader = function(config, $injector, gfiOutputFormatCheck) {
 
     geonetwork.GnFeaturesLoader.call(this, config, $injector);
 
     this.coordinates = config.coordinates;
+    this.gfiOutputFormatCheck = gfiOutputFormatCheck;
+    this.gfiOutputFormat = config.layer.gfiOutputFormat;
   };
 
   geonetwork.inherits(geonetwork.GnFeaturesGFILoader,
@@ -86,8 +88,21 @@
     var layer = this.layer,
         map = this.map,
         coordinates = this.coordinates;
-
-    var uri = layer.getSource().getGetFeatureInfoUrl(
+    //
+    var obj = {};
+    if (this.gfiOutputFormat == "XML"){
+       var uri = layer.getSource().getGetFeatureInfoUrl(
+        coordinates,
+        map.getView().getResolution(),
+        map.getView().getProjection(),
+        {
+          INFO_FORMAT: layer.ncInfo ? 'text/xml' : 'application/vnd.ogc.wms_xml'
+        }
+        );
+    uri += '&FEATURE_COUNT=2147483647';
+    }
+    else{
+       var uri = layer.getSource().getGetFeatureInfoUrl(
         coordinates,
         map.getView().getResolution(),
         map.getView().getProjection(),
@@ -96,12 +111,13 @@
         }
         );
     uri += '&FEATURE_COUNT=2147483647';
+    }
+   
 
     this.loading = true;
     this.promise = this.$http.get(
         this.proxyfyUrl(uri)).then(function(response) {
-
-      this.loading = false;
+        this.loading = false;
       if (layer.ncInfo) {
         var doc = ol.xml.parse(response.data);
         var props = {};
@@ -114,12 +130,33 @@
         this.features = (props.value && props.value != 'none') ?
             [new ol.Feature(props)] : [];
       } else {
-        var format = new ol.format.WMSGetFeatureInfo();
-        this.features = format.readFeatures(response.data, {
+        
+        if (this.gfiOutputFormat == "GML3"){
+          var format = new ol.format.GML();
+          this.features = format.readFeatures(response.data, {
           featureProjection: map.getView().getProjection()
         });
+        }
+        else if(this.gfiOutputFormat == "GML2"){
+          var format = new ol.format.WMSGetFeatureInfo();
+          this.features = format.readFeatures(response.data, {
+          featureProjection: map.getView().getProjection()
+        });
+        }
+        else{
+          //For arcgis wms service
+          var featureInfo = [];
+          var doc = ol.xml.parse(response.data);
+          var props = doc.getElementsByTagName("FIELDS");
+           for(i = 0; i < props.length; i++){
+              for(j = 0; j < props[i].attributes.length; j++){
+                obj[props[i].attributes[j].name] = props[i].attributes[j].value;
+              }
+              featureInfo.push(new ol.Feature(obj));
+           }
+          this.features = featureInfo;
+        }
       }
-
       return this.features;
 
     }.bind(this), function() {
@@ -331,18 +368,20 @@
    *
    * @constructor
    */
-  var GnFeaturesTableLoaderService = function($injector) {
+  var GnFeaturesTableLoaderService = function($injector, gfiOutputFormatCheck) {
     this.$injector = $injector;
+    this.gfiOutputFormatCheck = gfiOutputFormatCheck;
   };
   GnFeaturesTableLoaderService.prototype.createLoader = function(type, config) {
     var constructor = geonetwork['GnFeatures' + type.toUpperCase() + 'Loader'];
     if (!angular.isFunction(constructor)) {
       console.warn('Cannot find constructor for loader type : ' + type);
     }
-    return new constructor(config, this.$injector);
+    return new constructor(config, this.$injector, this.gfiOutputFormatCheck);
   };
   module.service('gnFeaturesTableLoader', [
     '$injector',
+    'gfiOutputFormatCheck',
     GnFeaturesTableLoaderService]);
 
 })();

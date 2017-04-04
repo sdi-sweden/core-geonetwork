@@ -86,6 +86,8 @@
     <xsl:call-template name="langId19139"/>
   </xsl:variable>
 
+ 
+  
   <!-- ========================================================================================= -->
   <xsl:template match="/">
     <Document locale="{$isoLangId}">
@@ -154,6 +156,9 @@
 
     <!-- the double // here seems needed to index MD_DataIdentification when
          it is nested in a SV_ServiceIdentification class -->
+	<xsl:variable name="fid" select="//gmd:fileIdentifier/gco:CharacterString/text()"/>
+	<xsl:variable name="title" select="//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString/text()"/>
+	<!--<xsl:message>I INDEX-FIELDS TITEL: <xsl:value-of select="$fid" />  <xsl:value-of select="$title" /></xsl:message>-->
 
     <xsl:for-each select="gmd:identificationInfo//gmd:MD_DataIdentification|
                 gmd:identificationInfo//*[contains(@gco:isoType, 'MD_DataIdentification')]|
@@ -385,6 +390,23 @@
                    string="{gmd:title/gco:CharacterString/text()}"
                    store="true" index="true"/>
           </xsl:if>
+      <!-- SDI-Sweden extension -->
+		   <xsl:if test="gmd:title/gco:CharacterString/text() != ''">
+				<xsl:variable name="thesaurusTitle" select="gmd:title/gco:CharacterString/text()"/>
+				<xsl:if test="$thesaurusTitle='Initiativ'  or $thesaurusTitle='Initiative'">
+                   <xsl:for-each select="//gmd:MD_Keywords/gmd:keyword/gco:CharacterString/text()">
+                       <xsl:variable name="keywordLower"  select="lower-case(.)"/>					
+                       <xsl:if test="$keywordLower='inspire'">
+							<Field name="inspireinitiativ" string="true" store="false" index="true"/>
+							<!--<xsl:message>IsInspireTheme: <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
+						</xsl:if>
+		              <!--<xsl:message>keyword: <xsl:value-of select="$keywordLower" /></xsl:message>-->
+					</xsl:for-each>					  
+				</xsl:if>
+				<!--<xsl:message>Thesaurus namme (index): <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
+		 </xsl:if>
+		  <!-- //SDI-Sweden extension -->
+
 
 
           <xsl:if test="$indexAllKeywordDetails and $thesaurusIdentifier != ''">
@@ -660,7 +682,7 @@
           </xsl:if>
 
           <!-- SWE customisation -->
-          <xsl:if test="lower-case($protocol) = 'http:ogc:wfs' or lower-case($protocol) = 'http:nedladdning'">
+          <xsl:if test="lower-case($protocol) = 'http:ogc:wfs' or starts-with(lower-case($protocol), 'http:nedladdning')">
             <Field name="download" string="true" store="false" index="true"/>
           </xsl:if>
 
@@ -699,6 +721,26 @@
                                                 $linkage, '|OGC:WMS|application/vnd.ogc.wms_xml', '|', $tPosition)}" store="true" index="false"/>
           </xsl:if>
         </xsl:for-each>
+      </xsl:for-each>
+
+
+      <xsl:for-each select="gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/*/gmd:organisationName/gco:CharacterString|gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/*/gmd:organisationName/gmx:Anchor">
+        <Field name="metadataPOC" string="{string(.)}" store="true" index="true"/>
+
+        <xsl:variable name="role" select="../../gmd:role/*/@codeListValue"/>
+        <xsl:variable name="roleTranslation" select="util:getCodelistTranslation('gmd:CI_RoleCode', string($role), string($isoLangId))"/>
+        <xsl:variable name="logo" select="../..//gmx:FileName/@src"/>
+        <xsl:variable name="email" select="../../gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString"/>
+        <xsl:variable name="phone" select="../../gmd:contactInfo/*/gmd:phone/*/gmd:voice[normalize-space(.) != '']/*/text()"/>
+        <xsl:variable name="individualName" select="../../gmd:individualName/gco:CharacterString/text()"/>
+        <xsl:variable name="positionName" select="../../gmd:positionName/gco:CharacterString/text()"/>
+        <xsl:variable name="address" select="string-join(../../gmd:contactInfo/*/gmd:address/*/(
+                                          gmd:deliveryPoint|gmd:postalCode|gmd:city|
+                                          gmd:administrativeArea|gmd:country)/gco:CharacterString/text(), ', ')"/>
+
+        <Field name="responsibleParty"
+               string="{concat($roleTranslation, '|distribution|', ., '|', $logo, '|', string-join($email, ','), '|', $individualName, '|', $positionName, '|', $address, '|', string-join($phone, ','))}"
+               store="true" index="false"/>
       </xsl:for-each>
 
       <xsl:for-each select="gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions">
