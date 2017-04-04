@@ -42,6 +42,7 @@ import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
+import org.fao.geonet.util.XslUtil;
 import org.jdom.Element;
 
 import java.nio.file.Path;
@@ -89,7 +90,8 @@ public class UserGroups implements Service {
             // -- get the profile of the user id supplied
             User user = userRepository.findOne(Integer.valueOf(id));
             if (user == null) {
-                throw new IllegalArgumentException("user " + id + " doesn't exist");
+                throw new IllegalArgumentException("user " +
+                        XslUtil.encodeForJavaScript(id) + " doesn't exist");
             }
 
             String theProfile = user.getProfile().name();

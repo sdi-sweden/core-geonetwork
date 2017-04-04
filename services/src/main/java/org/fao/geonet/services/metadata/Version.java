@@ -36,6 +36,7 @@ import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.fao.geonet.services.Utils;
+import org.fao.geonet.util.XslUtil;
 import org.jdom.Element;
 
 import java.nio.file.Path;
@@ -67,7 +68,8 @@ public class Version extends NotInReadOnlyModeService {
         Element md = dataMan.getMetadataNoInfo(context, id);
 
         if (md == null)
-            throw new IllegalArgumentException("Metadata not found --> " + id);
+            throw new IllegalArgumentException("Metadata not found --> " +
+                    XslUtil.encodeForJavaScript(id));
 
         if (!accessMan.canEdit(context, id))
             throw new OperationNotAllowedEx();

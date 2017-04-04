@@ -25,6 +25,7 @@ package org.fao.geonet.exceptions;
 
 import org.fao.geonet.Constants;
 import org.jdom.Element;
+import org.owasp.esapi.reference.DefaultEncoder;
 
 //=============================================================================
 
@@ -52,7 +53,8 @@ public abstract class JeevesException extends RuntimeException {
     protected int code;
 
     public JeevesException(String message, Object object) {
-        super(message, object instanceof Throwable ? (Throwable) object : null);
+        super(DefaultEncoder.getInstance().encodeForJavaScript(message),
+                object instanceof Throwable ? (Throwable) object : null);
 
         this.object = object;
         this.code = -1;

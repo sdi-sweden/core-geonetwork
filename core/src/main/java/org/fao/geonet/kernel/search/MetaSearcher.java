@@ -29,6 +29,7 @@ import org.fao.geonet.Util;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.services.util.SearchDefaults;
+import org.fao.geonet.util.XslUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 
@@ -108,7 +109,8 @@ public abstract class MetaSearcher implements Closeable {
             try {
                 return Integer.parseInt(sFrom);
             } catch (NumberFormatException nfe) {
-                throw new IllegalArgumentException("Bad '" + name + "' parameter: " + sFrom);
+                throw new IllegalArgumentException("Bad '" + XslUtil.encodeForJavaScript(name) +
+                        "' parameter: " + XslUtil.encodeForJavaScript(sFrom));
             }
         }
         return defaultVal;

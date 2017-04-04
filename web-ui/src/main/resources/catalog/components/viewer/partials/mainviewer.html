@@ -14,7 +14,7 @@
 
   <!--Top right buttons - Tools-->
   <div class="tools" gi-btn-group gnv-close-panel data-ng-controller="toolsController">
-    <button class="btn btn-default" ng-model="activeTools.addLayers" type="submit"
+    <button class="btn btn-default" ng-model="activeTools.addLayers" ng-show="addLayersTool" type="submit"
             rel="#addLayers" gi-btn gnv-tools-btn>
       <span class="fa-stack gn-stack">
         <i class="fa fa-stack-1x fa-tasks"></i>
@@ -22,44 +22,44 @@
       </span>
       <span role="tooltip" data-translate="">AddALayer</span>
     </button>
-    <button class="btn btn-default" ng-model="activeTools.layers" type="submit"
+    <button class="btn btn-default" ng-model="activeTools.layers" ng-show="manageLayersTool" type="submit"
             rel="#layers" gi-btn gnv-tools-btn>
       <span class="fa fa-tasks"></span>
       <span role="tooltip" data-translate="">ManageLayers</span>
     </button>
-    <button class="btn btn-default" ng-model="activeTools.contexts" type="submit"
+    <button class="btn btn-default" ng-model="activeTools.contexts" ng-show="contextsTool" type="submit"
             rel="#contexts" gi-btn gnv-tools-btn>
       <span class="fa fa-book"></span>
       <span role="tooltip" data-translate="">Contexts</span>
     </button>
     <button class="btn btn-default" ng-model="activeTools.print" type="submit"
-            data-ng-hide="is3dEnabled"
+            data-ng-hide="is3dEnabled || !printTool"
             rel="#print" gi-btn gnv-tools-btn>
       <span class="fa fa-print"></span>
       <span role="tooltip" data-translate="">Skriv ut</span>
     </button>
 
     <button class="btn btn-default" type="submit"
-            data-ng-click="syncMod()">
+            data-ng-click="syncMod()" ng-show="syncLayersTool">
       <span class="fa fa-sync"
             data-ng-class="synAllLayers ? 'fa-lock' : 'fa-unlock'"/>
       <span role="tooltip" data-translate="">syncAllLayers</span>
     </button>
     <button gi-btn class="btn btn-default" type="submit" ng-model="lineInteraction.active"
-            data-ng-hide="is3dEnabled"
+            data-ng-hide="is3dEnabled || !measureLengthTool"
             rel="#measures" gnv-tools-btn>
       <span class="fa fa-expand"></span>
       <span role="tooltip" data-translate="">measureLength</span>
     </button>
     <button gi-btn class="btn btn-default" type="submit" ng-model="polygonInteraction.active"
-            data-ng-hide="is3dEnabled"
+            data-ng-hide="is3dEnabled || !measureAreaTool"
             rel="#measures" gnv-tools-btn>
       <span class="fa fa-square"></span>
       <span role="tooltip" data-translate="">measureArea</span>
     </button>
     
     <button gi-btn class="btn btn-default" type="submit" ng-model="drawVector.inmap"
-            data-ng-hide="is3dEnabled"
+            data-ng-hide="is3dEnabled || !annotationTool"
             rel="#draw" gnv-tools-btn>
       <span class="fa fa-pencil"></span>
       <span role="tooltip" data-translate="">Anteckningar</span>
