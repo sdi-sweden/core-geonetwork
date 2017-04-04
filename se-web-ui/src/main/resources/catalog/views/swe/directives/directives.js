@@ -347,8 +347,8 @@
    * Shows predefined maps filters on home page.
    *
    */
-  module.directive('swePredefinedMapsFilter', ['$http', 'gnOwsContextService', 'gnSearchSettings',
-    function($http, gnOwsContextService, gnSearchSettings) {
+  module.directive('swePredefinedMapsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings) {
       return {
         restrict: 'E',
         replace: true,
@@ -386,6 +386,10 @@
             }
           });
           
+    	  $rootScope.$on('closePredefMap', function() {
+              scope.selectedItem = -1;
+           });
+          
           scope.doView = function(index, predefinedMap) {
           	  scope.selectedItem = index;
               gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
@@ -411,8 +415,8 @@
    * Shows geotechnics on home page.
    *
    */
-  module.directive('sweGeoTechnicsFilter', ['$http', 'gnOwsContextService', 'gnSearchSettings',
-    function($http, gnOwsContextService, gnSearchSettings) {
+  module.directive('sweGeoTechnicsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings) {
       return {
         restrict: 'E',
         replace: true,
@@ -434,6 +438,7 @@
           });
 
           scope.doView = function(geoTechnic) {
+        	$rootScope.$emit('closePredefMap');
             gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();
           };

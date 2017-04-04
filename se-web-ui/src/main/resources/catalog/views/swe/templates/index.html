@@ -245,17 +245,24 @@
           <div class="map-cont">
             <ul class="map-tool-list" style="z-index: 1000">
               <!--<li class=""><a href="" class="icon-buffer"></a></li>-->
-              <li data-ng-show="!mapFullView" id="map-panel-resize" class="resize full"><a href="" data-ng-click="resizeMapPanel()"><span class="icon-cursor"></span></a></li>
-              <li data-ng-show="mapFullView">
-              <a href="" data-ng-click="resizeMapPanel()">
-              <span class="onMaximised">
-              </span>
-              </a></li>
-              <li data-ng-show="!mapFullView">
-              <a href="" data-ng-click="hideMapPanel()">
-              <span class="onMediumSized">
-              </span>
-              </a></li>
+              <li data-ng-show="!mapFullView" id="map-panel-resize" class="resize full">
+                 <a href="" data-ng-click="resizeMapPanel()">
+                    <span class="icon-cursor">
+                    </span>
+                 </a>
+              </li>
+              <li data-ng-show="mapFullView" id="map-panel-resize-max">
+                 <a href="" data-ng-click="resizeMapPanel()">
+                    <span class="onMaximised">
+                    </span>
+                 </a>
+              </li>
+              <li data-ng-show="!mapFullView" id="map-panel-resize-medium">
+                 <a href="" data-ng-click="hideMapPanel()">
+                    <span class="onMediumSized">
+                    </span>
+                 </a>
+              </li>
             </ul>
             <div gn-main-viewer=""
                  data-map="searchObj.viewerMap">
