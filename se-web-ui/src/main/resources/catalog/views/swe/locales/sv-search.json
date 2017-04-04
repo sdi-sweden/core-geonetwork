@@ -61,7 +61,7 @@
     "organisation": "Organisation",
     "topicCategory": "Ämneskategori",
     "keyword": "Nyckelord",
-    "leaveComment": "tyck till",
+    "leaveComment": "Tyck till",
     "getService": "get-tjänst",
     "forPublishers": "för publicerare",
     "administrationMenu": "administration",
@@ -93,5 +93,6 @@
     "showServices": "Visa tjänster",
     "showDatasets": "Dataset",
     "popupClose": "Stäng",
-    "readMore": "Läs mer"
+    "readMore": "Läs mer",
+    "Graticule": "Fokalplatta"
 }
