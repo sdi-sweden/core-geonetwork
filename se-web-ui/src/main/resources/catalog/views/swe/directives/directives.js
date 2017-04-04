@@ -279,63 +279,34 @@
         },
         link: function(scope, elem) {
           gnConfigService.loadPromise.then(function() {
-            scope.prefix = gnConfig['system.ui.tooltiphelpurlprefix'];
+            scope.prefix = gnConfig['system.server.host'];
           });
 
           $timeout(function () {
             elem.on('click', '.help-icn-circle', function () {
               var tooltipElem = elem.find('.tool-tip-cont');
-
               if (tooltipElem.hasClass('open')) {
                 tooltipElem.removeClass('open');
               } else {
                 tooltipElem.addClass('open');
               }
+              $rootScope.$emit('closetooltip', tooltipElem);
             })
           });
+          
+		  $rootScope.$on('closetooltip', function (event, tooltipElem) {
+		     var tmpElem = elem.find('.tool-tip-cont');
+		     if(tmpElem != undefined && tooltipElem != undefined){
+		        if(tmpElem.get(0) !== tooltipElem.get(0)){
+				   if (tmpElem.hasClass('open')) {
+	                  tmpElem.removeClass('open');
+			       }
+			    }
+		     }
+	      });
+		  
           scope.openPopup = function() {
         	  var url = scope.prefix + scope.link;
-        	  $rootScope.$emit('openhelppopup', scope.link);
-		  }
-        }
-      };
-    }
-  ]);
-  
-  /**
-   * @ngdoc directive
-   * @name sweTooltipLarge
-   * @function
-   *
-   * @description
-   * Displays a large tooltip element.
-   *
-   */
-  module.directive('sweTooltipLarge', ['$timeout', '$rootScope',
-    function($timeout, $rootScope) {
-      return {
-        restrict: 'A',
-        replace: true,
-        templateUrl: '../../catalog/views/swe/directives/' +
-          'partials/tooltipLarge.html',
-        scope: {
-          title: '@',
-          text: '@',
-          link: '@'
-        },
-        link: function(scope, elem) {
-          $timeout(function () {
-            elem.on('click', '.help-icn-circle', function () {
-              var tooltipElem = elem.find('.tool-tip-cont-large');
-              
-              if (tooltipElem.hasClass('open')) {
-                tooltipElem.removeClass('open'); 
-              } else {
-                tooltipElem.addClass('open');
-              }
-            })
-          });
-          scope.openPopup = function(link) {
         	  $rootScope.$emit('openhelppopup', scope.link);
 		  }
         }
