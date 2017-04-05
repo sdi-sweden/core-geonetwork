@@ -21,7 +21,7 @@
  * Rome - Italy. email: geonetwork@osgeo.org
  */
 
-package org.fao.geonet.api.site;
+package site;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
