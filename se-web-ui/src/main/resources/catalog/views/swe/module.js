@@ -620,6 +620,8 @@
         $data_list_cont = angular.element('.data-list-cont');
         $map_cont = angular.element('.map-cont');
         $obj = angular.element('#map-panel-resize');
+		$objMax = angular.element('#map-panel-resize-max');
+		$objMedium = angular.element('#map-panel-resize-medium');
 		  
         if (is_side_data_bar_open) {
           $map_cont.css({
@@ -632,6 +634,10 @@
         }
         
         $obj.removeClass('full').addClass('small');
+		$obj.addClass('ng-hide');
+		$objMax.removeClass('ng-hide');
+		$objMedium.addClass('ng-hide');
+		
 		$scope.actual_height = $('.site-image-filter').height();
 	    exampleResize.onResize($rootScope, $scope);
         $timeout(function() {
@@ -699,9 +705,14 @@
         $data_list_cont = angular.element('.data-list-cont'),
         $map_cont = angular.element('.map-cont'),
         $obj = angular.element('#map-panel-resize');
+		$objMax = angular.element('#map-panel-resize-max');
+		$objMedium = angular.element('#map-panel-resize-medium');
         //To restrict GFI only when map are maximized
         is_map_maximized.data = !is_full_view_map;
         if (is_full_view_map) {
+        	
+          $scope.mapFullView = false;
+          
           if (is_side_data_bar_open) {
             $scope.$emit('body:class:remove', 'full-map-view');
             $scope.$emit('body:class:add', 'medium-map-view');
@@ -711,6 +722,9 @@
             $scope.$emit('body:class:add', 'small-map-view');
           }
           $obj.removeClass('small').addClass('full');
+    	  $obj.removeClass('ng-hide');
+		  $objMax.addClass('ng-hide');
+		  $objMedium.removeClass('ng-hide');
         }
         else {
           $scope.$emit('body:class:remove', 'medium-map-view');
