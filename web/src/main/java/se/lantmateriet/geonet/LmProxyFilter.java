@@ -1,151 +1,307 @@
 package se.lantmateriet.geonet;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.OutputStream;
+import java.io.StringReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.MultiFields;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.MatchAllDocsQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Bits;
-import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.Logger;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.kernel.GeonetworkDataDirectory;
-import org.fao.geonet.kernel.search.IndexAndTaxonomy;
-import org.fao.geonet.kernel.search.SearchManager;
-import org.fao.geonet.kernel.search.index.DirectoryFactory;
-import org.fao.geonet.kernel.search.index.FSDirectoryFactory;
-import org.fao.geonet.kernel.search.index.GeonetworkMultiReader;
-import org.fao.geonet.kernel.search.index.LuceneIndexLanguageTracker;
 import org.fao.geonet.utils.Log;
-import org.springframework.context.ConfigurableApplicationContext;
-
-import jeeves.config.springutil.JeevesDelegatingFilterProxy;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public class LmProxyFilter implements Filter {
 
     private Logger _logger = Log.createLogger(Geonet.GEONETWORK + ".lmproxy");
 
+    private static final String PARAM_ENDPOINT_PARAMETER = "endpoint.parameter";
+    private static final String PARAM_ALLOWED_HOSTS = "allowed.hosts";
+    private static final String PARAM_CLEARCACHE_ALLOWED = "clearcache.allowed";
+
+    private String mFilterName;
+    private HostVerifier verifier;
+
+    private String mEndpointParameter = null;
+    private boolean clearCacheAllowed = false;
+
+    private DocumentBuilder builder;
+    private XPathExpression expr;
+    private ParsingCache parsingCache;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        // TODO Auto-generated method stub
 
+        _logger.info("Init LmProxyFilter");
+
+        mFilterName = filterConfig.getFilterName();
+        if (mFilterName == null)
+            mFilterName = "Noname LmProxyFilter";
+
+        String endpointParam = filterConfig.getInitParameter(PARAM_ENDPOINT_PARAMETER);
+        if (endpointParam == null || endpointParam.trim().length() <= 0 || endpointParam.startsWith("@")) {
+            String errMsg = "Missing required init-param " + PARAM_ENDPOINT_PARAMETER;
+            _logger.fatal(errMsg);
+            throw new ServletException(errMsg);
+        } else {
+            mEndpointParameter = endpointParam;
+            _logger.info(PARAM_ENDPOINT_PARAMETER + " : " + mEndpointParameter);
+        }
+
+        clearCacheAllowed = false;
+        String clearParam = filterConfig.getInitParameter(PARAM_CLEARCACHE_ALLOWED);
+        if (clearParam != null) {
+            if ("true".equals(clearParam)) {
+                clearCacheAllowed = true;
+            }
+        }
+
+        _logger.info("Clearing of cache allowed: " + clearCacheAllowed);
+
+        parsingCache = new ParsingCache();
+
+        String allowedParam = filterConfig.getInitParameter(PARAM_ALLOWED_HOSTS);
+        if (allowedParam == null || allowedParam.trim().length() <= 0 || allowedParam.startsWith("@")) {
+            _logger.info("No static allowed hosts given (init-param '" + PARAM_ALLOWED_HOSTS + "')");
+
+            verifier = new HostVerifier();
+        } else {
+            String[] parts = allowedParam.split(",");
+
+            verifier = new HostVerifier(parts);
+
+            _logger.info("Allowed hosts " + verifier.getWhitelistAsString());
+        }
+
+        // specify instance class??
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+        factory.setValidating(false);
+        factory.setExpandEntityReferences(false);
+        factory.setNamespaceAware(false);
+
+        try {
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            throw new ServletException(e);
+        }
+
+        // specify instance class??
+        XPathFactory xPathfactory = XPathFactory.newInstance();
+        XPath xpath = xPathfactory.newXPath();
+        try {
+            expr = xpath.compile("/WMS_Capabilities/Capability//OnlineResource/@href");
+        } catch (XPathExpressionException e) {
+            throw new ServletException(e);
+        }
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(ServletRequest inReq, ServletResponse inRes, FilterChain inChain)
             throws IOException, ServletException {
 
-        String debug = request.getParameter("debug");
+        HttpServletRequest req = (HttpServletRequest) inReq;
+        HttpServletResponse res = (HttpServletResponse) inRes;
 
-        if (debug != null) {
+        if (clearCacheAllowed) {
+            if (req.getParameter("reload") != null) {
+                parsingCache.invalidate();
+                verifier.clear();
+                _logger.info("Cleared caches");
+            }
+        }
+
+        long start = System.currentTimeMillis();
+
+        URL endpointUrl = extractEndpointUrl(req);
+        boolean isValid = isEndpointValid(endpointUrl, req);
+
+        long diff = System.currentTimeMillis() - start;
+        _logger.debug("Validated endpoint url in " + diff + " ms");
+
+        if (isValid) {
+            handleValidEndpoint(endpointUrl, req, res, inChain);
+
+        } else {
+            logInvalidRequest(req);
+
+            res.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid endpoint");
+            res.flushBuffer();
+        }
+    }
+
+    private void handleValidEndpoint(URL endpoint, HttpServletRequest inReq, HttpServletResponse inRes,
+            FilterChain inChain) throws IOException, ServletException {
+
+        // parsing cache keep track of endpoints responses already parsed so we
+        // don't do it again
+        // the cache is invalidated at certain intervals
+        if (isCapabilitiesRequest(endpoint) && !parsingCache.isCached(endpoint)) {
+
+            parsingCache.add(endpoint);
+
+            OutputStream out = inRes.getOutputStream();
+            GenericResponseWrapper responseWrapper = new GenericResponseWrapper(inRes);
+
+            inChain.doFilter(inReq, responseWrapper);
+
+            byte[] data = responseWrapper.getData();
+            out.write(data);
+            out.close();
+
             long start = System.currentTimeMillis();
 
-            _logger.info("Execute the LmProxyFilter");
+            try {
+                Set<String> hosts = extractHostsFromCapabilities(data);
+                verifier.addToWhitelist(hosts);
 
-            ServletContext ctx = request.getServletContext();
-
-            if (ctx == null) {
-                _logger.warning("No ServletContext, can't continue");
-            } else {
-
-                ConfigurableApplicationContext applicationContext = JeevesDelegatingFilterProxy
-                        .getApplicationContextFromServletContext(ctx);
-
-                if (applicationContext == null) {
-                    _logger.warning("No ApplicationContext, can't continue");
-                } else {
-                    GeonetworkDataDirectory dataDir = applicationContext.getBean(GeonetworkDataDirectory.class);
-                    Set<Path> indexes = listIndexes(dataDir.getLuceneDir());
-
-                    readIndexes(indexes);
-                }
-            }
-
-            long diff = System.currentTimeMillis() - start;
-            _logger.debug("Executed LmProxyFilter in " + diff + " ms");
-        } else {
-            _logger.debug("LmProxyFilter no-op since 'debug' parameter not found");
-        }
-        chain.doFilter(request, response);
-    }
-
-    private void readIndexes(Set<Path> indexes) {
-
-        for (Path index : indexes) {
-
-            _logger.debug("Read " + index);
-
-            try (IndexReader reader = DirectoryReader.open(FSDirectory.open(index.toFile()))) {
-                int maxdoc = reader.maxDoc();
-                _logger.debug(" Maxdoc " + maxdoc);
-
-                for (int i = 0; i < maxdoc; i++) {
-
-                    Document doc = reader.document(i);
-                    String[] links = doc.getValues("link");
-
-                    if (_logger.isDebugEnabled()) {
-                        _logger.info("  Uuid: " + doc.get("_uuid"));
-                        _logger.info("  Title: " + doc.get("title"));
-                        for (int j = 0; j < links.length; j++) {
-                            _logger.info("  Link: " + links[j]);
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                _logger.error("Error reading index " + index.toString());
+                long diff = System.currentTimeMillis() - start;
+                _logger.info("Parsed capabilities (found " + hosts.size() + " hosts) in " + diff + " ms ("+endpoint.toString()+")");
+            } catch (XPathExpressionException | SAXException | IOException e) {
+                _logger.error("Can not parse capabilities from '" + endpoint.toString() + "'");
                 _logger.error(e);
             }
+
+        } else {
+            inChain.doFilter(inReq, inRes);
         }
 
     }
 
-    public Set<Path> listIndexes(Path luceneDir) throws IOException {
+    private Set<String> extractHostsFromCapabilities(byte[] data)
+            throws SAXException, IOException, XPathExpressionException {
 
-        Path newFile = luceneDir.resolve(FSDirectoryFactory.NON_SPATIAL_DIR);
+        Set<String> hosts = new HashSet<String>();
 
-        _logger.debug("Find indexes in lucene dir: " + newFile);
+        ByteArrayInputStream stream = new ByteArrayInputStream(data);
+        org.w3c.dom.Document doc = builder.parse(stream);
 
-        Set<Path> indices = new LinkedHashSet<>();
-        if (Files.exists(newFile)) {
-            try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(newFile)) {
-                for (Path file : dirStream) {
-                    if (Files.exists(file.resolve("segments.gen"))) {
-                        _logger.debug("Found '" + file.getFileName().toString() + "'");
-                        indices.add(file);
-                    }
-                }
+        NodeList nl = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node node = nl.item(i);
+            String value = node.getNodeValue();
+
+            try {
+                URL url = new URL(value);
+                String host = url.getHost();
+                hosts.add(host);
+            } catch (Exception e) {
+                _logger.debug("Can not extract host from '" + value + "'");
             }
-        } else {
-            _logger.error("Lucene dir doesn't exist, no indexes found in " + newFile.toString());
         }
-        return indices;
+
+        return hosts;
+    }
+
+    private boolean isCapabilitiesRequest(URL endpoint) {
+        String query = endpoint.getQuery();
+
+        if (query != null) {
+            query = query.toLowerCase();
+            return query.contains("request=getcapabilities");
+        }
+
+        return false;
+    }
+
+    private URL extractEndpointUrl(HttpServletRequest inReq) {
+        String endpoint = inReq.getParameter(mEndpointParameter);
+
+        if (endpoint == null || endpoint.trim().length() <= 0) {
+            _logger.debug("No endpoint found at parameter '" + mEndpointParameter + "'");
+            return null;
+        }
+
+        URL endpointURL = null;
+        try {
+            endpointURL = new URL(endpoint);
+        } catch (MalformedURLException e) {
+            _logger.debug("Malformed endpoint: '" + endpoint + "'");
+            return null;
+        }
+
+        String endpointHost = endpointURL.getHost();
+        if (endpointHost == null || endpointHost.trim().length() <= 0) {
+            _logger.debug("No host in endpoint url: '" + endpoint + "'");
+            return null;
+        }
+
+        return endpointURL;
+    }
+
+    private boolean isEndpointValid(URL endpointUrl, HttpServletRequest inReq) {
+
+        boolean valid = verifier.isValid(endpointUrl, new HostVerifierPopulator(inReq));
+        return valid;
     }
 
     @Override
     public void destroy() {
-        // TODO Auto-generated method stub
 
     }
 
+    protected void logInvalidRequest(HttpServletRequest inReq) {
+        StringBuilder logBuf = new StringBuilder();
+        if (mFilterName != null) {
+            logBuf.append(mFilterName);
+            logBuf.append(" - ");
+        }
+        logBuf.append("Invalid Request info: ");
+        logBuf.append(getRequestDetails(inReq));
+        _logger.warning(logBuf.toString());
+
+    }
+
+    private static StringBuilder getRequestDetails(HttpServletRequest inReq) {
+        StringBuilder logBuf = new StringBuilder();
+        logBuf.append("<method: ");
+        logBuf.append(inReq.getMethod());
+        logBuf.append("> <url: ");
+        StringBuffer targetUrl = inReq.getRequestURL();
+        String queryString = inReq.getQueryString();
+        if (queryString != null) {
+            targetUrl.append("?");
+            targetUrl.append(queryString);
+        }
+        logBuf.append(targetUrl);
+        logBuf.append("> <protocol: ");
+        logBuf.append(inReq.getProtocol());
+        logBuf.append("> <remote IP: ");
+        logBuf.append(inReq.getRemoteAddr());
+        logBuf.append("> <remote port: ");
+        logBuf.append(inReq.getRemotePort());
+        logBuf.append("> <user: ");
+        if (inReq.getRemoteUser() != null)
+            logBuf.append(inReq.getRemoteUser());
+        else
+            logBuf.append("null");
+
+        logBuf.append(">");
+
+        return logBuf;
+    }
 }
