@@ -4,9 +4,11 @@
 
   <div data-ng-controller="GnSearchController" data-ng-search-form="" data-runSearch="true">
     <div data-ng-controller="gnsSwe">
-      <div>
-		<header data-ng-include="'../../catalog/views/swe/templates/header.html'" data-ng-controller="SweFilterPanelController"></></header>
-	  </div>
+      <div scroll data-hide-map-fn="hideMapPanel">
+        <div>
+		  <header data-ng-include="'../../catalog/views/swe/templates/header.html'" data-ng-controller="SweFilterPanelController"></></header>
+	    </div>
+	  </div> 
 	</div>
   </div>
 

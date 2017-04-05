@@ -740,5 +740,24 @@
           } //end of link
       }
     }]);
+    
+    
+    /**
+     * Directive used to hide the full and medium sized map when scrolling.
+     * 
+     */
+	module.directive('scroll', function ($window) {
+	   return {
+	      scope: {
+	         hideMapFn: '&'
+	      },
+		  link: function(scope, element, attrs) {
+	         angular.element($window).bind("scroll", function() {
+			    scope.hideMapFn()();
+			    scope.$apply();
+	         });
+		  }
+		}
+	 });
 
 }());
