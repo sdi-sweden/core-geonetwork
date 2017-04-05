@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -72,12 +72,13 @@
     'gnConfigService',
     'is_map_maximized',
     'exampleResize',
+    'shareGnMainViewerScope',
     function($rootScope, $scope, $localStorage, $location, $analytics, suggestService,
              $http, $sce, $compile, $window, $translate, $timeout,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
-             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, gnConfigService, is_map_maximized, exampleResize) {
+             hotkeys, gnGlobalSettings, gnMdFormatter, gnConfig, gnConfigService, is_map_maximized, exampleResize, shareGnMainViewerScope) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -537,7 +538,7 @@
 			var initiativKeyword = md.initiativKeyword;
 			if(initiativKeyword) {
 				var initiativKeywordString = initiativKeyword.toString();
-				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using 'Ö' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
+				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using 'ï¿½' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
 					imgPath = '../../catalog/views/swe/images/opendata.png';
 				} else if(initiativKeywordString.indexOf('Geodatasamverkan') > -1) {
 					imgPath = '../../catalog/views/swe/images/geodatacooperation.png';
@@ -597,15 +598,21 @@
         $scope.$emit('body:class:add', 'small-map-view');
         $scope.actual_height = $('.site-image-filter').height()
         exampleResize.onResize($rootScope, $scope);
+        scope = shareGnMainViewerScope.sharedScope;
          $timeout(function() {
           viewerMap.updateSize();
           viewerMap.renderSync();
+          gnMap.hideOrShowMapTool(scope);
         }, 500); 
       };
      
       $scope.resizeCheck = function(){
         $scope.image_filter_height = $('.site-image-filter').height(); 
         $scope.collapsed =! $scope.collapsed;
+        scope = shareGnMainViewerScope.sharedScope;
+         $timeout(function() {
+            gnMap.hideOrShowMapTool(scope);
+          }, 500); 
         
       };
       
@@ -632,6 +639,10 @@
         $scope.$emit('body:class:remove', 'full-map-view');
         $scope.$emit('body:class:remove', 'medium-map-view');
         $scope.$emit('body:class:remove', 'large-map-view');
+        $timeout(function() {
+        searchMap.updateSize();
+        searchMap.renderSync();
+      }, 500);
       };
       
       $scope.resizeMapPanel = function() {
@@ -710,9 +721,9 @@
         if (gnSearchLocation.isSearch() && (!angular.isArray(
             searchMap.getSize()) || searchMap.getSize()[0] < 0)) {
 
-          setTimeout(function() {
+          $timeout(function() {
             searchMap.updateSize();
-            searchMap.renderSync(1000);
+            searchMap.renderSync();
 
             // TODO: load custom context to the search map
             //gnOwsContextService.loadContextFromUrl(
@@ -748,15 +759,20 @@
         }
       }, gnSearchSettings.sortbyDefault);
 
-
       // Refreshes the map in the initial load, otherwise no map displayed
       // until the window is resize or the user clicks the map.
       // Tried other options, but not working.
-      setTimeout(function() {
+      searchMap.once('postrender', function(){
         searchMap.updateSize();
         searchMap.renderSync();
+      });
 
-      }, 2000);
+      //If postrender fails to refresh map.It will refresh the map in specific time interval
+      $timeout(function() {
+        searchMap.updateSize();
+        searchMap.renderSync();
+      }, 5000);
+
     }]);
 
   module.controller('SweLogoutController',
@@ -1406,7 +1422,7 @@
                  if($scope.actual_height < 60){
                   $scope.$emit('body:class:add', 'geodata-examples-collapsed-with-cookie-alert');
                 }
-                else if($scope.actual_height < 300){
+                else if($scope.actual_height < 230){
                   $scope.$emit('body:class:add', 'geodata-examples-expanded-with-cookie-alert');
                 }
                 else{
@@ -1422,7 +1438,7 @@
                 if($scope.actual_height < 60){
                   $scope.$emit('body:class:add', 'geodata-examples-collapsed-without-cookie-alert');
                 }
-                else if($scope.actual_height < 300){
+                else if($scope.actual_height < 230){
                   $scope.$emit('body:class:add', 'geodata-examples-expanded-without-cookie-alert');
                 }
                 else{
@@ -1436,12 +1452,5 @@
     }
       
   });
-
-//To get GetFeatureInfo output format from GetCapabilities
-    module.factory("gfiOutputFormatCheck", function() {
-      return{
-         result: ""
-      };
-    });
 
 })();

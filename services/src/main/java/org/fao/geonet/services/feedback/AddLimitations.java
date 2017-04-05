@@ -39,6 +39,7 @@ import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.services.Utils;
+import org.fao.geonet.util.XslUtil;
 import org.fao.geonet.utils.BinaryFile;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
@@ -105,7 +106,8 @@ public class AddLimitations implements Service {
         Metadata info = context.getBean(MetadataRepository.class).findOne(id);
 
         if (info == null)
-            throw new IllegalArgumentException("Metadata not found --> " + id);
+            throw new IllegalArgumentException("Metadata not found --> " +
+                    XslUtil.encodeForJavaScript(id));
 
         //--- start building response
         Element response = new Element("response");
@@ -154,7 +156,8 @@ public class AddLimitations implements Service {
         Element elMd = dataManager.getMetadata(context, id, forEditing, withValidationErrors, keepXlinkAttributes);
 
         if (elMd == null)
-            throw new IllegalArgumentException("Metadata not found --> " + id);
+            throw new IllegalArgumentException("Metadata not found --> " +
+                    XslUtil.encodeForJavaScript(id));
 
         //--- place xml in metadata element
         Element md = new Element(Geonet.Elem.METADATA);

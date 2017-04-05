@@ -151,6 +151,8 @@
         if (is_full_view_map) {
           this.registerTables(layers, e.coordinate);
         }
+        /* To Show loading icon on GFI table*/
+        this.gnFeaturesTableManager.loadingCheck();
       }.bind(this));
     }.bind(this));
 

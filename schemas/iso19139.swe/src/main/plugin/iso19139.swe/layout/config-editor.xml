@@ -527,7 +527,7 @@
 
           <!-- Point of contact -->
           <field name="pointOfContact"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact" />
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact" />
 
           <!-- Thumbnails -->
           <field name="graphicOverview"
@@ -1009,7 +1009,23 @@
 
         </section>
 
-        <section name="service">
+        <section name="service" displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+
+          <field
+                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType"
+                  or="serviceType"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/*" />
+
+
+          <field
+                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:operatesOn"
+                  or="operatesOn"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/*" />
+
+        </section>
+
+
+        <section name="dataset" displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
 
 
           <field
@@ -1017,13 +1033,6 @@
                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType"
                   or="spatialRepresentationType"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*" />
-
-
-          <field
-                  name="spatialRepresentationType"
-                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:spatialRepresentationType"
-                  or="spatialRepresentationType"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/*" />
 
 
           <section name="scales">
@@ -1211,7 +1220,7 @@
 
         </section>
 
-        <section name="referenceSystemInfo2">
+        <section name="referenceSystemInfo2" displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
           <field name="rsIdentifier"
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../.." />
