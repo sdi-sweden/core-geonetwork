@@ -209,6 +209,7 @@
             var wms = new ol.layer.Tile({
             	group: 'Background layers',
             	crossOrigin: 'anonymous',
+            	url: '../../topo-wms',
                 source: new ol.source.TileWMS({
                     url: '../../topo-wms',
                     params: {
