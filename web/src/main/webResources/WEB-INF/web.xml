@@ -353,11 +353,12 @@ Context listener that creates endpoint cache and validator required by EndpointP
 
 		<init-param>
 			<param-name>userName</param-name>
-			<param-value>lant0087</param-value>
+			<param-value>${topo-wms.userName}</param-value>
 		</init-param>
 		<init-param>
 			<param-name>pwd</param-name>
-			<param-value>7R76bi3QD7ywsmO</param-value>
+			<param-value>${topo-wms.pwd}</topo-wms.pwd>
+		  </properties></param-value>
 		</init-param>
 	</servlet>
 
