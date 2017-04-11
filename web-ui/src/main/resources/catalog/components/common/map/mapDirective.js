@@ -34,7 +34,8 @@
        'gnMap',
        'gnOwsContextService',
        '$http',
-       function(gnMap, gnOwsContextService, $http) {
+       '$location',
+       function(gnMap, gnOwsContextService, $http, $location) {
          return {
            restrict: 'A',
            replace: true,
@@ -206,12 +207,20 @@
 
             var projection = ol.proj.get('EPSG:3006');
 
+            // MapFish requires absolute path to topoweb service
+            var topoWmsUrl = $location.protocol() + '://' + $location.host();
+            if ($location.protocol() != 'https') {
+          	  topoWmsUrl += ':';
+          	  topoWmsUrl += $location.port(); 
+            }
+            topoWmsUrl += '/geodataportalen/topo-wms';
+
             var wms = new ol.layer.Tile({
             	group: 'Background layers',
             	crossOrigin: 'anonymous',
-            	url: '../../topo-wms',
+            	url: topoWmsUrl,
                 source: new ol.source.TileWMS({
-                    url: '../../topo-wms',
+                    url: topoWmsUrl,
                     params: {
                         FORMAT: 'image/png',
                         VERSION: '1.1.1',
