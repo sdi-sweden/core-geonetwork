@@ -117,8 +117,7 @@
 
       // MapFish requires absolute path to topoweb service
       var topoWmsUrl = $location.protocol() + '://' +
-      $location.host() + ':' + $location.port() 
-      + '/geodataportalen/topo-wms';
+      $location.host() + '/geodataportalen/topo-wms';
       
       var wms = [new ol.layer.Tile({
     	  group: 'Background layers',
