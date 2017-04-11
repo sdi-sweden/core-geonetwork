@@ -31,9 +31,9 @@
 
 
   module.run(['gnSearchSettings', 'gnViewerSettings',
-    'gnOwsContextService', 'gnMap',
+    'gnOwsContextService', 'gnMap', '$location',
     function(gnSearchSettings, gnViewerSettings,
-             gnOwsContextService, gnMap) {
+             gnOwsContextService, gnMap, $location) {
 
       gnViewerSettings.defaultContext = null;
 
@@ -115,12 +115,17 @@
 
       var projection = ol.proj.get('EPSG:3006');
 
+      // MapFish requires absolute path to topoweb service
+      var topoWmsUrl = $location.protocol() + '://' +
+      $location.host() + ':' + $location.port() 
+      + '/geodataportalen/topo-wms';
+      
       var wms = [new ol.layer.Tile({
     	  group: 'Background layers',
     	  crossOrigin: 'anonymous',
-    	  url: '../../topo-wms',
+    	  url: topoWmsUrl,
           source: new ol.source.TileWMS({
-        	  url: '../../topo-wms',
+        	  url: topoWmsUrl,
               params: {
                   FORMAT: 'image/png',
                   VERSION: '1.1.1',
