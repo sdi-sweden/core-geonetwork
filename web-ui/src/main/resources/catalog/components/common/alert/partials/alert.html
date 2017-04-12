@@ -1,6 +1,6 @@
 <div class="gn-alerts">
   <div class="alert" role="alert" data-ng-class="'alert-' + a.type"
-       data-ng-repeat="a in alerts">
+       data-ng-repeat="a in alerts track by $index">
     <span data-ng-bind-html="a.msg"></span>
   </div>
 </div>
