@@ -50,7 +50,8 @@
         blur: 0
       }
     },
-    current: null
+    current: null,
+    applicationName: 'geodataportalen'
   });
 
   module.constant('gnLangs', {
