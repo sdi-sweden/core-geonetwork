@@ -226,7 +226,9 @@
               extent: extent,
               projection: projection,
               center: [572087, 6802255],
-              zoom: 1
+              maxZoom: 28,
+              minZoom: 2,
+              zoom: 2
             };
 
              var map = new ol.Map({
