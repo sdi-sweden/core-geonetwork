@@ -37,6 +37,7 @@
       this.MAP = '/map';
       this.METADATA = '/metadata/';
       this.HOME = '/home';
+      this.APPNAME ='/geodataportalen';
 
       var state = {};
       var that = this;
@@ -52,9 +53,8 @@
 		var origin = window.location.origin;
         if (!origin) {
 			origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
-			
 		}
-        return origin + '/geonetwork';
+        return origin + this.APPNAME;
       };
       this.path = function(path) {
         return $location.path(path);
