@@ -232,7 +232,7 @@
   </logger>
 
   <logger name="org.mapfish.print" additivity="true">
-    <level value="DEBUG"/>
+    <level value="WARN"/>
     <appender-ref ref="consoleAppender"/>
     <appender-ref ref="fileAppender"/>
    </logger>
