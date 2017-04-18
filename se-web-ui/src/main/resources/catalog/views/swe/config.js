@@ -110,13 +110,6 @@
       var projection = ol.proj.get('EPSG:3006');
 
       // MapFish requires absolute path to topoweb service
-//      var topoWmsUrl = $location.protocol() + '://' + $location.host();
-//      if ($location.protocol() != 'https') {
-//    	  topoWmsUrl += ':';
-//    	  topoWmsUrl += $location.port(); 
-//      }
-//      topoWmsUrl += '/geodataportalen/topo-wms';
-      
       var topoWmsUrl = gnSearchLocation.appUrl() + '/topo-wms';
       
       
