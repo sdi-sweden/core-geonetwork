@@ -60,13 +60,8 @@
     "searchOrganisation" : "Organisation",
     "organisation": "Organisation",
     "topicCategory": "Ämneskategori",
-<<<<<<< HEAD
     "keyword": "Initiativ",
-    "leaveComment": "tyck till",
-=======
-    "keyword": "Nyckelord",
     "leaveComment": "Tyck till",
->>>>>>> ticket1705-develop
     "getService": "get-tjänst",
     "forPublishers": "för publicerare",
     "administrationMenu": "administration",
