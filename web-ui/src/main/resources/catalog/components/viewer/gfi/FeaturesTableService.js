@@ -67,7 +67,14 @@
     });
     return count;
   };
-
+  
+  GnFeaturesTableManager.prototype.loadingCheck = function() {
+    var loading = true;
+    this.tables.forEach(function(table) {
+      loading = table.loader.isLoading();
+    });
+    return loading;
+  };
 
   module.service('gnFeaturesTableManager',
       ['gnFeaturesTableLoader', GnFeaturesTableManager]);
