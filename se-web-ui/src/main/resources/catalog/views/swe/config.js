@@ -31,9 +31,9 @@
 
 
   module.run(['gnSearchSettings', 'gnViewerSettings',
-    'gnOwsContextService', 'gnMap',
+    'gnOwsContextService', 'gnMap', 'gnSearchLocation',
     function(gnSearchSettings, gnViewerSettings,
-             gnOwsContextService, gnMap) {
+             gnOwsContextService, gnMap, gnSearchLocation) {
 
       gnViewerSettings.defaultContext = null;
 
@@ -94,13 +94,7 @@
       // Object to store the current Map context
       gnViewerSettings.storage = 'sessionStorage';
 
-      // -1199982.87894;4699997.48693
-      // 617761.505804;7968053.15247
-
       var extent = [-1200000, 4700000, 2540000, 8500000];
-      var resolutions = [4096.0, 2048.0, 1024.0, 512.0, 256.0,
-        128.0, 64.0, 32.0, 16.0, 8.0];
-      var matrixIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
       proj4.defs(
           'EPSG:3006',
@@ -115,12 +109,16 @@
 
       var projection = ol.proj.get('EPSG:3006');
 
+      // MapFish requires absolute path to topoweb service
+      var topoWmsUrl = gnSearchLocation.appUrl() + '/topo-wms';
+      
+      
       var wms = [new ol.layer.Tile({
     	  group: 'Background layers',
     	  crossOrigin: 'anonymous',
-    	  url: '../../topo-wms',
+    	  url: topoWmsUrl,
           source: new ol.source.TileWMS({
-        	  url: '../../topo-wms',
+        	  url: topoWmsUrl,
               params: {
                   FORMAT: 'image/png',
                   VERSION: '1.1.1',
@@ -135,11 +133,12 @@
        * Define maps
        */
       var mapsConfig = {
-        resolutions: resolutions,
         extent: extent,
         projection: projection,
         center: [572087, 6802255],
-        zoom: 0
+        maxZoom: 28,
+        minZoom: 2,
+        zoom: 2
       };
 
       // Add backgrounds to TOC

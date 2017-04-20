@@ -98,9 +98,9 @@ public class ShibbolethUserUtils {
         Profile profile = Profile.findProfileIgnoreCase(getHeader(req, config.getProfileKey(), ""));
         String group = getHeader(req, config.getGroupKey(), "");
 
-        firstname = new String(firstname.getBytes(), "utf-8");
-        surname = new String(surname.getBytes(), "utf-8");
-        group = new String(group.getBytes(), "utf-8");
+        firstname = new String(firstname.getBytes("iso-8859-1"), "utf-8");
+        surname = new String(surname.getBytes("iso-8859-1"), "utf-8");
+        group = new String(group.getBytes("iso-8859-1"), "utf-8");
 
         if (username != null && username.trim().length() > 0) { // ....add other
                                                                 // cnstraints to

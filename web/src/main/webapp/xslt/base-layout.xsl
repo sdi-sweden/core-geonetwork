@@ -51,6 +51,7 @@
         <meta name="description" content=""/>
         <meta name="keywords" content=""/>
 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
         <link rel="icon" sizes="16x16 32x32 48x48" type="image/png"
               href="../../images/logos/favicon.png"/>
