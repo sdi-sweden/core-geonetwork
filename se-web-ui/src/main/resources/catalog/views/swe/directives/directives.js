@@ -347,10 +347,10 @@
    * Shows predefined maps filters on home page.
    *
    */
-  module.directive('swePredefinedMapsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings',
-    function($http, $rootScope, gnOwsContextService, gnSearchSettings) {
+  module.directive('swePredefinedMapsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings', '$timeout',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings, $timeout) {
       return {
-        restrict: 'E',
+        restrict: 'EA',
         replace: true,
         templateUrl: '../../catalog/views/swe/directives/' +
           'partials/predefinedMaps.html',
@@ -360,7 +360,8 @@
           showMapFn: '&',
           showMapFnApi: '&',
           configUrl: '@',
-          selectedItem: '@'
+          selectedItem: '@',
+          isImageClicked: '='
         },
         link: function(scope, element, attrs) {
           scope.$watch("configUrl", function(value) {
@@ -392,7 +393,13 @@
           
           scope.doView = function(index, predefinedMap) {
           	  scope.selectedItem = index;
+              scope.isImageClicked = true;
               gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+               $timeout(function() {
+                  angular.element('.bg-img').css("opacity", "0.2");
+                  angular.element('.selected-img').css("opacity", "1");
+                }, 2000);
+              
               scope.showMapFn()();
             };
 
