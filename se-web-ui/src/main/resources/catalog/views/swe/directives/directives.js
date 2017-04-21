@@ -358,7 +358,6 @@
           predefinedMaps: '@',
           selectedMap: '@',
           showMapFn: '&',
-          showMapFnApi: '&',
           configUrl: '@',
           selectedItem: '@'
         },

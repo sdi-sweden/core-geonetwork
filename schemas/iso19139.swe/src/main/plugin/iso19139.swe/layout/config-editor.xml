@@ -274,7 +274,7 @@
   <!-- View configuration -->
   <views>
 
-    <view name="swedish">
+    <view name="swedish" upAndDownControlHidden="true">
       <tab id="swedish" default="true" mode="flat">
         <section name="metadata2">
           <field xpath="/gmd:MD_Metadata/gmd:fileIdentifier"/>
@@ -1872,7 +1872,7 @@
                      xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue='custodian']"
                      />
 
-                
+
             </section>
 
           </section>
@@ -3674,7 +3674,7 @@
 			<field xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints"/>
 		</section>
       </tab>
-      <!-- 
+      <!--
 	  <tab id="contentInfo" toggle="true">
         <section xpath="/gmd:MD_Metadata/gmd:contentInfo" or="contentInfo" in="/gmd:MD_Metadata"/>
       </tab>
@@ -3703,17 +3703,17 @@
 		<section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo" or="referenceSystemInfo"
                  in="/gmd:MD_Metadata"/>
 		<!-- INFORMATION ON DATA - End -->
-		
+
 		<!-- DISTRIBUTION - Start -->
 		<section name="distributionInfo" xpath="/gmd:MD_Metadata/gmd:distributionInfo" or="distributionInfo"
                  in="/gmd:MD_Metadata"/>
 		<!-- DISTRIBUTION - End -->
-		
+
 		<!-- KVALITET - Start -->
 		<section name="dataQualityInfo" xpath="/gmd:MD_Metadata/gmd:dataQualityInfo" or="dataQualityInfo"
                  in="/gmd:MD_Metadata"/>
 		<!-- KVALITET - End -->
-		
+
 		<!-- RESTRIKTIONER - Start -->
 		<section name="restriktionerInfo">
 			<field xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:resourceConstraints/gmd:MD_Constraints"/>
@@ -3722,7 +3722,7 @@
 			<field xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints"/>
 		</section>
 		<!-- RESTRIKTIONER - End -->
-		
+
 		<!-- INFORMATION OM METADATA - Start -->
 		<section name="metadata2">
           <field xpath="/gmd:MD_Metadata/gmd:language" or="language" in="/gmd:MD_Metadata"/>
