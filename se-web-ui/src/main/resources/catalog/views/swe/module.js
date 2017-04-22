@@ -700,7 +700,7 @@
         $timeout(function() {
               angular.element('.bg-img').css("opacity", "1");
               angular.element('.selected-img').css("opacity", "1");
-        }, 1000);
+        }, 250);
         $scope.mapFullView =! $scope.mapFullView;
         var $b = angular.element(document).find('body');
         window_width = angular.element($window).width(),
