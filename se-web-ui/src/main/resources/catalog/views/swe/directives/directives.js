@@ -395,18 +395,21 @@
           	  scope.selectedItem = index;
               scope.isImageClicked = true;
               gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
-               $timeout(function() {
-                  angular.element('.bg-img').css("opacity", "0.2");
-                  angular.element('.selected-img').css("opacity", "1");
-                }, 2000);
-              
-              scope.showMapFn()();
+              scope.showMapFn()();	
+              angular.element('#layers').removeClass('ng-hide');
+			  var layersButton = angular.element('#layersButton');
+			  if (!layersButton.hasClass('active')){
+			     $timeout(function() {
+			    	 layersButton.trigger('click');
+			     }, 500);
+			  }
             };
 
           scope.doViewFromApi = function(index, predefinedMap) {
         	scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
             scope.showMapFnApi()();
+            angular.element('#layers').removeClass('ng-hide');
 			var layersButton = angular.element('#layersButton');
 			if (!layersButton.hasClass('active')){
 			   $timeout(function() {
