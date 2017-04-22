@@ -394,12 +394,14 @@
           	  scope.selectedItem = index;
               gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
               scope.showMapFn()();
+              angular.element('#layers').removeClass('ng-hide');
             };
 
           scope.doViewFromApi = function(index, predefinedMap) {
         	scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
             scope.showMapFnApi()();
+            angular.element('#layers').removeClass('ng-hide');
           };
         }
       };
