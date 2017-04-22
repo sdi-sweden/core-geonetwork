@@ -389,6 +389,20 @@
           
     	  $rootScope.$on('closePredefMap', function() {
               scope.selectedItem = -1;
+              var predefMapArrow = angular.element('#predefmapsArrow');
+              if(!predefMapArrow.hasClass('collapsed')){
+            	  $timeout(function() {
+            		  predefMapArrow.trigger('click'); 
+            	  }, 100);
+              };
+              selectedPredefMap = angular.element('.selected-img');
+              if(selectedPredefMap.length > 0){
+                 selectedPredefMap.removeClass('selected-img').addClass('bg-img');
+                  $timeout(function() {
+                    angular.element('.bg-img').css("opacity", "1");
+                    angular.element('.selected-img').css("opacity", "1");
+                  }, 500);
+              }
            });
           
           scope.doView = function(index, predefinedMap) {
@@ -465,18 +479,17 @@
           });
 
           scope.doView = function(geoTechnic) {
-            selectedPredefMap = angular.element('.selected-img');
-            if(selectedPredefMap.length > 0){
-               selectedPredefMap.removeClass('selected-img').addClass('bg-img');
-                $timeout(function() {
-                  angular.element('.bg-img').css("opacity", "1");
-                  angular.element('.selected-img').css("opacity", "1");
-                }, 500);
-            }
           	$rootScope.$emit('closePredefMap');
-              gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
-              scope.showMapFn()();
-            };
+            gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
+            scope.showMapFn()();
+            angular.element('#layers').removeClass('ng-hide');
+			var layersButton = angular.element('#layersButton');
+			if (!layersButton.hasClass('active')){
+			   $timeout(function() {
+			      layersButton.trigger('click');
+			   }, 500);
+			}
+          };
         }
       };
   }]);
