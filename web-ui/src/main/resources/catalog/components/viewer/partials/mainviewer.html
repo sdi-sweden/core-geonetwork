@@ -32,19 +32,20 @@
       <span class="fa fa-book"></span>
       <span role="tooltip" data-translate="">Contexts</span>
     </button>
+<!--
     <button class="btn btn-default" ng-model="activeTools.print" type="submit"
             data-ng-hide="is3dEnabled || !printTool"
             rel="#print" gi-btn gnv-tools-btn>
       <span class="fa fa-print"></span>
       <span role="tooltip" data-translate="">PrintTheMap</span>
     </button>
-
     <button class="btn btn-default" type="submit"
             data-ng-click="syncMod()" ng-show="syncLayersTool">
       <span class="fa fa-sync"
             data-ng-class="synAllLayers ? 'fa-lock' : 'fa-unlock'"/>
       <span role="tooltip" data-translate="">syncAllLayers</span>
     </button>
+-->
     <button gi-btn class="btn btn-default" type="submit" ng-model="lineInteraction.active"
             data-ng-hide="is3dEnabled || !measureLengthTool"
             rel="#measures" gnv-tools-btn>
@@ -64,6 +65,7 @@
       <span class="fa fa-pencil"></span>
       <span role="tooltip" data-translate="">Annotations</span>
     </button>
+<!--
     <div class= "btn btn-default btn-map-help">
       <div class="map-view">
 	    <div data-swe-tooltip=""
@@ -73,6 +75,7 @@
 		</div>
 	  </div>
 	</div>
+-->
   </div>
   <!--Bottom right buttons - Navigation-->
   <div class="tools control-tools-largemap">
