@@ -397,7 +397,7 @@
                $timeout(function() {
                   angular.element('.bg-img').css("opacity", "0.2");
                   angular.element('.selected-img').css("opacity", "1");
-                }, 2000);
+                }, 1000);
               
               scope.showMapFn()();
             };
@@ -421,8 +421,8 @@
    * Shows geotechnics on home page.
    *
    */
-  module.directive('sweGeoTechnicsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings',
-    function($http, $rootScope, gnOwsContextService, gnSearchSettings) {
+  module.directive('sweGeoTechnicsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings', '$timeout',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings, $timeout) {
       return {
         restrict: 'E',
         replace: true,
@@ -444,10 +444,18 @@
           });
 
           scope.doView = function(geoTechnic) {
-        	$rootScope.$emit('closePredefMap');
-            gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
-            scope.showMapFn()();
-          };
+            selectedPredefMap = angular.element('.selected-img');
+            if(selectedPredefMap.length > 0){
+               selectedPredefMap.removeClass('selected-img').addClass('bg-img');
+                $timeout(function() {
+                  angular.element('.bg-img').css("opacity", "1");
+                  angular.element('.selected-img').css("opacity", "1");
+                }, 1000);
+            }
+          	$rootScope.$emit('closePredefMap');
+              gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
+              scope.showMapFn()();
+            };
         }
       };
   }]);
