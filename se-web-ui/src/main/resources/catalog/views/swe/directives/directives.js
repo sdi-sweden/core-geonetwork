@@ -347,8 +347,8 @@
    * Shows predefined maps filters on home page.
    *
    */
-  module.directive('swePredefinedMapsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings',
-    function($http, $rootScope, gnOwsContextService, gnSearchSettings) {
+  module.directive('swePredefinedMapsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings', '$timeout',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings, $timeout) {
       return {
         restrict: 'E',
         replace: true,
@@ -393,15 +393,25 @@
           scope.doView = function(index, predefinedMap) {
           	  scope.selectedItem = index;
               gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
-              scope.showMapFn()();
-              angular.element('#layers').removeClass('ng-hide');
+              scope.showMapFn()();			  
+			  var layersButton = angular.element('#layersButton');
+			  if (!layersButton.hasClass('active')){
+			     $timeout(function() {
+			    	 layersButton.trigger('click');
+			     }, 500);
+			  }
             };
 
           scope.doViewFromApi = function(index, predefinedMap) {
         	scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
             scope.showMapFnApi()();
-            angular.element('#layers').removeClass('ng-hide');
+			var layersButton = angular.element('#layersButton');
+			if (!layersButton.hasClass('active')){
+			   $timeout(function() {
+			      layersButton.trigger('click');
+			   }, 500);
+			}
           };
         }
       };
