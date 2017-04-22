@@ -395,6 +395,11 @@
           	  scope.selectedItem = index;
               scope.isImageClicked = true;
               gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+              $timeout(function() {
+                angular.element('.bg-img').css("opacity", "0.2");
+                angular.element('.selected-img').css("opacity", "1");
+              }, 1000);
+              
               scope.showMapFn()();	
               angular.element('#layers').removeClass('ng-hide');
 			  var layersButton = angular.element('#layersButton');
