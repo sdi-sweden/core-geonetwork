@@ -393,7 +393,8 @@
           scope.doView = function(index, predefinedMap) {
           	  scope.selectedItem = index;
               gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
-              scope.showMapFn()();			  
+              scope.showMapFn()();	
+              angular.element('#layers').removeClass('ng-hide');
 			  var layersButton = angular.element('#layersButton');
 			  if (!layersButton.hasClass('active')){
 			     $timeout(function() {
@@ -406,6 +407,7 @@
         	scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
             scope.showMapFnApi()();
+            angular.element('#layers').removeClass('ng-hide');
 			var layersButton = angular.element('#layersButton');
 			if (!layersButton.hasClass('active')){
 			   $timeout(function() {
