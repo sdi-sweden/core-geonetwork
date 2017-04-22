@@ -170,13 +170,16 @@
  	      <span class="image-filter-text"  ng-hide="collapsed" data-translate="">predefinedMapsTitle</span>
 		  <div class="image-filter-container"> 
 		    <a href="" data-ng-click="resizeCheck()" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
-	        <swe-predefined-maps-filter 
+	        <div id="imageFilter"  data-swe-predefined-maps-filter 
 	           ng-hide="collapsed"
 	           data-config-url="{{predefinedMapsUrl}}"
 	           data-show-map-fn="showFullMapPanel"
 	           data-show-map-fn-api="showFullMapPanelApi"
-			   data-selected-map="{{selectedPredefinedMap}}">
-	        </swe-predefined-maps-filter>
+			   data-selected-map="{{selectedPredefinedMap}}"
+         data-is-image-clicked="is_image_clicked"
+         >
+
+	        </div>
 		  </div>
         </div>
         <div data-ng-include="'../../catalog/views/swe/templates/filters.html'" data-ng-controller="SweFilterPanelController"></div>
