@@ -210,7 +210,7 @@
     "onlineUseLegendLYR": "Stil för ArcGIS(LYR)-resurs",
     "onlineUseStyleSLD": "Stil för resurser som använder SLD",
     "onlineUseStyleQML": "Stil för QGIS-resurs",
-    "onlineUseLimitation": "Användningsbegränsning",
+    "onlineUseLimitation": "Användbarhetsbegränsning",
     "onlineAccessLimitation": "Tillgänglighetsbegränsning",
     "onlinesrcUploadHelp": "Dra och släpp hit en tjänst",
     "onlineMore": "Mer information",

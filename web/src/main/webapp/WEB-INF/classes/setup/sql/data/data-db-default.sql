@@ -557,7 +557,7 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/platform/version', '3.1.0', 0, 150, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/platform/subVersion', 'SNAPSHOT', 0, 160, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/site/svnUuid', '', 0, 170, 'y');
-INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/server/host', 'localhost', 0, 210, 'n');
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/server/host', 'ver.geodata.se', 0, 210, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/server/protocol', 'http', 0, 220, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/server/port', '8080', 1, 230, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/server/securePort', '8443', 1, 240, 'y');
@@ -682,6 +682,7 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('metada
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/predefinedMaps/url', 'https://ver.geodata.se/geodataportalens-hjalpsidor/datasamlingar-rotsida', 0, 10200, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('map/geotechnics/url', 'https://ver.geodata.se/geodataportalens-hjalpsidor/geoteknik-rotsida', 0, 10210, 'n');
 
+INSERT INTO Settings (name, value, datatype, position, internal) VALUES ('system/ui/tooltiphelpurlprefix', 'https://ver.geodata.se/', 0, 10220, 'n');
 
 INSERT INTO HarvesterSettings (id, parentid, name, value) VALUES  (1,NULL,'harvesting',NULL);
 

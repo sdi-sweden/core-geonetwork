@@ -1014,8 +1014,11 @@ html, body {
   .site-geo-type-filter .other-filters {
     margin-right: 22px;
   }
-  .advance-filters-cont .right-side-filter {
-    margin-right: 5px;
+  .search-show-only .tool-tip-cont .tool-tip{
+    margin-left: 80px;
+  }
+  .search-show-only .tool-tip-cont .triangle{
+    margin-left: -80px;
   }
   .advance-filters-cont .draw-map-link-colm .help-icn-cont {
     top: 0px;
@@ -1163,14 +1166,16 @@ body {
     padding: 40px 0;
     max-width: none;
     h3 {
-      font-size: 14px;
+      font-size: 20px;
+      font-weight: bold;
+      font-family: 'Roboto', sans-serif;
       text-transform: uppercase;
       margin-bottom: 1em;
     }
     p, a {
-      font-size: 12.6px;
+      font-size: 13px;
+      font-family: 'Roboto', sans-serif;
       line-height: 19.6px;
-     
     }
     a {
       color: #fff;
@@ -1184,7 +1189,7 @@ body {
       margin-top: 23px;
     }
     .site-map ul {
-      margin-top: 36px;
+      margin-top: 0px;
       list-style: none;
       margin-left: 0;
       padding-left: 0;
@@ -1354,6 +1359,7 @@ button:focus [role=tooltip], button:hover [role=tooltip] {
   right: 3em;
   width: 310px;
   min-height: 15em;
+  /*max-height: calc(100% - 2em);*/
   max-height: 30em;
   max-width: none; 
   overflow-y: hidden;
