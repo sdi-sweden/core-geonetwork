@@ -696,6 +696,11 @@
       $scope.resizeMapPanel = function() {
   		$predefMap = angular.element('.selected-img');
 		$predefMap.removeClass('selected-img').addClass('bg-img');
+        angular.element('#imageFilter').scope().is_image_clicked = false;
+        $timeout(function() {
+              angular.element('.bg-img').css("opacity", "1");
+              angular.element('.selected-img').css("opacity", "1");
+        }, 250);
         $scope.mapFullView =! $scope.mapFullView;
         var $b = angular.element(document).find('body');
         window_width = angular.element($window).width(),
