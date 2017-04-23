@@ -1,13 +1,5 @@
 ﻿<div class="site-filter-cont open" >
   <div class="site-filter-wrapper">
-    <!-- Predefined search filters -->
-    <div class="site-image-filter">
- 	<span class="image-filter-text" data-translate="">predefinedMapsTitle</span>
-		  <div class="image-filter-container"> 
-		    <a href="" data-ng-click="resizeCheck()" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
-			  <swe-predefined-maps-filter ng-hide="collapsed" data-config-url="{{predefinedMapsUrl}}" data-show-map-fn="showLargeMapPanel"></swe-predefined-maps-filter>
-		  </div>
-    </div>
 
     <!-- Search filters -->
     <div class="site-filter-section-wrapper">
@@ -66,6 +58,13 @@
         <div class="filter-options-cont">
           <div class="basic-filters-cont active">
             <ul class="geo-categories">
+              <div class="geo-cat">
+			    <div data-swe-tooltip=""
+				  data-title="{{ 'search-title' | translate }}"
+				  data-text="{{ 'search-desc' | translate }}"
+				  data-link="{{ 'search-link' | translate }}">
+				</div>
+			  </div>
               <li data-ng-repeat="topic in topicCategories | orderBy: translatedTopicCat"
                   data-ng-click="toggleTopicCategory(topic)"
                   data-ng-class="{'active': isTopicCategorySelected(topic)}"><a href="" data-translate="">{{topic}}</a></li>
@@ -138,13 +137,14 @@
                   </div>
                   <div class="filter-colm draw-map-link-colm" data-ng-controller="SweGeoFreeHandPolygonController" >
                   <div data-ng-click="drawFreeHandPolygonInMap()">
-                  <a href="" class="fltr-link draw-map-link"><span data-translate="">drawingOnMap</span></a>
+                    <a href="" class="fltr-link draw-map-link"><span data-translate="">drawingOnMap</span></a>
                   </div>
-                    <div data-swe-tooltip=""
-                         data-title="{{ 'geographicalFilterTooltip-title' | translate }}"
-                         data-text="{{ 'geographicalFilterTooltip-desc' | translate }}"
-                         data-link="{{ 'geographicalFilterTooltip-link' | translate }}"></div>
+                  <div data-swe-tooltip=""
+                    data-title="{{ 'geographicalFilterTooltip-title' | translate }}"
+                    data-text="{{ 'geographicalFilterTooltip-desc' | translate }}"
+                    data-link="{{ 'geographicalFilterTooltip-link' | translate }}">
                   </div>
+                  
                 </div>
               </div>
 
@@ -156,10 +156,10 @@
                    data-current-facets="currentFacets">
               </div>
 
-              <div data-swe-tooltip=""
+<!--               <div data-swe-tooltip=""
                    data-title="{{ 'facetsFilterTooltip-title' | translate }}"
                    data-text="{{ 'facetsFilterTooltip-desc' | translate }}"
-                   data-link="{{ 'facetsFilterTooltip-link' | translate }}"></div>
+                   data-link="{{ 'facetsFilterTooltip-link' | translate }}"></div> -->
             </div>
           </div>
         </div>

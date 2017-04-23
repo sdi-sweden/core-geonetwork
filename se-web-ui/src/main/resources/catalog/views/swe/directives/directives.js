@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -161,6 +161,43 @@
       };
     }
   ]);
+  
+  /**
+   * @ngdoc directive
+   * @name sweShowDialog
+   * @function
+   *
+   * @description
+   * Adds "show" class for the dialog referenced in scope.dialog.
+   *
+   */
+  module.directive('sweShowDialogForHelp', [
+    function() {
+      return {
+        restrict: 'A',
+        scope: { dialog: '@dialog', focusControl: '@focusControl'},
+        link: function(scope, elem) {
+          elem.on('click', function() {
+            angular.element(scope.dialog).addClass('show');
+            if (scope.focusControl) {
+              angular.element(scope.focusControl).focus();
+            }
+          });
+        }
+      };
+    }
+  ]);
+  
+  module.directive('dragable', function(){   
+	  return {
+	    restrict: 'A',
+	    link : function(scope,elem,attr){
+	    	$(elem).draggable({
+	    		containment: "window"
+	        });
+	    }
+	  }  
+	});
 
   /**
    * @ngdoc directive
@@ -228,8 +265,8 @@
    * Displays a tooltip element.
    *
    */
-  module.directive('sweTooltip', ['$timeout', 'gnConfig', 'gnConfigService',
-    function($timeout, gnConfig, gnConfigService) {
+  module.directive('sweTooltip', ['$timeout','$rootScope','gnConfig','gnConfigService',
+    function($timeout, $rootScope, gnConfig, gnConfigService) {
       return {
         restrict: 'A',
         replace: true,
@@ -242,24 +279,41 @@
         },
         link: function(scope, elem) {
           gnConfigService.loadPromise.then(function() {
-            scope.prefix = gnConfig['system.ui.tooltiphelpurlprefix'];
+            scope.prefix = gnConfig['system.server.host'];
           });
 
           $timeout(function () {
             elem.on('click', '.help-icn-circle', function () {
               var tooltipElem = elem.find('.tool-tip-cont');
-
               if (tooltipElem.hasClass('open')) {
                 tooltipElem.removeClass('open');
               } else {
                 tooltipElem.addClass('open');
               }
+              $rootScope.$emit('closetooltip', tooltipElem);
             })
-          })
+          });
+          
+		  $rootScope.$on('closetooltip', function (event, tooltipElem) {
+		     var tmpElem = elem.find('.tool-tip-cont');
+		     if(tmpElem != undefined && tooltipElem != undefined){
+		        if(tmpElem.get(0) !== tooltipElem.get(0)){
+				   if (tmpElem.hasClass('open')) {
+	                  tmpElem.removeClass('open');
+			       }
+			    }
+		     }
+	      });
+		  
+          scope.openPopup = function() {
+        	  var url = scope.prefix + scope.link;
+        	  $rootScope.$emit('openhelppopup', scope.link);
+		  }
         }
       };
     }
   ]);
+  
 
   /**
    * @ngdoc directive
@@ -293,8 +347,8 @@
    * Shows predefined maps filters on home page.
    *
    */
-  module.directive('swePredefinedMapsFilter', ['$http', 'gnOwsContextService', 'gnSearchSettings',
-    function($http, gnOwsContextService, gnSearchSettings) {
+  module.directive('swePredefinedMapsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings) {
       return {
         restrict: 'E',
         replace: true,
@@ -304,6 +358,7 @@
           predefinedMaps: '@',
           selectedMap: '@',
           showMapFn: '&',
+          showMapFnApi: '&',
           configUrl: '@',
           selectedItem: '@'
         },
@@ -314,26 +369,42 @@
                   scope.predefinedMaps = data;
 
                   if (scope.selectedMap != undefined) {
+                	  var indexPredef;
                       var predefinedMapsFiltered =
                           scope.predefinedMaps.filter(function(x) {
-                              return x['title'] === scope.selectedMap
+                            if(x['id'] == scope.selectedMap){
+                        	  indexPredef = scope.predefinedMaps.indexOf(x);
+                        	}
+                            return x['id'] == scope.selectedMap
                           });
 
                       if (predefinedMapsFiltered.length > 0) {
-                          scope.doView(predefinedMapsFiltered[0]);
+                          scope.doViewFromApi(indexPredef, predefinedMapsFiltered[0]);
                       }
                   }
               });
             }
           });
+          
+    	  $rootScope.$on('closePredefMap', function() {
+              scope.selectedItem = -1;
+           });
+          
           scope.doView = function(index, predefinedMap) {
-			scope.selectedItem = index;
+          	  scope.selectedItem = index;
+              gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+              scope.showMapFn()();
+            };
+
+          scope.doViewFromApi = function(index, predefinedMap) {
+        	scope.selectedItem = index;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
-            scope.showMapFn()();
+            scope.showMapFnApi()();
           };
         }
       };
   }]);
+  
 
   /**
    * @ngdoc directive
@@ -344,8 +415,8 @@
    * Shows geotechnics on home page.
    *
    */
-  module.directive('sweGeoTechnicsFilter', ['$http', 'gnOwsContextService', 'gnSearchSettings',
-    function($http, gnOwsContextService, gnSearchSettings) {
+  module.directive('sweGeoTechnicsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings) {
       return {
         restrict: 'E',
         replace: true,
@@ -367,6 +438,7 @@
           });
 
           scope.doView = function(geoTechnic) {
+        	$rootScope.$emit('closePredefMap');
             gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();
           };
@@ -668,5 +740,5 @@
           } //end of link
       }
     }]);
-
+    
 }());
