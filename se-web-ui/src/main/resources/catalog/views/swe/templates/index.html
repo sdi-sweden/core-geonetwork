@@ -235,6 +235,16 @@
 
               <!-- Results -->
               <div data-ng-include="'../../catalog/views/swe/templates/resultList.html'" />
+              
+              <!-- Show Pagination at bottom of results -->
+              <span>
+                <div data-gn-pagination="paginationInfo"
+                     data-hits-values="searchObj.hitsperpageValues"
+                     class="pagination-cont"
+                     data-enable-hot-keys="">
+                </div>
+              </span>
+
             </div>
 
           <!-- Result popup -->
