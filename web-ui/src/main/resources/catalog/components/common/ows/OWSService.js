@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -146,10 +146,7 @@
               delete defaultParams[p.toLowerCase()];
             }
           }
-
-          return gnUrlUtils.append(parts[0],
-              gnUrlUtils.toKeyValue(defaultParams));
-
+    	  return gnUrlUtils.append(parts[0], gnUrlUtils.toKeyValue(defaultParams));
 
         };
         return {
@@ -163,8 +160,12 @@
                 request: 'GetCapabilities'
               });
 
-              //send request and decode result
               if (gnUrlUtils.isValid(url)) {
+            	//redirect http request via proxy
+              	if (!url.includes("https://")) {
+              		url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+              	}  
+              	//send request and decode result
                 $http.get(url, {
                   cache: true
                 })
@@ -193,7 +194,10 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-
+          	    //redirect http request via proxy
+                if (!url.includes("https://")) {
+                	url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                }  
                 $http.get(url, {
                   cache: true
                 })
