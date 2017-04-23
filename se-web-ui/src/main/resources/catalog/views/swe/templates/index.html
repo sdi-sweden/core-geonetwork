@@ -1,4 +1,4 @@
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+﻿<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <div>
 
@@ -169,7 +169,7 @@
         <div class="site-image-filter">
  	      <span class="image-filter-text"  ng-hide="collapsed" data-translate="">predefinedMapsTitle</span>
 		  <div class="image-filter-container"> 
-		    <a href="" data-ng-click="resizeCheck()" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
+		    <a href=""  id="predefmapsArrow" data-ng-click="resizeCheck()" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
 	        <div id="imageFilter"  data-swe-predefined-maps-filter 
 	           ng-hide="collapsed"
 	           data-config-url="{{predefinedMapsUrl}}"
@@ -235,6 +235,16 @@
 
               <!-- Results -->
               <div data-ng-include="'../../catalog/views/swe/templates/resultList.html'" />
+              
+              <!-- Show Pagination at bottom of results -->
+              <span>
+                <div data-gn-pagination="paginationInfo"
+                     data-hits-values="searchObj.hitsperpageValues"
+                     class="pagination-cont"
+                     data-enable-hot-keys="">
+                </div>
+              </span>
+
             </div>
 
           <!-- Result popup -->
