@@ -145,9 +145,9 @@
 
       // prevent the floating map from positioning on top of the footer
       $scope.affixFloatingMap = function() {
-        
+
         $(window).scroll(function (event) {
-          var windowTop = $(this).scrollTop() + $(window).height();     
+          var windowTop = $(this).scrollTop() + $(window).height();
 
           if (windowTop >= $('.footer').offset().top) {
             $('.floating-map-cont').addClass('affix-bottom');
@@ -161,7 +161,7 @@
       $rootScope.$on('$includeContentLoaded', function() {
         $timeout($scope.affixFloatingMap());
       });
-      
+
       $scope.toggleMap = function() {
         $(searchMap.getTargetElement()).toggle();
       };
@@ -220,13 +220,13 @@
                 anyField.focus();
               }
             }
-          }).add({
-            combo: 'enter',
-            description: $translate('hotkeySearchTheCatalog'),
-            allowIn: 'INPUT',
-            callback: function() {
-              $location.search('tab=search');
-            }
+          //}).add({
+          //  combo: 'enter',
+          //  description: $translate('hotkeySearchTheCatalog'),
+          //  allowIn: 'INPUT',
+          //  callback: function() {
+          //    $location.search('tab=search');
+          //  }
             //}).add({
             //  combo: 'r',
             //  description: $translate('hotkeyResetSearch'),
@@ -317,7 +317,7 @@
 
         return downloads;
       };
-	  
+
 		$scope.printPdf = function(mdView) {
 			var uuid = mdView.current.record['geonet:info'].uuid;
 			var config = {
@@ -502,7 +502,7 @@
 
               $('#gn-metadata-display').append(content);
 
-              $scope.activateTabs();       
+              $scope.activateTabs();
             });
           });
 
@@ -520,7 +520,7 @@
         if (md.defaultTitle == $scope.vectorLayer.get("defaultTitle")){
              $scope.vectorLayer.set("defaultTitle",null);
              $scope.vectorLayerBM.set("defaultTitle",null);
-        }       
+        }
         else{
           var feature = gnMap.getBboxFeatureFromMd(md,
             $scope.searchObj.searchMap.getView().getProjection());
@@ -529,23 +529,23 @@
           $scope.vectorLayer.getSource().addFeature(feature);
           $scope.vectorLayerBM.getSource().addFeature(feature);
         }
-        
+
       };
-	  
+
 	  $scope.fetchInitiativKeyword = function(md) {
 		var imgPath = '../../catalog/views/swe/images/noto.png';
 		if(md) {
 			var initiativKeyword = md.initiativKeyword;
 			if(initiativKeyword) {
 				var initiativKeywordString = initiativKeyword.toString();
-				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using '�' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
+				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using 'Ö' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
 					imgPath = '../../catalog/views/swe/images/opendata.png';
 				} else if(initiativKeywordString.indexOf('Geodatasamverkan') > -1) {
 					imgPath = '../../catalog/views/swe/images/geodatacooperation.png';
 				}
 			}
 		}
-        return imgPath;     
+        return imgPath;
       };
 
       /**
@@ -576,7 +576,7 @@
         $scope.$watch('image_filter_height', function (newValue, oldValue, scope) {
         $scope.actual_height = oldValue;
         exampleResize.onResize($rootScope, $scope);
-        
+
       });
 
       /**
@@ -585,40 +585,100 @@
       $scope.showMapPanel = function() {
         angular.element('.floating-map-cont').hide();
         $scope.$emit('body:class:add', 'small-map-view');
-        $scope.actual_height = $('.site-image-filter').height()
+        $scope.actual_height = $('.site-image-filter').height();
         exampleResize.onResize($rootScope, $scope);
         scope = shareGnMainViewerScope.sharedScope;
          $timeout(function() {
           viewerMap.updateSize();
           viewerMap.renderSync();
           gnMap.hideOrShowMapTool(scope);
-        }, 500); 
+        }, 500);
       };
-     
+
       $scope.resizeCheck = function(){
-        $scope.image_filter_height = $('.site-image-filter').height(); 
+        $scope.image_filter_height = $('.site-image-filter').height();
         $scope.collapsed =! $scope.collapsed;
         scope = shareGnMainViewerScope.sharedScope;
          $timeout(function() {
             gnMap.hideOrShowMapTool(scope);
-          }, 500); 
+          }, 500);
+
+      };
+
+      /**
+       * Show full map panel.
+       */
+      $scope.showFullMapPanel = function() {
+        angular.element('.floating-map-cont').hide();
+        $scope.$emit('body:class:remove', 'medium-map-view');
+        $scope.$emit('body:class:remove', 'small-map-view');
+        $scope.$emit('body:class:add', 'full-map-view');
+		$scope.mapFullView = true;
+        window_width = angular.element($window).width();
+		$map_data_list_cont = angular.element('.map-data-list-cont');
+        is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false;
+        $data_list_cont = angular.element('.data-list-cont');
+        $map_cont = angular.element('.map-cont');
+        $obj = angular.element('#map-panel-resize');
+		$objMax = angular.element('#map-panel-resize-max');
+		$objMedium = angular.element('#map-panel-resize-medium');
+		  
+        if (is_side_data_bar_open) {
+          $map_cont.css({
+            width: (window_width - $data_list_cont.width())
+          });
+        } else {
+          $map_cont.css({
+            width: window_width
+          });
+        }
         
+        $obj.removeClass('full').addClass('small');
+		$obj.addClass('ng-hide');
+		$objMax.removeClass('ng-hide');
+		$objMedium.addClass('ng-hide');
+		
+		$scope.actual_height = $('.site-image-filter').height();
+	    exampleResize.onResize($rootScope, $scope);
+        $timeout(function() {
+         viewerMap.updateSize();
+         viewerMap.renderSync();
+       }, 500); 
       };
       
       /**
-       * Show large map panel.
+       * Show full map panel from url.
        */
-      $scope.showLargeMapPanel = function() {
-  		$tools = angular.element('.tools');
-		$tools.removeClass('control-tools').addClass('control-tools-largemap');
+      $scope.showFullMapPanelApi = function() {
         angular.element('.floating-map-cont').hide();
-        $scope.$emit('body:class:add', 'large-map-view');
-          $timeout(function() {
-          viewerMap.updateSize();
-          viewerMap.renderSync();
-        }, 500);
-          $obj = angular.element('#map-panel-resize');
-          $obj.removeClass('full').addClass('small');
+        $scope.$emit('body:class:remove', 'medium-map-view');
+        $scope.$emit('body:class:remove', 'small-map-view');
+        $scope.$emit('body:class:add', 'full-map-view');
+		$scope.mapFullView = true;
+        window_width = angular.element($window).width();
+		$map_data_list_cont = angular.element('.map-data-list-cont');
+        is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false;
+        $data_list_cont = angular.element('.data-list-cont');
+        $map_cont = angular.element('.map-cont');
+        $obj = angular.element('#map-panel-resize');
+		  
+        if (is_side_data_bar_open) {
+          $map_cont.css({
+            width: (window_width - $data_list_cont.width())
+          });
+        } else {
+          $map_cont.css({
+            width: window_width
+          });
+        }
+        
+        $obj.removeClass('full').addClass('small');
+		$scope.actual_height = 260;
+	    exampleResize.onResize($rootScope, $scope);
+        $timeout(function() {
+         viewerMap.updateSize();
+         viewerMap.renderSync();
+       }, 500); 
       };
 
       /**
@@ -627,88 +687,80 @@
       $scope.hideMapPanel = function() {
 		$predefMap = angular.element('.selected-img');
 		$predefMap.removeClass('selected-img').addClass('bg-img');
-		$tools = angular.element('.tools');
-		$tools.removeClass('control-tools-largemap').addClass('control-tools');
         angular.element('.floating-map-cont').show();
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:remove', 'full-map-view');
         $scope.$emit('body:class:remove', 'medium-map-view');
-        $scope.$emit('body:class:remove', 'large-map-view');
-        $timeout(function() {
-        searchMap.updateSize();
-        searchMap.renderSync();
-      }, 500);
       };
-      
+
       $scope.resizeMapPanel = function() {
-		  $tools = angular.element('.tools');
-		  $tools.removeClass('control-tools-largemap').addClass('control-tools');
-          $scope.mapFullView =! $scope.mapFullView;
-          var $b = angular.element(document).find('body');
-          window_width = angular.element($window).width(),
-          $map_data_list_cont = angular.element('.map-data-list-cont'),
-          is_side_data_bar_open =
-              ($map_data_list_cont.hasClass('open')) ? true : false,
-          is_full_view_map = ($b.hasClass('full-map-view')) ? true : false,
-          is_large_view_map = ($b.hasClass('large-map-view')) ? true : false,
-          $data_list_cont = angular.element('.data-list-cont'),
-          $map_cont = angular.element('.map-cont'),
-          $obj = angular.element('#map-panel-resize');
-          //To restrict GFI only when map are maximized
-          is_map_maximized.data = !is_full_view_map;
-          if (is_full_view_map) {
-            if (is_side_data_bar_open) {
-              $scope.$emit('body:class:remove', 'full-map-view');
-              $scope.$emit('body:class:add', 'medium-map-view');
-            } else {
-              $scope.$emit('body:class:remove', 'full-map-view');
-              $scope.$emit('body:class:add', 'small-map-view');
-            }
-
-            $obj.removeClass('small').addClass('full');
-          }
-          else if (is_large_view_map) {
-          	if (is_side_data_bar_open) {
-                $scope.$emit('body:class:remove', 'large-map-view');
-                $scope.$emit('body:class:add', 'medium-map-view');
-              } else {
-                $scope.$emit('body:class:remove', 'large-map-view');
-                $scope.$emit('body:class:add', 'small-map-view');
-              }
-              $obj.removeClass('small').addClass('full');
-    		}
+  		$predefMap = angular.element('.selected-img');
+		$predefMap.removeClass('selected-img').addClass('bg-img');
+        $scope.mapFullView =! $scope.mapFullView;
+        var $b = angular.element(document).find('body');
+        window_width = angular.element($window).width(),
+        $map_data_list_cont = angular.element('.map-data-list-cont'),
+        is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false,
+        is_full_view_map = ($b.hasClass('full-map-view')) ? true : false,
+        $data_list_cont = angular.element('.data-list-cont'),
+        $map_cont = angular.element('.map-cont'),
+        $obj = angular.element('#map-panel-resize');
+		$objMax = angular.element('#map-panel-resize-max');
+		$objMedium = angular.element('#map-panel-resize-medium');
+        //To restrict GFI only when map are maximized
+        is_map_maximized.data = !is_full_view_map;
+        if (is_full_view_map) {
+        	
+          $scope.mapFullView = false;
+          
+          if (is_side_data_bar_open) {
+            $scope.$emit('body:class:remove', 'full-map-view');
+            $scope.$emit('body:class:add', 'medium-map-view');
+          } 
           else {
-            $scope.$emit('body:class:remove', 'large-map-view');
-            $scope.$emit('body:class:remove', 'medium-map-view');
-            $scope.$emit('body:class:remove', 'small-map-view');
-            $scope.$emit('body:class:add', 'full-map-view');
-
-            if (is_side_data_bar_open) {
-              $map_cont.css({
-                width: (window_width - $data_list_cont.width())
-              });
-            } else {
-              $map_cont.css({
-                width: window_width
-              });
-            }
-            $obj.removeClass('full').addClass('small');
+            $scope.$emit('body:class:remove', 'full-map-view');
+            $scope.$emit('body:class:add', 'small-map-view');
           }
+          $obj.removeClass('small').addClass('full');
+    	  $obj.removeClass('ng-hide');
+		  $objMax.addClass('ng-hide');
+		  $objMedium.removeClass('ng-hide');
+        }
+        else {
+          $scope.$emit('body:class:remove', 'medium-map-view');
+          $scope.$emit('body:class:remove', 'small-map-view');
+          $scope.$emit('body:class:add', 'full-map-view');
 
-          // Refresh the viewer map
-
-          $timeout(function() {
-            viewerMap.updateSize();
-            viewerMap.renderSync();
-
-            $("div.bootstrap-table div.fixed-table-container div.fixed-table-body table").each(function( ) {
-              $( this ).bootstrapTable('resetView');
+          if (is_side_data_bar_open) {
+            $map_cont.css({
+              width: (window_width - $data_list_cont.width())
             });
+            }
+          else {
+            $map_cont.css({
+              width: window_width
+              });
+          }
+         $obj.removeClass('full').addClass('small');
+        }
+        
+        // Refresh the viewer map
+        
+		$scope.actual_height = $('.site-image-filter').height();
+        exampleResize.onResize($rootScope, $scope);
 
-          }, 500);
+        $timeout(function() {
+          viewerMap.updateSize();
+          viewerMap.renderSync();
 
-          return false;
-        };
+          $("div.bootstrap-table div.fixed-table-container div.fixed-table-body table").each(function( ) {
+            $( this ).bootstrapTable('resetView');
+          });
+
+        }, 500);
+
+        return false;
+      };
 
 
       $scope.$on('$locationChangeSuccess', function(next, current) {
@@ -720,7 +772,7 @@
 
           $timeout(function() {
             searchMap.updateSize();
-            searchMap.renderSync();
+            searchMap.renderSync(1000);
 
             // TODO: load custom context to the search map
             //gnOwsContextService.loadContextFromUrl(
@@ -768,18 +820,18 @@
       $timeout(function() {
         searchMap.updateSize();
         searchMap.renderSync();
-      }, 5000);
+      }, 2000);
 
     }]);
 
   module.controller('SweLogoutController',
 	  ['$scope', '$http',
 	  function($scope, $http) {
-		  
+
 		  $scope.logout = function() {
 			  $http({method: 'GET',
 	              url: '/AGLogout'
-	              
+
 	              /*headers: {
 	                'X-Ajax-call': true}*/})
 	            .success(function(data) {
@@ -792,7 +844,7 @@
 	           });
 		  };
 	  }]);
-  
+
   /**
    * Controller for mail feedback popup.
    *
@@ -831,6 +883,27 @@
         $scope.$emit('body:class:remove', 'show-overlay');
       };
     }]);
+  
+  /**
+   * Controller for help popup.
+   *
+   */
+  module.controller('SweHelpController', [
+    '$cookies', '$scope', '$http', '$rootScope', '$sce',
+    function($cookies, $scope, $http, $rootScope, $sce) {
+	  
+	  $rootScope.$on('openhelppopup', function (event, data) {
+		  $scope.link = data;
+		  });
+	  $scope.trustSrc = function(link) {
+		   return $sce.trustAsResourceUrl(link);
+		};
+      $scope.close = function() {
+        // Cleanup and close the dialog
+        angular.element('#help-popup').removeClass('show');
+      };
+    }]);
+
 
 
   /**
@@ -1267,7 +1340,7 @@
           //var feature = gnMap.getPolygonFeature(namesearch, $scope.searchObj.searchMap.getView().getProjection());
 
           // Build multipolygon from the set of bboxes
-          geometry = new ol.geom.MultiPolygon(null);    
+          geometry = new ol.geom.MultiPolygon(null);
           feature.setGeometry(geometry);
 
           //$scope.searchObj.searchMap.addLayer($scope.vectorLayer);
@@ -1305,7 +1378,7 @@
           return false; // always return false if cooridinates are absent. Not sure if we shall still return true.
         }
     };
-    
+
 
   }]);
 
@@ -1419,7 +1492,7 @@
                  if($scope.actual_height < 60){
                   $scope.$emit('body:class:add', 'geodata-examples-collapsed-with-cookie-alert');
                 }
-                else if($scope.actual_height < 230){
+                else if($scope.actual_height < 250){
                   $scope.$emit('body:class:add', 'geodata-examples-expanded-with-cookie-alert');
                 }
                 else{
@@ -1435,19 +1508,19 @@
                 if($scope.actual_height < 60){
                   $scope.$emit('body:class:add', 'geodata-examples-collapsed-without-cookie-alert');
                 }
-                else if($scope.actual_height < 230){
+                else if($scope.actual_height < 250){
                   $scope.$emit('body:class:add', 'geodata-examples-expanded-without-cookie-alert');
                 }
                 else{
                   $scope.$emit('body:class:add', 'geodata-examples-expanded-larger-without-cookie-alert');
                 }
               }
-          }        
+          }
         }
 
       }
     }
-      
+
   });
 
 })();
