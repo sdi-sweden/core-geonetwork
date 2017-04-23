@@ -746,7 +746,7 @@
               width: window_width
               });
           }
-         $obj.removeClass('full').addClass('small');
+          $obj.removeClass('full').addClass('small');
         }
         
         // Refresh the viewer map
