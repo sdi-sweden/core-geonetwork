@@ -61,6 +61,56 @@
     <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
   </listener>
 
+	<!-- added by LM -->
+	
+	
+	<filter>
+        <filter-name>HeaderLogger</filter-name>
+        <filter-class>org.lmv.geodata.common.server.servlet.filter.LogHeaderValuesFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HeaderLogger</filter-name>
+        <!-- this will log headers when user switches language to spanish -->
+        <url-pattern>/srv/spa/catalog.search</url-pattern>
+    </filter-mapping>
+	
+	 
+	<filter>
+        <filter-name>RoleExtractor</filter-name>
+        <filter-class>org.lmv.geodata.common.server.servlet.filter.header.CommaStringChooserFilter</filter-class>
+        <init-param>
+            <param-name>headerKey</param-name>
+            <param-value>role</param-value>
+        </init-param>
+        <init-param>
+            <param-name>validValues</param-name>
+            <param-value>geodatase_sysadmin, geodatase_admin, geodatase_editor, geodatase_publisher, geodatase_user</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoleExtractor</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>RoleMapper</filter-name>
+        <filter-class>org.lmv.geodata.common.server.servlet.filter.header.HeaderValueMapperFilter</filter-class>
+        <init-param>
+            <param-name>headerKey</param-name>
+            <param-value>role</param-value>
+        </init-param>
+        <init-param>
+            <param-name>valueMappings</param-name>
+            <param-value>geodatase_sysadmin=Administrator,geodatase_admin=UserAdmin,geodatase_publisher=Reviewer,geodatase_editor=Editor,geodatase_user=Guest</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoleMapper</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	
+	<!-- end added by LM -->
+	
   <!-- Spring security -->
   <!--     <filter>
           <filter-name>springSecurityFilterChain</filter-name>
