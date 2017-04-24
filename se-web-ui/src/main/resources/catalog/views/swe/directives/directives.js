@@ -390,7 +390,7 @@
     	  $rootScope.$on('closePredefMap', function() {
               scope.selectedItem = -1;
               var predefMapArrow = angular.element('#predefmapsArrow');
-              if(!predefMapArrow.hasClass('collapsed')){
+              if(!predefMapArrow.hasClass('cls-btn icon-down-dir')){
             	  $timeout(function() {
             		  predefMapArrow.trigger('click'); 
             	  }, 100);
