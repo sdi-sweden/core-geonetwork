@@ -614,6 +614,7 @@
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:add', 'full-map-view');
 		$scope.mapFullView = true;
+        is_map_maximized.data = true;
         window_width = angular.element($window).width();
 		$map_data_list_cont = angular.element('.map-data-list-cont');
         is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false;
@@ -655,6 +656,7 @@
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:add', 'full-map-view');
 		$scope.mapFullView = true;
+        is_map_maximized.data = true;
         window_width = angular.element($window).width();
 		$map_data_list_cont = angular.element('.map-data-list-cont');
         is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false;
