@@ -75,10 +75,12 @@
              * @param {string} query string value of the search input
              */
             this.search = function(query) {
-             if (query.length < 3) {
-            	  $scope.collapsed = true;
-            	  return;
+              if (query.length == 0) {
+                $scope.collapsed = true;
+                $scope.clearInput();
+                return;
               }
+              if (query.length < 3) return;
 
               var coord = gnGetCoordinate(
                   $scope.map.getView().getProjection().getWorldExtent(), query);
@@ -138,6 +140,7 @@
                         });
                       }
                     }
+                    $scope.collapsed = false;
                   });
             };
           }],
