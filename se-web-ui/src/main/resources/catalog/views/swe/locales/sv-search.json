@@ -76,7 +76,6 @@
     "downloadableResources": "Nedladdningsbart",
     "drawingOnMap": "Rita på karta",
     "favourites":"favoriter",
-    "geographical":"geografisk",
     "aboutGeodata": "Om Geodata.se",
     "aboutGeodataportal": "I Geodataportalen kan du enkelt söka, hitta och titta på geodata.",
     "aboutLm": "Lantmäteriet är nationell samordnare för geodataområdet och Sveriges kontaktpunkt för Inspire-genomförandet.",
@@ -105,4 +104,5 @@
     "popupClose": "Stäng",
     "readMore": "Läs mer",
     "Graticule": "Rutnät"
+    ,"geographical":"geografisk"
 }
