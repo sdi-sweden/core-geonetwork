@@ -75,6 +75,11 @@
              * @param {string} query string value of the search input
              */
             this.search = function(query) {
+              if (query.length == 0) {
+                $scope.collapsed = true;
+                $scope.clearInput();
+                return;
+              }
               if (query.length < 3) return;
 
               var coord = gnGetCoordinate(
@@ -102,10 +107,6 @@
 
               //TODO: move api url and username to config
               var url = 'http://api.geonames.org/searchJSON';
-        	  //redirect http request via proxy
-           	  if (!url.includes("https://")) {
-          		url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-              }  
               $http.get(url, {
                 params: {
                   lang: lang,
@@ -135,6 +136,7 @@
                         });
                       }
                     }
+                    $scope.collapsed = false;
                   });
             };
           }],
