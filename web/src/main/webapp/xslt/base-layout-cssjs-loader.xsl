@@ -146,6 +146,7 @@
         <script
           src="{$uiResourcesPath}lib/bootstrap.ext/datepicker/bootstrap-datepicker.js"></script>
         <script src="{$uiResourcesPath}lib/bootstrap-table/dist/bootstrap-table.js"></script>
+        <script src="{$uiResourcesPath}lib/bootstrap-table/dist/locale/bootstrap-table-sv-SE.js"></script>
         <script src="{$uiResourcesPath}lib/bootstrap-table/src/extensions/export/bootstrap-table-export.js"></script>
         <!--</xsl:if>-->
 
