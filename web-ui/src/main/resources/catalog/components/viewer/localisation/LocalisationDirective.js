@@ -107,6 +107,10 @@
 
               //TODO: move api url and username to config
               var url = 'http://api.geonames.org/searchJSON';
+        	  //redirect http request via proxy
+           	  if (!url.includes("https://")) {
+          		url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+              }  
               $http.get(url, {
                 params: {
                   lang: lang,
