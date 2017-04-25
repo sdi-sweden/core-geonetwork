@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -705,7 +705,7 @@
         $data_list_cont = angular.element('.data-list-cont'),
         $map_cont = angular.element('.map-cont'),
         $obj = angular.element('#map-panel-resize');
-angular.element('#imageFilter').scope().is_image_clicked = false;
+        angular.element('#imageFilter').scope().is_image_clicked = false;
         $timeout(function() {
               angular.element('.bg-img').css("opacity", "1");
               angular.element('.selected-img').css("opacity", "1");
