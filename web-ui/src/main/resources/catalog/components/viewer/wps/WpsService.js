@@ -96,10 +96,6 @@
 
         //send request and decode result
         if (gnUrlUtils.isValid(url)) {
-    	    //redirect http request via proxy
-	    	if (!url.includes("https://")) {
-	    		url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-	    	}  
           return $http.get(url, {
             cache: true
           }).then(
