@@ -161,11 +161,6 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-            	//redirect http request via proxy
-              	if (!url.includes("https://")) {
-              		url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-              	}  
-              	//send request and decode result
                 $http.get(url, {
                   cache: true
                 })
@@ -194,10 +189,7 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-          	    //redirect http request via proxy
-                if (!url.includes("https://")) {
-                	url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                }  
+
                 $http.get(url, {
                   cache: true
                 })
