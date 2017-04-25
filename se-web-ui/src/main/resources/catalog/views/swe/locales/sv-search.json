@@ -1,10 +1,10 @@
 ﻿{
     "geographicalFilterTooltip-title": "Geografiskt filter",
-    "geographicalFilterTooltip-desc": "Geografiskt filter ...",
-    "geographicalFilterTooltip-link": "/geodataportalens-hjalpsidor/forstasidan/",
+    "geographicalFilterTooltip-desc": "Förfina sökning baserat på resurser inom angivet område",
+    "geographicalFilterTooltip-link": "/geodataportalens-hjalpsidor/forstasidan/avancerad-vy#Geografi",
     "facetsFilterTooltip-title": "Fasettfilter",
-    "facetsFilterTooltip-desc": "Fasettfilter ...",
-    "facetsFilterTooltip-link": "/geodataportalens-hjalpsidor/forstasidan/kartpanel/",
+    "facetsFilterTooltip-desc": "Förfina sökning baserat på organisation, kategori och nyckelord",
+    "facetsFilterTooltip-link": "/geodataportalens-hjalpsidor/forstasidan/avancerad-vy",
     "advancedSearchTooltip-title": "Avancerad sökning",
     "advancedSearchTooltip-desc": "Förfina sökning baserat på organisation, kategori och initiativ",
     "advancedSearchTooltip-link": "/geodataportalens-hjalpsidor/forstasidan/sokpanel/",
@@ -100,5 +100,5 @@
     "norksaDataTooltip-link": "http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/",
     "popupClose": "Stäng",
     "readMore": "Läs mer",
-    "Graticule": "Fokalplatta"
+    "Graticule": "Rutnät"
 }
