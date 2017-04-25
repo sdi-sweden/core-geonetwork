@@ -189,6 +189,7 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
+
                 $http.get(url, {
                   cache: true
                 })
