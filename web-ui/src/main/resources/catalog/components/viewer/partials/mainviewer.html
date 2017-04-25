@@ -23,7 +23,7 @@
       <span role="tooltip" data-translate="">AddALayer</span>
     </button>
     <button class="btn btn-default" ng-model="activeTools.layers" ng-show="manageLayersTool" type="submit"
-            rel="#layers" gi-btn gnv-tools-btn>
+            rel="#layers" id="layersButton" gi-btn gnv-tools-btn>
       <span class="fa fa-tasks"></span>
       <span role="tooltip" data-translate="">ManageLayers</span>
     </button>
@@ -32,12 +32,12 @@
       <span class="fa fa-book"></span>
       <span role="tooltip" data-translate="">Contexts</span>
     </button>
-    <button class="btn btn-default" ng-model="activeTools.print" type="submit"
+<!--     <button class="btn btn-default" ng-model="activeTools.print" type="submit"
             data-ng-hide="is3dEnabled || !printTool"
             rel="#print" gi-btn gnv-tools-btn>
       <span class="fa fa-print"></span>
-      <span role="tooltip" data-translate="">Skriv ut</span>
-    </button>
+      <span role="tooltip" data-translate="">PrintTheMap</span>
+    </button> -->
 
     <button class="btn btn-default" type="submit"
             data-ng-click="syncMod()" ng-show="syncLayersTool">

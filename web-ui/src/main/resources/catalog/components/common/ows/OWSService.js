@@ -171,10 +171,7 @@
               delete defaultParams[p.toLowerCase()];
             }
           }
-
-          return gnUrlUtils.append(parts[0],
-              gnUrlUtils.toKeyValue(defaultParams));
-
+    	  return gnUrlUtils.append(parts[0], gnUrlUtils.toKeyValue(defaultParams));
 
         };
         return {
@@ -232,7 +229,7 @@
                  	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
                     }
                   }
-                  $http.get(url, {
+                $http.get(url, {
                   cache: true
                 })
                     .success(function(data, status, headers, config) {

@@ -347,10 +347,10 @@
    * Shows predefined maps filters on home page.
    *
    */
-  module.directive('swePredefinedMapsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings',
-    function($http, $rootScope, gnOwsContextService, gnSearchSettings) {
+  module.directive('swePredefinedMapsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings', '$timeout',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings, $timeout) {
       return {
-        restrict: 'E',
+        restrict: 'EA',
         replace: true,
         templateUrl: '../../catalog/views/swe/directives/' +
           'partials/predefinedMaps.html',
@@ -360,7 +360,8 @@
           showMapFn: '&',
           showMapFnApi: '&',
           configUrl: '@',
-          selectedItem: '@'
+          selectedItem: '@',
+          isImageClicked: '='
         },
         link: function(scope, element, attrs) {
           scope.$watch("configUrl", function(value) {
@@ -392,14 +393,40 @@
           
           scope.doView = function(index, predefinedMap) {
           	  scope.selectedItem = index;
+              scope.isImageClicked = true;
               gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+               $timeout(function() {
+                  angular.element('.bg-img').css("opacity", "0.2");
+                  angular.element('.selected-img').css("opacity", "1");
+                }, 250);
+              
               scope.showMapFn()();
+              angular.element('#layers').removeClass('ng-hide');
+  			  var layersButton = angular.element('#layersButton');
+  			  if (!layersButton.hasClass('active')){
+  			     $timeout(function() {
+  			        layersButton.trigger('click');
+  			     }, 500);
+  			  }
             };
 
           scope.doViewFromApi = function(index, predefinedMap) {
         	scope.selectedItem = index;
+            scope.isImageClicked = true;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+            $timeout(function() {
+                angular.element('.bg-img').css("opacity", "0.2");
+                angular.element('.selected-img').css("opacity", "1");
+              }, 250);
+            
             scope.showMapFnApi()();
+            angular.element('#layers').removeClass('ng-hide');
+			var layersButton = angular.element('#layersButton');
+			if (!layersButton.hasClass('active')){
+			   $timeout(function() {
+			      layersButton.trigger('click');
+			   }, 500);
+			}
           };
         }
       };
@@ -415,8 +442,8 @@
    * Shows geotechnics on home page.
    *
    */
-  module.directive('sweGeoTechnicsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings',
-    function($http, $rootScope, gnOwsContextService, gnSearchSettings) {
+  module.directive('sweGeoTechnicsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings', '$timeout',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings, $timeout) {
       return {
         restrict: 'E',
         replace: true,
@@ -438,10 +465,18 @@
           });
 
           scope.doView = function(geoTechnic) {
-        	$rootScope.$emit('closePredefMap');
-            gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
-            scope.showMapFn()();
-          };
+            selectedPredefMap = angular.element('.selected-img');
+            if(selectedPredefMap.length > 0){
+               selectedPredefMap.removeClass('selected-img').addClass('bg-img');
+                $timeout(function() {
+                  angular.element('.bg-img').css("opacity", "1");
+                  angular.element('.selected-img').css("opacity", "1");
+                }, 500);
+            }
+          	$rootScope.$emit('closePredefMap');
+              gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
+              scope.showMapFn()();
+            };
         }
       };
   }]);
@@ -740,5 +775,5 @@
           } //end of link
       }
     }]);
-
+    
 }());
