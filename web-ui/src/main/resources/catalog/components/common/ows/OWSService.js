@@ -161,7 +161,6 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-              	//send request and decode result
                 $http.get(url, {
                   cache: true
                 })
