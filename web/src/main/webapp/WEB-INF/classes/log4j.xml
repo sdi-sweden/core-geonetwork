@@ -32,12 +32,15 @@
     <logger name="org.lmv.geodata.common.server.servlet.filter.header">
         <level value="WARN" />
     </logger>
-    
+
   <!-- Geonetwork module (and submodule) logging -->
   <logger name="geonetwork" additivity="false">
     <level value="WARN"/>
     <appender-ref ref="consoleAppender"/>
     <appender-ref ref="fileAppender"/>
+  </logger>
+   <logger name="geonetwork.lmproxy">
+    <level value="DEBUG"/>
   </logger>
   <logger name="geonetwork.search">
     <level value="WARN"/>
