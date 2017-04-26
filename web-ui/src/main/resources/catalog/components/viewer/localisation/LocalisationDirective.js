@@ -109,6 +109,7 @@
                   type: 'json',
                   maxRows: 10,
                   name_startsWith: query,
+                  country: 'SE',
                   east: 24.1633,
                   west: 10.9614,
                   north: 69.059,
