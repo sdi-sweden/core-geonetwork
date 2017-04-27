@@ -1272,16 +1272,27 @@
         </section>
 
         <section name="resources">
-          <field name="distributorContact"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact" />
+         <section xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor" or="distributor"
+                   in="/gmd:MD_Metadata"/>
 
-          <field name="distributionFormat"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat">
-          </field>
-
-          <field name="distributionFormat"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine">
-          </field>
+          <action type="add" name="add-distributor" btnLabel="add-distributor"
+                  or="distributor" in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution">
+            <template>
+              <snippet>
+                <gmd:distributor>
+                  <gmd:MD_Distributor>
+                    <gmd:distributorContact></gmd:distributorContact>
+                    <gmd:distributorFormat></gmd:distributorFormat>
+                    <gmd:distributorTransferOptions>
+                      <gmd:MD_DigitalTransferOptions>
+                        <gmd:onLine></gmd:onLine>
+                      </gmd:MD_DigitalTransferOptions>
+                    </gmd:distributorTransferOptions>
+                  </gmd:MD_Distributor>
+                </gmd:distributor>
+              </snippet>
+            </template>
+          </action>
         </section>
 
         <section name="inspire_sds"  displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
