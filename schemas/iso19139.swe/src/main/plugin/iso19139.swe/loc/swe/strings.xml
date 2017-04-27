@@ -84,11 +84,11 @@
   <temporalRangeSection>Temporaluträckning</temporalRangeSection>
   <beginPosition>Start</beginPosition>
   <endPosition>Slut</endPosition>
-  <conformity>Överensstämmelse</conformity>
+  <conformity>Specifikationsuppfyllelse</conformity>
   <conformity_title>Titel</conformity_title>
   <conformity_date>Datum</conformity_date>
   <explanation>Förklaring</explanation>
-  <pass>Överensstämmer</pass>
+  <pass>Överensstämmelse</pass>
   <indeterminatePosition>Obestämbar position</indeterminatePosition>
   <pointOfContact>Resurskontakt</pointOfContact>
   <distributorContactView>Distributionskontakt</distributorContactView>
