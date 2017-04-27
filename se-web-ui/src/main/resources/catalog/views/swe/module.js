@@ -675,7 +675,7 @@
         }
         
         $obj.removeClass('full').addClass('small');
-		$scope.actual_height = 260;
+		$scope.actual_height = 240;
 	    exampleResize.onResize($rootScope, $scope);
         $timeout(function() {
          viewerMap.updateSize();
