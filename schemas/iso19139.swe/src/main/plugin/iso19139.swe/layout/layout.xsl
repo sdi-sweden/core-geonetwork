@@ -332,7 +332,7 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$refSystemModel}, {$refSystemTableModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '{local-name()}', '#refsystem-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$refSystemModel}, {$refSystemTableModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '{local-name()}', '#refsystem-popup', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -442,7 +442,7 @@
 
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$dateModel},  {$dateTableModel}, '{$dateXmlSnippet}', {../gn:element/@ref}, '{local-name()}',  '#date-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$dateModel},  {$dateTableModel}, '{$dateXmlSnippet}', {../gn:element/@ref}, '{local-name()}',  '#date-popup', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -623,7 +623,7 @@
 
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$contactModel}, {$contactTableModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#contact-popup-{local-name()}', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$contactModel}, {$contactTableModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#contact-popup-{local-name()}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -765,7 +765,7 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#format-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#format-popup', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -875,7 +875,7 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$thumbnailModel}, {$thumbnailTableModel}, '{$thumbnailXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#thumbnail-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$thumbnailModel}, {$thumbnailTableModel}, '{$thumbnailXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#thumbnail-popup', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -995,7 +995,7 @@
     </xsl:variable>
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
