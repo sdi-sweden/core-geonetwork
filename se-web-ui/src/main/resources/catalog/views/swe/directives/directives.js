@@ -307,7 +307,7 @@
 		  
           scope.openPopup = function() {
         	  var url = scope.prefix + scope.link;
-        	  $rootScope.$emit('openhelppopup', scope.link);
+        	  $rootScope.$emit('openhelppopup', url);
 		  }
         }
       };
