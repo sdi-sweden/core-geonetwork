@@ -279,7 +279,7 @@
         },
         link: function(scope, elem) {
           gnConfigService.loadPromise.then(function() {
-            scope.prefix = gnConfig['system.server.host'];
+            scope.prefix = gnConfig['system.ui.tooltiphelpurlprefix'];
           });
 
           $timeout(function () {
