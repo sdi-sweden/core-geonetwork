@@ -206,33 +206,21 @@
 
             var projection = ol.proj.get('EPSG:3006');
 
-            var tileGrid = new ol.tilegrid.WMTS({
-              tileSize: 256,
-              extent: extent,
-              resolutions: resolutions,
-              matrixIds: matrixIds
+            var wms = new ol.layer.Tile({
+            	group: 'Background layers',
+            	crossOrigin: 'anonymous',
+            	url: '../../topo-wms',
+                source: new ol.source.TileWMS({
+                    url: '../../topo-wms',
+                    params: {
+                        FORMAT: 'image/png',
+                        VERSION: '1.1.1',
+                        SRS: 'EPSG:3006',
+                        LAYERS: 'topowebbkartan'
+                    }
+                })
             });
-
-            var apiKey = 'a9a380d6b6f25f22e232b8640b05ea8';
-
-            var wmts = new ol.layer.Tile({
-              extent: extent,
-              group: 'Background layers',
-              url:  'https://api.lantmateriet.se/open/topowebb-ccby/' +
-              'v1/wmts/token/' + apiKey + '/',
-              source: new ol.source.WMTS({
-                url: 'https://api.lantmateriet.se/open/topowebb-ccby/' +
-                    'v1/wmts/token/' + apiKey + '/',
-                layer: 'topowebb',
-                format: 'image/png',
-                matrixSet: '3006',
-                tileGrid: tileGrid,
-                version: '1.0.0',
-                style: 'default',
-                crossOrigin: 'anonymous'
-              })
-            }); 
-
+            
             var mapsConfig = {
               resolutions: resolutions,
               extent: extent,
@@ -243,7 +231,7 @@
 
              var map = new ol.Map({
                layers: [
-                 wmts,
+                 wms,
                  bboxLayer
                ],
                renderer: 'canvas',

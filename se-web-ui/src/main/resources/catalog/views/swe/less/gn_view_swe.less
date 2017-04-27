@@ -413,22 +413,22 @@ body.loggedin-user .header-logout {
 }
 //For map dock
 .geodata-examples-expanded-with-cookie-alert .site-side-map-cont {
-  top: 377px;
+  top: 381px;
 }
 .geodata-examples-collapsed-with-cookie-alert .site-side-map-cont {
-  top: 238px;
+  top: 175px;
 }
 .geodata-examples-expanded-larger-with-cookie-alert .site-side-map-cont {
-  top: 397px;
+  top: 406px;
 }
 .geodata-examples-expanded-without-cookie-alert .site-side-map-cont {
-  top: 287px;
+  top: 290px;
 }
 .geodata-examples-collapsed-without-cookie-alert .site-side-map-cont {
-  top: 115px;
+  top: 85px;
 }
 .geodata-examples-expanded-larger-without-cookie-alert .site-side-map-cont {
-  top: 305px;
+  top: 316px;
 }
 /*For IE edge horizontal scrollbar height differs.So Changed margin top to make map dock*/
 @supports (-ms-ime-align:auto) {
@@ -592,6 +592,43 @@ body.loggedin-user .header-logout {
   font-weight: normal;
   font-size: 12px;
 }
+.predef-map-help .tool-tip-cont.open {
+  display: block;
+}
+.predef-map-help .tool-tip-cont {
+  position: absolute;
+  width: 260px;
+  padding: 0 30px;
+  box-sizing: border-box;
+  background-color: #27605d;
+  left: -80px;
+  margin-left: -130px;
+  top: 178px;
+  z-index: 1000;
+  display: none;
+}
+.predef-map-help .tool-tip-cont .tool-tip {
+  *zoom: 1;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  position: relative;
+}
+.predef-map-help .tool-tip-cont .triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-bottom: 9px solid #27605d;
+  border-right: 9px solid transparent;
+  top: -38px;
+  left: 95px;
+}
+.predef-map-help {
+  top:25px;
+  left:86%;
+  position: relative;
+}
 .help-icn-cont {
   display: inline-block;
   cursor: pointer;
@@ -612,6 +649,10 @@ body.loggedin-user .header-logout {
 }
 .help-icn-cont .icon-help:before {
   color: #bfbfbf;
+}
+.predef-map-help .help-icn-cont .icon-help:before {
+  color: #bfbfbf;
+  background-color: #27605d;
 }
 .fltr-link {
   display: inline-block;
@@ -1728,7 +1769,18 @@ body.loggedin-user .header-logout {
   min-width: 940px;
   box-sizing: border-box;
 }
+
+.popupHelp {
+  position: fixed;
+  z-index: 1001;
+  display: none;
+  width: 100%;
+  box-sizing: border-box;
+}
 .popup.show {
+  display: block;
+}
+.popupHelp.show {
   display: block;
 }
 .popup.landing-popup {
@@ -1739,6 +1791,18 @@ body.loggedin-user .header-logout {
 }
 .popup.mail-popup {
   max-width: 585px;
+}
+.popupHelp.help-popup {
+  max-width: 800px;
+  height: 400px;
+}
+.popup-cont-header {
+  height:2em;
+  background-color:grey;
+}
+.popup-cont iframe {
+	width: 100%;
+	height: 400px;
 }
 .popup.geodata-row-popup {
   max-width: 1200px;
@@ -2008,7 +2072,6 @@ body.loggedin-user .header-logout {
   box-sizing: border-box;
   opacity: 0.7;
 }
-
 .site-image-filter .img-list li .selected-img {
   border: 5px solid #fff;
   background-repeat: no-repeat;
@@ -2019,7 +2082,6 @@ body.loggedin-user .header-logout {
   box-sizing: border-box;
   opacity: 1;
 }
-
 .site-image-filter .img-list li .filter-text {
   font-family: 'Roboto', sans-serif;
   font-weight: normal;
@@ -2065,6 +2127,12 @@ body.loggedin-user .header-logout {
 }
 .site-geo-type-filter .search-show-only {
     padding-top: 5px;
+}
+.site-geo-type-filter .search-show-only .tool-tip-cont {
+  left: 130px;
+}
+.site-geo-type-filter .search-show-only .tool-tip-cont .triangle {
+  left: -25px;
 }
 .site-geo-type-filter .type-filter-list {
   display: inline-block;
@@ -2175,6 +2243,45 @@ body.loggedin-user .header-logout {
   left: -1px;
 }*/
 
+.map-view .help-icn-cont {
+  position: relative;
+  right: 10px;
+  top: 0px;
+}
+.map-view .tool-tip-cont {
+  margin-left: -240px;
+}
+.map-view .tool-tip-cont .triangle {
+  left: 204px;
+}
+.map-view .tool-tip-cont p {
+  white-space: pre-wrap;
+}
+.btn-map-help{
+  border-radius:0px;
+  border-color:white;
+}
+.facet .help-icn-cont {
+  position: absolute;
+  right: -10px;
+  top: 10px;
+  padding: 10px;
+}
+.result-help .help-icn-cont{
+  left: 0px;
+}
+.result-help .help-icn-cont .tool-tip-cont{
+  margin-left: -15px;
+}
+.result-help .tool-tip-cont .triangle {
+  left: -21px;
+}
+.geo-cat .help-icn-cont {
+  position: absolute;
+  right: 8px;
+  top: 30px;
+  padding: 10px;
+}
 .geo-categories {
   max-width: 1270px;
   width: 100%;
@@ -3266,6 +3373,8 @@ body.loggedin-user .header-logout {
   width: 100%;
   max-width: 319px;
 }
+
+
 .mail-section-cont {
   *zoom: 1;
 }
@@ -3520,7 +3629,7 @@ a.link-btn[disabled] {
 }
 /* pre defined maps*/
 .site-image-filter .image-filter-text {
-  margin: 19px 0 19px;
+  margin: 19px 0 0px;
 }
 .site-image-filter .img-list li {
   margin: 0 0 12px 12px;
