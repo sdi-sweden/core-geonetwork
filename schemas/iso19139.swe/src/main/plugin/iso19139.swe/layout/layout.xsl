@@ -1051,7 +1051,7 @@
               <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:description', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
             </label>
 
-            <input type="text" class="form-control" data-ng-model="editRow.description" />
+            <textarea  class="form-control" data-ng-model="editRow.description"></textarea>
           </div>
 
           <div class="">
