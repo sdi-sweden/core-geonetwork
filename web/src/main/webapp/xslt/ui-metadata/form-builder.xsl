@@ -591,6 +591,11 @@
                         </xsl:attribute>
                       </xsl:for-each>
                     </div>
+					<xsl:if test="@use = 'gn-checkbox-with-nilreason'">
+					<br/>
+					<br/>
+					<br/>
+					</xsl:if>
                   </xsl:when>
                   <xsl:otherwise>
                     <xsl:variable name="keyIndex" select="position()"/>

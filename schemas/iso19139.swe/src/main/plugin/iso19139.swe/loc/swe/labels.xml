@@ -2295,7 +2295,7 @@ Ex. “under produktion” eller ”färdigställd”.</description>
 		<description>Namn som den hänvisade rapporten är känd under</description>
         <condition>mandatory</condition>
 		<helper sort="false">
-			<option show="y" title="Kommissionens förordning nr 976/2009 avseende nättjänster" value="Kommissionens förordning nr 976/2009 avseende nättjänster">Kommissionens förordning nr 976/2009 avseende nättjänster</option>
+			<option show="y" title="Kommissionens förordning nr 976/2009 avseende nättjänster" value="Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster">Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster</option>
 			<option show="y" title="KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster" value="KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster">KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster</option>
 			<option show="y" value="Tekniskt ramverk version 2.0">Tekniskt ramverk version 2.0</option>
 			<option show="y" value="INSPIRE Data Specification on Protected Sites - Guidelines">INSPIRE Data Specification on Protected Sites - Guidelines</option>
