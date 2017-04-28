@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
   ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
@@ -45,6 +45,34 @@
       org.apache.jcs.utils.servlet.JCSServletContextListener
     </listener-class>
   </listener>
+
+
+  <filter>
+      <filter-name>LmProxyFilter</filter-name>
+      <filter-class>
+          se.lantmateriet.geonet.LmProxyFilter
+      </filter-class>
+      <init-param>
+          <param-name>endpoint.parameter</param-name>
+          <param-value>url</param-value>
+      </init-param>
+      <init-param>
+          <param-name>clearcache.allowed</param-name>
+          <param-value>true</param-value>
+      </init-param>
+       <init-param>
+          <param-name>allowed.hosts</param-name>
+          <param-value>www.geodata.se,ver.geodata.se,utv.geodata.se</param-value>
+      </init-param>
+
+  </filter>
+
+  <filter-mapping>
+      <filter-name>LmProxyFilter</filter-name>
+      <url-pattern>/lm-proxy</url-pattern>
+      <url-pattern>/proxy</url-pattern>
+  </filter-mapping>
+
   <filter>
     <filter-name>characterEncodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -60,6 +88,56 @@
   <listener>
     <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
   </listener>
+
+	<!-- added by LM -->
+
+
+	<filter>
+        <filter-name>HeaderLogger</filter-name>
+        <filter-class>org.lmv.geodata.common.server.servlet.filter.LogHeaderValuesFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HeaderLogger</filter-name>
+        <!-- this will log headers when user switches language to spanish -->
+        <url-pattern>/srv/spa/catalog.search</url-pattern>
+    </filter-mapping>
+
+
+	<filter>
+        <filter-name>RoleExtractor</filter-name>
+        <filter-class>org.lmv.geodata.common.server.servlet.filter.header.CommaStringChooserFilter</filter-class>
+        <init-param>
+            <param-name>headerKey</param-name>
+            <param-value>role</param-value>
+        </init-param>
+        <init-param>
+            <param-name>validValues</param-name>
+            <param-value>geodatase_sysadmin, geodatase_admin, geodatase_editor, geodatase_publisher, geodatase_user</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoleExtractor</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>RoleMapper</filter-name>
+        <filter-class>org.lmv.geodata.common.server.servlet.filter.header.HeaderValueMapperFilter</filter-class>
+        <init-param>
+            <param-name>headerKey</param-name>
+            <param-value>role</param-value>
+        </init-param>
+        <init-param>
+            <param-name>valueMappings</param-name>
+            <param-value>geodatase_sysadmin=Administrator,geodatase_admin=UserAdmin,geodatase_publisher=Reviewer,geodatase_editor=Editor,geodatase_user=Guest</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoleMapper</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+	<!-- end added by LM -->
 
   <!-- Spring security -->
   <!--     <filter>
@@ -220,6 +298,59 @@
     <filter-name>resources</filter-name>
     <url-pattern>/map/*</url-pattern>
   </filter-mapping>
+
+<!-- added by LM -->
+    <servlet>
+        <display-name>LmProxy</display-name>
+        <servlet-name>LmProxy</servlet-name>
+        <servlet-class>
+            org.lmv.geodata.common.server.servlet.proxy.BasicAuthProxyServlet</servlet-class>
+        <init-param>
+            <param-name>request.param.url</param-name>
+            <param-value>url</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>loginConfig</param-name>
+            <param-value>${lmProxy.loginConfig}</param-value>
+        </init-param>
+         <init-param>
+            <param-name>acceptAll</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LmProxy</servlet-name>
+        <url-pattern>/lm-proxy</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+		<display-name>Proxy for topowebb wms service</display-name>
+		<servlet-name>TopoWmsProxy</servlet-name>
+		<servlet-class>
+			org.lmv.geodata.common.server.servlet.proxy.BasicAuthProxy</servlet-class>
+		<init-param>
+			<param-name>proxyEndpoint</param-name>
+			<param-value>http://maps.lantmateriet.se/topowebb/wms/v1</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>userName</param-name>
+			<param-value>${topo-wms.userName}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>pwd</param-name>
+			<param-value>${topo-wms.pwd}</param-value>
+		</init-param>
+	</servlet>
+
+    <servlet-mapping>
+		<servlet-name>TopoWmsProxy</servlet-name>
+		<url-pattern>/topo-wms</url-pattern>
+	</servlet-mapping>
+
+<!-- end added by LM -->
 
   <!-- Print servlet -->
   <servlet>
