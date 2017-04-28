@@ -176,15 +176,41 @@
               // button to it.
               //
               //  If it's not found, place the button just before the element
+              // <label class="control-label" ...
+              //     <div>
+              //       <input ...
               var asideCol = element.parent('div').prev();
 
               if (asideCol.hasClass('control-label')) {
                 asideCol.append(tooltipIconCompiled);
               } else {
-                element.before(tooltipIconCompiled);
+                // Check if a template field, 2 cases:
+
+                // <label ...
+                // <input ...
+                asideCol = element.prev();
+                if (asideCol.is('label')) {
+                  asideCol.append(tooltipIconCompiled);
+
+                } else {
+                  // <label class="control-label" ...
+                  // <div>
+                  //   <div>
+                  //     <div>
+                  //       <input ...
+                  asideCol = element.parent('div').parent('div').parent('div').prev();
+
+                  if (asideCol.hasClass('control-label')) {
+                    asideCol.append(tooltipIconCompiled);
+                  } else {
+                    element.before(tooltipIconCompiled);
+                  }
+
+                }
               }
 
             }
+
 
             // if element is a fieldset legend
             if (element.is('legend')) {
@@ -192,7 +218,8 @@
               stopEventBubble = true;
             }
             if (element.is('label')) {
-              element.parent().children('div').append(tooltipIconCompiled);
+              element.append(tooltipIconCompiled);
+              //element.parent().children('div').append(tooltipIconCompiled);
             }
           }
 
