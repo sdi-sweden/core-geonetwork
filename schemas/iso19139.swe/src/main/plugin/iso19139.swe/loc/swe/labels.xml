@@ -904,7 +904,7 @@ metadatamängden avser</description>
     </element>
     <element context="gmd:CI_Citation" id="362.0" name="gmd:date">
         <condition>mandatory</condition>
-        <label>Referensdatum</label>
+        <label>Referensdatum (Händelsedatum)</label>
         <description>Händelse angiven med datum för resursen</description>
         <_condition>M</_condition>
     </element>
@@ -1342,7 +1342,7 @@ för handhavande av resurs eller metadata i den
 angivna skyddsklassen.</description>
     </element>
     <element id="6.0" name="gmd:hierarchyLevel">
-        <label>Hierarkisk nivå</label>
+        <label>Resurstyp</label>
         <description>Hierarkisk nivå för den resurs som metadatamängden beskriver
 Exempelvis: datamängd, datamängdserie eller tjänst.…</description>
       <condition>mandatory</condition>
@@ -1477,7 +1477,7 @@ Detta undviker vi att ange, ange istället organisation.</description>
         <description>indikation om huruvida objektivets felteckning är tillgänglig</description>
     </element>
     <element id="139.0" name="gmd:level">
-        <label>Hierarkisk nivå</label>
+        <label>Resurstyp</label>
         <description>Hierarkisk nivå för de data som kvalitetsrapporteringen omfattar</description>
         <condition>mandatory</condition>
     </element>

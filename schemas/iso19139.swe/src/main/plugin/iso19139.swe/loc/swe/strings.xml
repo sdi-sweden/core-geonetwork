@@ -74,7 +74,7 @@
 
   <!-- INSPIRE view labels and help -->
   <url>Onlinelänk</url>
-  <identifier>Resursidentifierare</identifier>
+  <identifier>Resursidentfierare</identifier>
   <rsIdentifier>Projektion</rsIdentifier>
   <referenceDate>Temporal information</referenceDate>
   <creationDate>Produktionsdatum</creationDate>
