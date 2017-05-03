@@ -624,7 +624,7 @@
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition"
                      use="gn-date-picker"
                      tooltip="gml:beginPosition">
-                  <directiveAttributes data-tag-name="gml:beginPosition"/>
+                  <directiveAttributes data-tag-name="gml:beginPosition" data-hide-time="true"/>
                 </key>
                 <key label="endPosition"
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition"
@@ -632,8 +632,7 @@
                      tooltip="gml:endPosition"
                 >
                   <directiveAttributes
-                          data-tag-name="gml:endPosition"
-                         />
+                          data-tag-name="gml:endPosition" data-hide-time="true"/>
                 </key>
               </values>
               <snippet>
@@ -662,7 +661,7 @@
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition"
                      use="gn-date-picker"
                      tooltip="gml:beginPosition">
-                  <directiveAttributes data-tag-name="gml:beginPosition"/>
+                  <directiveAttributes data-tag-name="gml:beginPosition" data-hide-time="true"/>
                 </key>
                 <key label="endPosition"
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition"
@@ -670,7 +669,7 @@
                      tooltip="gml:endPosition"
                 >
                   <directiveAttributes
-                          data-tag-name="gml:endPosition" />
+                          data-tag-name="gml:endPosition" data-hide-time="true"/>
                 </key>
               </values>
               <snippet>
@@ -2362,7 +2361,7 @@
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition"
                      use="gn-date-picker"
                      tooltip="gmd:extent|gmd:EX_TemporalExtent">
-                  <directiveAttributes data-tag-name="gml:beginPosition"/>
+                  <directiveAttributes data-tag-name="gml:beginPosition" data-hide-time="true"/>
                 </key>
                 <key label="endPosition"
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition"
@@ -2370,7 +2369,7 @@
                      tooltip="gmd:extent|gmd:EX_TemporalExtent"
                 >
                   <directiveAttributes
-                          data-tag-name="gml:endPosition" />
+                          data-tag-name="gml:endPosition" data-hide-time="true"/>
                 </key>
               </values>
               <snippet>
