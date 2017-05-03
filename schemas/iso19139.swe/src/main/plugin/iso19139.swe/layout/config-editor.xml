@@ -1122,6 +1122,7 @@
                      use="textarea"/>
                 <key label="pass"
                      xpath="gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean"
+					 tooltip="gmd:pass"
                      use="gn-checkbox-with-nilreason">
                   <directiveAttributes
                           data-tag-name="gmd:pass"
@@ -2528,6 +2529,7 @@
                      use="textarea"/>
                 <key label="pass"
                      xpath="gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean"
+					 tooltip="gmd:pass"
                      use="gn-checkbox-with-nilreason">
                   <directiveAttributes
                           data-tag-name="gmd:pass"

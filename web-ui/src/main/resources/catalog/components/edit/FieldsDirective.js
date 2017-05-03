@@ -151,6 +151,7 @@
           var tooltipIcon;
           var isField = element.is('input') || element.is('textarea') || element.is('select');
           var isDatePicker = 'gnDatePicker' in attrs;
+		  var isRadio = 'gnCheckboxWithNilreason' in attrs;
           var tooltipIconCompiled = $compile(iconTemplate)(scope);
 
           var isTableEditor = element.siblings().length == 2 && element.siblings()[1].className == 'fixed-table-container';
@@ -159,7 +160,7 @@
             // put the button before the datepicker, but after the sublabel
             el.before(tooltipIconCompiled);
           };
-          if (isDatePicker) {
+          if (isDatePicker || isRadio) {
             createTooltipForDatePicker(element, tooltipIconCompiled);
           }
           var createTooltipForTableEditor = function (el, tooltip) {
