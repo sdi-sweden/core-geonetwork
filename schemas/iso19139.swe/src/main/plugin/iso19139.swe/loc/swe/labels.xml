@@ -299,8 +299,9 @@ samma typ.</description>
     </element>
     <element id="343.0" name="gmd:EX_GeographicBoundingBox">
         <label>Omskrivande rektangel</label>
-        <description>Koordinater för datamängdens utsträckning.
-	ANM. Detta är ungefärligt, referenssystem behövs ej.</description>
+        <description>Koordinater för resursens utsträckning. Antingen kan man välja i en lista av existerande uträckningsra
+		för land, län och kommuner eller manuellt rita en rektangel. ANM. Detta är ungefärligt angiven rektangel, referenssystem för
+		koordinaterna skall alltid vara enligt Lat/Long WGS84.</description>
     </element>
     <element id="348.0" name="gmd:EX_GeographicDescription">
         <label>Referens till geografiskt
