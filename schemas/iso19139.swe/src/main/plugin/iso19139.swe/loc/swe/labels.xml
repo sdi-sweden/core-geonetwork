@@ -1256,8 +1256,7 @@ komprimerade data</description>
         <description>Text som beskriver vad bilden visar.</description>
     </element>
     <element id="2.0" name="gmd:fileIdentifier">
-        <label>Identifierare för
-metadatamängd</label>
+        <label>Identifier for metadata</label>
         <description>Unik identifierare för metadatamängden.</description>
         <condition>mandatory</condition>
     </element>
