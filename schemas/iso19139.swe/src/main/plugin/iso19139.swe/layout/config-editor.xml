@@ -944,6 +944,7 @@
               <values>
                 <key label="maintenance_note"
                      xpath="gmd:MD_MaintenanceInformation/gmd:maintenanceNote/gco:CharacterString"
+					 use="textarea"
                      tooltip="gmd:maintenanceNote"/>
 
                 <key label="maintenance_frequency"
