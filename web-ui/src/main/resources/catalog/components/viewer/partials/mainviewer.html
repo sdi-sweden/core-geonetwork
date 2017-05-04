@@ -36,7 +36,7 @@
             data-ng-hide="is3dEnabled || !printTool"
             rel="#print" gi-btn gnv-tools-btn>
       <span class="fa fa-print"></span>
-      <span role="tooltip" data-translate="">PrintTheMap</span>
+      <span role="tooltip" data-translate="">Skriv ut</span>
     </button>
 
     <button class="btn btn-default" type="submit"
@@ -62,8 +62,17 @@
             data-ng-hide="is3dEnabled || !annotationTool"
             rel="#draw" gnv-tools-btn>
       <span class="fa fa-pencil"></span>
-      <span role="tooltip" data-translate="">Annotations</span>
+      <span role="tooltip" data-translate="">Anteckningar</span>
     </button>
+    <div class= "btn btn-default btn-map-help">
+      <div class="map-view">
+	    <div data-swe-tooltip=""
+		  data-title="{{ 'map-title' | translate }}"
+		  data-text="{{ 'map-desc' | translate }}"
+		  data-link="{{ 'map-link' | translate }}">
+		</div>
+	  </div>
+	</div>
   </div>
   <!--Bottom right buttons - Navigation-->
   <div class="tools control-tools-largemap">
