@@ -1,4 +1,11 @@
 <div class="geo-data-list">
+  <div class="result-help">
+     <div data-swe-tooltip=""
+		data-title="{{ 'searchResult-title' | translate }}"
+		data-text="{{ 'searchResult-desc' | translate }}"
+		data-link="{{ 'searchResult-link' | translate }}">
+    </div>
+  </div>
   <div class="geo-data-row" data-ng-repeat="md in searchResults.records" gn-fix-mdlinks=""  data-swe-displayextent-onhover>
     <div class="cb-cont checked login-cb-cont"><div class="cb"><span class="icon-ok"></span><input type="checkbox"></div></div>
     <div class="meta-data-wrapper">

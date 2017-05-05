@@ -37,6 +37,7 @@
 
   module.constant('gnGlobalSettings', {
     proxyUrl: '../../proxy?url=',
+    lmProxyUrl: '../../lm-proxy?url=',
     locale: {},
     isMapViewerEnabled: false,
     requireProxy: [],
