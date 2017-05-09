@@ -197,17 +197,17 @@
     <from>^/metadata/(.*)/(.*)/(.*).(xml|html)$</from>
     <to type="forward">/srv/$1/metadata.formatter.$4?uuid=$3&amp;xsl=$4</to>
   </rule>
-  
+
   <rule>
     <note>
       Example URL:
       From:http://localhost:8080/geonetwork/GetMetaDataById?id=4a126ac8-bbaa-4911-87e3-0468e444d831
-	  To:http://localhost:8080/geonetwork/srv/swe/xml.format.html?xsl=xsl-swe-view&amp;view=full-view-swe&amp;url=http://localhost:8080/geonetwork/srv/api/records/4a126ac8-bbaa-4911-87e3-0468e444d831/formatters/xml&amp;schema=iso19139.swe
+	  To:http://localhost:8080/geonetwork/srv/swe/xml.format.html?xsl=xsl-swe-view&amp;view=full-view-swe&amp;uuid=4a126ac8-bbaa-4911-87e3-0468e444d831&amp;schema=iso19139.swe
     </note>
     <from>^/GetMetaDataById\?.*id=(.*)</from>
-	<to type="forward">srv/swe/xml.format.html?xsl=xsl-swe-view&amp;view=full-view-swe&amp;url=%{scheme}://%{server-name}/%{context-path}/srv/api/records/$1/formatters/xml&amp;schema=iso19139.swe</to>
+	<to type="forward">srv/swe/xml.format.html?xsl=xsl-swe-view&amp;view=full-view-swe&amp;uuid=$1&amp;schema=iso19139.swe</to>
   </rule>
-  
+
   <!-- <rule>
     <note>
       Example URL:
