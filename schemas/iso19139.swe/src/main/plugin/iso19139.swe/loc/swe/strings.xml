@@ -74,21 +74,21 @@
 
   <!-- INSPIRE view labels and help -->
   <url>Onlinelänk</url>
-  <identifier>Resursidentifierare</identifier>
+  <identifier>Resursidentfierare</identifier>
   <rsIdentifier>Projektion</rsIdentifier>
   <referenceDate>Temporal information</referenceDate>
   <creationDate>Produktionsdatum</creationDate>
   <hierarchyLevel>Resurstyp</hierarchyLevel>
   <publicationDate>Publiceringsdatum</publicationDate>
   <revisionDate>Revideringsdatum</revisionDate>
-  <temporalRangeSection>Temporaluträckning</temporalRangeSection>
+  <temporalRangeSection>Temporal utsträckning</temporalRangeSection>
   <beginPosition>Start</beginPosition>
   <endPosition>Slut</endPosition>
-  <conformity>Överensstämmelse</conformity>
+  <conformity>Specifikationsuppfyllelse</conformity>
   <conformity_title>Titel</conformity_title>
   <conformity_date>Datum</conformity_date>
   <explanation>Förklaring</explanation>
-  <pass>Överensstämmer</pass>
+  <pass>Överensstämmelse</pass>
   <indeterminatePosition>Obestämbar position</indeterminatePosition>
   <pointOfContact>Resurskontakt</pointOfContact>
   <distributorContactView>Distributionskontakt</distributorContactView>
@@ -119,7 +119,7 @@
   <referenceSystemInfo2>Referenssystem</referenceSystemInfo2>
   <distributionInfo2>Distribution</distributionInfo2>
   <metadata2>Information om metadata</metadata2>
-  <extent>Geografisk, temporal och vertical utsträckning</extent>
+  <extent>Geografisk, temporal och vertikal utsträckning</extent>
   <distributorContact>Distributör</distributorContact>
   <metadataMaintenance2>Underhäll</metadataMaintenance2>
   <restrictions>Restriktioner</restrictions>
@@ -154,7 +154,7 @@
   <otherConstraints>Andra restriktioner</otherConstraints>
   <scales>Rumslig upplösning</scales>
 
-  <addInspireTheme>add Nyckelord</addInspireTheme>
+  <addInspireTheme>Add Tjänsteklassficering</addInspireTheme>
   <accessConstraintsBtn>Åtkomstrestriktioner</accessConstraintsBtn>
   <legalConstraintsBtn>Legal constraints</legalConstraintsBtn>
   <UseRestrictionsBtn>Nyttjanderestriktioner</UseRestrictionsBtn>
@@ -221,4 +221,5 @@
 
   <sds-section-custodian>Responsible custodian</sds-section-custodian>
   <sds-addOperation>Add Operation</sds-addOperation>
+  <add-distributor>Add distributor</add-distributor>
 </strings>
