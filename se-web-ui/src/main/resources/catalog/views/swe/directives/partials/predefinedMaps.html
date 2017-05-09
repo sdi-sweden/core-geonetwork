@@ -1,17 +1,15 @@
 <ul class="img-list">
     <li data-ng-repeat="map in predefinedMaps">
+		<div class="predef-map-help">
+			<div data-swe-tooltip=""
+				data-title={{map.title}}
+	            data-text={{map.description}}
+	            data-link={{map.helplink}}>
+			</div>
+		</div>
         <a href data-ng-mouseenter="hovering=true" data-ng-mouseleave="hovering=false" data-ng-click="doView($index, map)">
-<!--             <div data-ng-class="{'bg-img': selected === 0, 'selected': selectedItem === $index, 'unselected' : selectedItem !== $index}" 
-			data-ng-style="{'background-image':'url({{map.link}})'}"></div> -->
-			<div class ="bg-img" data-ng-class="selectedItem === $index ? 'selected-img' : 'bg-img'" data-ng-style="{'background-image':'url({{map.link}})'}"></div>
-<!--             <div class="tool-tip-cont">
-                <div class="tool-tip">
-                    <span class="triangle"></span>
-                    <h2>Tooltip</h2>
-                    <p>{{map.description}}</p>
-                </div>
-            </div> -->
-            <span class="filter-text">{{map.title}}</span>
-        </a>
+            <div class ="bg-img" data-ng-class="selectedItem === $index ? 'selected-img' : 'bg-img'" data-ng-style="{'background-image':'url({{map.link}})'}"></div>		
+		</a>
+        <span class="filter-text">{{map.title}}</span>
     </li>
 </ul>
