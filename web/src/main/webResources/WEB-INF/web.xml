@@ -309,6 +309,10 @@
             <param-name>request.param.url</param-name>
             <param-value>url</param-value>
         </init-param>
+        <init-param>
+            <param-name>request.param.other</param-name>
+            <param-value>true</param-value>
+        </init-param>
 
         <init-param>
             <param-name>loginConfig</param-name>

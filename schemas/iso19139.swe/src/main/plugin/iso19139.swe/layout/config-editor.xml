@@ -624,7 +624,7 @@
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition"
                      use="gn-date-picker"
                      tooltip="gml:beginPosition">
-                  <directiveAttributes data-tag-name="gml:beginPosition"/>
+                  <directiveAttributes data-tag-name="gml:beginPosition" data-hide-time="true"/>
                 </key>
                 <key label="endPosition"
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition"
@@ -632,8 +632,7 @@
                      tooltip="gml:endPosition"
                 >
                   <directiveAttributes
-                          data-tag-name="gml:endPosition"
-                         />
+                          data-tag-name="gml:endPosition" data-hide-time="true"/>
                 </key>
               </values>
               <snippet>
@@ -662,7 +661,7 @@
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition"
                      use="gn-date-picker"
                      tooltip="gml:beginPosition">
-                  <directiveAttributes data-tag-name="gml:beginPosition"/>
+                  <directiveAttributes data-tag-name="gml:beginPosition" data-hide-time="true"/>
                 </key>
                 <key label="endPosition"
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition"
@@ -670,7 +669,7 @@
                      tooltip="gml:endPosition"
                 >
                   <directiveAttributes
-                          data-tag-name="gml:endPosition" />
+                          data-tag-name="gml:endPosition" data-hide-time="true"/>
                 </key>
               </values>
               <snippet>
@@ -944,6 +943,7 @@
               <values>
                 <key label="maintenance_note"
                      xpath="gmd:MD_MaintenanceInformation/gmd:maintenanceNote/gco:CharacterString"
+					 use="textarea"
                      tooltip="gmd:maintenanceNote"/>
 
                 <key label="maintenance_frequency"
@@ -1069,10 +1069,10 @@
           <field
                   xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level"/>
 
-          <field name="lineage"
+          <field name="lineage" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"/>
 
-          <action type="add" name="lineage" or="statement"
+          <action type="add" name="lineage" or="statement" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage">
             <template>
               <snippet>
@@ -1082,7 +1082,7 @@
               </snippet>
             </template>
           </action>
-          <action type="add" name="lineage" or="lineage"
+          <action type="add" name="lineage" or="lineage" if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
             <template>
               <snippet>
@@ -1122,6 +1122,7 @@
                      use="textarea"/>
                 <key label="pass"
                      xpath="gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean"
+					 tooltip="gmd:pass"
                      use="gn-checkbox-with-nilreason">
                   <directiveAttributes
                           data-tag-name="gmd:pass"
@@ -1272,16 +1273,27 @@
         </section>
 
         <section name="resources">
-          <field name="distributorContact"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact" />
+         <section xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor" or="distributor"
+                   in="/gmd:MD_Metadata"/>
 
-          <field name="distributionFormat"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat">
-          </field>
-
-          <field name="distributionFormat"
-                 xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine">
-          </field>
+          <action type="add" name="add-distributor" btnLabel="add-distributor"
+                  or="distributor" in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution">
+            <template>
+              <snippet>
+                <gmd:distributor>
+                  <gmd:MD_Distributor>
+                    <gmd:distributorContact></gmd:distributorContact>
+                    <gmd:distributorFormat></gmd:distributorFormat>
+                    <gmd:distributorTransferOptions>
+                      <gmd:MD_DigitalTransferOptions>
+                        <gmd:onLine></gmd:onLine>
+                      </gmd:MD_DigitalTransferOptions>
+                    </gmd:distributorTransferOptions>
+                  </gmd:MD_Distributor>
+                </gmd:distributor>
+              </snippet>
+            </template>
+          </action>
         </section>
 
         <section name="inspire_sds"  displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
@@ -2350,7 +2362,7 @@
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition"
                      use="gn-date-picker"
                      tooltip="gmd:extent|gmd:EX_TemporalExtent">
-                  <directiveAttributes data-tag-name="gml:beginPosition"/>
+                  <directiveAttributes data-tag-name="gml:beginPosition" data-hide-time="true"/>
                 </key>
                 <key label="endPosition"
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition"
@@ -2358,7 +2370,7 @@
                      tooltip="gmd:extent|gmd:EX_TemporalExtent"
                 >
                   <directiveAttributes
-                          data-tag-name="gml:endPosition" />
+                          data-tag-name="gml:endPosition" data-hide-time="true"/>
                 </key>
               </values>
               <snippet>
@@ -2517,6 +2529,7 @@
                      use="textarea"/>
                 <key label="pass"
                      xpath="gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean"
+					 tooltip="gmd:pass"
                      use="gn-checkbox-with-nilreason">
                   <directiveAttributes
                           data-tag-name="gmd:pass"

@@ -299,8 +299,9 @@ samma typ.</description>
     </element>
     <element id="343.0" name="gmd:EX_GeographicBoundingBox">
         <label>Omskrivande rektangel</label>
-        <description>Koordinater för datamängdens utsträckning.
-	ANM. Detta är ungefärligt, referenssystem behövs ej.</description>
+        <description>Koordinater för resursens utsträckning. Antingen kan man välja i en lista av existerande uträckningsra
+		för land, län och kommuner eller manuellt rita en rektangel. ANM. Detta är ungefärligt angiven rektangel, referenssystem för
+		koordinaterna skall alltid vara enligt Lat/Long WGS84.</description>
     </element>
     <element id="348.0" name="gmd:EX_GeographicDescription">
         <label>Referens till geografiskt
@@ -904,7 +905,7 @@ metadatamängden avser</description>
     </element>
     <element context="gmd:CI_Citation" id="362.0" name="gmd:date">
         <condition>mandatory</condition>
-        <label>Referensdatum</label>
+        <label>Referensdatum (Händelsedatum)</label>
         <description>Händelse angiven med datum för resursen</description>
         <_condition>M</_condition>
     </element>
@@ -1256,8 +1257,7 @@ komprimerade data</description>
         <description>Text som beskriver vad bilden visar.</description>
     </element>
     <element id="2.0" name="gmd:fileIdentifier">
-        <label>Identifierare för
-metadatamängd</label>
+        <label>Identifier for metadata</label>
         <description>Unik identifierare för metadatamängden.</description>
         <condition>mandatory</condition>
     </element>
@@ -1342,7 +1342,7 @@ för handhavande av resurs eller metadata i den
 angivna skyddsklassen.</description>
     </element>
     <element id="6.0" name="gmd:hierarchyLevel">
-        <label>Hierarkisk nivå</label>
+        <label>Resurstyp</label>
         <description>Hierarkisk nivå för den resurs som metadatamängden beskriver
 Exempelvis: datamängd, datamängdserie eller tjänst.…</description>
       <condition>mandatory</condition>
@@ -1477,7 +1477,7 @@ Detta undviker vi att ange, ange istället organisation.</description>
         <description>indikation om huruvida objektivets felteckning är tillgänglig</description>
     </element>
     <element id="139.0" name="gmd:level">
-        <label>Hierarkisk nivå</label>
+        <label>Resurstyp</label>
         <description>Hierarkisk nivå för de data som kvalitetsrapporteringen omfattar</description>
         <condition>mandatory</condition>
     </element>
@@ -2295,7 +2295,7 @@ Ex. “under produktion” eller ”färdigställd”.</description>
 		<description>Namn som den hänvisade rapporten är känd under</description>
         <condition>mandatory</condition>
 		<helper sort="false">
-			<option show="y" title="Kommissionens förordning nr 976/2009 avseende nättjänster" value="Kommissionens förordning nr 976/2009 avseende nättjänster">Kommissionens förordning nr 976/2009 avseende nättjänster</option>
+			<option show="y" title="Kommissionens förordning nr 976/2009 avseende nättjänster" value="Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster">Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster</option>
 			<option show="y" title="KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster" value="KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster">KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster</option>
 			<option show="y" value="Tekniskt ramverk version 2.0">Tekniskt ramverk version 2.0</option>
 			<option show="y" value="INSPIRE Data Specification on Protected Sites - Guidelines">INSPIRE Data Specification on Protected Sites - Guidelines</option>
