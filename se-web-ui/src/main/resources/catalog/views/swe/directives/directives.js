@@ -161,7 +161,7 @@
       };
     }
   ]);
-  
+
   /**
    * @ngdoc directive
    * @name sweShowDialog
@@ -187,8 +187,8 @@
       };
     }
   ]);
-  
-  module.directive('dragable', function(){   
+
+  module.directive('dragable', function(){
 	  return {
 	    restrict: 'A',
 	    link : function(scope,elem,attr){
@@ -196,7 +196,7 @@
 	    		containment: "window"
 	        });
 	    }
-	  }  
+	  }
 	});
 
   /**
@@ -293,7 +293,7 @@
               $rootScope.$emit('closetooltip', tooltipElem);
             })
           });
-          
+
 		  $rootScope.$on('closetooltip', function (event, tooltipElem) {
 		     var tmpElem = elem.find('.tool-tip-cont');
 		     if(tmpElem != undefined && tooltipElem != undefined){
@@ -304,7 +304,7 @@
 			    }
 		     }
 	      });
-		  
+
           scope.openPopup = function() {
         	  var url = scope.prefix + scope.link;
         	  $rootScope.$emit('openhelppopup', url);
@@ -313,7 +313,7 @@
       };
     }
   ]);
-  
+
 
   /**
    * @ngdoc directive
@@ -347,8 +347,8 @@
    * Shows predefined maps filters on home page.
    *
    */
-  module.directive('swePredefinedMapsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings', '$timeout',
-    function($http, $rootScope, gnOwsContextService, gnSearchSettings, $timeout) {
+  module.directive('swePredefinedMapsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings', '$timeout', 'gnViewerSettings',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings, $timeout, gnViewerSettings) {
       return {
         restrict: 'EA',
         replace: true,
@@ -386,7 +386,7 @@
               });
             }
           });
-          
+
     	  $rootScope.$on('closePredefMap', function() {
               scope.selectedItem = -1;
               var predefMapArrow = angular.element('#predefmapsArrow');
@@ -404,7 +404,7 @@
                   }, 500);
               }
            });
-          
+
           scope.doView = function(index, predefinedMap) {
           	  scope.selectedItem = index;
               scope.isImageClicked = true;
@@ -413,7 +413,7 @@
                   angular.element('.bg-img').css("opacity", "0.2");
                   angular.element('.selected-img').css("opacity", "1");
                 }, 250);
-              
+
               scope.showMapFn()();
               angular.element('#layers').removeClass('ng-hide');
   			  var layersButton = angular.element('#layersButton');
@@ -425,6 +425,13 @@
             };
 
           scope.doViewFromApi = function(index, predefinedMap) {
+            // delete owsContext cookie to avoid loading previous layers
+            // if loading a predefined map from the Api
+            var storage = gnViewerSettings.storage ?
+              window[gnViewerSettings.storage] : window.localStorage;
+
+            storage.removeItem('owsContext')
+
         	scope.selectedItem = index;
             scope.isImageClicked = true;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
@@ -432,7 +439,7 @@
                 angular.element('.bg-img').css("opacity", "0.2");
                 angular.element('.selected-img').css("opacity", "1");
               }, 250);
-            
+
             scope.showMapFnApi()();
             angular.element('#layers').removeClass('ng-hide');
 			var layersButton = angular.element('#layersButton');
@@ -445,7 +452,7 @@
         }
       };
   }]);
-  
+
 
   /**
    * @ngdoc directive
@@ -788,5 +795,5 @@
           } //end of link
       }
     }]);
-    
+
 }());

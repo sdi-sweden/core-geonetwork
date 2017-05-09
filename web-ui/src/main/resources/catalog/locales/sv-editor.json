@@ -321,5 +321,7 @@
     "parentConcept": "Överordnat begrepp",
     "moreSpecificConcept": "Mer specifika begrepp",
     "associatedConcept": "Associerade begrepp",
-    "xsd": "Schemavalidering"
+    "xsd": "Schemavalidering",
+    "inspireValidation": "Inspirevalidering",
+    "mdRelationValidation": "Kontroll av länkar och relationer"
 }

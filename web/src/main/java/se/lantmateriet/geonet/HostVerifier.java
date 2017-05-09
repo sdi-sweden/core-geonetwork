@@ -90,6 +90,10 @@ public class HostVerifier {
     public synchronized void addToWhitelist(String host) {
         if (addToSet(host, mWhitelist)) {
             _logger.info("Add '" + host + "' to whitelist");
+
+            if(mBlacklist.remove(host)){
+                _logger.info("Removed '"+host+"' from blacklist");
+            }
         }
     }
 
