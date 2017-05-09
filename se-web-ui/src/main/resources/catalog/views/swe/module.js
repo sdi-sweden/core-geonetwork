@@ -121,6 +121,15 @@
       });
 
       $scope.selectedPredefinedMap = gnGlobalSettings.predefinedSelectedMap;
+      if ($scope.selectedPredefinedMap) {
+        // Clean owsContext to load only the layers from the predefined map
+        // It's already done in the directive, but seem in no debug mode it's "too late"
+        // to do it in the directive
+        var storage = gnViewerSettings.storage ?
+          window[gnViewerSettings.storage] : window.localStorage;
+
+        storage.removeItem('owsContext');
+      }
       $scope.collapsed = false;
       $scope.mapFullView = false;
       $scope.$on('someEvent', function(event, map) {
@@ -623,7 +632,7 @@
         $obj = angular.element('#map-panel-resize');
 		$objMax = angular.element('#map-panel-resize-max');
 		$objMedium = angular.element('#map-panel-resize-medium');
-		  
+
         if (is_side_data_bar_open) {
           $map_cont.css({
             width: (window_width - $data_list_cont.width())
@@ -633,20 +642,20 @@
             width: window_width
           });
         }
-        
+
         $obj.removeClass('full').addClass('small');
 		$obj.addClass('ng-hide');
 		$objMax.removeClass('ng-hide');
 		$objMedium.addClass('ng-hide');
-		
+
 		$scope.actual_height = $('.site-image-filter').height();
 	    exampleResize.onResize($rootScope, $scope);
         $timeout(function() {
          viewerMap.updateSize();
          viewerMap.renderSync();
-       }, 500); 
+       }, 500);
       };
-      
+
       /**
        * Show full map panel from url.
        */
@@ -663,7 +672,7 @@
         $data_list_cont = angular.element('.data-list-cont');
         $map_cont = angular.element('.map-cont');
         $obj = angular.element('#map-panel-resize');
-		  
+
         if (is_side_data_bar_open) {
           $map_cont.css({
             width: (window_width - $data_list_cont.width())
@@ -673,14 +682,14 @@
             width: window_width
           });
         }
-        
+
         $obj.removeClass('full').addClass('small');
 		$scope.actual_height = 240;
 	    exampleResize.onResize($rootScope, $scope);
         $timeout(function() {
          viewerMap.updateSize();
          viewerMap.renderSync();
-       }, 500); 
+       }, 500);
       };
 
       /**
@@ -721,13 +730,13 @@
         //To restrict GFI only when map are maximized
         is_map_maximized.data = !is_full_view_map;
         if (is_full_view_map) {
-        	
+
           $scope.mapFullView = false;
-          
+
           if (is_side_data_bar_open) {
             $scope.$emit('body:class:remove', 'full-map-view');
             $scope.$emit('body:class:add', 'medium-map-view');
-          } 
+          }
           else {
             $scope.$emit('body:class:remove', 'full-map-view');
             $scope.$emit('body:class:add', 'small-map-view');
@@ -754,9 +763,9 @@
           }
          $obj.removeClass('full').addClass('small');
         }
-        
+
         // Refresh the viewer map
-        
+
 		$scope.actual_height = $('.site-image-filter').height();
         exampleResize.onResize($rootScope, $scope);
 
@@ -894,7 +903,7 @@
         $scope.$emit('body:class:remove', 'show-overlay');
       };
     }]);
-  
+
   /**
    * Controller for help popup.
    *
@@ -902,7 +911,7 @@
   module.controller('SweHelpController', [
     '$cookies', '$scope', '$http', '$rootScope', '$sce',
     function($cookies, $scope, $http, $rootScope, $sce) {
-	  
+
 	  $rootScope.$on('openhelppopup', function (event, data) {
 		  $scope.link = data;
 		  });
