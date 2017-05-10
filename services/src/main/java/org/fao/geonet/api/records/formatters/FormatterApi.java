@@ -330,22 +330,31 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
         @RequestParam(value = "xsl", required = false) final String xslid,
         @RequestParam(value = "metadata", required = false) String metadata,
         @RequestParam(value = "url", required = false) final String url,
+        @RequestParam(value = "uuid", required = false) final String uuid,
         @RequestParam(value = "schema") final String schema,
         @RequestParam(value = "width", defaultValue = "_100") final FormatterWidth width,
         @RequestParam(value = "mdpath", required = false) final String mdPath,
         final NativeWebRequest request) throws Exception {
 
-        if (url == null && metadata == null) {
-            throw new IllegalArgumentException("Either the metadata or url parameter must be declared.");
+        if (url == null && metadata == null && uuid == null) {
+            throw new IllegalArgumentException("Either the metadata, url or uuid parameter must be declared.");
         }
-        if (url != null && metadata != null) {
-            throw new IllegalArgumentException("Only one of metadata or url parameter must be declared.");
+        if (url != null && metadata != null && uuid != null) {
+            throw new IllegalArgumentException("Only one of metadata, url or uuid parameter must be declared.");
         }
 
         FormatType formatType = FormatType.valueOf(type.toLowerCase());
         final ServiceContext context = createServiceContext(lang, formatType, request.getNativeRequest(HttpServletRequest.class));
         if (metadata == null) {
-            metadata = getXmlFromUrl(context, lang, url, request);
+            if (url == null) {
+                String resolvedId = resolveId(null, uuid);
+                Lib.resource.checkPrivilege(context, resolvedId, ReservedOperation.view);
+
+                Metadata md = loadMetadata(context.getBean(MetadataRepository.class), Integer.parseInt(resolvedId));
+                metadata = md.getData();
+            } else {
+                metadata = getXmlFromUrl(context, lang, url, request);
+            }
         }
         Element metadataEl = Xml.loadString(metadata, false);
 
@@ -514,7 +523,7 @@ public class FormatterApi extends AbstractFormatService implements ApplicationLi
         }
         boolean skipHeadersAddition = skipHeadersAddition(url, request);
         HttpUriRequest getXmlRequest = new HttpGet(adjustedUrl);
-        if(!skipHeadersAddition) { 
+        if(!skipHeadersAddition) {
 	        final Iterator<String> headerNames = request.getHeaderNames();
 	        while (headerNames.hasNext()) {
 	            String headerName = headerNames.next();
