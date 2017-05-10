@@ -327,7 +327,7 @@ public class FormatterApiIntegrationTest extends AbstractServiceIntegrationTest 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.getSession();
         MockHttpServletResponse response = new MockHttpServletResponse();
-        formatService.execXml("eng", "xml", "partial_view", Xml.getString(element), null, "iso19139", _100, null,
+        formatService.execXml("eng", "xml", "partial_view", Xml.getString(element), null, null,"iso19139", _100, null,
             new ServletWebRequest(request, response));
 
         final String view = response.getContentAsString();
@@ -345,7 +345,7 @@ public class FormatterApiIntegrationTest extends AbstractServiceIntegrationTest 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.getSession();
         MockHttpServletResponse response = new MockHttpServletResponse();
-        formatService.execXml("eng", "xml", "partial_view", Xml.getString(sampleMetadataXml), null, "iso19139", _100, "gmd:MD_Metadata",
+        formatService.execXml("eng", "xml", "partial_view", Xml.getString(sampleMetadataXml), null, null,"iso19139", _100, "gmd:MD_Metadata",
             new ServletWebRequest(request, response));
 
         final String view = response.getContentAsString();
@@ -365,7 +365,7 @@ public class FormatterApiIntegrationTest extends AbstractServiceIntegrationTest 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.getSession();
         MockHttpServletResponse response = new MockHttpServletResponse();
-        formatService.execXml("eng", "xml", "partial_view", null, url, "iso19139", _100, null, new ServletWebRequest(request, response));
+        formatService.execXml("eng", "xml", "partial_view", null, url, null,"iso19139", _100, null, new ServletWebRequest(request, response));
 
         final String view = response.getContentAsString();
         assertTrue(view.contains("KML (1)"));
@@ -386,7 +386,7 @@ public class FormatterApiIntegrationTest extends AbstractServiceIntegrationTest 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.getSession();
         MockHttpServletResponse response = new MockHttpServletResponse();
-        formatService.execXml("eng", "xml", "partial_view", null, "request", "iso19139", _100, null, new ServletWebRequest(request, response));
+        formatService.execXml("eng", "xml", "partial_view", null, "request", null,"iso19139", _100, null, new ServletWebRequest(request, response));
 
         final String view = response.getContentAsString();
         assertTrue(view.contains("KML (1)"));
