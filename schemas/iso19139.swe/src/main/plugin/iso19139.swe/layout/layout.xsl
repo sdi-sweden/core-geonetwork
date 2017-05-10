@@ -304,11 +304,6 @@
       name: 'code',
       title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:code', $labels, name(gmd:RS_Identifier), '', $codexpath)/label" />',
       codelist: false,
-      },
-      {
-      name: 'codespace',
-      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:codeSpace', $labels, name(gmd:RS_Identifier), '', '')/label" />',
-      codelist: false
       }
       ]
     </xsl:variable>
@@ -361,14 +356,7 @@
               </xsl:for-each>
             </select>
           </div>
-
-          <div>
-            <label class="col-sm-2 control-label">
-              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:codeSpace', $labels, name(gmd:RS_Identifier), '', '')/label" />
-            </label>
-
-            <input type="text" class="form-control" data-ng-model="editRow.codespace" />
-          </div>
+          
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
