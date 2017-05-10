@@ -138,7 +138,7 @@
   module.directive('gnFieldTooltip',
     ['gnSchemaManagerService', 'gnCurrentEdit', '$compile', '$translate',
       function(gnSchemaManagerService, gnCurrentEdit, $compile, $translate) {
-         
+
       var iconTemplate = "<a class='btn field-tooltip' " +
       "data-ng-show='gnCurrentEdit.displayTooltips'>" +
       "<span class='fa fa-question-circle-o'></span></a>";
@@ -151,40 +151,79 @@
           var tooltipIcon;
           var isField = element.is('input') || element.is('textarea') || element.is('select');
           var isDatePicker = 'gnDatePicker' in attrs;
+		  var isRadio = 'gnCheckboxWithNilreason' in attrs;
           var tooltipIconCompiled = $compile(iconTemplate)(scope);
 
+          var isTableEditor = element.siblings().length == 2 && element.siblings()[1].className == 'fixed-table-container';
           var createTooltipForDatePicker = function (el, tooltip) {
 
             // put the button before the datepicker, but after the sublabel
             el.before(tooltipIconCompiled);
           };
-          if (isDatePicker) {
+          if (isDatePicker || isRadio) {
             createTooltipForDatePicker(element, tooltipIconCompiled);
           }
-          if (isField && element.attr('type') !== 'hidden') {
-            // try to find the label (with class 'control-label') that
-            // is before this element in the DOM and append the tooltip
-            // button to it.
-            // 
-            //  If it's not found, place the button just before the element 
-            var asideCol = element.parent('div').prev();
+          var createTooltipForTableEditor = function (el, tooltip) {
 
-            if (asideCol.hasClass('control-label')) {
-              asideCol.append(tooltipIconCompiled);
-            } else {
-              element.before(tooltipIconCompiled);
+            // put the button before the datepicker, but after the sublabel
+            el.append(tooltipIconCompiled);
+          };
+          if (isTableEditor)  {
+            createTooltipForTableEditor(element, tooltipIconCompiled);
+          } else {
+            if (isField && element.attr('type') !== 'hidden') {
+              // try to find the label (with class 'control-label') that
+              // is before this element in the DOM and append the tooltip
+              // button to it.
+              //
+              //  If it's not found, place the button just before the element
+              // <label class="control-label" ...
+              //     <div>
+              //       <input ...
+              var asideCol = element.parent('div').prev();
+
+              if (asideCol.hasClass('control-label')) {
+                asideCol.append(tooltipIconCompiled);
+              } else {
+                // Check if a template field, 2 cases:
+
+                // <label ...
+                // <input ...
+                asideCol = element.prev();
+                if (asideCol.is('label')) {
+                  asideCol.append(tooltipIconCompiled);
+
+                } else {
+                  // <label class="control-label" ...
+                  // <div>
+                  //   <div>
+                  //     <div>
+                  //       <input ...
+                  asideCol = element.parent('div').parent('div').parent('div').prev();
+
+                  if (asideCol.hasClass('control-label')) {
+                    asideCol.append(tooltipIconCompiled);
+                  } else {
+                    element.before(tooltipIconCompiled);
+                  }
+
+                }
+              }
+
             }
 
+
+            // if element is a fieldset legend
+            if (element.is('legend')) {
+              element.contents().first().after(tooltipIconCompiled);
+              stopEventBubble = true;
+            }
+            if (element.is('label')) {
+              element.append(tooltipIconCompiled);
+              //element.parent().children('div').append(tooltipIconCompiled);
+            }
           }
 
-          // if element is a fieldset legend
-          if (element.is('legend')) {
-            element.contents().first().after(tooltipIconCompiled);
-            stopEventBubble = true;
-          }
-          if (element.is('label')) {
-            element.parent().children('div').append(tooltipIconCompiled);
-          }
           tooltipIcon = tooltipIconCompiled;
 
           var closeTooltips = function() {
@@ -193,7 +232,7 @@
             // Less official way to hide
             $('.popover').hide();
           };
-        
+
           var initTooltip = function(eventName, event) {
             // if (stopEventBubble) {
             //   event.stopPropagation();

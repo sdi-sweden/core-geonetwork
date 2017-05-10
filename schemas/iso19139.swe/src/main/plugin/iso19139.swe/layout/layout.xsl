@@ -304,11 +304,6 @@
       name: 'code',
       title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:code', $labels, name(gmd:RS_Identifier), '', $codexpath)/label" />',
       codelist: false,
-      },
-      {
-      name: 'codespace',
-      title: '<xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:codeSpace', $labels, name(gmd:RS_Identifier), '', '')/label" />',
-      codelist: false
       }
       ]
     </xsl:variable>
@@ -331,15 +326,17 @@
       ]
     </xsl:variable>
 
+    <xsl:variable name="dialog-id" select="generate-id()" />
+
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$refSystemModel}, {$refSystemTableModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '{local-name()}', '#refsystem-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$refSystemModel}, {$refSystemTableModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '{local-name()}', '#refsystem-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="refsystem-popup" class="gn-modal-lg gn-modal-lg-refsystem-popup">
+           id="refsystem-popup-{$dialog-id}" class="gn-modal-lg gn-modal-lg-refsystem-popup">
 
         <div data-swe-date-dialog="">
           <div>
@@ -359,14 +356,7 @@
               </xsl:for-each>
             </select>
           </div>
-
-          <div>
-            <label class="col-sm-2 control-label">
-              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:codeSpace', $labels, name(gmd:RS_Identifier), '', '')/label" />
-            </label>
-
-            <input type="text" class="form-control" data-ng-model="editRow.codespace" />
-          </div>
+          
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
@@ -440,16 +430,17 @@
       ]
     </xsl:variable>
 
+    <xsl:variable name="dialog-id" select="generate-id()" />
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$dateModel},  {$dateTableModel}, '{$dateXmlSnippet}', {../gn:element/@ref}, '{local-name()}',  '#date-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$dateModel},  {$dateTableModel}, '{$dateXmlSnippet}', {../gn:element/@ref}, '{local-name()}',  '#date-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the dates -->
       <div data-gn-modal=""
          data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-         id="date-popup" class="gn-modal-lg gn-modal-lg-date-popup">
+         id="date-popup-{$dialog-id}" class="gn-modal-lg gn-modal-lg-date-popup">
 
       <div data-swe-date-dialog="">
         <div>
@@ -619,11 +610,8 @@
       ]
     </xsl:variable>
 
-
-
-
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$contactModel}, {$contactTableModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#contact-popup-{local-name()}', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$contactModel}, {$contactTableModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#contact-popup-{local-name()}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -764,15 +752,17 @@
       ]
     </xsl:variable>
 
+    <xsl:variable name="dialog-id" select="generate-id()" />
+
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#format-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#format-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="format-popup" class="gn-modal-lg gn-modal-lg-format-popup">
+           id="format-popup-{$dialog-id}" class="gn-modal-lg gn-modal-lg-format-popup">
 
         <div data-swe-date-dialog="">
           <div>
@@ -874,15 +864,17 @@
       ]
     </xsl:variable>
 
+    <xsl:variable name="dialog-id" select="generate-id()" />
+
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$thumbnailModel}, {$thumbnailTableModel}, '{$thumbnailXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#thumbnail-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$thumbnailModel}, {$thumbnailTableModel}, '{$thumbnailXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#thumbnail-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="thumbnail-popup" class="gn-modal-lg gn-modal-lg-thumbnail-popup">
+           id="thumbnail-popup-{$dialog-id}" class="gn-modal-lg gn-modal-lg-thumbnail-popup">
 
         <div data-swe-date-dialog="">
           <div>
@@ -937,7 +929,7 @@
                 <gco:CharacterString>{{editRow.protocol}}</gco:CharacterString>
               </gmd:protocol>
               <gmd:name>
-                <gco:CharacterString>{{editRow.name}}</gco:CharacterString>
+                <gco:CharacterString>{{editRow.fname}}</gco:CharacterString>
               </gmd:name>
               <gmd:description>
                 <gco:CharacterString>{{editRow.description}}</gco:CharacterString>
@@ -994,15 +986,17 @@
       ]
     </xsl:variable>
 
+    <xsl:variable name="dialog-id" select="generate-id()" />
+
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup', '{$labelConfig/label}', '{$labelConfig/condition}')" >
+         data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
       <!-- Dialog to edit the ref. system -->
       <div data-gn-modal=""
            data-gn-popup-options="{{title:'{$labelConfig/label}'}}"
-           id="onlineres-popup" class="gn-modal-lg gn-modal-lg-onlineres-popup">
+           id="onlineres-popup-{$dialog-id}" class="gn-modal-lg gn-modal-lg-onlineres-popup">
 
         <div data-swe-date-dialog="">
 
@@ -1045,7 +1039,7 @@
               <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:description', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
             </label>
 
-            <input type="text" class="form-control" data-ng-model="editRow.description" />
+            <textarea  class="form-control" data-ng-model="editRow.description"></textarea>
           </div>
 
           <div class="">
