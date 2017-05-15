@@ -467,6 +467,7 @@
               </template>
             </xsl:variable>
 
+            <!-- Send tooltipEl the name of the first element of the template snippet -->
             <xsl:call-template name="render-element-template-field">
               <xsl:with-param name="name" select="$strings/*[name() = $name]"/>
               <xsl:with-param name="id" select="$id"/>
@@ -475,6 +476,7 @@
               <xsl:with-param name="keyValues" select="$keyValues"/>
               <xsl:with-param name="template" select="$templateWithoutGnCopyElement"/>
               <xsl:with-param name="isMissingLabel" select="$strings/*[name() = $isMissingLabel]"/>
+              <xsl:with-param name="tooltipEl" select="name($template/snippet/*[1])"/>
             </xsl:call-template>
           </xsl:if>
         </xsl:when>
@@ -692,6 +694,7 @@
             <xsl:with-param name="btnLabel"
                             select="if ($btnLabelTranslation != '') then $btnLabelTranslation else $btnLabel"/>
             <xsl:with-param name="btnClass" select="@btnClass"/>
+            <xsl:with-param name="tooltipEl" select="@tooltip"/>
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>

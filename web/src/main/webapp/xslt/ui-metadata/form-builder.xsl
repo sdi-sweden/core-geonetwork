@@ -415,6 +415,7 @@
     <xsl:param name="isAddAction" required="no" as="xs:boolean" select="false()"/>
     <xsl:param name="btnLabel" required="no" as="xs:string?" select="''"/>
     <xsl:param name="btnClass" required="no" as="xs:string?" select="''"/>
+    <xsl:param name="tooltipEl" required="no" as="xs:string?" select="''"/>
 
     <xsl:variable name="tagId" select="generate-id()"/>
 
@@ -435,6 +436,21 @@
       data-gn-field-highlight="">
 
       <label class="col-sm-3 control-label">
+        <xsl:choose>
+          <xsl:when test="name() = 'action' or name() = 'field'">
+            <xsl:choose>
+              <xsl:when test="string($tooltipEl)">
+                <xsl:attribute name="data-gn-field-tooltip"><xsl:value-of select="$schema" />|<xsl:value-of select="$tooltipEl" /></xsl:attribute>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:attribute name="data-gn-field-tooltip"><xsl:value-of select="$schema" />|<xsl:value-of select="$qname" /></xsl:attribute>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:attribute name="data-gn-field-tooltip"><xsl:value-of select="$schema" />|<xsl:value-of select="name()" />|<xsl:value-of select="name(..)" /></xsl:attribute>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:value-of select="$name"/>&#160;
       </label>
       <div class="col-sm-8">
