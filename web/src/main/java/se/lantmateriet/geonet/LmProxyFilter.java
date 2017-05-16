@@ -3,7 +3,6 @@ package se.lantmateriet.geonet;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
@@ -17,6 +16,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,7 +31,6 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.utils.Log;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class LmProxyFilter implements Filter {
@@ -102,6 +101,14 @@ public class LmProxyFilter implements Filter {
         factory.setValidating(false);
         factory.setExpandEntityReferences(false);
         factory.setNamespaceAware(false);
+        try {
+            factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            factory.setFeature("http://apache.org/xml/features/validation/schema", false);
+            factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        } catch (ParserConfigurationException e) {
+            throw new ServletException(e);
+        }
+
 
         try {
             builder = factory.newDocumentBuilder();
@@ -159,9 +166,8 @@ public class LmProxyFilter implements Filter {
         // parsing cache keep track of endpoints responses already parsed so we
         // don't do it again
         // the cache is invalidated at certain intervals
-        if (isCapabilitiesRequest(endpoint) && !parsingCache.isCached(endpoint)) {
 
-            parsingCache.add(endpoint);
+        if (isCapabilitiesRequest(endpoint)) {
 
             OutputStream out = inRes.getOutputStream();
             GenericResponseWrapper responseWrapper = new GenericResponseWrapper(inRes);
@@ -169,35 +175,77 @@ public class LmProxyFilter implements Filter {
             inChain.doFilter(inReq, responseWrapper);
 
             byte[] data = responseWrapper.getData();
-            out.write(data);
-            out.close();
 
             long start = System.currentTimeMillis();
 
-            try {
-                Set<String> hosts = extractHostsFromCapabilities(data);
-                verifier.addToWhitelist(hosts);
+            if( !parsingCache.isCached(endpoint)){
+                try {
 
-                long diff = System.currentTimeMillis() - start;
-                _logger.info("Parsed capabilities (found " + hosts.size() + " hosts) in " + diff + " ms ("+endpoint.toString()+")");
-            } catch (XPathExpressionException | SAXException | IOException e) {
-                _logger.error("Can not parse capabilities from '" + endpoint.toString() + "'");
-                _logger.error(e);
+                    org.w3c.dom.Document doc = createDocument(data);
+                    Set<String> hosts = extractHostsFromCapabilities(doc);
+                    verifier.addToWhitelist(hosts);
+
+                    long diff = System.currentTimeMillis() - start;
+                    _logger.info("Parsed capabilities (found " + hosts.size() + " hosts) in " + diff + " ms ("+endpoint.toString()+")");
+
+                    String contentType = responseWrapper.getContentType();
+                    String encoding = null;
+                    if(doc.getXmlEncoding()!=null){
+                        encoding = doc.getXmlEncoding();
+                    }
+                    else{
+                        encoding = responseWrapper.getCharacterEncoding();
+                    }
+
+                    _logger.info("  Storing contentType '"+contentType+"' and encoding '"+encoding+"' for that capabilities");
+                    parsingCache.add(endpoint, contentType, encoding);
+
+                } catch (XPathExpressionException | SAXException | IOException e) {
+                    _logger.error("Can not parse capabilities from '" + endpoint.toString() + "'");
+                    _logger.error(e);
+                }
             }
+            else{
+                _logger.debug("Did not parse capabilities since it was cached ("+endpoint.toString()+")");
+            }
+
+            setCharset(responseWrapper, parsingCache.getContentType(endpoint), parsingCache.getEncoding(endpoint));
+
+            out.write(data);
+            out.close();
 
         } else {
             inChain.doFilter(inReq, inRes);
         }
-
     }
 
-    private Set<String> extractHostsFromCapabilities(byte[] data)
-            throws SAXException, IOException, XPathExpressionException {
+    private void setCharset(HttpServletResponse inRes, String contentType, String encoding){
 
-        Set<String> hosts = new HashSet<String>();
+        _logger.debug("Use content type '"+contentType+"' and encoding '"+encoding+"'");
 
+        if(!contentType.contains("charset") && contentType!=null && encoding!=null){
+            String ct = contentType+";charset="+encoding;
+            inRes.setContentType(ct);
+            inRes.setCharacterEncoding(encoding);
+
+            _logger.debug("Set response content type: "+ct+" and character encoding: "+encoding);
+        }
+        else{
+            _logger.debug("Did not set response content type. ContentType: "+contentType+", CharacterEncoding: "+encoding);
+        }
+    }
+
+    private org.w3c.dom.Document createDocument(byte[] data) throws SAXException, IOException{
         ByteArrayInputStream stream = new ByteArrayInputStream(data);
         org.w3c.dom.Document doc = builder.parse(stream);
+
+        return doc;
+    }
+
+    private Set<String> extractHostsFromCapabilities(org.w3c.dom.Document doc)
+            throws XPathExpressionException {
+
+        Set<String> hosts = new HashSet<String>();
 
         NodeList nl = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 
