@@ -96,7 +96,7 @@
 
         //send request and decode result
         if (gnUrlUtils.isValid(url)) {
-       	  if (url.includes("maps.lantmateriet.se" || "www.geodata.se/gateway/gateto")) {
+       	  if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
         	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
           }  else {
        	    if (!url.includes("https://")) {
