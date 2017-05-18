@@ -33,7 +33,7 @@
       'gnUrlUtils', 'gnGlobalSettings', 'gfiOutputFormatCheck',
       function($http, $q, gnUrlUtils, gnGlobalSettings, gfiOutputFormatCheck) {
 
-    	var proxyfyURL() = function(url) {
+    	var proxyfyURL = function(url) {
     		if (url.includes("proxy")) {
     			return url;    			
     		}
