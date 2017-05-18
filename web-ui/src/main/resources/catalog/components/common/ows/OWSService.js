@@ -47,6 +47,10 @@
              var wmsLayers = parseUrl[1].split("=")
           }
           
+          var getAppUrlLmProxy = function(){
+        	 return gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl;
+          }
+          
           //Function to parse layers inside each layergroup 
           var parseLayerGroup = function(layer){
             for  (var l in layer) {
@@ -64,8 +68,8 @@
             return layerCheck;
           }
 
-          if (url.includes("maps.lantmateriet.se")) {
-            url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+          if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+            url = getAppUrlLmProxy() + encodeURIComponent(url);
           }
 
           // Push all leaves into a flat array of Layers.
@@ -128,8 +132,8 @@
         				  for (var k = 0; k < layers[j].Style.length; k++) {
         					  if (angular.isDefined(layers[j].Style[k].LegendURL)) {
         						  for (var l = 0; l < layers[j].Style[k].LegendURL.length; l++) {
-        							  if (layers[j].Style[k].LegendURL[l].OnlineResource.includes("maps.lantmateriet.se")) {
-        								  layers[j].Style[k].LegendURL[l].OnlineResource = gnGlobalSettings.lmProxyUrl + encodeURIComponent(layers[j].Style[k].LegendURL[l].OnlineResource);
+        							  if (layers[j].Style[k].LegendURL[l].OnlineResource.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+        								  layers[j].Style[k].LegendURL[l].OnlineResource = getAppUrlLmProxy() + encodeURIComponent(layers[j].Style[k].LegendURL[l].OnlineResource);
             				            }
         						  }
         					  } 
@@ -189,11 +193,11 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-             	  if (url.includes("maps.lantmateriet.se")) {
-                	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+             	  if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+                	  url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
                   }  else {
                	    if (!url.includes("https://")) {
-                 	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                 	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.proxyUrl + encodeURIComponent(url);
                     }
                   }
            	  //send request and decode result
@@ -225,11 +229,11 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-             	  if (url.includes("maps.lantmateriet.se")) {
-                	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+             	  if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+                	  url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
                   }  else {
                	    if (!url.includes("https://")) {
-                 	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                 	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.proxyUrl + encodeURIComponent(url);
                     }
                   }
                   $http.get(url, {

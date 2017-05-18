@@ -69,8 +69,9 @@
     'gnGlobalSettings',
     'gnMap',
     '$q',
+    'gnUrlUtils',
     function($http, gnOwsCapabilities, gnUrlUtils, gnGlobalSettings,
-             gnMap, $q) {
+             gnMap, $q, gnUrlUtils) {
 
       this.WMS_MIMETYPE = 'application/x-ogc-wms';
 
@@ -96,11 +97,11 @@
 
         //send request and decode result
         if (gnUrlUtils.isValid(url)) {
-       	  if (url.includes("maps.lantmateriet.se")) {
-        	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+       	  if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+        	  url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
           }  else {
        	    if (!url.includes("https://")) {
-         	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+         	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.proxyUrl + encodeURIComponent(url);
             }  
           }
           return $http.get(url, {

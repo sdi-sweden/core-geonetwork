@@ -113,10 +113,10 @@
       $scope.location = gnSearchLocation;
 
       gnConfigService.loadPromise.then(function() {
-        $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl +
+        $scope.predefinedMapsUrl = '../../' + gnGlobalSettings.proxyUrl +
             gnConfig['map.predefinedMaps.url'];
 
-        $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl +
+        $scope.geotechnicsUrl = '../../' + gnGlobalSettings.proxyUrl +
             gnConfig['map.geotechnics.url'];
       });
 
@@ -538,7 +538,7 @@
 			var initiativKeyword = md.initiativKeyword;
 			if(initiativKeyword) {
 				var initiativKeywordString = initiativKeyword.toString();
-				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using 'Ö' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
+				if(initiativKeywordString.indexOf('ppna data') > -1 ) { // Not using 'ï¿½' but just using word 'ppna data'. Has some issue with browsers. So keeping it simple.
 					imgPath = '../../catalog/views/swe/images/opendata.png';
 				} else if(initiativKeywordString.indexOf('Geodatasamverkan') > -1) {
 					imgPath = '../../catalog/views/swe/images/geodatacooperation.png';

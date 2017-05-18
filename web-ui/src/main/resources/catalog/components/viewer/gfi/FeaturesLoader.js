@@ -50,6 +50,11 @@
     this.$injector = $injector;
     this.$http = this.$injector.get('$http');
     this.gnProxyUrl = this.$injector.get('gnGlobalSettings').proxyUrl;
+	var origin = window.location.origin;
+      if (!origin) {
+		  origin = window.location.protocol + "//" + window.location.hostname;
+	}
+    this.lmProxyUrl = origin + '/' + this.$injector.get('gnGlobalSettings').lmProxyUrl;
 
     this.layer = config.layer;
     this.map = config.map;
@@ -66,6 +71,10 @@
 
   geonetwork.GnFeaturesLoader.prototype.proxyfyUrl = function(url) {
     return this.gnProxyUrl + encodeURIComponent(url);
+  };
+
+  geonetwork.GnFeaturesLoader.prototype.lmproxyfyUrl = function(url) {
+    return this.lmProxyUrl + encodeURIComponent(url);
   };
 
   /**

@@ -36,8 +36,8 @@
 
 
   module.constant('gnGlobalSettings', {
-    proxyUrl: '../../proxy?url=',
-    lmProxyUrl: '../../lm-proxy?url=',
+    proxyUrl: 'proxy?url=',
+    lmProxyUrl: 'lm-proxy?url=',
     locale: {},
     isMapViewerEnabled: false,
     requireProxy: [],
@@ -51,7 +51,8 @@
         blur: 0
       }
     },
-    current: null
+    current: null,
+    applicationName: 'geodataportalen'
   });
 
   module.constant('gnLangs', {
@@ -141,7 +142,7 @@
         'spa': 'Español', 'cat': 'Català', 'cze': 'Czech', 'fin': 'Suomeksi', 'swe': 'Svensk'};
       $scope.url = '';
       $scope.base = '../../catalog/';
-      $scope.proxyUrl = gnGlobalSettings.proxyUrl;
+      $scope.proxyUrl = '../../' + gnGlobalSettings.proxyUrl;
       $scope.logoPath = '../../images/harvesting/';
       $scope.isMapViewerEnabled = gnGlobalSettings.isMapViewerEnabled;
       $scope.isDebug = window.location.search.indexOf('debug') !== -1;
