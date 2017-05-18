@@ -33,6 +33,21 @@
       'gnUrlUtils', 'gnGlobalSettings', 'gfiOutputFormatCheck',
       function($http, $q, gnUrlUtils, gnGlobalSettings, gfiOutputFormatCheck) {
 
+    	var proxyfyURL() = function(url) {
+    		if (url.includes("proxy")) {
+    			return url;    			
+    		}
+    		var appUrlLmProxy = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl;
+            if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+                url = appUrlLmProxy + encodeURIComponent(url);
+            } else {
+           	    if (!url.includes("https://")) {
+             	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                }
+            }
+            return url;
+    	}
+    	
         var displayFileContent = function(wmsUrl,data) {
           var parser = new ol.format.WMSCapabilities();
           var result = parser.read(data);
@@ -45,10 +60,6 @@
           var parseUrl = wmsUrl.substring(wmsUrl.indexOf("&") + 1).split("&") 
           if (parseUrl.length > 1) {
              var wmsLayers = parseUrl[1].split("=")
-          }
-          
-          var getAppUrlLmProxy = function(){
-        	 return gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl;
           }
           
           //Function to parse layers inside each layergroup 
@@ -68,9 +79,7 @@
             return layerCheck;
           }
 
-          if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
-            url = getAppUrlLmProxy() + encodeURIComponent(url);
-          }
+          url = proxyfyURL(url);
 
           // Push all leaves into a flat array of Layers.
           var getFlatLayers = function(layer) {
@@ -132,9 +141,7 @@
         				  for (var k = 0; k < layers[j].Style.length; k++) {
         					  if (angular.isDefined(layers[j].Style[k].LegendURL)) {
         						  for (var l = 0; l < layers[j].Style[k].LegendURL.length; l++) {
-        							  if (layers[j].Style[k].LegendURL[l].OnlineResource.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
-        								  layers[j].Style[k].LegendURL[l].OnlineResource = getAppUrlLmProxy() + encodeURIComponent(layers[j].Style[k].LegendURL[l].OnlineResource);
-            				            }
+        							  layers[j].Style[k].LegendURL[l].OnlineResource = proxyfyURL(layers[j].Style[k].LegendURL[l].OnlineResource);
         						  }
         					  } 
         				  }
@@ -193,13 +200,7 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-             	  if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
-                	  url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-                  }  else {
-               	    if (!url.includes("https://")) {
-                 	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                    }
-                  }
+             	url = proxyfyURL(url);
            	  //send request and decode result
                 $http.get(url, {
                   cache: true
@@ -229,13 +230,7 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-             	  if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
-                	  url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-                  }  else {
-               	    if (!url.includes("https://")) {
-                 	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                    }
-                  }
+            	  url = proxyfyURL(url);
                   $http.get(url, {
                   cache: true
                 })
