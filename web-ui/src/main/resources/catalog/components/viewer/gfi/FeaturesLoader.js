@@ -70,11 +70,11 @@
   };
 
   geonetwork.GnFeaturesLoader.prototype.proxyfyUrl = function(url) {
-    return this.gnProxyUrl + encodeURIComponent(url);
-  };
-
-  geonetwork.GnFeaturesLoader.prototype.lmproxyfyUrl = function(url) {
-    return this.lmProxyUrl + encodeURIComponent(url);
+	if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+		return this.lmProxyUrl + encodeURIComponent(url)
+	}  else {
+		return this.gnProxyUrl + encodeURIComponent(url);
+	}
   };
 
   /**
