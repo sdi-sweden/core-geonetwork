@@ -54,7 +54,7 @@
 			origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
 			
 		}
-        return origin + '/geonetwork';
+        return origin + '/' + gnGlobalSettings.applicationName;
       };
       this.path = function(path) {
         return $location.path(path);
