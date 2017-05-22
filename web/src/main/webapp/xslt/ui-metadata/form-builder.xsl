@@ -158,6 +158,11 @@
           </label>
 
           <div class="col-sm-8 gn-value">
+		  <!-- Create an empty input to contain the data-gn-field-tooltip
+			key which is used to check if an element
+			is the first element of its kind in the form. -->
+		  <input type="hidden"
+               data-gn-field-tooltip=""/>
             <xsl:if test="$isMultilingual">
               <xsl:attribute name="data-gn-multilingual-field"
                              select="$metadataOtherLanguagesAsJson"/>
