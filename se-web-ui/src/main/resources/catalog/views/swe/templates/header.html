@@ -15,26 +15,30 @@
         <span class="hidden-xs hidden-sm" data-translate="">otherGeodata</span><span class="icon-down-dir"></span>
       </div>
       <ul class="-list">
-        <li><a class="-text-link" target="_blank" href="https://maps.slu.se/">
-              <span data-translate="">getService</span>
-            </a>
-        </li>
-        <li><a class="-text-link" target="_blank" href="http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/">
-              <span data-translate="">norwegianMetadata</span>
-            </a>
-        </li>
+        <li><a href="geodata_row_popup.html" class="-text-link"><span data-translate="">getService</span></a></li>
       </ul>
     </div>
 	<swe-geo-technics-filter data-config-url="{{geotechnicsUrl}}" data-show-map-fn="showFullMapPanel"></swe-geo-technics-filter>
-    <a></a>
-    <a></a>
-    <a></a>
-    <a></a>
+    <a data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="../../login" class="header-login header-text">
+    <span class="hidden-xs hidden-sm" data-translate="">forPublishers</span>
+    </a>
+
+    <a data-swe-show-dialog="" data-dialog="#newmetadata-popup" data-ng-show="authenticated" href="" class="header-login header-text login-popup-link">
+    <span class="hidden-xs hidden-sm" data-translate="">createMetadata-menu</span>
+    </a>
+
+    <a data-ng-show="authenticated" href="admin.console" class="header-admin header-text">
+    <span class="hidden-xs hidden-sm" data-translate="">administrationMenu</span>
+    </a>
+
+    <a data-ng-show="authenticated" href="/AGLogout" class="header-logout header-text">
+    <span class="hidden-xs hidden-sm" data-translate="">logout</span>
+    </a>
   </div>
 
-<!--   <div class="header-right-cont">
+  <div class="header-right-cont">
     <a href="" class="header-menu header-text">      
       <span data-translate="">menu</span>
     </a>
-  </div> -->
+  </div>
 </div>

@@ -754,7 +754,7 @@
 
     <xsl:variable name="dialog-id" select="generate-id()" />
 
-    <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
+    <div class="form-group gn-field distributorFormat" data-ng-controller="SweEditorTableController"
          data-ng-init="init({$formatModel}, {$formatTableModel}, '{$formatXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#format-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
@@ -988,7 +988,7 @@
 
     <xsl:variable name="dialog-id" select="generate-id()" />
 
-    <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
+    <div class="form-group gn-field distributorOnlineKalla" data-ng-controller="SweEditorTableController"
          data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />

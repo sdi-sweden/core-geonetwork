@@ -865,7 +865,7 @@
   <!-- ########################## -->
   <!-- Render values for text ... -->
   <xsl:template mode="render-value"
-                match="gco:CharacterString|gco:Integer|gco:Decimal|
+                match="gmd:statement|gco:CharacterString|gco:Integer|gco:Decimal|
        gco:Boolean|gco:Real|gco:Measure|gco:Length|gco:Distance|gco:Angle|gmx:FileName|
        gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|
        gco:LocalName|gml:beginPosition|gml:endPosition">
