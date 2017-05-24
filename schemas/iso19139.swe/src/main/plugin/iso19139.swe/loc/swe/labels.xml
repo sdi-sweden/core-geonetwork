@@ -1467,7 +1467,43 @@ Detta undviker vi att ange, ange istället organisation.</description>
             <label>Tornedalsfinska(fiu)</label>
           </entry>
         </codelist>
-    </element>
+    </element>	
+	<element id="390.0" name="gmd:language">
+        <label>Språk i resurs</label>
+        <description>Det språk som används i resursen.</description>
+        <help>språk som används i resursen</help>
+        <_condition>Mandatory</_condition>
+        <codelist>
+          <entry>
+            <code>eng</code>
+            <label>Engelska(eng)</label>
+          </entry>
+          <entry>
+            <code>swe</code>
+            <label>Svenska(swe)</label>
+          </entry>
+          <entry>
+            <code>smj</code>
+            <label>Lulesamiska(smj)</label>
+          </entry>
+          <entry>
+            <code>sme</code>
+            <label>Nordsamiska(sme)</label>
+          </entry>
+          <entry>
+            <code>smi</code>
+            <label>Samiska(smi)</label>
+          </entry>
+          <entry>
+            <code>sma</code>
+            <label>Sydsamiska(sma)</label>
+          </entry>
+          <entry>
+            <code>fiu</code>
+            <label>Tornedalsfinska(fiu)</label>
+          </entry>
+        </codelist>
+    </element>	
     <element context="gmd:MD_FeatureCatalogueDescription" id="235.0" name="gmd:language">
         <label>Språk</label>
         <description>Språk som används i objekttypskatalogen</description>

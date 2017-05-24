@@ -1177,7 +1177,7 @@
           </field>
 
 
-          <action type="add" name="conformity" or="report"
+          <action type="add" name="conformity" or="report" tooltip="gmd:result"
                   forceLabel="true"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
             <template>
@@ -2850,7 +2850,7 @@
           </field>
 
 
-          <action type="add" name="conformity" or="report"
+          <action type="add" name="conformity" or="report" tooltip="gmd:result"
                   forceLabel="true"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
             <template>
@@ -4523,7 +4523,7 @@
           </field>
 
 
-          <action type="add" name="conformity" or="report"
+          <action type="add" name="conformity" or="report" tooltip="gmd:result"
                   forceLabel="true"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
             <template>
@@ -6042,6 +6042,15 @@
                   or="operatesOn"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/*" />
 
+          <!--<action type="add" name="operatesOn" or="operatesOn"
+                  forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification">
+            <template>
+              <snippet>
+                <srv:operatesOn uuidref="" xlink:href=""/>
+              </snippet>
+            </template>
+          </action>-->
         </section>
 
 
@@ -6196,7 +6205,7 @@
           </field>
 
 
-          <action type="add" name="conformity" or="report"
+          <action type="add" name="conformity" or="report" tooltip="gmd:result"
                   forceLabel="true"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
             <template>
@@ -7603,7 +7612,7 @@
           </field>
 
 
-          <action type="add" name="conformity" or="report"
+          <action type="add" name="conformity" or="report" tooltip="gmd:result"
                   forceLabel="true"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification)=0"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">

@@ -28,7 +28,7 @@
             <div class="update-tag"><span>Senast uppdaterad <span data-gn-humanize-time="{{mdView.current.record['geonet:info'].changeDate}}"
                                                                     data-from-now=""></span></span>
             </div>
-            
+
           </div>
         </div>
 
@@ -64,7 +64,10 @@
               <div class="-label"><span class="icon-info"></span>{{ 'moreInformation' | translate }} <span class="icon-down-dir"></span></div>
               <ul class="-list">
                 <li data-ng-repeat="l in getInformationLinks(mdView.current.record)">
-                  <a href="{{l.url}}" class="-text-link" target="_blank">{{l.desc || l.url}}</a>
+                  <a href="{{l.url}}" title="{{l.desc || l.name}}" class="-text-link" target="_blank">
+                    <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                    <span data-ng-show="l.name == ''">{{ 'mdlink' | translate }} {{$index + 1}}</span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -78,7 +81,10 @@
               <div class="-label"><span class="icon-map"></span>{{ 'showOnMap' | translate }} <span class="icon-down-dir"></span></div>
               <ul class="-list">
                 <li data-ng-repeat="l in getMapLinks(mdView.current.record)">
-                  <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l, mdView.current.record)">{{l.desc || l.url}}</a>
+                  <a href="" class="-text-link" title="{{l.desc || l.name}}" data-ng-click="resultviewFns.addWmsLayersFromCap(l, mdView.current.record)">
+                    <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                    <span data-ng-show="l.name == ''">{{ 'layer' | translate }} {{$index + 1}}</span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -92,7 +98,10 @@
               <div class="-label"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>{{ 'downloadDataset' | translate }} <span class="icon-down-dir"></span></div>
               <ul class="-list">
                 <li data-ng-repeat="l in getDownloadLinks(mdView.current.record)">
-                  <a href="{{l.url}}" class="-text-link" target="_blank">{{l.desc || l.url}}</a>
+                  <a href="{{l.url}}" title="{{l.desc || l.name}}" class="-text-link" target="_blank">
+                    <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                    <span data-ng-show="l.name == ''">{{ 'downloadlink' | translate }} {{$index + 1}}</span>
+                  </a>
                 </li>
               </ul>
             </div>

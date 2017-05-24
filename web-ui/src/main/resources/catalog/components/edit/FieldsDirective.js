@@ -139,7 +139,7 @@
     ['gnSchemaManagerService', 'gnCurrentEdit', '$compile', '$translate',
       function(gnSchemaManagerService, gnCurrentEdit, $compile, $translate) {
 
-      var iconTemplate = "<a class='btn field-tooltip' " +
+      var iconTemplate = "<a class='btn field-tooltip' tabindex='1'" +
       "data-ng-show='gnCurrentEdit.displayTooltips'>" +
       "<span class='fa fa-question-circle-o'></span></a>";
 
@@ -202,7 +202,8 @@
                   asideCol = element.parent('div').parent('div').parent('div').prev();
 
                   if (asideCol.hasClass('control-label')) {
-                    asideCol.append(tooltipIconCompiled);
+					 // Commented out this code Since we have added code below to show tooltip to all label.And To avoid multiple tooltips added for // Resursidentifierare
+                    //asideCol.append(tooltipIconCompiled);
                   } else {
                     element.before(tooltipIconCompiled);
                   }
@@ -292,7 +293,7 @@
                     '</div><div class="popover-inner">' +
                     '<h3 class="popover-title"></h3>' +
                     '<div class="popover-content"><p></p></div></div></div>',
-                    trigger: 'click'
+                    trigger: 'focus click'
                   });
 
                    closeTooltips();
@@ -309,6 +310,11 @@
                       $('.popover>.arrow').css('top',
                       oldTopArrow - newTopPopover + oldTopPopover);
                     }
+                  });
+				  //To toggle tooltip content both on click and focus event
+				  tooltipIcon.on('hidden.bs.popover', function(event) {
+                    isInitialized = false;
+					tooltipIcon.popover('destroy');
                   });
                   tooltipIcon.on('$destroy', function() {
                     tooltipIcon.off();
