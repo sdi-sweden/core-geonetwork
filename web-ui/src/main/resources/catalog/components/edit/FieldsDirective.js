@@ -27,7 +27,7 @@
   goog.require('gn_metadata_manager_service');
 
   var module = angular.module('gn_fields_directive',
-      []);
+    []);
 
   /**
    * Note: ng-model and angular checks could not be applied to
@@ -35,25 +35,25 @@
    * from the form content using ng-init for example.
    */
   module.directive('gnCheck',
-      function() {
-        return {
-          restrict: 'A',
-          link: function(scope, element, attrs) {
+    function() {
+      return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
 
-            // Required attribute
-            if (attrs.required) {
-              element.keyup(function() {
-                if ($(this).get(0).value == '') {
-                  $(attrs.gnCheck).addClass('has-error');
-                } else {
-                  $(attrs.gnCheck).removeClass('has-error');
-                }
-              });
-              element.keyup();
-            }
+          // Required attribute
+          if (attrs.required) {
+            element.keyup(function() {
+              if ($(this).get(0).value == '') {
+                $(attrs.gnCheck).addClass('has-error');
+              } else {
+                $(attrs.gnCheck).removeClass('has-error');
+              }
+            });
+            element.keyup();
           }
-        };
-      });
+        }
+      };
+    });
 
   /**
    * @ngdoc directive
@@ -65,46 +65,46 @@
    * of a numberic value and a unit.
    */
   module.directive('gnMeasure',
-      function() {
-        return {
-          restrict: 'A',
-          templateUrl: '../../catalog/components/edit/partials/' +
-              'measure.html',
-          scope: {
-            uom: '@',
-            ref: '@'
-          },
-          link: function(scope, element, attrs) {
-            scope.value = parseFloat(attrs['gnMeasure'], 10) || null;
+    function() {
+      return {
+        restrict: 'A',
+        templateUrl: '../../catalog/components/edit/partials/' +
+        'measure.html',
+        scope: {
+          uom: '@',
+          ref: '@'
+        },
+        link: function(scope, element, attrs) {
+          scope.value = parseFloat(attrs['gnMeasure'], 10) || null;
 
-            // Load the config from the textarea containing the helpers
-            scope.config =
-                angular.fromJson($('#' + scope.ref + '_config')[0].value);
-            if (scope.config == null) {
-              scope.config = {
-                option: []
-              };
-            }
-            // If only one option, convert to an array
-            if (!$.isArray(scope.config.option)) {
-              scope.config.option = [scope.config.option];
-            }
-            if (angular.isArray(scope.config)) {
-              scope.config.option = scope.config;
-            }
-            scope.$watch('selected', function(n, o) {
-              if (n && n !== o) {
-                if (n['@value']) {
-                  scope.value = parseFloat(n['@value'], 10);
-                }
-                if (n['@title']) {
-                  scope.uom = n['@title'];
-                }
-              }
-            });
+          // Load the config from the textarea containing the helpers
+          scope.config =
+            angular.fromJson($('#' + scope.ref + '_config')[0].value);
+          if (scope.config == null) {
+            scope.config = {
+              option: []
+            };
           }
-        };
-      });
+          // If only one option, convert to an array
+          if (!$.isArray(scope.config.option)) {
+            scope.config.option = [scope.config.option];
+          }
+          if (angular.isArray(scope.config)) {
+            scope.config.option = scope.config;
+          }
+          scope.$watch('selected', function(n, o) {
+            if (n && n !== o) {
+              if (n['@value']) {
+                scope.value = parseFloat(n['@value'], 10);
+              }
+              if (n['@title']) {
+                scope.uom = n['@title'];
+              }
+            }
+          });
+        }
+      };
+    });
   /**
    * @ngdoc directive
    * @name gn_fields.directive:gnFieldTooltip
@@ -126,12 +126,12 @@
    *
    *
    * @example
-  <example>
-    <file name="index.html">
-      <label for="gn-field-3"
-         data-gn-field-tooltip="iso19139|gmd:fileIdentifier|gmd:MD_Metadata|
-         /gmd:MD_Metadata/gmd:fileIdentifier"
-         data-placement="left">File identifier</label>
+   <example>
+   <file name="index.html">
+   <label for="gn-field-3"
+   data-gn-field-tooltip="iso19139|gmd:fileIdentifier|gmd:MD_Metadata|
+   /gmd:MD_Metadata/gmd:fileIdentifier"
+   data-placement="left">File identifier</label>
    </file>
    </example>
    */
@@ -139,201 +139,206 @@
     ['gnSchemaManagerService', 'gnCurrentEdit', '$compile', '$translate',
       function(gnSchemaManagerService, gnCurrentEdit, $compile, $translate) {
 
-      var iconTemplate = "<a class='btn field-tooltip' tabindex='1'" +
-      "data-ng-show='gnCurrentEdit.displayTooltips'>" +
-      "<span class='fa fa-question-circle-o'></span></a>";
+        var iconTemplate = "<a class='btn field-tooltip' tabindex='1'" +
+          "data-ng-show='gnCurrentEdit.displayTooltips'>" +
+          "<span class='fa fa-question-circle-o'></span></a>";
 
-      return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-          var isInitialized = false;
-          var stopEventBubble = false;
-          var tooltipIcon;
-          var isField = element.is('input') || element.is('textarea') || element.is('select');
-          var isDatePicker = 'gnDatePicker' in attrs;
-		  var isRadio = 'gnCheckboxWithNilreason' in attrs;
-          var tooltipIconCompiled = $compile(iconTemplate)(scope);
+        return {
+          restrict: 'A',
+          link: function(scope, element, attrs) {
+            var isInitialized = false;
+            var stopEventBubble = false;
+            var tooltipIcon;
+            console.log(element.hasClass("panel-heading"))
+            var isField = element.is('input') || element.is('textarea') || element.is('select');
+            var isDatePicker = 'gnDatePicker' in attrs;
+            var isRadio = 'gnCheckboxWithNilreason' in attrs;
+            var tooltipIconCompiled = $compile(iconTemplate)(scope);
 
-          var isTableEditor = element.siblings().length == 2 && element.siblings()[1].className == 'fixed-table-container';
-          var createTooltipForDatePicker = function (el, tooltip) {
+            var isTableEditor = element.siblings().length == 2 && element.siblings()[1].className == 'fixed-table-container';
+            var createTooltipForDatePicker = function (el, tooltip) {
 
-            // put the button before the datepicker, but after the sublabel
-            el.before(tooltipIconCompiled);
-          };
-          if (isDatePicker || isRadio) {
-            createTooltipForDatePicker(element, tooltipIconCompiled);
-          }
-          var createTooltipForTableEditor = function (el, tooltip) {
+              // put the button before the datepicker, but after the sublabel
+              el.before(tooltipIconCompiled);
+            };
+            if (isDatePicker || isRadio) {
+              createTooltipForDatePicker(element, tooltipIconCompiled);
+            }
+            var createTooltipForTableEditor = function (el, tooltip) {
 
-            // put the button before the datepicker, but after the sublabel
-            el.append(tooltipIconCompiled);
-          };
-          if (isTableEditor)  {
-            createTooltipForTableEditor(element, tooltipIconCompiled);
-          } else {
-            if (isField && element.attr('type') !== 'hidden') {
-              // try to find the label (with class 'control-label') that
-              // is before this element in the DOM and append the tooltip
-              // button to it.
-              //
-              //  If it's not found, place the button just before the element
-              // <label class="control-label" ...
-              //     <div>
-              //       <input ...
-              var asideCol = element.parent('div').prev();
+              // put the button before the datepicker, but after the sublabel
+              el.append(tooltipIconCompiled);
+            };
+            if (isTableEditor)  {
+              createTooltipForTableEditor(element, tooltipIconCompiled);
+            } else {
+              if (isField && element.attr('type') !== 'hidden') {
+                // try to find the label (with class 'control-label') that
+                // is before this element in the DOM and append the tooltip
+                // button to it.
+                //
+                //  If it's not found, place the button just before the element
+                // <label class="control-label" ...
+                //     <div>
+                //       <input ...
+                var asideCol = element.parent('div').prev();
 
-              if (asideCol.hasClass('control-label')) {
-                asideCol.append(tooltipIconCompiled);
-              } else {
-                // Check if a template field, 2 cases:
-
-                // <label ...
-                // <input ...
-                asideCol = element.prev();
-                if (asideCol.is('label')) {
+                if (asideCol.hasClass('control-label')) {
                   asideCol.append(tooltipIconCompiled);
-
                 } else {
-                  // <label class="control-label" ...
-                  // <div>
-                  //   <div>
-                  //     <div>
-                  //       <input ...
-                  asideCol = element.parent('div').parent('div').parent('div').prev();
+                  // Check if a template field, 2 cases:
 
-                  if (asideCol.hasClass('control-label')) {
-					 // Commented out this code Since we have added code below to show tooltip to all label.And To avoid multiple tooltips added for // Resursidentifierare
-                    //asideCol.append(tooltipIconCompiled);
+                  // <label ...
+                  // <input ...
+                  asideCol = element.prev();
+                  if (asideCol.is('label')) {
+                    asideCol.append(tooltipIconCompiled);
+
                   } else {
-                    element.before(tooltipIconCompiled);
-                  }
+                    // <label class="control-label" ...
+                    // <div>
+                    //   <div>
+                    //     <div>
+                    //       <input ...
+                    asideCol = element.parent('div').parent('div').parent('div').prev();
 
+                    if (asideCol.hasClass('control-label')) {
+                      // Commented out this code Since we have added code below to show tooltip to all label.And To avoid multiple tooltips added for // Resursidentifierare
+                      //asideCol.append(tooltipIconCompiled);
+                    } else {
+                      element.before(tooltipIconCompiled);
+                    }
+
+                  }
                 }
+
               }
 
+
+              // if element is a fieldset legend
+              if (element.is('legend') || element.hasClass("panel-heading")) {
+                element.contents().first().after(tooltipIconCompiled);
+                stopEventBubble = true;
+              }
+              if (element.is('label')) {
+                element.append(tooltipIconCompiled);
+                //element.parent().children('div').append(tooltipIconCompiled);
+              }
+              //
+              if (element.hasClass("panel-heading")) {
+                element.append(tooltipIconCompiled);
+              }
             }
 
+            tooltipIcon = tooltipIconCompiled;
 
-            // if element is a fieldset legend
-            if (element.is('legend')) {
-              element.contents().first().after(tooltipIconCompiled);
-              stopEventBubble = true;
-            }
-            if (element.is('label')) {
-              element.append(tooltipIconCompiled);
-              //element.parent().children('div').append(tooltipIconCompiled);
-            }
-          }
+            var closeTooltips = function() {
+              // Close all tooltips/popovers (there still might be some open)
+              $('.popover').popover('hide');
+              // Less official way to hide
+              $('.popover').hide();
+            };
 
-          tooltipIcon = tooltipIconCompiled;
+            var initTooltip = function(eventName, event) {
+               if (stopEventBubble) {
+                 event.stopPropagation();
+               }
+              if (!isInitialized && gnCurrentEdit.displayTooltips) {
+                // Retrieve field information (there is a cache)
+                gnSchemaManagerService
+                  .getElementInfo(attrs.gnFieldTooltip).then(function(data) {
+                  var info = data;
 
-          var closeTooltips = function() {
-            // Close all tooltips/popovers (there still might be some open)
-            $('.popover').popover('hide');
-            // Less official way to hide
-            $('.popover').hide();
-          };
+                  if (info.description && info.label) {
+                    //if (info.description && info.description.length > 0) {
+                    // Initialize tooltip when description returned
+                    var html = '';
 
-          var initTooltip = function(eventName, event) {
-            // if (stopEventBubble) {
-            //   event.stopPropagation();
-            // }
-            if (!isInitialized && gnCurrentEdit.displayTooltips) {
-              // Retrieve field information (there is a cache)
-              gnSchemaManagerService
-               .getElementInfo(attrs.gnFieldTooltip).then(function(data) {
-                var info = data;
+                    // TODO: externalize in a template.
+                    if (angular.isArray(info.help)) {
+                      angular.forEach(info.help, function(helpText) {
+                        if (helpText['@for']) {
+                          html += helpText['#text'];
+                        } else {
+                          html += helpText;
+                        }
+                      });
+                    } else if (info.help) {
+                      html += info.help;
+                    }
 
-                if (info.description && info.label) {
-                  //if (info.description && info.description.length > 0) {
-                  // Initialize tooltip when description returned
-                  var html = '';
+                    // Add description to the body html
+                    html += '<p>' + info.description + '</p>';
 
-                  // TODO: externalize in a template.
-                  if (angular.isArray(info.help)) {
-                    angular.forEach(info.help, function(helpText) {
-                      if (helpText['@for']) {
-                        html += helpText['#text'];
-                      } else {
-                        html += helpText;
-                      }
-                    });
-                  } else if (info.help) {
-                    html += info.help;
-                  }
+                    // Add @name to de body html
+                    //html += '<p class="text-muted"><span class="title">' + $translate('elementName') + ': </span>' + info['@name'] + '</p>';
 
-                  // Add description to the body html
-                  html += '<p>' + info.description + '</p>';
+                    // Right same width as field
+                    // For legend, popover is right
+                    // Bottom is not recommended when typeahead
+                    var placement = attrs.placement || 'right';
 
-                  // Add @name to de body html
-                  //html += '<p class="text-muted"><span class="title">' + $translate('elementName') + ': </span>' + info['@name'] + '</p>';
-
-                  // Right same width as field
-                  // For legend, popover is right
-                  // Bottom is not recommended when typeahead
-                  var placement = attrs.placement || 'right';
-
-                  // TODO : improve. Here we fix the width
-                  // to the remaining space between the element
-                  // and the right window border.
-                  var width = ($(window).width() -
+                    // TODO : improve. Here we fix the width
+                    // to the remaining space between the element
+                    // and the right window border.
+                    var width = ($(window).width() -
                       tooltipIcon.offset().left -
                       tooltipIcon.outerWidth()) * .95;
 
-                  tooltipIcon.popover({
-                    title: info.label,
-                    container: 'body',
-                    content: html,
-                    html: true,
-                    placement: placement,
-                    template: '<div class="popover gn-popover" ' +
-                    'style="width:' + width + 'px"' +
-                    '>' +
-                    '<div class="arrow">' +
-                    '</div><div class="popover-inner">' +
-                    '<h3 class="popover-title"></h3>' +
-                    '<div class="popover-content"><p></p></div></div></div>',
-                    trigger: 'focus click'
-                  });
+                    tooltipIcon.popover({
+                      title: info.label,
+                      container: 'body',
+                      content: html,
+                      html: true,
+                      placement: placement,
+                      template: '<div class="popover gn-popover" ' +
+                      'style="width:' + width + 'px"' +
+                      '>' +
+                      '<div class="arrow">' +
+                      '</div><div class="popover-inner">' +
+                      '<h3 class="popover-title"></h3>' +
+                      '<div class="popover-content"><p></p></div></div></div>',
+                      trigger: 'focus click'
+                    });
 
-                   closeTooltips();
+                    closeTooltips();
 
-                  tooltipIcon.on('shown.bs.popover', function(event) {
+                    tooltipIcon.on('shown.bs.popover', function(event) {
 
-                    if ($('div.popover').css('top') && $('div.popover').css('top').charAt(0) === '-') {
-                      // move popover under navbar.
-                      var oldTopPopover = $('div.popover').position().top;
-                      var newTopPopover =
-                      $(".navbar:not('.ng-hide')").outerHeight() + 5;
-                      var oldTopArrow = $('.popover>.arrow').position().top;
-                      $('div.popover').css('top', newTopPopover);
-                      $('.popover>.arrow').css('top',
-                      oldTopArrow - newTopPopover + oldTopPopover);
-                    }
-                  });
-				  //To toggle tooltip content both on click and focus event
-				  tooltipIcon.on('hidden.bs.popover', function(event) {
-                    isInitialized = false;
-					tooltipIcon.popover('destroy');
-                  });
-                  tooltipIcon.on('$destroy', function() {
-                    tooltipIcon.off();
-                  });
-                  tooltipIcon.popover('show');
+                      if ($('div.popover').css('top') && $('div.popover').css('top').charAt(0) === '-') {
+                        // move popover under navbar.
+                        var oldTopPopover = $('div.popover').position().top;
+                        var newTopPopover =
+                          $(".navbar:not('.ng-hide')").outerHeight() + 5;
+                        var oldTopArrow = $('.popover>.arrow').position().top;
+                        $('div.popover').css('top', newTopPopover);
+                        $('.popover>.arrow').css('top',
+                          oldTopArrow - newTopPopover + oldTopPopover);
+                      }
+                    });
+                    //To toggle tooltip content both on click and focus event
+                    tooltipIcon.on('hidden.bs.popover', function(event) {
+                      isInitialized = false;
+                      tooltipIcon.popover('destroy');
+                    });
+                    tooltipIcon.on('$destroy', function() {
+                      tooltipIcon.off();
+                    });
+                    tooltipIcon.popover('show');
 
 
-                  isInitialized = true;
-                }
-              });
-            }
-          };
+                    isInitialized = true;
+                  }
+                });
+              }
+            };
 
-          tooltipIcon.click(function(event) {
-            initTooltip();
-          });
-        }
-      };
-    }]);
+            tooltipIcon.click(function(event) {
+              initTooltip('click', event);
+            });
+          }
+        };
+      }]);
   /**
    * @ngdoc directive
    * @name gn_fields.directive:gnEditorControlMove
@@ -359,7 +364,7 @@
 
           $(element).click(function() {
             gnEditor.move(scope.ref, scope.direction || 'down',
-                scope.domelementToMove);
+              scope.domelementToMove);
           });
         }
       };
@@ -379,7 +384,7 @@
         restrict: 'A',
         link: function(scope, element, attrs) {
           var ref = attrs['gnFieldHighlightRemove'],
-              target = $('#gn-el-' + ref);
+            target = $('#gn-el-' + ref);
 
           element.on('mouseover', function(e) {
             target.addClass('text-danger');
@@ -413,12 +418,12 @@
 
             element.addClass('field-bg');
             element.find('a').has('.fa-times.text-danger')
-                .css('visibility', 'visible');
+              .css('visibility', 'visible');
           });
           element.on('mouseout', function() {
             element.removeClass('field-bg');
             element.find('a').has('.fa-times.text-danger')
-                .css('visibility', 'hidden');
+              .css('visibility', 'hidden');
           });
         }
       };
