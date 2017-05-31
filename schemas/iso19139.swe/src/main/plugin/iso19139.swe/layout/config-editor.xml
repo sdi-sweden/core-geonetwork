@@ -1036,7 +1036,7 @@
             in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*" />
 
 
-          <section name="scales">
+          <section name="scales" tooltip="gmd:spatialResolution">
             <field
               name="equivalentScale"
               xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale"
@@ -2709,7 +2709,7 @@
             in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*" />
 
 
-          <section name="scales">
+          <section name="scales" tooltip="gmd:spatialResolution">
             <field
               name="equivalentScale"
               xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale"
@@ -4382,7 +4382,7 @@
             in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*" />
 
 
-          <section name="scales">
+          <section name="scales" tooltip="gmd:spatialResolution">
             <field
               name="equivalentScale"
               xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale"
@@ -6064,7 +6064,7 @@
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*" />
 
 
-          <section name="scales">
+          <section name="scales" tooltip="gmd:spatialResolution">
             <field
                     name="equivalentScale"
                     xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale"
