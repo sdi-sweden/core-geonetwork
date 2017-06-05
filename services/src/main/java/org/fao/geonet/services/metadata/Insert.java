@@ -29,6 +29,8 @@ import jeeves.constants.Jeeves;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.Util;
 import org.fao.geonet.constants.Geonet;
@@ -110,7 +112,13 @@ public class Insert extends NotInReadOnlyModeService {
                 throw new BadParameterEx("Can't detect schema for metadata automatically.", "schema is unknown");
             }
         }
-        if (validate) DataManager.validateMetadata(schema, xml, context, Integer.parseInt(group));
+        if (validate) {
+            Integer groupId = null;
+            if (!StringUtils.isNotEmpty(group)) {
+                groupId = Integer.parseInt(group);
+            }
+            DataManager.validateMetadata(schema, xml, context, groupId);
+        }
 
         //-----------------------------------------------------------------------
         //--- if the uuid does not exist we generate it for metadata and templates

@@ -53,7 +53,8 @@ public abstract class JeevesException extends RuntimeException {
     protected int code;
 
     public JeevesException(String message, Object object) {
-        super(DefaultEncoder.getInstance().encodeForJavaScript(message),
+
+        super(object instanceof Element?message:DefaultEncoder.getInstance().encodeForJavaScript(message),
                 object instanceof Throwable ? (Throwable) object : null);
 
         this.object = object;
