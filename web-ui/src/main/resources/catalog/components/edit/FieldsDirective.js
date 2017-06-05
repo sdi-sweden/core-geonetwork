@@ -149,7 +149,6 @@
             var isInitialized = false;
             var stopEventBubble = false;
             var tooltipIcon;
-            console.log(element.hasClass("panel-heading"))
             var isField = element.is('input') || element.is('textarea') || element.is('select');
             var isDatePicker = 'gnDatePicker' in attrs;
             var isRadio = 'gnCheckboxWithNilreason' in attrs;
