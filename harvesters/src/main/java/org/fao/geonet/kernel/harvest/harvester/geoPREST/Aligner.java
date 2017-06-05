@@ -320,7 +320,7 @@ public class Aligner extends BaseAligner {
             }
 
             try {
-                params.getValidate().validate(dataMan, context, response);
+                params.getValidate().validate(dataMan, context, response, null);
             } catch (Exception e) {
                 log.info("Ignoring invalid metadata with uuid " + uuid);
                 result.doesNotValidate++;
