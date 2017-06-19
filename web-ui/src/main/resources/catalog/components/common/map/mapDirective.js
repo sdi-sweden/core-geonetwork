@@ -331,7 +331,16 @@
                reprojExtent('form', 'md');
                setDcOutput();
                drawBbox();
-               map.getView().fit(scope.extent.map, map.getSize());
+               if (gnMap.isValidExtent(scope.extent.map)) {
+                 map.getView().fit(scope.extent.map, map.getSize());
+               }
+             };
+              /**
+              * Called on to remove 4 extent in map.
+              */
+             scope.removeExtent = function(){
+              scope.extent.form = [];
+              scope.updateBbox();
              };
 
              /**
