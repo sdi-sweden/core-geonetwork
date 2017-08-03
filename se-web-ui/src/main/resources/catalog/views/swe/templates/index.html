@@ -1,4 +1,4 @@
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+﻿<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <div>
 
@@ -169,27 +169,22 @@
         <div class="site-image-filter">
  	      <span class="image-filter-text"  ng-hide="collapsed" data-translate="">predefinedMapsTitle</span>
 		  <div class="image-filter-container"> 
-		    <a href="" data-ng-click="resizeCheck()" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
-	        <swe-predefined-maps-filter 
+		    <a href=""  id="predefmapsArrow" data-ng-click="resizeCheck()" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
+	        <div id="imageFilter"  data-swe-predefined-maps-filter 
 	           ng-hide="collapsed"
 	           data-config-url="{{predefinedMapsUrl}}"
 	           data-show-map-fn="showFullMapPanel"
 	           data-show-map-fn-api="showFullMapPanelApi"
-			   data-selected-map="{{selectedPredefinedMap}}">
-	        </swe-predefined-maps-filter>
+			   data-selected-map="{{selectedPredefinedMap}}"
+               data-is-image-clicked="is_image_clicked"
+             >
+	        </div>
 		  </div>
         </div>
         <div data-ng-include="'../../catalog/views/swe/templates/filters.html'" data-ng-controller="SweFilterPanelController"></div>
 
         <div class="site-content">
           <!-- Map -->
-          <!--<div class="floating-map-cont">
-            <div class="floating-map">
-              <span class="cursor-cont"><span class="icon-cursor"></span></span>
-              <div class="map-img"></div>
-            </div>
-          </div>-->
-
           <div class="floating-map" data-gn-map-field="searchObj.searchMap"
                data-template-url="../../catalog/views/swe/directives/partials/mapfield.html"
                data-gn-map-field-geom="searchObj.params.geometry"
@@ -232,6 +227,16 @@
 
               <!-- Results -->
               <div data-ng-include="'../../catalog/views/swe/templates/resultList.html'" />
+              
+              <!-- Show Pagination at bottom of results -->
+              <span>
+                <div data-gn-pagination="paginationInfo"
+                     data-hits-values="searchObj.hitsperpageValues"
+                     class="pagination-cont"
+                     data-enable-hot-keys="">
+                </div>
+              </span>
+
             </div>
 
           <!-- Result popup -->
