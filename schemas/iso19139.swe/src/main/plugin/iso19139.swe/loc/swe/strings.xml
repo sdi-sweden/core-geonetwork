@@ -78,17 +78,18 @@
   <rsIdentifier>Projektion</rsIdentifier>
   <referenceDate>Temporal information</referenceDate>
   <creationDate>Produktionsdatum</creationDate>
+  <language>Språk i resurs</language>
   <hierarchyLevel>Resurstyp</hierarchyLevel>
   <publicationDate>Publiceringsdatum</publicationDate>
   <revisionDate>Revideringsdatum</revisionDate>
-  <temporalRangeSection>Temporaluträckning</temporalRangeSection>
+  <temporalRangeSection>Temporal utsträckning</temporalRangeSection>
   <beginPosition>Start</beginPosition>
   <endPosition>Slut</endPosition>
-  <conformity>Överensstämmelse</conformity>
+  <conformity>Specifikationsuppfyllelse</conformity>
   <conformity_title>Titel</conformity_title>
   <conformity_date>Datum</conformity_date>
   <explanation>Förklaring</explanation>
-  <pass>Överensstämmer</pass>
+  <pass>Överensstämmelse</pass>
   <indeterminatePosition>Obestämbar position</indeterminatePosition>
   <pointOfContact>Resurskontakt</pointOfContact>
   <distributorContactView>Distributionskontakt</distributorContactView>
@@ -115,11 +116,15 @@
   <add-extent-from-geokeywordsHelp>Analysera alla nyckelord och försök ta fram lämplig utsträckning.</add-extent-from-geokeywordsHelp>
 
   <swedish>Vy SDI-Sverige</swedish>
+  <swedish-a>Only mandatory with admin-elements</swedish-a>
+  <swedish-b>All elements, No admin-elements</swedish-b>
+  <swedish-c>All elements, with admin-elements</swedish-c>
+
   <identificationInfo2>Identifiering av resurs</identificationInfo2>
   <referenceSystemInfo2>Referenssystem</referenceSystemInfo2>
   <distributionInfo2>Distribution</distributionInfo2>
   <metadata2>Information om metadata</metadata2>
-  <extent>Geografisk, temporal och vertical utsträckning</extent>
+  <extent>Geografisk, temporal och vertikal utsträckning</extent>
   <distributorContact>Distributör</distributorContact>
   <metadataMaintenance2>Underhäll</metadataMaintenance2>
   <restrictions>Restriktioner</restrictions>
@@ -154,7 +159,7 @@
   <otherConstraints>Andra restriktioner</otherConstraints>
   <scales>Rumslig upplösning</scales>
 
-  <addInspireTheme>add Nyckelord</addInspireTheme>
+  <addInspireTheme>Add Tjänsteklassficering</addInspireTheme>
   <accessConstraintsBtn>Åtkomstrestriktioner</accessConstraintsBtn>
   <legalConstraintsBtn>Legal constraints</legalConstraintsBtn>
   <UseRestrictionsBtn>Nyttjanderestriktioner</UseRestrictionsBtn>
@@ -221,4 +226,5 @@
 
   <sds-section-custodian>Responsible custodian</sds-section-custodian>
   <sds-addOperation>Add Operation</sds-addOperation>
+  <add-distributor>Add distributor</add-distributor>
 </strings>
