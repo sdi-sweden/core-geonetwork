@@ -39,8 +39,8 @@
       $scope.editRow = null;
 
 
-      $scope.init = function(rows, rowsModel, xmlSnippet, parent, 
-                             name, dialog, title, mandatory) {
+      $scope.init = function(rows, rowsModel, xmlSnippet, parent,
+                             name, dialog, title, mandatory, tooltip) {
         $scope.rows = rows;
         $scope.rowsModel = rowsModel;
         $scope.xmlSnippet = xmlSnippet;
@@ -49,6 +49,7 @@
         $scope.dialog = dialog;
         $scope.title = title;
         $scope.mandatory = mandatory;
+        $scope.tooltip = tooltip;
 		//$scope.organisationNames = null;
 		//if(name === 'distributorContact' || name === 'contact' || name === 'pointOfContact') {
 		if(name === 'pointOfContact' || name === 'contact' || name === 'distributorContact') {
@@ -139,7 +140,7 @@
 					});
 				}
 			});
-				
+
 		}
       };
 
@@ -247,7 +248,7 @@
       $scope.cancel = function() {
         $($scope.dialog).modal('hide');
       };
-	  
+
 	  /**
      * Put the selected record from drop down into table-grid.
      */
@@ -258,7 +259,7 @@
 		$scope.editRow.email = selectedOrganisation.split('~')[1]; // 1 always email
 		$scope.editRow.phone = selectedOrganisation.split('~')[2]; // 2 always phone
 		$scope.editRow.role = ''; // Role is always empty
-		
+
 		//$scope.saveRow(); // Put the selected record from drop down into table-grid
 	  };
 
