@@ -62,7 +62,7 @@
       </init-param>
        <init-param>
           <param-name>allowed.hosts</param-name>
-          <param-value>www.geodata.se,ver.geodata.se,utv.geodata.se</param-value>
+          <param-value>www.geodata.se,ver.geodata.se,utv.geodata.se,api.geonames.org,www.sgugeolagret.se,web2.geodata.se</param-value>
       </init-param>
 
   </filter>
@@ -308,6 +308,10 @@
         <init-param>
             <param-name>request.param.url</param-name>
             <param-value>url</param-value>
+        </init-param>
+        <init-param>
+            <param-name>request.param.other</param-name>
+            <param-value>true</param-value>
         </init-param>
 
         <init-param>

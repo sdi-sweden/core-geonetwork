@@ -11,8 +11,6 @@
     "dateFilterTooltip-title": "Datumfilter",
     "dateFilterTooltip-desc": "Förfina sökning baserat på resurser med händelsedatum inom angivet intervall",
     "dateFilterTooltip-link": "/geodataportalens-hjalpsidor/forstasidan/avancerad-vy#Datum",
-    "search-title": "Ämneskategorifilter",
-    "search-desc": "Förfina sökning baserat på ämneskatogori.",
     "searchFromDate": "från datum",
     "searchToDate": "till datum",
     "searchGeographicFilter": "Geografisk filtrering",
@@ -99,6 +97,8 @@
     "nonSweMetadata": "Metadata följer inte den senaste Nationella metadataprofilen. När metadata redigeras uppgraderas metadata till denna nya profil. Vill du göra detta ?",
     "showServices": "Visa tjänster",
     "showDatasets": "Dataset",
+    "mdlink": "Link",
+    "downloadlink": "Download",
     "norwegianMetadata": "Norska Data",
     "norksaDataTooltip-title": "Norska Data",
     "norksaDataTooltip-desc": "Via länken kan du nå geodata i Norge. Kan vara till nytta för myndigheter, länsstyrelser och kommuner som har behov av att använda geodata från Norge i gränsöverskridande samarbeten.",
@@ -106,6 +106,6 @@
     "popupClose": "Stäng",
     "readMore": "Läs mer",
     "Graticule": "Rutnät",
-    "mdlink": "Link",
-    "downloadlink": "Download"
+    "geographical":"geografisk",
+    "thisisthebottomrow":"Lägg inte till nya rader nedanför!"
 }
