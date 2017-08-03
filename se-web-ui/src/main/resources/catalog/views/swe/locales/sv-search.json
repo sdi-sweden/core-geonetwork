@@ -105,5 +105,7 @@
     "norksaDataTooltip-link": "http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/",
     "popupClose": "Stäng",
     "readMore": "Läs mer",
-    "Graticule": "Rutnät"
+    "Graticule": "Rutnät",
+    "mdlink": "Link",
+    "downloadlink": "Download"
 }
