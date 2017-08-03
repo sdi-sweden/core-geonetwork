@@ -133,15 +133,23 @@
         
         if (this.gfiOutputFormat == "GML3"){
           var format = new ol.format.GML();
-          this.features = format.readFeatures(response.data, {
-          featureProjection: map.getView().getProjection()
-        });
+          try {
+               this.features = format.readFeatures(response.data, {
+              featureProjection: map.getView().getProjection()
+            });
+          }
+          catch(err) {
+          }
         }
         else if(this.gfiOutputFormat == "GML2"){
           var format = new ol.format.WMSGetFeatureInfo();
-          this.features = format.readFeatures(response.data, {
-          featureProjection: map.getView().getProjection()
-        });
+          try {
+                this.features = format.readFeatures(response.data, {
+                featureProjection: map.getView().getProjection()
+              });
+          }
+          catch(err) {
+          }
         }
         else{
           //For arcgis wms service
