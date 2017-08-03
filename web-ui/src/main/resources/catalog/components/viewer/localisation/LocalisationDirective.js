@@ -75,6 +75,11 @@
              * @param {string} query string value of the search input
              */
             this.search = function(query) {
+              if (query.length == 0) {
+                $scope.collapsed = true;
+                $scope.clearInput();
+                return;
+              }
               if (query.length < 3) return;
 
               var coord = gnGetCoordinate(
@@ -113,6 +118,7 @@
                   type: 'json',
                   maxRows: 10,
                   name_startsWith: query,
+                  country: 'SE',
                   east: 24.1633,
                   west: 10.9614,
                   north: 69.059,
@@ -135,6 +141,7 @@
                         });
                       }
                     }
+                    $scope.collapsed = false;
                   });
             };
           }],
