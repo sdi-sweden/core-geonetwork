@@ -97,5 +97,7 @@
     "norwegianMetadata": "Norska Data",
     "norksaDataTooltip-title": "Norska Data",
     "norksaDataTooltip-desc": "Via länken kan du nå geodata i Norge. Kan vara till nytta för myndigheter, länsstyrelser och kommuner som har behov av att använda geodata från Norge i gränsöverskridande samarbeten.",
-    "norksaDataTooltip-link": "http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/"
+    "norksaDataTooltip-link": "http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/",
+    "mdlink": "Link",
+    "downloadlink": "Download"
 }

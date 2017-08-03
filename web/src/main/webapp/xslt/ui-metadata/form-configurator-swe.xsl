@@ -57,7 +57,7 @@
         <xsl:when test="$sectionName">
           <!-- Use panels instead of fieldsets for editor sections -->
           <div class="panel panel-default" data-gn-field-highlight="">
-            <div class="panel-heading" data-gn-slide-toggle="">
+            <div class="panel-heading" data-gn-slide-toggle="" data-gn-field-tooltip="{$schema}|{@tooltip}">
               <span class="ng-scope">
                 <xsl:value-of
                         select="if (contains($sectionName, ':'))
@@ -67,14 +67,14 @@
               </span>
             </div>
             <div class="panel-body">
-              <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord']|*">
+              <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' and name() != 'tooltip']|*">
                 <xsl:with-param name="base" select="$base"/>
               </xsl:apply-templates>
             </div>
           </div>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates mode="form-builder" select="@*|*">
+          <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord']|*">
             <xsl:with-param name="base" select="$base"/>
           </xsl:apply-templates>
         </xsl:otherwise>
