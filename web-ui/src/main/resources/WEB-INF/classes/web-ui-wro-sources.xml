@@ -77,6 +77,7 @@
     <jsSource webappPath="/catalog/lib/bootstrap.ext/datepicker/bootstrap-datepicker.js"/>
     <jsSource webappPath="/catalog/lib/bootstrap-table/dist/bootstrap-table.min.js"
               minimize="false"/>
+    <jsSource webappPath="/catalog/lib/bootstrap-table/dist/locale/bootstrap-table-sv-SE.js" />
     <jsSource webappPath="/catalog/lib/zip/zip.js"/>
     <jsSource webappPath="/catalog/lib/zip/include.js"/>
     <jsSource webappPath="/catalog/lib/base64.js"/>
