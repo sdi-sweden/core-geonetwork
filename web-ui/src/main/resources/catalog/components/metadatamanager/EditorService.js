@@ -466,9 +466,6 @@
                      $(ctrl.get(1)).addClass('invisible');
 
                      var next = $(element).next();
-                     if (next.hasClass('gn-add-field')) {
-                       next.removeClass('gn-extra-field');
-                     }
                    }
                  }
                };
