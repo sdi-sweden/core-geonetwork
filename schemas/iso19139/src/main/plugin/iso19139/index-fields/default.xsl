@@ -411,13 +411,13 @@
 				<xsl:variable name="thesaurusTitle" select="gmd:title/gco:CharacterString/text()"/>
 				<xsl:if test="$thesaurusTitle='Initiativ'  or $thesaurusTitle='Initiative'">
                    <xsl:for-each select="//gmd:MD_Keywords/gmd:keyword/gco:CharacterString/text()">
-                       <xsl:variable name="keywordLower"  select="lower-case(.)"/>					
+                       <xsl:variable name="keywordLower"  select="lower-case(.)"/>
                        <xsl:if test="$keywordLower='inspire'">
 							<Field name="inspireinitiativ" string="true" store="false" index="true"/>
 							<!--<xsl:message>IsInspireTheme: <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
-						</xsl:if>	
+						</xsl:if>
 		              <!--<xsl:message>keyword: <xsl:value-of select="$keywordLower" /></xsl:message>-->
-					</xsl:for-each>					  
+					</xsl:for-each>
 				</xsl:if>
 				<!--<xsl:message>Thesaurus namme (index): <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
 		 </xsl:if>
@@ -721,7 +721,8 @@
       </xsl:for-each>
 
       <!-- index online protocol -->
-      <xsl:for-each select="gmd:transferOptions/gmd:MD_DigitalTransferOptions">
+      <!-- Customisation for Swedish SDI: Only gmd:distributorTransferOptions are managed -->
+      <!--<xsl:for-each select="gmd:transferOptions/gmd:MD_DigitalTransferOptions">
         <xsl:variable name="tPosition" select="position()"></xsl:variable>
         <xsl:for-each select="gmd:onLine/gmd:CI_OnlineResource[gmd:linkage/gmd:URL!='']">
           <xsl:variable name="download_check">
@@ -735,11 +736,11 @@
           <xsl:variable name="mimetype"
                         select="geonet:protocolMimeType($linkage, $protocol, gmd:name/gmx:MimeFileType/@type)"/>
 
-          <!-- If the linkage points to WMS service and no protocol specified, manage as protocol OGC:WMS -->
+          &lt;!&ndash; If the linkage points to WMS service and no protocol specified, manage as protocol OGC:WMS &ndash;&gt;
           <xsl:variable name="wmsLinkNoProtocol"
                         select="contains(lower-case($linkage), 'service=wms') and not(string($protocol))"/>
 
-          <!-- ignore empty downloads -->
+          &lt;!&ndash; ignore empty downloads &ndash;&gt;
           <xsl:if test="string($linkage)!='' and not(contains($linkage,$download_check))">
             <Field name="protocol" string="{string($protocol)}" store="true" index="true"/>
           </xsl:if>
@@ -754,40 +755,40 @@
             <Field name="mimetype" string="{$mimetype}" store="true" index="true"/>
           </xsl:if>
 
-          <!-- SWE customisation -->
+          &lt;!&ndash; SWE customisation &ndash;&gt;
           <xsl:if test="lower-case($protocol) = 'http:ogc:wfs' or starts-with(lower-case($protocol), 'http:nedladdning')">
             <Field name="download" string="true" store="false" index="true"/>
           </xsl:if>
 
-          <!-- SWE customisation -->
+          &lt;!&ndash; SWE customisation &ndash;&gt;
           <xsl:if test="lower-case($protocol) = 'http:ogc:wms'">
             <Field name="dynamic" string="true" store="false" index="true"/>
           </xsl:if>
 
-          <!-- ignore WMS links without protocol (are indexed below with mimetype application/vnd.ogc.wms_xml) -->
+          &lt;!&ndash; ignore WMS links without protocol (are indexed below with mimetype application/vnd.ogc.wms_xml) &ndash;&gt;
           <xsl:if test="not($wmsLinkNoProtocol)">
             <Field name="link"
                    string="{concat($title, '|', $desc, '|', $linkage, '|', $protocol, '|', $mimetype, '|', $tPosition)}"
                    store="true" index="false"/>
           </xsl:if>
 
-          <!-- Add KML link if WMS -->
-          <!-- SWE customisation -->
+          &lt;!&ndash; Add KML link if WMS &ndash;&gt;
+          &lt;!&ndash; SWE customisation &ndash;&gt;
           <xsl:if test="lower-case($protocol) = 'http:ogc:wms' and string($linkage)!='' and string($title)!=''">
-            <!-- FIXME : relative path -->
+            &lt;!&ndash; FIXME : relative path &ndash;&gt;
             <Field name="link" string="{concat($title, '|', $desc, '|',
                                                 '../../srv/en/google.kml?uuid=', /gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString, '&amp;layers=', $title,
                                                 '|application/vnd.google-earth.kml+xml|application/vnd.google-earth.kml+xml', '|', $tPosition)}"
                    store="true" index="false"/>
           </xsl:if>
 
-          <!-- Try to detect Web Map Context by checking protocol or file extension -->
+          &lt;!&ndash; Try to detect Web Map Context by checking protocol or file extension &ndash;&gt;
           <xsl:if test="starts-with($protocol,'OGC:WMC') or contains($linkage,'.wmc')">
             <Field name="link" string="{concat($title, '|', $desc, '|',
                                                 $linkage, '|application/vnd.ogc.wmc|application/vnd.ogc.wmc', '|', $tPosition)}"
                    store="true" index="false"/>
           </xsl:if>
-          <!-- Try to detect OWS Context by checking protocol or file extension -->
+          &lt;!&ndash; Try to detect OWS Context by checking protocol or file extension &ndash;&gt;
           <xsl:if test="starts-with($protocol,'OGC:OWS-C') or contains($linkage,'.ows')">
             <Field name="link" string="{concat($title, '|', $desc, '|',
                                                 $linkage, '|application/vnd.ogc.ows|application/vnd.ogc.ows', '|', $tPosition)}"
@@ -799,7 +800,7 @@
                                                 $linkage, '|OGC:WMS|application/vnd.ogc.wms_xml', '|', $tPosition)}" store="true" index="false"/>
           </xsl:if>
         </xsl:for-each>
-      </xsl:for-each>
+      </xsl:for-each>-->
 
 
       <xsl:for-each select="gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/*/gmd:organisationName/gco:CharacterString|gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/*/gmd:organisationName/gmx:Anchor">

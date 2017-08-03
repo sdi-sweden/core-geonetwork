@@ -43,9 +43,15 @@
 
           scope.addFromTemplate = function() {
             textarea.attr('name', scope.id);
-
+            // To get top value of clicked add button 
+            var clickedButtonPosition = $(this).offset().top;
             // Save and refreshform
-            gnEditor.save(gnCurrentEdit.id, true);
+            gnEditor.save(gnCurrentEdit.id, true).then(function(response){
+            // Scroll and focus the form to newly added section 
+              $('html,body').animate({
+                  scrollTop: clickedButtonPosition},
+                  200);
+            });
           };
 
           $(element).click(scope.addFromTemplate);

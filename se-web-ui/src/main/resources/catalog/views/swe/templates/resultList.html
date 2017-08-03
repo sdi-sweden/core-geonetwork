@@ -8,11 +8,11 @@
         <!-- Manage Metadata Compact view-->
           <li ng-if="!user.isEditorOrMore()">
              <a href="" data-ng-click="showMetadata($index, md, searchResults.records)" class="-label-link" ><span class="icon-doc-text"></span></a>
-          </li> 
+          </li>
           <li ng-if="user.isEditorOrMore()">
              <div data-swe-toggle-style="" class="dropdown-compact meta-dropdown"><span class="icon-doc-text"></span>
             <div data-swe-md-actions-menu="" /></div>
-          </li> 
+          </li>
           <!-- Show geobox Compact view-->
           <li data-ng-show="md.geoBox !== undefined">
             <a href="" data-ng-click="showMetadataGeometry(md)" >
@@ -28,7 +28,10 @@
             <span class="icon-info"></span>
             <ul class="-list">
               <li data-ng-repeat="l in ::links">
-                <a href="{{l.url}}"  class="-text-link" target="_blank">{{l.desc || l.url}}</a>
+                <a href="{{l.url}}" class="-text-link" title="{{l.desc || l.name}}" target="_blank">
+                  <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                  <span data-ng-show="l.name == ''">{{ 'mdlink' | translate }} {{$index + 1}}</span>
+                </a>
               </li>
             </ul>
           </li>
@@ -39,9 +42,9 @@
           <li data-swe-toggle-style="" class="dropdown-compact more-info-dropdown" data-ng-show="::layers.length > 1"><span class="icon-map"></span>
             <ul class="-list">
             <li data-ng-repeat="l in ::layers">
-                  <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l.url, md)">
-                    <span data-ng-show="l.desc !== ''">{{l.desc}}</span>
-                    <span data-ng-show="l.desc == ''">{{ 'layer' | translate }} {{$index + 1}}</span>
+                  <a href="" class="-text-link" title="{{l.desc || l.name}}" data-ng-click="resultviewFns.addWmsLayersFromCap(l.url, md)">
+                    <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                    <span data-ng-show="l.name == ''">{{ 'layer' | translate }} {{$index + 1}}</span>
                   </a>
             </li>
             </ul>
@@ -50,11 +53,14 @@
           <li data-ng-show="::downloads.length == 1">
             <a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}"><span class="download-icn-cont"><span class="icon-down-fat"></span></span></a>
           </li>
-    
+
           <li data-swe-toggle-style="" class="dropdown-compact more-info-dropdown" data-ng-show="::downloads.length > 1"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>
                 <ul class="-list">
                   <li data-ng-repeat="l in ::downloads">
-                    <a href="{{l.url}}" download="{{l.desc}}" class="-text-link">{{l.desc || l.url}}</a>
+                    <a href="{{l.url}}" title="{{l.desc || l.name}}" download="{{l.desc}}" class="-text-link">
+                      <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                      <span data-ng-show="l.name == ''">{{ 'downloadlink' | translate }} {{$index + 1}}</span>
+                    </a>
                   </li>
                 </ul>
           </li>
@@ -143,7 +149,10 @@
           <div class="-label"><span class="icon-info"></span>{{ 'moreInformation' | translate }} <span class="icon-down-dir"></span></div>
           <ul class="-list">
             <li data-ng-repeat="l in ::links">
-              <a href="{{l.url}}" class="-text-link" target="_blank">{{l.desc || l.url}}</a>
+              <a href="{{l.url}}" class="-text-link" title="{{l.desc || l.name}}" target="_blank">
+                <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                <span data-ng-show="l.name == ''">{{ 'mdlink' | translate }} {{$index + 1}}</span>
+              </a>
             </li>
           </ul>
         </div>
@@ -157,9 +166,9 @@
           <div class="-label"><span class="icon-map"></span><span class="hidden-xs hidden-sm">Visa på karta </span><span class="icon-down-dir"></span></div>
           <ul class="-list">
             <li data-ng-repeat="l in ::layers">
-              <a href="" class="-text-link" data-ng-click="resultviewFns.addWmsLayersFromCap(l.url, md)">
-                <span data-ng-show="l.desc !== ''">{{l.desc}}</span>
-                <span data-ng-show="l.desc == ''">{{ 'layer' | translate }} {{$index + 1}}</span>
+              <a href="" class="-text-link" title="{{l.desc || l.name}}" data-ng-click="resultviewFns.addWmsLayersFromCap(l.url, md)">
+                <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                <span data-ng-show="l.name == ''">{{ 'layer' | translate }} {{$index + 1}}</span>
               </a>
             </li>
           </ul>
@@ -174,7 +183,10 @@
           <div class="-label"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>{{ 'downloadDataset' | translate }} <span class="icon-down-dir"></span></div>
           <ul class="-list">
             <li data-ng-repeat="l in ::downloads">
-              <a href="{{l.url}}" download="{{l.desc}}" class="-text-link">{{l.desc || l.url}}</a>
+              <a href="{{l.url}}" title="{{l.desc || l.name}}" download="{{l.desc}}" class="-text-link">
+                <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                <span data-ng-show="l.name == ''">{{ 'downloadlink' | translate }} {{$index + 1}}</span>
+              </a>
             </li>
           </ul>
         </div>

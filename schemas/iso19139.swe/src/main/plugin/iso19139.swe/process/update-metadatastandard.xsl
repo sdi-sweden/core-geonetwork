@@ -18,36 +18,36 @@
       <xsl:apply-templates select="gmd:language" />
       <xsl:apply-templates select="gmd:characterSet" />
       <xsl:apply-templates select="gmd:parentIdentifier" />
-      <xsl:apply-templates select="gmd:hierarchyLevel " />
-      <xsl:apply-templates select="gmd:hierarchyLevelName " />
-      <xsl:apply-templates select="gmd:contact " />
-      <xsl:apply-templates select="gmd:dateStamp " />
+      <xsl:apply-templates select="gmd:hierarchyLevel" />
+      <xsl:apply-templates select="gmd:hierarchyLevelName" />
+      <xsl:apply-templates select="gmd:contact" />
+      <xsl:apply-templates select="gmd:dateStamp" />
 
       <gmd:metadataStandardName>
-        <gco:CharacterString>EN ISO 19115-geodata.se 4.0</gco:CharacterString>
+        <gco:CharacterString>SS-EN ISO 19115:2005-se 4.0</gco:CharacterString>
       </gmd:metadataStandardName>
       <gmd:metadataStandardVersion>
         <gco:CharacterString>4.0</gco:CharacterString>
       </gmd:metadataStandardVersion>
 
       <xsl:apply-templates select="gmd:dataSetURI" />
-      <xsl:apply-templates select="gmd:locale " />
-      <xsl:apply-templates select="gmd:spatialRepresentationInfo " />
-      <xsl:apply-templates select="gmd:referenceSystemInfo " />
-      <xsl:apply-templates select="gmd:metadataExtensionInfo " />
-      <xsl:apply-templates select="gmd:identificationInfo " />
-      <xsl:apply-templates select="gmd:contentInfo " />
+      <xsl:apply-templates select="gmd:locale" />
+      <xsl:apply-templates select="gmd:spatialRepresentationInfo" />
+      <xsl:apply-templates select="gmd:referenceSystemInfo" />
+      <xsl:apply-templates select="gmd:metadataExtensionInfo" />
+      <xsl:apply-templates select="gmd:identificationInfo" />
+      <xsl:apply-templates select="gmd:contentInfo" />
       <xsl:apply-templates select="gmd:distributionInfo" />
-      <xsl:apply-templates select="gmd:dataQualityInfo " />
-      <xsl:apply-templates select="gmd:portrayalCatalogueInfo " />
-      <xsl:apply-templates select="gmd:metadataConstraints " />
-      <xsl:apply-templates select="gmd:applicationSchemaInfo " />
+      <xsl:apply-templates select="gmd:dataQualityInfo" />
+      <xsl:apply-templates select="gmd:portrayalCatalogueInfo" />
+      <xsl:apply-templates select="gmd:metadataConstraints" />
+      <xsl:apply-templates select="gmd:applicationSchemaInfo" />
       <xsl:apply-templates select="gmd:metadataMaintenance" />
-      <xsl:apply-templates select="gmd:series " />
-      <xsl:apply-templates select="gmd:describes " />
-      <xsl:apply-templates select="gmd:propertyType " />
-      <xsl:apply-templates select="gmd:featureType " />
-      <xsl:apply-templates select="gmd:featureAttribute " />
+      <xsl:apply-templates select="gmd:series" />
+      <xsl:apply-templates select="gmd:describes" />
+      <xsl:apply-templates select="gmd:propertyType" />
+      <xsl:apply-templates select="gmd:featureType" />
+      <xsl:apply-templates select="gmd:featureAttribute" />
     </xsl:copy>
   </xsl:template>
 

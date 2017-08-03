@@ -1091,6 +1091,14 @@ kind. Label with always be displayed.
           </xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="tooltip" type="xs:string">
+        <xs:annotation>
+          <xs:documentation><![CDATA[
+Element name to display the tooltip related. If not specified, takes the first element in the template snippet.
+]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
       <xs:attribute ref="or"/>
       <xs:attribute ref="in"/>
       <xs:attribute ref="addDirective"/>

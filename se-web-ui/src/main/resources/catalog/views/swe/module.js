@@ -51,7 +51,7 @@
     '$analytics',
     'suggestService',
     '$http',
-	'$sce',
+    '$sce',
     '$compile',
     '$window',
     '$translate',
@@ -145,9 +145,9 @@
 
       // prevent the floating map from positioning on top of the footer
       $scope.affixFloatingMap = function() {
-        
+
         $(window).scroll(function (event) {
-          var windowTop = $(this).scrollTop() + $(window).height();     
+          var windowTop = $(this).scrollTop() + $(window).height();
 
           if (windowTop >= $('.footer').offset().top) {
             $('.floating-map-cont').addClass('affix-bottom');
@@ -161,7 +161,7 @@
       $rootScope.$on('$includeContentLoaded', function() {
         $timeout($scope.affixFloatingMap());
       });
-      
+
       $scope.toggleMap = function() {
         $(searchMap.getTargetElement()).toggle();
       };
@@ -220,13 +220,13 @@
                 anyField.focus();
               }
             }
-          }).add({
-            combo: 'enter',
-            description: $translate('hotkeySearchTheCatalog'),
-            allowIn: 'INPUT',
-            callback: function() {
-              $location.search('tab=search');
-            }
+          //}).add({
+          //  combo: 'enter',
+          //  description: $translate('hotkeySearchTheCatalog'),
+          //  allowIn: 'INPUT',
+          //  callback: function() {
+          //    $location.search('tab=search');
+          //  }
             //}).add({
             //  combo: 'r',
             //  description: $translate('hotkeyResetSearch'),
@@ -317,7 +317,7 @@
 
         return downloads;
       };
-	  
+
 		$scope.printPdf = function(mdView) {
 			var uuid = mdView.current.record['geonet:info'].uuid;
 			var config = {
@@ -502,7 +502,7 @@
 
               $('#gn-metadata-display').append(content);
 
-              $scope.activateTabs();       
+              $scope.activateTabs();
             });
           });
 
@@ -520,7 +520,7 @@
         if (md.defaultTitle == $scope.vectorLayer.get("defaultTitle")){
              $scope.vectorLayer.set("defaultTitle",null);
              $scope.vectorLayerBM.set("defaultTitle",null);
-        }       
+        }
         else{
           var feature = gnMap.getBboxFeatureFromMd(md,
             $scope.searchObj.searchMap.getView().getProjection());
@@ -529,9 +529,9 @@
           $scope.vectorLayer.getSource().addFeature(feature);
           $scope.vectorLayerBM.getSource().addFeature(feature);
         }
-        
+
       };
-	  
+
 	  $scope.fetchInitiativKeyword = function(md) {
 		var imgPath = '../../catalog/views/swe/images/noto.png';
 		if(md) {
@@ -545,19 +545,8 @@
 				}
 			}
 		}
-        return imgPath;     
+        return imgPath;
       };
-
-      /**
-       * Toggle size of floating map
-       */
-     /* $scope.toggleFloatingMap = function() {
-        angular.element('.floating-map-cont').toggleClass('medium');
-        // angular.element('.floating-map-cont').show();
-        // $scope.$emit('body:class:remove', 'small-map-view');
-        // $scope.$emit('body:class:remove', 'full-map-view');
-        // $scope.$emit('body:class:remove', 'medium-map-view');
-      };*/
 
       /**
        * Show full view results.
@@ -587,7 +576,7 @@
         $scope.$watch('image_filter_height', function (newValue, oldValue, scope) {
         $scope.actual_height = oldValue;
         exampleResize.onResize($rootScope, $scope);
-        
+
       });
 
       /**
@@ -603,23 +592,25 @@
           viewerMap.updateSize();
           viewerMap.renderSync();
           gnMap.hideOrShowMapTool(scope);
-        }, 500); 
+        }, 500);
       };
-     
+
       $scope.resizeCheck = function(){
-        $scope.image_filter_height = $('.site-image-filter').height(); 
+        $scope.image_filter_height = $('.site-image-filter').height();
         $scope.collapsed =! $scope.collapsed;
         scope = shareGnMainViewerScope.sharedScope;
          $timeout(function() {
             gnMap.hideOrShowMapTool(scope);
-          }, 500); 
-        
+          }, 500);
+
       };
-      
+
       /**
        * Show large map panel.
        */
       $scope.showLargeMapPanel = function() {
+  		$tools = angular.element('.tools');
+		$tools.removeClass('control-tools').addClass('control-tools-largemap');
         angular.element('.floating-map-cont').hide();
         $scope.$emit('body:class:add', 'large-map-view');
           $timeout(function() {
@@ -634,6 +625,10 @@
        * Hide map panel.
        */
       $scope.hideMapPanel = function() {
+		$predefMap = angular.element('.selected-img');
+		$predefMap.removeClass('selected-img').addClass('bg-img');
+		$tools = angular.element('.tools');
+		$tools.removeClass('control-tools-largemap').addClass('control-tools');
         angular.element('.floating-map-cont').show();
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:remove', 'full-map-view');
@@ -644,8 +639,10 @@
         searchMap.renderSync();
       }, 500);
       };
-      
+
       $scope.resizeMapPanel = function() {
+		  $tools = angular.element('.tools');
+		  $tools.removeClass('control-tools-largemap').addClass('control-tools');
           $scope.mapFullView =! $scope.mapFullView;
           var $b = angular.element(document).find('body');
           window_width = angular.element($window).width(),
@@ -778,11 +775,11 @@
   module.controller('SweLogoutController',
 	  ['$scope', '$http',
 	  function($scope, $http) {
-		  
+
 		  $scope.logout = function() {
 			  $http({method: 'GET',
 	              url: '/AGLogout'
-	              
+
 	              /*headers: {
 	                'X-Ajax-call': true}*/})
 	            .success(function(data) {
@@ -795,7 +792,7 @@
 	           });
 		  };
 	  }]);
-  
+
   /**
    * Controller for mail feedback popup.
    *
@@ -1270,7 +1267,7 @@
           //var feature = gnMap.getPolygonFeature(namesearch, $scope.searchObj.searchMap.getView().getProjection());
 
           // Build multipolygon from the set of bboxes
-          geometry = new ol.geom.MultiPolygon(null);    
+          geometry = new ol.geom.MultiPolygon(null);
           feature.setGeometry(geometry);
 
           //$scope.searchObj.searchMap.addLayer($scope.vectorLayer);
@@ -1308,7 +1305,7 @@
           return false; // always return false if cooridinates are absent. Not sure if we shall still return true.
         }
     };
-    
+
 
   }]);
 
@@ -1445,12 +1442,12 @@
                   $scope.$emit('body:class:add', 'geodata-examples-expanded-larger-without-cookie-alert');
                 }
               }
-          }        
+          }
         }
 
       }
     }
-      
+
   });
 
 })();
