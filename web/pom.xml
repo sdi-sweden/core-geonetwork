@@ -51,15 +51,23 @@
   </licenses>
 
   <repositories>
-		<repository>
-			<id>geodata-release</id>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<name>libs-release</name>
-			<url>http://maven.geodata.se/libs-release</url>
-		</repository>
-		<repository>
+        <repository>
+            <id>geodata-release</id>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <name>libs-release</name>
+            <url>http://maven.geodata.se/libs-release</url>
+        </repository>
+        <repository>
+            <id>geodata-snapshot</id>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <name>libs-snapshot</name>
+            <url>http://maven.geodata.se/libs-snapshot</url>
+        </repository>
+        <repository>
             <id>52North</id>
             <name>52North repository</name>
             <url>http://52north.org/maven/repo/releases</url>
@@ -68,14 +76,14 @@
 
   <!-- FIXME set common dependencies to the root pom.xml  -->
   <dependencies>
-  
+
     <!-- dependency containing filters for mapping geodata.se roles to geonetwork -->
-  	<dependency>
-  		<groupId>org.lmv.geodata</groupId>
-  		<artifactId>geodata-common-server</artifactId>
-  		<version>3.8.1</version>
-  	</dependency>
-  	
+    <dependency>
+        <groupId>org.lmv.geodata</groupId>
+        <artifactId>geodata-common-server</artifactId>
+        <version>3.8.2-SNAPSHOT</version>
+    </dependency>
+
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
