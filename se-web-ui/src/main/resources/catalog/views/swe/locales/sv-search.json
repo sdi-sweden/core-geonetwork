@@ -100,5 +100,7 @@
     "norksaDataTooltip-link": "http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/",
     "popupClose": "Stäng",
     "readMore": "Läs mer",
-    "Graticule": "Fokalplatta"
+    "Graticule": "Fokalplatta",
+    "mdlink": "Link",
+    "downloadlink": "Download"
 }

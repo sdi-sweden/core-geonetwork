@@ -751,7 +751,7 @@
 		  <xsl:when test="$tabName = 'introduction'">
 			  <xsl:variable name="dates">
 				<xsl:for-each select="parent::node()/gmd:date">
-					<xsl:value-of  select="*/gmd:date/gco:Date[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}')]"/>
+          <xsl:value-of select="*/gmd:date/gco:Date"/>
 					<xsl:if test="position() != last()">,</xsl:if>
 				</xsl:for-each>
 			  </xsl:variable>
@@ -865,7 +865,7 @@
   <!-- ########################## -->
   <!-- Render values for text ... -->
   <xsl:template mode="render-value"
-                match="gco:CharacterString|gco:Integer|gco:Decimal|
+                match="gmd:statement|gco:CharacterString|gco:Integer|gco:Decimal|
        gco:Boolean|gco:Real|gco:Measure|gco:Length|gco:Distance|gco:Angle|gmx:FileName|
        gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|
        gco:LocalName|gml:beginPosition|gml:endPosition">
