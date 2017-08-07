@@ -232,6 +232,9 @@ public class DataManager implements ApplicationEventPublisherAware {
         try {
             dataMan.validate(schema, xml);
         } catch (XSDValidationErrorEx e) {
+            if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
+                Log.debug(Geonet.DATA_MANAGER, "XSDValidation Fail: " + e.getMessage());
+            }
             if (!fileName.equals(" ")) {
                 throw new XSDValidationErrorEx(e.getMessage() + "(in " + fileName + "): ", e.getObject());
             } else {
@@ -258,6 +261,10 @@ public class DataManager implements ApplicationEventPublisherAware {
             Element failedSchematronVerification = Xml.selectElement(schemaTronReport, "geonet:report/geonet:schematronVerificationError", theNSs);
 
             if ((failedAssert != null) || (failedSchematronVerification != null)) {
+                if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
+                    Log.debug(Geonet.DATA_MANAGER, "Schematron Validation Fail: FailedAssert = " + failedAssert);
+                    Log.debug(Geonet.DATA_MANAGER, "Schematron Validation Fail: failedSchematronVerification = " + failedSchematronVerification);
+                }
                 throw new SchematronValidationErrorEx("Schematron errors detected for file " + fileName + " - "
                     + Xml.getString(schemaTronReport) + " for more details", schemaTronReport);
             }
