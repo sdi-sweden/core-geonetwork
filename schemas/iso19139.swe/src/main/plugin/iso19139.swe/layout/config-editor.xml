@@ -651,6 +651,28 @@
             </template>
           </field>
 
+          <!-- Add Temporal extent - dataset -->
+           <action type="add"
+            name="temporalRangeSection" or="temporalElement"
+                   forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            <template>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="">
+                       <gml:beginPosition/>
+                       <gml:endPosition/>
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </action>
+
           <!-- Temporal extent - services -->
           <field name="temporalRangeSection" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:temporalElement"
@@ -687,6 +709,28 @@
               </snippet>
             </template>
           </field>
+
+          <!-- Add Temporal extent - service -->
+           <action type="add"
+            name="temporalRangeSection" or="temporalElement"
+                   forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            <template>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="">
+                       <gml:beginPosition/>
+                       <gml:endPosition/>
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </action>
 
           <field name="verticalElementSection" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/gmd:EX_Extent/gmd:verticalElement"
@@ -1036,7 +1080,7 @@
             in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*" />
 
 
-          <section name="scales">
+          <section name="scales" tooltip="gmd:spatialResolution">
             <field
               name="equivalentScale"
               xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale"
@@ -2324,6 +2368,28 @@
             </template>
           </field>
 
+          <!-- Add Temporal extent - dataset -->
+           <action type="add"
+            name="temporalRangeSection" or="temporalElement"
+                   forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            <template>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="">
+                       <gml:beginPosition/>
+                       <gml:endPosition/>
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </action>
+
           <!-- Temporal extent - services -->
           <field name="temporalRangeSection" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:temporalElement"
@@ -2360,6 +2426,28 @@
               </snippet>
             </template>
           </field>
+
+          <!-- Add Temporal extent - service -->
+           <action type="add"
+            name="temporalRangeSection" or="temporalElement3"
+                   forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            <template>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="">
+                       <gml:beginPosition/>
+                       <gml:endPosition/>
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </action>
 
           <field name="verticalElementSection" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/gmd:EX_Extent/gmd:verticalElement"
@@ -2709,7 +2797,7 @@
             in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*" />
 
 
-          <section name="scales">
+          <section name="scales" tooltip="gmd:spatialResolution">
             <field
               name="equivalentScale"
               xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale"
@@ -3997,6 +4085,28 @@
             </template>
           </field>
 
+          <!-- Add Temporal extent - dataset -->
+           <action type="add"
+            name="temporalRangeSection" or="temporalElement"
+                   forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            <template>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="">
+                       <gml:beginPosition/>
+                       <gml:endPosition/>
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </action>
+
           <!-- Temporal extent - services -->
           <field name="temporalRangeSection" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:temporalElement"
@@ -4033,6 +4143,28 @@
               </snippet>
             </template>
           </field>
+
+          <!-- Add Temporal extent - service -->
+           <action type="add"
+            name="temporalRangeSection" or="temporalElement2"
+                   forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            <template>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="">
+                       <gml:beginPosition/>
+                       <gml:endPosition/>
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </action>
 
           <field name="verticalElementSection" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/gmd:EX_Extent/gmd:verticalElement"
@@ -4382,7 +4514,7 @@
             in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*" />
 
 
-          <section name="scales">
+          <section name="scales" tooltip="gmd:spatialResolution">
             <field
               name="equivalentScale"
               xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale"
@@ -5670,6 +5802,28 @@
             </template>
           </field>
 
+          <!-- Add Temporal extent - dataset -->
+           <action type="add"
+            name="temporalRangeSection" or="temporalElement"
+                   forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            <template>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="1234">
+                       <gml:beginPosition/>
+                       <gml:endPosition/>
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </action>
+
           <!-- Temporal extent - services -->
           <field name="temporalRangeSection" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:temporalElement"
@@ -5706,6 +5860,28 @@
               </snippet>
             </template>
           </field>
+
+          <!-- Add Temporal extent - service -->
+           <action type="add"
+            name="temporalRangeSection" or="temporalElement"
+                   forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            <template>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="">
+                       <gml:beginPosition/>
+                       <gml:endPosition/>
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </action>
 
           <field name="verticalElementSection" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/gmd:EX_Extent/gmd:verticalElement"
@@ -6064,7 +6240,7 @@
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*" />
 
 
-          <section name="scales">
+          <section name="scales" tooltip="gmd:spatialResolution">
             <field
                     name="equivalentScale"
                     xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale"
@@ -7417,6 +7593,28 @@
             </template>
           </field>
 
+          <!-- Add Temporal extent - dataset -->
+           <action type="add"
+            name="temporalRangeSection" or="temporalElement"
+                   forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            <template>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="">
+                       <gml:beginPosition/>
+                       <gml:endPosition/>
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </action>
+
           <field name="temporalRangeSection" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
@@ -7451,6 +7649,28 @@
               </snippet>
             </template>
           </field>
+
+          <!-- Add Temporal extent - service -->
+           <action type="add"
+            name="temporalRangeSection" or="temporalElement"
+                   forceLabel="true"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:extent/gmd:EX_Extent"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            <template>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="">
+                       <gml:beginPosition/>
+                       <gml:endPosition/>
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </action>
 
           <field name="lineage"
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"/>
