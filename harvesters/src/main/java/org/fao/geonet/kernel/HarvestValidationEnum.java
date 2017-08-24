@@ -61,7 +61,7 @@ public enum HarvestValidationEnum {
 
     public static HarvestValidationEnum lookup(final String name) {
         if ("true".equals(name)) {
-            return HarvestValidationEnum.XSDVALIDATION;
+            return HarvestValidationEnum.SCHEMATRONVALIDATION;
         }
         if ("false".equals(name)) {
             return HarvestValidationEnum.NOVALIDATION;

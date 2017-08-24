@@ -230,7 +230,8 @@ public class DataManager implements ApplicationEventPublisherAware {
 
         DataManager.setNamespacePrefix(xml);
         try {
-            dataMan.validate(schema, xml);
+// LM:1804 - do not run XSD validation on swedish national profile
+//            dataMan.validate(schema, xml);
         } catch (XSDValidationErrorEx e) {
             if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
                 Log.debug(Geonet.DATA_MANAGER, "XSDValidation Fail: " + e.getMessage());
