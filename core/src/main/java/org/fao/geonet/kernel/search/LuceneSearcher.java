@@ -820,7 +820,8 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
 
         String createDate = doc.get("_createDate");
         if (createDate != null) createDate = createDate.toUpperCase();
-        String changeDate = doc.get("_changeDate");
+        // Swedish SDI, changed from _changeDate (value in db) to changeDate (value from metadata, for iso19139 it's gmd:dateStamp)
+        String changeDate = doc.get("changeDate");
         if (changeDate != null) changeDate = changeDate.toUpperCase();
 
         // Root element is using root element name if not using only the index content (ie. dumpAllField)
