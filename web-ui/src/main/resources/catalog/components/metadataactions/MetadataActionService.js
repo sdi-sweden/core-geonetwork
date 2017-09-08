@@ -129,15 +129,6 @@
       };
 
       /**
-       * Export one metadata to RDF format.
-       * @param {string} uuid
-       */
-      this.metadataRDF = function(uuid) {
-        var url = gnHttp.getService('mdGetRDF') + '?uuid=' + uuid;
-        location.replace(url);
-      };
-
-      /**
        * Export to MEF format (one or selection). If uuid is provided, export
        * one metadata, else export the whole selection.
        * @param {string} uuid

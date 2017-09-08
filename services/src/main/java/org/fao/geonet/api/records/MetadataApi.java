@@ -44,8 +44,12 @@ import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.SchemaManager;
+import org.fao.geonet.kernel.ThesaurusManager;
 import org.fao.geonet.kernel.mef.MEFLib;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
+import org.fao.geonet.repository.IsoLanguageRepository;
+import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Attribute;
@@ -267,6 +271,111 @@ public class MetadataApi implements ApplicationContextAware {
         ));
         return isJson ? Xml.getJSON(xml) : xml;
         //return xml;
+    }
+
+    @ApiOperation(value = "Get a metadata record in rdf format",
+        nickname = "get")
+    @RequestMapping(value = "/{metadataUuid}/rdf",
+        method = RequestMethod.GET,
+        produces = {
+            MediaType.APPLICATION_XML_VALUE
+        })
+    public
+    @ResponseBody
+    Element getRdf(
+        @ApiParam(value = "Record UUID.",
+            required = true)
+        @PathVariable
+            String metadataUuid,
+        @RequestHeader(
+            value = HttpHeaders.ACCEPT,
+            defaultValue = MediaType.APPLICATION_XML_VALUE
+        )
+            String acceptHeader,
+        HttpServletResponse response,
+        HttpServletRequest request
+    )
+        throws Exception {
+
+        ServiceContext context = ServiceContext.get();
+        DataManager dataManager = context.getBean(DataManager.class);
+        MetadataRepository metadataRepository = context.getBean(MetadataRepository.class);
+        Metadata md = metadataRepository.findOneByUuid(metadataUuid);
+        if (md == null) {
+            // TODO: i18n
+            throw new ResourceNotFoundException(String.format(
+                "Metadata with UUID '%s' not found in this catalog.",
+                metadataUuid
+            ));
+        }
+        try {
+            Lib.resource.checkPrivilege(context,
+                md.getId() + "",
+                ReservedOperation.view);
+        } catch (Exception e) {
+            // TODO: i18n
+            // TODO: Report exception in JSON format
+            throw new SecurityException(String.format(
+                "Metadata with UUID '%s' not shared with you.",
+                metadataUuid
+            ));
+        }
+
+
+        boolean withValidationErrors = false, keepXlinkAttributes = false, forEditing = false;
+        Element xml  =
+            dataManager.getMetadataNoInfo(context, md.getId() + "");
+
+
+        response.setHeader("Content-Disposition", String.format(
+            "inline; filename=\"%s.rdf\"",
+            md.getUuid()
+        ));
+
+        GeonetworkDataDirectory dataDirectory = context.getBean(GeonetworkDataDirectory.class);
+        Path dcatXsl = dataDirectory.getWebappDir().resolve("xslt/services/dcat/rdf.xsl");
+
+        // Retrieve model for rdf.xsl
+        ThesaurusManager th = context.getBean(ThesaurusManager.class);
+        Locale language = languageUtils.parseAcceptLanguage(request.getLocales());
+
+        SettingManager sm = context.getBean(SettingManager.class);
+        Element systemConfig  = new Element("systemConfig").addContent(
+            sm.getAllAsXML(true).getChild("system").detach());
+
+        Element isoLang = context.getBean(IsoLanguageRepository.class).findAllAsXml();
+        isoLang.setName("isoLang");
+
+        Element thesaurus = th.buildResultfromThTable(context);
+        thesaurus.setName("thesaurus");
+
+        Element rawRelated = new Element("root").addContent(Arrays.asList(
+            new Element("gui").addContent(Arrays.asList(
+                new Element("language").setText(language.getISO3Language()),
+                new Element("url").setText(context.getBaseUrl())
+            )),
+            MetadataUtils.getRelated(context, md.getId(), md.getUuid(), new RelatedItemType[0], 1, 100, true)
+        ));
+        Path relatedXsl = dataDirectory.getWebappDir().resolve("xslt/services/metadata/relation.xsl");
+
+        Element related = Xml.transform(rawRelated, relatedXsl);
+        related.setName("relation");
+
+        Element raw = new Element("root").addContent(Arrays.asList(
+            new Element("gui").addContent(Arrays.asList(
+                new Element("language").setText(language.getISO3Language()),
+                new Element("url").setText(context.getBaseUrl()),
+                thesaurus,
+                systemConfig,
+                isoLang,
+                related
+            )),
+            xml
+        ));
+
+        final Element transform = Xml.transform(raw, dcatXsl);
+
+        return transform;
     }
 
     @ApiOperation(

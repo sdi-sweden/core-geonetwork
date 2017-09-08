@@ -73,7 +73,7 @@ public class RdfOutputManager {
         try {
             List results = searcher.search(context);
 
-            Element records = createXsltModel(context);
+            Element records = createXsltModel(context, searcher);
 
             // Write results intermediate files:
             //  - recordsFile: File where each metadata is written in DCAT format.
@@ -129,7 +129,7 @@ public class RdfOutputManager {
                             // Write results
                             writeFileResults(outputRecordsFile, recordsRdf, page);
 
-                            records = createXsltModel(context);
+                            records = createXsltModel(context, searcher);
 
                             page++;
                         }
@@ -283,7 +283,7 @@ public class RdfOutputManager {
     /**
      * Creates the model element to send to the rdf xslt.
      */
-    private Element createXsltModel(ServiceContext context) {
+    private Element createXsltModel(ServiceContext context, RdfSearcher searcher) {
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
         SettingManager sm = gc.getBean(SettingManager.class);
 
@@ -298,11 +298,15 @@ public class RdfOutputManager {
         siteEl.addContent(new Element("name").setText(sm.getValue(Settings.SYSTEM_SITE_NAME_PATH)));
         siteEl.addContent(new Element("organization").setText(sm.getValue(Settings.SYSTEM_SITE_ORGANIZATION)));
 
+        Element inspireEl = new Element("inspire");
+        inspireEl.addContent(new Element("enable").setText(sm.getValue(Settings.SYSTEM_INSPIRE_ENABLE)));
+
         Element guiEl = new Element("gui");
         Element systemConfigEl = new Element("systemConfig");
         Element systemEl = new Element("system");
         systemEl.addContent(serverEl);
         systemEl.addContent(siteEl);
+        systemEl.addContent(inspireEl);
 
         systemConfigEl.addContent(systemEl);
 
@@ -310,6 +314,7 @@ public class RdfOutputManager {
         guiEl.addContent(new Element("language").setText(context.getLanguage()));
         guiEl.addContent(new Element("url").setText(context.getBaseUrl()));
         guiEl.addContent(new Element("thesaurus").setContent(thesaurusEl.detach()));
+        guiEl.addContent(new Element("organization").setText(searcher.getOrganisation()));
 
         modelEl.addContent(guiEl);
 

@@ -26,8 +26,11 @@ package org.fao.geonet.services.rdf;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.GeonetContext;
+import org.fao.geonet.Util;
 import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.constants.Params;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.SearcherType;
@@ -47,12 +50,20 @@ import java.util.List;
 public class RdfSearcher {
     private MetaSearcher searcher;
     private Element searchRequest;
+    private String organisation;
+
+    public String getOrganisation() {
+        return organisation;
+    }
 
     public RdfSearcher(Element params, ServiceContext context) {
         searchRequest = SearchDefaults.getDefaultSearch(context, params);
         searchRequest.addContent(new Element(Geonet.SearchResult.BUILD_SUMMARY).setText("false"));
         searchRequest.addContent(new Element("_isTemplate").setText("n"));
         searchRequest.addContent(new Element("_op0").setText("1"));
+
+        organisation = Util.getParam(params, "orgName", "");
+
         if (Log.isDebugEnabled(Geonet.SEARCH_ENGINE))
             Log.debug(Geonet.SEARCH_ENGINE, "PUBLIC METADATA SEARCH CRITERIA:\n" + Xml.getString(searchRequest));
 
