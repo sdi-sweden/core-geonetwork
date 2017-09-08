@@ -75,7 +75,7 @@
 
         <script src="{$uiResourcesPath}lib/base64.js"></script>
         <script src="{$uiResourcesPath}lib/jquery-2.0.3.js"></script>
-
+        <script src="{$uiResourcesPath}lib/jquery-ui.js"></script>
         <script src="{$uiResourcesPath}lib/moment+langs.min.js"></script>
 
         <script src="{$uiResourcesPath}lib/angular/angular.js"></script>
