@@ -38,15 +38,17 @@
     			return url;    			
     		}
     		var newUrl = url;
-    		var appUrlLmProxy = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl;
             if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
-                newUrl = appUrlLmProxy + encodeURIComponent(url);
+                //newUrl = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+                newUrl = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
             } else if (url.includes("maps-ver.lantmateriet.se")) {
-            	newUrl = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);            	
+            	//newUrl = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+            	newUrl = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
             }
              else {
            	    if (!url.includes("https://")) {
-             	    newUrl = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.srvProxyUrl + encodeURIComponent(url);
+             	    //newUrl = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.srvProxyUrl + encodeURIComponent(url);
+             	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
                 }
             }
             return newUrl;

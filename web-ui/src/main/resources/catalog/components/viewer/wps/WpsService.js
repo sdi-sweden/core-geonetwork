@@ -98,12 +98,15 @@
         //send request and decode result
         if (gnUrlUtils.isValid(url)) {
        	  if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
-        	  url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+//        	  url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+        	  url = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
           }  else if (url.includes("maps-ver.lantmateriet.se")) {
-        	url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+//        	url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+        	url = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
           } else {
        	    if (!url.includes("https://")) {
-         	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.srvProxyUrl + encodeURIComponent(url);
+//         	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.srvProxyUrl + encodeURIComponent(url);
+         	   url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
             }
           }
           return $http.get(url, {

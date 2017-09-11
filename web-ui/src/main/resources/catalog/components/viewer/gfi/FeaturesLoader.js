@@ -50,12 +50,16 @@
     this.$injector = $injector;
     this.$http = this.$injector.get('$http');
     this.gnProxyUrl = this.$injector.get('gnGlobalSettings').proxyUrl;
-	var origin = window.location.origin;
-      if (!origin) {
-		  origin = window.location.protocol + "//" + window.location.hostname;
-	}
-    this.lmProxyUrl = origin + '/' + this.$injector.get('gnGlobalSettings').lmProxyUrl;
-
+//	var origin = window.location.origin;
+//      if (!origin) {
+//		  origin = window.location.protocol + "//" + window.location.hostname;
+//	}
+//    this.lmProxyUrl = origin + '/' + this.$injector.get('gnGlobalSettings').lmProxyUrl;
+//    this.lmProxyVerUrl = origin + '/' + this.$injector.get('gnGlobalSettings').lmProxyVerUrl;
+    
+    this.lmProxyUrl = '../../' + this.$injector.get('gnGlobalSettings').lmProxyUrl;
+    this.lmProxyVerUrl = '../../' + this.$injector.get('gnGlobalSettings').lmProxyVerUrl;
+    
     this.layer = config.layer;
     this.map = config.map;
 
@@ -72,7 +76,11 @@
   geonetwork.GnFeaturesLoader.prototype.proxyfyUrl = function(url) {
 	if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
 		return this.lmProxyUrl + encodeURIComponent(url)
-	}  else {
+	}  
+	else if (url.includes("maps-ver.lantmateriet.se")) {
+		return this.lmProxyVerUrl + encodeURIComponent(url)
+	}
+	else {
 		return this.gnProxyUrl + encodeURIComponent(url);
 	}
   };
