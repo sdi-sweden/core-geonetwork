@@ -33,6 +33,24 @@
       'gnUrlUtils', 'gnGlobalSettings', 'gfiOutputFormatCheck',
       function($http, $q, gnUrlUtils, gnGlobalSettings, gfiOutputFormatCheck) {
 
+    	var proxyfyURL = function(url) {
+    		if (url.includes("proxy")) {
+    			return url;    			
+    		}
+    		var appUrlLmProxy = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl;
+            if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+                url = appUrlLmProxy + encodeURIComponent(url);
+            } else if (url.includes("maps-ver.lantmateriet.se") {
+            	url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyVerUrl; + encodeURIComponent(url);            	
+            }
+             else {
+           	    if (!url.includes("https://")) {
+             	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                }
+            }
+            return url;
+    	}
+    	
         var displayFileContent = function(wmsUrl,data) {
           var parser = new ol.format.WMSCapabilities();
           var result = parser.read(data);
@@ -64,9 +82,7 @@
             return layerCheck;
           }
 
-          if (url.includes("maps.lantmateriet.se")) {
-            url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-          }
+          url = proxyfyURL(url);
 
           if (url.includes("maps-ver.lantmateriet.se")) {
               url = gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
@@ -132,12 +148,7 @@
         				  for (var k = 0; k < layers[j].Style.length; k++) {
         					  if (angular.isDefined(layers[j].Style[k].LegendURL)) {
         						  for (var l = 0; l < layers[j].Style[k].LegendURL.length; l++) {
-        							  if (layers[j].Style[k].LegendURL[l].OnlineResource.includes("maps.lantmateriet.se")) {
-        								  layers[j].Style[k].LegendURL[l].OnlineResource = gnGlobalSettings.lmProxyUrl + encodeURIComponent(layers[j].Style[k].LegendURL[l].OnlineResource);
-            				            }
-        							  if (layers[j].Style[k].LegendURL[l].OnlineResource.includes("maps-ver.lantmateriet.se")) {
-        								  layers[j].Style[k].LegendURL[l].OnlineResource = gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(layers[j].Style[k].LegendURL[l].OnlineResource);
-            				            }
+        							  layers[j].Style[k].LegendURL[l].OnlineResource = proxyfyURL(layers[j].Style[k].LegendURL[l].OnlineResource);
         						  }
         					  } 
         				  }
@@ -193,15 +204,7 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-             	  if (url.includes("maps.lantmateriet.se")) {
-                	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-                  }  else 
-                  if (url.includes("maps-ver.lantmateriet.se")) {
-                   	  url = gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
-                  }  else 
-                	  if (!url.includes("https://")) {
-                 	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                  }
+             	url = proxyfyURL(url);
            	  //send request and decode result
                 $http.get(url, {
                   cache: true
@@ -231,6 +234,7 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
+<<<<<<< HEAD
              	  if (url.includes("maps.lantmateriet.se")) {
                 	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
                   }  else 
@@ -241,6 +245,9 @@
                  	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
                   }
                   
+=======
+            	  url = proxyfyURL(url);
+>>>>>>> ticket1781
                   $http.get(url, {
                   cache: true
                 })
