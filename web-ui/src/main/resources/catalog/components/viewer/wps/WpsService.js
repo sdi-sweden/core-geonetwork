@@ -103,7 +103,7 @@
         	url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
           } else {
        	    if (!url.includes("https://")) {
-         	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+         	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.srvProxyUrl + encodeURIComponent(url);
             }
           }
           return $http.get(url, {

@@ -37,18 +37,19 @@
     		if (url.includes("proxy")) {
     			return url;    			
     		}
+    		var newUrl = url;
     		var appUrlLmProxy = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl;
             if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
-                url = appUrlLmProxy + encodeURIComponent(url);
-            } else if (url.includes("maps-ver.lantmateriet.se") {
-            	url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyVerUrl; + encodeURIComponent(url);            	
+                newUrl = appUrlLmProxy + encodeURIComponent(url);
+            } else if (url.includes("maps-ver.lantmateriet.se")) {
+            	newUrl = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);            	
             }
              else {
            	    if (!url.includes("https://")) {
-             	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+             	    newUrl = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.srvProxyUrl + encodeURIComponent(url);
                 }
             }
-            return url;
+            return newUrl;
     	}
     	
         var displayFileContent = function(wmsUrl,data) {
@@ -234,20 +235,7 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-<<<<<<< HEAD
-             	  if (url.includes("maps.lantmateriet.se")) {
-                	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-                  }  else 
-                  if (url.includes("maps-ver.lantmateriet.se")) {
-                   	  url = gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
-                  }  else 
-                	  if (!url.includes("https://")) {
-                 	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                  }
-                  
-=======
             	  url = proxyfyURL(url);
->>>>>>> ticket1781
                   $http.get(url, {
                   cache: true
                 })
