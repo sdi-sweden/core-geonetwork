@@ -98,10 +98,12 @@
         if (gnUrlUtils.isValid(url)) {
        	  if (url.includes("maps.lantmateriet.se")) {
         	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-          }  else {
-       	    if (!url.includes("https://")) {
+          }  else 
+          if (url.includes("maps-ver.lantmateriet.se")) {
+           	  url = gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+          }  else 
+        	  if (!url.includes("https://")) {
          	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-            }  
           }
           return $http.get(url, {
             cache: true

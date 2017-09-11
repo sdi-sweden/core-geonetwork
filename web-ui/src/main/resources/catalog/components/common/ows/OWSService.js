@@ -68,6 +68,10 @@
             url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
           }
 
+          if (url.includes("maps-ver.lantmateriet.se")) {
+              url = gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+          }
+
           // Push all leaves into a flat array of Layers.
           var getFlatLayers = function(layer) {
             if (angular.isArray(layer)) {
@@ -131,6 +135,9 @@
         							  if (layers[j].Style[k].LegendURL[l].OnlineResource.includes("maps.lantmateriet.se")) {
         								  layers[j].Style[k].LegendURL[l].OnlineResource = gnGlobalSettings.lmProxyUrl + encodeURIComponent(layers[j].Style[k].LegendURL[l].OnlineResource);
             				            }
+        							  if (layers[j].Style[k].LegendURL[l].OnlineResource.includes("maps-ver.lantmateriet.se")) {
+        								  layers[j].Style[k].LegendURL[l].OnlineResource = gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(layers[j].Style[k].LegendURL[l].OnlineResource);
+            				            }
         						  }
         					  } 
         				  }
@@ -188,10 +195,12 @@
               if (gnUrlUtils.isValid(url)) {
              	  if (url.includes("maps.lantmateriet.se")) {
                 	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-                  }  else {
-               	    if (!url.includes("https://")) {
+                  }  else 
+                  if (url.includes("maps-ver.lantmateriet.se")) {
+                   	  url = gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+                  }  else 
+                	  if (!url.includes("https://")) {
                  	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                    }
                   }
            	  //send request and decode result
                 $http.get(url, {
@@ -224,11 +233,14 @@
               if (gnUrlUtils.isValid(url)) {
              	  if (url.includes("maps.lantmateriet.se")) {
                 	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-                  }  else {
-               	    if (!url.includes("https://")) {
+                  }  else 
+                  if (url.includes("maps-ver.lantmateriet.se")) {
+                   	  url = gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+                  }  else 
+                	  if (!url.includes("https://")) {
                  	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                    }
                   }
+                  
                   $http.get(url, {
                   cache: true
                 })
