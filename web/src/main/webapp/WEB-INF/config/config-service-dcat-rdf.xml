@@ -25,7 +25,7 @@
 <geonet>
   <services package="org.fao.geonet">
 
-    <service name="rdf.metadata.get">
+    <service name="rdf.metadata.get" deprecated="true">
       <documentation>Return a metadata in DCAT format. See
         http://trac.osgeo.org/geonetwork/wiki/proposals/DCATandRDFServices
       </documentation>
