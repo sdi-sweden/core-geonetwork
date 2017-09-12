@@ -45,6 +45,7 @@ import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.setting.SettingInfo;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.geotools.gml2.GMLConfiguration;
@@ -180,6 +181,7 @@ public class SearchController {
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("lang", displayLanguage);
             params.put("displayInfo", resultType == ResultType.RESULTS_WITH_SUMMARY ? "true" : "false");
+            params.put("inspireEnabled", context.getBean(SettingManager.class).getValueAsBool("system/inspire/enable", false));
 
             try {
                 result = Xml.transform(result, styleSheet, params);

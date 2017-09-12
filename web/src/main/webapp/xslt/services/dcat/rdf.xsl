@@ -29,6 +29,26 @@
                 xmlns:void="http://www.w3.org/TR/void/"
                 xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+                xmlns:adms   = "http://www.w3.org/ns/adms#"
+                xmlns:cnt    = "http://www.w3.org/2011/content#"
+                xmlns:earl   = "http://www.w3.org/ns/earl#"
+                xmlns:gco    = "http://www.isotc211.org/2005/gco"
+                xmlns:gmd    = "http://www.isotc211.org/2005/gmd"
+                xmlns:gml    = "http://www.opengis.net/gml"
+                xmlns:gmx    = "http://www.isotc211.org/2005/gmx"
+                xmlns:gsp    = "http://www.opengis.net/ont/geosparql#"
+                xmlns:i      = "http://inspire.ec.europa.eu/schemas/common/1.0"
+                xmlns:i-gp   = "http://inspire.ec.europa.eu/schemas/geoportal/1.0"
+                xmlns:locn   = "http://www.w3.org/ns/locn#"
+                xmlns:owl    = "http://www.w3.org/2002/07/owl#"
+                xmlns:org    = "http://www.w3.org/ns/org#"
+                xmlns:prov   = "http://www.w3.org/ns/prov#"
+                xmlns:schema = "http://schema.org/"
+                xmlns:srv    = "http://www.isotc211.org/2005/srv"
+                xmlns:vcard  = "http://www.w3.org/2006/vcard/ns#"
+                xmlns:wdrs   = "http://www.w3.org/2007/05/powder-s#"
+                xmlns:xlink  = "http://www.w3.org/1999/xlink"
+                xmlns:xsi    = "http://www.w3.org/2001/XMLSchema-instance"
                 version="2.0"
                 extension-element-prefixes="saxon" exclude-result-prefixes="#all">
 
@@ -56,7 +76,10 @@
   <xsl:variable name="iso2letterLanguageCode" select="substring(/root/gui/language, 1, 2)"/>
 
 
+  <xsl:variable name="inspireEnabled" select="$env/system/inspire/enable = 'true'"/>
+
   <xsl:template match="/">
+    <xsl:message>HERE inspireEnabled: <xsl:value-of select="$inspireEnabled" /></xsl:message>
     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
              xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
              xmlns:foaf="http://xmlns.com/foaf/0.1/"

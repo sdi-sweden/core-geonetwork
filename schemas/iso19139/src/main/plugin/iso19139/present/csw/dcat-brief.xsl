@@ -34,11 +34,14 @@
                 xmlns:xslUtils="java:org.fao.geonet.util.XslUtil"
                 version="1.0">
 
-  <xsl:import href="../metadata-rdf.xsl"/>
+  <xsl:param name="displayInfo"/>
+  <xsl:param name="lang"/>
+  <xsl:param name="inspireEnabled" select="false()"/>
+
+  <xsl:include href="../../layout/tpl-rdf.xsl" />
 
   <xsl:variable name="url" select="xslUtils:getSiteUrl()"/>
-  <xsl:variable name="language" select="xslUtils:getLanguage()"/>
-  <xsl:variable name="iso2letterLanguageCode" select="xslUtils:twoCharLangCode($language)"/>
+  <xsl:variable name="iso2letterLanguageCode" select="xslUtils:twoCharLangCode(lang)"/>
 
   <!-- ============================================================================================ -->
 
@@ -106,7 +109,7 @@
         the language on the dataset level (see dataset language).
       -->
       <dct:language>
-        <xsl:value-of select="$language"/>
+        <xsl:value-of select="$lang"/>
       </dct:language>
 
 
