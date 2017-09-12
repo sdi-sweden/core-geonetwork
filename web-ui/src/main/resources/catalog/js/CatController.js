@@ -144,7 +144,7 @@
         'spa': 'Español', 'cat': 'Català', 'cze': 'Czech', 'fin': 'Suomeksi', 'swe': 'Svensk'};
       $scope.url = '';
       $scope.base = '../../catalog/';
-      $scope.proxyUrl = '../../' + gnGlobalSettings.proxyUrl;
+      $scope.proxyUrl = gnGlobalSettings.proxyUrl;
       $scope.logoPath = '../../images/harvesting/';
       $scope.isMapViewerEnabled = gnGlobalSettings.isMapViewerEnabled;
       $scope.isDebug = window.location.search.indexOf('debug') !== -1;
