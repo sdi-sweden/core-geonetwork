@@ -87,10 +87,6 @@
 
           url = proxyfyURL(url);
 
-          if (url.includes("maps-ver.lantmateriet.se")) {
-              url = gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
-          }
-
           // Push all leaves into a flat array of Layers.
           var getFlatLayers = function(layer) {
             if (angular.isArray(layer)) {
