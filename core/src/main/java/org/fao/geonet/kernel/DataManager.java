@@ -911,15 +911,19 @@ public class DataManager implements ApplicationEventPublisherAware {
      * Creates XML schematron report.
      */
     public Element doSchemaTronForEditor(String schema, Element md, String lang, Integer groupOwner) throws Exception {
+        // Swedish SDI - Don't add edit info - causes schematron rules not working fine with geonet elements
+        // Also the link with failed rules and editor UI elements is not implemented
         // enumerate the metadata xml so that we can report any problems found
         // by the schematron_xml script to the geonetwork editor
-        editLib.enumerateTree(md);
+        //editLib.enumerateTree(md);
 
         // get an xml version of the schematron errors and return for error display
         Element schemaTronXmlReport = getSchemaTronXmlReport(schema, md, lang, null, groupOwner);
 
+        // Swedish SDI - Don't add edit info - causes schematron rules not working fine with geonet elements
+        // Also the link with failed rules and editor UI elements is not implemented
         // remove editing info added by enumerateTree
-        editLib.removeEditingInfo(md);
+        //editLib.removeEditingInfo(md);
 
         return schemaTronXmlReport;
     }
@@ -2043,15 +2047,19 @@ public class DataManager implements ApplicationEventPublisherAware {
             error = applyCustomSchematronRules(schema, Integer.parseInt(metadataId), md, lang, validations);
         } else {
             try {
+                // Swedish SDI - Don't add edit info - causes schematron rules not working fine with geonet elements
+                // Also the link with failed rules and editor UI elements is not implemented
                 // enumerate the metadata xml so that we can report any problems found
                 // by the schematron_xml script to the geonetwork editor
-                editLib.enumerateTree(md);
+                //editLib.enumerateTree(md);
 
                 //Apply custom schematron rules
                 error = applyCustomSchematronRules(schema, Integer.parseInt(metadataId), md, lang, validations);
 
+                // Swedish SDI - Don't add edit info - causes schematron rules not working fine with geonet elements
+                // Also the link with failed rules and editor UI elements is not implemented
                 // remove editing info added by enumerateTree
-                editLib.removeEditingInfo(md);
+                //editLib.removeEditingInfo(md);
 
             } catch (Exception e) {
                 e.printStackTrace();
