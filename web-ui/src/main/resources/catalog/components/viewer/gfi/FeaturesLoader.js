@@ -74,6 +74,9 @@
   };
 
   geonetwork.GnFeaturesLoader.prototype.proxyfyUrl = function(url) {
+	if (url.includes("proxy")) {
+		return url;    			
+	}
 	if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
 		return this.lmProxyUrl + encodeURIComponent(url)
 	}  
