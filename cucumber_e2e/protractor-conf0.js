@@ -9,7 +9,12 @@ exports.config = {
 
   specs: [
     'features/Sok_Enkel_vy.feature',
-
+    'features/VisaMetadata.feature',
+    'features/Sok_Avancerad_vy.feature',
+    'features/Login.feature',
+    'features/PubliceraMetadatapost.feature',
+    'features/HanteraFavoriter.feature',
+    'features/VisaResultat.feature'
 
   ],
   cucumberOpts: {
@@ -31,7 +36,7 @@ exports.config = {
     format: 'pretty',
 	keepAlive: true,
    tags:[
-      '~@qa_readys',
+      '~@qa_ready',
       '~@qa_todo',
       '~@qa_dev'
     ]

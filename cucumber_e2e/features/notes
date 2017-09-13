@@ -1,0 +1,19 @@
+When the user selelcts a template
+Then the editor is opend with selected template
+
+
+@qa_dev1
+Scenario Outline: Skapa metadatjkhjöjhda post från mall
+  Given that the user is loged in
+  And is in search page
+  When the user clicks the button ny metadata
+  Then a form with templates are visible
+  | templates|
+  | ---Metadata för datamängd mall 3.1.1 |
+  | ---Metadata för tjänst - mall 3.1.1 |
+  When the user selelcts a <template>
+  Then the editor is opend with selected <template>
+  Examples:
+  | template |
+  | ---Metadata för datamängd mall 3.1.1 |
+  | ---Metadata för tjänst - mall 3.1.1 |

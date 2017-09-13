@@ -1,22 +1,21 @@
-@qa_ready
+@qa_todo
 Feature: Publicera metadata poster i Metadata Editor
-   
-  Scenario: Skapa metadata post to publish
-    Given that the user is in publishing mode
-    When the user clicks the button to create a metadata post
-	Then a form for redigera metadata is displayed 
- 
-	Given that a post is open for editing
-	And the post is valid
-	When the user clicks the button to publish the post
-    Then a question is displayed asking if the user wants to make the post public
-    
-  Scenario Outline: Publish valid post as public
-    Given that a question is displayed to ask if user wants to make the post public
-    When user selects <public_status>
-    Then a message is displayed that metadata is updated
-    And the post is visible in the result list as public <public_status>
-    Examples: public or not
-	| public_status |
-	| yes |
-	| no | 
+  @qa_todo
+  Scenario: Skapa metadata post från mall
+    Given that the user is loged in
+    And is in search page
+    When the user clicks the button ny metadata
+    Then a form with templates are visible
+    | templates|
+    | ---Metadata för datamängd mall 3.1.1 |
+    | ---Metadata för tjänst - mall 3.1.1 |
+
+    @qa_todo
+    Scenario Outline: Skapa metadatjkhjöjhda post från mall
+      Given that the user has clicked on ny metadata
+      When the user select a <template>
+      Then the editor opens whit selected "<template>"
+      Examples:
+      |template|
+      |datamängd|
+      |tjänst|
