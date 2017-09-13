@@ -862,7 +862,11 @@ public class MetadataInsertDeleteApi {
 
         if (rejectIfInvalid) {
             try {
-                DataManager.validateMetadata(schema, xmlElement, context);
+                Integer groupId = null;
+                if (StringUtils.isNotEmpty(group)) {
+                    groupId = Integer.parseInt(group);
+                }
+                DataManager.validateMetadata(schema, xmlElement, context, groupId);
             } catch (XSDValidationErrorEx e) {
                 throw new IllegalArgumentException(e);
             }

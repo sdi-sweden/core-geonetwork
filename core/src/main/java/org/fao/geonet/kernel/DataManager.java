@@ -214,16 +214,32 @@ public class DataManager implements ApplicationEventPublisherAware {
     /**
      * Validates metadata against XSD and schematron files related to metadata schema throwing
      * XSDValidationErrorEx if xsd errors or SchematronValidationErrorEx if schematron rules fails.
+     *
+     * Used to validate metadata to imported/harvested.
+     *
+     * @param schema        Metadata schema
+     * @param xml           Xml content
+     * @param context
+     * @param groupOwner    Group owner for the metadata (used in the SchemaCriteria.GROUP
+     *
      */
-    public static void validateMetadata(String schema, Element xml, ServiceContext context) throws Exception {
-        validateMetadata(schema, xml, context, " ");
+    public static void validateMetadata(String schema, Element xml, ServiceContext context, Integer groupOwner) throws Exception {
+        validateMetadata(schema, xml, context, " ", groupOwner);
     }
 
     /**
      * Validates metadata against XSD and schematron files related to metadata schema throwing
      * XSDValidationErrorEx if xsd errors or SchematronValidationErrorEx if schematron rules fails.
+     *
+     * Used to validate metadata to imported/harvested.
+     *
+     * @param schema        Metadata schema
+     * @param xml           Xml content
+     * @param context
+     * @param fileName
+     * @param groupOwner    Group owner for the metadata (used in the SchemaCriteria.GROUP
      */
-    public static void validateMetadata(String schema, Element xml, ServiceContext context, String fileName) throws Exception {
+    public static void validateMetadata(String schema, Element xml, ServiceContext context, String fileName,  Integer groupOwner) throws Exception {
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 
         DataManager dataMan = gc.getBean(DataManager.class);
@@ -248,10 +264,10 @@ public class DataManager implements ApplicationEventPublisherAware {
         //--- Note we have to use uuid here instead of id because we don't have
         //--- an id...
 
-        Element schemaTronXml = dataMan.doSchemaTronForEditor(schema, xml, context.getLanguage());
+        Element schemaTronXml = dataMan.doSchemaTronForEditor(schema, xml, context.getLanguage(), groupOwner);
         xml.detach();
         if (schemaTronXml != null && schemaTronXml.getContent().size() > 0) {
-            Element schemaTronReport = dataMan.doSchemaTronForEditor(schema, xml, context.getLanguage());
+            Element schemaTronReport = dataMan.doSchemaTronForEditor(schema, xml, context.getLanguage(), groupOwner);
 
             List<Namespace> theNSs = new ArrayList<Namespace>();
             theNSs.add(Namespace.getNamespace("geonet", "http://www.fao.org/geonetwork"));
@@ -902,16 +918,20 @@ public class DataManager implements ApplicationEventPublisherAware {
     /**
      * Creates XML schematron report.
      */
-    public Element doSchemaTronForEditor(String schema, Element md, String lang) throws Exception {
+    public Element doSchemaTronForEditor(String schema, Element md, String lang, Integer groupOwner) throws Exception {
+        // Swedish SDI - Don't add edit info - causes schematron rules not working fine with geonet elements
+        // Also the link with failed rules and editor UI elements is not implemented
         // enumerate the metadata xml so that we can report any problems found
         // by the schematron_xml script to the geonetwork editor
-        editLib.enumerateTree(md);
+        //editLib.enumerateTree(md);
 
         // get an xml version of the schematron errors and return for error display
-        Element schemaTronXmlReport = getSchemaTronXmlReport(schema, md, lang, null);
+        Element schemaTronXmlReport = getSchemaTronXmlReport(schema, md, lang, null, groupOwner);
 
+        // Swedish SDI - Don't add edit info - causes schematron rules not working fine with geonet elements
+        // Also the link with failed rules and editor UI elements is not implemented
         // remove editing info added by enumerateTree
-        editLib.removeEditingInfo(md);
+        //editLib.removeEditingInfo(md);
 
         return schemaTronXmlReport;
     }
@@ -1035,19 +1055,26 @@ public class DataManager implements ApplicationEventPublisherAware {
     /**
      * Creates XML schematron report for each set of rules defined in schema directory.
      */
-    private Element getSchemaTronXmlReport(String schema, Element md, String lang, Map<String, Integer[]> valTypeAndStatus) throws Exception {
+    private Element getSchemaTronXmlReport(String schema, Element md,
+                                           String lang, Map<String,
+                                           Integer[]> valTypeAndStatus, Integer groupOwner) throws Exception {
         // NOTE: this method assumes that you've run enumerateTree on the
         // metadata
 
         MetadataSchema metadataSchema = getSchema(schema);
         String[] rules = metadataSchema.getSchematronRules();
 
+        final SchematronValidatorExternalMd schematronValidator = ApplicationContextHolder.get().getBean(SchematronValidatorExternalMd.class);
+        List<ApplicableSchematron> applicableSchematronList = schematronValidator.getApplicableSchematronList(md, metadataSchema, groupOwner);
+
         // Schematron report is composed of one or more report(s)
         // for each set of rules.
         Element schemaTronXmlOut = new Element("schematronerrors",
             Edit.NAMESPACE);
         if (rules != null) {
-            for (String rule : rules) {
+            for (ApplicableSchematron applicableSchematron : applicableSchematronList) {
+                String rule = applicableSchematron.schematron.getFile();
+
                 // -- create a report for current rules.
                 // Identified by a rule attribute set to shematron file name
                 if (Log.isDebugEnabled(Geonet.DATA_MANAGER))
@@ -2031,15 +2058,19 @@ public class DataManager implements ApplicationEventPublisherAware {
             error = applyCustomSchematronRules(schema, Integer.parseInt(metadataId), md, lang, validations);
         } else {
             try {
+                // Swedish SDI - Don't add edit info - causes schematron rules not working fine with geonet elements
+                // Also the link with failed rules and editor UI elements is not implemented
                 // enumerate the metadata xml so that we can report any problems found
                 // by the schematron_xml script to the geonetwork editor
-                editLib.enumerateTree(md);
+                //editLib.enumerateTree(md);
 
                 //Apply custom schematron rules
                 error = applyCustomSchematronRules(schema, Integer.parseInt(metadataId), md, lang, validations);
 
+                // Swedish SDI - Don't add edit info - causes schematron rules not working fine with geonet elements
+                // Also the link with failed rules and editor UI elements is not implemented
                 // remove editing info added by enumerateTree
-                editLib.removeEditingInfo(md);
+                //editLib.removeEditingInfo(md);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -2061,6 +2092,74 @@ public class DataManager implements ApplicationEventPublisherAware {
         return Pair.read(errorReport, version);
     }
 
+
+    /**
+     * Used by the validate embedded service. The validation report is stored in the session.
+     *
+     */
+    public Element doValidateExternal(String schema,Element md, String lang, int groupOwnerId) throws Exception {
+        List<MetadataValidation> validations = new ArrayList<>();
+        Element errorReport = new Element("report", Edit.NAMESPACE);
+        errorReport.setAttribute("id", "-1", Edit.NAMESPACE);
+
+        //-- get an XSD validation report and add results to the metadata
+        //-- as geonet:xsderror attributes on the affected elements
+        Element xsdErrors = getXSDXmlReport(schema, md);
+        int xsdErrorCount = 0;
+        if (xsdErrors != null) {
+            xsdErrorCount = xsdErrors.getContent().size();
+        }
+        if (xsdErrorCount > 0) {
+            errorReport.addContent(xsdErrors);
+            validations.add(new MetadataValidation().
+                setId(new MetadataValidationId(-1, "xsd")).
+                setStatus(MetadataValidationStatus.INVALID).
+                setRequired(true).
+                setNumTests(xsdErrorCount).
+                setNumFailures(xsdErrorCount));
+
+            if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
+                Log.debug(Geonet.DATA_MANAGER, "  - XSD error: " + Xml.getString(xsdErrors));
+            }
+        } else {
+            validations.add(new MetadataValidation().
+                setId(new MetadataValidationId(-1, "xsd")).
+                setStatus(MetadataValidationStatus.VALID).
+                setRequired(true).
+                setNumTests(1).
+                setNumFailures(0));
+
+            if (Log.isTraceEnabled(Geonet.DATA_MANAGER)) {
+                Log.trace(Geonet.DATA_MANAGER, "Valid.");
+            }
+        }
+
+        // ...then schematrons
+        // edit mode
+        Element error = null;
+        try {
+            // enumerate the metadata xml so that we can report any problems found
+            // by the schematron_xml script to the geonetwork editor
+            editLib.enumerateTree(md);
+
+            //Apply custom schematron rules
+            error = applyCustomSchematronRulesExternal(schema, md, lang, validations, groupOwnerId);
+
+            // remove editing info added by enumerateTree
+            editLib.removeEditingInfo(md);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.error(Geonet.DATA_MANAGER, "Could not run schematron validation on metadata : " + e.getMessage());
+        }
+
+        if (error != null) {
+            errorReport.addContent(error);
+        }
+
+        return errorReport;
+    }
+
     /**
      * Creates XML schematron report for each set of rules defined in schema directory. This method
      * assumes that you've run enumerateTree on the metadata
@@ -2071,6 +2170,12 @@ public class DataManager implements ApplicationEventPublisherAware {
                                               String lang, List<MetadataValidation> validations) {
         final SchematronValidator schematronValidator = getApplicationContext().getBean(SchematronValidator.class);
         return schematronValidator.applyCustomSchematronRules(schema, metadataId, md, lang, validations);
+    }
+
+    public Element applyCustomSchematronRulesExternal(String schema, Element md,
+                                              String lang, List<MetadataValidation> validations, int groupOwnerId) {
+        final SchematronValidatorExternalMd schematronValidator = getApplicationContext().getBean(SchematronValidatorExternalMd.class);
+        return schematronValidator.applyCustomSchematronRules(schema, md, lang, validations, groupOwnerId);
     }
 
     /**

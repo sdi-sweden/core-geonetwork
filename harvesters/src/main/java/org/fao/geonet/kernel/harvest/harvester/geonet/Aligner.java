@@ -506,7 +506,7 @@ public class Aligner extends BaseAligner {
         if (log.isDebugEnabled()) log.debug("  - Adding metadata with remote uuid:" + ri.uuid);
 
         try {
-            params.getValidate().validate(dataMan, context, md);
+            params.getValidate().validate(dataMan, context, md, null);
         } catch (Exception e) {
             log.info("Ignoring invalid metadata uuid: " + ri.uuid);
             result.doesNotValidate++;
@@ -760,7 +760,7 @@ public class Aligner extends BaseAligner {
 
 
         try {
-            params.getValidate().validate(dataMan, context, md);
+            params.getValidate().validate(dataMan, context, md, null);
         } catch (Exception e) {
             log.info("Ignoring invalid metadata uuid: " + ri.uuid);
             result.doesNotValidate++;

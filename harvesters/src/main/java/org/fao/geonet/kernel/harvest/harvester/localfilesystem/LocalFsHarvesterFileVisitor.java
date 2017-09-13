@@ -157,7 +157,7 @@ class LocalFsHarvesterFileVisitor extends SimpleFileVisitor<Path> {
 
                 if (schema != null) {
                     try {
-                        params.getValidate().validate(dataMan, context, xml);
+                        params.getValidate().validate(dataMan, context, xml, null);
                     } catch (Exception e) {
                         log.debug("Cannot validate XML from file " + filePath + ", ignoring. Error was: " + e.getMessage());
                         result.doesNotValidate++;

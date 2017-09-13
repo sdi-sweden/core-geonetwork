@@ -189,7 +189,7 @@ public class ArcSDEHarvester extends AbstractHarvester<HarvestResult> {
                 } else {
 
                     try {
-                        params.getValidate().validate(dataMan, context, iso19139);
+                        params.getValidate().validate(dataMan, context, iso19139, null);
                     } catch (Exception e) {
                         Log.info(ARCSDE_LOG_MODULE_NAME, "Ignoring invalid metadata with uuid " + uuid);
                         result.doesNotValidate++;

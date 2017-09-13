@@ -1,18 +1,13 @@
 @qa_ready
 Feature: Hantera favoriter
-  
+  @qa_readynot
   Scenario: Create favorit
-    Given that the user has chosen to visa filtering
-    When the user clicks the star next to a post title that does not have a star 
+    Given that the user has a search result
+    When the user clicks the star next to the post "Testpost_referensdatum_till_Geodatasamverkan" that does not have a star
     Then the post is added as a favorit
-    
-  Scenario: Show favoriter
-    Given that the user has chosen to visa filtering
-    When the user clicks the link to favoriter  
-    Then all posts that are favoriter are shown in the result list
-
+  @todo
   Scenario: Ta bort favorit
-    Given that the user has chosen to visa filtering
-    When the user clicks the star next to a post title that has a star 
+    Given that the user has a search result
+    And the post "Testpost_referensdatum_till_Geodatasamverkan" is a favorite
+    When the user clicks the yellow star next to the post "Testpost_referensdatum_till_Geodatasamverkan"
     Then the post is removed as a favorit
-    

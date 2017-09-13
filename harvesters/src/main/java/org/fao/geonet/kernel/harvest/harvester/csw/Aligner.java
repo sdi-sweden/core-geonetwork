@@ -415,7 +415,7 @@ public class Aligner extends BaseAligner {
             response = (Element) response.detach();
 
             try {
-                params.getValidate().validate(dataMan, context, response);
+                params.getValidate().validate(dataMan, context, response, null);
             } catch (Exception e) {
                 if (e instanceof XSDValidationErrorEx) {
                     log.info("Ignoring invalid metadata (XSD Validation fail) with uuid " + uuid);

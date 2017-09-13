@@ -414,7 +414,7 @@ class Harvester extends BaseAligner implements IHarvester<HarvestResult> {
             } else {
 
                 try {
-                    params.getValidate().validate(dataMan, context, md);
+                    params.getValidate().validate(dataMan, context, md, null);
                     return (Element) md.detach();
                 } catch (Exception e) {
                     log.info("Skipping metadata that does not validate. Remote id : " + ri.id);
