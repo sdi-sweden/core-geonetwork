@@ -407,7 +407,7 @@ public class Aligner {
                 info.detach();
 
             try {
-                params.getValidate().validate(dataMan, context, md);
+                params.getValidate().validate(dataMan, context, md, null);
                 return (Element) md.detach();
             } catch (Exception e) {
                 log.info("Ignoring invalid metadata: " + id);

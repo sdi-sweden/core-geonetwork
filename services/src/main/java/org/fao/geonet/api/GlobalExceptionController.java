@@ -94,7 +94,8 @@ public class GlobalExceptionController {
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
-        HttpMessageNotReadableException.class
+        HttpMessageNotReadableException.class,
+        RuntimeException.class
     })
     public ApiError runtimeExceptionHandler(final Exception exception) {
         return new ApiError("runtime_exception", exception.getClass().getSimpleName(), exception.getMessage());
