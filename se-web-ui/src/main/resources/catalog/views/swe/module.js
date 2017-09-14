@@ -113,10 +113,10 @@
       $scope.location = gnSearchLocation;
 
       gnConfigService.loadPromise.then(function() {
-        $scope.predefinedMapsUrl = gnGlobalSettings.proxyUrl +
+        $scope.predefinedMapsUrl = '../../' + gnGlobalSettings.srvProxyUrl +
             gnConfig['map.predefinedMaps.url'];
 
-        $scope.geotechnicsUrl = gnGlobalSettings.proxyUrl +
+        $scope.geotechnicsUrl = '../../' + gnGlobalSettings.srvProxyUrl +
             gnConfig['map.geotechnics.url'];
       });
 

@@ -62,13 +62,14 @@
       </init-param>
        <init-param>
           <param-name>allowed.hosts</param-name>
-          <param-value>www.geodata.se,ver.geodata.se,utv.geodata.se,api.geonames.org,www.sgugeolagret.se,web2.geodata.se</param-value>
+          <param-value>www.geodata.se,ver.geodata.se,utv.geodata.se,api.geonames.org,www.sgugeolagret.se,web2.geodata.se,localhost</param-value>
       </init-param>
 
   </filter>
 
   <filter-mapping>
       <filter-name>LmProxyFilter</filter-name>
+      <url-pattern>/lm-proxy-ver</url-pattern>
       <url-pattern>/lm-proxy</url-pattern>
       <url-pattern>/proxy</url-pattern>
   </filter-mapping>
@@ -327,6 +328,35 @@
     <servlet-mapping>
         <servlet-name>LmProxy</servlet-name>
         <url-pattern>/lm-proxy</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>LmProxyVer</display-name>
+        <servlet-name>LmProxyVer</servlet-name>
+        <servlet-class>
+            org.lmv.geodata.common.server.servlet.proxy.BasicAuthProxyServlet</servlet-class>
+        <init-param>
+            <param-name>request.param.url</param-name>
+            <param-value>url</param-value>
+        </init-param>
+        <init-param>
+            <param-name>request.param.other</param-name>
+            <param-value>true</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>loginConfig</param-name>
+            <param-value>${lmProxyVer.loginConfig}</param-value>
+        </init-param>
+         <init-param>
+            <param-name>acceptAll</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LmProxyVer</servlet-name>
+        <url-pattern>/lm-proxy-ver</url-pattern>
     </servlet-mapping>
 
     <servlet>
