@@ -74,7 +74,7 @@
   };
 
   geonetwork.GnFeaturesLoader.prototype.proxyfyUrl = function(url) {
-	if (url.includes("proxy")) {
+	if (url.includes("proxy") || url.includes("topo-wms")) {
 		return url;    			
 	}
 	if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {

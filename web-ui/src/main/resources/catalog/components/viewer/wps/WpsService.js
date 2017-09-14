@@ -97,6 +97,9 @@
 
         //send request and decode result
         if (gnUrlUtils.isValid(url)) {
+   		  if (url.includes("proxy") || url.includes("topo-wms")) { 
+    			return url;    			
+    	  }
        	  if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
 //        	  url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
         	  url = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);

@@ -34,7 +34,7 @@
       function($http, $q, gnUrlUtils, gnGlobalSettings, gfiOutputFormatCheck) {
 
     	var proxyfyURL = function(url) {
-    		if (url.includes("proxy")) {
+    		if (url.includes("proxy") || url.includes("topo-wms")) {
     			return url;    			
     		}
     		var newUrl = url;
