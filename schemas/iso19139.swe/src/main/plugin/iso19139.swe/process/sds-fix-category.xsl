@@ -29,9 +29,6 @@
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 version="2.0" exclude-result-prefixes="#all">
 
-  <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
     <xsl:import href="../../iso19139/process/sds-fix-category.xsl"/>
-  </xsl:stylesheet>
-
 
 </xsl:stylesheet>
