@@ -264,38 +264,21 @@
         </srv:SV_ServiceIdentification>
     </gmd:identificationInfo>
     <gmd:distributionInfo>
-        <gmd:MD_Distribution>
-            <gmd:distributionFormat>
-                <gmd:MD_Format>
-                    <gmd:name gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:name>
-                    <gmd:version gco:nilReason="missing">
-                        <gco:CharacterString/>
-                    </gmd:version>
-                </gmd:MD_Format>
-            </gmd:distributionFormat>
-            <gmd:transferOptions>
-                <gmd:MD_DigitalTransferOptions>
-                    <gmd:onLine>
-                        <gmd:CI_OnlineResource>
-                            <gmd:linkage>
-                                <gmd:URL>http://localhost:8080/geoserver/wms?SERVICE=WMS</gmd:URL>
-                            </gmd:linkage>
-                            <gmd:protocol>
-                                <gco:CharacterString>OGC:WMS-1.1.1-http-get-map</gco:CharacterString>
-                            </gmd:protocol>
-                            <gmd:name>
-                                <gco:CharacterString>gn:gboundaries</gco:CharacterString>
-                            </gmd:name>
-                            <gmd:description>
-                                <gco:CharacterString>Country boundaries</gco:CharacterString>
-                            </gmd:description>
-                        </gmd:CI_OnlineResource>
-                    </gmd:onLine>
-                </gmd:MD_DigitalTransferOptions>
-            </gmd:transferOptions>
-        </gmd:MD_Distribution>
+      <gmd:MD_Distribution>
+        <gmd:distributionFormat>
+          <gmd:MD_Format>
+            <gmd:name gco:nilReason="missing">
+              <gco:CharacterString/>
+            </gmd:name>
+            <gmd:version gco:nilReason="missing">
+              <gco:CharacterString/>
+            </gmd:version>
+          </gmd:MD_Format>
+        </gmd:distributionFormat>
+        <gmd:transferOptions>
+          <gmd:MD_DigitalTransferOptions/>
+        </gmd:transferOptions>
+      </gmd:MD_Distribution>
     </gmd:distributionInfo>
     <gmd:dataQualityInfo>
         <gmd:DQ_DataQuality>

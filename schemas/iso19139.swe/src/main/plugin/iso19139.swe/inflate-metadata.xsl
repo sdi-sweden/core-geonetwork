@@ -21,6 +21,14 @@
 
       <xsl:apply-templates select="gmd:fileIdentifier" />
       <xsl:apply-templates select="gmd:language" />
+
+      <xsl:if test="not(gmd:language)">
+        <gmd:language>
+          <gmd:LanguageCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#LanguageCode"
+                            codeListValue="swe"/>
+        </gmd:language>
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:characterSet" />
       <xsl:apply-templates select="gmd:parentIdentifier" />
       <xsl:apply-templates select="gmd:hierarchyLevel" />
@@ -62,6 +70,7 @@
       <xsl:copy-of select="@*" />
 
       <xsl:apply-templates select="gmd:citation" />
+
       <xsl:apply-templates select="gmd:abstract" />
       <xsl:apply-templates select="gmd:purpose" />
       <xsl:apply-templates select="gmd:credit" />

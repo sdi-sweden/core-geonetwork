@@ -310,6 +310,25 @@
           <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date" />
 
+          <action type="add" name="referenceDateAdd" or="date"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date) = 0">
+            <template>
+              <snippet>
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date></gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+              </snippet>
+            </template>
+          </action>
+
           <!-- Resource identifier for dataset, service
            and add action to compute it if not defined. -->
           <field name="identifier" templateModeOnly="true" notDisplayedIfMissing="true"
@@ -393,7 +412,7 @@
 
           <!-- INSPIRE Themes -->
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
             gmd:descriptiveKeywords
             [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'INSPIRE themes')]"/>
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
@@ -401,8 +420,8 @@
                   name="inspireTheme"
                   btnLabel="addInspireTheme"
                   or="descriptiveKeywords"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
                         gmd:descriptiveKeywords[
                           contains(gmd:MD_Keywords/gmd:thesaurusName/
                                       gmd:CI_Citation/gmd:title/gco:CharacterString,
@@ -1271,6 +1290,26 @@
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../.." />
 
+          <action type="add" name="referenceSystemInfo2" or="referenceSystemInfo"
+                  in="/gmd:MD_Metadata"
+                  if="count(gmd:MD_Metadata/gmd:referenceSystemInfo) = 0">
+            <template>
+              <snippet>
+                <gmd:referenceSystemInfo>
+                  <gmd:MD_ReferenceSystem>
+                    <gmd:referenceSystemIdentifier>
+                      <gmd:RS_Identifier>
+                        <gmd:code>
+                          <gco:CharacterString></gco:CharacterString>
+                        </gmd:code>
+                      </gmd:RS_Identifier>
+                    </gmd:referenceSystemIdentifier>
+                  </gmd:MD_ReferenceSystem>
+                </gmd:referenceSystemInfo>
+              </snippet>
+            </template>
+          </action>
+
           <!--<field name="rsIdentifier" templateModeOnly="false"
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../..">
@@ -2027,6 +2066,25 @@
           <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date" />
 
+          <action type="add" name="referenceDateAdd" or="date"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date) = 0">
+            <template>
+              <snippet>
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date></gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+              </snippet>
+            </template>
+          </action>
+
           <!-- Resource identifier for dataset, service
            and add action to compute it if not defined. -->
           <field name="identifier" templateModeOnly="true" notDisplayedIfMissing="true"
@@ -2110,7 +2168,7 @@
 
           <!-- INSPIRE Themes -->
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
             gmd:descriptiveKeywords
             [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'INSPIRE themes')]"/>
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
@@ -2118,8 +2176,8 @@
                   name="inspireTheme"
                   btnLabel="addInspireTheme"
                   or="descriptiveKeywords"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
                         gmd:descriptiveKeywords[
                           contains(gmd:MD_Keywords/gmd:thesaurusName/
                                       gmd:CI_Citation/gmd:title/gco:CharacterString,
@@ -2988,6 +3046,26 @@
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../.." />
 
+          <action type="add" name="referenceSystemInfo2" or="referenceSystemInfo"
+                  in="/gmd:MD_Metadata"
+                  if="count(gmd:MD_Metadata/gmd:referenceSystemInfo) = 0">
+            <template>
+              <snippet>
+                <gmd:referenceSystemInfo>
+                  <gmd:MD_ReferenceSystem>
+                    <gmd:referenceSystemIdentifier>
+                      <gmd:RS_Identifier>
+                        <gmd:code>
+                          <gco:CharacterString></gco:CharacterString>
+                        </gmd:code>
+                      </gmd:RS_Identifier>
+                    </gmd:referenceSystemIdentifier>
+                  </gmd:MD_ReferenceSystem>
+                </gmd:referenceSystemInfo>
+              </snippet>
+            </template>
+          </action>
+
           <!--<field name="rsIdentifier" templateModeOnly="false"
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../..">
@@ -3744,6 +3822,25 @@
           <field
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date" />
 
+          <action type="add" name="referenceDateAdd" or="date"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date) = 0">
+            <template>
+              <snippet>
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date></gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+              </snippet>
+            </template>
+          </action>
+
           <!-- Resource identifier for dataset, service
            and add action to compute it if not defined. -->
           <field name="identifier" templateModeOnly="true" notDisplayedIfMissing="true"
@@ -3827,7 +3924,7 @@
 
           <!-- INSPIRE Themes -->
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
             gmd:descriptiveKeywords
             [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'INSPIRE themes')]"/>
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
@@ -3835,8 +3932,8 @@
                   name="inspireTheme"
                   btnLabel="addInspireTheme"
                   or="descriptiveKeywords"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
                         gmd:descriptiveKeywords[
                           contains(gmd:MD_Keywords/gmd:thesaurusName/
                                       gmd:CI_Citation/gmd:title/gco:CharacterString,
@@ -4705,6 +4802,26 @@
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../.." />
 
+          <action type="add" name="referenceSystemInfo2" or="referenceSystemInfo"
+                  in="/gmd:MD_Metadata"
+                  if="count(gmd:MD_Metadata/gmd:referenceSystemInfo) = 0">
+            <template>
+              <snippet>
+                <gmd:referenceSystemInfo>
+                  <gmd:MD_ReferenceSystem>
+                    <gmd:referenceSystemIdentifier>
+                      <gmd:RS_Identifier>
+                        <gmd:code>
+                          <gco:CharacterString></gco:CharacterString>
+                        </gmd:code>
+                      </gmd:RS_Identifier>
+                    </gmd:referenceSystemIdentifier>
+                  </gmd:MD_ReferenceSystem>
+                </gmd:referenceSystemInfo>
+              </snippet>
+            </template>
+          </action>
+
           <!--<field name="rsIdentifier" templateModeOnly="false"
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../..">
@@ -5461,6 +5578,25 @@
           <field
                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date" />
 
+          <action type="add" name="referenceDateAdd" or="date"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date) = 0">
+            <template>
+              <snippet>
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date></gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+              </snippet>
+            </template>
+          </action>
+
           <!-- Resource identifier for dataset, service
            and add action to compute it if not defined. -->
           <field name="identifier" templateModeOnly="true" notDisplayedIfMissing="true"
@@ -5544,7 +5680,7 @@
 
           <!-- INSPIRE Themes -->
           <field
-                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/
+                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
             gmd:descriptiveKeywords
             [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'INSPIRE themes')]"/>
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
@@ -5552,8 +5688,8 @@
                   name="inspireTheme"
                   btnLabel="addInspireTheme"
                   or="descriptiveKeywords"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
                         gmd:descriptiveKeywords[
                           contains(gmd:MD_Keywords/gmd:thesaurusName/
                                       gmd:CI_Citation/gmd:title/gco:CharacterString,
@@ -6431,6 +6567,25 @@
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../.." />
 
+          <action type="add" name="referenceSystemInfo2" or="referenceSystemInfo"
+                  in="/gmd:MD_Metadata"
+                  if="count(gmd:MD_Metadata/gmd:referenceSystemInfo) = 0">
+            <template>
+              <snippet>
+                <gmd:referenceSystemInfo>
+                  <gmd:MD_ReferenceSystem>
+                    <gmd:referenceSystemIdentifier>
+                      <gmd:RS_Identifier>
+                        <gmd:code>
+                          <gco:CharacterString></gco:CharacterString>
+                        </gmd:code>
+                      </gmd:RS_Identifier>
+                    </gmd:referenceSystemIdentifier>
+                  </gmd:MD_ReferenceSystem>
+                </gmd:referenceSystemInfo>
+              </snippet>
+            </template>
+          </action>
           <!--<field name="rsIdentifier" templateModeOnly="false"
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../..">
