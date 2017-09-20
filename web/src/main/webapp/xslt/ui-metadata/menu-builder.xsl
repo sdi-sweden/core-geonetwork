@@ -37,10 +37,11 @@
     <xsl:param name="config" as="node()"/>
     <xsl:variable name="currentView" select="$config/editor/views/view[tab/@id = $tab]"/>
 
-    <div class="gn-scroll-spy"
+    <!-- SWE custom changes, don't show menu with links to sections -->
+    <!--<div class="gn-scroll-spy"
          data-gn-scroll-spy="gn-editor-{$metadataId}"
          data-watch=""
-         data-all-depth="{if ($isFlatMode) then 'true' else 'false'}"/>
+         data-all-depth="{if ($isFlatMode) then 'true' else 'false'}"/>-->
 
     <ul class="nav nav-tabs">
       <!-- Make a drop down choice to swith to one view to another -->
