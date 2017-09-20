@@ -38,10 +38,9 @@ import org.fao.geonet.csw.common.OutputSchema;
 import org.fao.geonet.csw.common.ResultType;
 import org.fao.geonet.csw.common.exceptions.CatalogException;
 import org.fao.geonet.csw.common.exceptions.NoApplicableCodeEx;
-import org.fao.geonet.domain.Pair;
-import org.fao.geonet.domain.Profile;
-import org.fao.geonet.domain.ReservedGroup;
-import org.fao.geonet.domain.ReservedOperation;
+import org.fao.geonet.domain.*;
+import org.fao.geonet.exceptions.SchematronValidationErrorEx;
+import org.fao.geonet.exceptions.XSDValidationErrorEx;
 import org.fao.geonet.kernel.*;
 import org.fao.geonet.kernel.csw.CatalogService;
 import org.fao.geonet.kernel.csw.services.AbstractOperation;
@@ -50,7 +49,10 @@ import org.fao.geonet.kernel.csw.services.getrecords.SearchController;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
+import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.utils.Log;
+
+import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -243,6 +245,16 @@ public class Transaction extends AbstractOperation implements CatalogService {
         //
         String docType = null, title = null, isTemplate = null;
         boolean ufo = true, indexImmediate = false;
+
+        boolean validate = gc.getBean(SettingManager.class).getValueAsBool("system/csw/transactionValidate", false);
+        if (validate) {
+            Element report =  gc.getBean(DataManager.class).doValidateExternal(schema, xml,context.getLanguage(), (group!=null?Integer.parseInt(group):null));
+
+            if (report != null) {
+                throw new Exception(Xml.getJSON(report));
+            }
+        }
+
         String id = dataMan.insertMetadata(context, schema, xml, uuid, userId, group, source,
             isTemplate, docType, category, createDate, changeDate, ufo, indexImmediate);
 
@@ -319,13 +331,25 @@ public class Transaction extends AbstractOperation implements CatalogService {
                 throw new NoApplicableCodeEx("User not allowed to update this metadata(" + id + ").");
             }
 
+            Metadata metadata = gc.getBean(MetadataRepository.class).findOne(Integer.parseInt(id));
+            Integer group = metadata.getSourceInfo().getGroupOwner();
+
+            boolean validate = gc.getBean(SettingManager.class).getValueAsBool("system/csw/transactionValidate", false);
+            if (validate) {
+                Element report =  gc.getBean(DataManager.class).doValidateExternal(schemaId, xml,context.getLanguage(), group);
+
+                if (report != null) {
+                    throw new Exception(Xml.getJSON(report));
+                }
+            }
+
             String changeDate = null;
 
-            boolean validate = false;
+
             boolean ufo = false;
             boolean index = false;
             String language = context.getLanguage();
-            dataMan.updateMetadata(context, id, xml, validate, ufo, index, language, changeDate, false);
+            dataMan.updateMetadata(context, id, xml, false, ufo, index, language, changeDate, false);
 
             toIndex.add(id);
 

@@ -710,6 +710,8 @@
     "system/csw/metadataPublic-help": "En post publiceras automatiskt till alla användare när den läggs till genom CSW-T protokollet.",
     "system/csw/transactionUpdateCreateXPath": "Skapa elementet om det inte existerar när XPath används i en CSW-transaktion.",
     "system/csw/transactionUpdateCreateXPath-help": "Om ej vald uppdateras endast befintliga element.",
+    "system/csw/transactionValidate": "Validate metadata in insert/update",
+    "system/csw/transactionValidate-help": "Validates metadata in insert/update operations, returning an ExceptionReport with the validation report when the metadata doesn't validate",
     "system/downloadservice": "Ladda ned tjänst",
     "system/downloadservice/leave": "Använd metadatakopplingen som den är - inga ändringar i kopplingen",
     "system/downloadservice/leave-help": "Detta val innebär att GeoNetwork inte kommer att hantera nedladdningar av filer.",
