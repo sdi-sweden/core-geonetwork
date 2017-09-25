@@ -2086,7 +2086,7 @@ public class DataManager implements ApplicationEventPublisherAware {
      * Used by the validate embedded service. The validation report is stored in the session.
      *
      */
-    public Element doValidateExternal(String schema,Element md, String lang, int groupOwnerId) throws Exception {
+    public Element doValidateExternal(String schema,Element md, String lang, Integer groupOwnerId) throws Exception {
         List<MetadataValidation> validations = new ArrayList<>();
         Element errorReport = new Element("report", Edit.NAMESPACE);
         errorReport.setAttribute("id", "-1", Edit.NAMESPACE);
@@ -2129,13 +2129,13 @@ public class DataManager implements ApplicationEventPublisherAware {
         try {
             // enumerate the metadata xml so that we can report any problems found
             // by the schematron_xml script to the geonetwork editor
-            editLib.enumerateTree(md);
+            //editLib.enumerateTree(md);
 
             //Apply custom schematron rules
             error = applyCustomSchematronRulesExternal(schema, md, lang, validations, groupOwnerId);
 
             // remove editing info added by enumerateTree
-            editLib.removeEditingInfo(md);
+            //editLib.removeEditingInfo(md);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -2162,7 +2162,7 @@ public class DataManager implements ApplicationEventPublisherAware {
     }
 
     public Element applyCustomSchematronRulesExternal(String schema, Element md,
-                                              String lang, List<MetadataValidation> validations, int groupOwnerId) {
+                                              String lang, List<MetadataValidation> validations, Integer groupOwnerId) {
         final SchematronValidatorExternalMd schematronValidator = getApplicationContext().getBean(SchematronValidatorExternalMd.class);
         return schematronValidator.applyCustomSchematronRules(schema, md, lang, validations, groupOwnerId);
     }
