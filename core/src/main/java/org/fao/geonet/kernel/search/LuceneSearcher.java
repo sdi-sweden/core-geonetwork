@@ -1675,9 +1675,27 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
             _sm.releaseIndexReader(indexAndTaxonomy);
         }
 
+        // Do a new search with total number of hits, otherwise some results starting with accented letters are lost
+        // See https://github.com/geonetwork/core-geonetwork/issues/2174
         TopDocs hits = results.one();
         _elSummary = results.two();
         _numHits = Integer.parseInt(_elSummary.getAttributeValue("count"));
+
+        indexAndTaxonomy = _sm.getIndexReader(_language.presentationLanguage, _versionToken);
+        _versionToken = indexAndTaxonomy.version;
+        try {
+            results = doSearchAndMakeSummary(_numHits, startHit, startHit+_numHits,
+                _language.presentationLanguage,
+                _summaryConfig, _luceneConfig,
+                indexAndTaxonomy.indexReader,
+                _query, _filter, _sort, indexAndTaxonomy.taxonomyReader,
+                buildSummary);
+        } finally {
+            _sm.releaseIndexReader(indexAndTaxonomy);
+        }
+
+        hits = results.one();
+
 
         if (Log.isDebugEnabled(Geonet.SEARCH_ENGINE))
             Log.debug(Geonet.SEARCH_ENGINE, "Hits found : " + _numHits + "");
