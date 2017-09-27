@@ -229,4 +229,7 @@
   <add-distributor>Add distributor</add-distributor>
 
   <referenceDateAdd>Referensdatum (Händelsedatum)</referenceDateAdd>
+
+  <limitationsPublicAccess>Limitations on public access</limitationsPublicAccess>
+  <conditionsForAccess>Conditions for access</conditionsForAccess>
 </strings>
