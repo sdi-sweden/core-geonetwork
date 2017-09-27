@@ -229,4 +229,7 @@
   <add-distributor>Add distributor</add-distributor>
 
   <referenceDateAdd>Referensdatum (Händelsedatum)</referenceDateAdd>
+
+  <SpatialDataServiceCategory>Spatial Data Service Category</SpatialDataServiceCategory>
+  <addSpatialDataServiceCategory>Add Spatial Data Service Category Keyword</addSpatialDataServiceCategory>
 </strings>

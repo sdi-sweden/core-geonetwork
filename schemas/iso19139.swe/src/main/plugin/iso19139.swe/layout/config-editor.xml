@@ -2020,6 +2020,7 @@
       <thesaurusList>
         <thesaurus key="external.theme.Initiativ"
                    widgetMode="checkboxes" />
+        <thesaurus key="external.theme.SpatialDataServiceCategorySwedish" />
       </thesaurusList>
 
       <!-- Elements that should not use the "flat" mode -->
@@ -3776,6 +3777,7 @@
       <thesaurusList>
         <thesaurus key="external.theme.Initiativ"
                    widgetMode="checkboxes" />
+        <thesaurus key="external.theme.SpatialDataServiceCategorySwedish" />
       </thesaurusList>
 
       <!-- Elements that should not use the "flat" mode -->
@@ -5532,6 +5534,7 @@
       <thesaurusList>
         <thesaurus key="external.theme.Initiativ"
                    widgetMode="checkboxes" />
+        <thesaurus key="external.theme.SpatialDataServiceCategorySwedish" />
       </thesaurusList>
 
       <!-- Elements that should not use the "flat" mode -->
@@ -5783,6 +5786,66 @@
                             <gmd:code>
                               <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
                                           xlink:href="http://localhost:8080/geonetwork/srv/swe/thesaurus.download?ref=external.theme.Initiativ">geonetwork.thesaurus.external.theme.Initiativ</gmx:Anchor>
+                            </gmd:code>
+                          </gmd:MD_Identifier>
+                        </gmd:identifier>
+                      </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                  </gmd:MD_Keywords>
+                </gmd:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+
+
+
+          <field name="SpatialDataServiceCategory"
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
+            gmd:descriptiveKeywords
+            [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gmx:Anchor, 'SpatialDataServiceCategory')]"
+            if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
+          <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
+          <action type="add"
+                  btnLabel="addSpatialDataServiceCategory"
+                  name="spatialDataServiceCategory"
+                  or="descriptiveKeywords"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                  if="(count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:descriptiveKeywords[
+                          contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gmx:Anchor,
+                                   'SpatialDataServiceCategory')]) = 0)">
+            <template>
+              <snippet>
+                <gmd:descriptiveKeywords>
+                  <gmd:MD_Keywords>
+                    <gmd:keyword>
+                      <gco:CharacterString></gco:CharacterString>
+                    </gmd:keyword>
+                    <gmd:type>
+                      <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                      <gmd:CI_Citation>
+                        <gmd:title>
+                          <gco:CharacterString>kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster</gco:CharacterString>
+                        </gmd:title>
+                        <gmd:date>
+                          <gmd:CI_Date>
+                            <gmd:date>
+                              <gco:Date>2011-04-04</gco:Date>
+                            </gmd:date>
+                            <gmd:dateType>
+                              <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </gmd:dateType>
+                          </gmd:CI_Date>
+                        </gmd:date>
+                        <gmd:identifier>
+                          <gmd:MD_Identifier>
+                            <gmd:code>
+                              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                                          xlink:href="http://localhost:8080/geonetwork/srv/swe/thesaurus.download?ref=external.theme.SpatialDataServiceCategorySwedish">
+                                geonetwork.thesaurus.external.theme.SpatialDataServiceCategorySwedish</gmx:Anchor>
                             </gmd:code>
                           </gmd:MD_Identifier>
                         </gmd:identifier>
@@ -6407,6 +6470,184 @@
         </section>
 
         <section name="dataQualityInfo2">
+          <!-- TG Requirement 5.3 -->
+          <action type="add" name="report" or="report" btnLabel="TG Requirement5.3"
+                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+            <template>
+              <snippet>
+                <gmd:report>
+                  <gmd:DQ_DomainConsistency>
+                    <gmd:result>
+                      <gmd:DQ_ConformanceResult>
+                        <gmd:specification>
+                          <gmd:CI_Citation>
+                            <gmd:title>
+                              <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2009/976">
+                                KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster
+                              </gmx:Anchor>
+                            </gmd:title>
+                            <gmd:date>
+                              <gmd:CI_Date>
+                                <gmd:date>
+                                  <gco:Date>2010-12-08</gco:Date>
+                                </gmd:date>
+                                <gmd:dateType>
+                                  <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                                </gmd:dateType>
+                              </gmd:CI_Date>
+                            </gmd:date>
+                          </gmd:CI_Citation>
+                        </gmd:specification>
+                        <gmd:explanation>
+                          <gco:CharacterString>Enligt ovanstående spec</gco:CharacterString>
+                        </gmd:explanation>
+                        <gmd:pass>
+                          <gco:Boolean>true</gco:Boolean>
+                        </gmd:pass>
+                      </gmd:DQ_ConformanceResult>
+                    </gmd:result>
+                  </gmd:DQ_DomainConsistency>
+                </gmd:report>
+              </snippet>
+            </template>
+          </action>
+
+          <!-- TG Requirement 5.5 -->
+          <action type="add" name="report" or="report" btnLabel="TG Requirement 5.5"
+                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+            <template>
+            <snippet>
+            <gmd:report>
+              <gmd:DQ_DomainConsistency>
+                <gmd:result>
+                  <gmd:DQ_ConformanceResult>
+                    <gmd:specification>
+                      <gmd:CI_Citation>
+                        <gmd:title>
+                          <gmx:Anchor xlink:href="http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=32546">Svensk standard · SS-EN ISO 19128:2008  - Geografisk information - Gränssnitt mot kartserver (ISO 19128:2005)</gmx:Anchor>
+                        </gmd:title>
+                        <gmd:date>
+                          <gmd:CI_Date>
+                            <gmd:date>
+                              <gco:Date>2008-01-21</gco:Date>
+                            </gmd:date>
+                            <gmd:dateType>
+                              <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                            </gmd:dateType>
+                          </gmd:CI_Date>
+                        </gmd:date>
+                      </gmd:CI_Citation>
+                    </gmd:specification>
+                    <gmd:explanation>
+                      <gco:CharacterString>Denna spatiala datatjänst överensstämmer med kraven i SS-EN ISO 19128:2008  - Geografisk information - Gränssnitt mot kartserver (ISO 19128:2005)</gco:CharacterString>
+                    </gmd:explanation>
+                    <gmd:pass>
+                      <gco:Boolean>true</gco:Boolean>
+                    </gmd:pass>
+                  </gmd:DQ_ConformanceResult>
+                </gmd:result>
+              </gmd:DQ_DomainConsistency>
+            </gmd:report>
+            </snippet>
+            </template>
+          </action>
+
+
+          <!-- TG Requirement 6.5 performance -->
+          <action type="add" name="report" or="report" btnLabel="TG Requirement 6.5 performance"
+                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"
+                  if="count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report[gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor/@xlink:href='http://inspire.ec.europa.eu/metadatacodelist/QualityOfServiceCriteriaCode/performance']) = 0">
+            <template>
+            <snippet>
+            <gmd:report>
+              <gmd:DQ_ConceptualConsistency>
+                <gmd:nameOfMeasure>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadatacodelist/QualityOfServiceCriteriaCode/performance">prestanda</gmx:Anchor>
+                </gmd:nameOfMeasure>
+                <gmd:measureDescription>
+                  <gco:CharacterString>
+                    Den maximala tiden som ett anrop till tjänsten kan ta under normal belastning (utanför perioder av hög belastning)
+                  </gco:CharacterString>
+                </gmd:measureDescription>
+                <gmd:result>
+                  <gmd:DQ_QuantitativeResult>
+                    <gmd:valueUnit xlink:href="http://www.opengis.net/def/uom/SI/second"/>
+                    <gmd:value>
+                      <gco:Record xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">1.23</gco:Record>
+                    </gmd:value>
+                  </gmd:DQ_QuantitativeResult>
+                </gmd:result>
+              </gmd:DQ_ConceptualConsistency>
+            </gmd:report>
+            </snippet>
+            </template>
+          </action>
+
+          <!-- TG Requirement 6.5 availability -->
+          <action type="add" name="report" or="report" btnLabel="TG Requirement 6.5 availability"
+                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"
+                  if="count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report[gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor/@xlink:href='http://inspire.ec.europa.eu/metadatacodelist/QualityOfServiceCriteriaCode/availability']) = 0">
+            <template>
+            <snippet>
+            <gmd:report>
+              <gmd:DQ_ConceptualConsistency>
+                <gmd:nameOfMeasure>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadatacodelist/QualityOfServiceCriteriaCode/availability">tillgänglighet</gmx:Anchor>
+                </gmd:nameOfMeasure>
+                <gmd:measureDescription>
+                  <gco:CharacterString>
+                    Hur stor del av tiden räknat på ett år som tjänsten är tillgänglig i procent.
+                  </gco:CharacterString>
+                </gmd:measureDescription>
+                <gmd:result>
+                  <gmd:DQ_QuantitativeResult>
+                    <gmd:valueUnit xlink:href="urn:ogc:def:uom:OGC::percent"/>
+                    <gmd:value>
+                      <gco:Record xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">98.3</gco:Record>
+                    </gmd:value>
+                  </gmd:DQ_QuantitativeResult>
+                </gmd:result>
+              </gmd:DQ_ConceptualConsistency>
+            </gmd:report>
+            </snippet>
+            </template>
+          </action>
+
+          <!-- TG Requirement 6.5 capacity -->
+          <action type="add" name="report" or="report" btnLabel="TG Requirement 6.5 capacity"
+                  in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality"
+                  if="count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report[gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor/@xlink:href='http://inspire.ec.europa.eu/metadatacodelist/QualityOfServiceCriteriaCode/capacity']) = 0">
+            <template>
+            <snippet>
+            <gmd:report>
+              <gmd:DQ_ConceptualConsistency>
+                <gmd:nameOfMeasure>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadatacodelist/QualityOfServiceCriteriaCode/capacity">kapacitet</gmx:Anchor>
+                </gmd:nameOfMeasure>
+                <gmd:measureDescription>
+                  <gco:CharacterString>
+                    Maximalt antal samtidiga anrop som kan hanteras  under den rapporterade prestandan.
+                  </gco:CharacterString>
+                </gmd:measureDescription>
+                <gmd:result>
+                  <gmd:DQ_QuantitativeResult>
+                    <gmd:valueUnit xlink:href="http://www.opengis.net/def/uom/OGC/1.0/unity"/>
+                    <gmd:value>
+                      <gco:Record xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">22</gco:Record>
+                    </gmd:value>
+                  </gmd:DQ_QuantitativeResult>
+                </gmd:result>
+              </gmd:DQ_ConceptualConsistency>
+            </gmd:report>
+            </snippet>
+            </template>
+          </action>
+
+
+          <field
+            xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level"/>
+
+
           <field
                   xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level"/>
 
@@ -7296,6 +7537,7 @@
       <thesaurusList>
         <thesaurus key="external.theme.Initiativ"
                    widgetMode="checkboxes" />
+        <thesaurus key="external.theme.SpatialDataServiceCategorySwedish" />
       </thesaurusList>
 
       <!-- Elements that should not use the "flat" mode -->
@@ -9166,7 +9408,7 @@
 		<!-- INFORMATION OM METADATA - End -->
       </tab>
     </view>
-    <view name="xml" disabled="true">
+    <view name="xml">
       <tab id="xml" default="true"/>
     </view>
   </views>
