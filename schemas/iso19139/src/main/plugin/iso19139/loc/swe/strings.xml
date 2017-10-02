@@ -157,7 +157,7 @@
   <accessConstraintsBtn>Åtkomstrestriktioner</accessConstraintsBtn>
   <legalConstraintsBtn>Legal constraints</legalConstraintsBtn>
   <UseRestrictionsBtn>Nyttjanderestriktioner</UseRestrictionsBtn>
-  <AccessRestrictionsBtn>Användningsrestriktioner</AccessRestrictionsBtn>
+  <AccessRestrictionsBtn>Åtkomstrestriktioner</AccessRestrictionsBtn>
 
   <!-- String for INSPIRE SDS tab -->
   <inspire_sds_cc1>Conformance class 1: invocable</inspire_sds_cc1>

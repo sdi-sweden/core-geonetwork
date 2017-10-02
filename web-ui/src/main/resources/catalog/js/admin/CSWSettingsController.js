@@ -40,6 +40,7 @@
       var cswSettings = ['system/csw/contactId'];
       var cswBooleanSettings = ['system/csw/enable',
         'system/csw/metadataPublic',
+        'system/csw/transactionValidate',
         'system/csw/transactionUpdateCreateXPath'];
 
       /**

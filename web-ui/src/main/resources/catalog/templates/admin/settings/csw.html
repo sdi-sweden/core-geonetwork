@@ -42,6 +42,16 @@
 
           <p class="help-block">{{'system/csw/transactionUpdateCreateXPath-help' | translate}}</p>
         </div>
+         <div>
+          <label>
+            <input type="checkbox" name="system.csw.transactionValidate"
+                   value="{{cswSettings['system/csw/transactionValidate']}}"
+                   data-ng-model="cswSettings['system/csw/transactionValidate']"/>
+            <span>{{'system/csw/transactionValidate' | translate}}</span>
+          </label>
+
+          <p class="help-block">{{'system/csw/transactionValidate-help' | translate}}</p>
+        </div>
         <div>
           <label for="{{system.csw.contactId}}">{{'system/csw/contactId' | translate}}</label>
           <select data-ng-model="cswSettings['system/csw/contactId']" name="system.csw.contactId"
