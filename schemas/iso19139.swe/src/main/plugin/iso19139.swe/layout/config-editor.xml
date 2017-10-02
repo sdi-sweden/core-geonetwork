@@ -6083,9 +6083,14 @@
           </action>
 
           <!--Limitations on public access. -->
-          <field name="limitationsPublicAccess"
+          <!--<field name="limitationsPublicAccess"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
             gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]"
+                 if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>-->
+
+          <field name="limitationsPublicAccess"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
+            gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]]"
                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
 
           <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="Limitations on public access"
@@ -6101,8 +6106,8 @@
                         codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
                         codeListValue="otherRestrictions"/>
                     </gmd:accessConstraints>
-                    <gmd:otherConstraints gco:nilReason="missing">
-                      <gco:CharacterString/>
+                    <gmd:otherConstraints>
+                      <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">no limitations to public access</gmx:Anchor>
                     </gmd:otherConstraints>
                   </gmd:MD_LegalConstraints>
                 </gmd:resourceConstraints>
@@ -6111,10 +6116,16 @@
           </action>
 
           <!-- Conditions for access -->
-          <field name="conditionsForAccess"
+          <!--<field name="conditionsForAccess"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
             gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))]"
+                 if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>-->
+
+          <field name="conditionsForAccess"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
+            gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))]]"
                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+
 
           <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="Conditions for access"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
@@ -6129,8 +6140,8 @@
                         codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
                         codeListValue="otherRestrictions"/>
                     </gmd:accessConstraints>
-                    <gmd:otherConstraints gco:nilReason="missing">
-                      <gco:CharacterString/>
+                    <gmd:otherConstraints>
+                      <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
                     </gmd:otherConstraints>
                   </gmd:MD_LegalConstraints>
                 </gmd:resourceConstraints>
@@ -6139,10 +6150,15 @@
           </action>
 
           <!-- Conditions for use -->
-          <field name="conditionsForUse"
+          <!--<field name="conditionsForUse"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
             gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints"
+                 if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>-->
+
+          <field name="conditionsForUse"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints]"
                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>
+
 
           <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="Conditions for use"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
@@ -6157,8 +6173,8 @@
                         codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
                         codeListValue="otherRestrictions"/>
                     </gmd:useConstraints>
-                    <gmd:otherConstraints gco:nilReason="missing">
-                      <gco:CharacterString/>
+                    <gmd:otherConstraints>
+                      <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
                     </gmd:otherConstraints>
                   </gmd:MD_LegalConstraints>
                 </gmd:resourceConstraints>

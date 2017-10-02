@@ -3193,4 +3193,34 @@ Detta undvikar vi att ange.</description>
 
     </helper>
   </element>
+
+  <element name="conditionsForUse">
+    <label>Conditions for use</label>
+    <description>Conditions for use</description>
+    <helper sort="no">
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="conditions to access and use unknown">conditions to access and use unknown</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="no conditions to access and use">no conditions to access and use</option>
+
+    </helper>
+  </element>
+
+  <element id="72.0" name="LimitationsOnPublicAcces">
+    <label>Limitations on Public Access</label>
+    <description>Andra restriktioner och rättsliga förutsättningar för åtkomst och nyttjande av resursen (eller metadata)</description>
+    <condition>conditional</condition>
+    <helper sort="false"  relAtt="xlink:href">
+
+      <!--			&lt;!&ndash;<option show="y" value="inga begransningar">Inga begränsningar</option>
+                  <option show="y" value="-&#45;&#45;&#45;&#45;Restriktioner tillämpliga för Inspire">-&#45;&#45;&#45;&#45;Restriktioner tillämpliga för Inspire</option>-->
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations" value="no limitations to public access">no limitations to public access</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a" value="Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag">Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b" value="Internationella förbindelser, allmän säkerhet eller nationellt försvar">Internationella förbindelser, allmän säkerhet eller nationellt försvar</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c" value="Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.">Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1d" value="Sekretess som omfattar kommersiell eller industriell information, där sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning i syfte att skydda legitima ekonomiska intressen, inbegripet det allmänna intresset att upprätthålla sekretess för statistiska uppgifter och skattesekretess">Sekretess som omfattar kommersiell eller industriell information, där sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning i syfte att skydda legitima ekonomiska intressen, inbegripet det allmänna intresset att upprätthålla sekretess för statistiska uppgifter och skattesekretess</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1e" value="Immateriella rättigheter">Immateriella rättigheter</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1f" value="Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning">Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g" value="En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.">En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h" value="Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter">Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter</option>
+    </helper>
+  </element>
 </labels>

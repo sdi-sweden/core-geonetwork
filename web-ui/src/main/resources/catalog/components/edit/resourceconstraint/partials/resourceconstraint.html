@@ -1,0 +1,25 @@
+<div>
+  <label class="control-label col-sm-3"
+         data-gn-field-tooltip="iso19139|{{config.elementTooltip}}"
+         >{{label}}</label>
+
+  <div class="col-sm-8">
+    <label>Reference</label>
+
+    <select class="form-control"
+            data-ng-change="updateValue()"
+            data-ng-model="selectedValueAttr"
+            data-ng-options="item.value for item in listValues"
+            >
+    </select>
+
+    <label>Text</label>
+
+    <textarea class="form-control"  data-ng-model="selectedValue">
+    </textarea>
+
+    <div>
+      <input name="_X{{ref.replace('_', '')}}" type="hidden" value="{{snippet}}"/>
+    </div>
+  </div>
+</div>

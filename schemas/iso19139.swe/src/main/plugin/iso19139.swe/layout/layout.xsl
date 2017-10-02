@@ -1096,7 +1096,7 @@
 
   <!-- limitationsPublicAccess -->
   <xsl:template mode="mode-iso19139"
-                match="gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints]/gmd:MD_LegalConstraints/gmd:otherConstraints"
+                match="gmd:MD_DataIdentification-OLD/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints]/gmd:MD_LegalConstraints/gmd:otherConstraints"
                 priority="2000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
@@ -1137,13 +1137,14 @@
 
   <!-- Conditions for access and use -->
   <xsl:template mode="mode-iso19139"
-                match="gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:useConstraints]/gmd:MD_LegalConstraints/gmd:otherConstraints"
+                match="gmd:MD_DataIdentification-OLD/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:useConstraints]/gmd:MD_LegalConstraints/gmd:otherConstraints"
                 priority="2000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="overrideLabel" select="''" required="no"/>
     <xsl:param name="refToDelete" required="no"/>
 
+    <xsl:message>===== resourceConstraints directive</xsl:message>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
     <xsl:variable name="xpath"
                   select="gn-fn-metadata:getXPathByRef(gn:element/@ref, $metadata, false())"/>
@@ -1173,5 +1174,82 @@
       <!-- TODO: Handle conditional helper -->
       <xsl:with-param name="listOfValues" select="$helper"/>
     </xsl:call-template>
+  </xsl:template>
+
+
+  <xsl:template mode="mode-iso19139" match="gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:otherConstraints]" priority="3000">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+    <xsl:message>========== gmd:resourceConstraints directive</xsl:message>
+
+    <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+    <xsl:variable name="isoType" select="if (gmd:MD_LegalConstraints/gmd:otherConstraints/@gco:isoType) then gmd:MD_LegalConstraints/gmd:otherConstraints/@gco:isoType else ''"/>
+    <!--<xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(gmd:MD_LegalConstraints/gmd:otherConstraints), $labels, name(gmd:MD_LegalConstraints), $isoType, $xpath)"/>-->
+
+    <xsl:variable name="mode" select="if (count(gmd:MD_LegalConstraints[gmd:accessConstraints]) > 0) then
+                'AccessConstraints'
+              else
+                'UseConstraints'" />
+
+
+    <xsl:variable name="toolipValue" select="if (count(gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]) > 0) then
+               'LimitationsOnPublicAcces'
+              else if (count(gmd:MD_LegalConstraints[gmd:accessConstraints]) > 0) then
+                'conditionsForAccess'
+              else
+                'conditionsForUse'" />
+
+
+    <xsl:variable name="labelConfig" select="if (count(gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]) > 0) then
+                gn-fn-metadata:getLabel($schema, 'LimitationsOnPublicAcces', $labels, name(gmd:MD_LegalConstraints), $isoType, $xpath)
+              else if (count(gmd:MD_LegalConstraints[gmd:accessConstraints]) > 0) then
+                gn-fn-metadata:getLabel($schema, 'conditionsForAccess', $labels, name(gmd:MD_LegalConstraints), $isoType, $xpath)
+              else
+                gn-fn-metadata:getLabel($schema, 'conditionsForUse', $labels, name(gmd:MD_LegalConstraints), $isoType, $xpath)" />
+
+
+    <xsl:message>========== gmd:resourceConstraints directive schema/ label: <xsl:value-of select="$schema" />/<xsl:value-of select="$labelConfig/label" /></xsl:message>
+    <xsl:message>========== gmd:resourceConstraints directive value: <xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor" /></xsl:message>
+    <xsl:message>========== gmd:resourceConstraints directive value href: <xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href" /></xsl:message>
+
+    <xsl:variable name="helper"
+                  select="gn-fn-metadata:getHelper($labelConfig/helper, gmd:MD_LegalConstraints/gmd:otherConstraints)"/>
+
+    <!--<xsl:message>helper: <xsl:value-of select="$helper" /></xsl:message>-->
+
+    <xsl:variable name="listOfValues">
+      [
+      <xsl:for-each select="$helper/option">
+        {'id': '<xsl:value-of select="@title" />', 'value': '<xsl:value-of select="@value" />'}<xsl:if test="position() != last()">,</xsl:if>
+      </xsl:for-each>
+      ]
+    </xsl:variable>
+
+
+    <xsl:variable name="directiveConfig">
+      {
+        'values': <xsl:value-of select="$listOfValues" />,
+        'value': '<xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor"/>',
+        'valueAttr': '<xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href"/>',
+        'mode': '<xsl:value-of select="$mode" />',
+        'elementTooltip': '<xsl:value-of select="$toolipValue" />'
+      }
+    </xsl:variable>
+
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label"
+                      select="$labelConfig/label"/>
+      <xsl:with-param name="value" select="$directiveConfig"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <xsl:with-param name="xpath" select="$xpath"/>
+      <xsl:with-param name="directive" select="'gn-resource-constraint'"/>
+      <xsl:with-param name="editInfo" select="gn:element"/>
+      <!--<xsl:with-param name="parentEditInfo" select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/gn:element"/>-->
+
+
+
+    </xsl:call-template>
+
   </xsl:template>
 </xsl:stylesheet>
