@@ -46,7 +46,7 @@
     'gnSearchSettings',
     function($scope, $q, $http, suggestService,
              gnAlertService, gnSearchSettings) {
-
+      $scope.is_image_clicked = true;
       /** Object to be shared through directives and controllers */
       $scope.searchObj = {
         params: {},

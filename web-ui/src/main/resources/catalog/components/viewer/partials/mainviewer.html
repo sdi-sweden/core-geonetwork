@@ -1,4 +1,4 @@
-<div class="wrapper" data-ng-controller="gnViewerController">
+﻿<div class="wrapper" data-ng-controller="gnViewerController">
 
   <div data-gn-alert-manager=""></div>
   <div id="map"
@@ -23,28 +23,28 @@
       <span role="tooltip" data-translate="">AddALayer</span>
     </button>
     <button class="btn btn-default" ng-model="activeTools.layers" ng-show="manageLayersTool" type="submit"
-            rel="#layers" gi-btn gnv-tools-btn>
+            rel="#layers" id="layersButton" gi-btn gnv-tools-btn>
       <span class="fa fa-tasks"></span>
       <span role="tooltip" data-translate="">ManageLayers</span>
     </button>
-    <button class="btn btn-default" ng-model="activeTools.contexts" ng-show="contextsTool" type="submit"
+<!--     <button class="btn btn-default" ng-model="activeTools.contexts" ng-show="contextsTool" type="submit"
             rel="#contexts" gi-btn gnv-tools-btn>
       <span class="fa fa-book"></span>
       <span role="tooltip" data-translate="">Contexts</span>
     </button>
-    <button class="btn btn-default" ng-model="activeTools.print" type="submit"
             data-ng-hide="is3dEnabled || !printTool"
             rel="#print" gi-btn gnv-tools-btn>
       <span class="fa fa-print"></span>
       <span role="tooltip" data-translate="">PrintTheMap</span>
-    </button>
+    </button> -->
 
-    <button class="btn btn-default" type="submit"
+<!--     <button class="btn btn-default" type="submit"
             data-ng-click="syncMod()" ng-show="syncLayersTool">
       <span class="fa fa-sync"
             data-ng-class="synAllLayers ? 'fa-lock' : 'fa-unlock'"/>
       <span role="tooltip" data-translate="">syncAllLayers</span>
     </button>
+-->
     <button gi-btn class="btn btn-default" type="submit" ng-model="lineInteraction.active"
             data-ng-hide="is3dEnabled || !measureLengthTool"
             rel="#measures" gnv-tools-btn>
@@ -64,6 +64,17 @@
       <span class="fa fa-pencil"></span>
       <span role="tooltip" data-translate="">Annotations</span>
     </button>
+<!--
+    <div class= "btn btn-default btn-map-help">
+      <div class="map-view">
+	    <div data-swe-tooltip=""
+		  data-title="{{ 'map-title' | translate }}"
+		  data-text="{{ 'map-desc' | translate }}"
+		  data-link="{{ 'map-link' | translate }}">
+		</div>
+	  </div>
+	</div>
+-->
   </div>
   <!--Bottom right buttons - Navigation-->
   <div class="tools control-tools-largemap">
@@ -107,18 +118,18 @@
       </h3>
     </div>
     <div class="panel-body">
-      <tabset id="info-tabset">
-        <tab heading="{{'SearchLayer' | translate}}"
+      <!--<tabset id="info-tabset">
+         <tab heading="{{'SearchLayer' | translate}}"
              active="addLayerTabs.search">
           <br/>
           <div data-gn-search-layer-for-map="map"></div>
         </tab>
         <tab heading="{{'LayerWMS' | translate}}"
-             active="addLayerTabs.wms">
+             active="addLayerTabs.wms"> -->
           <div gn-wms-import="wms"
                gn-wms-import-map="map"
                services-list-from-catalog="true"></div>
-        </tab>
+        <!-- </tab>
         <tab heading="{{'LayerWMTS' | translate}}"
              active="addLayerTabs.wmts">
           <div gn-wms-import="wmts" gn-wms-import-map="map"></div>
@@ -126,8 +137,8 @@
         <tab heading="{{'LayerKML' | translate}}"
              active="addLayerTabs.kml">
           <div gn-kml-import="" gn-kml-import-map="map"></div>
-        </tab>
-      </tabset>
+        </tab> 
+      </tabset>-->
     </div>
   </div>
 
