@@ -1181,7 +1181,7 @@
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
-    <xsl:message>========== gmd:resourceConstraints directive</xsl:message>
+    <!--<xsl:message>========== gmd:resourceConstraints directive</xsl:message>-->
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (gmd:MD_LegalConstraints/gmd:otherConstraints/@gco:isoType) then gmd:MD_LegalConstraints/gmd:otherConstraints/@gco:isoType else ''"/>
@@ -1208,11 +1208,11 @@
               else
                 gn-fn-metadata:getLabel($schema, 'conditionsForUse', $labels, name(gmd:MD_LegalConstraints), $isoType, $xpath)" />
 
-
+<!--
     <xsl:message>========== gmd:resourceConstraints directive schema/ label: <xsl:value-of select="$schema" />/<xsl:value-of select="$labelConfig/label" /></xsl:message>
     <xsl:message>========== gmd:resourceConstraints directive value: <xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor" /></xsl:message>
     <xsl:message>========== gmd:resourceConstraints directive value href: <xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href" /></xsl:message>
-
+-->
     <xsl:variable name="helper"
                   select="gn-fn-metadata:getHelper($labelConfig/helper, gmd:MD_LegalConstraints/gmd:otherConstraints)"/>
 

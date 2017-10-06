@@ -134,15 +134,8 @@
             <xsl:attribute name="data-{$directive}" select="$value"/>
             <xsl:attribute name="data-ref" select="concat('_', $editInfo/@ref)"/>
             <xsl:attribute name="data-label" select="$label"/>
-            <xsl:if test="string($valueAttr)">
-              <xsl:attribute name="data-attr" select="$valueAttr"/>
-            </xsl:if>
             <xsl:if test="string($listOfValues)">
               <xsl:attribute name="data-list-values" select="$listOfValues"/>
-            </xsl:if>
-            <xsl:if test="string($directiveConfig)">
-              <xsl:attribute name="data-config" select="$directiveConfig"/>
-
             </xsl:if>
           </div>
           <div class="col-sm-1 gn-control">
