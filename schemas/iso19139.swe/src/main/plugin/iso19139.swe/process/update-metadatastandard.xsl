@@ -12,7 +12,8 @@
 
   <xsl:template match="gmd:MD_Metadata">
     <xsl:copy>
-      <xsl:copy-of select="@*" />
+      <!-- Remove schemaLocation, usually doesn't have gmx namespace. Let GeoNetwork add it from schema-ident.xml -->
+      <xsl:copy-of select="@*[not(name()= 'xsi:schemaLocation')]" />
 
       <xsl:apply-templates select="gmd:fileIdentifier" />
       <xsl:apply-templates select="gmd:language" />
@@ -50,6 +51,10 @@
       <xsl:apply-templates select="gmd:featureAttribute" />
     </xsl:copy>
   </xsl:template>
+
+  <!-- Requested to remove the gmd:resourceConstraints when updating to iso19139.swe, as are old ones and require
+       to be handle for INSPIRE TG 2.0 in the metadata editor -->
+  <xsl:template match="gmd:resourceConstraints" />
 
 
   <!-- ================================================================= -->

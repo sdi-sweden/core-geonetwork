@@ -129,13 +129,16 @@
         -->
     <xsl:choose>
       <xsl:when test="$directive != ''">
-        <div class="form-group" id="gn-el-{$editInfo/@ref}">
-          <div class="col-lg-10">
+        <div class="form-group gn-field" id="gn-el-{$editInfo/@ref}">
+          <div>
             <xsl:attribute name="data-{$directive}" select="$value"/>
             <xsl:attribute name="data-ref" select="concat('_', $editInfo/@ref)"/>
             <xsl:attribute name="data-label" select="$label"/>
+            <xsl:if test="string($listOfValues)">
+              <xsl:attribute name="data-list-values" select="$listOfValues"/>
+            </xsl:if>
           </div>
-          <div class="col-lg-2 gn-control">
+          <div class="col-sm-1 gn-control">
             <xsl:if test="not($isDisabled)">
               <xsl:call-template name="render-form-field-control-remove">
                 <xsl:with-param name="editInfo" select="$editInfo"/>
