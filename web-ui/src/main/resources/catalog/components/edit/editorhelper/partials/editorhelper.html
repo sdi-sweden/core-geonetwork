@@ -55,7 +55,7 @@
              data-ng-class="multilingualField == 'true' ? 'hidden' : ''"
              data-ng-model="config.value"/>
     </div>
-    <div class="col-xs-4" data-ng-if="type != 'textarea">
+    <div class="col-xs-4" data-ng-if="type != 'textarea'">
       <select class="form-control"
               data-ng-model="config.selected"
               data-ng-options="o as o['#text'] for o in config.option">
