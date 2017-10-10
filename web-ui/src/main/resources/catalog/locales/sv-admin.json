@@ -416,7 +416,7 @@
     "harvesterError": "Fel i skördning",
     "harvesterFilter": "Sökfilter",
     "harvesterGroup": "Grupp",
-    "harvesterGroupHelp": "Endast katalogens administratör eller användaradministratören för den här gruppen kan hantera denna nod.",
+    "harvesterGroupHelp": "Grupp som äger skördade poster. Endast katalogens administratör eller användaradministratören för den här gruppen kan hantera denna nod.",
     "harvesterHistory": "Skördningshistorik",
     "harvesterIcon": "Logotyp",
     "harvesterIconHelp": "Bild som beskriver den externa noden.",

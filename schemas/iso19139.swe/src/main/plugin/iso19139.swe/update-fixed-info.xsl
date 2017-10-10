@@ -47,16 +47,16 @@
 	<xsl:template match="gmd:MD_Metadata">
 		<xsl:copy>
 			<xsl:apply-templates select="@*"/>
-			
+
 			<gmd:fileIdentifier>
 				<gco:CharacterString>
 					<xsl:value-of select="/root/env/uuid"/>
 				</gco:CharacterString>
 			</gmd:fileIdentifier>
-			
+
 			<xsl:apply-templates select="gmd:language"/>
 			<xsl:apply-templates select="gmd:characterSet"/>
-			
+
 			<xsl:choose>
 				<xsl:when test="/root/env/parentUuid!=''">
 					<gmd:parentIdentifier>
@@ -97,7 +97,7 @@
 	</xsl:template>
 
 	<!-- ================================================================= -->
-	
+
 	<!-- Only set metadataStandardName and metadataStandardVersion
 	if not set. -->
 	<xsl:template match="gmd:metadataStandardName[@gco:nilReason='missing' or gco:CharacterString='']" priority="10">
@@ -105,7 +105,7 @@
 			<gco:CharacterString>ISO 19115:2003/19139</gco:CharacterString>
 		</xsl:copy>
 	</xsl:template>
-	
+
 	<xsl:template match="gmd:metadataStandardVersion[@gco:nilReason='missing' or gco:CharacterString='']" priority="10">
 		<xsl:copy>
 			<gco:CharacterString>1.0</gco:CharacterString>
@@ -113,7 +113,7 @@
 	</xsl:template>
 
 	<!-- ================================================================= -->
-	
+
 	<xsl:template match="@gml:id">
 		<xsl:choose>
 			<xsl:when test="normalize-space(.)=''">
@@ -128,7 +128,7 @@
 	</xsl:template>
 
 	<!-- ==================================================================== -->
-	<!-- Fix srsName attribute generate CRS:84 (EPSG:4326 with long/lat 
+	<!-- Fix srsName attribute generate CRS:84 (EPSG:4326 with long/lat
 	     ordering) by default -->
 
 	<xsl:template match="@srsName">
@@ -143,7 +143,7 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-  
+
   <!-- Add required gml attributes if missing -->
   <xsl:template match="gml:Polygon[not(@gml:id) and not(@srsName)]">
     <xsl:copy>
@@ -157,9 +157,9 @@
       <xsl:copy-of select="*"/>
     </xsl:copy>
   </xsl:template>
-  
+
 	<!-- ================================================================= -->
-	
+
 	<xsl:template match="*[gco:CharacterString]">
 		<xsl:copy>
 			<xsl:apply-templates select="@*[not(name()='gco:nilReason')]"/>
@@ -268,7 +268,7 @@
 
 	<!-- ================================================================= -->
 
-	<!-- Do not allow to expand operatesOn sub-elements 
+	<!-- Do not allow to expand operatesOn sub-elements
 		and constrain users to use uuidref attribute to link
 		service metadata to datasets. This will avoid to have
 		error on XSD validation. -->
@@ -500,9 +500,9 @@
 
   <!-- ================================================================= -->
 	<!-- Adjust the namespace declaration - In some cases name() is used to get the
-		element. The assumption is that the name is in the format of  <ns:element> 
-		however in some cases it is in the format of <element xmlns=""> so the 
-		following will convert them back to the expected value. This also corrects the issue 
+		element. The assumption is that the name is in the format of  <ns:element>
+		however in some cases it is in the format of <element xmlns=""> so the
+		following will convert them back to the expected value. This also corrects the issue
 		where the <element xmlns=""> loose the xmlns="" due to the exclude-result-prefixes="#all" -->
 	<!-- Note: Only included prefix gml, gmd and gco for now. -->
 	<!-- TODO: Figure out how to get the namespace prefix via a function so that we don't need to hard code them -->
@@ -567,16 +567,30 @@
 
 			</xsl:when>
 			<xsl:otherwise>
-				<gmd:otherConstraints>
-					<xsl:copy-of select="@*" />
-					<gco:CharacterString><xsl:value-of select="$value" /></gco:CharacterString>
-				</gmd:otherConstraints>
-			</xsl:otherwise>
+        <xsl:variable name="valueInHelper2" select="$labelsFile/labels/element[@name='conditionsForAccess']/helper/option[contains($value, @value)]/@title" />
+
+        <xsl:choose>
+          <xsl:when test="string($valueInHelper2)">
+            <gmd:otherConstraints>
+              <xsl:copy-of select="@*" />
+              <gmx:Anchor xlink:href="{$valueInHelper2}"><xsl:value-of select="$value" /></gmx:Anchor>
+            </gmd:otherConstraints>
+
+          </xsl:when>
+          <xsl:otherwise>
+            <gmd:otherConstraints>
+              <xsl:copy-of select="@*" />
+              <gco:CharacterString><xsl:value-of select="$value" /></gco:CharacterString>
+            </gmd:otherConstraints>
+          </xsl:otherwise>
+        </xsl:choose>
+
+      </xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 <!-- ================================================================= -->
 	<!-- copy everything else as is -->
-	
+
 	<xsl:template match="@*|node()">
 	    <xsl:copy>
 	        <xsl:apply-templates select="@*|node()"/>

@@ -356,7 +356,7 @@
               </xsl:for-each>
             </select>
           </div>
-          
+
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
@@ -1059,7 +1059,7 @@
   <xsl:template mode="mode-iso19139" match="gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[position() &gt; 1]" priority="1000" />
 
   <!-- Other constraints with gmx:Anchor -->
-  <xsl:template mode="mode-iso19139" priority="200" match="gmd:otherConstraints[$schema='iso19139.swe' and gmx:Anchor]">
+<!--  <xsl:template mode="mode-iso19139" priority="200" match="gmd:otherConstraints[$schema='iso19139.swe' and gmx:Anchor]">
     <xsl:variable name="name" select="name(.)"/>
 
     <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, $name, $labels)"/>
@@ -1067,8 +1067,8 @@
 
 
     <xsl:variable name="attributes">
-      <!-- Create form for all existing attribute (not in gn namespace)
-      and all non existing attributes not already present. -->
+      &lt;!&ndash; Create form for all existing attribute (not in gn namespace)
+      and all non existing attributes not already present. &ndash;&gt;
       <xsl:apply-templates mode="render-for-field-for-attribute"
                            select="
         gmx:Anchor/@*|
@@ -1088,8 +1088,168 @@
       <xsl:with-param name="isDisabled" select="false()" />
       <xsl:with-param name="attributesSnippet" select="$attributes" />
       <xsl:with-param name="listOfValues" select="$helper"/>
-      <!--<xsl:with-param name="forceDisplayAttributes" select="true()" />-->
+      &lt;!&ndash;<xsl:with-param name="forceDisplayAttributes" select="true()" />&ndash;&gt;
 
     </xsl:call-template>
+  </xsl:template>-->
+
+
+  <!-- limitationsPublicAccess -->
+  <xsl:template mode="mode-iso19139"
+                match="gmd:MD_DataIdentification-OLD/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints]/gmd:MD_LegalConstraints/gmd:otherConstraints"
+                priority="2000">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="overrideLabel" select="''" required="no"/>
+    <xsl:param name="refToDelete" required="no"/>
+
+    <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+    <xsl:variable name="xpath"
+                  select="gn-fn-metadata:getXPathByRef(gn:element/@ref, $metadata, false())"/>
+
+    <xsl:variable name="labelConfig"
+                  select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+    <xsl:variable name="helper" select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
+
+    <xsl:variable name="theElement" select="gco:CharacterString|gmx:Anchor"/>
+
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label"
+                      select="if ($overrideLabel != '') then $overrideLabel else $labelConfig/label"/>
+      <xsl:with-param name="value" select="*"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <!--<xsl:with-param name="widget"/>
+        <xsl:with-param name="widgetParams"/>-->
+      <xsl:with-param name="xpath" select="$xpath"/>
+      <xsl:with-param name="type"
+                      select="gn-fn-metadata:getFieldType($editorConfig, name(),
+        name($theElement))"/>
+
+      <xsl:with-param name="name" select="$theElement/gn:element/@ref"/>
+      <xsl:with-param name="editInfo" select="$theElement/gn:element"/>
+      <xsl:with-param name="parentEditInfo"
+                      select="if ($refToDelete) then $refToDelete else gn:element"/>
+      <!-- TODO: Handle conditional helper -->
+      <xsl:with-param name="listOfValues" select="$helper"/>
+    </xsl:call-template>
+  </xsl:template>
+
+
+  <!-- Conditions for access and use -->
+  <xsl:template mode="mode-iso19139"
+                match="gmd:MD_DataIdentification-OLD/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:useConstraints]/gmd:MD_LegalConstraints/gmd:otherConstraints"
+                priority="2000">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="overrideLabel" select="''" required="no"/>
+    <xsl:param name="refToDelete" required="no"/>
+
+    <xsl:message>===== resourceConstraints directive</xsl:message>
+    <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+    <xsl:variable name="xpath"
+                  select="gn-fn-metadata:getXPathByRef(gn:element/@ref, $metadata, false())"/>
+
+    <xsl:variable name="labelConfig"
+                  select="gn-fn-metadata:getLabel($schema, 'conditionsForAccess', $labels, name(..), $isoType, $xpath)"/>
+    <xsl:variable name="helper" select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
+
+    <xsl:variable name="theElement" select="gco:CharacterString|gmx:Anchor"/>
+
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label"
+                      select="if ($overrideLabel != '') then $overrideLabel else $labelConfig/label"/>
+      <xsl:with-param name="value" select="*"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <!--<xsl:with-param name="widget"/>
+        <xsl:with-param name="widgetParams"/>-->
+      <xsl:with-param name="xpath" select="$xpath"/>
+      <xsl:with-param name="type"
+                      select="gn-fn-metadata:getFieldType($editorConfig, name(),
+        name($theElement))"/>
+
+      <xsl:with-param name="name" select="$theElement/gn:element/@ref"/>
+      <xsl:with-param name="editInfo" select="$theElement/gn:element"/>
+      <xsl:with-param name="parentEditInfo"
+                      select="if ($refToDelete) then $refToDelete else gn:element"/>
+      <!-- TODO: Handle conditional helper -->
+      <xsl:with-param name="listOfValues" select="$helper"/>
+    </xsl:call-template>
+  </xsl:template>
+
+
+  <xsl:template mode="mode-iso19139" match="gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:otherConstraints]" priority="3000">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+    <!--<xsl:message>========== gmd:resourceConstraints directive</xsl:message>-->
+
+    <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+    <xsl:variable name="isoType" select="if (gmd:MD_LegalConstraints/gmd:otherConstraints/@gco:isoType) then gmd:MD_LegalConstraints/gmd:otherConstraints/@gco:isoType else ''"/>
+    <!--<xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(gmd:MD_LegalConstraints/gmd:otherConstraints), $labels, name(gmd:MD_LegalConstraints), $isoType, $xpath)"/>-->
+
+    <xsl:variable name="mode" select="if (count(gmd:MD_LegalConstraints[gmd:accessConstraints]) > 0) then
+                'AccessConstraints'
+              else
+                'UseConstraints'" />
+
+
+    <xsl:variable name="toolipValue" select="if (count(gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]) > 0) then
+               'LimitationsOnPublicAcces'
+              else if (count(gmd:MD_LegalConstraints[gmd:accessConstraints]) > 0) then
+                'conditionsForAccess'
+              else
+                'conditionsForUse'" />
+
+
+    <xsl:variable name="labelConfig" select="if (count(gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]) > 0) then
+                gn-fn-metadata:getLabel($schema, 'LimitationsOnPublicAcces', $labels, name(gmd:MD_LegalConstraints), $isoType, $xpath)
+              else if (count(gmd:MD_LegalConstraints[gmd:accessConstraints]) > 0) then
+                gn-fn-metadata:getLabel($schema, 'conditionsForAccess', $labels, name(gmd:MD_LegalConstraints), $isoType, $xpath)
+              else
+                gn-fn-metadata:getLabel($schema, 'conditionsForUse', $labels, name(gmd:MD_LegalConstraints), $isoType, $xpath)" />
+
+<!--
+    <xsl:message>========== gmd:resourceConstraints directive schema/ label: <xsl:value-of select="$schema" />/<xsl:value-of select="$labelConfig/label" /></xsl:message>
+    <xsl:message>========== gmd:resourceConstraints directive value: <xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor" /></xsl:message>
+    <xsl:message>========== gmd:resourceConstraints directive value href: <xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href" /></xsl:message>
+-->
+    <xsl:variable name="helper"
+                  select="gn-fn-metadata:getHelper($labelConfig/helper, gmd:MD_LegalConstraints/gmd:otherConstraints)"/>
+
+    <!--<xsl:message>helper: <xsl:value-of select="$helper" /></xsl:message>-->
+
+    <xsl:variable name="listOfValues">
+      [
+      <xsl:for-each select="$helper/option">
+        {'id': '<xsl:value-of select="@title" />', 'value': '<xsl:value-of select="@value" />'}<xsl:if test="position() != last()">,</xsl:if>
+      </xsl:for-each>
+      ]
+    </xsl:variable>
+
+
+    <xsl:variable name="directiveConfig">
+      {
+        'values': <xsl:value-of select="$listOfValues" />,
+        'value': '<xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor"/>',
+        'valueAttr': '<xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href"/>',
+        'mode': '<xsl:value-of select="$mode" />',
+        'elementTooltip': '<xsl:value-of select="$toolipValue" />'
+      }
+    </xsl:variable>
+
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label"
+                      select="$labelConfig/label"/>
+      <xsl:with-param name="value" select="$directiveConfig"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <xsl:with-param name="xpath" select="$xpath"/>
+      <xsl:with-param name="directive" select="'gn-resource-constraint'"/>
+      <xsl:with-param name="editInfo" select="gn:element"/>
+      <!--<xsl:with-param name="parentEditInfo" select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/gn:element"/>-->
+
+
+
+    </xsl:call-template>
+
   </xsl:template>
 </xsl:stylesheet>
