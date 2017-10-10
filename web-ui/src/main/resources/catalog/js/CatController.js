@@ -37,6 +37,7 @@
 
   module.constant('gnGlobalSettings', {
     proxyUrl: '../../proxy?url=',
+    lmProxyUrl: '../../lm-proxy?url=',
     locale: {},
     isMapViewerEnabled: false,
     requireProxy: [],
@@ -50,7 +51,8 @@
         blur: 0
       }
     },
-    current: null
+    current: null,
+    applicationName: 'geodataportalen'
   });
 
   module.constant('gnLangs', {
