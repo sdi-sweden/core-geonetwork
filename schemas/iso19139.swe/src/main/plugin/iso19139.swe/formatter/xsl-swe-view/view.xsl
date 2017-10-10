@@ -275,7 +275,9 @@
 				<xsl:apply-templates mode="Overview" select="//gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact | //gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact"/>
 				<xsl:apply-templates mode="maxDate" select="//gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date"/>
 				<!-- Online Links -->
-				<xsl:apply-templates mode="online" select="//gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine"/>
+				<xsl:apply-templates mode="online" select="//gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine">
+					<xsl:with-param name="overViewTab" select="'true'"/>
+				</xsl:apply-templates>
 	
 				<!--Not found element as name gmd:status-->
 				<!--End Date : 04-11-10 -->
@@ -700,7 +702,19 @@
 				<!--<td class = "Level-1-element">Andra krav på underhåll:</td>-->
 				<td class="Level-1-element">Anmärkning</td>
 				<td>
-					<xsl:value-of select="."/>
+					<div id="maintenanceNote">
+						<xsl:variable name="preId" select="generate-id()"/>					
+						<pre>
+							<xsl:attribute name="id">pre<xsl:value-of select="$preId"/><xsl:value-of select="position()"/></xsl:attribute>
+							<xsl:attribute name="property"><xsl:value-of select="'dct:description'"/></xsl:attribute>
+							<xsl:attribute name="itemprop"><xsl:value-of select="'description'"/></xsl:attribute>
+							<xsl:value-of select="." disable-output-escaping="yes"/>
+						</pre>
+						<script type="text/javascript">fix2('pre<xsl:value-of select="$preId"/>
+							<xsl:value-of select="position()"/>');
+							</script>
+					</div>
+					<script type="text/javascript">setLinkClickable('maintenanceNote');</script>
 				</td>
 			</tr>
 		</xsl:for-each>
@@ -6143,6 +6157,7 @@
 	  </xsl:template>
 	  
 	  <xsl:template mode="online" match="gmd:onLine[1]" >
+		<xsl:param name="overViewTab"/>
 		<tr>
 			<td class="Level-1-element online-table-td">Online-länkar</td>
 			<td colspan="2">
@@ -6151,6 +6166,11 @@
 						<th class="view-metadata-table-th-1">Länktyp</th>
 						<th class="view-metadata-table-th-2">Namn</th>
 						<th class="view-metadata-table-th-3">Url</th>
+						<!-- Show description column only for non-overView tab: start  -->
+						<xsl:if test="$overViewTab != 'true'">
+							<th class="view-metadata-table-th-4">Description</th>
+						</xsl:if>
+						<!-- Show description column only for non-overView tab: end  -->
 					</tr>
 					<xsl:for-each select="parent::node()/gmd:onLine">
 						<xsl:variable name="protocol">
@@ -6174,6 +6194,9 @@
 						<xsl:variable name="url">
 							<xsl:apply-templates mode="render-value" select="*/gmd:linkage/gmd:URL"/>
 						</xsl:variable>
+						<xsl:variable name="description">
+							<xsl:apply-templates mode="render-value" select="*/gmd:description"/>
+						</xsl:variable>
 						<tr>
 							<td class="view-metadata-table-td-1">
 								<xsl:value-of select="normalize-space($aliasProtocol)"/>
@@ -6193,6 +6216,20 @@
 									</xsl:otherwise>
 								</xsl:choose>
 							</td>
+							<!-- Show description column only for non-overView tab: start  -->
+							<xsl:if test="$overViewTab != 'true'">
+								<td class="view-metadata-table-td-4">
+									<xsl:variable name="preId" select="generate-id()"/>
+									<div class="pre">
+										<xsl:attribute name="id">pre<xsl:value-of select="$preId"/><xsl:value-of select="position()"/></xsl:attribute>
+										<xsl:value-of select="normalize-space($description)"/>
+									</div>
+									<script type="text/javascript">setLinkClickable('pre<xsl:value-of select="$preId"/>
+										<xsl:value-of select="position()"/>');
+									</script>
+								</td>
+							</xsl:if>
+							<!-- Show description column only for non-overView tab: end  -->
 						</tr>
 					</xsl:for-each>
 				</table>

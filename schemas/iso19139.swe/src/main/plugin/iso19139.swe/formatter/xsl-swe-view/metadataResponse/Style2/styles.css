@@ -563,6 +563,25 @@ table.view-metadata-table td.view-metadata-table-td-3 {
 	padding-left:15px;
 	font-size:13px;
 }
+table.view-metadata-table th.view-metadata-table-th-4 {
+	width:50%;
+	word-wrap:break-word;
+	border:1px solid #D3D3D3;
+	padding-left:15px;
+	font-weight:normal;
+	color: gray;
+	text-align:left;
+	background-color:white;
+	text-transform:none !important;
+	font-size:13px;
+}
+table.view-metadata-table td.view-metadata-table-td-4 {
+	width:50%;
+	word-wrap:break-word;
+	border:1px solid #D3D3D3;
+	padding-left:15px;
+	font-size:13px;
+}
 
 .online-table-td {
 	vertical-align:top
