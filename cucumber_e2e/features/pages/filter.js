@@ -30,7 +30,9 @@ var Filter = function () {};
 	}},
 
 	doFreeTextSearch: {get: function(){
-		return element(by.id('gn-or-field')).sendKeys(protractor.Key.ENTER);
+	    var el = element(by.id('gn-or-field'));
+	    browser.driver.sleep(500);
+		return el.sendKeys(protractor.Key.ENTER);
 //    return element(by.xpath("//*[@id='gn-or-field']")).sendKeys(protractor.Key.ENTER);
 	}},
 
