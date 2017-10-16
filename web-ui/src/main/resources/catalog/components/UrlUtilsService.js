@@ -148,6 +148,14 @@
           };
         };
 
+  	    this.appUrl = function() {
+  		  var origin = window.location.origin;
+            if (!origin) {
+  			  origin = window.location.protocol + "//" + window.location.hostname;
+  		  }
+          return origin;  
+  	    };
+        
       };
 
       return new UrlUtils();

@@ -33,6 +33,24 @@
       'gnUrlUtils', 'gnGlobalSettings', 'gfiOutputFormatCheck',
       function($http, $q, gnUrlUtils, gnGlobalSettings, gfiOutputFormatCheck) {
 
+    	var proxyfyURL = function(url) {
+    		if (url.includes("proxy") || url.includes("topo-wms")) {
+    			return url;    			
+    		}
+    		var newUrl = url;
+            if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+                newUrl = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+            } else if (url.includes("maps-ver.lantmateriet.se")) {
+            	newUrl = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+            }
+             else {
+           	    if (!url.includes("https://")) {
+             	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                }
+            }
+            return newUrl;
+    	}
+    	
         var displayFileContent = function(wmsUrl,data) {
           var parser = new ol.format.WMSCapabilities();
           var result = parser.read(data);
@@ -64,9 +82,7 @@
             return layerCheck;
           }
 
-          if (url.includes("maps.lantmateriet.se")) {
-            url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-          }
+          url = proxyfyURL(url);
 
           // Push all leaves into a flat array of Layers.
           var getFlatLayers = function(layer) {
@@ -128,9 +144,7 @@
         				  for (var k = 0; k < layers[j].Style.length; k++) {
         					  if (angular.isDefined(layers[j].Style[k].LegendURL)) {
         						  for (var l = 0; l < layers[j].Style[k].LegendURL.length; l++) {
-        							  if (layers[j].Style[k].LegendURL[l].OnlineResource.includes("maps.lantmateriet.se")) {
-        								  layers[j].Style[k].LegendURL[l].OnlineResource = gnGlobalSettings.lmProxyUrl + encodeURIComponent(layers[j].Style[k].LegendURL[l].OnlineResource);
-            				            }
+        							  layers[j].Style[k].LegendURL[l].OnlineResource = proxyfyURL(layers[j].Style[k].LegendURL[l].OnlineResource);
         						  }
         					  } 
         				  }
@@ -186,13 +200,7 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-             	  if (url.includes("maps.lantmateriet.se")) {
-                	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-                  }  else {
-               	    if (!url.includes("https://")) {
-                 	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                    }
-                  }
+             	url = proxyfyURL(url);
            	  //send request and decode result
                 $http.get(url, {
                   cache: true
@@ -222,13 +230,7 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-             	  if (url.includes("maps.lantmateriet.se")) {
-                	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-                  }  else {
-               	    if (!url.includes("https://")) {
-                 	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                    }
-                  }
+            	  url = proxyfyURL(url);
                   $http.get(url, {
                   cache: true
                 })

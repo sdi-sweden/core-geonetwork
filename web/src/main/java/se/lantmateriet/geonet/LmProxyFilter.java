@@ -223,7 +223,7 @@ public class LmProxyFilter implements Filter {
 
         _logger.debug("Use content type '"+contentType+"' and encoding '"+encoding+"'");
 
-        if(!contentType.contains("charset") && contentType!=null && encoding!=null){
+        if(contentType!=null && !contentType.contains("charset") && encoding!=null){
             String ct = contentType+";charset="+encoding;
             inRes.setContentType(ct);
             inRes.setCharacterEncoding(encoding);
