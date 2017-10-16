@@ -23,7 +23,6 @@ module.exports = function() {
 		browser.wait(EC.visibilityOf(searchfilter.searchElement), 2000).then(function(){
 			searchfilter.freeTextSearch(arg1);
 		});
-
 		callback();
 	});
 
