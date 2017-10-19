@@ -153,7 +153,7 @@ USA.
 			//*[@gco:isoType='srv:SV_ServiceIdentification']">
       <sch:let name="keywordValue_INSPIRE"
                value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
-      <sch:let name="inspire-thesaurus" value="document('${inspire.thesaurus.path}')"/>
+      <sch:let name="inspire-thesaurus" value="document('../../../../config/codelist/external/thesauri/theme/inspire-theme.rdf')"/>
       <sch:let name="inspire-theme" value="$inspire-thesaurus//skos:Concept"/>
       <!-- Visa fel om inte Inspire Thesaurs visas. -->
       <sch:assert test="count($inspire-theme) > 0"> INSPIRE Themes saknas. Installationen är ej
