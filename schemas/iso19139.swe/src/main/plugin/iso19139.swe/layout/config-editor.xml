@@ -8108,7 +8108,9 @@
                       <gco:CharacterString>{{explanation}}</gco:CharacterString>
                       <gn:copy select="gmd:PT_FreeText"/>
                     </gmd:explanation>
-                    {{pass}}
+                    <gmd:pass>
+                      <gmd:boolean>{{pass}}</gmd:boolean>
+                    </gmd:pass>
                   </gmd:DQ_ConformanceResult>
                 </gmd:result>
               </snippet>
