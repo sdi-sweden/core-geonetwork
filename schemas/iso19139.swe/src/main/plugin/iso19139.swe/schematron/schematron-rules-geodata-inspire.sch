@@ -173,6 +173,7 @@ USA.
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:106d] Nyckelord tjänsteklassificering är obligatoriskt för tjänster">
+    <sch:title>"[Geodata.se:106d] Nyckelord tjänsteklassificering är obligatoriskt för tjänster"</sch:title>
     <sch:rule context="//gmd:hierarchyLevel[1]/*[@codeListValue ='service']">
       <sch:let name="keywordValue" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()"/>
       <sch:let name="keywordValue_INS" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
@@ -307,14 +308,16 @@ USA.
     </sch:rule>
   </sch:pattern>
 
-   <sch:pattern fpi="[Geodata.se:107b] Referensdatum måste anges">
+   <sch:pattern fpi="[Geodata.se:107] Referensdatum måste anges">
+    <sch:title>[Geodata.se:107] Temporal Referensdatum</sch:title>
     <sch:rule context="//gmd:identificationInfo">
       <sch:assert test="(//gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date) "
       >[Geodata.se:107b] Referensdatum krävs</sch:assert>
     </sch:rule>
   </sch:pattern>
 
-  <sch:pattern fpi="[Geodata.se:108] Tillkomsthistorik  måste anges">
+  <sch:pattern fpi="[Geodata.se:108] Tillkomsthistorik">
+    <sch:title>[Geodata.se:108] Tillkomsthistorik</sch:title>
     <sch:rule context="/*">
       <sch:let name="lineage" value="normalize-space(//gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/*/text())"/>
       <sch:let name="lineageLength" value="string-length($lineage)"/>
@@ -355,6 +358,7 @@ USA.
   </sch:pattern>
   <!--
   <sch:pattern fpi="[Geodata.se:109a] Datakvalite - överensstämmelse måste anges">
+  <sch:title>[Geodata.se:109a] Datakvalite - överensstämmelse måste anges"</sch:title>
     <sch:rule context="//gmd:dataQualityInfo/gmd:DQ_DataQuality">
       <sch:assert test="(gmd:report/gmd:DQ_DomainConsistency) or
       (gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass)  or
@@ -364,13 +368,14 @@ USA.
 -->
   <!--
   <sch:pattern fpi="[Geodata.se:110b] Åtkomstrestriktioner måste anges">
+    <sch:title>[Geodata.se:110b] Åtkomstrestriktioner måste anges</sch:title>
     <sch:rule context="//gmd:identificationInfo">
       <sch:assert test="(//gmd:resourceConstraints//gmd:accessConstraints)">[Geodata.se:110b] Åtkomstrestriktioner måste anges</sch:assert>
     </sch:rule>
   </sch:pattern>
   -->
   <sch:pattern fpi="[Geodata.se:110] Information om restriktioner">
-    <sch:title>[Geodata.se:110c] Information om restriktioner</sch:title>
+    <sch:title>[Geodata.se:110] Information om restriktioner</sch:title>
     <sch:rule context="//gmd:identificationInfo">
       <sch:let name="resourceConstraints_count" value="count(//gmd:resourceConstraints)"/>
       <sch:assert test="count(//gmd:resourceConstraints) > 0 ">[Geodata.se:110c] Information om restriktioner saknas</sch:assert>
