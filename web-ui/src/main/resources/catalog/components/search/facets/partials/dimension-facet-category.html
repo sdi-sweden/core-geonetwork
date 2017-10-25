@@ -8,7 +8,8 @@
           data-ng-class="c.category?(isSelected?'fa-minus-square':'fa-plus-square'):'invisible'"></span>
     <label title="{{c['@label'] || c['@value']}}"
            data-ng-class="{'gn-facet-active': isSelected}">
-      <input type="checkbox"
+      <input id="{{c['@label'] || c['@value']}}"
+      		 type="checkbox"
              data-ng-checked="isInFilter(c)"
              data-ng-click="filter(c, $event)"/>&nbsp;
       <span class="gn-facet-label">{{(c['@label'] || c['@value']) | characters:20}}</span>&nbsp;
