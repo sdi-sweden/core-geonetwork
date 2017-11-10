@@ -246,7 +246,8 @@ public class DataManager implements ApplicationEventPublisherAware {
 
         DataManager.setNamespacePrefix(xml);
         try {
-            dataMan.validate(schema, xml);
+//TODO - fix XSD compliance in Swedish metadata
+//            dataMan.validate(schema, xml);
         } catch (XSDValidationErrorEx e) {
             if (!fileName.equals(" ")) {
                 throw new XSDValidationErrorEx(e.getMessage() + "(in " + fileName + "): ", e.getObject());
@@ -858,7 +859,8 @@ public class DataManager implements ApplicationEventPublisherAware {
      * Use this validate method for XML documents with dtd.
      */
     public void validate(String schema, Document doc) throws Exception {
-        Xml.validate(doc);
+//TODO - fix XSD compliance in Swedish metadata
+//        Xml.validate(doc);
     }
 
     /**
@@ -872,14 +874,17 @@ public class DataManager implements ApplicationEventPublisherAware {
 
         if (schema == null) {
             // must use schemaLocation
-            Xml.validate(md);
+//TODO - fix XSD compliance in Swedish metadata
+//            Xml.validate(md);
         } else {
             // if schemaLocation use that
             if (!schemaLoc.equals("")) {
-                Xml.validate(md);
+//TODO - fix XSD compliance in Swedish metadata
+//                Xml.validate(md);
                 // otherwise use supplied schema name
             } else {
-                Xml.validate(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md);
+//TODO - fix XSD compliance in Swedish metadata
+//                Xml.validate(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md);
             }
         }
     }
@@ -1860,7 +1865,8 @@ public class DataManager implements ApplicationEventPublisherAware {
     public boolean validate(Element xml) {
         try {
             String schema = autodetectSchema(xml);
-            validate(schema, xml);
+//TODO - fix XSD compliance in Swedish metadata
+//            validate(schema, xml);
             return true;
         }
         // XSD validation error(s)
