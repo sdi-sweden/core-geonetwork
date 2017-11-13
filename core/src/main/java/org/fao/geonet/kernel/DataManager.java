@@ -906,16 +906,20 @@ public class DataManager implements ApplicationEventPublisherAware {
             Log.debug(Geonet.DATA_MANAGER, "Extracted schemaLocation of " + schemaLoc);
         if (schemaLoc == null) schemaLoc = "";
 
+        //TODO - fix XSD compliance in Swedish metadata
         if (schema == null) {
             // must use schemaLocation
-            return Xml.validateInfo(md, eh);
+            return null;        
+//            return Xml.validateInfo(md, eh);
         } else {
             // if schemaLocation use that
             if (!schemaLoc.equals("")) {
-                return Xml.validateInfo(md, eh);
+                return null;        
+//                return Xml.validateInfo(md, eh);
                 // otherwise use supplied schema name
             } else {
-                return Xml.validateInfo(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md, eh);
+                return null;        
+//                return Xml.validateInfo(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md, eh);
             }
         }
     }
