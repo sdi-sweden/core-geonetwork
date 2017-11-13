@@ -82,7 +82,8 @@
             return layerCheck;
           }
 
-          url = proxyfyURL(url);
+          // ticket 0270
+          //url = proxyfyURL(url);
 
           // Push all leaves into a flat array of Layers.
           var getFlatLayers = function(layer) {
@@ -155,7 +156,8 @@
           };
           getFlatLayers(result.Capability.Layer);
           setLayerAsArray(result.Capability);
-          checkOnlineResourceURL(layers);
+          // ticket 0270
+          //checkOnlineResourceURL(layers);
           result.Capability.layers = layers;
           if(parseUrl.length > 1 && wmsLayers[0].toLowerCase() == "layers"){
               result.Capability.Layer[0].Layer = layers;
