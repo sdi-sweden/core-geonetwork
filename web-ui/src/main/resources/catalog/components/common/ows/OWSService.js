@@ -202,9 +202,9 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-             	url = proxyfyURL(url);
+             	var proxifiedUrl = proxyfyURL(url);
            	  //send request and decode result
-                $http.get(url, {
+                $http.get(proxifiedUrl, {
                   cache: true
                 })
                     .success(function(data) {
@@ -232,8 +232,8 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-            	  url = proxyfyURL(url);
-                  $http.get(url, {
+            	  var proxifiedUrl = proxyfyURL(url);
+                  $http.get(proxifiedUrl, {
                   cache: true
                 })
                     .success(function(data, status, headers, config) {

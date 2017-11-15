@@ -75,6 +75,25 @@
 
       this.WMS_MIMETYPE = 'application/x-ogc-wms';
 
+	  	var proxyfyURL = function(url) {
+			if (url.includes("proxy") || url.includes("topo-wms")) {
+				return url;    			
+			}
+			var newUrl = url;
+	        if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+	            newUrl = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+	        } else if (url.includes("maps-ver.lantmateriet.se")) {
+	        	newUrl = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+	        }
+	         else {
+	       	    if (!url.includes("https://")) {
+	         	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+	            }
+	        }
+	        return newUrl;
+		}
+      
+      
       /**
        * @ngdoc method
        * @methodOf gn_viewer.service:gnWpsService
@@ -97,22 +116,8 @@
 
         //send request and decode result
         if (gnUrlUtils.isValid(url)) {
-   		  if (url.includes("proxy") || url.includes("topo-wms")) { 
-    			return url;    			
-    	  }
-       	  if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
-//        	  url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-        	  url = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-          }  else if (url.includes("maps-ver.lantmateriet.se")) {
-//        	url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
-        	url = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
-          } else {
-       	    if (!url.includes("https://")) {
-//         	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.srvProxyUrl + encodeURIComponent(url);
-         	   url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-            }
-          }
-          return $http.get(url, {
+          var proxifiedUrl = proxyfyURL(url);	
+          return $http.get(proxifiedUrl, {
             cache: true
           }).then(
               function(response) {
