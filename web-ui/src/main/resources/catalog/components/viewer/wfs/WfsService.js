@@ -81,7 +81,25 @@
     'gnUrlUtils',
     function($http, gnOwsCapabilities, gnUrlUtils, gnGlobalSettings, $q, gnUrlUtils) {
 
-      /**
+    	var proxyfyURL = function(url) {
+    		if (url.includes("proxy") || url.includes("topo-wms")) {
+    			return url;    			
+    		}
+    		var newUrl = url;
+            if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+                newUrl = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+            } else if (url.includes("maps-ver.lantmateriet.se")) {
+            	newUrl = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+            }
+             else {
+           	    if (!url.includes("https://")) {
+             	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                }
+            }
+            return newUrl;
+    	}
+
+       /**
        * Do a getCapabilies request to the url (service) given in parameter.
        *
        * @param {string} url wfs service url
@@ -98,22 +116,8 @@
           });
 
           if (gnUrlUtils.isValid(url)) {
-      		  if (url.includes("proxy") || url.includes("topo-wms")) {
-    			 return url;    			
-    		  }
-         	  if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
-//            	  url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-            	  url = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-              }  else if (url.includes("maps-ver.lantmateriet.se")) {
-//            	url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
-            	url = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
-              } else {
-           	    if (!url.includes("https://")) {
-//             	    url = gnUrlUtils.appUrl() + '/' + gnGlobalSettings.applicationName + '/' + gnGlobalSettings.srvProxyUrl + encodeURIComponent(url);
-             	   url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                }
-              }
-            $http.get(url, {
+            var proxifiedUrl = proxyfyURL(url);
+            $http.get(proxifiedUrl, {
               cache: true
             }).then(function(response) {
               //First cleanup not supported INSPIRE extensions:
