@@ -246,8 +246,9 @@ public class DataManager implements ApplicationEventPublisherAware {
 
         DataManager.setNamespacePrefix(xml);
         try {
-// LM:1804 - do not run XSD validation on swedish national profile
-            dataMan.validate(schema, xml);
+//TODO - fix XSD compliance in Swedish metadata
+            // LM:1804 - do not run XSD validation on swedish national profile
+//            dataMan.validate(schema, xml);
         } catch (XSDValidationErrorEx e) {
             if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
                 Log.debug(Geonet.DATA_MANAGER, "XSDValidation Fail: " + e.getMessage());
@@ -866,7 +867,8 @@ public class DataManager implements ApplicationEventPublisherAware {
      * Use this validate method for XML documents with dtd.
      */
     public void validate(String schema, Document doc) throws Exception {
-        Xml.validate(doc);
+//TODO - fix XSD compliance in Swedish metadata
+//        Xml.validate(doc);
     }
 
     /**
@@ -880,14 +882,17 @@ public class DataManager implements ApplicationEventPublisherAware {
 
         if (schema == null) {
             // must use schemaLocation
-            Xml.validate(md);
+//TODO - fix XSD compliance in Swedish metadata
+//            Xml.validate(md);
         } else {
             // if schemaLocation use that
             if (!schemaLoc.equals("")) {
-                Xml.validate(md);
+//TODO - fix XSD compliance in Swedish metadata
+//                Xml.validate(md);
                 // otherwise use supplied schema name
             } else {
-                Xml.validate(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md);
+//TODO - fix XSD compliance in Swedish metadata
+//                Xml.validate(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md);
             }
         }
     }
@@ -901,16 +906,20 @@ public class DataManager implements ApplicationEventPublisherAware {
             Log.debug(Geonet.DATA_MANAGER, "Extracted schemaLocation of " + schemaLoc);
         if (schemaLoc == null) schemaLoc = "";
 
+        //TODO - fix XSD compliance in Swedish metadata
         if (schema == null) {
             // must use schemaLocation
-            return Xml.validateInfo(md, eh);
+            return null;        
+//            return Xml.validateInfo(md, eh);
         } else {
             // if schemaLocation use that
             if (!schemaLoc.equals("")) {
-                return Xml.validateInfo(md, eh);
+                return null;        
+//                return Xml.validateInfo(md, eh);
                 // otherwise use supplied schema name
             } else {
-                return Xml.validateInfo(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md, eh);
+                return null;        
+//                return Xml.validateInfo(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md, eh);
             }
         }
     }
@@ -1871,7 +1880,8 @@ public class DataManager implements ApplicationEventPublisherAware {
     public boolean validate(Element xml) {
         try {
             String schema = autodetectSchema(xml);
-            validate(schema, xml);
+//TODO - fix XSD compliance in Swedish metadata
+//            validate(schema, xml);
             return true;
         }
         // XSD validation error(s)

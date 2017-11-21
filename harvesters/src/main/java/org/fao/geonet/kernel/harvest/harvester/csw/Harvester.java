@@ -241,6 +241,10 @@ class Harvester implements IHarvester<HarvestResult> {
         request.setDistribSearch(params.queryScope.equalsIgnoreCase("true"));
         request.setHopCount(params.hopCount);
 
+        // add ConstraintLanguage to default request
+        request.setConstraintLanguage(ConstraintLanguage.CQL);
+        request.setConstraintLangVersion("1.1.0");
+        
         CswOperation oper = server.getOperation(CswServer.GET_RECORDS);
 
         // Use the preferred HTTP method and check one exist.
@@ -397,6 +401,8 @@ class Harvester implements IHarvester<HarvestResult> {
         if (log.isDebugEnabled()) {
             log.debug("preferredOutputSchema chosen = " + preferredOutputSchema);
             log.debug("From OutputSchemalist = " + oper.getOutputSchemaList());
+            log.debug("constraintLanguage = " + constraintLanguage);
+            log.debug("Constraint = '" + constraint +"'");
         }
         request.setOutputSchema(preferredOutputSchema);
         request.setConstraintLanguage(constraintLanguage);
