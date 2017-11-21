@@ -41,7 +41,7 @@ San Francisco, California, 94105,
 USA.
 
 -->
-  <sch:title xmlns="http://www.w3.org/2001/XMLSchema"> Minimumkrav fˆr data som ej ingÂr i Inspire eller Geodatasamverkan</sch:title>
+  <sch:title xmlns="http://www.w3.org/2001/XMLSchema"> Minimumkrav för data som ej ingår i Inspire eller Geodatasamverkan</sch:title>
   <sch:ns prefix="gml" uri="http://www.opengis.net/gml"/>
   <sch:ns prefix="gmd" uri="http://www.isotc211.org/2005/gmd"/>
   <sch:ns prefix="srv" uri="http://www.isotc211.org/2005/srv"/>
