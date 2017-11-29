@@ -1,4 +1,4 @@
-//=============================================================================
+﻿//=============================================================================
 //===	Copyright (C) 2001-2007 Food and Agriculture Organization of the
 //===	United Nations (FAO-UN), United Nations World Food Programme (WFP)
 //===	and United Nations Environment Programme (UNEP)
@@ -246,8 +246,7 @@ class Harvester implements IHarvester<HarvestResult> {
         // Use the preferred HTTP method and check one exist.
         configRequest(request, oper, server, s, PREFERRED_HTTP_METHOD);
         // Force csw:Record outputSchema
-        // WTF!! Why??
-        //request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
+//        request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
 
         if (params.isUseAccount()) {
             log.debug("Logging into server (" + params.getUsername() + ")");
@@ -267,8 +266,7 @@ class Harvester implements IHarvester<HarvestResult> {
 
             configRequest(request, oper, server, s, PREFERRED_HTTP_METHOD.equals("GET") ? "POST" : "GET");
             // Force csw:Record outputSchema
-            // WTF!! Why??
-            //request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
+//            request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
         }
 
         Set<RecordInfo> records = new HashSet<RecordInfo>();

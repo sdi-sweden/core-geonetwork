@@ -10,11 +10,11 @@ Feature: Publicera metadata poster i Metadata Editor
 	  | yes |
 	  | no |
 
-@qa_todo
-	Given that a post is open for editing
-	And the post is valid
-	When the user clicks the button to publish the post
-  Then a question is displayed asking if the user wants to make the post public
+# @qa_todo
+	# Given that a post is open for editing
+	# And the post is valid
+	# When the user clicks the button to publish the post
+  # Then a question is displayed asking if the user wants to make the post public
 @qa_todo
   Scenario Outline: Publish valid post as public
     Given that a question is displayed to ask if user wants to make the post public

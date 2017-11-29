@@ -185,10 +185,10 @@ public class GetRecordsRequest extends CatalogRequest {
         addParam("elementSetName", elemSetName);
 
         // Optional Default action is to execute an unconstrained query.
+        addParam("constraintLanguage", constrLang);
+        addParam("constraint_language_version", constrLangVersion);
         if (constraint != null) {
             addParam("constraint", constraint);
-            addParam("constraintLanguage", constrLang);
-            addParam("constraint_language_version", constrLangVersion);
         }
 
         if (distribSearch) {
