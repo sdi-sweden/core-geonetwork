@@ -38,6 +38,8 @@ import org.fao.geonet.domain.MetadataType;
 import org.fao.geonet.domain.OperationAllowedId_;
 import org.fao.geonet.domain.Pair;
 import org.fao.geonet.exceptions.OperationAbortedEx;
+import org.fao.geonet.exceptions.SchematronValidationErrorEx;
+import org.fao.geonet.exceptions.XSDValidationErrorEx;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.UpdateDatestamp;
 import org.fao.geonet.kernel.harvest.BaseAligner;
@@ -397,6 +399,7 @@ public class Aligner extends BaseAligner {
             }
             Element response = request.execute();
             if (log.isDebugEnabled()) {
+                log.debug("Request sent:\n" + request.getSentData());
                 log.debug("Record got:\n" + Xml.getString(response));
             }
 
@@ -416,7 +419,18 @@ public class Aligner extends BaseAligner {
             try {
                 params.getValidate().validate(dataMan, context, response, null);
             } catch (Exception e) {
-                log.info("Ignoring invalid metadata with uuid " + uuid);
+                if (e instanceof XSDValidationErrorEx) {
+                    log.info("Ignoring invalid metadata (XSD Validation fail) with uuid " + uuid);
+                    if (log.isDebugEnabled()) {
+                        log.debug("XSD Validation message: " + e.getMessage());
+                    }
+                }
+                if (e instanceof SchematronValidationErrorEx){
+                    log.info("Ignoring invalid metadata (Schematron Validation fail) with uuid " + uuid);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Schematron Validation message: " + e.getMessage());
+                    }                    
+                }
                 result.doesNotValidate++;
                 return null;
             }

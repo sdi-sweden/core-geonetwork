@@ -27,20 +27,42 @@
 
 package org.fao.geonet.kernel;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Sets;
+import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataUuid;
+import static org.springframework.data.jpa.domain.Specifications.where;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jetty.util.ConcurrentHashSet;
-import org.eclipse.jetty.util.StringUtil;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.NodeInfo;
@@ -141,46 +163,22 @@ import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.Root;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Function;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
 
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.transaction.TransactionManager;
 import jeeves.transaction.TransactionTask;
 import jeeves.xlink.Processor;
-
-import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataUuid;
-import static org.springframework.data.jpa.domain.Specifications.where;
 
 /**
  * Handles all operations on metadata (select,insert,update,delete etc...).
@@ -249,6 +247,9 @@ public class DataManager implements ApplicationEventPublisherAware {
 //TODO - fix XSD compliance in Swedish metadata
 //            dataMan.validate(schema, xml);
         } catch (XSDValidationErrorEx e) {
+            if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
+                Log.debug(Geonet.DATA_MANAGER, "XSDValidation Fail: " + e.getMessage());
+            }
             if (!fileName.equals(" ")) {
                 throw new XSDValidationErrorEx(e.getMessage() + "(in " + fileName + "): ", e.getObject());
             } else {
@@ -275,6 +276,10 @@ public class DataManager implements ApplicationEventPublisherAware {
             Element failedSchematronVerification = Xml.selectElement(schemaTronReport, "geonet:report/geonet:schematronVerificationError", theNSs);
 
             if ((failedAssert != null) || (failedSchematronVerification != null)) {
+                if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
+                    Log.debug(Geonet.DATA_MANAGER, "Schematron Validation Fail: FailedAssert = " + failedAssert);
+                    Log.debug(Geonet.DATA_MANAGER, "Schematron Validation Fail: failedSchematronVerification = " + failedSchematronVerification);
+                }
                 throw new SchematronValidationErrorEx("Schematron errors detected for file " + fileName + " - "
                     + Xml.getString(schemaTronReport) + " for more details", schemaTronReport);
             }
@@ -881,7 +886,7 @@ public class DataManager implements ApplicationEventPublisherAware {
             if (!schemaLoc.equals("")) {
 //TODO - fix XSD compliance in Swedish metadata
 //                Xml.validate(md);
-                // otherwise use supplied schema name
+            // otherwise use supplied schema name
             } else {
 //TODO - fix XSD compliance in Swedish metadata
 //                Xml.validate(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md);
@@ -898,16 +903,20 @@ public class DataManager implements ApplicationEventPublisherAware {
             Log.debug(Geonet.DATA_MANAGER, "Extracted schemaLocation of " + schemaLoc);
         if (schemaLoc == null) schemaLoc = "";
 
+        //TODO - fix XSD compliance in Swedish metadata
         if (schema == null) {
             // must use schemaLocation
-            return Xml.validateInfo(md, eh);
+            return null;        
+//            return Xml.validateInfo(md, eh);
         } else {
             // if schemaLocation use that
             if (!schemaLoc.equals("")) {
-                return Xml.validateInfo(md, eh);
-                // otherwise use supplied schema name
+                return null;        
+//                return Xml.validateInfo(md, eh);
+            // otherwise use supplied schema name
             } else {
-                return Xml.validateInfo(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md, eh);
+                return null;        
+//                return Xml.validateInfo(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md, eh);
             }
         }
     }

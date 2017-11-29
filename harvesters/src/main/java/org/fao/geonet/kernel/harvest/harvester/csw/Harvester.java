@@ -246,7 +246,7 @@ class Harvester implements IHarvester<HarvestResult> {
         // Use the preferred HTTP method and check one exist.
         configRequest(request, oper, server, s, PREFERRED_HTTP_METHOD);
         // Force csw:Record outputSchema
-        request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
+//        request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
 
         if (params.isUseAccount()) {
             log.debug("Logging into server (" + params.getUsername() + ")");
@@ -266,7 +266,7 @@ class Harvester implements IHarvester<HarvestResult> {
 
             configRequest(request, oper, server, s, PREFERRED_HTTP_METHOD.equals("GET") ? "POST" : "GET");
             // Force csw:Record outputSchema
-            request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
+//            request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
         }
 
         Set<RecordInfo> records = new HashSet<RecordInfo>();
@@ -391,6 +391,10 @@ class Harvester implements IHarvester<HarvestResult> {
         String preferredOutputSchema = oper.getPreferredOutputSchema();
         if (this.params.outputSchema != null && !this.params.outputSchema.isEmpty()) {
             preferredOutputSchema = this.params.outputSchema;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("preferredOutputSchema chosen = " + preferredOutputSchema);
+            log.debug("From OutputSchemalist = " + oper.getOutputSchemaList());
         }
         request.setOutputSchema(preferredOutputSchema);
         request.setConstraintLanguage(constraintLanguage);
@@ -592,7 +596,7 @@ class Harvester implements IHarvester<HarvestResult> {
             log.info("Searching on : " + params.getName() + " (" + start + ".." + (start + max) + ")");
             Element response = request.execute();
             if (log.isDebugEnabled()) {
-                log.debug("Sent request " + request.getSentData());
+                log.debug("GetRecords Sent request " + request.getSentData());
                 log.debug("Search results:\n" + Xml.getString(response));
             }
 
