@@ -82,9 +82,6 @@
             return layerCheck;
           }
 
-          // ticket 0270
-          //url = proxyfyURL(url);
-
           // Push all leaves into a flat array of Layers.
           var getFlatLayers = function(layer) {
             if (angular.isArray(layer)) {
@@ -137,27 +134,8 @@
             }
           };
           
-          // Check if the Style OnlineReource URL needs to go through proxy
-          var checkOnlineResourceURL = function(layers) {
-        	  if(layers) {
-        		  for (var j = 0; j < layers.length; j++) {
-        			  if (angular.isDefined(layers[j].Style)) {
-        				  for (var k = 0; k < layers[j].Style.length; k++) {
-        					  if (angular.isDefined(layers[j].Style[k].LegendURL)) {
-        						  for (var l = 0; l < layers[j].Style[k].LegendURL.length; l++) {
-        							  layers[j].Style[k].LegendURL[l].OnlineResource = proxyfyURL(layers[j].Style[k].LegendURL[l].OnlineResource);
-        						  }
-        					  } 
-        				  }
-        			  }
-        			  
-        		  }
-        	  }
-          };
           getFlatLayers(result.Capability.Layer);
           setLayerAsArray(result.Capability);
-          // ticket 0270
-          //checkOnlineResourceURL(layers);
           result.Capability.layers = layers;
           if(parseUrl.length > 1 && wmsLayers[0].toLowerCase() == "layers"){
               result.Capability.Layer[0].Layer = layers;
