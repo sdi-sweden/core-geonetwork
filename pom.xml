@@ -178,7 +178,6 @@
             <includeTests>false</includeTests>
             <failOnError>false</failOnError>
           </configuration>
-<!-- -->
          <executions>
             <execution>
               <goals>
@@ -187,12 +186,11 @@
               <phase>test</phase>
             </execution>
           </executions>
-<!-- -->
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>2.10</version>
+          <version>2.17</version>
           <executions>
             <execution>
               <id>check</id>
@@ -204,14 +202,52 @@
           </executions>
           <configuration>
             <enableRulesSummary>false</enableRulesSummary>
-            <configLocation>${rootProjectDir}/code_quality/checkstyle_checks.xml</configLocation>
-            <propertyExpansion>samedir=${rootProjectDir}/code_quality/</propertyExpansion>
+            <configLocation>${project.parent.basedir}/code_quality/checkstyle_checks.xml</configLocation>
+            <propertyExpansion>samedir=${project.parent.basedir}/code_quality/</propertyExpansion>
+			<suppressionsLocation>${project.parent.basedir}/code_quality/checkstyle_suppressions.xml</suppressionsLocation>
+			<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
             <logViolationsToConsole>true</logViolationsToConsole>
             <maxAllowedViolations>0</maxAllowedViolations>
             <violationSeverity>warning</violationSeverity>
             <encoding>UTF-8</encoding>
+			<failOnViolation>false</failOnViolation>
+			<failsOnError>false</failsOnError>
           </configuration>
         </plugin>
+		<plugin>
+			<!-- Code Coverage -->
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>${jacoco.plugin.version}</version>
+			<configuration>
+				<haltOnFailure>false</haltOnFailure>
+			</configuration>
+			<executions>
+				<execution>
+					<id>pre-unit-test</id>
+					<goals>
+						<goal>prepare-agent</goal>
+					</goals>
+					<configuration>
+						<destFile>${jacoco.destfile}</destFile>
+						<append>true</append>
+						<propertyName>surefireArgLine</propertyName>
+					</configuration>
+				</execution>
+				<execution>
+					<id>post-unit-test</id>
+					<phase>test</phase>
+					<goals>
+						<goal>report</goal>
+					</goals>
+					<configuration>
+						<dataFile>${jacoco.destfile}</dataFile>
+						<outputDirectory>${sonar.jacoco.reportPath}</outputDirectory>
+						<skip>${skip.surefire.tests}</skip>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>           		     
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-eclipse-plugin</artifactId>
@@ -263,7 +299,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.18.1</version>
         <configuration>
-          <argLine>-Dfile.encoding=UTF-8 -Xmx512M</argLine>
+          <argLine>-Dfile.encoding=UTF-8 -Xmx1024M -Xss4m @{surefireArgLine}</argLine>
           <!--<rerunFailingTestsCount>5</rerunFailingTestsCount>-->
           <runOrder>alphabetical</runOrder>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -311,7 +347,7 @@
         <artifactId>sonar-maven-plugin</artifactId>
         <version>${sonar-maven-plugin.version}</version>
       </plugin>
-      </plugins>
+    </plugins>
   </build>
 
   <!-- =========================================================== -->
@@ -1099,7 +1135,7 @@
 
     <repository>
       <snapshots>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
       </snapshots>
       <releases>
         <enabled>true</enabled>
@@ -1250,8 +1286,21 @@
     <slf4j.version>1.7.7</slf4j.version>
     <xbean.version>3.18</xbean.version>
     <build.helper.version>1.9.1</build.helper.version>
-    <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
+	
+	<war-name>geodataportalen</war-name>
+
+    <!-- Sonar and Jacoco -->
+    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <sonar.jacoco.reportPath>${project.basedir}/target/coverage-reports</sonar.jacoco.reportPath>
+    <sonar.language>java</sonar.language>
     <sonar-maven-plugin.version>3.0.1</sonar-maven-plugin.version>
     <sonar.java.source>1.8</sonar.java.source>
+    <jacoco.plugin.version>0.7.6.201602180812</jacoco.plugin.version>    
+    <jacoco.destfile>${project.build.directory}/coverage/jacoco.exec</jacoco.destfile>
+    <jacoco.skip>false</jacoco.skip>
+    <jacoco.excludePattern/>
+    <surefireArgLine></surefireArgLine>
+    <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
   </properties>
 </project>
