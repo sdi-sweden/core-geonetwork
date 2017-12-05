@@ -41,7 +41,7 @@ San Francisco, California, 94105,
 USA.
 
 -->
-  <sch:title xmlns="http://www.w3.org/2001/XMLSchema">Nationell metadataprofil 3.1 fˆr Inspire teman</sch:title>
+  <sch:title xmlns="http://www.w3.org/2001/XMLSchema">Nationell metadataprofil 3.1 för Inspire teman</sch:title>
   <sch:ns prefix="gml" uri="http://www.opengis.net/gml"/>
   <sch:ns prefix="gmd" uri="http://www.isotc211.org/2005/gmd"/>
   <sch:ns prefix="srv" uri="http://www.isotc211.org/2005/srv"/>
@@ -153,7 +153,7 @@ USA.
 			//*[@gco:isoType='srv:SV_ServiceIdentification']">
       <sch:let name="keywordValue_INSPIRE"
                value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
-      <sch:let name="inspire-thesaurus" value="document('${inspire.thesaurus.path}')"/>
+      <sch:let name="inspire-thesaurus" value="document('../../../../config/codelist/external/thesauri/theme/inspire-theme.rdf')"/>
       <sch:let name="inspire-theme" value="$inspire-thesaurus//skos:Concept"/>
       <!-- Visa fel om inte Inspire Thesaurs visas. -->
       <sch:assert test="count($inspire-theme) > 0"> INSPIRE Themes saknas. Installationen är ej
