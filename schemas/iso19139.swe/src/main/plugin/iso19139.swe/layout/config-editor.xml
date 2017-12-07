@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
   ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
@@ -297,10 +297,7 @@
         <section name="identificationInfo2">
           <!-- Title -->
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"
-            or="title"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"
-            del="."/>
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"/>
 
           <!--Alternative title -->
           <field
@@ -2058,11 +2055,7 @@
         <section name="identificationInfo2">
           <!-- Title -->
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"
-            or="title"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"
-            del="."/>
-            
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"/>
 
           <!--Alternative title -->
           <field
@@ -2998,7 +2991,9 @@
                       <gco:CharacterString>{{explanation}}</gco:CharacterString>
                       <gn:copy select="gmd:PT_FreeText"/>
                     </gmd:explanation>
-                    {{pass}}
+                    <gmd:pass>
+						<gco:Boolean>{{pass}}</gco:Boolean>
+					</gmd:pass>
                   </gmd:DQ_ConformanceResult>
                 </gmd:result>
               </snippet>
@@ -3818,11 +3813,7 @@
         <section name="identificationInfo2">
           <!-- Title -->
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"
-            or="title"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"
-            del="."/>
-
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"/>
 
           <!--Alternative title -->
           <field
@@ -4758,7 +4749,9 @@
                       <gco:CharacterString>{{explanation}}</gco:CharacterString>
                       <gn:copy select="gmd:PT_FreeText"/>
                     </gmd:explanation>
-                    {{pass}}
+                    <gmd:pass>
+						<gco:Boolean>{{pass}}</gco:Boolean>
+					</gmd:pass>
                   </gmd:DQ_ConformanceResult>
                 </gmd:result>
               </snippet>
@@ -5578,11 +5571,7 @@
         <section name="identificationInfo2">
           <!-- Title -->
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"
-            or="title"
-            in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"
-            del="."/>
-
+                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"/>
 
           <!--Alternative title -->
           <field
@@ -6654,7 +6643,9 @@
                       <gco:CharacterString>{{explanation}}</gco:CharacterString>
                       <gn:copy select="gmd:PT_FreeText"/>
                     </gmd:explanation>
-                    {{pass}}
+                    <gmd:pass>
+						<gco:Boolean>{{pass}}</gco:Boolean>
+					</gmd:pass>
                   </gmd:DQ_ConformanceResult>
                 </gmd:result>
               </snippet>
@@ -8125,8 +8116,8 @@
                       <gn:copy select="gmd:PT_FreeText"/>
                     </gmd:explanation>
                     <gmd:pass>
-                      <gmd:boolean>{{pass}}</gmd:boolean>
-                    </gmd:pass>
+						<gco:Boolean>{{pass}}</gco:Boolean>
+					</gmd:pass>
                   </gmd:DQ_ConformanceResult>
                 </gmd:result>
               </snippet>
