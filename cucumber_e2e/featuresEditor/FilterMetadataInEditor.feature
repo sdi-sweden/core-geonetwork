@@ -3,9 +3,9 @@ Feature: Filter metadata
 
 Scenario: Show only my posts
   Given that the user is in contribute view
-  When the user clicks "show only my posts"
+  When the user clicks "Datamängd"
   Then only metadata belonging to the user should be displayed
-
+  
 Scenario Outline:  Filter on service type
   Given that the user is in contribute view
   When the user clicks "<servicetype>"

@@ -1,15 +1,17 @@
-@qa_dev
+@qa_ready
 Feature: Administrate metadata
 
 Scenario: Validate metadata
- When the users validates metadata
+ When the user validates metadata
  Then the metadata is validated 
  
 Scenario: Publish metadata
- Given that the user has permission to edit selected metadata with title "xxx" (put in before hook)
+ Given that the user has permission to edit metadata "title"
+ #(put in before hook)
  And that the metadata is valid
  When the user publishes metadata
- Then the metadata is publised (depublish after)
+ Then the metadata is publised
+ #(depublish after)
  
 Scenario: Depublish metadata
  Given that the metadata is published
@@ -18,5 +20,5 @@ Scenario: Depublish metadata
  
 Scenario: Delete metadata
  Given that the metadata is created
- When the users deletes metadata
+ When the user deletes metadata
  Then the metadata is deleted
