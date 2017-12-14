@@ -65,6 +65,13 @@
              var wmsLayers = parseUrl[1].split("=")
           }
           
+          // check if URL needs to go through the Lantmäteriet proxy
+          if (url.includes("maps.lantmateriet.se")) {
+        	  url = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+          } else if (url.includes("maps-ver.lantmateriet.se")) {
+          	url = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+          }
+          
           //Function to parse layers inside each layergroup 
           var parseLayerGroup = function(layer){
             for  (var l in layer) {
@@ -133,9 +140,32 @@
               }
             }
           };
-          
+
+          // Check if the Style OnlineReource URL needs to go through Lantmäteriet proxy
+          var checkOnlineResourceURL = function(layers) {
+        	  if(layers) {
+        		  for (var j = 0; j < layers.length; j++) {
+        			  if (angular.isDefined(layers[j].Style)) {
+        				  for (var k = 0; k < layers[j].Style.length; k++) {
+        					  if (angular.isDefined(layers[j].Style[k].LegendURL)) {
+        						  for (var l = 0; l < layers[j].Style[k].LegendURL.length; l++) {
+        							  var url = layers[j].Style[k].LegendURL[l].OnlineResource;
+								      if (url.includes("maps.lantmateriet.se")){
+								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+								      } else if (url.includes("maps-ver.lantmateriet.se")) {
+								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+								      }
+        						  }
+        					  } 
+        				  }
+        			  }
+        			  
+        		  }
+        	  }
+          };
           getFlatLayers(result.Capability.Layer);
           setLayerAsArray(result.Capability);
+          checkOnlineResourceURL(layers);
           result.Capability.layers = layers;
           if(parseUrl.length > 1 && wmsLayers[0].toLowerCase() == "layers"){
               result.Capability.Layer[0].Layer = layers;
