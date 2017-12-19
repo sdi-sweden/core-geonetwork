@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:ns2="http://www.w3.org/2004/02/skos/core#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+
+  <skos:ConceptScheme rdf:about="http://www.geodata.com/thesaurus/topiccats">
+    <dc:title>Amnesomrade</dc:title>
+    <dc:description>Amnesomrade vocabulary.</dc:description>
+    <dcterms:issued>2008-04-17 12:00:00</dcterms:issued>
+    <dcterms:modified>2008-04-17 12:00:00</dcterms:modified>
+  </skos:ConceptScheme>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#farming">
+    <skos:prefLabel xml:lang="sv">Areella näringar</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/topiccats"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#biota">
+    <skos:prefLabel xml:lang="sv">Biologi och ekologi</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/topiccats"/>
+  </skos:Concept>
+
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#boundaries">
+    <skos:prefLabel xml:lang="sv">Administrativa gränser</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/topiccats"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#climatologyMeteorologyAtmosphere">
+    <skos:prefLabel xml:lang="sv">Atmosfär, klimatologi och meteorologi</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#economy">
+    <skos:prefLabel xml:lang="sv">Ekonomi</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#elevation">
+    <skos:prefLabel xml:lang="sv">Höjddata</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#environment">
+    <skos:prefLabel xml:lang="sv">Miljö</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#geoscientificInformation">
+    <skos:prefLabel xml:lang="sv">Geovetenskap</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#health">
+    <skos:prefLabel xml:lang="sv">Hälsa</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#imageryBaseMapsEarthCover">
+    <skos:prefLabel xml:lang="sv">MilArealtäckande bilder och bakgrundskartorjö</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#intelligenceMilitary">
+    <skos:prefLabel xml:lang="sv">Försvar</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#inlandWaters">
+    <skos:prefLabel xml:lang="sv">Sjöar och vattendrag</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#location">
+    <skos:prefLabel xml:lang="sv">Positionering</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#oceans">
+    <skos:prefLabel xml:lang="sv">Kust och hav</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#planningCadastre">
+    <skos:prefLabel xml:lang="sv">Fastigheter och fysisk planering</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#society">
+    <skos:prefLabel xml:lang="sv">Samhälle och kultur</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#structure">
+    <skos:prefLabel xml:lang="sv">Byggnader och byggnadsanläggningar</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#transportation">
+    <skos:prefLabel xml:lang="sv">Transporter</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="http://www.geodata.com/thesaurus/topiccats#utilitiesCommunication">
+    <skos:prefLabel xml:lang="sv">Tekniska försörjningssystem</skos:prefLabel>
+    <skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+  </skos:Concept>
+</rdf:RDF>

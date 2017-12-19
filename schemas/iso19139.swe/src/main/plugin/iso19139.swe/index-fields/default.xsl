@@ -61,7 +61,9 @@
 	<xsl:variable name="inspire-thesaurus" select="if ($inspire!='false') then document(concat('file:///', $thesauriDir, '/external/thesauri/theme/inspire-theme.rdf')) else ''"/>
 	<xsl:variable name="inspire-theme" select="if ($inspire!='false') then $inspire-thesaurus//skos:Concept else ''"/>
 
-	<!-- If identification creation, publication and revision date
+  <xsl:variable name="topiccats-thesaurus" select="if ($inspire!='false') then document(concat('file:///', $thesauriDir, '/external/thesauri/theme/topic-categories.rdf')) else ''"/>
+
+  <!-- If identification creation, publication and revision date
     should be indexed as a temporal extent information (eg. in INSPIRE
     metadata implementing rules, those elements are defined as part
     of the description of the temporal extent). -->
@@ -341,7 +343,17 @@
 						<Field name="initiativKeyword" string="{$keyword}" store="true" index="true"/>
 					</xsl:if>
 
-					<!-- If INSPIRE is enabled, check if the keyword is one of the 34 themes
+                    <xsl:if test="lower-case($thesaurusName) = 'amnesomrade'">
+                      <xsl:variable name="key" select="$topiccats-thesaurus/*/skos:Concept[normalize-space(skos:prefLabel)=normalize-space($keyword)]/@rdf:about" />
+
+                      <xsl:if test="string($key)">
+                        <Field name="topicCat" string="{substring-after($key, 'http://www.geodata.com/thesaurus/topiccats#')}" store="true" index="true"/>
+                      </xsl:if>
+
+                    </xsl:if>
+
+
+          <!-- If INSPIRE is enabled, check if the keyword is one of the 34 themes
                and index annex, theme and theme in english. -->
 					<xsl:if test="$inspire='true'">
 						<xsl:if test="string-length(.) &gt; 0">
@@ -1146,4 +1158,3 @@
 				</xsl:choose>
 			</xsl:template>
 		</xsl:stylesheet>
-		
