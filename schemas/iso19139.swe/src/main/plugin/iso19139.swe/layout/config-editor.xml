@@ -6064,7 +6064,7 @@
             name="useLimitation"
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/
                 gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation" />
-          <action type="add" name="useLimitation" or="resourceConstraints" btnLabel="Add use limitation"
+          <action type="add" name="useLimitation" or="resourceConstraints" btnLabel="useLimitation"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
                 gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation) = 0">
@@ -6092,7 +6092,7 @@
             gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]]"
                  />
 
-          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="Limitations on public access"
+          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="limitationsPublicAccess"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
             gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]) = 0">
@@ -6126,7 +6126,7 @@
                  />
 
 
-          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="Conditions for access"
+          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="conditionsForAccess"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
             gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))]) = 0">
@@ -6159,7 +6159,7 @@
                 />
 
 
-          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="Conditions for use"
+          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="conditionsForUse"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
                   gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints) = 0">
