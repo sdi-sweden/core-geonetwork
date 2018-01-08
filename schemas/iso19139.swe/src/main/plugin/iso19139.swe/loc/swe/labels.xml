@@ -3185,8 +3185,8 @@ Detta undvikar vi att ange.</description>
 
 
   <element name="conditionsForAccess">
-    <label>Conditions for access</label>
-    <description>Conditions for access</description>
+    <label>Åtkomstrestriktioner</label>
+    <description>Åtkomstrestriktioner</description>
     <helper sort="no">
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="conditions to access and use unknown">conditions to access and use unknown</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="no conditions to access and use">no conditions to access and use</option>
@@ -3195,8 +3195,8 @@ Detta undvikar vi att ange.</description>
   </element>
 
   <element name="conditionsForUse">
-    <label>Conditions for use</label>
-    <description>Conditions for use</description>
+    <label>Nyttjanderestriktioner</label>
+    <description>Nyttjanderestriktioner</description>
     <helper sort="no">
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="conditions to access and use unknown">conditions to access and use unknown</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="no conditions to access and use">no conditions to access and use</option>
@@ -3205,7 +3205,7 @@ Detta undvikar vi att ange.</description>
   </element>
 
   <element id="72.0" name="LimitationsOnPublicAcces">
-    <label>Limitations on Public Access</label>
+    <label>Begränsningar i offentlig åtkomst</label>
     <description>Andra restriktioner och rättsliga förutsättningar för åtkomst och nyttjande av resursen (eller metadata)</description>
     <condition>conditional</condition>
     <helper sort="false"  relAtt="xlink:href">

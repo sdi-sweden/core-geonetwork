@@ -326,5 +326,7 @@
     "parentConcept":"Parent concept",
     "moreSpecificConcept":"More specific concepts",
     "associatedConcept":"Associated concepts",
-    "xsd": "Schema validation"
+    "xsd": "Schema validation",
+    "resourceConstraintReference": "Reference",
+    "resourceConstraintText": "Text"
 }
