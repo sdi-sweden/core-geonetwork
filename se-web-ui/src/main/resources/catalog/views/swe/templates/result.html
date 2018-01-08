@@ -12,6 +12,7 @@
               </h1>
               <span class="excerpt"></span>
             </div>
+<!--            
             <div class="help-icn-cont">
               <div class="help-icn-circle"><span class="icon-help"></span></div>
               <div class="tool-tip-cont">
@@ -23,6 +24,7 @@
                 </div>
               </div>
             </div>
+-->            
             <div class="update-tag"><span>Senast uppdaterad <span data-gn-humanize-time="{{mdView.current.record['geonet:info'].changeDate}}"
                                                                     data-from-now=""></span></span>
             </div>
@@ -52,10 +54,10 @@
             <div class="link-cont" ng-if="user.isEditorOrMore() && user.canEditRecord(mdView.current.record)">
               <a class="-label-link" href=""><span class="icon-pencil"></span>{{ 'edit' | translate }}</a>
             </div>
-            <div class="link-cont">
+<!--             <div class="link-cont">
               <a class="-label-link" href="" data-ng-click="printPdf(mdView)"><span class="icon-print"></span>{{ 'Print' | translate }}</a>
 			  <iframe id="iframe" style="width:0px;height:0px;display:block;visibility:hidden"/>
-            </div>
+            </div> -->
 
             <!-- Metadata links -->
             <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="getInformationLinks(mdView.current.record).length > 1">
