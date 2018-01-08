@@ -36,6 +36,10 @@
     <xsl:value-of select="false()"/>
   </xsl:template>
 
+  <xsl:template name="get-iso19110-is-sds-service">
+    <xsl:value-of select="false()"/>
+  </xsl:template>
+
   <!--
     Load the schema configuration for the editor.
       -->
