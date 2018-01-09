@@ -14,7 +14,7 @@
 
   <!-- SDS: Category. Render an anchor as select box populating it with a codelist -->
   <xsl:template mode="mode-iso19139" priority="2000"
-                match="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[$tab='inspire_sds']">
+                match="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[$tab='inspire_sds' or $isSDSService = 'true']">
     <xsl:call-template name="render-element">
       <xsl:with-param name="label" select="$strings/sds-category"/>
       <xsl:with-param name="value" select="@xlink:href"/>
@@ -57,7 +57,7 @@
 
   <!-- SDS: CRS -->
   <xsl:template mode="mode-iso19139" priority="2002"
-                match="gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code/gmx:Anchor[$tab='inspire_sds']">
+                match="gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code/gmx:Anchor[$tab='inspire_sds' or $isSDSService = 'true']">
     <xsl:call-template name="render-element">
       <xsl:with-param name="label" select="''"/>
       <xsl:with-param name="value" select="@xlink:title"/>
@@ -70,7 +70,7 @@
 
   <!-- SDS: Quality of Service-->
   <xsl:template mode="mode-iso19139" priority="2002"
-                match="gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency[/root/gui/currTab/text()='inspire_sds']">
+                match="gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency[$tab='inspire_sds' or $isSDSService = 'true']">
     <xsl:call-template name="render-boxed-element">
       <xsl:with-param name="label"
                       select="concat($strings/qos_measure, gmd:nameOfMeasure/gmx:Anchor/text())"/>
@@ -101,7 +101,7 @@
 
   <!-- SDS: Render Constraints anchors -->
   <xsl:template mode="mode-iso19139"
-                match="srv:SV_ServiceIdentification[$tab='inspire_sds']/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor]"
+                match="srv:SV_ServiceIdentification[$tab='inspire_sds' or $isSDSService = 'true']/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor]"
                 priority="2000">
 
     <xsl:variable name="anchor" select="./gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor"/>
@@ -125,7 +125,7 @@
 
   <!--<xsl:template mode="mode-iso19139" priority="200" match="*[*/@codeList]">  -->
   <xsl:template mode="mode-iso19139" priority="201"
-                match="srv:SV_OperationMetadata/srv:DCP[$tab='inspire_sds']">
+                match="srv:SV_OperationMetadata/srv:DCP[$tab='inspire_sds' or $isSDSService = 'true']">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="codelists" select="$iso19139codelists" required="no"/>

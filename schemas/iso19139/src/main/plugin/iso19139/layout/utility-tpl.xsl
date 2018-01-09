@@ -37,6 +37,11 @@
       select="count($metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
   </xsl:template>
 
+  <xsl:template name="get-iso19139-is-sds-service">
+    <xsl:value-of
+      select="(count($metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0) and ($metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName = 'other')"/>
+  </xsl:template>
+
   <xsl:template name="get-iso19139-extents-as-json">[
     <xsl:for-each select="//gmd:geographicElement/gmd:EX_GeographicBoundingBox[
             number(gmd:westBoundLongitude/gco:Decimal)

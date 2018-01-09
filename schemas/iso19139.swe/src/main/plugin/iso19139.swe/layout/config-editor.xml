@@ -275,7 +275,7 @@
   <views>
 
     <!-- Only mandatory Not admin-elements -->
-    <view name="swedish-a" upAndDownControlHidden="true">
+    <view name="swedish-a" disabled="true" upAndDownControlHidden="true">
       <tab id="swedish-a" default="true" mode="flat">
         <section name="metadata2">
           <field xpath="/gmd:MD_Metadata/gmd:fileIdentifier"/>
@@ -547,7 +547,8 @@
 
           <!-- Point of contact -->
           <field name="pointOfContact"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact" />
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"
+                 if=""/>
 
           <!-- Thumbnails -->
           <field name="graphicOverview"
@@ -1962,14 +1963,15 @@
 
             </section> <!-- use constraints -->
 
-            <section name="sds-section-custodian">
+            <!-- It's managed in identification info section -->
+            <!--<section name="sds-section-custodian">
 
               <field name="pointOfContact"
                      xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue='custodian']"
               />
 
 
-            </section>
+            </section>-->
 
           </section>
 
@@ -2031,7 +2033,7 @@
     </view>
 
     <!-- Only mandatory with admin-elements -->
-    <view name="swedish-b" upAndDownControlHidden="true">
+    <view name="swedish-b" disabled="true" upAndDownControlHidden="true">
       <tab id="swedish-b" default="true" mode="flat">
         <section name="metadata2">
           <field xpath="/gmd:MD_Metadata/gmd:fileIdentifier"/>
@@ -3787,7 +3789,7 @@
     </view>
 
     <!-- All elements, No admin-elements -->
-    <view name="swedish-c" upAndDownControlHidden="true">
+    <view name="swedish-c" disabled="true" upAndDownControlHidden="true">
       <tab id="swedish-c" default="true" mode="flat">
         <section name="metadata2">
           <field xpath="/gmd:MD_Metadata/gmd:fileIdentifier"/>
@@ -5874,7 +5876,11 @@
 
           <!-- Point of contact -->
           <field name="pointOfContact"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact" />
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_IdentificationInfo/gmd:pointOfContact" />
+
+          <field name="pointOfContact"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact"
+               />
 
           <!-- Thumbnails -->
           <field name="graphicOverview"
@@ -6123,7 +6129,7 @@
             name="useLimitation"
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/
                 gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation" />
-          <action type="add" name="useLimitation" or="resourceConstraints" btnLabel="Add use limitation"
+          <action type="add" name="useLimitation" or="resourceConstraints" btnLabel="useLimitation"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
                 gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation) = 0">
@@ -6151,7 +6157,7 @@
             gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]]"
                  />
 
-          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="Limitations on public access"
+          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="limitationsPublicAccess"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
             gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]) = 0">
@@ -6185,7 +6191,7 @@
                  />
 
 
-          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="Conditions for access"
+          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="conditionsForAccess"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
             gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))]) = 0">
@@ -6218,7 +6224,7 @@
                 />
 
 
-          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="Conditions for use"
+          <action type="add" name="accessConstraints" or="resourceConstraints" btnLabel="conditionsForUse"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
                   gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints) = 0">
@@ -6625,9 +6631,11 @@
           </action>
 
 
+          <!-- Conformity, except for SDS that is managed in SDS section -->
           <field name="conformity" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/
                     gmd:report/gmd:DQ_DomainConsistency/gmd:result"
+                 if="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName != 'other'"
                  del="../..">
             <template>
               <values>
@@ -6705,6 +6713,7 @@
 
           <action type="add" name="conformity" or="report" tooltip="gmd:result"
                   forceLabel="true"
+                  if="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName != 'other'"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
             <template>
               <snippet>
@@ -6842,7 +6851,7 @@
           </action>
         </section>
 
-        <section name="inspire_sds"  displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+        <section name="inspire_sds"  displayIfRecord="gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName = 'other'">
           <!-- CONFORMITY CLASS 1 -->
           <section name="inspire_sds_cc1">
 
