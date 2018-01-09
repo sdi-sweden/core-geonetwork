@@ -240,18 +240,43 @@
           </gmd:type>
         </gmd:MD_Keywords>
       </gmd:descriptiveKeywords>
-      <gmd:resourceConstraints>
+      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+        <gmd:MD_Constraints>
+          <gmd:useLimitation gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:useLimitation>
+        </gmd:MD_Constraints>
+      </gmd:resourceConstraints>
+      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
         <gmd:MD_LegalConstraints>
           <gmd:accessConstraints>
-            <gmd:MD_RestrictionCode codeListValue="copyright"
-                                    codeList="./resources/codeList.xml#MD_RestrictionCode"/>
+            <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
+                                    codeListValue="otherRestrictions"/>
           </gmd:accessConstraints>
+          <gmd:otherConstraints>
+            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">no limitations to public access</gmx:Anchor>
+          </gmd:otherConstraints>
+        </gmd:MD_LegalConstraints>
+      </gmd:resourceConstraints>
+      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+        <gmd:MD_LegalConstraints>
+          <gmd:accessConstraints>
+            <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
+                                    codeListValue="otherRestrictions"/>
+          </gmd:accessConstraints>
+          <gmd:otherConstraints>
+            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
+          </gmd:otherConstraints>
+        </gmd:MD_LegalConstraints>
+      </gmd:resourceConstraints>
+      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+        <gmd:MD_LegalConstraints>
           <gmd:useConstraints>
-            <gmd:MD_RestrictionCode codeListValue="otherRestictions"
-                                    codeList="./resources/codeList.xml#MD_RestrictionCode"/>
+            <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
+                                    codeListValue="otherRestrictions"/>
           </gmd:useConstraints>
           <gmd:otherConstraints>
-            <gco:CharacterString/>
+            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
           </gmd:otherConstraints>
         </gmd:MD_LegalConstraints>
       </gmd:resourceConstraints>

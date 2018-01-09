@@ -37,6 +37,10 @@
     <xsl:call-template name="get-iso19139-is-service" />
   </xsl:template>
 
+  <xsl:template name="get-iso19139.swe-is-sds-service">
+    <xsl:call-template name="get-iso19139-is-sds-service" />
+  </xsl:template>
+
   <xsl:template name="get-iso19139.swe-extents-as-json">
     <xsl:call-template name="get-iso19139-extents-as-json" />
   </xsl:template>

@@ -325,5 +325,7 @@
     "associatedConcept": "Associerade begrepp",
     "xsd": "Schemavalidering",
     "inspireValidation": "Inspirevalidering",
-    "mdRelationValidation": "Kontroll av länkar och relationer"
+    "mdRelationValidation": "Kontroll av länkar och relationer",
+    "resourceConstraintReference": "Referens",
+    "resourceConstraintText": "Text"
 }
