@@ -296,7 +296,9 @@
         <section name="identificationInfo2">
           <!-- Title -->
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"/>
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"
+            or="title"
+            in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation" />
 
           <!--Alternative title -->
           <field
@@ -2054,7 +2056,9 @@
         <section name="identificationInfo2">
           <!-- Title -->
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"/>
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"
+            or="title"
+            in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation" />
 
           <!--Alternative title -->
           <field
@@ -3810,7 +3814,9 @@
         <section name="identificationInfo2">
           <!-- Title -->
           <field
-            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"/>
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"
+            or="title"
+            in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation" />
 
           <!--Alternative title -->
           <field
@@ -5566,7 +5572,9 @@
         <section name="identificationInfo2">
           <!-- Title -->
           <field
-                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"/>
+            xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title"
+            or="title"
+            in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation" />
 
           <!--Alternative title -->
           <field
