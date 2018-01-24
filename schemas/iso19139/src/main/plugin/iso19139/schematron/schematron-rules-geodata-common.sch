@@ -227,10 +227,10 @@ USA.
   </sch:pattern>
   -->
   <sch:pattern fpi="[Geodata.se:110] Information om restriktioner">
-    <sch:title>[Geodata.se:110c] Information om restriktioner</sch:title>
+    <sch:title>[Geodata.se:110] Information om restriktioner</sch:title>
     <sch:rule context="//gmd:identificationInfo">
       <sch:let name="resourceConstraints_count" value="count(//gmd:resourceConstraints)"/>
-      <sch:assert test="count(//gmd:resourceConstraints) > 0 ">[Geodata.se:110c] Information om restriktioner saknas</sch:assert>
+      <sch:assert test="resourceConstraints_count > 0 ">[Geodata.se:110c] Information om restriktioner saknas</sch:assert>
     </sch:rule>
     <sch:rule context="//gmd:identificationInfo//gmd:resourceConstraints">
       <sch:let name="accessConstraints"
