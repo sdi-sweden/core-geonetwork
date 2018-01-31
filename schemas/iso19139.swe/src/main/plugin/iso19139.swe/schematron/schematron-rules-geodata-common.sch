@@ -197,12 +197,12 @@ USA.
 
   <sch:pattern fpi="[Geodata.se:108] Tillkomsthistorik  måste anges">
     <sch:rule context="/*">
-      <sch:let name="lineage" value="normalize-space(//gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/*/text())"/>
+      <sch:let name="lineage" value="//gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/*/text()/normalize-space(.)"/>
       <sch:let name="lineageLength" value="string-length($lineage)"/>
       <sch:assert	test="//gmd:hierarchyLevel/*/@codeListValue='service' or ($lineage and ($lineageLength &lt; 2500))"> [Geodata.se:108] Tillkomsthistorik är obligatorisk för datamängder och får ha max 2500 tecken</sch:assert>
     </sch:rule>
     <sch:rule context="/*">
-      <sch:let name="lineage" value="normalize-space(//gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/*/text())"/>
+      <sch:let name="lineage" value="//gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/*/text()/normalize-space(.)"/>
       <!-- assertions and report -->
       <sch:assert test="$lineage">[Geodata.se:108] Tillkomsthistorik är obligatorisk</sch:assert>
       <!--		<sch:report test="$lineage">[Geodata.se:108] Tillkomst<sch:value-of select="$lineage"/></sch:report>-->
@@ -227,46 +227,49 @@ USA.
   </sch:pattern>
   -->
   <sch:pattern fpi="[Geodata.se:110] Information om restriktioner">
-    <sch:title>[Geodata.se:110c] Information om restriktioner</sch:title>
+    <sch:title>[Geodata.se:110] Information om restriktioner</sch:title>
     <sch:rule context="//gmd:identificationInfo">
       <sch:let name="resourceConstraints_count" value="count(//gmd:resourceConstraints)"/>
-      <sch:assert test="count(//gmd:resourceConstraints) > 0 ">[Geodata.se:110c] Information om restriktioner saknas</sch:assert>
+      <sch:assert test="$resourceConstraints_count > 0 ">[Geodata.se:110c] Information om restriktioner saknas</sch:assert>
     </sch:rule>
     <sch:rule context="//gmd:identificationInfo//gmd:resourceConstraints">
-      <sch:let name="accessConstraints"
+      <sch:let name="legalConstraints"
                value="//gmd:MD_LegalConstraints/gmd:accessConstraints/*/@codeListValue"/>
-      <sch:let name="accessConstraints_present"
+      <sch:let name="legalConstraints_present"
                value="//gmd:MD_LegalConstraints/gmd:accessConstraints/*/@codeListValue = 'copyright' or //gmd:MD_LegalConstraints/gmd:accessConstraints/*/@codeListValue = 'patent' or //gmd:MD_LegalConstraints/gmd:accessConstraints/*/@codeListValue = 'patentPending' or //gmd:MD_LegalConstraints/gmd:accessConstraints/*/@codeListValue = 'trademark' or //gmd:MD_LegalConstraints/gmd:accessConstraints/*/@codeListValue = 'license' or //gmd:MD_LegalConstraints/gmd:accessConstraints/*/@codeListValue = 'intellectualPropertyRights' or //gmd:MD_LegalConstraints/gmd:accessConstraints/*/@codeListValue = 'restricted' or //gmd:MD_LegalConstraints/gmd:accessConstraints/*/@codeListValue = 'otherRestrictions'"/>
       <sch:let name="classification" value="gmd:classification/*/@codeListValue"/>
       <sch:let name="classification_present"
                value="gmd:classification/*/@codeListValue = 'unclassified' or gmd:classification/*/@codeListValue = 'restricted' or gmd:classification/*/@codeListValue = 'confidential' or gmd:classification/*/@codeListValue = 'secret' or gmd:classification/*/@codeListValue = 'topSecret'"/>
-      <sch:let name="otherConstraints"
-               value="gmd:MD_LegalConstraints/gmd:otherConstraints/*/text()"/>
+      <sch:let name="otherLegalConstraints"
+               value="//gmd:MD_LegalConstraints/gmd:otherConstraints/*/text()"/>
 
-      <sch:assert test="$accessConstraints_present">[Geodata.se:110f] Information om åtkomstrestriktioner saknas eller har fel värde <sch:value-of
-        select="$accessConstraints"/>
+      <sch:assert test="$legalConstraints_present">[Geodata.se:110f] Information om åtkomstrestriktioner saknas eller har fel värde <sch:value-of select="$legalConstraints"/>
       </sch:assert>
     </sch:rule>
     <sch:rule context="//gmd:identificationInfo[1]/*">
-      <sch:let name="useLimitation" value="gmd:resourceConstraints/*/gmd:useLimitation[1]/*/text()"/>
 
-      <sch:let name="useLimitation_count" value="count(gmd:resourceConstraints/*/gmd:useLimitation/*/text())"/>
-      <sch:let name="useLimitationLength" value="string-length($useLimitation)"/>
-      <sch:let name="accessConstraints" value="gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue"/>
-      <sch:let name="accessConstraints_present" value="gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'copyright' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'patent' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'patentPending' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'trademark' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'license' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'intellectualPropertyRights' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'restricted'"/>
-      <sch:let name="classification" value="gmd:resourceConstraints/*/gmd:classification/*/@codeListValue"/>
-      <sch:let name="classification_present" value="gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'unclassified' or gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'restricted' or gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'confidential' or gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'secret' or gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'topSecret'"/>
-      <sch:let name="otherConstraints" value="gmd:resourceConstraints/*/gmd:otherConstraints/*/text()"/>
-      <sch:let name="otherConstraints_condition" value="gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'otherRestrictions'"/>
-      <sch:let name="otherConstraintsLength" value="string-length($otherConstraints)"/>
+      <sch:assert test="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints) &gt; 0">[Geodata.se:110e] [Geodata.se:110f] Användningsbegränsningar och användbarhetsbegränsingar skall anges</sch:assert>
 
-      <sch:let name="otherConstraints_present" value="$otherConstraints and $otherConstraints_condition and ($otherConstraintsLength &lt; 1000)"/>
-      <sch:assert test="$accessConstraints_present or $classification_present or $otherConstraints_present">[Geodata.se:110f] Information om åtkomstrestriktioner saknas eller har fel värde, andra begränsningar får ha max 1000 tecken</sch:assert>
-      <sch:assert test="count(gmd:resourceConstraints/*)">[Geodata.se:110e] [Geodata.se:110f] Användningsbegränsningar och användbarhetsbegränsingar skall anges</sch:assert>
-      <!-- ändrat 2013-08-22 -->
-      <sch:assert test="$useLimitation and ($useLimitationLength &lt; 2500)">[Geodata.se:110e] Information om användbarhetsbegränsningar måste finnas och vara kortare än 2500 tecken </sch:assert>
+	  <sch:let name="useLimitation" value="//gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString/text()"/>
+      <sch:let name="useLimitation_count" value="count($//gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString/text())"/>
       <sch:assert test="$useLimitation_count = 1">[Geodata.se:110g] Information om användbarhetsbegränsningar måste finnas men får bara anges en gång</sch:assert>
-      <!--<sch:report test="$useLimitation_count">[Geodata.se:110g] Antal useLimitationb <sch:value-of select="$useLimitation_count"/></sch:report>-->
+
+      <sch:let name="useLimitationLength" value="//gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString/text()/string-length(.)"/>
+      <sch:assert test="$useLimitation and ($useLimitationLength &lt; 2500)">[Geodata.se:110e] Information om användbarhetsbegränsningar måste finnas och vara kortare än 2500 tecken </sch:assert>
+	  
+      <sch:let name="accessConstraints" value="//gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue"/>
+      <sch:let name="accessConstraints_present" value="//gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'copyright' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'patent' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'patentPending' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'trademark' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'license' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'intellectualPropertyRights' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'restricted'"/>
+      <!-- <sch:let name="classification" value="gmd:resourceConstraints/*/gmd:classification/*/@codeListValue"/> -->
+      <sch:let name="classification_present" value="//gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'unclassified' or //gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'restricted' or //gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'confidential' or //gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'secret' or //gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'topSecret'"/>
+      <sch:let name="otherConstraints" value="//gmd:resourceConstraints/*/gmd:otherConstraints/*/text()"/>
+      <sch:let name="otherConstraints_condition" value="//gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'otherRestrictions'"/>
+      <sch:let name="otherConstraintsLength" value="//gmd:resourceConstraints/*/gmd:otherConstraints/*/text()/string-length(.) &lt; 1000"/>
+
+      <sch:let name="otherConstraints_present" value="$otherConstraints and $otherConstraints_condition and $otherConstraintsLength"/>
+
+      <sch:assert test="$accessConstraints_present or $classification_present or $otherConstraints_present">[Geodata.se:110f] Information om åtkomstrestriktioner saknas eller har fel värde, andra begränsningar får ha max 1000 tecken</sch:assert>
+
+      <!-- ändrat 2013-08-22 -->
     </sch:rule>
 
     <!--
@@ -279,9 +282,9 @@ USA.
     </sch:rule>
     -->
     <sch:rule context="//gmd:identificationInfo">
-      <sch:let name="useLimitation" value="normalize-space(gmd:resourceConstraints//gmd:useLimitation//text())"/>
+      <sch:let name="useLimitation" value="//gmd:resourceConstraints/*/gmd:useLimitation//text()/normalize-space(.)"/>
       <sch:let name="useLimitation_count"
-               value="count(gmd:resourceConstraints//gmd:useLimitation//text())"/>
+               value="count(//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/*/gmd:useLimitation/*/text()/normalize-space(.))"/>
       <sch:assert test="$useLimitation_count">[Geodata.se:110e] Information om användbarhetsbegränsningar saknas</sch:assert>
       <!--			<sch:report test="$useLimitation_count">[Geodata.se:110e] (2.9.2) Conditions applying to access and use found: <sch:value-of select="$useLimitation"/>
             </sch:report>
@@ -427,7 +430,7 @@ USA.
   <sch:pattern fpi=" [Geodata.se:123] Identifierare för metadatamängden">
     <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
       <sch:assert
-        test="gmd:fileIdentifier and (normalize-space(gmd:fileIdentifier/gco:CharacterString) != '') "
+        test="gmd:fileIdentifier and (gmd:fileIdentifier/gco:CharacterString/normalize-space(.) != '') "
       >[Geodata.se:123] Identiferare för metadatamängden krävs.</sch:assert>
       <!-- the text "fileIdentifier not present" only gets emitted if the assertion fails -->
     </sch:rule>
@@ -473,32 +476,38 @@ USA.
     <sch:title>[Geodata.se:126]Om format anges skall även version för formatet anges </sch:title>
     <sch:rule context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor">
 	  <sch:let name="MDFormatPresent" value="gmd:distributorFormat" />
-      <sch:let name="MDFormat" value="normalize-space(gmd:distributorFormat/gmd:MD_Format/gmd:name/gco:CharacterString)" />
-      <sch:let name="MDFormatVers" value="normalize-space(gmd:distributorFormat/gmd:MD_Format/gmd:version/gco:CharacterString)" />
-      <sch:let name="MDFormatLen" value="string-length(normalize-space(gmd:distributorFormat/gmd:MD_Format/gmd:name/gco:CharacterString))" />
-      <sch:let name="MDFormatVersLen" value="string-length(normalize-space(gmd:distributorFormat/gmd:MD_Format/gmd:version/gco:CharacterString))" />
+	  
+	  <sch:assert	test="$MDFormatPresent" >
+        [Geodata.se:126] Format måste anges" />
+	  </sch:assert> 	  
 
+		
+      <!-- gmd:distributorFormat can have 1 or more children -->
+	  <xsl:for-each select="gmd:distributorFormat/gmd:MD_Format">
+		<sch:let name="MDFormat" value="normalize-space(self::node()[gmd:name/gco:CharacterString/text()])" />
+		<sch:let name="MDFormatLen" value="string-length($MDFormat)" />
+		<sch:let name="MDFormatVers" value="normalize-space(self::node()[gmd:version/gco:CharacterString/text()])" />
+		<sch:let name="MDFormatVersLen" value="string-length($MDFormatVers)" />
 
-      <!--<sch:assert	test="(not($MDFormat) and not($MDFormatVers)) or ($MDFormat and $MDFormatVers)" >-->
-      <!--<sch:assert	test="not($MDFormat) or (($MDFormat and ($MDFormatLen &gt; 1)) and ($MDFormatVers and ($MDFormatVersLen &gt; 0)))" >-->
-      <sch:assert	test="$MDFormatPresent and $MDFormat and $MDFormatVers and ($MDFormatLen &gt; 1) and  ($MDFormatVersLen &gt; 0)" >
+		<sch:assert	test="$MDFormatPresent and $MDFormat and $MDFormatVers and ($MDFormatLen &gt; 1) and  ($MDFormatVersLen &gt; 0)" >
         [Geodata.se:126]Om format anges skall även version för formatet anges: <sch:value-of select="$MDFormat" />
+		</sch:assert> 	  
 
+		  <sch:report test="$MDFormat"><sch:value-of select="$MDFormat" />
+			!<sch:value-of select="$MDFormatVers" />
+			!<sch:value-of select="$MDFormatLen" />
+			!<sch:value-of select="$MDFormatVersLen" />
+			!
+		  </sch:report>
+		  <sch:report test="$MDFormatVers">
+			#<sch:value-of select="$MDFormat" />
+			#<sch:value-of select="$MDFormatVers" />
+			#<sch:value-of select="$MDFormatLen" />
+			#<sch:value-of select="$MDFormatVersLen" />
+			#
+		  </sch:report>
+	  </xsl:for-each>
 
-      </sch:assert>
-      <sch:report test="$MDFormat"><sch:value-of select="$MDFormat" />
-        !<sch:value-of select="$MDFormatVers" />
-        !<sch:value-of select="$MDFormatLen" />
-        !<sch:value-of select="$MDFormatVersLen" />
-        !
-      </sch:report>
-      <sch:report test="$MDFormatVers">
-        #<sch:value-of select="$MDFormat" />
-        #<sch:value-of select="$MDFormatVers" />
-        #<sch:value-of select="$MDFormatLen" />
-        #<sch:value-of select="$MDFormatVersLen" />
-        #
-      </sch:report>
     </sch:rule>
   </sch:pattern>
 
