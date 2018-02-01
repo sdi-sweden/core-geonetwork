@@ -1974,7 +1974,7 @@ Ex. SS-EN ISO 19115.</description>
 
 <!--			&lt;!&ndash;<option show="y" value="inga begransningar">Inga begränsningar</option>
 			<option show="y" value="-&#45;&#45;&#45;&#45;Restriktioner tillämpliga för Inspire">-&#45;&#45;&#45;&#45;Restriktioner tillämpliga för Inspire</option>-->
-      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations" value="no limitations to public access">no limitations to public access</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations" value="inga begränsningar">inga begränsningar</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a" value="Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag">Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b" value="Internationella förbindelser, allmän säkerhet eller nationellt försvar">Internationella förbindelser, allmän säkerhet eller nationellt försvar</option>
 			<option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c" value="Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.">Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.</option>
@@ -3188,8 +3188,8 @@ Detta undvikar vi att ange.</description>
     <label>Åtkomstrestriktioner</label>
     <description>Åtkomstrestriktioner</description>
     <helper sort="no">
-      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="conditions to access and use unknown">conditions to access and use unknown</option>
-      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="no conditions to access and use">no conditions to access and use</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="villkor okända">villkor okända</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="inga tillämpliga villkor">inga tillämpliga villkor</option>
 
     </helper>
   </element>
@@ -3198,9 +3198,12 @@ Detta undvikar vi att ange.</description>
     <label>Nyttjanderestriktioner</label>
     <description>Nyttjanderestriktioner</description>
     <helper sort="no">
-      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="conditions to access and use unknown">conditions to access and use unknown</option>
-      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="no conditions to access and use">no conditions to access and use</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="villkor okända">villkor okända</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="inga tillämpliga villkor">inga tillämpliga villkor</option>
+      <option show="y" title="http://register.geodata.se/metadata/useConstraints.xml#CC01.0" value="Creative commons  CC0 1.0 Universiell">Creative commons  CC0 1.0 Universiell</option>
 
+	  
+	  
     </helper>
   </element>
 
@@ -3212,7 +3215,7 @@ Detta undvikar vi att ange.</description>
 
       <!--			&lt;!&ndash;<option show="y" value="inga begransningar">Inga begränsningar</option>
                   <option show="y" value="-&#45;&#45;&#45;&#45;Restriktioner tillämpliga för Inspire">-&#45;&#45;&#45;&#45;Restriktioner tillämpliga för Inspire</option>-->
-      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations" value="no limitations to public access">no limitations to public access</option>
+      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations" value="inga begränsningar">inga begränsningar</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a" value="Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag">Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b" value="Internationella förbindelser, allmän säkerhet eller nationellt försvar">Internationella förbindelser, allmän säkerhet eller nationellt försvar</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c" value="Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.">Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.</option>
