@@ -413,7 +413,67 @@
       <xsl:apply-templates select="gmd:resourceMaintenance" />
       <xsl:apply-templates select="gmd:graphicOverview" />
       <xsl:apply-templates select="gmd:resourceFormat" />
-      <xsl:apply-templates select="gmd:descriptiveKeywords" />
+      <xsl:apply-templates select="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString != 'Initiativ']" />
+
+      <xsl:for-each select="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'Initiativ']">
+        <xsl:copy>
+          <xsl:copy-of select="@*" />
+
+          <xsl:for-each select="gmd:MD_Keywords">
+            <xsl:copy>
+              <xsl:copy-of select="@*" />
+
+              <xsl:apply-templates select="gmd:keyword" />
+              <xsl:apply-templates select="gmd:type" />
+
+              <xsl:for-each select="gmd:thesaurusName">
+                <xsl:copy>
+                  <xsl:copy-of select="@*" />
+
+                  <xsl:for-each select="gmd:CI_Citation">
+                    <xsl:copy>
+                      <xsl:copy-of select="@*" />
+
+                      <xsl:apply-templates select="gmd:title" />
+                      <xsl:apply-templates select="gmd:alternateTitle" />
+                      <xsl:apply-templates select="gmd:date" />
+                      <xsl:apply-templates select="gmd:edition" />
+                      <xsl:apply-templates select="gmd:editionDate" />
+
+
+                      <xsl:choose>
+                        <!-- Add identifier section required by GeoNetwork -->
+                        <xsl:when test="not(gmd:identifier)">
+                          <gmd:identifier>
+                            <gmd:MD_Identifier>
+                              <gmd:code>
+                                <gmx:Anchor xlink:href="{/root/env/url}/thesaurus.download?ref=external.theme.Initiativ">geonetwork.thesaurus.external.theme.Initiativ</gmx:Anchor>
+                              </gmd:code>
+                            </gmd:MD_Identifier>
+                          </gmd:identifier>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:apply-templates select="gmd:identifier" />
+                        </xsl:otherwise>
+                      </xsl:choose>
+
+                      <xsl:apply-templates select="gmd:citedResponsibleParty" />
+                      <xsl:apply-templates select="gmd:presentationForm" />
+                      <xsl:apply-templates select="gmd:series" />
+                      <xsl:apply-templates select="gmd:otherCitationDetails" />
+                      <xsl:apply-templates select="gmd:collectiveTitle" />
+                      <xsl:apply-templates select="gmd:ISBN" />
+                      <xsl:apply-templates select="gmd:ISSN" />
+
+                    </xsl:copy>
+                  </xsl:for-each>
+                </xsl:copy>
+
+              </xsl:for-each>
+            </xsl:copy>
+          </xsl:for-each>
+        </xsl:copy>
+      </xsl:for-each>
 
       <xsl:if test="count(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'Initiativ']) = 0">
         <gmd:descriptiveKeywords xmlns:gn="http://www.fao.org/geonetwork" xmlns:srv="http://www.isotc211.org/2005/srv">
