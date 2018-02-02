@@ -26,6 +26,7 @@
 	xmlns:gml="http://www.opengis.net/gml" xmlns:srv="http://www.isotc211.org/2005/srv"
 	xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco"
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:geonet="http://www.fao.org/geonetwork"
   xmlns:java="java:org.fao.geonet.util.XslUtil" exclude-result-prefixes="#all">
 
@@ -44,7 +45,38 @@
 
 	<!-- ================================================================= -->
 
-	<xsl:template match="gmd:MD_Metadata">
+  <!-- Fix schemaLocation if not complete -->
+  <xsl:template match="@xsi:schemaLocation">
+
+    <xsl:variable name="isService" select="count(//srv:SV_ServiceIdentification) > 0" />
+
+    <xsl:variable name="schemaLocationInfo">
+      <xsl:choose>
+        <xsl:when test="not(contains(., 'http://www.isotc211.org/2005/gmd')) or
+                        not(contains(., 'http://www.isotc211.org/2005/gmx')) or
+                        ($isService and not(contains(., 'http://www.isotc211.org/2005/srv')))">
+          <xsl:value-of select="." />
+          <xsl:if test="not(contains(., 'http://www.isotc211.org/2005/gmd'))"><xsl:text> </xsl:text>http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd</xsl:if>
+          <xsl:if test="not(contains(., 'http://www.isotc211.org/2005/gmx'))"><xsl:text> </xsl:text>http://www.isotc211.org/2005/gmx http://www.isotc211.org/2005/gmx/gmx.xsd</xsl:if>
+          <xsl:if test="($isService and not(contains(., 'http://www.isotc211.org/2005/srv')))"><xsl:text> </xsl:text>http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd</xsl:if>
+        </xsl:when>
+        <xsl:otherwise></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="string(normalize-space($schemaLocationInfo))">
+        <xsl:attribute name="xsi:schemaLocation"><xsl:value-of select="normalize-space($schemaLocationInfo)" /></xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="." />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!-- ================================================================= -->
+
+  <xsl:template match="gmd:MD_Metadata">
 		<xsl:copy>
 			<xsl:apply-templates select="@*"/>
 
