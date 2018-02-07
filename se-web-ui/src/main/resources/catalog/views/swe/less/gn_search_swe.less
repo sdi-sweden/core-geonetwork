@@ -1011,6 +1011,9 @@ html, body {
   .site-geo-type-filter .other-filter-help-icn {
     top: 0px;
   }
+  .site-geo-type-filter .other-filters {
+    margin-right: 22px;
+  }
   .search-show-only .tool-tip-cont .tool-tip{
     margin-left: 80px;
   }
@@ -1357,9 +1360,9 @@ button:focus [role=tooltip], button:hover [role=tooltip] {
   right: 3em;
   width: 310px;
   min-height: 15em;
-  max-height: 30em;
+  max-height: calc(100% - 2em);
   max-width: none; 
-  overflow-y: hidden;
+  overflow-y: auto;
   transition: opacity .3s ease;
   z-index: 1000;
   background: #fff;
