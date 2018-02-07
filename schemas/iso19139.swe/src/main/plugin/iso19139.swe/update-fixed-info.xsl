@@ -505,6 +505,51 @@
 		</xsl:copy>
 	</xsl:template>
 
+  <xsl:template match="gmd:identificationInfo/srv:SV_ServiceIdentification">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+
+      <xsl:apply-templates select="gmd:citation" />
+      <xsl:apply-templates select="gmd:abstract" />
+      <xsl:apply-templates select="gmd:purpose" />
+      <xsl:apply-templates select="gmd:credit" />
+      <xsl:apply-templates select="gmd:status" />
+      <xsl:apply-templates select="gmd:pointOfContact" />
+
+      <xsl:variable name="isSDS" select="//gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName = 'other'" />
+      <xsl:if test="$isSDS = true()">
+        <xsl:variable name="existsCustodian" select="count(gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'custodian']) > 0" />
+        <xsl:variable name="existsDistributorCustodian" select="count(//gmd:distributorContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'custodian']) > 0" />
+
+        <xsl:if test="$existsCustodian = false() and $existsDistributorCustodian = true()">
+          <gmd:pointOfContact>
+            <xsl:copy-of select="//gmd:distributorContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'custodian']/gmd:CI_ResponsibleParty" />
+          </gmd:pointOfContact>
+        </xsl:if>
+      </xsl:if>
+
+      <xsl:apply-templates select="gmd:resourceMaintenance" />
+      <xsl:apply-templates select="gmd:graphicOverview" />
+      <xsl:apply-templates select="gmd:resourceFormat" />
+      <xsl:apply-templates select="gmd:descriptiveKeywords" />
+      <xsl:apply-templates select="gmd:resourceSpecificUsage" />
+      <xsl:apply-templates select="gmd:resourceConstraints" />
+      <xsl:apply-templates select="gmd:aggregationInfo" />
+
+      <xsl:apply-templates select="srv:serviceType" />
+      <xsl:apply-templates select="srv:serviceTypeVersion" />
+      <xsl:apply-templates select="srv:accessProperties" />
+      <xsl:apply-templates select="srv:restrictions" />
+      <xsl:apply-templates select="srv:keywords" />
+      <xsl:apply-templates select="srv:extent" />
+      <xsl:apply-templates select="srv:coupledResource" />
+      <xsl:apply-templates select="srv:couplingType" />
+      <xsl:apply-templates select="srv:containsOperations" />
+      <xsl:apply-templates select="srv:operatesOn" />
+    </xsl:copy>
+  </xsl:template>
+
 	<xsl:template match="gmd:MD_Distributor">
 		<xsl:copy>
 			<xsl:copy-of select="@*" />
@@ -582,7 +627,8 @@
 	<!-- If the value is defined in the labels helper (contains the value in the helper) and contains
 			 a title value (related attribute), it's stored as gmx:Anchor. Otherwise is stored as gco:CharacterString
 	-->
-	<xsl:template match="gmd:otherConstraints" priority="1000">
+	<xsl:template match="gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'ConditionsApplyingToAccessAndUse')) and
+	                                          not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAccess'))]" priority="1000">
 		<xsl:variable name="value" select="*/text()" />
 
 		<xsl:variable name="valueInHelper" select="$labelsFile/labels/element[@name='gmd:otherConstraints']/helper/option[contains($value, @value)]/@title" />
@@ -599,27 +645,14 @@
 
 			</xsl:when>
 			<xsl:otherwise>
-        <xsl:variable name="valueInHelper2" select="$labelsFile/labels/element[@name='conditionsForAccess']/helper/option[contains($value, @value)]/@title" />
-
-        <xsl:choose>
-          <xsl:when test="string($valueInHelper2)">
-            <gmd:otherConstraints>
-              <xsl:copy-of select="@*" />
-              <gmx:Anchor xlink:href="{$valueInHelper2}"><xsl:value-of select="$value" /></gmx:Anchor>
-            </gmd:otherConstraints>
-
-          </xsl:when>
-          <xsl:otherwise>
-            <gmd:otherConstraints>
-              <xsl:copy-of select="@*" />
-              <gco:CharacterString><xsl:value-of select="$value" /></gco:CharacterString>
-            </gmd:otherConstraints>
-          </xsl:otherwise>
-        </xsl:choose>
-
+        <gmd:otherConstraints>
+          <xsl:copy-of select="@*" />
+          <gco:CharacterString><xsl:value-of select="$value" /></gco:CharacterString>
+        </gmd:otherConstraints>
       </xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+
 <!-- ================================================================= -->
 	<!-- copy everything else as is -->
 

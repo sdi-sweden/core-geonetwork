@@ -42,6 +42,7 @@
         templateUrl: '../../catalog/components/edit/resourceconstraint/partials/' +
         'resourceconstraint.html',
         link: function(scope, element, attrs) {
+
           // Assign gnCurrentEdit, otherwise tooltips doesn't work
           scope.gnCurrentEdit = gnCurrentEdit;
 
@@ -70,7 +71,7 @@
                 "                                          codeListValue=\"otherRestrictions\"/>\n" +
                 "               </gmd:accessConstraints>\n" +
                 "               <gmd:otherConstraints>\n" +
-                "                  <gmx:Anchor xlink:href=\"" + scope.selectedValueAttr + "\">" + scope.selectedValue + "</gmx:Anchor>\n" +
+                "                  <gmx:Anchor xlink:href=\"" + scope.selectedValueAttr.id + "\">" + scope.selectedValue + "</gmx:Anchor>\n" +
                 "               </gmd:otherConstraints>\n" +
                 "            </gmd:MD_LegalConstraints>";
             } else {
@@ -82,7 +83,7 @@
                 "                                          codeListValue=\"otherRestrictions\"/>\n" +
                 "               </gmd:useConstraints>\n" +
                 "               <gmd:otherConstraints>\n" +
-                "                  <gmx:Anchor xlink:href=\"" + scope.selectedValueAttr + "\">" + scope.selectedValue + "</gmx:Anchor>\n" +
+                "                  <gmx:Anchor xlink:href=\"" + scope.selectedValueAttr.id + "\">" + scope.selectedValue + "</gmx:Anchor>\n" +
                 "               </gmd:otherConstraints>\n" +
                 "            </gmd:MD_LegalConstraints>";
             }
