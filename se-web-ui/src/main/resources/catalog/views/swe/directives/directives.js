@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -164,6 +164,43 @@
 
   /**
    * @ngdoc directive
+   * @name sweShowDialog
+   * @function
+   *
+   * @description
+   * Adds "show" class for the dialog referenced in scope.dialog.
+   *
+   */
+  module.directive('sweShowDialogForHelp', [
+    function() {
+      return {
+        restrict: 'A',
+        scope: { dialog: '@dialog', focusControl: '@focusControl'},
+        link: function(scope, elem) {
+          elem.on('click', function() {
+            angular.element(scope.dialog).addClass('show');
+            if (scope.focusControl) {
+              angular.element(scope.focusControl).focus();
+            }
+          });
+        }
+      };
+    }
+  ]);
+
+  module.directive('dragable', function(){
+	  return {
+	    restrict: 'A',
+	    link : function(scope,elem,attr){
+	    	$(elem).draggable({
+	    		containment: "window"
+	        });
+	    }
+	  }
+	});
+
+  /**
+   * @ngdoc directive
    * @name sweHideDialog
    * @function
    *
@@ -228,8 +265,8 @@
    * Displays a tooltip element.
    *
    */
-  module.directive('sweTooltip', ['$timeout', 'gnConfig', 'gnConfigService',
-    function($timeout, gnConfig, gnConfigService) {
+  module.directive('sweTooltip', ['$timeout','$rootScope','gnConfig','gnConfigService',
+    function($timeout, $rootScope, gnConfig, gnConfigService) {
       return {
         restrict: 'A',
         replace: true,
@@ -248,18 +285,35 @@
           $timeout(function () {
             elem.on('click', '.help-icn-circle', function () {
               var tooltipElem = elem.find('.tool-tip-cont');
-
               if (tooltipElem.hasClass('open')) {
                 tooltipElem.removeClass('open');
               } else {
                 tooltipElem.addClass('open');
               }
+              $rootScope.$emit('closetooltip', tooltipElem);
             })
-          })
+          });
+
+		  $rootScope.$on('closetooltip', function (event, tooltipElem) {
+		     var tmpElem = elem.find('.tool-tip-cont');
+		     if(tmpElem != undefined && tooltipElem != undefined){
+		        if(tmpElem.get(0) !== tooltipElem.get(0)){
+				   if (tmpElem.hasClass('open')) {
+	                  tmpElem.removeClass('open');
+			       }
+			    }
+		     }
+	      });
+
+          scope.openPopup = function() {
+        	  var url = scope.prefix + scope.link;
+        	  $rootScope.$emit('openhelppopup', url);
+		  }
         }
       };
     }
   ]);
+
 
   /**
    * @ngdoc directive
@@ -293,10 +347,10 @@
    * Shows predefined maps filters on home page.
    *
    */
-  module.directive('swePredefinedMapsFilter', ['$http', 'gnOwsContextService', 'gnSearchSettings',
-    function($http, gnOwsContextService, gnSearchSettings) {
+  module.directive('swePredefinedMapsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings', '$timeout', 'gnViewerSettings',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings, $timeout, gnViewerSettings) {
       return {
-        restrict: 'E',
+        restrict: 'EA',
         replace: true,
         templateUrl: '../../catalog/views/swe/directives/' +
           'partials/predefinedMaps.html',
@@ -304,8 +358,10 @@
           predefinedMaps: '@',
           selectedMap: '@',
           showMapFn: '&',
+          showMapFnApi: '&',
           configUrl: '@',
-          selectedItem: '@'
+          selectedItem: '@',
+          isImageClicked: '='
         },
         link: function(scope, element, attrs) {
           scope.$watch("configUrl", function(value) {
@@ -314,26 +370,89 @@
                   scope.predefinedMaps = data;
 
                   if (scope.selectedMap != undefined) {
+                	  var indexPredef;
                       var predefinedMapsFiltered =
                           scope.predefinedMaps.filter(function(x) {
-                              return x['title'] === scope.selectedMap
+                            if(x['id'] == scope.selectedMap){
+                        	  indexPredef = scope.predefinedMaps.indexOf(x);
+                        	}
+                            return x['id'] == scope.selectedMap
                           });
 
                       if (predefinedMapsFiltered.length > 0) {
-                          scope.doView(predefinedMapsFiltered[0]);
+                          scope.doViewFromApi(indexPredef, predefinedMapsFiltered[0]);
                       }
                   }
               });
             }
           });
+
+    	  $rootScope.$on('closePredefMap', function() {
+              scope.selectedItem = -1;
+              var predefMapArrow = angular.element('#predefmapsArrow');
+              if(!predefMapArrow.hasClass('cls-btn icon-down-dir')){
+            	  $timeout(function() {
+            		  predefMapArrow.trigger('click'); 
+            	  }, 100);
+              };
+              selectedPredefMap = angular.element('.selected-img');
+              if(selectedPredefMap.length > 0){
+                 selectedPredefMap.removeClass('selected-img').addClass('bg-img');
+                  $timeout(function() {
+                    angular.element('.bg-img').css("opacity", "1");
+                    angular.element('.selected-img').css("opacity", "1");
+                  }, 500);
+              }
+           });
+
           scope.doView = function(index, predefinedMap) {
-			scope.selectedItem = index;
+          	  scope.selectedItem = index;
+              scope.isImageClicked = true;
+              gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
+               $timeout(function() {
+                  angular.element('.bg-img').css("opacity", "0.2");
+                  angular.element('.selected-img').css("opacity", "1");
+                }, 250);
+
+              scope.showMapFn()();
+              angular.element('#layers').removeClass('ng-hide');
+  			  var layersButton = angular.element('#layersButton');
+  			  if (!layersButton.hasClass('active')){
+  			     $timeout(function() {
+  			        layersButton.trigger('click');
+  			     }, 500);
+  			  }
+            };
+
+          scope.doViewFromApi = function(index, predefinedMap) {
+            // delete owsContext cookie to avoid loading previous layers
+            // if loading a predefined map from the Api
+            var storage = gnViewerSettings.storage ?
+              window[gnViewerSettings.storage] : window.localStorage;
+
+            storage.removeItem('owsContext')
+
+        	scope.selectedItem = index;
+            scope.isImageClicked = true;
             gnOwsContextService.loadContext(predefinedMap.map, gnSearchSettings.viewerMap);
-            scope.showMapFn()();
+            $timeout(function() {
+                angular.element('.bg-img').css("opacity", "0.2");
+                angular.element('.selected-img').css("opacity", "1");
+              }, 250);
+
+            scope.showMapFnApi()();
+            angular.element('#layers').removeClass('ng-hide');
+			var layersButton = angular.element('#layersButton');
+			if (!layersButton.hasClass('active')){
+			   $timeout(function() {
+			      layersButton.trigger('click');
+			   }, 500);
+			}
           };
         }
       };
   }]);
+
 
   /**
    * @ngdoc directive
@@ -344,8 +463,8 @@
    * Shows geotechnics on home page.
    *
    */
-  module.directive('sweGeoTechnicsFilter', ['$http', 'gnOwsContextService', 'gnSearchSettings',
-    function($http, gnOwsContextService, gnSearchSettings) {
+  module.directive('sweGeoTechnicsFilter', ['$http', '$rootScope', 'gnOwsContextService', 'gnSearchSettings', '$timeout',
+    function($http, $rootScope, gnOwsContextService, gnSearchSettings, $timeout) {
       return {
         restrict: 'E',
         replace: true,
@@ -367,8 +486,16 @@
           });
 
           scope.doView = function(geoTechnic) {
+          	$rootScope.$emit('closePredefMap');
             gnOwsContextService.loadContext(geoTechnic.map, gnSearchSettings.viewerMap);
             scope.showMapFn()();
+            angular.element('#layers').removeClass('ng-hide');
+			var layersButton = angular.element('#layersButton');
+			if (!layersButton.hasClass('active')){
+			   $timeout(function() {
+			      layersButton.trigger('click');
+			   }, 500);
+			}
           };
         }
       };
