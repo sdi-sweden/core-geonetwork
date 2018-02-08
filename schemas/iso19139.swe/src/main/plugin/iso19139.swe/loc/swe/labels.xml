@@ -2334,8 +2334,8 @@ Ex. “under produktion” eller ”färdigställd”.</description>
 		<description>Namn som den hänvisade rapporten är känd under</description>
         <condition>mandatory</condition>
 		<helper sort="false">
-			<option show="y" title="Kommissionens förordning nr 976/2009 avseende nättjänster" value="Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster">Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster</option>
-			<option show="y" title="KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster" value="KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster">KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster</option>
+			<option show="y" title="http://eur-lex.europa.eu/eli/reg/2009/976" value="Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster">Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster</option>
+			<option show="y" title="http://data.europa.eu/eli/reg/2010/1089" value="KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster">KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster</option>
 			<option show="y" value="Tekniskt ramverk version 2.0">Tekniskt ramverk version 2.0</option>
 			<option show="y" value="INSPIRE Data Specification on Protected Sites - Guidelines">INSPIRE Data Specification on Protected Sites - Guidelines</option>
 			<option show="y" value="INSPIRE Data Specification on Area management/restriction/regulation zones and reporting units - Draft Technical Guidelines">INSPIRE Data Specification on Area management/restriction/regulation zones and reporting units - Draft Technical Guidelines</option>
@@ -3202,8 +3202,8 @@ Detta undvikar vi att ange.</description>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="inga tillämpliga villkor">inga tillämpliga villkor</option>
       <option show="y" title="http://register.geodata.se/metadata/useConstraints.xml#CC01.0" value="Creative commons  CC0 1.0 Universiell">Creative commons  CC0 1.0 Universiell</option>
 
-	  
-	  
+
+
     </helper>
   </element>
 
@@ -3224,6 +3224,38 @@ Detta undvikar vi att ange.</description>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1f" value="Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning">Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g" value="En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.">En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h" value="Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter">Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter</option>
+    </helper>
+  </element>
+
+
+  <element id="72.0" name="InspireRegulations">
+    <label>Titel</label>
+    <description>Namn som den hänvisade rapporten är känd under</description>
+    <condition>mandatory</condition>
+    <helper sort="false" relAtt="xlink:href">
+      <option show="y" title="http://data.europa.eu/eli/reg/2009/976" value="Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster">Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster</option>
+      <option show="y" title="http://data.europa.eu/eli/reg/2010/1089" value="KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster">KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster</option>
+    </helper>
+  </element>
+
+
+  <element id="72.0" name="InspireTechnicalReport">
+    <label>Titel</label>
+    <description>Namn som den hänvisade rapporten är känd under</description>
+    <condition>mandatory</condition>
+    <helper sort="false" relAtt="xlink:href">
+      <option show="y" value="Tekniskt ramverk version 2.0">Tekniskt ramverk version 2.0</option>
+      <option show="y" value="INSPIRE Data Specification on Protected Sites - Guidelines">INSPIRE Data Specification on Protected Sites - Guidelines</option>
+      <option show="y" value="INSPIRE Data Specification on Area management/restriction/regulation zones and reporting units - Draft Technical Guidelines">INSPIRE Data Specification on Area management/restriction/regulation zones and reporting units - Draft Technical Guidelines</option>
+      <option show="y" value="INSPIRE Data Specification on Bio-geographical Regions - Draft Technical Guidelines">INSPIRE Data Specification on Bio-geographical Regions - Draft Technical Guidelines</option>
+      <option show="y" value="INSPIRE Data Specification on Environmental Monitoring Facilities - Draft Technical Guidelines">INSPIRE Data Specification on Environmental Monitoring Facilities - Draft Technical Guidelines</option>
+      <option show="y" value="INSPIRE Data Specification on Habitats and Biotopes - Draft Technical Guidelines">INSPIRE Data Specification on Habitats and Biotopes - Draft Technical Guidelines</option>
+      <option show="y" value="INSPIRE Data Specification on Land Cover - Draft Technical Guidelines">INSPIRE Data Specification on Land Cover - Draft Technical Guidelines</option>
+      <option show="y" value="INSPIRE Data Specification on Land Use - Draft Technical Guidelines">INSPIRE Data Specification on Land Use - Draft Technical Guidelines</option>
+      <option show="y" value="INSPIRE Data Specification on Production and Industrial Facilities - Draft Technical Guidelines">INSPIRE Data Specification on Production and Industrial Facilities - Draft Technical Guidelines</option>
+      <option show="y" value="INSPIRE Data Specification on Sea regions - Draft Technical Guidelines">INSPIRE Data Specification on Sea regions - Draft Technical Guidelines</option>
+      <option show="y" value="INSPIRE Data Specification on Species Distribution - Draft Technical Guidelines">INSPIRE Data Specification on Species Distribution - Draft Technical Guidelines</option>
+      <option show="y" value="INSPIRE Data Specification on Statistical units - Draft Technical Guidelines">INSPIRE Data Specification on Statistical units - Draft Technical Guidelines</option>
     </helper>
   </element>
 </labels>

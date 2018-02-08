@@ -41,8 +41,9 @@
     node()[namespace-uri()!='http://www.fao.org/geonetwork' and
            not(contains(name(.),'_ELEMENT'))]"
     mode="gn-element-cleaner">
-    <xsl:copy>
-      <xsl:copy-of select="@*[namespace-uri()!='http://www.fao.org/geonetwork']"/>
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of select="namespace::*[. != 'http://www.fao.org/geonetwork']"/>
+      <xsl:copy-of select="@*[namespace-uri() != 'http://www.fao.org/geonetwork']"/>
       <xsl:apply-templates select="node()" mode="gn-element-cleaner"/>
     </xsl:copy>
   </xsl:template>
@@ -75,10 +76,22 @@
 
     <xsl:variable name="nodeName" select="name(.)"/>
     <xsl:variable name="parentName" select="name(..)"/>
+    <xsl:variable name="attrs" select="@*"/>
 
     <xsl:copy>
-      <xsl:copy-of
-        select="@*|$node-to-merge/descendant-or-self::node()[name() = $nodeName and name(..) = $parentName]/@*"/>
+      <!-- Copy all attribute from the template mode first
+       and then all existing attributes of the equivalent node
+       which are not defined in the template (to avoid to override
+       the template attribute by the matching node ones). -->
+      <xsl:copy-of select="$attrs"/>
+      <xsl:for-each select="$node-to-merge/descendant-or-self::node()[
+                              name() = $nodeName and name(..) = $parentName
+                            ]/@*">
+        <xsl:variable name="attrName" select="name()"/>
+      <xsl:if test="count($attrs[name() = $attrName]) = 0">
+          <xsl:copy-of select="."/>
+        </xsl:if>
+      </xsl:for-each>
       <xsl:apply-templates mode="gn-merge" select="*">
         <xsl:with-param name="node-to-merge" select="$node-to-merge"/>
       </xsl:apply-templates>

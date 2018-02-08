@@ -610,8 +610,20 @@
       ]
     </xsl:variable>
 
+    <xsl:variable name="mdType">
+      <xsl:choose>
+        <xsl:when test="count(//gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">dataset</xsl:when>
+        <xsl:otherwise>
+          <xsl:choose>
+            <xsl:when test="//gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName = 'other'">sds</xsl:when>
+            <xsl:otherwise>service</xsl:otherwise>
+          </xsl:choose>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$contactModel}, {$contactTableModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#contact-popup-{local-name()}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
+         data-ng-init="init({$contactModel}, {$contactTableModel}, '{$contactXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#contact-popup-{local-name()}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}', '{$mdType}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -622,6 +634,10 @@
 
         <div data-swe-date-dialog="">
 			<div data-ng-show="showResourceContactDD">
+        <label class="control-label" data-ng-translate="">
+          <xsl:value-of select="$strings/selectResourceContact" />
+        </label>
+
 				<select class="form-control" data-ng-model="organisation" data-ng-change="populateContactFields(organisation)">
 					<option data-ng-repeat="org in organisationNames.{local-name()}" title="{{org.displayValue}}" data-ng-value="org.fieldValue">
 						{{org.displayValue}}
@@ -664,7 +680,8 @@
                                   $codelists,
                                   .)"/>
 
-            <select class="" data-ng-model="editRow.role">
+
+            <select class="" data-ng-model="editRow.role" data-ng-disabled="mdType == 'sds' &amp;&amp; name == 'distributorContact'">
               <xsl:for-each select="$codelist/entry">
                 <xsl:sort select="label"/>
                 <option value="{code}" title="{normalize-space(description)}">
@@ -673,6 +690,7 @@
               </xsl:for-each>
             </select>
           </div>
+
 
           <div class="">
             <button type="button" class="btn navbar-btn btn-success" data-ng-click="saveRow()">
@@ -988,8 +1006,21 @@
 
     <xsl:variable name="dialog-id" select="generate-id()" />
 
+    <xsl:variable name="mdType">
+      <xsl:choose>
+        <xsl:when test="count(//gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">dataset</xsl:when>
+        <xsl:otherwise>
+          <xsl:choose>
+            <xsl:when test="//gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName = 'other'">sds</xsl:when>
+            <xsl:otherwise>service</xsl:otherwise>
+          </xsl:choose>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:message>$mdType: <xsl:value-of select="$mdType" /></xsl:message>
     <div class="form-group gn-field distributorOnlineKalla" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
+         data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}', '{$mdType}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -1034,12 +1065,20 @@
             <input type="text" class="form-control" data-ng-model="editRow.fname" />
           </div>
 
-          <div>
+          <div data-ng-show="mdType == 'sds'">
             <label class="col-sm-6 control-label">
               <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:description', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
             </label>
 
             <textarea  class="form-control" data-ng-model="editRow.description"></textarea>
+
+            <label class="col-sm-6 control-label">
+              SDS service description (suggestions):
+            </label>
+            <select class="form-control" data-ng-model="editRow.description">
+              <option value="accessPoint">Access Point</option>
+              <option value="endPoint">End Point</option>
+            </select>
           </div>
 
           <div class="">

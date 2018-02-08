@@ -129,6 +129,8 @@
   <metadataMaintenance2>Underhäll</metadataMaintenance2>
   <restrictions>Restriktioner</restrictions>
   <dataQualityInfo2>Kvaliteinformation</dataQualityInfo2>
+  <dataQualityInfoService>Kvaliteinformation</dataQualityInfoService>
+  <dataQualityInfoSDS>Kvaliteinformation</dataQualityInfoSDS>
   <service>Beskrivning av tjänst</service>
   <dataset>Beskrivning av datamängd</dataset>
   <resources>Tillhandahållande av resurser</resources>
@@ -185,6 +187,11 @@
   <sds-tech-spec>Technical specification</sds-tech-spec>
   <conformity_desc>Tech spec title</conformity_desc>
   <conformity_linkage>Tech spec URL</conformity_linkage>
+
+  <sds-add-reg-spec>Add a regulation specification</sds-add-reg-spec>
+  <sds-reg-spec>Regulation specification</sds-reg-spec>
+  <reg_conformity_desc>Regulation spec title</reg_conformity_desc>
+  <reg_conformity_linkage>Regulation spec URL</reg_conformity_linkage>
 
 
   <sds-section-qos>Quality of Service</sds-section-qos>
