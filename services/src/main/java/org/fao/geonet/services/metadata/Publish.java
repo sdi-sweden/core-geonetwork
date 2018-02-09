@@ -36,6 +36,7 @@ import jeeves.server.dispatchers.ServiceManager;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.domain.Metadata;
 import org.fao.geonet.domain.OperationAllowed;
+import org.fao.geonet.domain.OperationAllowedId;
 import org.fao.geonet.domain.ReservedGroup;
 import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.exceptions.ServiceNotAllowedEx;
@@ -186,6 +187,9 @@ public class Publish {
                     }
                 }
 
+                // #1373 make published metadata viewable and downloadable to All users
+                forceAddOfViewAndDownloadToGrouplAll(mdId, operationAllowed);
+
                 doPublish(serviceContext, report, groupIds, toIndex, operationIds, mdId, allOpsSpec, operationAllowed);
             } else {
                 doUnpublish(serviceContext, report, groupIds, toIndex, operationIds, mdId, allOpsSpec, operationAllowed);
@@ -195,8 +199,42 @@ public class Publish {
         BatchOpsMetadataReindexer r = new BatchOpsMetadataReindexer(dataManager, toIndex);
         r.process(testing || toIndex.size() < 5);
 
-
         return report;
+    }
+
+    private void forceAddOfViewAndDownloadToGrouplAll(int metadataId, List<OperationAllowed> operationsAllowed) {
+        boolean hasView = false;
+        boolean hasDownload = false;
+        int GROUP_ALL = ReservedGroup.all.getId();
+        int VIEW = ReservedOperation.view.getId();
+        int DOWNLOAD = ReservedOperation.download.getId();
+
+        for (OperationAllowed operationAllowed : operationsAllowed) {
+            OperationAllowedId opAllowedId = operationAllowed.getId();
+            metadataId = opAllowedId.getMetadataId();
+            boolean groupAll = false;
+            if (opAllowedId.getGroupId() == GROUP_ALL) {
+                groupAll = true;
+            }
+            if (groupAll && opAllowedId.getOperationId() == VIEW) {
+                hasView = true;
+            }
+            if (groupAll && opAllowedId.getOperationId() == DOWNLOAD) {
+                hasDownload = true;
+            }
+        }
+        if (!hasView) {
+            createNewOperation(operationsAllowed, GROUP_ALL, VIEW, metadataId);
+        }
+        if (!hasDownload) {
+            createNewOperation(operationsAllowed, GROUP_ALL, DOWNLOAD, metadataId);
+        }
+    }
+
+    private void createNewOperation(List<OperationAllowed> operationsAllowed, int group, int operation, int metadataId) {
+        OperationAllowedId newOpID = new OperationAllowedId(metadataId, group, operation);
+        OperationAllowed newOperationAllowed = new OperationAllowed(newOpID);
+        operationsAllowed.add(newOperationAllowed);
     }
 
     private Iterator<String> getIds(ConfigurableApplicationContext appContext, UserSession userSession, final String commaSeparatedIds) {
@@ -306,6 +344,7 @@ public class Publish {
     }
 
 
+    @SuppressWarnings("serial")
     @XmlRootElement(name = "publishReport")
     @XmlAccessorType(XmlAccessType.FIELD)
     public static final class PublishReport implements Serializable {
