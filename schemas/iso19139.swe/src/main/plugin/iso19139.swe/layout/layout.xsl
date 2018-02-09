@@ -1018,7 +1018,7 @@
       </xsl:choose>
     </xsl:variable>
 
-    <xsl:message>$mdType: <xsl:value-of select="$mdType" /></xsl:message>
+    <!--<xsl:message>$mdType: <xsl:value-of select="$mdType" /></xsl:message>-->
     <div class="form-group gn-field distributorOnlineKalla" data-ng-controller="SweEditorTableController"
          data-ng-init="init({$onlineResModel}, {$onlineResTableModel}, '{$onlineResXmlSnippet}', {../gn:element/@ref}, '{local-name()}', '#onlineres-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}', '{$mdType}')" >
 
@@ -1063,6 +1063,14 @@
               <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:name', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
             </label>
             <input type="text" class="form-control" data-ng-model="editRow.fname" />
+          </div>
+
+          <div data-ng-show="mdType != 'sds'">
+            <label class="col-sm-6 control-label">
+              <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'gmd:description', $labels, name(gmd:CI_OnlineResource), '', '')/label" />
+            </label>
+
+            <textarea  class="form-control" data-ng-model="editRow.description"></textarea>
           </div>
 
           <div data-ng-show="mdType == 'sds'">
@@ -1183,7 +1191,7 @@
     <xsl:param name="overrideLabel" select="''" required="no"/>
     <xsl:param name="refToDelete" required="no"/>
 
-    <xsl:message>===== resourceConstraints directive</xsl:message>
+    <!--<xsl:message>===== resourceConstraints directive</xsl:message>-->
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
     <xsl:variable name="xpath"
                   select="gn-fn-metadata:getXPathByRef(gn:element/@ref, $metadata, false())"/>
