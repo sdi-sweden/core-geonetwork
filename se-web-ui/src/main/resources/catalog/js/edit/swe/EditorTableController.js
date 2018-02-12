@@ -40,7 +40,7 @@
 
 
       $scope.init = function(rows, rowsModel, xmlSnippet, parent,
-                             name, dialog, title, mandatory, tooltip) {
+                             name, dialog, title, mandatory, tooltip, mdType) {
         $scope.rows = rows;
         $scope.rowsModel = rowsModel;
         $scope.xmlSnippet = xmlSnippet;
@@ -50,6 +50,9 @@
         $scope.title = title;
         $scope.mandatory = mandatory;
         $scope.tooltip = tooltip;
+        console.log("mdType:" + mdType);
+        $scope.mdType = mdType;
+
 		//$scope.organisationNames = null;
 		//if(name === 'distributorContact' || name === 'contact' || name === 'pointOfContact') {
 		if(name === 'pointOfContact' || name === 'contact' || name === 'distributorContact') {
@@ -171,7 +174,12 @@
      */
       $scope.addRow = function() {
         $scope.mode = 'add';
-        $scope.editRow = {ref: ''};
+
+        if (($scope.mdType === 'sds') && ($scope.name === 'distributorContact')) {
+          $scope.editRow = {ref: '', role: 'custodian'};
+        } else {
+          $scope.editRow = {ref: ''};
+        }
 
         $($scope.dialog).modal('show');
       };
@@ -253,12 +261,20 @@
      * Put the selected record from drop down into table-grid.
      */
 	  $scope.populateContactFields = function(selectedOrganisation) {
-		//$scope.mode = 'add'; // set the mode to 'add' always.
-		$scope.editRow = {ref: ''}; // reset the editRow reference.
-		$scope.editRow.organisation = selectedOrganisation.split('~')[0]; // 0 always org
-		$scope.editRow.email = selectedOrganisation.split('~')[1]; // 1 always email
-		$scope.editRow.phone = selectedOrganisation.split('~')[2]; // 2 always phone
-		$scope.editRow.role = ''; // Role is always empty
+
+	    var role = '';
+      //$scope.mode = 'add'; // set the mode to 'add' always.
+      // Role is always empty (except in SDS distributor, keep the value)
+      if(($scope.mdType === 'sds') && ($scope.name === 'distributorContact')) {
+        role = $scope.editRow.role;
+      }
+
+      $scope.editRow = {ref: ''}; // reset the editRow reference.
+      $scope.editRow.organisation = selectedOrganisation.split('~')[0]; // 0 always org
+      $scope.editRow.email = selectedOrganisation.split('~')[1]; // 1 always email
+      $scope.editRow.phone = selectedOrganisation.split('~')[2]; // 2 always phone
+      $scope.editRow.role = role; // Role is always empty (except in SDS distributor, keep the value)
+
 
 		//$scope.saveRow(); // Put the selected record from drop down into table-grid
 	  };

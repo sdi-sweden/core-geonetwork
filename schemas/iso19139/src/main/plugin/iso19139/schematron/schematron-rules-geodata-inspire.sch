@@ -199,7 +199,7 @@ USA.
 			<sch:let name="keywordValue_INS" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
 			<sch:assert test="$degree or not($keywordValue_INS)">[Geodata.se:109] Resurser som ingår i Inspire skall ha en överensstämmelserapport </sch:assert>
 
-		</sch:rule>
+		</sch:rule>	
 
 		<sch:rule context="/gmd:MD_Metadata//gmd:report/gmd:DQ_DomainConsistency/gmd:result">
 			<sch:let name="keywordValue_INS" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
@@ -218,10 +218,7 @@ USA.
 				<sch:value-of select="$degree"/>
 			</sch:report>
 -->			
-			<sch:assert
-				test="(($title_count > 0) and $degree and $specification_date and $explanation) or not($keywordValue_INS)">[Geodata.se:109] Resurser som ingår i Inspire bör ha en överensstämmelserapport
-			</sch:assert>
-
+			<sch:assert test="(($title_count > 0) and $degree and $specification_date and $explanation) or not($keywordValue_INS)">[Geodata.se:109] Resurser som ingår i Inspire bör ha en överensstämmelserapport </sch:assert>
 			<sch:assert test="($title_count > 0) or not($keywordValue_INS)">[Geodata.se:109a] Resurser som ingår i Inspire bör ha en överensstämmelserapport  - namn på specifikation saknas </sch:assert>
 			<sch:assert test="$explanation or not($keywordValue_INS)">[Geodata.se:109b] Resurser som ingår i Inspire skall ha en överensstämmelserapport - beskrivning av specifikationsuppfyllelse saknas </sch:assert>
 			<sch:assert test="$degree or not($keywordValue_INS)">[Geodata.se:109c] Resurser som ingår i Inspire skall ha en överensstämmelserapport) - överensstämmelse (ja/nej) saknas </sch:assert>
@@ -230,7 +227,7 @@ USA.
 			<sch:assert test="($resourceType = 'service' and   $serviceSpec)  or ($resourceType = 'dataset' or $resourceType = 'series') or not($keywordValue_INS)">[Geodata.se:109f] Tjänster som ingår i Inspire skall ha en överensstämmelserapport mot genomförandebestämmelsen: Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster  </sch:assert>
 			<sch:assert test="($explanation) or not($keywordValue_INS)">[Geodata.se:109g] Resurser som ingår i Inspire skall ha en överensstämmelserapport) - förklaring saknas </sch:assert>
 		</sch:rule>
-	</sch:pattern>
+    </sch:pattern>
 
 
 	<sch:pattern fpi="[Geodata.se:113b] Metadatakontakt måste ha epostadress och organisation eller person angiven">

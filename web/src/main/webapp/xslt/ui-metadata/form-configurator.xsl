@@ -204,6 +204,8 @@
       <!-- Check if this field is controlled by a condition
           (eg. display that field for service metadata record only).
           If @if expression return false, the field is not displayed. -->
+
+
       <xsl:variable name="isDisplayed">
         <xsl:choose>
           <xsl:when test="@if">
@@ -238,7 +240,7 @@
         In that case, a geonet:child element should exist in the document.
         -->
       <xsl:choose>
-        <xsl:when test="$isDisplayed and not(@templateModeOnly)">
+        <xsl:when test="$isDisplayed = 'true' and not(@templateModeOnly)">
           <xsl:variable name="configName" select="@name"/>
 
 

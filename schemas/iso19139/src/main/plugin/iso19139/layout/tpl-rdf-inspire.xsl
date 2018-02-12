@@ -431,13 +431,13 @@
     <xsl:param name="orrlang">
       <xsl:choose>
         <xsl:when test="gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue != ''">
-          <xsl:value-of select="translate(gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue,$uppercase,$lowercase)"/>
+          <xsl:value-of select="translate(gmd:identificationInfo/*/gmd:language[gmd:LanguageCode/@codeListValue != ''][1]/gmd:LanguageCode/@codeListValue,$uppercase,$lowercase)"/>
         </xsl:when>
         <xsl:when test="gmd:identificationInfo/*/gmd:language/gmd:LanguageCode != ''">
-          <xsl:value-of select="translate(gmd:identificationInfo/*/gmd:language/gmd:LanguageCode,$uppercase,$lowercase)"/>
+          <xsl:value-of select="translate(gmd:identificationInfo/*/gmd:language[gmd:LanguageCode != ''][1]/gmd:LanguageCode,$uppercase,$lowercase)"/>
         </xsl:when>
         <xsl:when test="gmd:identificationInfo/*/gmd:language/gco:CharacterString != ''">
-          <xsl:value-of select="translate(gmd:identificationInfo/*/gmd:language/gco:CharacterString,$uppercase,$lowercase)"/>
+          <xsl:value-of select="translate(gmd:identificationInfo/*/gmd:language[gco:CharacterString != ''][1]/gco:CharacterString,$uppercase,$lowercase)"/>
         </xsl:when>
       </xsl:choose>
     </xsl:param>

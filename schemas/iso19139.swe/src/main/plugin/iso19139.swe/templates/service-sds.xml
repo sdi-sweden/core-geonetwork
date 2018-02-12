@@ -100,6 +100,17 @@
     <gmd:metadataStandardVersion>
       <gco:CharacterString>4.0</gco:CharacterString>
     </gmd:metadataStandardVersion>
+    <gmd:referenceSystemInfo>
+      <gmd:MD_ReferenceSystem>
+        <gmd:referenceSystemIdentifier>
+          <gmd:RS_Identifier>
+            <gmd:code>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:code>
+          </gmd:RS_Identifier>
+        </gmd:referenceSystemIdentifier>
+      </gmd:MD_ReferenceSystem>
+    </gmd:referenceSystemInfo>
     <gmd:identificationInfo>
         <srv:SV_ServiceIdentification>
             <gmd:citation>

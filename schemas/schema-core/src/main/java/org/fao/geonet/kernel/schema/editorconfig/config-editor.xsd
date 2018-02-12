@@ -930,7 +930,7 @@ eg. The gmd:MD_Identifier may contain a gmd:authority node which needs to be pre
             <xs:documentation>The list of values to match from the template.</xs:documentation>
           </xs:annotation>
         </xs:element>
-        <xs:element minOccurs="1" maxOccurs="1" ref="snippet"/>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="snippet"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
