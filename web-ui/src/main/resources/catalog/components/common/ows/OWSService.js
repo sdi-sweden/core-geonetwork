@@ -33,6 +33,24 @@
       'gnUrlUtils', 'gnGlobalSettings', 'gfiOutputFormatCheck',
       function($http, $q, gnUrlUtils, gnGlobalSettings, gfiOutputFormatCheck) {
 
+    	var proxyfyURL = function(url) {
+    		if (url.includes("proxy") || url.includes("topo-wms")) {
+    			return url;    			
+    		}
+    		var newUrl = url;
+            if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+                newUrl = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+            } else if (url.includes("maps-ver.lantmateriet.se")) {
+            	newUrl = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+            }
+             else {
+           	    if (!url.includes("https://")) {
+             	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                }
+            }
+            return newUrl;
+    	}
+    	
         var displayFileContent = function(wmsUrl,data) {
           var parser = new ol.format.WMSCapabilities();
           var result = parser.read(data);
@@ -45,6 +63,13 @@
           var parseUrl = wmsUrl.substring(wmsUrl.indexOf("&") + 1).split("&") 
           if (parseUrl.length > 1) {
              var wmsLayers = parseUrl[1].split("=")
+          }
+          
+          // check if URL needs to go through the Lantmäteriet proxy
+          if (url.includes("maps.lantmateriet.se")) {
+        	  url = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+          } else if (url.includes("maps-ver.lantmateriet.se")) {
+          	url = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
           }
           
           //Function to parse layers inside each layergroup 
@@ -62,10 +87,6 @@
                 }
             }
             return layerCheck;
-          }
-
-          if (url.includes("maps.lantmateriet.se")) {
-            url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
           }
 
           // Push all leaves into a flat array of Layers.
@@ -119,8 +140,8 @@
               }
             }
           };
-          
-          // Check if the Style OnlineReource URL needs to go through proxy
+
+          // Check if the Style OnlineReource URL needs to go through Lantmäteriet proxy
           var checkOnlineResourceURL = function(layers) {
         	  if(layers) {
         		  for (var j = 0; j < layers.length; j++) {
@@ -128,9 +149,12 @@
         				  for (var k = 0; k < layers[j].Style.length; k++) {
         					  if (angular.isDefined(layers[j].Style[k].LegendURL)) {
         						  for (var l = 0; l < layers[j].Style[k].LegendURL.length; l++) {
-        							  if (layers[j].Style[k].LegendURL[l].OnlineResource.includes("maps.lantmateriet.se")) {
-        								  layers[j].Style[k].LegendURL[l].OnlineResource = gnGlobalSettings.lmProxyUrl + encodeURIComponent(layers[j].Style[k].LegendURL[l].OnlineResource);
-            				            }
+        							  var url = layers[j].Style[k].LegendURL[l].OnlineResource;
+								      if (url.includes("maps.lantmateriet.se")){
+								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+								      } else if (url.includes("maps-ver.lantmateriet.se")) {
+								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+								      }
         						  }
         					  } 
         				  }
@@ -186,15 +210,9 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-             	  if (url.includes("maps.lantmateriet.se")) {
-                	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-                  }  else {
-               	    if (!url.includes("https://")) {
-                 	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                    }
-                  }
+             	var proxifiedUrl = proxyfyURL(url);
            	  //send request and decode result
-                $http.get(url, {
+                $http.get(proxifiedUrl, {
                   cache: true
                 })
                     .success(function(data) {
@@ -222,14 +240,8 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-             	  if (url.includes("maps.lantmateriet.se")) {
-                	  url = gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-                  }  else {
-               	    if (!url.includes("https://")) {
-                 	    url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                    }
-                  }
-                  $http.get(url, {
+            	  var proxifiedUrl = proxyfyURL(url);
+                  $http.get(proxifiedUrl, {
                   cache: true
                 })
                     .success(function(data, status, headers, config) {
