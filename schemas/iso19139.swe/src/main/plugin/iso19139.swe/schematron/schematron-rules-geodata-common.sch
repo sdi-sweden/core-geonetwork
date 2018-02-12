@@ -169,25 +169,6 @@ USA.
     </sch:rule>
   </sch:pattern>
   
-  <sch:pattern	fpi="[Geodata.se:106f] Typ av Initativ måste anges (Inspire, Geodatasamverkan eller Öppna Data)">
-    <sch:title>[Geodata.se:106f] Typ av Initativ måste anges (Inspire, Geodatasamverkan eller Öppna Data)</sch:title>
-    <sch:rule
-      context="//gmd:MD_DataIdentification|
-			//*[@gco:isoType='gmd:MD_DataIdentification']|
-			//srv:SV_ServiceIdentification|
-			//*[@gco:isoType='srv:SV_ServiceIdentification']">
-      <sch:let name="initiativ-type-found"
-               value="//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/text() = 'Inspire' or //gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/text() = 'Geodatasamverkan' or //gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/text() = 'Öppna data'"/>
-      <sch:let name="initiativ-found"
-               value="//gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:title/*/text()='Initiativ'"/>
-	  
-      <sch:assert test="$initiativ-found and $initiativ-type-found ">[Geodata.se:106f] Typ av Initativ måste anges (Inspire, Geodatasamverkan eller Öppna Data)</sch:assert>
-	  
-    </sch:rule>
-  </sch:pattern>
-
-  
-  
   <sch:pattern fpi="[Geodata.se:107b] Referensdatum måste anges">
     <sch:rule context="//gmd:identificationInfo">
       <sch:assert test="(//gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date) "

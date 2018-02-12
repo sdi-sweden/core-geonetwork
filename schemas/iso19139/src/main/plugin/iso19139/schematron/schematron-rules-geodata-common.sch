@@ -167,26 +167,7 @@ USA.
       <!--<sch:report test="$serviceType_present">[Geodata.se:106e] Typ av tjänst måste anges(discovery, view, download etc): <sch:value-of select="$serviceType"/>
       </sch:report>-->
     </sch:rule>
-  </sch:pattern>
-  
-  <sch:pattern	fpi="[Geodata.se:106f] Typ av Initativ måste anges (Inspire, Geodatasamverkan eller Öppna Data)">
-    <sch:title>[Geodata.se:106f] Typ av Initativ måste anges (Inspire, Geodatasamverkan eller Öppna Data)</sch:title>
-    <sch:rule
-      context="//gmd:MD_DataIdentification|
-			//*[@gco:isoType='gmd:MD_DataIdentification']|
-			//srv:SV_ServiceIdentification|
-			//*[@gco:isoType='srv:SV_ServiceIdentification']">
-      <sch:let name="initiativ-type-found"
-               value="//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/text() = 'Inspire' or //gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/text() = 'Geodatasamverkan' or //gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/text() = 'Öppna data'"/>
-      <sch:let name="initiativ-found"
-               value="//gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:title/*/text()='Initiativ'"/>
-	  
-      <sch:assert test="$initiativ-found and $initiativ-type-found ">[Geodata.se:106f] Typ av Initativ måste anges (Inspire, Geodatasamverkan eller Öppna Data)</sch:assert>
-	  
-    </sch:rule>
-  </sch:pattern>
-
-  
+  </sch:pattern> 
   
   <sch:pattern fpi="[Geodata.se:107b] Referensdatum måste anges">
     <sch:rule context="//gmd:identificationInfo">
