@@ -34,7 +34,8 @@
        'gnMap',
        'gnOwsContextService',
        '$http',
-       function(gnMap, gnOwsContextService, $http) {
+       'gnSearchLocation',
+       function(gnMap, gnOwsContextService, $http, gnSearchLocation) {
          return {
            restrict: 'A',
            replace: true,
@@ -189,9 +190,6 @@
 
              //To set base map of editor
             var extent = [-1200000, 4700000, 2540000, 8500000];
-            var resolutions = [4096.0, 2048.0, 1024.0, 512.0, 256.0,
-              128.0, 64.0, 32.0, 16.0, 8.0];
-            var matrixIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
             proj4.defs(
                 'EPSG:3006',
@@ -206,44 +204,36 @@
 
             var projection = ol.proj.get('EPSG:3006');
 
-            var tileGrid = new ol.tilegrid.WMTS({
-              tileSize: 256,
-              extent: extent,
-              resolutions: resolutions,
-              matrixIds: matrixIds
+            // MapFish requires absolute path to topoweb service
+            var topoWmsUrl = gnSearchLocation.appUrl() + '/topo-wms';
+
+            var wms = new ol.layer.Tile({
+            	group: 'Background layers',
+            	crossOrigin: 'anonymous',
+            	url: topoWmsUrl,
+                source: new ol.source.TileWMS({
+                    url: topoWmsUrl,
+                    params: {
+                        FORMAT: 'image/png',
+                        VERSION: '1.1.1',
+                        SRS: 'EPSG:3006',
+                        LAYERS: 'topowebbkartan'
+                    }
+                })
             });
-
-            var apiKey = 'a9a380d6b6f25f22e232b8640b05ea8';
-
-            var wmts = new ol.layer.Tile({
-              extent: extent,
-              group: 'Background layers',
-              url:  'https://api.lantmateriet.se/open/topowebb-ccby/' +
-              'v1/wmts/token/' + apiKey + '/',
-              source: new ol.source.WMTS({
-                url: 'https://api.lantmateriet.se/open/topowebb-ccby/' +
-                    'v1/wmts/token/' + apiKey + '/',
-                layer: 'topowebb',
-                format: 'image/png',
-                matrixSet: '3006',
-                tileGrid: tileGrid,
-                version: '1.0.0',
-                style: 'default',
-                crossOrigin: 'anonymous'
-              })
-            }); 
-
+            
             var mapsConfig = {
-              resolutions: resolutions,
               extent: extent,
               projection: projection,
               center: [572087, 6802255],
-              zoom: 0
+              maxZoom: 28,
+              minZoom: 2,
+              zoom: 2
             };
 
              var map = new ol.Map({
                layers: [
-                 wmts,
+                 wms,
                  bboxLayer
                ],
                renderer: 'canvas',
