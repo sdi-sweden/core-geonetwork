@@ -198,10 +198,10 @@ USA.
 			<sch:let name="keywordValue_INS" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
 			<sch:assert test="$degree or not($keywordValue_INS)">[Geodata.se:109] Resurser som ingår i Inspire skall ha en överensstämmelserapport </sch:assert>
 
-			<sch:report test="$degree">(2.8.1) Degree of conformity found:
+		<!--	<sch:report test="$degree">(2.8.1) Degree of conformity found:
 				<sch:value-of select="$degree"/>
 			</sch:report>
-		<!-- -->						
+		 -->						
 		</sch:rule>
 
 		<sch:rule context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report">
@@ -221,20 +221,6 @@ USA.
 			<sch:assert
 				test="($title_count > 0 and $pass_count > 0 and $date_count > 0 and $explanation_count > 0) or not($keywordValue_INS)">[Geodata.se:109] Resurser som ingår i Inspire bör ha en överensstämmelserapport
 			</sch:assert>
-
-			<sch:report test="$title_count">(2.8.1) Number of Titles found:
-				<sch:value-of select="$title_count"/>
-			</sch:report>
-			<sch:report test="$pass_count">(2.8.1) Number of Passes found:
-				<sch:value-of select="$pass_count"/>
-			</sch:report>
-			<sch:report test="$date_count">(2.8.1) Number of Dates found:
-				<sch:value-of select="$date_count"/>
-			</sch:report>
-			<sch:report test="$explanation_count">(2.8.1) Number of Explanations found:
-				<sch:value-of select="$explanation_count"/>
-			</sch:report>
-
 			
 			<sch:assert test="($title_count = $report_count) or not($keywordValue_INS)">[Geodata.se:109a] Resurser som ingår i Inspire bör ha en överensstämmelserapport  - namn på specifikation saknas </sch:assert>
 			<sch:assert test="($explanation_count = $report_count) or not($keywordValue_INS)">[Geodata.se:109b] Resurser som ingår i Inspire skall ha en överensstämmelserapport - beskrivning av specifikationsuppfyllelse saknas </sch:assert>
