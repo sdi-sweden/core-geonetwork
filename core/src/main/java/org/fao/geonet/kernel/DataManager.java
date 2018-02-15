@@ -1,4 +1,4 @@
-//==============================================================================
+﻿//==============================================================================
 //===
 //=== DataManager
 //===
@@ -40,7 +40,7 @@ import com.google.common.collect.Sets;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jetty.util.ConcurrentHashSet;
-import org.eclipse.jetty.util.StringUtil;
+//import org.eclipse.jetty.util.StringUtil;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.NodeInfo;
@@ -141,7 +141,7 @@ import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import java.io.File;
+//import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
