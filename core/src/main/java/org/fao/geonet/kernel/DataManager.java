@@ -40,7 +40,7 @@ import com.google.common.collect.Sets;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jetty.util.ConcurrentHashSet;
-import org.eclipse.jetty.util.StringUtil;
+//import org.eclipse.jetty.util.StringUtil;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.NodeInfo;
@@ -141,7 +141,7 @@ import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import java.io.File;
+//import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -248,6 +248,9 @@ public class DataManager implements ApplicationEventPublisherAware {
         try {
             dataMan.validate(schema, xml);
         } catch (XSDValidationErrorEx e) {
+            if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
+                Log.debug(Geonet.DATA_MANAGER, "XSDValidation Fail: " + e.getMessage());
+            }
             if (!fileName.equals(" ")) {
                 throw new XSDValidationErrorEx(e.getMessage() + "(in " + fileName + "): ", e.getObject());
             } else {
@@ -274,6 +277,10 @@ public class DataManager implements ApplicationEventPublisherAware {
             Element failedSchematronVerification = Xml.selectElement(schemaTronReport, "geonet:report/geonet:schematronVerificationError", theNSs);
 
             if ((failedAssert != null) || (failedSchematronVerification != null)) {
+                if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
+                    Log.debug(Geonet.DATA_MANAGER, "Schematron Validation Fail: FailedAssert = " + failedAssert);
+                    Log.debug(Geonet.DATA_MANAGER, "Schematron Validation Fail: failedSchematronVerification = " + failedSchematronVerification);
+                }
                 throw new SchematronValidationErrorEx("Schematron errors detected for file " + fileName + " - "
                     + Xml.getString(schemaTronReport) + " for more details", schemaTronReport);
             }
