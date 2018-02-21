@@ -194,7 +194,10 @@ USA.
 	<sch:pattern fpi="[Geodata.se:110] Information om restriktioner">
 		<sch:title>[Geodata.se:110] Information om restriktioner</sch:title>
 		
-		<sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">			
+		<sch:rule context="//gmd:MD_DataIdentification|
+			//*[@gco:isoType='gmd:MD_DataIdentification']|
+			//srv:SV_ServiceIdentification|
+			//*[@gco:isoType='srv:SV_ServiceIdentification']">			
 			<sch:let name="resourceConstraints_count" value="count(gmd:resourceConstraints)"/>
 			<sch:assert test="$resourceConstraints_count > 0 ">[Geodata.se:110c] Information om restriktioner saknas</sch:assert>
 
@@ -318,7 +321,7 @@ USA.
 
   <sch:pattern fpi="[Geodata.se:116] Datum för metadata måste anges">
     <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
-      <sch:assert test="(gmd:dateStamp)">[Geodata.se:116] Datum för metadata måste anges</sch:assert>
+      <sch:assert test="(gmd:dateStamp/*/text())">[Geodata.se:116] Datum för metadata måste anges</sch:assert>
     </sch:rule>
   </sch:pattern>
 
@@ -382,7 +385,7 @@ USA.
     </sch:rule>
   </sch:pattern>
 
-  <sch:pattern fpi="Geograpfisk utsträckning [Geodata.se:125]">
+  <sch:pattern fpi="[Geodata.se:125] Geograpfisk utsträckning">
     <sch:title>Kontroll av geografisk utsträckning</sch:title>
     <sch:rule context="//gmd:identificationInfo/gmd:MD_DataIdentification">
       <!--<sch:rule context="//gmd:identificationInfo[1]/gmd:MD_DataIdentification/*">-->
@@ -416,14 +419,10 @@ USA.
     <sch:title>[Geodata.se:126]Om format anges skall även version för formatet anges </sch:title>
 
     <sch:rule context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor">
- 	  <sch:let name="MDFormatPresent" value="count(/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat) > 0" />
-    </sch:rule>
-	
-    <sch:rule context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat">
-      <sch:let name="MDFormat" value="normalize-space(gmd:MD_Format/gmd:name/gco:CharacterString)" />
-      <sch:let name="MDFormatVers" value="normalize-space(gmd:MD_Format/gmd:version/gco:CharacterString)" />
-      <sch:let name="MDFormatLen" value="string-length(normalize-space(gmd:MD_Format/gmd:name/gco:CharacterString))" />
-      <sch:let name="MDFormatVersLen" value="string-length(normalize-space(gmd:MD_Format/gmd:version/gco:CharacterString))" />
+      <sch:let name="MDFormat" value="gmd:distributorFormat/gmd:MD_Format/gmd:name/gco:CharacterString/normalize-space(.)" />
+      <sch:let name="MDFormatVers" value="gmd:distributorFormat/gmd:MD_Format/gmd:version/gco:CharacterString/normalize-space(.)" />
+      <sch:let name="MDFormatLen" value="gmd:distributorFormat/gmd:MD_Format/gmd:name/gco:CharacterString/string-length(normalize-space(.))" />
+      <sch:let name="MDFormatVersLen" value="gmd:distributorFormat/gmd:MD_Format/gmd:version/gco:CharacterString(string-length(normalize-space(.))" />
 
       <sch:assert	test="$MDFormat and $MDFormatVers and ($MDFormatLen &gt; 1) and  ($MDFormatVersLen &gt; 0)" >
         [Geodata.se:126]Om format anges skall även version för formatet anges: <sch:value-of select="$MDFormat" />
