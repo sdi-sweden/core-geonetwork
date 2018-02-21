@@ -1,0 +1,10 @@
+<Context useHttpOnly="true">
+  <Resources>
+    <PreResources className="org.apache.catalina.webresources.FileResourceSet"
+                  base="${catalina.home}/../GeodataFiles/geonetwork/conf/config-node/srv.xml"
+                  webAppMount="/WEB-INF/config-node/srv.xml" />
+    <PreResources className="org.apache.catalina.webresources.FileResourceSet"
+                  base="${catalina.home}/../GeodataFiles/geonetwork/conf/config-db/jdbc.properties"
+                  webAppMount="/WEB-INF/config-db/jdbc.properties" />
+  </Resources>
+</Context> 
