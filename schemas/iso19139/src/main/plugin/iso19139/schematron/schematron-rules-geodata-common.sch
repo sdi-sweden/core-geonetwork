@@ -422,7 +422,7 @@ USA.
       <sch:let name="MDFormat" value="gmd:distributorFormat/gmd:MD_Format/gmd:name/gco:CharacterString/normalize-space(.)" />
       <sch:let name="MDFormatVers" value="gmd:distributorFormat/gmd:MD_Format/gmd:version/gco:CharacterString/normalize-space(.)" />
       <sch:let name="MDFormatLen" value="gmd:distributorFormat/gmd:MD_Format/gmd:name/gco:CharacterString/string-length(normalize-space(.))" />
-      <sch:let name="MDFormatVersLen" value="gmd:distributorFormat/gmd:MD_Format/gmd:version/gco:CharacterString(string-length(normalize-space(.))" />
+      <sch:let name="MDFormatVersLen" value="gmd:distributorFormat/gmd:MD_Format/gmd:version/gco:CharacterString/(string-length(normalize-space(.))" />
 
       <sch:assert	test="$MDFormat and $MDFormatVers and ($MDFormatLen &gt; 1) and  ($MDFormatVersLen &gt; 0)" >
         [Geodata.se:126]Om format anges skall även version för formatet anges: <sch:value-of select="$MDFormat" />
