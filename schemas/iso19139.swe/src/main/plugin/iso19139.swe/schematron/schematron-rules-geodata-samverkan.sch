@@ -75,7 +75,7 @@ USA.
   <!-- TODO : add bbox is mandatory M41 -->
 
   <sch:pattern fpi="[Geodata.se:107] Referensdatum eller Temporal utsträckning  måste anges">
-
+    <sch:title>[Geodata.se:107] Referensdatum eller Temporal utsträckning  måste anges</sch:title>
     <sch:rule context="//gmd:identificationInfo">
       <sch:let name="temporalExtentBegin" value="//gmd:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:beginPosition/text() | //srv:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:beginPosition/text()"/>
       <sch:let name="temporalExtentEnd" value="//gmd:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:endPosition/text() |  //srv:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:endPosition/text()"/>

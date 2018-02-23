@@ -78,6 +78,7 @@ USA.
 	</sch:pattern>
 
 	<sch:pattern fpi="[Geodata.se:106d] Nyckelord tjänsteklassificering är obligatoriskt för tjänster">
+		<sch:title>[Geodata.se:106d] Nyckelord tjänsteklassificering är obligatoriskt för tjänster</sch:title>
 		<sch:rule context="//gmd:hierarchyLevel[1]/*[@codeListValue ='service']">
 			<sch:let name="keywordValue" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()"/>
 			<sch:let name="keywordValue_INS" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
@@ -231,6 +232,7 @@ USA.
 
 
 	<sch:pattern fpi="[Geodata.se:113b] Metadatakontakt måste ha epostadress och organisation eller person angiven">
+		<sch:title>[Geodata.se:113b] Metadatakontakt måste ha epostadress och organisation eller person angiven</sch:title>
 		<sch:rule context="//gmd:MD_Metadata">
 			<sch:assert
         test="(((gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName) or (gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName)) and (gmd:contact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress))"

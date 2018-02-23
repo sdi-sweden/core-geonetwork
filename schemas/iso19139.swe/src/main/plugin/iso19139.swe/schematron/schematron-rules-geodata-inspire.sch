@@ -78,6 +78,7 @@ USA.
 	</sch:pattern>
 
 	<sch:pattern fpi="[Geodata.se:106d] Nyckelord tjänsteklassificering är obligatoriskt för tjänster">
+		<sch:title>[Geodata.se:106d] Nyckelord tjänsteklassificering är obligatoriskt för tjänster</sch:title>
 		<sch:rule context="//gmd:hierarchyLevel[1]/*[@codeListValue ='service']">
 			<sch:let name="keywordValue" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()"/>
 			<sch:let name="keywordValue_INS" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
@@ -193,8 +194,9 @@ USA.
 
 	<sch:pattern fpi="[Geodata.se:109]">
 		<sch:title>Data som ingår i Inspire skall ha en överensstämmelserapport [Geodata.se:109]</sch:title>
-		<sch:rule context="/gmd:MD_Metadata/gmd:dataQualityInfo">
-			<sch:let name="degree" value="count(//gmd:DQ_DomainConsistency) > 0"/>
+		<sch:rule context="/gmd:MD_Metadata">
+
+			<sch:let name="degree" value="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency"/>
 			<sch:let name="keywordValue_INS" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
 			<sch:assert test="$degree or not($keywordValue_INS)">[Geodata.se:109] Resurser som ingår i Inspire skall ha en överensstämmelserapport </sch:assert>
 
@@ -236,6 +238,7 @@ USA.
 
 
 	<sch:pattern fpi="[Geodata.se:113b] Metadatakontakt måste ha epostadress och organisation eller person angiven">
+		<sch:title>[Geodata.se:113b] Metadatakontakt måste ha epostadress och organisation eller person angiven</sch:title>
 		<sch:rule context="//gmd:MD_Metadata">
 			<sch:assert
         test="(((gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName) or (gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName)) and (gmd:contact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress))"

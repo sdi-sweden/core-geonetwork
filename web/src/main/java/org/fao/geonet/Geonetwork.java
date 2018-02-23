@@ -178,6 +178,9 @@ public class Geonetwork implements ApplicationHandler {
         String luceneConfigXmlFile = handlerConfig.getMandatoryValue(Geonet.Config.LUCENE_CONFIG);
 
         logger.info("Data directory: " + systemDataDir);
+        logger.info("Thesauri directory: " + thesauriDir);
+        logger.info("Lucene directory: " + luceneDir);
+        logger.info("Lucene Config XML file: " + luceneConfigXmlFile);
 
         setProps(appPath, handlerConfig);
 
