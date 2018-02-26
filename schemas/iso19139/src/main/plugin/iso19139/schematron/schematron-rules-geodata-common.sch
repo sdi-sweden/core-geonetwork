@@ -117,10 +117,10 @@ USA.
     </sch:rule>
   </sch:pattern>
 
+<!--
   <sch:pattern fpi="[Geodata.se:105] - Ämnesområde  måste anges">
     <sch:title>[Geodata.se:105] - Testing 'Classification of spatial data and services' elements</sch:title>
     <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']">
-      <!-- <sch:rule context="//gmd:identificationInfo[1]/*"> -->
       <sch:let name="topicCategory" value="gmd:topicCategory/*/text()"/>
       <sch:let name="topicCategoryFound"
                value="
@@ -144,13 +144,10 @@ USA.
 				gmd:topicCategory/*/text()='transportation' or
 				gmd:topicCategory/*/text()='utilitiesCommunication'
 				"/>
-      <!-- assertions and report -->
       <sch:assert test="$topicCategoryFound">[[Geodata.se:105I] - Ämnesområde måste anges"</sch:assert>
-      <!--<sch:report test="$topicCategory">(2.3.1) Topic category found: <sch:value-of
-          select="$topicCategory"/>
-      </sch:report>-->
     </sch:rule>
   </sch:pattern>
+-->
 
   <sch:pattern fpi="[Geodata.se:106e] Typ av tjänst måste anges (discovery, view, download etc)">
     <sch:title>[Geodata.se:106e] Kontrollerar: Tjänstetyp måste anges (discovery, view, download etc)</sch:title>
@@ -481,10 +478,12 @@ USA.
         <sch:report test="$value">	<sch:value-of select="$value"/></sch:report>
         <sch:report test="$recordType and $valueUnit and $value">	</sch:report>-->
 
+<!--  Harvested metadata doesn't get the xlink:title and xlink:href fields (something in Geonetwork removes them). This now matches the schematron rules in the old portal
 
       <sch:assert test="$recordType and $valueUnit and $value" >[Geodata.se:127] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges Värde=<sch:value-of select="$value"/>   Värdetyp=<sch:value-of select="$recordType"/>  Värdeenhet=<sch:value-of select="$valueUnit"/>  </sch:assert>
       <sch:assert test="$recordType" >[Geodata.se:127a] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värdetyp saknas </sch:assert>
       <sch:assert test="$valueUnit" >[Geodata.se:127b] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värdeenhet saknas </sch:assert>
+-->
       <sch:assert test="$value" >[Geodata.se:127c] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värde saknas </sch:assert>
 
     </sch:rule>
