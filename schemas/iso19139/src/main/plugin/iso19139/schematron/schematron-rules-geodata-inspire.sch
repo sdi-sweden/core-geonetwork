@@ -78,6 +78,7 @@ USA.
 	</sch:pattern>
 
 	<sch:pattern fpi="[Geodata.se:106d] Nyckelord tjänsteklassificering är obligatoriskt för tjänster">
+		<sch:title>[Geodata.se:106d] Nyckelord tjänsteklassificering är obligatoriskt för tjänster</sch:title>
 		<sch:rule context="//gmd:hierarchyLevel[1]/*[@codeListValue ='service']">
 			<sch:let name="keywordValue" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()"/>
 			<sch:let name="keywordValue_INS" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
@@ -169,7 +170,7 @@ USA.
 		</sch:rule>
 	</sch:pattern>
 
-
+<!-- This used by Schematron XPATH to determine if INSPIRE rule set should be run
 	<sch:pattern	fpi="[Geodata.se:106g] OM resursen ingår i Inspire är nyckelord obligatoriskt med värdet Inspire ur nyckelordslexikonet Initiativ">
 		<sch:title>[Geodata.se:106g] OM resursen ingår i Inspire är nyckelord obligatoriskt med värdet Inspire ur nyckelordslexikonet Initiativ</sch:title>
 		<sch:rule
@@ -181,15 +182,11 @@ USA.
                value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
 			<sch:let name="thesaurus_name_SDT"
                value="//gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:title/*/text()='Initiativ'"/>
-			<!--			<sch:assert test="$keywordValue_SDT">[Geodata.se:106g] Nyckelord är obligatoriskt för Inspire resurser med värdet Inspire i nyckelordslexikonet Initiativ</sch:assert>
-      <sch:assert test="$thesaurus_name_SDT">[Geodata.se:106g] Nyckelord är obligatoriskt för Inspire resurser med värdet Inspire i nyckelordslexikonet Initiativ</sch:assert>
-      -->
-			<sch:assert test="$thesaurus_name_SDT and $keywordValue_SDT">[Geodata.se:106g] OM resursen ingår i Inspire är nyckelord obligatoriskt med värdet Inspire ur nyckelordslexikonet Initiativ</sch:assert>
-			<!--         <sch:report test="$keywordValue_SDT">[Geodata.se:106g] Nyckelord är obligatoriskt för Inspire resurser med värdet Inspire i nyckelordslexikonet Initiativ<sch:value-of select="$keywordValue_SDT"/></sch:report>
-      <sch:report test="$thesaurus_name_SDT">[Geodata.se:106g] Nyckelord är obligatoriskt för Inspire resurser med värdet Inspire i nyckelordslexikonet Initiativ<sch:value-of select="$thesaurus_name_SDT"/></sch:report>
--->
+
+		   <sch:assert test="$thesaurus_name_SDT and $keywordValue_SDT">[Geodata.se:106g] OM resursen ingår i Inspire är nyckelord obligatoriskt med värdet Inspire ur nyckelordslexikonet Initiativ</sch:assert>
 		</sch:rule>
 	</sch:pattern>
+-->
 
 	<sch:pattern fpi="[Geodata.se:109]">
 		<sch:title>Data som ingår i Inspire skall ha en överensstämmelserapport [Geodata.se:109]</sch:title>
@@ -229,14 +226,16 @@ USA.
 		</sch:rule>
     </sch:pattern>
 
-
+<!--
 	<sch:pattern fpi="[Geodata.se:113b] Metadatakontakt måste ha epostadress och organisation eller person angiven">
+		<sch:title>[Geodata.se:113b] Metadatakontakt måste ha epostadress och organisation eller person angiven</sch:title>
 		<sch:rule context="//gmd:MD_Metadata">
 			<sch:assert
         test="(((gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName) or (gmd:contact/gmd:CI_ResponsibleParty/gmd:individualName)) and (gmd:contact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress))"
       >[Geodata.se:113b] Metadatakontakt måste ha epostadress och organisation eller person angiven</sch:assert>
 		</sch:rule>
 	</sch:pattern>
+-->
 
 	<!-- INSPIRE metadata rules / END -->
 	<!-- Kontroller för Geodata.se -->

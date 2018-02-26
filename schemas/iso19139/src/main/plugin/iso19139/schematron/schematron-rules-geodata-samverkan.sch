@@ -52,7 +52,7 @@ USA.
   <!-- INSPIRE metadata rules / START -->
   <!-- ############################################ -->
 
-
+<!-- This used by Schematron XPATH to determine if Geodatasamverkan rule set should be run
   <sch:pattern fpi="[Geodata.se:106h] OM resursen ingår i Geodatasamverkan är nyckelord obligatoriskt med värdet Geodatasamverkan ur nyckelordslexikonet Initiativ">
     <sch:title>[Geodata.se:106h] OM resursen ingår i Geodatasamverkan är nyckelord obligatoriskt med värdet Geodatasamverkan ur nyckelordslexikonet Initiativ</sch:title>
     <sch:rule
@@ -64,18 +64,15 @@ USA.
                value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Geodatasamverkan'"/>
       <sch:let name="thesaurus_name_SDT"
                value="//gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:title/*/text()='Initiativ'"/>
-      <!--			<sch:assert test="$keywordValue_SDT">[Geodata.se:106h] Nyckelord är obligatoriskt för resurser inom Geodatasamverkan med värdet Geodatasamverkan i nyckelordslexikonet Initiativ</sch:assert>
-      <sch:assert test="$thesaurus_name_SDT">[Geodata.se:106h] Nyckelord är obligatoriskt OM resursen ingår i Geodatasamverkan med värdet Geodatasamverkan i nyckelordslexikonet Initiativ </sch:assert>
--->
       <sch:assert test="$thesaurus_name_SDT and $keywordValue_SDT">[Geodata.se:106h] OM resursen ingår i Geodatasamverkan är nyckelord obligatoriskt med värdet Geodatasamverkan ur nyckelordslexikonet Initiativ</sch:assert>
-      <!--	<sch:report test="$keywordValue_SDT">[Geodata.se:106h] OM resursen ingår i Geodatasamverkan är nyckelord obligatoriskt med ett värdet Geodatasamverkan ur nyckelordslexikonet Initiativ<sch:value-of select="$keywordValue_SDT"/></sch:report>
-        <sch:report test="$thesaurus_name_SDT">[Geodata.se:106h] OM resursen ingår i Geodatasamverkan är nyckelord obligatoriskt med ett värdet Geodatasamverkan ur nyckelordslexikonet Initiativ<sch:value-of select="$thesaurus_name_SDT"/></sch:report>-->
     </sch:rule>
   </sch:pattern>
+-->
+
   <!-- TODO : add bbox is mandatory M41 -->
 
   <sch:pattern fpi="[Geodata.se:107] Referensdatum eller Temporal utsträckning  måste anges">
-
+    <sch:title>[Geodata.se:107] Referensdatum eller Temporal utsträckning  måste anges</sch:title>
     <sch:rule context="//gmd:identificationInfo">
       <sch:let name="temporalExtentBegin" value="//gmd:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:beginPosition/text() | //srv:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:beginPosition/text()"/>
       <sch:let name="temporalExtentEnd" value="//gmd:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:endPosition/text() |  //srv:extent/*/gmd:temporalElement/*/gmd:extent/*/gml:endPosition/text()"/>
@@ -99,12 +96,14 @@ USA.
     </sch:rule>
   </sch:pattern>
 
+  <!--  Not in the old portals MetedataClasses file, so not used.
   <sch:pattern fpi="[Geodata.se:117] Kopplade resurser måste anges för en tjänst">
     <sch:rule context="//srv:SV_ServiceIdentification">
       <sch:assert test="(//srv:operatesOn)">[Geodata.se:117] Kopplade resurser måste anges för en tjänst</sch:assert>
     </sch:rule>
   </sch:pattern>
-
+  -->
+  
   <!-- ========================================================================================== -->
   <!-- Abstract Patterns                                                                          -->
   <!-- ========================================================================================== -->

@@ -1634,6 +1634,7 @@ public class SearchManager {
             } catch (Throwable e) {
 
                 if (_writer == null) {
+                    e.printStackTrace();
                     throw new RuntimeException(e);
                 }
                 String exceptionString = Xml.getString(JeevesException.toElement(e));

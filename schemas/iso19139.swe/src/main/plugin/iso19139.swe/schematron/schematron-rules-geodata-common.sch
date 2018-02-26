@@ -52,6 +52,7 @@ USA.
   <!-- INSPIRE metadata rules / START -->
   <!-- ############################################ -->
   <sch:pattern fpi="[Geodata.se:101] - En titel måste anges">
+    <sch:title>[Geodata.se:101] - En titel måste anges</sch:title>
     <sch:rule context="//gmd:identificationInfo[1]/*">
       <sch:let name="resourceTitle" value="normalize-space(gmd:citation/*/gmd:title/*/text())"/>
       <sch:let name="resourceTitleLength" value="string-length(gmd:citation/*/gmd:title/*/text())"/>
@@ -70,6 +71,7 @@ USA.
   -->
 
   <sch:pattern fpi="[Geodata.se:102] - Sammanfattning  måste anges">
+    <sch:title>[Geodata.se:102] - Sammanfattning  måste anges</sch:title>
     <sch:rule context="//gmd:identificationInfo[1]/*">
       <sch:let name="resourceAbstract" value="normalize-space(gmd:abstract/*/text())"/>
       <sch:let name="resourceAbstractLength" value="string-length(gmd:abstract/*/text())"/>
@@ -82,6 +84,7 @@ USA.
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:103] - Typ av resurs (hierarkisk nivå)  måste anges">
+    <sch:title>[Geodata.se:103] - Typ av resurs (hierarkisk nivå)  måste anges</sch:title>
     <sch:rule context="//gmd:MD_Metadata">
       <sch:let name="resourceType_present"
                value="gmd:hierarchyLevel/*/@codeListValue='dataset'
@@ -97,6 +100,7 @@ USA.
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:104] - Identifierare för resursen  måste anges">
+    <sch:title>[Geodata.se:104] - Identifierare för resursen  måste anges</sch:title>
     <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']">
       <sch:let name="resourceIdentifier_code"
                value="normalize-space(//gmd:citation/*/gmd:identifier/*/gmd:code/*/text())"/>
@@ -107,13 +111,14 @@ USA.
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:105] - Ämnesområde  måste anges ">
+    <sch:title>[Geodata.se:105] - Ämnesområde  måste anges </sch:title>
     <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']">
       <sch:assert test="gmd:topicCategory">[Geodata.se:105] - Ämnesområde krävs </sch:assert>
     </sch:rule>
   </sch:pattern>
 
-  <sch:pattern fpi="[[Geodata.se:105] - Ämnesområde  måste anges">
-    <sch:title>Testing 'Classification of spatial data and services' elements</sch:title>
+  <sch:pattern fpi="[Geodata.se:105] - Ämnesområde  måste anges">
+    <sch:title>[Geodata.se:105] - Testing 'Classification of spatial data and services' elements</sch:title>
     <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']">
       <!-- <sch:rule context="//gmd:identificationInfo[1]/*"> -->
       <sch:let name="topicCategory" value="gmd:topicCategory/*/text()"/>
@@ -170,6 +175,7 @@ USA.
   </sch:pattern>
   
   <sch:pattern fpi="[Geodata.se:107b] Referensdatum måste anges">
+    <sch:title>[Geodata.se:107b] Referensdatum måste anges </sch:title>
     <sch:rule context="//gmd:identificationInfo">
       <sch:assert test="(//gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date) "
       >[Geodata.se:107b] Referensdatum krävs</sch:assert>
@@ -177,6 +183,7 @@ USA.
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:108] Tillkomsthistorik  måste anges">
+    <sch:title>[Geodata.se:108] Tillkomsthistorik  måste anges </sch:title>
     <sch:rule context="/*">
       <sch:let name="lineage" value="//gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/*/text()/normalize-space(.)"/>
       <sch:let name="lineageLength" value="string-length($lineage)"/>
@@ -272,12 +279,14 @@ USA.
 
 
   <sch:pattern fpi="[Geodata.se:112a] Resurskontakt måste anges">
+    <sch:title>[Geodata.se:112a] Resurskontakt måste anges </sch:title>
     <sch:rule context="//gmd:identificationInfo[1]/*">
       <sch:assert test="(gmd:pointOfContact)">[Geodata.se:112a] Resurskontakt måste anges</sch:assert>
     </sch:rule>
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:112b] Kontaktinformation måste anges med organisationsnamn och epostadress ">
+    <sch:title>[Geodata.se:112b] Kontaktinformation måste anges med organisationsnamn och epostadress </sch:title>
     <sch:rule context="//gmd:identificationInfo[1]/*">
 <!--    <sch:let name="pointOfContact-exists" value="gmd:pointOfContact" /> -->
 	<sch:let name="organisationName" value="gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName" />
@@ -289,6 +298,7 @@ USA.
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:112c] Kontaktinformation inom Infrastrukturen för geodata måste ha en resurskontakt som har ansvarsområdet(rollen)  ägare">
+    <sch:title>[Geodata.se:112c] Kontaktinformation inom Infrastrukturen för geodata måste ha en resurskontakt som har ansvarsområdet(rollen)  ägare </sch:title>
     <sch:rule context="//gmd:identificationInfo[1]/*">
       <sch:assert
         test="((gmd:pointOfContact) and (gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue ='owner']) )"
@@ -297,6 +307,7 @@ USA.
   </sch:pattern>
 
   <sch:pattern fpi="Responsible organisation">
+    <sch:title>[Geodata.se:112b] Responsible organisation </sch:title>
     <sch:rule context="//gmd:identificationInfo[1]/*">
       <sch:let name="organisationName" value="gmd:pointOfContact/*/gmd:organisationName/*/text()"/>
       <sch:let name="role" value="gmd:pointOfContact/*/gmd:role/*/@codeListValue"/>
@@ -324,12 +335,14 @@ USA.
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:113a] Metadatakontakt måste anges">
+    <sch:title>[Geodata.se:113a] Metadatakontakt måste anges </sch:title>
     <sch:rule context="//gmd:MD_Metadata">
-      <sch:assert test="(gmd:contact)">[Geodata.se:113a] Metadatakontakt måste anges</sch:assert>
+      <sch:assert test="(gmd:contact/gmd:CI_ResponsibleParty)">[Geodata.se:113a] Metadatakontakt måste anges</sch:assert>
     </sch:rule>
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:113c] Metadatakontakt måste ha epostadress och organisation angiven">
+    <sch:title>[Geodata.se:113c] Metadatakontakt måste ha epostadress och organisation angiven </sch:title>
     <sch:rule context="//gmd:MD_Metadata">
       <sch:assert
         test="((gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName) and (gmd:contact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress))"
@@ -339,6 +352,7 @@ USA.
   </sch:pattern>
   
   <sch:pattern fpi="[Geodata.se:113d] Metadatakontakt måste ha rollen Kontakt(pointOfContact) angiven ">
+    <sch:title>[Geodata.se:113d] Metadatakontakt måste ha rollen Kontakt(pointOfContact) angiven </sch:title>
     <sch:rule context="//gmd:MD_Metadata">
       <sch:assert
         test="gmd:contact/*/gmd:role/*/@codeListValue = 'pointOfContact'"
@@ -347,6 +361,7 @@ USA.
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:114] - Metadataspråk måste anges">
+    <sch:title>[Geodata.se:114] - Metadataspråk måste anges </sch:title>
     <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
       <sch:assert
        test="gmd:language and ((normalize-space(gmd:language/gco:CharacterString/text()) != '') or (gmd:language/gmd:LanguageCode) or (gmd:language/@gco:nilReason and contains('inapplicable missing template unknown withheld',gmd:language/@gco:nilReason)))"
@@ -356,12 +371,14 @@ USA.
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:116] Datum för metadata måste anges">
+    <sch:title>[Geodata.se:116] Datum för metadata måste anges </sch:title>
     <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
-      <sch:assert test="(gmd:dateStamp)">[Geodata.se:116] Datum för metadata måste anges</sch:assert>
+      <sch:assert test="(gmd:dateStamp/*/text())">[Geodata.se:116] Datum för metadata måste anges</sch:assert>
     </sch:rule>
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:119]">
+    <sch:title>[Geodata.se:118] och [Geodata.se:119] </sch:title>
     <sch:rule context="//gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*">
       <sch:let name="resourceLocator" value="gmd:linkage/*/text()"/>
       <sch:let name="protocol" value="gmd:protocol/*/text()"/>
@@ -408,6 +425,7 @@ USA.
   <!-- Kontroller för Geodata.se -->
   <!-- Kontrollera att fileidentifier finns med-->
   <sch:pattern fpi=" [Geodata.se:123] Identifierare för metadatamängden">
+    <sch:title> [Geodata.se:123] Identifierare för metadatamängden</sch:title>
     <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
       <sch:assert
         test="gmd:fileIdentifier and (gmd:fileIdentifier/gco:CharacterString/normalize-space(.) != '') ">[Geodata.se:123] Identiferare för metadatamängden krävs.</sch:assert>
@@ -416,13 +434,14 @@ USA.
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:124] Metadatastandard måste anges">
+    <sch:title>[Geodata.se:124] Metadatastandard måste anges</sch:title>
     <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
       <sch:assert test="gmd:metadataStandardName/gco:CharacterString">[Geodata.se:124] Metadatastandard måste anges</sch:assert>
     </sch:rule>
   </sch:pattern>
 
-  <sch:pattern fpi="Geograpfisk utsträckning [Geodata.se:125]">
-    <sch:title>Kontroll av geografisk utsträckning</sch:title>
+  <sch:pattern fpi="[Geodata.se:125] Geograpfisk utsträckning">
+    <sch:title>[Geodata.se:125] Kontroll av geografisk utsträckning</sch:title>
     <sch:rule context="//gmd:identificationInfo/gmd:MD_DataIdentification">
       <!--<sch:rule context="//gmd:identificationInfo[1]/gmd:MD_DataIdentification/*">-->
       <sch:let name="west" value="//gmd:geographicElement/*/gmd:westBoundLongitude[1]/*"/>
