@@ -130,6 +130,11 @@
             for(var i = 0; i < layerList.length; i++) {
               scope.map.removeLayer(layerList[i]);
             }
+            if (scope.failedLayers) {
+               for(var i = 0; i < scope.failedLayers.length; i++) {
+                   scope.removeFailed(layerList[i]);
+               }
+            }
           };
         }
       };

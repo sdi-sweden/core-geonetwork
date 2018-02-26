@@ -64,6 +64,10 @@ public abstract class JeevesException extends RuntimeException {
     //--------------------------------------------------------------------------
 
     public static Element toElement(Throwable t) {
+        return toElement(t, true);
+    }
+
+    public static Element toElement(Throwable t, boolean addStacktrace) {
         String msg = t.getMessage();
         String cls = t.getClass().getSimpleName();
         String id = Constants.ERROR;
@@ -78,8 +82,11 @@ public abstract class JeevesException extends RuntimeException {
 
         Element error = new Element(Constants.ERROR)
             .addContent(new Element("message").setText(msg))
-            .addContent(new Element("class").setText(cls))
-            .addContent(getStackTrace(t, 10));
+            .addContent(new Element("class").setText(cls));
+
+        if(addStacktrace){
+            error.addContent(getStackTrace(t, 10));
+        }
 
         error.setAttribute("id", id);
 
