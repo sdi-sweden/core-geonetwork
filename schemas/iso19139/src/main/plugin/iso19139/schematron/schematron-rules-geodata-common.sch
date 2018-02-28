@@ -340,12 +340,12 @@ USA.
 
   <sch:pattern fpi="[Geodata.se:119]">
     <sch:title>[Geodata.se:118] och [Geodata.se:119] </sch:title>
-    <sch:rule context="//gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*">
+    <sch:rule context="//gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
       <sch:let name="resourceLocator" value="gmd:linkage/*/text()"/>
       <sch:let name="protocol" value="gmd:protocol/*/text()"/>
 
-      <sch:let name="resourceLocatorLen" value="string-length(gmd:linkage/*/text())"/>
-      <sch:let name="protocolLen" value="string-length(gmd:protocol/*/text())"/>
+      <sch:let name="resourceLocatorLen" value="string-length(normalize-space(gmd:linkage/*/text()))"/>
+      <sch:let name="protocolLen" value="string-length(normalize-space(gmd:protocol/*/text()))"/>
       <sch:let name="protocolCorrect" value="gmd:protocol/*/text() = 'HTTP:OGC:WMS' or
 				gmd:protocol/*/text() = 'HTTP:OGC:WFS' or
 				gmd:protocol/*/text() = 'HTTP:OGC:WSC' or
@@ -363,23 +363,25 @@ USA.
                 select="$protocolCorrect"/>
           </sch:report>-->
 
-      <sch:assert	test="not($resourceLocator) or (($resourceLocator and ($resourceLocatorLen &gt; 0)) and ($protocol and $protocolCorrect))" >
+      <sch:assert	test="($resourceLocator and ($resourceLocatorLen &gt; 0)) and ($protocol and $protocolCorrect)" >
         [Geodata.se:119] Om länk til resurs anges skall även protokoll anges med korrekt värde #<sch:value-of
         select="$protocol"/># ,  <sch:value-of
         select="$resourceLocator"/>
 
       </sch:assert>
     </sch:rule>
+	
+	<!-- rule 118 no longer need as it is replaced by XSD validation -->
+	<!--
     <sch:rule context="//gmd:distributionInfo">
       <sch:assert	test="(//gmd:transferOptions/*/gmd:onLine/*/gmd:linkage or //gmd:distributorTransferOptions/*/gmd:onLine/*/gmd:linkage)"
       >[Geodata.se:118] Tillhandahållande adress måste anges om sådan finns</sch:assert>
     </sch:rule>
-
     <sch:rule context="//gmd:hierarchyLevel[1]/*[@codeListValue ='service']">
       <sch:assert	test="(//gmd:transferOptions/*/gmd:onLine/*/gmd:linkage or //gmd:distributorTransferOptions/*/gmd:onLine/*/gmd:linkage)"
       >[Geodata.se:118] Tillhandahållande adress måste anges om sådan finns</sch:assert>
     </sch:rule>
-
+    -->
   </sch:pattern>
 
   <!-- INSPIRE metadata rules / END -->
