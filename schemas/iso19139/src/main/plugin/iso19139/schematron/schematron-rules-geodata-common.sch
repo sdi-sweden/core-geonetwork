@@ -181,12 +181,12 @@ USA.
 
   <sch:pattern fpi="[Geodata.se:108] Tillkomsthistorik  måste anges">
     <sch:title>[Geodata.se:108] Tillkomsthistorik  måste anges </sch:title>
-    <sch:rule context="/*">
+    <sch:rule context="/gmd:MD_Metadata">
       <sch:let name="lineage" value="//gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/*/text()/normalize-space(.)"/>
       <sch:let name="lineageLength" value="string-length($lineage)"/>
       <sch:assert	test="//gmd:hierarchyLevel/*/@codeListValue='service' or ($lineage and ($lineageLength &lt; 2500))"> [Geodata.se:108] Tillkomsthistorik är obligatorisk för datamängder och får ha max 2500 tecken</sch:assert>
     </sch:rule>
-    <sch:rule context="/*">
+    <sch:rule context="/gmd:MD_Metadata">
       <sch:let name="lineage" value="//gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/*/text()/normalize-space(.)"/>
       <!-- assertions and report -->
       <sch:assert test="$lineage">[Geodata.se:108] Tillkomsthistorik är obligatorisk</sch:assert>
@@ -208,7 +208,7 @@ USA.
 			<sch:let name="useLimitation_count" value="count(gmd:resourceConstraints/*/gmd:useLimitation)"/>
 			<sch:assert test="$useLimitation_count = 1">[Geodata.se:110g] Information om användbarhetsbegränsningar måste finnas men får bara anges en gång</sch:assert>
 
-			<sch:let name="useLimitation" value="normalize-space(gmd:resourceConstraints/*/gmd:useLimitation/*/text())"/>
+			<sch:let name="useLimitation" value="gmd:resourceConstraints/*/gmd:useLimitation/*/text()/normalize-space(.)"/>
 			<sch:let name="useLimitationLength" value="string-length($useLimitation)"/>
 			<sch:assert test="$useLimitation and ($useLimitationLength &lt; 2500)">[Geodata.se:110e] Information om användbarhetsbegränsningar måste finnas och vara kortare än 2500 tecken </sch:assert>
 
@@ -295,6 +295,7 @@ USA.
     </sch:rule>
   </sch:pattern>
 
+  <!-- rule 113a is redundant as gmd:contact/gmd:CI_ResponsibleParty are mandatory fields in the XSD schema  -->
   <sch:pattern fpi="[Geodata.se:113a] Metadatakontakt måste anges">
     <sch:title>[Geodata.se:113a] Metadatakontakt måste anges </sch:title>
     <sch:rule context="//gmd:MD_Metadata">
@@ -307,8 +308,7 @@ USA.
     <sch:rule context="//gmd:MD_Metadata">
       <sch:assert
         test="((gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName) and (gmd:contact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress))"
-      >[Geodata.se:113c] Metadatakontakt måste ha epostadress och organisation
-        angiven</sch:assert>
+      >[Geodata.se:113c] Metadatakontakt måste ha epostadress och organisation angiven</sch:assert>
     </sch:rule>
   </sch:pattern>
   
@@ -436,11 +436,11 @@ USA.
   <sch:pattern fpi="[Geodata.se:126] ">
     <sch:title>[Geodata.se:126]Om format anges skall även version för formatet anges </sch:title>
 
-    <sch:rule context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor">
-      <sch:let name="MDFormat" value="gmd:distributorFormat/gmd:MD_Format/gmd:name/gco:CharacterString/normalize-space(.)" />
-      <sch:let name="MDFormatVers" value="gmd:distributorFormat/gmd:MD_Format/gmd:version/gco:CharacterString/normalize-space(.)" />
-      <sch:let name="MDFormatLen" value="gmd:distributorFormat/gmd:MD_Format/gmd:name/gco:CharacterString/string-length(normalize-space(.))" />
-      <sch:let name="MDFormatVersLen" value="gmd:distributorFormat/gmd:MD_Format/gmd:version/gco:CharacterString/string-length(normalize-space(.))" />
+    <sch:rule context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat">
+      <sch:let name="MDFormat" value="gmd:MD_Format/gmd:name/gco:CharacterString/normalize-space(.)" />
+      <sch:let name="MDFormatVers" value="gmd:MD_Format/gmd:version/gco:CharacterString/normalize-space(.)" />
+      <sch:let name="MDFormatLen" value="gmd:MD_Format/gmd:name/gco:CharacterString/string-length(normalize-space(.))" />
+      <sch:let name="MDFormatVersLen" value="gmd:MD_Format/gmd:version/gco:CharacterString/string-length(normalize-space(.))" />
 
       <sch:assert	test="$MDFormat and $MDFormatVers and ($MDFormatLen &gt; 1) and  ($MDFormatVersLen &gt; 0)" >
         [Geodata.se:126]Om format anges skall även version för formatet anges: <sch:value-of select="$MDFormat" />
