@@ -246,7 +246,8 @@ class Harvester implements IHarvester<HarvestResult> {
         // Use the preferred HTTP method and check one exist.
         configRequest(request, oper, server, s, PREFERRED_HTTP_METHOD);
         // Force csw:Record outputSchema
-        request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
+        // WTF!! Why??
+        //request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
 
         if (params.isUseAccount()) {
             log.debug("Logging into server (" + params.getUsername() + ")");
@@ -266,7 +267,8 @@ class Harvester implements IHarvester<HarvestResult> {
 
             configRequest(request, oper, server, s, PREFERRED_HTTP_METHOD.equals("GET") ? "POST" : "GET");
             // Force csw:Record outputSchema
-            request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
+            // WTF!! Why??
+            //request.setOutputSchema(Csw.NAMESPACE_CSW.getURI());
         }
 
         Set<RecordInfo> records = new HashSet<RecordInfo>();
@@ -392,6 +394,10 @@ class Harvester implements IHarvester<HarvestResult> {
         if (this.params.outputSchema != null && !this.params.outputSchema.isEmpty()) {
             preferredOutputSchema = this.params.outputSchema;
         }
+        if (log.isDebugEnabled()) {
+            log.debug("preferredOutputSchema chosen = " + preferredOutputSchema);
+            log.debug("From OutputSchemalist = " + oper.getOutputSchemaList());
+        }
         request.setOutputSchema(preferredOutputSchema);
         request.setConstraintLanguage(constraintLanguage);
         request.setConstraintLangVersion(CONSTRAINT_LANGUAGE_VERSION);
@@ -402,14 +408,26 @@ class Harvester implements IHarvester<HarvestResult> {
         if (this.params.outputSchema != null && !this.params.outputSchema.isEmpty()) {
             if ("http://www.isotc211.org/2005/gmd".equals(this.params.outputSchema)) {
                 request.addTypeName(TypeName.getTypeName("gmd:MD_Metadata"));
+                if (log.isDebugEnabled()) {
+                    log.debug("TypeName chosen = 'gmd:MD_Metadata' as 'http://www.isotc211.org/2005/gmd' equals the outputSchema");
+                }                
             } else if ("http://www.opengis.net/cat/csw/2.0.2".equals(this.params.outputSchema)) {
                 request.addTypeName(TypeName.getTypeName("csw:Record"));
+                if (log.isDebugEnabled()) {
+                    log.debug("TypeName chosen = 'csw:Record' as 'http://www.opengis.net/cat/csw/2.0.2' equals the outputSchema");
+                }                
             } else {
                 request.addTypeName(TypeName.getTypeName("csw:Record"));
+                if (log.isDebugEnabled()) {
+                    log.debug("TypeName chosen = 'csw:Record' as there is no defined outputSchema");
+                }                
             }
         } else {
             for (String typeName : oper.getTypeNamesList()) {
                 request.addTypeName(TypeName.getTypeName(typeName));
+                if (log.isDebugEnabled()) {
+                    log.debug("TypeName chosen = " + TypeName.getTypeName(typeName) + "[params.ouputSchema is null or empty]");
+                }                
             }
         }
         request.setOutputFormat(oper.getPreferredOutputFormat());
@@ -592,7 +610,7 @@ class Harvester implements IHarvester<HarvestResult> {
             log.info("Searching on : " + params.getName() + " (" + start + ".." + (start + max) + ")");
             Element response = request.execute();
             if (log.isDebugEnabled()) {
-                log.debug("Sent request " + request.getSentData());
+                log.debug("GetRecords Sent request " + request.getSentData());
                 log.debug("Search results:\n" + Xml.getString(response));
             }
 
