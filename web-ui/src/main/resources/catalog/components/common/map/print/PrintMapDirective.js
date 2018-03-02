@@ -55,6 +55,13 @@
             }
           });
         }
+        // force scale values to be int compatible
+        for (var i = 0; i < data.scales.length; i++) {
+          var nameArr = data.scales[i].name.split(":");
+          var name = nameArr[1].replace(",", "").replace(/\s+/g, '');
+          var value = parseInt(name);
+          data.scales[i].value = value;
+        }
         $scope.config = {
           createURL: data.createURL,
           layout: layout,
