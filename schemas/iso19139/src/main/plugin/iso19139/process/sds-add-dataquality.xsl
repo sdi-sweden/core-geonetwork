@@ -65,9 +65,8 @@
                     <gmd:CI_Citation>
                       <gmd:title>
                         <gmx:Anchor
-                          xlink:href="http://inspire.ec.europa.eu/metadata-codelist/Category/invocable">
-                          invocable
-                        </gmx:Anchor>
+                          xlink:href=" http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable"
+                          xlink:title="INSPIRE Invocable Spatial Data Services metadata">invocable</gmx:Anchor>
                       </gmd:title>
                       <gmd:date>
                         <gmd:CI_Date>

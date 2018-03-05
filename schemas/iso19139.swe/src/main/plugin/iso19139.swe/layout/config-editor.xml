@@ -7155,7 +7155,7 @@
 
           <!-- 4.4.1 category -->
           <field name="sds-category"
-                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title[starts-with(gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/Category')]"/>
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title[starts-with(gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/id/ats/metadata/2.0')]"/>
 
 
           <!-- CONFORMITY CLASS 1 -->
@@ -7163,13 +7163,13 @@
 
             <!-- 4.4.1 pass -->
             <field
-                    xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult[starts-with(gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/Category')]/gmd:pass"/>
+                    xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult[starts-with(gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/id/ats/metadata/2.0')]/gmd:pass"/>
 
             <action type="add"
                     name="inspire_add_pass"
                     forceLabel="true"
                     or="pass"
-                    in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult[starts-with(gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/Category')]">
+                    in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult[starts-with(gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/id/ats/metadata/2.0')]">
               <template>
                 <snippet>
                   <gmd:pass>
@@ -7458,7 +7458,7 @@
               name="sds-tech-spec"
               del="../.."
               xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[
-                  not(starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/Category')) and
+                  not(starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/id/ats/metadata/2.0')) and
                   not(starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://data.europa.eu/eli/reg'))]">
               <template>
                 <values>

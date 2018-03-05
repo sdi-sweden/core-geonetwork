@@ -2184,17 +2184,17 @@
 
   <codelist name="SDS_category">
     <entry>
-      <code>http://inspire.ec.europa.eu/metadata-codelist/Category/harmonised</code>
+      <code>http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-harmonised</code>
       <label>harmonised</label>
       <description>Harmonised</description>
     </entry>
     <entry>
-      <code>http://inspire.ec.europa.eu/metadata-codelist/Category/interoperable</code>
+      <code>http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-interoperable</code>
       <label>interoperable</label>
       <description>Interoperable</description>
     </entry>
     <entry>
-      <code>http://inspire.ec.europa.eu/metadata-codelist/Category/invocable</code>
+      <code>http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable</code>
       <label>invocable</label>
       <description>Invocable</description>
     </entry>

@@ -44,7 +44,7 @@
       function getHiddenFiekdContent(gnselect, gnhidden){
       var value = $("select[name=" + gnselect + "]").val();
       var lastindexof = value.lastIndexOf("/")+1;
-      $(gnhidden).val(value.substring(lastindexof));
+      $(gnhidden).val(value.substring(lastindexof).replace("sds-", ""));
       }
     </script>
 
