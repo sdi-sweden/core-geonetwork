@@ -1625,7 +1625,7 @@ Ex. SS-EN ISO 19115.</description>
         <condition>mandatory</condition>
     </element>
     <element context="gmd:MD_Format" id="285.0" name="gmd:name">
-        <label>Beteckning</label>
+        <label>Formatnamn</label>
         <description>Beteckning på formatet</description>
         <help>name of the data transfer format(s)</help>
         <condition>mandatory</condition>
