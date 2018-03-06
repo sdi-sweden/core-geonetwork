@@ -40,7 +40,7 @@
   <default>Standard</default>
   <simple>Enkel</simple>
   <inspire>INSPIRE</inspire>
-  <inspire_sds>SDS</inspire_sds>
+  <inspire_sds>SDS (Rumslig Data Tjänst)</inspire_sds>
   <resource>Resurs</resource>
   <xml>XML</xml>
   <metadata>Metadata</metadata>
@@ -168,11 +168,11 @@
   <AccessRestrictionsBtn>Åtkomstrestriktioner</AccessRestrictionsBtn>
 
   <!-- String for INSPIRE SDS tab -->
-  <inspire_sds_cc1>Conformance class 1: invocable</inspire_sds_cc1>
-  <inspire_sds_cc2>Conformance class 2: interoperable</inspire_sds_cc2>
-  <inspire_sds_cc3>Conformance class 3: harmonized</inspire_sds_cc3>
+  <inspire_sds_cc1>Överenstämmelseklass 1 - Anropningsbar</inspire_sds_cc1>
+  <inspire_sds_cc2>Överenstämmelseklass 2 - Interoperabel</inspire_sds_cc2>
+  <inspire_sds_cc3> Överenstämmelseklass 3 - Harmoniserad</inspire_sds_cc3>
 
-  <sds-category>Category</sds-category>
+  <sds-category>Tjänstekategori</sds-category>
   <inspire_add_pass>Add pass element</inspire_add_pass>
   <sds-add-dataquality>Add DataQuality element</sds-add-dataquality>
   <sds-add-dataqualityHelp>TG4: For each spatial data service, there shall be one and only one set
