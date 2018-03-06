@@ -1,4 +1,4 @@
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+﻿<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <div>
 
@@ -76,7 +76,38 @@
       </div>
     </div>
   </div>
+  
+ <!--    <!-- Help page popup -->
+<!--   <div style="height:300px" dragable id="help-popup" role="dialog" class="popupHelp help-popup" data-ng-controller="SweHelpController">
+    <div class="popup-cont">
+      <div style="height:50px">
+         <a href="" data-ng-click="close()" class="cls-btn icon-cancel"></a>
+      </div>
+      <div>
+        <iframe width="100%" style="height:300px" src="{{trustSrc(link)}}">
+		  <p>Your browser does not support iframes.</p>
+	    </iframe>
+	  </div>
+	  <button data-ng-click="close()" class="btn">Close</button>
+    </div> -->
+    
+        <!-- Help page popup -->
+  <div id="help-popup" class="popupHelp help-popup" dragable="" data-ng-controller="SweHelpController">
+    <div class="popup-cont">
+      <div class="popup-cont-header">
+         <a href="" data-ng-click="close()" class="cls-btn icon-cancel"></a>
+      </div>
+      <div>
+        <iframe src="{{trustSrc(link)}}">
+		  <p>Your browser does not support iframes.</p>
+	    </iframe>
+	  </div>
+	  <button data-ng-click="close()" class="btn" data-translate="">popupClose</button>
+    </div>
+  </div>
 
+
+  
   <!-- Create metadata popup -->
   <div id="newmetadata-popup" class="popup mail-popup" data-ng-controller="SweNewMetadataController">
     <div class="popup-cont">
@@ -134,17 +165,26 @@
       <div class="site-wrapper" data-ng-search-form=""
            data-runSearch="true">
         <!-- Filters -->
+            <!-- Predefined search filters -->
+        <div class="site-image-filter">
+ 	      <span class="image-filter-text"  ng-hide="collapsed" data-translate="">predefinedMapsTitle</span>
+		  <div class="image-filter-container"> 
+		    <a href=""  id="predefmapsArrow" data-ng-click="resizeCheck()" ng-class="{'cls-btn icon-down-dir': collapsed, 'cls-btn icon-up-dir': !collapsed}"></a>
+	        <div id="imageFilter"  data-swe-predefined-maps-filter 
+	           ng-hide="collapsed"
+	           data-config-url="{{predefinedMapsUrl}}"
+	           data-show-map-fn="showFullMapPanel"
+	           data-show-map-fn-api="showFullMapPanelApi"
+			   data-selected-map="{{selectedPredefinedMap}}"
+               data-is-image-clicked="is_image_clicked"
+             >
+	        </div>
+		  </div>
+        </div>
         <div data-ng-include="'../../catalog/views/swe/templates/filters.html'" data-ng-controller="SweFilterPanelController"></div>
 
         <div class="site-content">
           <!-- Map -->
-          <!--<div class="floating-map-cont">
-            <div class="floating-map">
-              <span class="cursor-cont"><span class="icon-cursor"></span></span>
-              <div class="map-img"></div>
-            </div>
-          </div>-->
-
           <div class="floating-map" data-gn-map-field="searchObj.searchMap"
                data-template-url="../../catalog/views/swe/directives/partials/mapfield.html"
                data-gn-map-field-geom="searchObj.params.geometry"
@@ -187,6 +227,16 @@
 
               <!-- Results -->
               <div data-ng-include="'../../catalog/views/swe/templates/resultList.html'" />
+              
+              <!-- Show Pagination at bottom of results -->
+              <span>
+                <div data-gn-pagination="paginationInfo"
+                     data-hits-values="searchObj.hitsperpageValues"
+                     class="pagination-cont"
+                     data-enable-hot-keys="">
+                </div>
+              </span>
+
             </div>
 
           <!-- Result popup -->
@@ -200,17 +250,24 @@
           <div class="map-cont">
             <ul class="map-tool-list" style="z-index: 1000">
               <!--<li class=""><a href="" class="icon-buffer"></a></li>-->
-              <li data-ng-show="!mapFullView" id="map-panel-resize" class="resize full"><a href="" data-ng-click="resizeMapPanel()"><span class="icon-cursor"></span></a></li>
-              <li data-ng-show="mapFullView">
-              <a href="" data-ng-click="resizeMapPanel()">
-              <span class="onMaximised">
-              </span>
-              </a></li>
-              <li data-ng-show="!mapFullView">
-              <a href="" data-ng-click="hideMapPanel()">
-              <span class="onMediumSized">
-              </span>
-              </a></li>
+              <li data-ng-show="!mapFullView" id="map-panel-resize" class="resize full">
+                 <a href="" data-ng-click="resizeMapPanel()">
+                    <span class="icon-cursor">
+                    </span>
+                 </a>
+              </li>
+              <li data-ng-show="mapFullView" id="map-panel-resize-max">
+                 <a href="" data-ng-click="resizeMapPanel()">
+                    <span class="onMaximised">
+                    </span>
+                 </a>
+              </li>
+              <li data-ng-show="!mapFullView" id="map-panel-resize-medium">
+                 <a href="" data-ng-click="hideMapPanel()">
+                    <span class="onMediumSized">
+                    </span>
+                 </a>
+              </li>
             </ul>
             <div gn-main-viewer=""
                  data-map="searchObj.viewerMap">
