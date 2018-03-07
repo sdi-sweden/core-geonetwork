@@ -134,6 +134,7 @@
         $scope.triggerSearch();
       });
 
+
       $scope.$on('aftersearchemptyorerror', function() {
         if ($scope.displayInitialMetadata) {
           $scope.displayInitialMetadata = false;
@@ -183,6 +184,12 @@
         });
       };
 
+      $window.onload = function() {
+        if (gnViewerSettings.wmsUrl && gnViewerSettings.layerName) {
+          $scope.showMapPanel();
+          $scope.resizeMapPanel();
+        }
+      };
 
       $rootScope.$on('$includeContentLoaded', function() {
         $timeout($scope.affixFloatingMap());
