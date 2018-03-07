@@ -184,12 +184,23 @@
         });
       };
 
-      $window.onload = function() {
-        if (gnViewerSettings.wmsUrl && gnViewerSettings.layerName) {
-          $scope.showMapPanel();
-          $scope.resizeMapPanel();
-        }
-      };
+
+      $scope.$watch('$viewContentLoaded',
+        function() {
+          if (gnViewerSettings.wmsUrl && gnViewerSettings.layerName) {
+            var checkExist = setInterval(function() {
+              if ($('.map').length) {
+                var bodyClass = $('body').attr('class');
+                if (bodyClass.indexOf("full-map-view") == -1) {
+                  $scope.showMapPanel();
+                  $scope.resizeMapPanel();
+                }
+                clearInterval(checkExist);
+              }
+            }, 100);
+          }
+        });
+
 
       $rootScope.$on('$includeContentLoaded', function() {
         $timeout($scope.affixFloatingMap());
@@ -701,15 +712,15 @@
             $obj.removeClass('small').addClass('full');
           }
           else if (is_large_view_map) {
-          	if (is_side_data_bar_open) {
-                $scope.$emit('body:class:remove', 'large-map-view');
-                $scope.$emit('body:class:add', 'medium-map-view');
-              } else {
-                $scope.$emit('body:class:remove', 'large-map-view');
-                $scope.$emit('body:class:add', 'small-map-view');
-              }
-              $obj.removeClass('small').addClass('full');
-    		}
+            if (is_side_data_bar_open) {
+              $scope.$emit('body:class:remove', 'large-map-view');
+              $scope.$emit('body:class:add', 'medium-map-view');
+            } else {
+              $scope.$emit('body:class:remove', 'large-map-view');
+              $scope.$emit('body:class:add', 'small-map-view');
+            }
+            $obj.removeClass('small').addClass('full');
+    		  }
           else {
             $scope.$emit('body:class:remove', 'large-map-view');
             $scope.$emit('body:class:remove', 'medium-map-view');
