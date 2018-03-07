@@ -194,6 +194,8 @@
                 if (bodyClass.indexOf("full-map-view") == -1) {
                   $scope.showMapPanel();
                   $scope.resizeMapPanel();
+                } else {
+                  $scope.mapFullView = true;
                 }
                 clearInterval(checkExist);
               }
@@ -710,6 +712,7 @@
             }
 
             $obj.removeClass('small').addClass('full');
+            $scope.$emit('body:class:remove', 'scroll-blocked');
           }
           else if (is_large_view_map) {
             if (is_side_data_bar_open) {
@@ -720,6 +723,7 @@
               $scope.$emit('body:class:add', 'small-map-view');
             }
             $obj.removeClass('small').addClass('full');
+            $scope.$emit('body:class:remove', 'scroll-blocked');
     		  }
           else {
             $scope.$emit('body:class:remove', 'large-map-view');
@@ -737,6 +741,7 @@
               });
             }
             $obj.removeClass('full').addClass('small');
+            $scope.$emit('body:class:add', 'scroll-blocked');
           }
 
           // Refresh the viewer map
