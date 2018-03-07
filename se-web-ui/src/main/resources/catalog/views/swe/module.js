@@ -83,6 +83,8 @@
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
 
+      $scope.displayInitialMetadata = false;
+
       $scope.vectorLayer = new ol.layer.Vector({
         source: new ol.source.Vector({
           features: []
@@ -132,9 +134,33 @@
         $scope.triggerSearch();
       });
 
+      $scope.$on('aftersearchemptyorerror', function() {
+        if ($scope.displayInitialMetadata) {
+          $scope.displayInitialMetadata = false;
+          $scope.displayInitialMetadataUUID = "";
+        }
+      });
+
       $scope.$on('aftersearch', function() {
-          $analytics.eventTrack('siteSearch', {  searchQuery: $location.search(),
-              searchQueryResult: ($scope.searchResults.count > 0)?'hit':'no-hit' });
+        if ($scope.displayInitialMetadata) {
+          if (($scope.mdView.current.record) &&
+            ($scope.mdView.current.record.getUuid() ==  $scope.displayInitialMetadataUUID)) {
+            $scope.displayInitialMetadata = false;
+            $scope.displayInitialMetadataUUID = "";
+
+            var checkExist = setInterval(function() {
+              if ($('.geodata-row-popup').length) {
+                $scope.showMetadata($scope.mdView.current.index,
+                  $scope.mdView.current.record,
+                  $scope.mdView.records);
+                clearInterval(checkExist);
+              }
+            }, 100);
+          }
+        }
+
+        $analytics.eventTrack('siteSearch', {  searchQuery: $location.search(),
+          searchQueryResult: ($scope.searchResults.count > 0)?'hit':'no-hit' });
       });
 
       $scope.$on('layerView', function(event) {
@@ -770,6 +796,16 @@
         searchMap.renderSync();
       }, 5000);
 
+
+      // The url contains the path to display a metadata.
+      // Trigger a search  to get the metadata and handle
+      // in the search events the display of the metadata.
+      if ($location.path().indexOf("/metadata/") == 0) {
+        $scope.displayInitialMetadata = true;
+        $scope.displayInitialMetadataUUID = $location.path().substring($location.path().lastIndexOf("/")+1);
+        $scope.searchObj.params.or = $scope.displayInitialMetadataUUID;
+        $scope.triggerSearch();
+      }
     }]);
 
   module.controller('SweLogoutController',
