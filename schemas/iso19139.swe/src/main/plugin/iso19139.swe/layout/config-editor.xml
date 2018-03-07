@@ -6135,7 +6135,7 @@
         </section>
 
         <!-- Restriktioner -->
-        <section name="restrictions" displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0 or gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName != 'other'">
+        <section name="restrictions" displayIfRecord="(count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) + count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification[srv:serviceType/gco:LocalName != 'other'])) > 0 ">
           <!-- Use limitations -->
           <field
             name="useLimitation"
@@ -7117,7 +7117,7 @@
           </action>-->
         </section>
 
-        <section name="resources" displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0 or gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName != 'other'">
+        <section name="resources" displayIfRecord="(count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) + count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification[srv:serviceType/gco:LocalName != 'other'])) > 0 ">
          <section xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor" or="distributor"
                    in="/gmd:MD_Metadata"/>
 
