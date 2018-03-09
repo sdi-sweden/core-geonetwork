@@ -189,6 +189,10 @@
             }
 
             $scope.$broadcast('aftersearch');
+          },
+
+          function(data) {
+            $scope.$broadcast('aftersearchemptyorerror');
           });
     };
 

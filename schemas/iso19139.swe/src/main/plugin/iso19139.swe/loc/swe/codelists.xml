@@ -2109,18 +2109,18 @@
 
   <codelist name="SDS_category">
     <entry>
-      <code>http://inspire.ec.europa.eu/metadata-codelist/Category/harmonised</code>
-      <label>harmonised</label>
+      <code>http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-harmonised</code>
+      <label>Överenstämmelseklass 3 - Harmoniserad</label>
       <description>Harmonised</description>
     </entry>
     <entry>
-      <code>http://inspire.ec.europa.eu/metadata-codelist/Category/interoperable</code>
-      <label>interoperable</label>
+      <code>http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-interoperable</code>
+      <label>Överenstämmelseklass 2 - Interoperabel</label>
       <description>Interoperable</description>
     </entry>
     <entry>
-      <code>http://inspire.ec.europa.eu/metadata-codelist/Category/invocable</code>
-      <label>invocable</label>
+      <code>http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable</code>
+      <label>Överenstämmelseklass 1 - Anropningsbar</label>
       <description>Invocable</description>
     </entry>
   </codelist>

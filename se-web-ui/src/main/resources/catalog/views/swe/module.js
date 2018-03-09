@@ -83,6 +83,8 @@
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
 
+      $scope.displayInitialMetadata = false;
+      
       $scope.vectorLayer = new ol.layer.Vector({
         source: new ol.source.Vector({
           features: []
@@ -141,8 +143,32 @@
         $scope.triggerSearch();
       });
 
+     $scope.$on('aftersearchemptyorerror', function() {
+       if ($scope.displayInitialMetadata) {
+         $scope.displayInitialMetadata = false;
+         $scope.displayInitialMetadataUUID = "";
+       }
+     });
+    	  
       $scope.$on('aftersearch', function() {
-          $analytics.eventTrack('siteSearch', {  searchQuery: $location.search(),
+    	  if ($scope.displayInitialMetadata) {
+    		 if (($scope.mdView.current.record) &&
+    		    ($scope.mdView.current.record.getUuid() ==  $scope.displayInitialMetadataUUID)) {
+    		       $scope.displayInitialMetadata = false;
+    		       $scope.displayInitialMetadataUUID = "";
+    		  
+    		       var checkExist = setInterval(function() {
+    		         if ($('.geodata-row-popup').length) {
+    		           $scope.showMetadata($scope.mdView.current.index,
+    		              $scope.mdView.current.record,
+    		              $scope.mdView.records);
+    		           clearInterval(checkExist);
+    		         }
+    		       }, 100);
+    		   }
+    	  }
+
+    	  $analytics.eventTrack('siteSearch', {  searchQuery: $location.search(),
               searchQueryResult: ($scope.searchResults.count > 0)?'hit':'no-hit' });
       });
 
@@ -166,6 +192,23 @@
         });
       };
 
+      $scope.$watch('$viewContentLoaded',
+	    function() {
+	      if (gnViewerSettings.wmsUrl && gnViewerSettings.layerName) {
+	        var checkExist = setInterval(function() {
+	          if ($('.map').length) {
+	            var bodyClass = $('body').attr('class');
+	            if (bodyClass.indexOf("full-map-view") == -1) {
+	              $scope.showMapPanel();
+	              $scope.resizeMapPanel();
+	            } else {
+	              $scope.mapFullView = true;
+	            }
+	            clearInterval(checkExist);
+	          }
+	        }, 100);
+	      }
+	    });
 
       $rootScope.$on('$includeContentLoaded', function() {
         $timeout($scope.affixFloatingMap());
@@ -619,10 +662,12 @@
        */
       $scope.showFullMapPanel = function() {
         angular.element('.floating-map-cont').hide();
+        $scope.$emit('body:class:remove', 'large-map-view');
         $scope.$emit('body:class:remove', 'medium-map-view');
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:add', 'full-map-view');
-    		$scope.mapFullView = true;
+        $scope.$emit('body:class:add', 'scroll-blocked');
+    	$scope.mapFullView = true;
         is_map_maximized.data = true;
         window_width = angular.element($window).width();
 		$map_data_list_cont = angular.element('.map-data-list-cont');
@@ -661,10 +706,12 @@
        */
       $scope.showFullMapPanelApi = function() {
         angular.element('.floating-map-cont').hide();
+        $scope.$emit('body:class:remove', 'large-map-view');
         $scope.$emit('body:class:remove', 'medium-map-view');
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:add', 'full-map-view');
-		    $scope.mapFullView = true;
+        $scope.$emit('body:class:add', 'scroll-blocked');
+	    $scope.mapFullView = true;
         is_map_maximized.data = true;
         window_width = angular.element($window).width();
 		$map_data_list_cont = angular.element('.map-data-list-cont');
@@ -702,6 +749,7 @@
         $scope.$emit('body:class:remove', 'small-map-view');
         $scope.$emit('body:class:remove', 'full-map-view');
         $scope.$emit('body:class:remove', 'medium-map-view');
+        $scope.$emit('body:class:remove', 'large-map-view');
         $timeout(function() {
           searchMap.updateSize();
           searchMap.renderSync();
@@ -722,6 +770,7 @@
         $map_data_list_cont = angular.element('.map-data-list-cont'),
         is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false,
         is_full_view_map = ($b.hasClass('full-map-view')) ? true : false,
+        is_large_view_map = ($b.hasClass('large-map-view')) ? true : false,
         $data_list_cont = angular.element('.data-list-cont'),
         $map_cont = angular.element('.map-cont'),
         $obj = angular.element('#map-panel-resize');
@@ -742,11 +791,24 @@
             $scope.$emit('body:class:add', 'small-map-view');
           }
           $obj.removeClass('small').addClass('full');
+          $scope.$emit('body:class:remove', 'scroll-blocked');
     	  $obj.removeClass('ng-hide');
 		  $objMax.addClass('ng-hide');
 		  $objMedium.removeClass('ng-hide');
         }
+        else if (is_large_view_map) {
+          if (is_side_data_bar_open) {
+            $scope.$emit('body:class:remove', 'large-map-view');
+            $scope.$emit('body:class:add', 'medium-map-view');
+          } else {
+            $scope.$emit('body:class:remove', 'large-map-view');
+            $scope.$emit('body:class:add', 'small-map-view');
+          }
+          $obj.removeClass('small').addClass('full');
+          $scope.$emit('body:class:remove', 'scroll-blocked');
+    	}
         else {
+          $scope.$emit('body:class:remove', 'large-map-view');
           $scope.$emit('body:class:remove', 'medium-map-view');
           $scope.$emit('body:class:remove', 'small-map-view');
           $scope.$emit('body:class:add', 'full-map-view');
@@ -762,6 +824,7 @@
               });
           }
          $obj.removeClass('full').addClass('small');
+         $scope.$emit('body:class:add', 'scroll-blocked');
         }
 
         // Refresh the viewer map
@@ -842,7 +905,16 @@
         searchMap.renderSync();
       }, 2000);
 
-    }]);
+      // The url contains the path to display a metadata.
+      // Trigger a search  to get the metadata and handle
+      // in the search events the display of the metadata.
+      if ($location.path().indexOf("/metadata/") == 0) {
+        $scope.displayInitialMetadata = true;
+        $scope.displayInitialMetadataUUID = $location.path().substring($location.path().lastIndexOf("/")+1);
+        $scope.searchObj.params.or = $scope.displayInitialMetadataUUID;
+        $scope.triggerSearch();
+      }
+      }]);
 
   module.controller('SweLogoutController',
 	  ['$scope', '$http',
