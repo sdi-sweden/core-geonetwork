@@ -218,7 +218,7 @@
           }
 
         }
-
+        var editorAppURL = 'catalog.edit#';
         return gnMetadataManager.create(
             $scope.activeTpl['geonet:info'].id,
             $scope.ownerGroup,
@@ -227,6 +227,7 @@
             $routeParams.childOf ? true : false,
             undefined,
             metadataUuid
+            ,editorAppURL
         ).error(function(data) {
           $rootScope.$broadcast('StatusUpdated', {
             title: $translate.instant('createMetadataError'),
