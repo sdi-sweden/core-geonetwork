@@ -122,8 +122,7 @@
       <gmd:citation>
         <gmd:CI_Citation>
           <gmd:title>
-            <gco:CharacterString>Swedish - Template for Vector data in ISO19139
-              (preferred!)
+            <gco:CharacterString>Swedish - Template for Vector data in ISO19139 (preferred!)
             </gco:CharacterString>
           </gmd:title>
           <gmd:date>
@@ -144,10 +143,8 @@
         </gmd:CI_Citation>
       </gmd:citation>
       <gmd:abstract>
-        <gco:CharacterString>The ISO19115 metadata standard is the preferred
-          metadata
-          standard to use. If unsure what templates to start with, use this
-          one.
+        <gco:CharacterString>The ISO19115 metadata standard is the preferred metadata standard to use.
+          If unsure what templates to start with, use this one.
         </gco:CharacterString>
       </gmd:abstract>
       <gmd:purpose>
@@ -324,16 +321,16 @@
           <gmd:geographicElement>
             <gmd:EX_GeographicBoundingBox>
               <gmd:westBoundLongitude>
-                <gco:Decimal>-180</gco:Decimal>
+                <gco:Decimal>10.61</gco:Decimal>
               </gmd:westBoundLongitude>
               <gmd:eastBoundLongitude>
-                <gco:Decimal>180</gco:Decimal>
+                <gco:Decimal>24.18</gco:Decimal>
               </gmd:eastBoundLongitude>
               <gmd:southBoundLatitude>
-                <gco:Decimal>-90</gco:Decimal>
+                <gco:Decimal>55.14</gco:Decimal>
               </gmd:southBoundLatitude>
               <gmd:northBoundLatitude>
-                <gco:Decimal>90</gco:Decimal>
+                <gco:Decimal>69.06</gco:Decimal>
               </gmd:northBoundLatitude>
             </gmd:EX_GeographicBoundingBox>
           </gmd:geographicElement>
