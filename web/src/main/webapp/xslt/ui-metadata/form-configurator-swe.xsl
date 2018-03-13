@@ -57,7 +57,10 @@
         <xsl:when test="$sectionName">
           <!-- Use panels instead of fieldsets for editor sections -->
           <div class="panel panel-default" data-gn-field-highlight="">
-            <div class="panel-heading" data-gn-slide-toggle="" data-gn-field-tooltip="{$schema}|{@tooltip}">
+            <div class="panel-heading" data-gn-slide-toggle="">
+              <xsl:if test="string(@tooltip)">
+                <xsl:attribute name="data-gn-field-tooltip"><xsl:value-of select="concat($schema, '|', @tooltip)" /></xsl:attribute>
+              </xsl:if>
               <span class="ng-scope">
                 <xsl:value-of
                         select="if (contains($sectionName, ':'))
