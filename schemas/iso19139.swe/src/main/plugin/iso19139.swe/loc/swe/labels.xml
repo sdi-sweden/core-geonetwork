@@ -906,7 +906,7 @@ metadatamängden avser</description>
     <element context="gmd:CI_Citation" id="362.0" name="gmd:date">
         <condition>mandatory</condition>
         <label>Referensdatum (Händelsedatum)</label>
-        <description>Händelse angiven med datum för resursen</description>
+        <description>Händelse angiven med datum för resursen, Tex Publicering, revision, skapande</description>
         <_condition>M</_condition>
     </element>
     <element context="gmd:CI_Date" id="394.0" name="gmd:date">
@@ -1363,8 +1363,7 @@ Exempelvis: datamängd, datamängdserie eller tjänst.…</description>
     </element>
     <element id="573.0" name="gmd:identifier">
         <label>Identifierare för resurs</label>
-        <description>Unique identifier for the resource. EXAMPLE: Universal Product Code (UPC),
-            National Stock Number (NSN)</description>
+        <description>Unik identifierare för resurs</description>
     </element>
     <element context="gmd:CI_Citation" id="573.0" name="gmd:identifier">
         <label></label>
@@ -1600,7 +1599,7 @@ Ex. SS-EN ISO 19115.</description>
     </element>
     <element id="11.0" name="gmd:metadataStandardVersion">
         <label>Version av metadatastandard</label>
-        <description>Version av använd metadatastandard (10)</description>
+        <description>Version av använd metadatastandard</description>
     </element>
     <element id="261.0" name="gmd:minValue">
         <label>Minimivärde</label>
