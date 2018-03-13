@@ -5554,7 +5554,7 @@
     <view name="swedish" upAndDownControlHidden="true">
       <tab id="swedish" default="true" mode="flat">
         <!-- Information om metadata -->
-        <section name="metadata2">
+        <section name="metadata2" tooltip="gmd:MD_Metadata">
           <field xpath="/gmd:MD_Metadata/gmd:fileIdentifier"/>
 
           <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevel"/>

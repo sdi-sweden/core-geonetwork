@@ -625,6 +625,12 @@ A section is a group of fields.
       <xs:attribute ref="or"/>
       <xs:attribute ref="in"/>
       <xs:attribute ref="displayIfRecord"/>
+      <xs:attribute name="tooltip" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>An optional tooltip to display for the section. The tooltip must be defined in ``{schema}/loc/{lang}/labels.xml``.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
     </xs:complexType>
     <xs:unique name="avoidDuplicateFieldWithSameXPath">
       <xs:annotation>
