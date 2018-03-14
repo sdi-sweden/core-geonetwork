@@ -55,16 +55,16 @@
 
   module.constant('gnLangs', {
     langs: {
-      'eng': 'en',
-      'dut': 'du',
-      'fre': 'fr',
-      'ger': 'ge',
-      'kor': 'ko',
-      'spa': 'es',
-      'cze': 'cz',
-      'cat': 'ca',
-      'fin': 'fi',
-      'swe': 'sv'
+//      'dut': 'du',
+//      'fre': 'fr',
+//      'ger': 'ge',
+//      'kor': 'ko',
+//      'spa': 'es',
+//      'cze': 'cz',
+//      'cat': 'ca',
+//      'fin': 'fi',
+      'swe': 'sv',
+      'eng': 'en'
     },
     getIso2Lang: function(iso3lang) {
       return this.langs[iso3lang];
@@ -135,9 +135,10 @@
       $scope.langs = gnLangs.langs;
 
       // Lang names to be displayed in language selector
-      $scope.langLabels = {'eng': 'English', 'dut': 'Nederlands',
-        'fre': 'Français', 'ger': 'Deutsch', 'kor': '한국의',
-        'spa': 'Español', 'cat': 'Català', 'cze': 'Czech', 'fin': 'Suomeksi', 'swe': 'Svensk'};
+//      $scope.langLabels = {'eng': 'English', 'dut': 'Nederlands',
+//        'fre': 'Français', 'ger': 'Deutsch', 'kor': '한국의',
+//        'spa': 'Español', 'cat': 'Català', 'cze': 'Czech', 'fin': 'Suomeksi', 'swe': 'Svensk'};
+      $scope.langLabels = {'swe': 'Svensk','eng': 'English'};
       $scope.url = '';
       $scope.base = '../../catalog/';
       $scope.proxyUrl = gnGlobalSettings.proxyUrl;
