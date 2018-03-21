@@ -156,7 +156,8 @@
                                     {
                                       method: 'PUT'
                                     }).then(function(data) {
-            alertResult(data.data);
+// TODO: dont show message for now - need to process the data returned, similar to publish method                
+//            alertResult(data.data);
             $rootScope.$broadcast('mdSelectNone');
             $rootScope.$broadcast('search');
           });
@@ -310,6 +311,7 @@
           if (md && success === 'success') {
             md.publish();
           }
+          $rootScope.$broadcast('search');
         };
         if (angular.isDefined(md)) {
           return gnHttp.callService(service, {
