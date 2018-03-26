@@ -4,9 +4,9 @@
                   xmlns:gmd="http://www.isotc211.org/2005/gmd"
                   xmlns:xlink='http://www.w3.org/1999/xlink'
                   xmlns:gco="http://www.isotc211.org/2005/gco"
+                  xmlns:gmx="http://www.isotc211.org/2005/gmx"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xmlns:napec="http://www.ec.gc.ca/data_donnees/standards/schemas/napec"
-                  exclude-result-prefixes="gmd xlink gco xsi napec">
+                  exclude-result-prefixes="gmd xlink gco xsi gmx">
 
   <!-- ================================================================= -->
 
@@ -14,6 +14,7 @@
     <xsl:copy>
       <!-- Remove schemaLocation, usually doesn't have gmx namespace. Let GeoNetwork add it from schema-ident.xml -->
       <xsl:copy-of select="@*[not(name()= 'xsi:schemaLocation')]" />
+      <xsl:namespace name="gmx" select="'http://www.isotc211.org/2005/gmx'"/>
 
       <xsl:apply-templates select="gmd:fileIdentifier" />
       <xsl:apply-templates select="gmd:language" />
@@ -56,6 +57,44 @@
        to be handle for INSPIRE TG 2.0 in the metadata editor -->
   <xsl:template match="gmd:resourceConstraints" />
 
+
+  <!-- Change specification title to an Anchor if pointing to the INSPIRE spec -->
+  <xsl:template match="gmd:specification">
+    <xsl:variable name="title" select="gmd:CI_Citation/gmd:title/gco:CharacterString" />
+
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:choose>
+        <xsl:when test="lower-case($title) = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster'">
+          <gmd:CI_Citation>
+            <gmd:title>
+              <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">
+                <xsl:value-of select="$title" />
+              </gmx:Anchor>
+            </gmd:title>
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:alternateTitle" />
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:date" />
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:edition" />
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:editionDate" />
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:identifier" />
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:citedResponsibleParty" />
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:presentationForm" />
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:series" />
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:otherCitationDetails" />
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:collectiveTitle" />
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:ISBN" />
+            <xsl:apply-templates select="gmd:CI_Citation/gmd:ISSN" />
+          </gmd:CI_Citation>
+        </xsl:when>
+
+        <xsl:otherwise>
+          <xsl:apply-templates select="gmd:CI_Citation" />
+        </xsl:otherwise>
+      </xsl:choose>
+
+    </xsl:copy>
+  </xsl:template>
 
   <!-- ================================================================= -->
   <!-- copy everything else as is -->
