@@ -209,7 +209,7 @@ USA.
 			<sch:assert test="$useLimitation_count = 1">[Geodata.se:110g] Information om användbarhetsbegränsningar måste finnas men får bara anges en gång</sch:assert>
 
 			<sch:let name="useLimitation" value="gmd:resourceConstraints/*/gmd:useLimitation/*/text()/normalize-space(.)"/>
-			<sch:let name="useLimitationLength" value="string-length($useLimitation)"/>
+			<sch:let name="useLimitationLength" value="gmd:resourceConstraints/*/gmd:useLimitation/*/text()/string-length(normalize-space(.))"/>
 			<sch:assert test="$useLimitation and ($useLimitationLength &lt; 2500)">[Geodata.se:110e] Information om användbarhetsbegränsningar måste finnas och vara kortare än 2500 tecken </sch:assert>
 
 			
@@ -221,7 +221,7 @@ USA.
 			
 			<sch:let name="otherConstraints_condition" value="gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'otherRestrictions'"/>
 			<sch:let name="otherConstraints" value="gmd:resourceConstraints/*/gmd:otherConstraints/*/text()"/>
-			<sch:let name="otherConstraintsLength" value="string-length($otherConstraints)"/>
+			<sch:let name="otherConstraintsLength" value="gmd:resourceConstraints/*/gmd:otherConstraints/*/text()/string-length(.)"/>
 			<sch:let name="otherConstraints_present" value="$otherConstraints_condition and ($otherConstraintsLength &gt; 0) and ($otherConstraintsLength &lt; 1000)"/>
 
 <!-- 			<sch:report test="$accessConstraints_present">$accessConstraints_present:
@@ -344,8 +344,8 @@ USA.
       <sch:let name="resourceLocator" value="gmd:linkage/*/text()"/>
       <sch:let name="protocol" value="gmd:protocol/*/text()"/>
 
-      <sch:let name="resourceLocatorLen" value="string-length(normalize-space(gmd:linkage/*/text()))"/>
-      <sch:let name="protocolLen" value="string-length(normalize-space(gmd:protocol/*/text()))"/>
+      <sch:let name="resourceLocatorLen" value="gmd:linkage/*/text()/string-length(normalize-space(.))"/>
+      <sch:let name="protocolLen" value="gmd:protocol/*/text()/string-length(normalize-space(.))"/>
       <sch:let name="protocolCorrect" value="gmd:protocol/*/text() = 'HTTP:OGC:WMS' or
 				gmd:protocol/*/text() = 'HTTP:OGC:WFS' or
 				gmd:protocol/*/text() = 'HTTP:OGC:WSC' or
