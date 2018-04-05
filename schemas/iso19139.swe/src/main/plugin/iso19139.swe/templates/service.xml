@@ -105,7 +105,7 @@
             <gmd:citation>
                 <gmd:CI_Citation>
                     <gmd:title>
-                        <gco:CharacterString>Swedish - Template for services</gco:CharacterString>
+                        <gco:CharacterString>Svenska - Mall för tjänster</gco:CharacterString>
                     </gmd:title>
                     <gmd:alternateTitle gco:nilReason="missing"/>
                     <gmd:date>
@@ -121,8 +121,7 @@
                 </gmd:CI_Citation>
             </gmd:citation>
             <gmd:abstract>
-                <gco:CharacterString>The ISO19139/119 metadata standard is the preferred metadata standard
-          to use for services (WMS, WFS, WCS).</gco:CharacterString>
+                <gco:CharacterString>The ISO19139/119 metadata standard is the preferred metadata standard to use for services (WMS, WFS, WCS).</gco:CharacterString>
             </gmd:abstract>
         	<gmd:status>
                 <gmd:MD_ProgressCode codeListValue="completed" codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_ProgressCode"/>
@@ -223,16 +222,16 @@
                     <gmd:geographicElement>
                         <gmd:EX_GeographicBoundingBox>
                             <gmd:westBoundLongitude>
-                                <gco:Decimal>-180</gco:Decimal>
+                                <gco:Decimal>10.61</gco:Decimal>
                             </gmd:westBoundLongitude>
                             <gmd:eastBoundLongitude>
-                                <gco:Decimal>180</gco:Decimal>
+                                <gco:Decimal>24.18</gco:Decimal>
                             </gmd:eastBoundLongitude>
                             <gmd:southBoundLatitude>
-                                <gco:Decimal>-90</gco:Decimal>
+                                <gco:Decimal>55.14</gco:Decimal>
                             </gmd:southBoundLatitude>
                             <gmd:northBoundLatitude>
-                                <gco:Decimal>90</gco:Decimal>
+                                <gco:Decimal>69.06</gco:Decimal>
                             </gmd:northBoundLatitude>
                         </gmd:EX_GeographicBoundingBox>
                     </gmd:geographicElement>
@@ -241,12 +240,13 @@
             <srv:couplingType>
                 <srv:SV_CouplingType codeListValue="tight" codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#SV_CouplingType"/>
             </srv:couplingType>
-
+<!-- 
             <srv:couplingType>
                 <srv:SV_CouplingType codeListValue="tight"
                                      codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#SV_CouplingType"/>
             </srv:couplingType>
-            <srv:containsOperations>
+ -->
+             <srv:containsOperations>
                 <srv:SV_OperationMetadata>
                     <srv:operationName>
                         <gco:CharacterString>GetCapabilities</gco:CharacterString>
@@ -255,10 +255,12 @@
                         <srv:DCPList codeList="http://inspire.ec.europa.eu/metadata-codelist/DCPList"
                                      codeListValue="XML"/>
                     </srv:DCP>
-                    <srv:DCP>
+<!--                      <srv:DCP>
                         <srv:DCPList codeList="http://inspire.ec.europa.eu/metadata-codelist/DCPList"
                                      codeListValue=""/>
                     </srv:DCP>
+-->
+                    <srv:connectPoint/>
                 </srv:SV_OperationMetadata>
             </srv:containsOperations>
         </srv:SV_ServiceIdentification>
@@ -318,7 +320,7 @@
                                 </gmd:CI_Citation>
                             </gmd:specification>
                             <gmd:explanation>
-                                <gco:CharacterString>Conformant to the INSPIRE SDS specifications.
+                                <gco:CharacterString>Överensstämmer till INSPIRE SDS specifikationerna.
                                 </gco:CharacterString>
                             </gmd:explanation>
                             <gmd:pass>
@@ -409,16 +411,13 @@
                             <gmd:specification>
                                 <gmd:CI_Citation>
                                     <gmd:title>
-                                        <gmx:Anchor xlink:href="http://link,to/the.technical.specification">Description
-                                            of technical specification
+                                        <gmx:Anchor xlink:href="http://link,to/the.technical.specification">Beskrivning av teknisk specifikation
                                         </gmx:Anchor>
                                     </gmd:title>
                                     <gmd:date>
                                         <gmd:CI_Date>
                                             <gmd:date>
-                                                <gco:Date>
-                                                    <gco:Date>2014-12-11</gco:Date>
-                                                </gco:Date>
+                                                <gco:Date>2014-12-11</gco:Date>
                                             </gmd:date>
                                             <gmd:dateType>
                                                 <gmd:CI_DateTypeCode
@@ -430,7 +429,7 @@
                                 </gmd:CI_Citation>
                             </gmd:specification>
                             <gmd:explanation>
-                                <gco:CharacterString>Conformant to the cited specifications.</gco:CharacterString>
+                                <gco:CharacterString>Överensstämmer med de angivna specifikationerna.</gco:CharacterString>
                             </gmd:explanation>
                             <gmd:pass>
                                 <gco:Boolean>true</gco:Boolean>
