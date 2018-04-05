@@ -56,6 +56,10 @@
   <applicationSchemaInfo>Schema info</applicationSchemaInfo>
   <noThesaurusName>Nyckelord</noThesaurusName>
   <bboxesSection>Geographic täckning</bboxesSection>
+  <description>beskrivning</description>
+  <graphicOverview>graphic overview</graphicOverview>
+  <spatialRepresentationType>spatial Representation Type</spatialRepresentationType>
+  <equivalentScale>equivalent Scale</equivalentScale>
 
   <!-- XSD error translation -->
   <invalidElement>Invalid element. Invalid content was found starting with element: </invalidElement>

@@ -5882,7 +5882,7 @@
           </action>
 
           <!-- Character set -->
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:characterSet" />
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_IdentificationInfo/gmd:characterSet" />
 
           <!-- Point of contact -->
           <field name="pointOfContact"
@@ -5894,23 +5894,23 @@
 
           <!-- Thumbnails -->
           <field name="graphicOverview"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:graphicOverview" />
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_IdentificationInfo/gmd:graphicOverview" />
         </section>
 
         <!-- Geografisk, temporal och vertikal utsträckning -->
         <section name="extent">
           <!-- Extent description - dataset -->
           <field name="description"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/gmd:EX_Extent/gmd:description"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:description"
                  or="description"
-                 in="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/gmd:EX_Extent"
+                 in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent"
                  del="."/>
 
           <!-- Extent description - service -->
           <field name="description"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/srv:extent/gmd:EX_Extent/gmd:description"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:description"
                  or="description"
-                 in="/gmd:MD_Metadata/gmd:identificationInfo/*/srv:extent/gmd:EX_Extent"
+                 in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent"
                  del="."/>
 
           <!-- Extent - dataset -->
