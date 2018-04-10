@@ -5882,11 +5882,11 @@
           </action>
 
           <!-- Character set -->
-          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_IdentificationInfo/gmd:characterSet" />
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:characterSet" />
 
           <!-- Point of contact -->
           <field name="pointOfContact"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_IdentificationInfo/gmd:pointOfContact" />
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact" />
 
           <field name="pointOfContact"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact"
@@ -5894,7 +5894,7 @@
 
           <!-- Thumbnails -->
           <field name="graphicOverview"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_IdentificationInfo/gmd:graphicOverview" />
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview" />
         </section>
 
         <!-- Geografisk, temporal och vertikal utsträckning -->
