@@ -238,7 +238,7 @@ USA.
 
     <sch:rule context="//gmd:identificationInfo[1]/*">
 
-      <sch:assert test="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints) &gt; 0">[Geodata.se:110e] [Geodata.se:110f] Användningsbegränsningar och användbarhetsbegränsingar skall anges</sch:assert>
+      <sch:assert test="not(gmd:hierarchyLevel/*/@codeListValue='dataset') or count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints) &gt; 0">[Geodata.se:110e] [Geodata.se:110f] Användningsbegränsningar och användbarhetsbegränsingar skall anges</sch:assert>
 
 	  <sch:let name="useLimitation" value="//gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString/text()"/>
       <sch:let name="useLimitation_count" value="count(//gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString/text())"/>
@@ -522,8 +522,10 @@ USA.
         <sch:report test="$recordType and $valueUnit and $value">	</sch:report>-->
 
 
+<!-- disable for now - templates and editor need to be updated to support gco:recordType
       <sch:assert test="$recordType and $valueUnit and $value" >[Geodata.se:127] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges Värde=<sch:value-of select="$value"/>   Värdetyp=<sch:value-of select="$recordType"/>  Värdeenhet=<sch:value-of select="$valueUnit"/>  </sch:assert>
       <sch:assert test="$recordType" >[Geodata.se:127a] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värdetyp saknas </sch:assert>
+-->
       <sch:assert test="$valueUnit" >[Geodata.se:127b] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värdeenhet saknas </sch:assert>
       <sch:assert test="$value" >[Geodata.se:127c] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värde saknas </sch:assert>
 
