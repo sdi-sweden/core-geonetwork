@@ -200,6 +200,8 @@ public class DataManager implements ApplicationEventPublisherAware {
     // initialize in init method
     private ServiceContext servContext;
     private EditLib editLib;
+    
+    private static final boolean XSD_VALIDATION_ON = false;
 
     //--------------------------------------------------------------------------
     //---
@@ -246,7 +248,9 @@ public class DataManager implements ApplicationEventPublisherAware {
 
         DataManager.setNamespacePrefix(xml);
         try {
-            dataMan.validate(schema, xml);
+            if (XSD_VALIDATION_ON) {
+                dataMan.validate(schema, xml);
+            }
         } catch (XSDValidationErrorEx e) {
             if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
                 Log.debug(Geonet.DATA_MANAGER, "XSDValidation Fail: " + e.getMessage());
@@ -865,7 +869,9 @@ public class DataManager implements ApplicationEventPublisherAware {
      * Use this validate method for XML documents with dtd.
      */
     public void validate(String schema, Document doc) throws Exception {
-        Xml.validate(doc);
+        if (XSD_VALIDATION_ON) {
+            Xml.validate(doc);
+        }
     }
 
     /**
@@ -878,15 +884,21 @@ public class DataManager implements ApplicationEventPublisherAware {
         if (schemaLoc == null) schemaLoc = "";
 
         if (schema == null) {
-            // must use schemaLocation
-            Xml.validate(md);
+            if (XSD_VALIDATION_ON) {
+                // must use schemaLocation
+                Xml.validate(md);
+            }
         } else {
             // if schemaLocation use that
             if (!schemaLoc.equals("")) {
-                Xml.validate(md);
-                // otherwise use supplied schema name
+                if (XSD_VALIDATION_ON) {
+                    Xml.validate(md);
+                    // otherwise use supplied schema name
+                }
             } else {
-                Xml.validate(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md);
+                if (XSD_VALIDATION_ON) {
+                    Xml.validate(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md);
+                }
             }
         }
     }
@@ -901,15 +913,27 @@ public class DataManager implements ApplicationEventPublisherAware {
         if (schemaLoc == null) schemaLoc = "";
 
         if (schema == null) {
-            // must use schemaLocation
-            return Xml.validateInfo(md, eh);
+            if (XSD_VALIDATION_ON) {
+                // must use schemaLocation
+                return Xml.validateInfo(md, eh);
+            } else {
+                return null;
+            }
         } else {
             // if schemaLocation use that
             if (!schemaLoc.equals("")) {
-                return Xml.validateInfo(md, eh);
+                if (XSD_VALIDATION_ON) {
+                    return Xml.validateInfo(md, eh);
+                } else {
+                    return null;
+                }
                 // otherwise use supplied schema name
             } else {
-                return Xml.validateInfo(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md, eh);
+                if (XSD_VALIDATION_ON) {
+                    return Xml.validateInfo(getSchemaDir(schema).resolve(Geonet.File.SCHEMA), md, eh);
+                } else {
+                    return null;
+                }
             }
         }
     }
@@ -1138,11 +1162,13 @@ public class DataManager implements ApplicationEventPublisherAware {
         // NOTE: this method assumes that enumerateTree has NOT been run on the metadata
         ErrorHandler errorHandler = new ErrorHandler();
         errorHandler.setNs(Edit.NAMESPACE);
-        Element xsdErrors;
+        Element xsdErrors = null;
 
         try {
-            xsdErrors = validateInfo(schema,
-                md, errorHandler);
+            if (XSD_VALIDATION_ON) {
+                xsdErrors = validateInfo(schema,
+                    md, errorHandler);
+            }
         } catch (Exception e) {
             xsdErrors = JeevesException.toElement(e);
             return xsdErrors;
@@ -1899,7 +1925,9 @@ public class DataManager implements ApplicationEventPublisherAware {
             // if document has a doctype then validate using that (assuming that the
             // dtd is either mapped locally or will be cached after first validate)
             try {
-                Xml.validate(doc);
+                if (XSD_VALIDATION_ON){
+                    Xml.validate(doc);
+                }
                 validations.add(new MetadataValidation().
                     setId(new MetadataValidationId(intMetadataId, "dtd")).
                     setStatus(MetadataValidationStatus.VALID).
@@ -1926,9 +1954,12 @@ public class DataManager implements ApplicationEventPublisherAware {
             if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
                 Log.debug(Geonet.DATA_MANAGER, "Validating against XSD " + schema);
             }
+            Element xsdErrors = null;
             // do XSD validation
             Element md = doc.getRootElement();
-            Element xsdErrors = getXSDXmlReport(schema, md);
+            if (XSD_VALIDATION_ON) {
+                xsdErrors = getXSDXmlReport(schema, md);
+            }
 
             int xsdErrorCount = 0;
             if (xsdErrors != null && xsdErrors.getContent().size() > 0) {
@@ -2008,9 +2039,12 @@ public class DataManager implements ApplicationEventPublisherAware {
         Element errorReport = new Element("report", Edit.NAMESPACE);
         errorReport.setAttribute("id", metadataId, Edit.NAMESPACE);
 
+        Element xsdErrors = null;
+        if (XSD_VALIDATION_ON) {
         //-- get an XSD validation report and add results to the metadata
         //-- as geonet:xsderror attributes on the affected elements
-        Element xsdErrors = getXSDXmlReport(schema, md);
+            xsdErrors = getXSDXmlReport(schema, md);
+        }
         int xsdErrorCount = 0;
         if (xsdErrors != null) {
             xsdErrorCount = xsdErrors.getContent().size();
@@ -2098,9 +2132,12 @@ public class DataManager implements ApplicationEventPublisherAware {
         Element errorReport = new Element("report", Edit.NAMESPACE);
         errorReport.setAttribute("id", "-1", Edit.NAMESPACE);
 
+        Element xsdErrors = null;
+        if (XSD_VALIDATION_ON) {
         //-- get an XSD validation report and add results to the metadata
         //-- as geonet:xsderror attributes on the affected elements
-        Element xsdErrors = getXSDXmlReport(schema, md);
+            xsdErrors = getXSDXmlReport(schema, md);
+        }
         int xsdErrorCount = 0;
         if (xsdErrors != null) {
             xsdErrorCount = xsdErrors.getContent().size();
