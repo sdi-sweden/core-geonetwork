@@ -33,7 +33,7 @@
     '$timeout',
     function(gnAlertValue, $timeout) {
 
-      var delay = 2000;
+      var delay = 15000;
       this.addAlert = function(alert) {
         gnAlertValue.push(alert);
 
