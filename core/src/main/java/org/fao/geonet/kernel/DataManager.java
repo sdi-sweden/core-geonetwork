@@ -1973,7 +1973,7 @@ public class DataManager implements ApplicationEventPublisherAware {
                     setNumTests(xsdErrorCount).
                     setNumFailures(xsdErrorCount));
                 if (Log.isDebugEnabled(Geonet.DATA_MANAGER))
-                    Log.debug(Geonet.DATA_MANAGER, "Invalid.");
+                    Log.debug(Geonet.DATA_MANAGER, "Invalid: " + xsdErrorCount + " failures");
                 valid = false;
             } else {
                 validations.add(new MetadataValidation().
@@ -1990,6 +1990,8 @@ public class DataManager implements ApplicationEventPublisherAware {
                 //Apply custom schematron rules
                 Element errors = applyCustomSchematronRules(schema, Integer.parseInt(metadataId), doc.getRootElement(), lang, validations);
                 valid = valid && errors == null;
+                if (Log.isDebugEnabled(Geonet.DATA_MANAGER))
+                    Log.debug(Geonet.DATA_MANAGER, "Validation after schematron is : " + valid);
                 editLib.removeEditingInfo(md);
             } catch (Exception e) {
                 e.printStackTrace();
