@@ -130,11 +130,11 @@
   <metadata2>Information om metadata</metadata2>
   <extent>Geografisk, temporal och vertikal utsträckning</extent>
   <distributorContact>Distributör</distributorContact>
-  <metadataMaintenance2>Underhäll</metadataMaintenance2>
+  <metadataMaintenance2>Underhåll</metadataMaintenance2>
   <restrictions>Restriktioner</restrictions>
-  <dataQualityInfo2>Kvaliteinformation</dataQualityInfo2>
-  <dataQualityInfoService>Kvaliteinformation</dataQualityInfoService>
-  <dataQualityInfoSDS>Kvaliteinformation</dataQualityInfoSDS>
+  <dataQualityInfo2>Kvalitetsinformation</dataQualityInfo2>
+  <dataQualityInfoService>Kvalitetsinformation</dataQualityInfoService>
+  <dataQualityInfoSDS>Kvalitetsinformation</dataQualityInfoSDS>
   <service>Beskrivning av tjänst</service>
   <dataset>Beskrivning av datamängd</dataset>
   <resources>Tillhandahållande av resurser</resources>
@@ -229,15 +229,15 @@
   <sds-addConstraints>Customizable constraints</sds-addConstraints>
 
   <sds>
-    <noConditionsApply>No conditions apply</noConditionsApply>
-    <conditionsUnknown>Conditions unknown</conditionsUnknown>
+    <noConditionsApply>Inga villkor gäller</noConditionsApply>
+    <conditionsUnknown>Villkor okänd</conditionsUnknown>
   </sds>
 
-  <sds-limitation>Limitation</sds-limitation>
+  <sds-limitation>Begränsning</sds-limitation>
 
-  <sds-section-custodian>Responsible custodian</sds-section-custodian>
-  <sds-addOperation>Add Operation</sds-addOperation>
-  <add-distributor>Add distributor</add-distributor>
+  <sds-section-custodian>Ansvarig förvaring</sds-section-custodian>
+  <sds-addOperation>Lägg till verkan</sds-addOperation>
+  <add-distributor>Lägg till distributör</add-distributor>
 
   <referenceDateAdd>Referensdatum (Händelsedatum)</referenceDateAdd>
 

@@ -5915,8 +5915,7 @@
 
           <!-- Extent - dataset -->
           <field
-                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/
-            gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
+                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
           <action type="add" name="extent" or="extent"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
             <template>
@@ -5926,16 +5925,16 @@
                     <gmd:geographicElement>
                       <gmd:EX_GeographicBoundingBox>
                         <gmd:westBoundLongitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>10.61</gco:Decimal>
                         </gmd:westBoundLongitude>
                         <gmd:eastBoundLongitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>24.18</gco:Decimal>
                         </gmd:eastBoundLongitude>
                         <gmd:southBoundLatitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>55.14</gco:Decimal>
                         </gmd:southBoundLatitude>
                         <gmd:northBoundLatitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>69.06</gco:Decimal>
                         </gmd:northBoundLatitude>
                       </gmd:EX_GeographicBoundingBox>
                     </gmd:geographicElement>
@@ -5947,32 +5946,31 @@
 
           <!-- Extent - service -->
           <field
-                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
-            srv:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
+                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
           <action type="add" name="extent" or="extent"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification">
             <template>
               <snippet>
-                <gmd:extent>
+                <srv:extent>
                   <gmd:EX_Extent>
                     <gmd:geographicElement>
                       <gmd:EX_GeographicBoundingBox>
                         <gmd:westBoundLongitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>10.61</gco:Decimal>
                         </gmd:westBoundLongitude>
                         <gmd:eastBoundLongitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>24.18</gco:Decimal>
                         </gmd:eastBoundLongitude>
                         <gmd:southBoundLatitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>55.14</gco:Decimal>
                         </gmd:southBoundLatitude>
                         <gmd:northBoundLatitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>69.06</gco:Decimal>
                         </gmd:northBoundLatitude>
                       </gmd:EX_GeographicBoundingBox>
                     </gmd:geographicElement>
                   </gmd:EX_Extent>
-                </gmd:extent>
+                </srv:extent>
               </snippet>
             </template>
           </action>
