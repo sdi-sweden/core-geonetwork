@@ -87,12 +87,12 @@
   <publicationDate>Publiceringsdatum</publicationDate>
   <revisionDate>Revideringsdatum</revisionDate>
   <temporalRangeSection>Temporal utsträckning</temporalRangeSection>
-  <beginPosition>Start</beginPosition>
-  <endPosition>Slut</endPosition>
+  <beginPosition>Startdatum</beginPosition>
+  <endPosition>Slutdatum</endPosition>
   <conformity>Specifikationsuppfyllelse</conformity>
   <conformity_title>Titel</conformity_title>
   <conformity_date>Datum</conformity_date>
-  <explanation>Förklaring</explanation>
+  <explanation>Överensstämmelse Förklaring</explanation>
   <pass>Överensstämmelse</pass>
   <indeterminatePosition>Obestämbar position</indeterminatePosition>
   <pointOfContact>Resurskontakt</pointOfContact>
@@ -142,7 +142,7 @@
   <verticalElementSection>Vertikal utsträckning</verticalElementSection>
   <vertical_crs_minimum_value>Lägsta höjd</vertical_crs_minimum_value>
   <vertical_crs_maximum_value>Högsta höjd</vertical_crs_maximum_value>
-  <vertical_crs_datum>Vertikalt Datum</vertical_crs_datum>
+  <vertical_crs_datum>Referenssystem för höjd</vertical_crs_datum>
 
   <resourceMaintanceSection>Ajourhållning</resourceMaintanceSection>
   <maintenance_frequency>Underhållsfrekvens</maintenance_frequency>
@@ -182,20 +182,20 @@
   <sds-add-dataqualityHelp>TG4: For each spatial data service, there shall be one and only one set
     of quality information (dataQualityInfo element) scoped to “service”.
   </sds-add-dataqualityHelp>
-  <sds-add-tech-spec>Add a technical specification</sds-add-tech-spec>
+  <sds-add-tech-spec>Lägg till en teknisk specifikation</sds-add-tech-spec>
   <sds-add-tech-specHelp>TG8: The Specification metadata element shall at least refer to or contain
     one technical specification to which the invocable spatial data service fully conforms,
     providing all the necessary technical elements, to actually invoke the service and enable its
     usage.
   </sds-add-tech-specHelp>
-  <sds-tech-spec>Technical specification</sds-tech-spec>
-  <conformity_desc>Tech spec title</conformity_desc>
-  <conformity_linkage>Tech spec URL</conformity_linkage>
+  <sds-tech-spec>Teknisk specifikation</sds-tech-spec>
+  <conformity_desc>Teknisk specifikation titel</conformity_desc>
+  <conformity_linkage>Teknisk specifikation URL</conformity_linkage>
 
-  <sds-add-reg-spec>Add a regulation specification</sds-add-reg-spec>
-  <sds-reg-spec>Regulation specification</sds-reg-spec>
-  <reg_conformity_desc>Regulation spec title</reg_conformity_desc>
-  <reg_conformity_linkage>Regulation spec URL</reg_conformity_linkage>
+  <sds-add-reg-spec>Lägg til Överensstämelserapport</sds-add-reg-spec>
+  <sds-reg-spec>Överensstämelserapport</sds-reg-spec>
+  <reg_conformity_desc>Överensstämelserapport titel</reg_conformity_desc>
+  <reg_conformity_linkage>Överensstämelserapport URL</reg_conformity_linkage>
 
 
   <sds-section-qos>Quality of Service</sds-section-qos>

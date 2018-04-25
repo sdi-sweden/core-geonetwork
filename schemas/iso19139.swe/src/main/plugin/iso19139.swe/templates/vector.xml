@@ -142,9 +142,7 @@
         </gmd:CI_Citation>
       </gmd:citation>
       <gmd:abstract>
-        <gco:CharacterString>The ISO19115 metadata standard is the preferred metadata standard to use.
-          If unsure what templates to start with, use this one.
-        </gco:CharacterString>
+        <gco:CharacterString/>
       </gmd:abstract>
       <gmd:purpose>
         <gco:CharacterString/>

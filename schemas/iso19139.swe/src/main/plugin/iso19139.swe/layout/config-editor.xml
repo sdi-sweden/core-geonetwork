@@ -5984,17 +5984,13 @@
                 <!-- -Need a * for gml:TimePeriodTypeCHOICE_ELEMENT2 added by editor enumerated tree -->
                 <key label="beginPosition"
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition"
-                     use="gn-date-picker"
-                     tooltip="gml:beginPosition">
+                     use="gn-date-picker">
                   <directiveAttributes data-tag-name="gml:beginPosition" data-hide-time="true"/>
                 </key>
                 <key label="endPosition"
                      xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition"
-                     use="gn-date-picker"
-                     tooltip="gml:endPosition"
-                >
-                  <directiveAttributes
-                          data-tag-name="gml:endPosition" data-hide-time="true"/>
+                     use="gn-date-picker">
+                  <directiveAttributes data-tag-name="gml:endPosition" data-hide-time="true"/>
                 </key>
               </values>
               <snippet>
@@ -6110,7 +6106,8 @@
 
                 <key label="vertical_crs_datum"
                      xpath="gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title"
-                     tooltip="gmd:verticalCRS">>
+                     >
+<!--                      tooltip="gmd:verticalCRS"> -->
                   <helper name="gmd:verticalCRS" />
                 </key>
               </values>
@@ -6133,7 +6130,8 @@
         </section>
 
         <!-- Restriktioner -->
-        <section name="restrictions" displayIfRecord="(count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) + count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification[srv:serviceType/gco:LocalName != 'other'])) > 0 ">
+        <section name="restrictions" displayIfRecord="(count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) + count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification[srv:serviceType/gco:LocalName != 'other'])) > 0 "
+                 tooltip="gmd:resourceConstraints">
           <!-- Use limitations -->
           <field
             name="useLimitation"
@@ -6560,7 +6558,7 @@
                 </key>
                 <key label="conformity_date" use="gn-date-picker"
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
-                <key label="explanation" use="text"
+                <key label="explanation" use="text" tooltip="gmd:explanation"
                      xpath="gmd:DQ_ConformanceResult/gmd:explanation/gco:CharacterString"/>
                 <key label="pass"
                      xpath="gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean"
@@ -6640,7 +6638,7 @@
                           </gmd:CI_Citation>
                         </gmd:specification>
                         <gmd:explanation>
-                          <gco:CharacterString>Conformant to the cited specifications.
+                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
@@ -6756,7 +6754,7 @@
                           </gmd:CI_Citation>
                         </gmd:specification>
                         <gmd:explanation>
-                          <gco:CharacterString>Conformant to the cited specifications.
+                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
@@ -6906,7 +6904,7 @@
                           </gmd:CI_Citation>
                         </gmd:specification>
                         <gmd:explanation>
-                          <gco:CharacterString>Conformant to the cited specifications.
+                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
@@ -7022,7 +7020,7 @@
                           </gmd:CI_Citation>
                         </gmd:specification>
                         <gmd:explanation>
-                          <gco:CharacterString>Conformant to the cited specifications.
+                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
@@ -7434,7 +7432,7 @@
                             </gmd:CI_Citation>
                           </gmd:specification>
                           <gmd:explanation>
-                            <gco:CharacterString>Conformant to the cited specifications.
+                            <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
                             </gco:CharacterString>
                           </gmd:explanation>
                           <gmd:pass>
@@ -7550,7 +7548,7 @@
                             </gmd:CI_Citation>
                           </gmd:specification>
                           <gmd:explanation>
-                            <gco:CharacterString>Conformant to the cited specifications.
+                            <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
                             </gco:CharacterString>
                           </gmd:explanation>
                           <gmd:pass>
