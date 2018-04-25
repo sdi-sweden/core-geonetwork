@@ -1,4 +1,4 @@
-{
+﻿{
     "add-extent-from-geokeywords": "Beräkna täckning utifrån nyckelord",
     "add-extent-from-geokeywords-help": "Sök alla nyckelord i synonymordlistan av typen plats och lägg till matchande utsträckningar.",
     "addCRS-help": "Lägg till en ny CRS",
@@ -137,7 +137,7 @@
     "unsupportedFileExtension": "Bara filer med filändelse XML, ZIP eller MEF stödjs.",
     "inGroup": "I",
     "initiativeType": "Typ av initiativ",
-    "keywordInsertMode": "Lägg till nyckelord som",
+    "keywordInsertMode": "Lägg till initiativ som",
     "linkService": "Koppla tjänst till ett metadata",
     "linkToDataset": "Länk till en datamängd",
     "linkToDatasetTitle": "Koppla en datamängd till aktivt metadata",
@@ -288,7 +288,7 @@
     "uploadFile": "Ladda upp en fil från datorn",
     "uuidAction": "Identifierare för post behandlas",
     "validate-help": "Jämför posten mot standard-valideringsregler",
-    "validationReport": "Validering",
+    "validationReport": "Schematronvalidering",
     "runValidation": "Kör valideringskontroll",
     "whoCanAccess": "Vem har tillgång",
     "wmsServiceUrl": "URL för tjänst",

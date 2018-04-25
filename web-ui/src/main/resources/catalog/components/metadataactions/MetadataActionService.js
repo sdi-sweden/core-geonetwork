@@ -54,11 +54,15 @@
       var windowOption = '';
 
       var alertResult = function(msg) {
-        gnAlertService.addAlert({
-          msg: msg,
-          type: 'success'
-        });
+    	  alertResultAndType(msg, 'success');
       };
+
+      var alertResultAndType = function(msg, type) {
+          gnAlertService.addAlert({
+            msg: msg,
+            type: type
+          });
+        };
 
       /**
        * Open a popup and compile object content.
@@ -277,7 +281,7 @@
         var service = flag === 'on' ? 'publish' : 'unpublish';
 
         var publishNotification = function(data) {
-          var message = '<h4>' + $translate.instant(service + 'Completed') +
+          var message = '<h4>' + $translate.instant(service + 'Complete') +
               '</h4><dl class="dl-horizontal"><dt>' +
               $translate.instant('mdPublished') + '</dt><dd>' +
               data.data.published + '</dd><dt>' +
@@ -299,18 +303,26 @@
                 message = $translate.instant('metadataUnchanged');
               } else if (data.data.disallowed > 0) {
                 message = $translate.instant('accessRestricted');
-              }
+              } 
               success = 'danger';
             }
+          } else {
+            if ((flag === 'on' && data.data.published === 0) ||
+                (flag !== 'on' && data.data.unpublished === 0)) {
+              if ((data.data.novalid > 0) || 
+                  (data.data.unpublished > 0 ) || 
+                  (data.data.unmodified > 0) || 
+                  (data.data.disallowed > 0)) {
+                success = 'danger';
+              }
+            }
           }
-          gnAlertService.addAlert({
-            msg: message,
-            type: success
-          });
+          alertResultAndType(message, success);
 
           if (md && success === 'success') {
             md.publish();
           }
+          $rootScope.$broadcast('mdSelectNone');
           $rootScope.$broadcast('search');
         };
         if (angular.isDefined(md)) {

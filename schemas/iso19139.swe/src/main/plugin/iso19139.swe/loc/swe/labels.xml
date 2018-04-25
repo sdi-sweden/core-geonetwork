@@ -12,12 +12,15 @@
 
 	<element context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
 		<label>Identifierare för resurs</label>
-        <description>Identifierare för resurs</description>
+        <description>Identifierare för resurs. Anges som en HTTP länk till metadata. 
+       Till exempel https://www.geodata.se/geodataportalen/GetMetaDataById?id=_Följt av den aktuella resursens unika identifierare_(70aad9d0-0df3-4c6f-8147-7e58c0d8205d)</description>
+       <condition>mandatory</condition>
 	</element>
 
 	<element context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
 		<label>Identifierare för resurs</label>
-        <description>Identifierare för resurs</description>
+        <description>Identifierare för resurs. Anges som en HTTP länk till metadata. 
+       Till exempel https://www.geodata.se/geodataportalen/GetMetaDataById?id=_Följt av den aktuella resursens unika identifierare_(70aad9d0-0df3-4c6f-8147-7e58c0d8205d)</description>
 	</element>
 
 	<element context="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
@@ -299,8 +302,8 @@ samma typ.</description>
     </element>
     <element id="343.0" name="gmd:EX_GeographicBoundingBox">
         <label>Omskrivande rektangel</label>
-        <description>Koordinater för resursens utsträckning. Antingen kan man välja i en lista av existerande uträckningsra
-		för land, län och kommuner eller manuellt rita en rektangel. ANM. Detta är ungefärligt angiven rektangel, referenssystem för
+        <description>Rektangel för Sverige är default. Antingen kan man välja i en lista av existerande uträckningsra
+		för län och kommuner eller manuellt rita en rektangel. ANM. Detta är ungefärligt angiven rektangel, referenssystem för
 		koordinaterna skall alltid vara enligt Lat/Long WGS84.</description>
     </element>
     <element id="348.0" name="gmd:EX_GeographicDescription">
@@ -316,11 +319,11 @@ samma typ.</description>
 		geografisk utsträckning</description>
     </element>
     <element id="350.0" name="gmd:EX_TemporalExtent">
-        <label>Temporal utsträckning</label>
+        <label>Temporal (tid) utsträckning</label>
         <description>Temporal (tidsmässig) utsträckning för resursen.</description>
     </element>
     <element id="354.0" name="gmd:EX_VerticalExtent">
-        <label>Vertikal utsträckning</label>
+        <label>Vertikal (höjd) utsträckning</label>
         <description>Vertikal utsträckning för resursen.</description>
     </element>
     <element id="372.0" name="gmd:ISBN">
@@ -364,9 +367,9 @@ samma typ.</description>
         <help>range of wavelengths in the electromagnetic spectrum</help>
     </element>
     <element id="48.0" name="gmd:MD_BrowseGraphic">
-        <description>En illustration av resursen, kan vara en översikt och
-		en teckenförklaring (eller både och).</description>
         <label>Exempelbild</label>
+        <description>En URL till exempelbild anges som ligger på en öppen server.  Kan vara en översikt eller
+		en teckenförklaring (eller både och).</description>
     </element>
     <element id="67.0" name="gmd:MD_Constraints">
         <label>Restriktioner</label>
@@ -399,7 +402,7 @@ samma typ.</description>
     </element>
     <element id="279.0" name="gmd:MD_Distributor">
         <label>Datadistributör</label>
-        <description>Information om den som distribuerar data.</description>
+        <description>Information om den som distributerar data.</description>
     </element>
     <element id="306.0" name="gmd:MD_ExtendedElementInformation">
         <description>Metadataelement som saknas i SS-EN ISO 19115
@@ -553,7 +556,7 @@ presentationsregler som används</description>
     </element>
     <element id="608.0" name="gmd:URL">
         <label>URL</label>
-        <description>URL</description>
+        <description>URL är webbadress för webbplatsen</description>
     </element>
     <element id="25.0" name="gmd:abstract">
         <label>Sammanfattning</label>
@@ -800,7 +803,7 @@ presentationsregler som används</description>
     </element>
     <element context="gmd:MD_Metadata" id="8.0" name="gmd:contact">
         <label>Metadatakontakt</label>
-        <description>ansvarig för metadatamängden</description>
+        <description>Ansvarig för metadatamängden. Minst en post med rollen Kontakt måste anges.</description>
         <condition>mandatory</condition>
     </element>
     <element context="gmd:MD_MaintenanceInformation" id="148.1" name="gmd:contact">
@@ -988,8 +991,8 @@ bearbetningens genomförande</description>
             tolerances</description>
     </element>
     <element context="gmd:MD_AbstractClass" id="561.0" name="gmd:description">
-        <label>Description</label>
-        <description>Description</description>
+        <label>Beskrivning</label>
+        <description>Beskrivning</description>
     </element>
     <element context="LI_ProcessStep" id="87.0" name="gmd:description">
         <condition>mandatory</condition>
@@ -1004,9 +1007,8 @@ bearbetningens genomförande</description>
         <_condition>Conditional / sourceExtent not provided?</_condition>
     </element>
     <element context="gmd:EX_Extent" id="335.0" name="gmd:description">
-        <label>Textbeskrivning av
-		utsträckning</label>
-        <description>Textbeskrivning av rumslig och temporal utsträckning
+        <label>Textbeskrivning av utsträckning</label>
+        <description>En fritextbeskrivning av rumslig och temporal utsträckning
 		för angiven resurs</description>
         <_condition>Conditional / geographicElement and temporalElement and verticalElement not
             documented?</_condition>
@@ -1016,8 +1018,8 @@ bearbetningens genomförande</description>
         <description>Beskrivning av den länk som det hänvisas till.</description>
     </element>
     <element context="gmd:MD_CodeDomain" id="541.0" name="gmd:description">
-        <label>Description</label>
-        <description>Description of the code domain</description>
+        <label>Beskrivning</label>
+        <description>Beskrivning av kod-domain</description>
     </element>
     <element context="gmd:MD_CodeValue" id="549.0" name="gmd:description">
         <label>Value description</label>
@@ -1028,13 +1030,13 @@ bearbetningens genomförande</description>
         <description>Attribute description</description>
     </element>
     <element context="gmd:MD_Role" id="557.0" name="gmd:description">
-        <label>Description</label>
-        <description>Role description</description>
+        <label>Beskrivning</label>
+        <description> Beskrivning av Rollen</description>
     </element>
     <element id="33.0" name="gmd:descriptiveKeywords">
-        <label>Beskrivande nyckelord</label>
-        <description>Nyckelord som beskriver ämnesområde eller liknande.
-		Dessa nyckelord används för att kategorisera och söka data.</description>
+        <label>Initiativ</label>
+        <description>Ska ange vad metadata är avsedd för.
+        Kugghjulet ger dig möjlighet att ändra hur initativet sparas i xmlfilen</description>
     </element>
     <element id="258.0" name="gmd:descriptor">
         <label>Beskrivning</label>
@@ -1083,7 +1085,7 @@ bearbetningens genomförande</description>
     <element id="272.0" name="gmd:distributor">
         <label>Datadistributör</label>
         <description>Information om datadistributörer.
-ANM. Listan behöver inte vara fullständig.</description>
+ANM. Listan behöver inte vara fullständig.  Minst en kontakt med rollen Distributör måste anges.</description>
     </element>
     <element id="280.0" name="gmd:distributorContact">
         <label>Kontakt</label>
@@ -1094,7 +1096,7 @@ resursen.</description>
     <element id="282.0" name="gmd:distributorFormat">
         <label>Format</label>
         <description>Information om format som kan tillhandahållas av
-distributören.</description>
+distributören. Om format anges måste version också anges.</description>
         <condition>mandatory</condition>
     </element>
     <element id="283.0" name="gmd:distributorTransferOptions">
@@ -1174,7 +1176,7 @@ resurs</description>
 vid kvalitetsutvärderingen</description>
     </element>
     <element id="131.0" name="gmd:explanation">
-        <label>Beskrivning</label>
+        <label>Överensstämmelse Förklaring</label>
         <description>Beskrivning av vad kravet från
 dataproduktspecifikationen eller användare innebär.</description>
         <condition>mandatory</condition>
@@ -1258,7 +1260,8 @@ komprimerade data</description>
     </element>
     <element id="2.0" name="gmd:fileIdentifier">
         <label>Identifier for metadata</label>
-        <description>Unik identifierare för metadatamängden.</description>
+        <description>Unik identifierare för metadatamängden. 
+        Sätts automatiskt och kan ej ändras</description>
         <condition>mandatory</condition>
     </element>
     <element id="49.0" name="gmd:fileName">
@@ -1414,7 +1417,7 @@ Detta undviker vi att ange, ange istället organisation.</description>
     </element>
     <element id="53.0" name="gmd:keyword">
         <label>Nyckelord</label>
-        <description>Ord eller fraser som beskriver resursen. Används för att kategorisera och söka efter resursen.</description>
+        <description>Ett ord eller en fras som beskriver resursen. Används för att kategorisera och söka efter resursen.</description>
     </element>
     <element context="gmd:MD_Metadata" id="3.0" name="gmd:language">
         <label>Språk i metadata</label>
@@ -1434,7 +1437,7 @@ Detta undviker vi att ange, ange istället organisation.</description>
     <element context="gmd:MD_DataIdentification" id="39.0" name="gmd:language">
         <label>Språk i resurs</label>
         <description>Det språk som används i resursen.</description>
-        <help>språk som används i resursen</help>
+<!--         <help>språk som används i resursen</help> -->
         <_condition>Mandatory</_condition>
         <codelist>
           <entry>
@@ -1541,7 +1544,7 @@ resursen är färdigställd.</description>
     </element>
     <element id="148.0" name="gmd:maintenanceNote">
         <label>Anmärkning</label>
-        <description>Information om specifika krav för underhåll av resursen</description>
+        <description>Information om specifika krav för underhåll av resursen. Fritextfält.</description>
     </element>
     <element id="260.0" name="gmd:maxValue">
         <label>Maximivärde</label>
@@ -1550,7 +1553,7 @@ angivet band</description>
     </element>
     <element id="356.0" name="gmd:maximumValue">
         <label>Högsta höjd</label>
-        <description>Högsta vertikala värdet (t ex meter över havet)</description>
+        <description>Högsta vertikala värdet</description>
         <condition>mandatory</condition>
     </element>
     <element id="102.0" name="gmd:measureDescription">
@@ -1607,7 +1610,7 @@ Ex. SS-EN ISO 19115.</description>
     </element>
     <element id="355.0" name="gmd:minimumValue">
         <label>Lägsta höjd</label>
-        <description>Lägsta vertikala värdet (t ex meter över havet)</description>
+        <description>Lägsta vertikala värdet</description>
         <condition>mandatory</condition>
     </element>
     <element context="gmd:MD_AbstractClass" id="560.0" name="gmd:name">
@@ -2006,7 +2009,9 @@ ingår i den nya profilen.</description>
     </element>
     <element id="132.0" name="gmd:pass">
         <label>Överensstämmelse</label>
-        <description>Utfall av jämförelse mellan kvalitetsutvärdering och de specificerade kraven</description>
+        <description>Vilken förordning som datamängden ska upfylla. 
+        I Överensstämmelserapport: tjänster används 'KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010...' och för datamängder används 'Kommissionens förordning (EG) nr 976/2009...'
+        I Teknisk Specifikation: välj från listan eller skriva information direkt</description>
         <condition>mandatory</condition>
     </element>
     <element id="263.0" name="gmd:peakResponse">
@@ -2027,8 +2032,8 @@ ingår i den nya profilen.</description>
         <condition>mandatory</condition>
     </element>
     <element id="29.0" name="gmd:pointOfContact">
-        <label>Resurskontakt</label>
-        <description>Här anges kontaktinformation till i första hand organisationen (enligt NV:s riktlinjer).</description>
+        <label>Resursägare</label>
+        <description>Här anges kontaktinformation till i första hand organisationen med rollen Ägare (Rollen Äagare måste finnas med)</description>
     </element>
     <element id="342.0" name="gmd:polygon">
         <label>Polygon</label>
@@ -2110,7 +2115,7 @@ finns tillgängliga</description>
     </element>
     <element id="187.0" name="gmd:referenceSystemIdentifier">
         <label>Rumsligt referenssystem</label>
-        <description>Namn som identifierar referenssystem</description>
+        <description>Välj referenssystem från listan</description>
         <condition>conditional</condition>
     </element>
     <element id="13.0" name="gmd:referenceSystemInfo">
@@ -2120,8 +2125,7 @@ referenssystem som används i resursen.</description>
     </element>
     <element id="80.0" name="gmd:report">
         <label>Kvalitetsrapport</label>
-        <description>Kvantitativ kvalitetsrapport för de data som
-specificerats under omfattning (79)</description>
+        <description>Kvantitativ kvalitetsrapport för de data som specificerats</description>
         <condition>conditional</condition>
     </element>
     <element id="182.0" name="gmd:resolution">
@@ -2130,7 +2134,7 @@ specificerats under omfattning (79)</description>
     </element>
     <element id="35.0" name="gmd:resourceConstraints">
         <label>Resursrestriktioner</label>
-        <description>Begränsningar av åtkomst och nyttjande av resursen.</description>
+        <description>Begränsningar av åtkomst och nyttjande av resursen.  För Inspire krävs minst ett varde för varje fält</description>
     </element>
     <element id="32.0" name="gmd:resourceFormat">
         <label>Lagringsformat</label>
@@ -2147,10 +2151,11 @@ hur ofta (tidsintervall) och i vilken omfattning.</description>
 olika användare.</description>
     </element>
     <element id="107.0" name="gmd:result">
-        <label>Resultat</label>
+        <label>Överensstämelserapport</label>
         <description>Värde eller mängd av värden som erhållits för ett
 kvalitetsmått eller resultat av jämförelse av detta
-(dessa) mot en specificerad kravnivå.</description>
+(dessa) mot en specificerad kravnivå.  
+Krävs bara för Inspire metadata men Teknisk specifikation är användbar för alla metadata</description>
         <condition>mandatory</condition>
     </element>
     <element context="gmd:MD_Association" id="566.0" name="gmd:role">
@@ -2268,16 +2273,15 @@ för tidsperiod</label>
 representerad i resursen</description>
     </element>
     <element id="37.0" name="gmd:spatialRepresentationType">
-        <label>Metod för rumslig
-representation</label>
-        <description>Metod för att rumsligt representera geografisk
-information
+        <label>Metod för rumslig representation</label>
+        <description>Metod för att rumsligt representera geografisk information
 Ex. Vektor, Raster, Tabell.</description>
     </element>
     <element id="38.0" name="gmd:spatialResolution">
         <label>Rumslig upplösning.</label>
         <description>Faktor som ger en övergripande förståelse av
-detaljeringsgraden på rumsliga data i datamängden</description>
+detaljeringsgraden på rumsliga data i datamängden.  Bara det stjärnmärkta fältet behöver fyllas i om man inte har ett intervall 
+då anges till och från värden i de två fälten</description>
     </element>
     <element id="63.0" name="gmd:specificUsage">
         <label>Beskrivning</label>
@@ -2302,8 +2306,17 @@ produktspecifikation för formatet</description>
     </element>
     <element id="83.0" name="gmd:statement">
         <label>Redogörelse</label>
-        <description>Allmän beskrivning av producentens kännedom om en
-datamängds tillkomsthistorik.</description>
+        <description>generell beskrivning av producentens kännedom om tillkomsthistoriken för resursen
+Generell ursprungsinformation. Tex. Produktionshistorik, ursprungsdata.
+Beskrivningen av ursprungsdata kan innehålla tex.
+* Beskrivning
+* Skala
+* Datum för viss bearbetning
+
+För bearbetningsbeskrivningar är följande intressant:
+* Datainsamlingsmetod
+* Mellanliggande bearbetningssteg
+* Bearbetningssteg för att ta fram slutprodukt</description>
         <condition>conditional</condition>
     </element>
     <element id="28.0" name="gmd:status">
@@ -2316,8 +2329,8 @@ Ex. “under produktion” eller ”färdigställd”.</description>
         <description>Kompletterande information om resursen</description>
     </element>
     <element id="337.0" name="gmd:temporalElement">
-        <label>Temporal utsträckning</label>
-        <description>information om temporal utsträckning</description>
+        <label>Temporal (tid) utsträckning</label>
+        <description>Temporal (tidsmässig) utsträckning för resursen.</description>
         <condition>conditional</condition>
     </element>
     <element id="602.0" name="gmd:textGroup">
@@ -2355,12 +2368,38 @@ Ex. “under produktion” eller ”färdigställd”.</description>
     </element>
     <element context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title" id="904.0" name="gmd:title">
         <label>Titel</label>
-        <description>Namn som resursen är känd under</description>
+        <description>Titel används ofta för fritextsökning för att återfinna data. Om inte en standardiserad titel finns föreslås att en kortfattad titel på max 100 tecken skapas.
+
+Förkortningar eller specialtermer bör undvikas så att titeln kan förstås av en bred användargrupp.
+
+Titeln bör vara det formella produktnamnet om det existerar ett sådant.
+
+Annars bör titeln vara kort. Den bör innehålla en beskrivning av resursens tematiska, temporala och rumsliga omfattning.
+
+Exempelvis:
+Fördelning av trädskiktets nettoackumulation i rötter (tematiskt innehåll)
+under 2004 (temporal omfattning)
+i Dalarnas län (rumslig omfattning)
+
+Språket ska vara det som angetts som metadataspråk.</description>
     </element>
 
 	 <element context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:title" id="904.0" name="gmd:title">
         <label>Titel</label>
-        <description>Namn som tjänsten är känd under</description>
+        <description>Titel används ofta för fritextsökning för att återfinna data. Om inte en standardiserad titel finns föreslås att en kortfattad titel på max 100 tecken skapas.
+
+Förkortningar eller specialtermer bör undvikas så att titeln kan förstås av en bred användargrupp.
+
+Titeln bör vara det formella produktnamnet om det existerar ett sådant.
+
+Annars bör titeln vara kort. Den bör innehålla en beskrivning av resursens tematiska, temporala och rumsliga omfattning.
+
+Exempelvis:
+Fördelning av trädskiktets nettoackumulation i rötter (tematiskt innehåll)
+under 2004 (temporal omfattning)
+i Dalarnas län (rumslig omfattning)
+
+Språket ska vara det som angetts som metadataspråk.</description>
     </element>
 
 	<element id="507.0" name="gmd:title">
@@ -2466,7 +2505,7 @@ rasterkoordinater och geografiska eller kartkoordinater
     </element>
     <element id="68.0" name="gmd:useLimitation">
         <label>Användbarhetsbegränsningar</label>
-        <description>Här kan anges begränsningar för användningsområden som användaren bör känna till.</description>
+        <description>Här kan anges begränsningar för användningsområden som användaren bör känna till. Detta är ett fritextfält.</description>
 		<!-- added by metagis -->
 <!--		<helper sort="true">
 			<option show="y" value="inga tillämpliga villkor">Inga tillämpliga villkor</option>
@@ -2534,8 +2573,8 @@ rasterkoordinater och geografiska eller kartkoordinater
         <condition>mandatory</condition>
     </element>
     <element id="338.0" name="gmd:verticalElement">
-        <label>Vertikal utsträckning</label>
-        <description>Information om vertikal utsträckning</description>
+        <label>Vertikal (höjd) utsträckning</label>
+        <description>Vertikal utsträckning för resursen.</description>
         <condition>conditional</condition>
     </element>
     <element id="408.0" name="gmd:voice">
@@ -2730,10 +2769,10 @@ Detta undvikar vi att ange.</description>
 			<option value="transformation">Omvandlingstjänst (transformation)</option>
 			<option value="invoke">Tjänst förförbindelse med andra datatajänster (invoke)</option>
 			<option value="other">Annan tjänst (other)</option>
-			<option value="OGC:WMS">OGC Web Map Service (OGC:WMS), används för "icke-INSPIRE" WMS:er.</option>
-			<option value="OGC:WFS">OGC Web Feature Service (OGC:WFS), används för "icke-INSPIRE" WFS:er</option>
-			<option value="OGC:WCS">OGC Web Coverage Service (OGC:WCS)</option>
-			<option value="W3C:HTML:LINK">Information (W3C:HTML:LINK)</option>
+			<option value="ogc:wms">OGC Web Map Service (OGC:WMS), används för "icke-INSPIRE" WMS:er.</option>
+			<option value="ogc:wfs">OGC Web Feature Service (OGC:WFS), används för "icke-INSPIRE" WFS:er</option>
+			<option value="ogc:wcs">OGC Web Coverage Service (OGC:WCS)</option>
+<!-- 			<option value="W3C:HTML:LINK">Information (W3C:HTML:LINK)</option>  -->
             <!-- INSPIRE Service type defined in MD IR / 1.3.1 Spatial data service type
             <option value="discovery">Discovery Service (discovery)</option>
             <option value="view">View Service (view)</option>
@@ -3072,7 +3111,7 @@ Detta undvikar vi att ange.</description>
         <label>Distributed Computing Platforms list</label>
     </element>
     <element name="gmd:verticalCRS">
-        <label>Vertikalt datum</label>
+        <label>Referenssystem för höjd</label>
         <description>Information om basnivån som vertikala värden utgår från, exempelvis havsytan eller geoiden</description>
       <helper>
         <option value="Rikets höjdsystem RH2000">Rikets höjdsystem RH2000</option>
@@ -3230,7 +3269,7 @@ Detta undvikar vi att ange.</description>
 
   <element id="72.0" name="LimitationsOnPublicAcces">
     <label>Begränsningar i offentlig åtkomst</label>
-    <description>Andra restriktioner och rättsliga förutsättningar för åtkomst och nyttjande av resursen (eller metadata)</description>
+    <description>Andra restriktioner och rättsliga förutsättningar för åtkomst och nyttjande av resursen (eller metadata).</description>
     <condition>conditional</condition>
     <helper sort="false"  relAtt="xlink:href">
 
