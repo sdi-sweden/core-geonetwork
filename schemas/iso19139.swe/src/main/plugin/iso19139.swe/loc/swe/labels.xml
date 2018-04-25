@@ -2730,10 +2730,10 @@ Detta undvikar vi att ange.</description>
 			<option value="transformation">Omvandlingstjänst (transformation)</option>
 			<option value="invoke">Tjänst förförbindelse med andra datatajänster (invoke)</option>
 			<option value="other">Annan tjänst (other)</option>
-			<option value="OGC:WMS">OGC Web Map Service (OGC:WMS), används för "icke-INSPIRE" WMS:er.</option>
-			<option value="OGC:WFS">OGC Web Feature Service (OGC:WFS), används för "icke-INSPIRE" WFS:er</option>
-			<option value="OGC:WCS">OGC Web Coverage Service (OGC:WCS)</option>
-			<option value="W3C:HTML:LINK">Information (W3C:HTML:LINK)</option>
+			<option value="ogc:wms">OGC Web Map Service (OGC:WMS), används för "icke-INSPIRE" WMS:er.</option>
+			<option value="ogc:wfs">OGC Web Feature Service (OGC:WFS), används för "icke-INSPIRE" WFS:er</option>
+			<option value="ogc:wcs">OGC Web Coverage Service (OGC:WCS)</option>
+<!-- 			<option value="W3C:HTML:LINK">Information (W3C:HTML:LINK)</option>  -->
             <!-- INSPIRE Service type defined in MD IR / 1.3.1 Spatial data service type
             <option value="discovery">Discovery Service (discovery)</option>
             <option value="view">View Service (view)</option>
