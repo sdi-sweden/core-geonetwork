@@ -6089,8 +6089,10 @@
             </template>
           </action>
 
+          <!-- Vertical element - dataset -->
           <field name="verticalElementSection" templateModeOnly="true"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/gmd:EX_Extent/gmd:verticalElement"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:verticalElement"
+                 if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
                  del="../..">
             <template>
               <values>
@@ -6108,6 +6110,46 @@
                      xpath="gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title"
                      >
 <!--                      tooltip="gmd:verticalCRS"> -->
+                  <helper name="gmd:verticalCRS" />
+                </key>
+              </values>
+              <snippet>
+                <gmd:verticalElement>
+                  <gmd:EX_VerticalExtent>
+                    <gmd:minimumValue>
+                      <gco:Real>{{vertical_crs_minimum_value}}</gco:Real>
+                    </gmd:minimumValue>
+                    <gmd:maximumValue>
+                      <gco:Real>{{vertical_crs_maximum_value}}</gco:Real>
+                    </gmd:maximumValue>
+                    <gmd:verticalCRS xlink:title="{{vertical_crs_datum}}"/>
+                  </gmd:EX_VerticalExtent>
+                </gmd:verticalElement>
+              </snippet>
+            </template>
+          </field>
+
+          <!-- Vertical element - service -->
+          <field name="verticalElementSection" templateModeOnly="true"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:verticalElement"
+                 if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            del="../..">
+            <template>
+              <values>
+                <key label="vertical_crs_minimum_value"
+                     xpath="gmd:EX_VerticalExtent/gmd:minimumValue/gco:Real"
+                     tooltip="gmd:minimumValue"
+                     use="number"/>
+
+                <key label="vertical_crs_maximum_value"
+                     xpath="gmd:EX_VerticalExtent/gmd:maximumValue/gco:Real"
+                     tooltip="gmd:maximumValue"
+                     use="number"/>
+
+                <key label="vertical_crs_datum"
+                     xpath="gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title"
+                >
+                  <!--                      tooltip="gmd:verticalCRS"> -->
                   <helper name="gmd:verticalCRS" />
                 </key>
               </values>
