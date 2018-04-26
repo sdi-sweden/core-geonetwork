@@ -245,4 +245,7 @@
   <conditionsForAccess>Åtkomstrestriktioner</conditionsForAccess>
   <conditionsForUse>Nyttjanderestriktioner</conditionsForUse>
   <addTopicCategory>Lägg till Ämneskategori</addTopicCategory>
+
+  <geographicExtent>Omskrivande rektangel</geographicExtent>
+  <temporalExtent>Temporal utsträckning</temporalExtent>
 </strings>

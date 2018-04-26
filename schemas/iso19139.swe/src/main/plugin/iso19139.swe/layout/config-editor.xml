@@ -5916,7 +5916,7 @@
           <!-- Extent - dataset -->
           <field
                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
-          <action type="add" name="extent" or="extent"
+          <action type="add" name="extent" or="extent" btnLabel="geographicExtent"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
             <template>
               <snippet>
@@ -5947,7 +5947,7 @@
           <!-- Extent - service -->
           <field
                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
-          <action type="add" name="extent" or="extent"
+          <action type="add" name="extent" or="extent" btnLabel="geographicExtent"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification">
             <template>
               <snippet>
@@ -6011,7 +6011,7 @@
           <!-- Add Temporal extent - dataset -->
            <action type="add"
             name="temporalRangeSection" or="temporalElement"
-                   forceLabel="true"
+                   btnLabel="temporalExtent"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
             <template>
@@ -6070,7 +6070,7 @@
           <!-- Add Temporal extent - service -->
            <action type="add"
             name="temporalRangeSection" or="temporalElement"
-                   forceLabel="true"
+                   btnLabel="temporalExtent"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
             <template>
@@ -6638,7 +6638,7 @@
                           </gmd:CI_Citation>
                         </gmd:specification>
                         <gmd:explanation>
-                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
+                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
@@ -6754,7 +6754,7 @@
                           </gmd:CI_Citation>
                         </gmd:specification>
                         <gmd:explanation>
-                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
+                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
@@ -6904,7 +6904,7 @@
                           </gmd:CI_Citation>
                         </gmd:specification>
                         <gmd:explanation>
-                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
+                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
@@ -7020,7 +7020,7 @@
                           </gmd:CI_Citation>
                         </gmd:specification>
                         <gmd:explanation>
-                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
+                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
@@ -7432,7 +7432,7 @@
                             </gmd:CI_Citation>
                           </gmd:specification>
                           <gmd:explanation>
-                            <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
+                            <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf
                             </gco:CharacterString>
                           </gmd:explanation>
                           <gmd:pass>
@@ -7548,7 +7548,7 @@
                             </gmd:CI_Citation>
                           </gmd:specification>
                           <gmd:explanation>
-                            <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf 
+                            <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf
                             </gco:CharacterString>
                           </gmd:explanation>
                           <gmd:pass>
