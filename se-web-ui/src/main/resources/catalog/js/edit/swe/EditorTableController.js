@@ -269,7 +269,10 @@
         role = $scope.editRow.role;
       }
 
-      $scope.editRow = {ref: ''}; // reset the editRow reference.
+      if (!$scope.editRow) {
+        $scope.editRow = {ref: ''}; // reset the editRow reference.
+      }
+
       $scope.editRow.organisation = selectedOrganisation.split('~')[0]; // 0 always org
       $scope.editRow.email = selectedOrganisation.split('~')[1]; // 1 always email
       $scope.editRow.phone = selectedOrganisation.split('~')[2]; // 2 always phone
