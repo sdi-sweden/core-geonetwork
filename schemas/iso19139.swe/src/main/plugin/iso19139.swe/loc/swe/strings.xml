@@ -248,4 +248,7 @@
 
   <geographicExtent>Omskrivande rektangel</geographicExtent>
   <temporalExtent>Temporal utsträckning</temporalExtent>
+
+  <SpatialDataServiceCategory>Spatial Data Service Category</SpatialDataServiceCategory>
+  <addSpatialDataServiceCategory>Add Spatial Data Service Category Keyword</addSpatialDataServiceCategory>
 </strings>
