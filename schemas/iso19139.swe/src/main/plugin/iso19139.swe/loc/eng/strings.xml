@@ -120,4 +120,7 @@
   <distributorContact>Distributor contact</distributorContact>
   <metadataMaintenance2>Md. maintenance</metadataMaintenance2>
   <addTopicCategory>Add Topic Category</addTopicCategory>
+
+  <geographicExtent>Omskrivande rektangel</geographicExtent>
+  <temporalExtent>Temporal utsträckning</temporalExtent>
 </strings>

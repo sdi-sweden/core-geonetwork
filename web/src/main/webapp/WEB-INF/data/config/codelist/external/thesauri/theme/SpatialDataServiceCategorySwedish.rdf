@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:adms="http://www.w3.org/ns/adms#" xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:vann="http://purl.org/vocab/vann/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dct="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  <skos:ConceptScheme rdf:about="http://geonetwork-opensource.org/inspire-theme">
+    <dc:title>kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster</dc:title>
+    <dc:description>Spatial Data Service thesaurus for GeoNetwork opensource.</dc:description>
+    <dc:creator>
+      <foaf:Organization>
+        <foaf:name>EEA</foaf:name>
+      </foaf:Organization>
+    </dc:creator>
+    <dc:uri>http://www.eionet.europa.eu/gemet/about?langcode=en</dc:uri>
+    <dc:rights>http://www.eionet.europa.eu/gemet/about?langcode=en</dc:rights>
+    <dcterms:issued xmlns:dcterms="http://purl.org/dc/terms/">2008-06-01</dcterms:issued>
+    <dcterms:modified xmlns:dcterms="http://purl.org/dc/terms/">2008-06-01</dcterms:modified>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory">
+    <skos:prefLabel xml:lang="sv">Klassificering av rumsliga datatjänster</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Nyckelorden är baserade på den geografiska tjänstetaxonomin i
+            EN ISO 19119. Denna taxonomi är indelad i kategorier, där underkategorierna definierar
+            värdedomänen för de rumsliga datatjänsternas klassificering.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanInteractionService">
+    <skos:prefLabel xml:lang="sv">Geografiska tjänster för mänsklig interaktion</skos:prefLabel>
+    <skos:scopeNote xml:lang="" />
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanCatalogueViewer">
+    <skos:prefLabel xml:lang="sv">Visningstjänst för datakatalog</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Klient som gör det möjligt för en användare att interagera med
+            en datakatalog för att lokalisera, bläddra bland och hantera metadata om geografiska
+            data eller geografiska tjänster.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicViewer">
+    <skos:prefLabel xml:lang="sv">Geografiskt visningstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Klient som gör det möjligt för en användare att visa ett eller
+            flera geografiska objektsamlingar eller yttäckande datamängder.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicSpreadsheetViewer">
+    <skos:prefLabel xml:lang="sv">Tjänst för geografisk visning av kalkylblad</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Klient som gör det möjligt för en användare att interagera med
+            flera dataobjekt och begära kalkyler liknande aritmetiska kalkylblad men utvidgade till
+            att omfatta geografiska data.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanServiceEditor">
+    <skos:prefLabel xml:lang="sv">Tjänsteredigerare</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Klient som gör det möjligt för en användare att kontrollera
+            geografiska bearbetningstjänster.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanChainDefinitionEditor">
+    <skos:prefLabel xml:lang="sv">Redigeringstjänst för tjänstekedjedefinition</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Möjliggör användarinteraktion med en tjänst för
+            tjänstekedjedefinition.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanWorkflowEnactmentManager">
+    <skos:prefLabel xml:lang="sv">Hanteringstjänst för informationsflöden</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Möjliggör användarinteraktion med en tjänst för hantering av
+            arbetsflöde.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicFeatureEditor">
+    <skos:prefLabel xml:lang="sv">Redigeringstjänst för geografiska objekt</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Geografiskt visningstjänst som gör det möjligt för en
+            användare att interagera med objektdata.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicSymbolEditor">
+    <skos:prefLabel xml:lang="sv">Redigeringstjänst för geografiska symboler</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som gör det möjligt för en användare att välja och
+            hantera symbolförteckningar.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanFeatureGeneralizationEditor">
+    <skos:prefLabel xml:lang="sv">Redigeringstjänst för generalisering av
+            objekt</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som gör det möjligt för en användare att ändra de
+            kartografiska egenskaperna hos ett objekt eller en samling objekt genom att förenkla
+            dess visualisering, samtidigt som dess framträdande inslag bibehålls – den rumsliga
+            motsvarigheten till förenkling.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicDataStructureViewer">
+    <skos:prefLabel xml:lang="sv">Visningstjänst för geografisk datastruktur</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger en användare åtkomst till en del av en
+            datamängd för att se dess interna struktur.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoManagementService">
+    <skos:prefLabel xml:lang="sv">Geografiska
+            modell-/informationshanteringstjänster</skos:prefLabel>
+    <skos:scopeNote xml:lang="" />
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureAccessService">
+    <skos:prefLabel xml:lang="sv">Tjänst för åtkomst till objekt</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger en användare åtkomst till och möjlighet att
+            hantera lagrade objekt.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoMapAccessService">
+    <skos:prefLabel xml:lang="sv">Tjänst för åtkomst till karta</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger användare åtkomst till geografisk grafik, t.ex.
+            bilder av geografiska data.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCoverageAccessService">
+    <skos:prefLabel xml:lang="sv">Tjänst för åtkomst till täckningsområde</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger en användare åtkomst till och möjlighet att
+            hantera yttäckande information</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoSensorDescriptionService">
+    <skos:prefLabel xml:lang="sv">Tjänst för sensorbeskrivning</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger en beskrivningar av en sensor, bland annat
+            sensorns placering samt dess geometriska, dynamiska och radiometriska egenskaper för
+            geo-bearbetning.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoProductAccessService">
+    <skos:prefLabel xml:lang="sv">Tjänst för produktåtkomst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger en användare åtkomst till och möjlighet att
+            hantera en lagrad geografisk produkt.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureTypeService">
+    <skos:prefLabel xml:lang="sv">Tjänst för objekttypskatalog</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger en användare åtkomst till och möjlighet att
+            hantera objekttypsdefinitioner.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService">
+    <skos:prefLabel xml:lang="sv">Datakatalogtjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger åtkomst till och möjlighet att hantera lagrade
+            metadata om instanser.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoRegistryService">
+    <skos:prefLabel xml:lang="sv">Registertjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger åtkomst till lagrade metadata om olika
+            typer.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoGazetteerService">
+    <skos:prefLabel xml:lang="sv">Ortnamnstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger åtkomst till en katalog med instanser av en typ
+            eller olika typer av verkliga naturfenomen och som innehåller
+            positionsinformation.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoOrderHandlingService">
+    <skos:prefLabel xml:lang="sv">Orderhanteringstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger en användare möjlighet att beställa produkter
+            från en leverantör.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoStandingOrderService">
+    <skos:prefLabel xml:lang="sv">Tjänst för stående beställning</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Orderhanteringstjänst som ger en användare möjlighet att
+            begära att en produkt för ett geografiskt område levereras när den blir
+            tillgänglig.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/taskManagementService">
+    <skos:prefLabel xml:lang="sv">Geografiska tjänster för
+            flödesstyrning/uppgiftshantering</skos:prefLabel>
+    <skos:scopeNote xml:lang="" />
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/chainDefinitionService">
+    <skos:prefLabel xml:lang="sv">Tjänst för kedjedefinition</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att definiera en kedja och genomföra den med hjälp
+            av tjänsten för tillämpning av arbetsflöde.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/workflowEnactmentService">
+    <skos:prefLabel xml:lang="sv">Tjänst för tillämpning av arbetsflöde</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänsten för tillämpning av arbetsflöde tolkar en kedja och
+            kontrollerar instansieringen av tjänster och sekvenseringen av
+            aktiviteter.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/subscriptionService">
+    <skos:prefLabel xml:lang="sv">Prenumerationstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger kunder möjlighet att registrera sig för att få
+            meddelanden om händelser.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialProcessingService">
+    <skos:prefLabel xml:lang="sv">Geografiska bearbetningstjänster – rumsliga</skos:prefLabel>
+    <skos:scopeNote xml:lang="" />
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialCoordinateConversionService">
+    <skos:prefLabel xml:lang="sv">Tjänst för konvertering av koordinater</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att omvandla koordinater från ett koordinatsystem
+            till ett annat koordinatsystem baserat på samma geodetiska datum.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialCoordinateTransformationService">
+    <skos:prefLabel xml:lang="sv">Tjänst för omvandling av koordinater</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att omvandla koordinater från ett koordinatsystem
+            baserat på ett geodetiskt datum till ett koordinatsystem som baseras på ett annat
+            geodetiskt datum.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialCoverageVectorConversionService">
+    <skos:prefLabel xml:lang="sv">Tjänst för konvertering av
+            täckningsområde/vektor</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att ändra den rumsliga representationen mellan ett
+            täckningsschema och ett vektorschema, eller vice versa.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialImageCoordinateConversionService">
+    <skos:prefLabel xml:lang="sv">Tjänst för konvertering av bildkoordinater</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">En tjänst för koordinatomvandling eller koordinatkonvertering
+            som gör det möjligt att ändra en bilds koordinatreferenssystem.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialRectificationService">
+    <skos:prefLabel xml:lang="sv">Rektifieringstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som omvandla en bild till en vinkelrät parallell
+            projektion och därigenom till konstant skala.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialOrthorectificationService">
+    <skos:prefLabel xml:lang="sv">Tjänst för ortorektifiering</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">En rektifieringstjänst som avlägsnar skevhet och
+            förskjutningar i bilder på grund av upphöjningar i terrängen.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialSensorGeometryModelAdjustmentService">
+    <skos:prefLabel xml:lang="sv">Tjänst för justering av
+            sensorgeometrimodeller</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som justerar sensorers geometrimodeller för att
+            förbättra matchningen av en bild med andra bilder och/eller kända
+            markpositioner.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialImageGeometryModelConversionService">
+    <skos:prefLabel xml:lang="sv">Tjänst för konvertering av
+            bildgeometrimodeller</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som konverterar sensorers geometrimodeller till andra,
+            likvärdiga, geometrimodeller.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialSubsettingService">
+    <skos:prefLabel xml:lang="sv">Selekteringstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som extraherar data från en indatamängd i en konstant
+            rumslig region, antingen enligt geografisk placering eller
+            rutnätkoordinater.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialSamplingService">
+    <skos:prefLabel xml:lang="sv">Datainsamlingstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som extraherar data från en indatamängd med hjälp av
+            ett konsekvent insamlingssystem, antingen enligt geografisk placering eller
+            nätkoordinater.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialTilingChangeService">
+    <skos:prefLabel xml:lang="sv">Rutindelningsändringstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som förändrar en rutindelning av geografiska
+            data.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialDimensionMeasurementService">
+    <skos:prefLabel xml:lang="sv">Tjänst för mätning av dimensioner</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att beräkna dimensionerna hos objekt som är synliga
+            i en bild eller andra geodata.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialFeatureManipulationService">
+    <skos:prefLabel xml:lang="sv">Tjänst för objektmodifiering</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Registrerar ett objekt till ett annat objekt, en bild eller en
+            annan datamängd eller koordinatuppsättning för att korrigera relativa förändringar vid
+            överföring, rotationsskillnader, skalskillnader och perspektivförskjutningar.
+            Säkerställer att alla objekt i objektsamlingen är topologiskt konsekventa i enlighet med
+            objektsamlingens topologistandard, och identifierar och/eller korrigerar eventuella
+            inkonsekvenser.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialFeatureMatchingService">
+    <skos:prefLabel xml:lang="sv">Tjänst för matchning av objekt</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som fastställer vilka objekt och delar av objekt som
+            representerar samma verkliga enhet, utifrån flera olika datakällor, t.ex. genom
+            matchning av kanter och begränsad sammanläggning.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialFeatureGeneralizationService">
+    <skos:prefLabel xml:lang="sv">Tjänst för generalisering av objekt</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som minskar den rumsliga variationen i en objektsamling
+            för att öka effektiviteten i kommunikationen genom att motverka datareduceringens
+            oönskade effekter.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialRouteDeterminationService">
+    <skos:prefLabel xml:lang="sv">Vägbeskrivningstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att fastställa den bästa vägen mellan två angivna
+            punkter baserat på indataparametrarna och objektsamlingens egenskaper.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialPositioningService">
+    <skos:prefLabel xml:lang="sv">Positioneringstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som fungerar med hjälp av en anordning för
+            positionsangivelse som använder, tar emot och entydigt tolkar positionsinformation.
+            Tjänsten fastställer också huruvida resultaten uppfyller
+            användningskraven.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialProximityAnalysisService">
+    <skos:prefLabel xml:lang="sv">Tjänst för avståndsanalys</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Utgår från en angiven position eller ett angivet geografiskt
+            objekt med en angiven uppsättning attribut som är belägna inom ett användarspecificerat
+            avstånd från positionen eller objektet.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicProcessingService">
+    <skos:prefLabel xml:lang="sv">Geografiska bearbetningstjänster – tematiska</skos:prefLabel>
+    <skos:scopeNote xml:lang="" />
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGoparameterCalculationService">
+    <skos:prefLabel xml:lang="sv">Tjänst för beräkning av geografiska
+            parametrar</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att få fram tillämpningsinriktade kvantitativa
+            resultat som inte går att få fram från rådata.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicClassificationService">
+    <skos:prefLabel xml:lang="sv">Tjänst för tematisk klassificering</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att klassificera geografiska regioner utifrån
+            tematiska attribut.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicFeatureGeneralizationService">
+    <skos:prefLabel xml:lang="sv">Tjänst för generalisering av objekt</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som generaliserar objekttyper i en objektsamling för
+            att förbättra effektiviteten i kommunikationen genom at motverka datareduceringens
+            oönskade effekter.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicSubsettingService">
+    <skos:prefLabel xml:lang="sv">Selekteringstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som extraherar data från indata baserade på
+            parametervärden.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicSpatialCountingService">
+    <skos:prefLabel xml:lang="sv">Rumslig räkningstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som räknar geografiska objekt.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicChangeDetectionService">
+    <skos:prefLabel xml:lang="sv">Tjänst för förändringsdetektering</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att upptäcka skillnader mellan två datamängder som
+            representerar samma geografiska område vid olika tidpunkter.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGeographicInformationExtractionService">
+    <skos:prefLabel xml:lang="sv">Tjänst för extrahering av geografisk
+            information</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som stöder extrahering av objekt- och
+            terränginformation från fjärranalysbilder och skannade bilder.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageProcessingService">
+    <skos:prefLabel xml:lang="sv">Bildbearbetningstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att ändra värden hos en bilds tematiska attribut
+            med hjälp av en matematisk funktion.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicReducedResolutionGenerationService">
+    <skos:prefLabel xml:lang="sv">Tjänst för upplösningsreducering</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som minskar en bilds upplösning.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageManipulationService">
+    <skos:prefLabel xml:lang="sv">Bildmodifieringstjänster</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänster för att modifiera en bilds datavärden: ändra färg och
+            kontrast, använda olika typer av filter, ändra bildupplösning, ta bort brus, "striping",
+            systematiska/radiometriska korrigeringar, atmosfärisk dämpning, ändra ljus
+            etc.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageUnderstandingService">
+    <skos:prefLabel xml:lang="sv">Tjänster för bildförståelse</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänster för automatisk bildförändringsdetektering,
+            registrering av bilddifferentiering, analys och visning av förändringarnas betydelse och
+            områdesbaserad och modellbaserad differentiering.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageSynthesisService">
+    <skos:prefLabel xml:lang="sv">Bildsyntestjänster</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänster för att skapa och omvandla bilder med hjälp av
+            datorbaserade rumsliga modeller, perspektivomvandlingar och modifiering av
+            bildegenskaper för att förbättra synbarheten, skärpa upplösningen och/eller minska
+            effekterna av moln eller dimma.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicMultibandImageManipulationService">
+    <skos:prefLabel xml:lang="sv">Modifiering av flerbandsbilder</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som modifierar en bild med hjälp av bildens olika
+            band.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicObjectDetectionService">
+    <skos:prefLabel xml:lang="sv">Tjänst för objektdetektering</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att upptäcka verkliga objekt i en
+            bild.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGeoparsingService">
+    <skos:prefLabel xml:lang="sv">Geoanalystjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att skanna textdokument för platsbaserade
+            referenser, t.ex. platsnamn, adresser, postnummer etc., i syfte att förbereda en
+            övergång till en geokodningstjänst.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGeocodingService">
+    <skos:prefLabel xml:lang="sv">Geokodningstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att förstärka platsbaserade textreferenser med
+            geografiska koordinater (eller andra rumsliga referenser).</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalProcessingService">
+    <skos:prefLabel xml:lang="sv">Geografiska bearbetningstjänster – temporala</skos:prefLabel>
+    <skos:scopeNote xml:lang="" />
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalReferenceSystemTransformationService">
+    <skos:prefLabel xml:lang="sv">Tjänst för omvandling av temporal referens</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att ändra tidsinstansers värden från ett
+            tidsreferenssystem till ett annat tidsreferenssystem.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalSubsettingService">
+    <skos:prefLabel xml:lang="sv">Selekteringstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som extraherar data från indata i konstanta intervall
+            baserat på tidsmässiga värden.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalSamplingService">
+    <skos:prefLabel xml:lang="sv">Urvalstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som extraherar data från indata med hjälp av ett
+            enhetligt urvalsschema baserat på temporala värden.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalProximityAnalysisService">
+    <skos:prefLabel xml:lang="sv">Tjänst för analys av tidsavstånd</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Utifrån ett angivet tidsintervall eller en angiven händelse
+            hittar tjänsten alla objekt med en angiven uppsättning attribut som är belägna inom det
+            intervall som användaren specificerat, med utgångspunkt i intervallet eller
+            händelsen.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/metadataProcessingService">
+    <skos:prefLabel xml:lang="sv">Geografiska bearbetningstjänster – metadata</skos:prefLabel>
+    <skos:scopeNote xml:lang="" />
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/metadataStatisticalCalculationService">
+    <skos:prefLabel xml:lang="sv">Tjänst för statistisk beräkning</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att utföra statistiska beräkningar i en
+            datamängd.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/metadataGeographicAnnotationService">
+    <skos:prefLabel xml:lang="sv">Tjänst för geografiska noteringar</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för att lägga till extra information till en bild eller
+            ett objekt i en objektsamling.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comService">
+    <skos:prefLabel xml:lang="sv">Geografiska kommunikationstjänster</skos:prefLabel>
+    <skos:scopeNote xml:lang="" />
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comEncodingService">
+    <skos:prefLabel xml:lang="sv">Kodningstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för tillämpning av kodningsregler och som
+            tillhandahåller ett gränssnitt för kodning och avkodning.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comTransferService">
+    <skos:prefLabel xml:lang="sv">Överföringstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst för tillämpning av ett eller flera protokoll (transfer
+            protocols) för överföring av data mellan distribuerade informationssystem via
+            kommunikationsmedia offline eller online.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comGeographicCompressionService">
+    <skos:prefLabel xml:lang="sv">Geografisk komprimeringstjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som omvandlar rumsliga delar av en objektssamling till
+            eller från komprimerad form.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comGeographicFormatConversionService">
+    <skos:prefLabel xml:lang="sv">Tjänst för konvertering av geografiska
+            dataformat</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som konverterar från ett geografiskt dataformat till
+            ett annat.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comMessagingService">
+    <skos:prefLabel xml:lang="sv">Meddelandetjänst</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som tillåter flera användare att samtidigt visa,
+            kommentera och begära redigeringar av objektsamlingar.</skos:scopeNote>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comRemoteFileAndExecutableManagement">
+    <skos:prefLabel xml:lang="sv">Fjärrhantering av filer och körbara filer</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Tjänst som ger tillgång till en sekundär lagringsplats för
+            geografiska objekt som fungerar som om den vore en lokal tjänst.</skos:scopeNote>
+  </skos:Concept>
+</rdf:RDF>
+

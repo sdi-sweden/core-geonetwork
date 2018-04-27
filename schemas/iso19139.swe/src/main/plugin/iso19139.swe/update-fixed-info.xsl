@@ -628,7 +628,8 @@
 			 a title value (related attribute), it's stored as gmx:Anchor. Otherwise is stored as gco:CharacterString
 	-->
 	<xsl:template match="gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'ConditionsApplyingToAccessAndUse')) and
-	                                          not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAccess'))]" priority="1000">
+	                                          not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAccess')) and
+	                                           not(contains(gmx:Anchor/@xlink:href, 'anvandningsrestriktioner.xml'))]" priority="1000">
 		<xsl:variable name="value" select="*/text()" />
 
 		<xsl:variable name="valueInHelper" select="$labelsFile/labels/element[@name='gmd:otherConstraints']/helper/option[contains($value, @value)]/@title" />

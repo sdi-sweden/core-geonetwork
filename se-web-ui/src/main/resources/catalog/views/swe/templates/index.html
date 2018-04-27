@@ -12,7 +12,7 @@
 
   <div data-gn-alert-manager="" data-ng-init="init()"></div><cookiewarning></cookiewarning>
 
-  <div class="overlay"></div> 
+  <div class="overlay"></div>
 
   <!-- Mail comment popup -->
   <div id="mail-popup" class="popup mail-popup" data-ng-controller="SweMailController">
@@ -118,7 +118,16 @@
             <div class="mail-section-cont">
               <div class="mail-section">
                 <h1 data-translate="">createMetadata-title</h1>
-                <p data-translate="">createMetadata-desc</p>
+
+                <div class="margin-bottom-small">
+                  <span class="label">
+                    {{'createMetadata-desc' | translate }}:</span>
+
+                  <div data-swe-tooltip=""
+                       data-title="{{ 'createMetadataTemplateTooltip-title' | translate }}"
+                       data-text="{{ 'createMetadataTemplateTooltip-desc' | translate }}"
+                       data-link="{{ 'createMetadataTemplateTooltip-link' | translate }}"></div>
+                </div>
 
                 <form name="newMetadataForm" novalidate>
                   <div data-ng-repeat="tpl in tpls">
@@ -136,6 +145,12 @@
                   <div class="row" data-ng-show="groups && groups.length > 0">
                     <label class="control-label ngr-md-label">
                       <span data-translate="">createMetadata-group</span>:
+
+                      <div data-swe-tooltip=""
+                           data-title="{{ 'createMetadataGroupTooltip-title' | translate }}"
+                           data-text="{{ 'createMetadataGroupTooltip-desc' | translate }}"
+                           data-link="{{ 'createMetadataGroupTooltip-link' | translate }}"></div>
+
                       <!-- <strong>{{(ownerGroup.label[lang] || '...') | translate}}</strong> -->
                     </label>
 
