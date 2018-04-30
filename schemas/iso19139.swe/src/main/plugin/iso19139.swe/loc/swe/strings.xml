@@ -92,7 +92,7 @@
   <conformity>Specifikationsuppfyllelse</conformity>
   <conformity_title>Titel</conformity_title>
   <conformity_date>Datum</conformity_date>
-  <explanation>Överensstämmelse Förklaring</explanation>
+  <explanation>Förklaring</explanation>
   <pass>Överensstämmelse</pass>
   <indeterminatePosition>Obestämbar position</indeterminatePosition>
   <pointOfContact>Resurskontakt</pointOfContact>
@@ -165,7 +165,7 @@
   <otherConstraints>Andra restriktioner</otherConstraints>
   <scales>Rumslig upplösning</scales>
 
-  <addInspireTheme>Lägg till Tema</addInspireTheme>
+  <addInspireTheme>Lägg till Inspire Tema</addInspireTheme>
   <accessConstraintsBtn>Åtkomstrestriktioner</accessConstraintsBtn>
   <legalConstraintsBtn>Legal constraints</legalConstraintsBtn>
   <UseRestrictionsBtn>Nyttjanderestriktioner</UseRestrictionsBtn>
@@ -245,6 +245,7 @@
   <conditionsForAccess>Åtkomstrestriktioner</conditionsForAccess>
   <conditionsForUse>Nyttjanderestriktioner</conditionsForUse>
   <addTopicCategory>Lägg till Ämneskategori</addTopicCategory>
+  <topicCategory>Ämnesområde</topicCategory>
 
   <geographicExtent>Omskrivande rektangel</geographicExtent>
   <temporalExtent>Temporal utsträckning</temporalExtent>

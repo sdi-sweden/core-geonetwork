@@ -447,9 +447,10 @@ samma typ.</description>
         <description>information om rasterbaserade data i datamängden</description>
     </element>
     <element id="205.0" name="gmd:MD_Identifier">
-        <label>Identifierare</label>
-        <description>Ett unikt värde som identifierar ett objekt
-		(inom en namnrymd).</description>
+		<label>Identifierare för resurs</label>
+        <description>Identifierare för resurs. Anges som en HTTP länk till metadata. 
+       Till exempel https://www.geodata.se/geodataportalen/GetMetaDataById?id=_Följt av den aktuella resursens unika identifierare_(70aad9d0-0df3-4c6f-8147-7e58c0d8205d)</description>		
+		<condition>mandatory</condition>
     </element>
     <element id="243.0" name="gmd:MD_ImageDescription">
         <label>Bildlämplighet</label>
@@ -1176,7 +1177,7 @@ resurs</description>
 vid kvalitetsutvärderingen</description>
     </element>
     <element id="131.0" name="gmd:explanation">
-        <label>Överensstämmelse Förklaring</label>
+        <label>Förklaring</label>
         <description>Beskrivning av vad kravet från
 dataproduktspecifikationen eller användare innebär.</description>
         <condition>mandatory</condition>
@@ -2010,7 +2011,7 @@ ingår i den nya profilen.</description>
     <element id="132.0" name="gmd:pass">
         <label>Överensstämmelse</label>
         <description>Vilken förordning som datamängden ska upfylla. 
-        I Överensstämmelserapport: tjänster används 'KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010...' och för datamängder används 'Kommissionens förordning (EG) nr 976/2009...'
+        I Överensstämmelserapport: datamängder används 'KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010...' och för tjänster används 'Kommissionens förordning (EG) nr 976/2009...'
         I Teknisk Specifikation: välj från listan eller skriva information direkt</description>
         <condition>mandatory</condition>
     </element>
