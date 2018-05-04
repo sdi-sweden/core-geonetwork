@@ -132,7 +132,7 @@
                 </gmd:CI_Citation>
             </gmd:citation>
             <gmd:abstract>
-                <gco:CharacterString>The ISO19139/119 metadata standard is the preferred metadata standard to use for services (WMS, WFS, WCS).</gco:CharacterString>
+                <gco:CharacterString>Metadatastandarden ISO19139/119 är den föredragna metadatastandarden som ska användas för tjänster (WMS, WFS, WCS).</gco:CharacterString>
             </gmd:abstract>
         	<gmd:status>
                 <gmd:MD_ProgressCode codeListValue="completed" codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_ProgressCode"/>
@@ -182,14 +182,14 @@
                             <gmd:onlineResource>
                                 <gmd:CI_OnlineResource>
                                     <gmd:linkage>
-                                        <gmd:URL>http://geonetwork-opensource.org/</gmd:URL>
+                                        <gmd:URL>http://</gmd:URL>
                                     </gmd:linkage>
                                 </gmd:CI_OnlineResource>
                             </gmd:onlineResource>
                         </gmd:CI_Contact>
                     </gmd:contactInfo>
                     <gmd:role>
-                        <gmd:CI_RoleCode codeListValue="pointOfContact" codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_RoleCode"/>
+                        <gmd:CI_RoleCode codeListValue="owner" codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_RoleCode"/>
                     </gmd:role>
                 </gmd:CI_ResponsibleParty>
         	</gmd:pointOfContact>
@@ -217,7 +217,7 @@
                                         codeListValue="otherRestrictions"/>
               </gmd:accessConstraints>
               <gmd:otherConstraints>
-                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">no limitations to public access</gmx:Anchor>
+                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">inga begränsningar för allmänhetens tillgång</gmx:Anchor>
               </gmd:otherConstraints>
             </gmd:MD_LegalConstraints>
           </gmd:resourceConstraints>
@@ -228,7 +228,7 @@
                                         codeListValue="otherRestrictions"/>
               </gmd:accessConstraints>
               <gmd:otherConstraints>
-                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
+                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">Villkor för åtkomst och användning okänd</gmx:Anchor>
               </gmd:otherConstraints>
             </gmd:MD_LegalConstraints>
           </gmd:resourceConstraints>
@@ -239,7 +239,7 @@
                                         codeListValue="otherRestrictions"/>
               </gmd:useConstraints>
               <gmd:otherConstraints>
-                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
+                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">Villkor för åtkomst och användning okänd</gmx:Anchor>
               </gmd:otherConstraints>
             </gmd:MD_LegalConstraints>
           </gmd:resourceConstraints>

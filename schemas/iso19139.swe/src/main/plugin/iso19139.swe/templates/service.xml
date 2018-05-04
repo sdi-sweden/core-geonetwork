@@ -38,7 +38,7 @@
     <gmd:contact>
         <gmd:CI_ResponsibleParty>
             <gmd:individualName>
-                <gco:CharacterString>The administrator of the service</gco:CharacterString>
+                <gco:CharacterString>Administratören av tjänsten</gco:CharacterString>
             </gmd:individualName>
             <gmd:organisationName gco:nilReason="missing">
                 <gco:CharacterString/>
@@ -121,7 +121,7 @@
                 </gmd:CI_Citation>
             </gmd:citation>
             <gmd:abstract>
-                <gco:CharacterString>The ISO19139/119 metadata standard is the preferred metadata standard to use for services (WMS, WFS, WCS).</gco:CharacterString>
+                <gco:CharacterString>Metadatastandarden ISO19139/119 är den föredragna metadatastandarden som ska användas för tjänster (WMS, WFS, WCS).</gco:CharacterString>
             </gmd:abstract>
         	<gmd:status>
                 <gmd:MD_ProgressCode codeListValue="completed" codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_ProgressCode"/>
