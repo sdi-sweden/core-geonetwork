@@ -145,7 +145,7 @@
                 codeListValue="otherRestrictions"/>
             </gmd:accessConstraints>
             <gmd:otherConstraints>
-              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">no limitations to public access</gmx:Anchor>
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">Inga begränsningar för allmänhetens tillgång</gmx:Anchor>
             </gmd:otherConstraints>
           </gmd:MD_LegalConstraints>
         </gmd:resourceConstraints>
@@ -161,7 +161,7 @@
                 codeListValue="otherRestrictions"/>
             </gmd:accessConstraints>
             <gmd:otherConstraints>
-              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">Villkor för åtkomst och användning okänd</gmx:Anchor>
             </gmd:otherConstraints>
           </gmd:MD_LegalConstraints>
         </gmd:resourceConstraints>
@@ -176,7 +176,7 @@
                 codeListValue="otherRestrictions"/>
             </gmd:useConstraints>
             <gmd:otherConstraints>
-              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">Villkor för åtkomst och användning okänd</gmx:Anchor>
             </gmd:otherConstraints>
           </gmd:MD_LegalConstraints>
         </gmd:resourceConstraints>
@@ -537,7 +537,7 @@
                 codeListValue="otherRestrictions"/>
             </gmd:accessConstraints>
             <gmd:otherConstraints>
-              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">no limitations to public access</gmx:Anchor>
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">Inga begränsningar för allmänhetens tillgång</gmx:Anchor>
             </gmd:otherConstraints>
           </gmd:MD_LegalConstraints>
         </gmd:resourceConstraints>
@@ -553,7 +553,7 @@
                 codeListValue="otherRestrictions"/>
             </gmd:accessConstraints>
             <gmd:otherConstraints>
-              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">Villkor för åtkomst och användning okänd</gmx:Anchor>
             </gmd:otherConstraints>
           </gmd:MD_LegalConstraints>
         </gmd:resourceConstraints>
@@ -568,7 +568,7 @@
                 codeListValue="otherRestrictions"/>
             </gmd:useConstraints>
             <gmd:otherConstraints>
-              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">Villkor för åtkomst och användning okänd</gmx:Anchor>
             </gmd:otherConstraints>
           </gmd:MD_LegalConstraints>
         </gmd:resourceConstraints>

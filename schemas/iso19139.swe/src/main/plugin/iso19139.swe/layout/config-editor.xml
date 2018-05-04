@@ -7794,7 +7794,7 @@
                             codeListValue="otherRestrictions"/>
                         </gmd:accessConstraints>
                         <gmd:otherConstraints>
-                          <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">no limitations to public access</gmx:Anchor>
+                          <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">inga begränsningar för allmänhetens tillgång</gmx:Anchor>
                         </gmd:otherConstraints>
                       </gmd:MD_LegalConstraints>
                     </gmd:resourceConstraints>
@@ -7828,7 +7828,7 @@
                             codeListValue="otherRestrictions"/>
                         </gmd:accessConstraints>
                         <gmd:otherConstraints>
-                          <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
+                          <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">Villkor för åtkomst och användning okänd</gmx:Anchor>
                         </gmd:otherConstraints>
                       </gmd:MD_LegalConstraints>
                     </gmd:resourceConstraints>
@@ -7861,7 +7861,7 @@
                             codeListValue="otherRestrictions"/>
                         </gmd:useConstraints>
                         <gmd:otherConstraints>
-                          <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">conditions to access and use unknown</gmx:Anchor>
+                          <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">Villkor för åtkomst och användning okänd</gmx:Anchor>
                         </gmd:otherConstraints>
                       </gmd:MD_LegalConstraints>
                     </gmd:resourceConstraints>
@@ -8157,7 +8157,7 @@
                       <srv:DCP>
                         <srv:DCPList
                                 codeList="http://inspire.ec.europa.eu/metadata-codelist/DCPList"
-                                codeListValue="webServices">Web services
+                                codeListValue="webServices">Webb-tjänster
                         </srv:DCPList>
                       </srv:DCP>
                       <srv:connectPoint>
@@ -8480,16 +8480,16 @@
                     <gmd:geographicElement>
                       <gmd:EX_GeographicBoundingBox>
                         <gmd:westBoundLongitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>10.61</gco:Decimal>
                         </gmd:westBoundLongitude>
                         <gmd:eastBoundLongitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>24.18</gco:Decimal>
                         </gmd:eastBoundLongitude>
                         <gmd:southBoundLatitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>55.14</gco:Decimal>
                         </gmd:southBoundLatitude>
                         <gmd:northBoundLatitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>69.06</gco:Decimal>
                         </gmd:northBoundLatitude>
                       </gmd:EX_GeographicBoundingBox>
                     </gmd:geographicElement>
@@ -8508,16 +8508,16 @@
                     <gmd:geographicElement>
                       <gmd:EX_GeographicBoundingBox>
                         <gmd:westBoundLongitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>10.61</gco:Decimal>
                         </gmd:westBoundLongitude>
                         <gmd:eastBoundLongitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>24.18</gco:Decimal>
                         </gmd:eastBoundLongitude>
                         <gmd:southBoundLatitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>55.14</gco:Decimal>
                         </gmd:southBoundLatitude>
                         <gmd:northBoundLatitude>
-                          <gco:Decimal/>
+                          <gco:Decimal>69.06</gco:Decimal>
                         </gmd:northBoundLatitude>
                       </gmd:EX_GeographicBoundingBox>
                     </gmd:geographicElement>

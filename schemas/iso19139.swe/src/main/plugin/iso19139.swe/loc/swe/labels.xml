@@ -610,7 +610,7 @@ presentationsregler som används</description>
     </element>
     <element id="361.0" name="gmd:alternateTitle">
         <label>Alternativ titel</label>
-        <description>Alternativ titel, vanlig förkorning,
+        <description>Alternativ titel, vanlig förkortning,
 		eller engelsk titel. Flera kan anges. </description>
     </element>
     <element id="287.0" name="gmd:amendmentNumber">
