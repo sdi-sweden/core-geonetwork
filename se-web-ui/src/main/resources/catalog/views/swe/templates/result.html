@@ -49,14 +49,15 @@
             <span>Datamängd direktåtkomlig för hämtning</span>
           </div>
           <div class="toolbar-right-list tool-bar-list">
-            <div class="link-cont" ng-if="user.isEditorOrMore() && user.canEditRecord(mdView.current.record)">
+<!--
+             <div class="link-cont" ng-if="user.isEditorOrMore() && user.canEditRecord(mdView.current.record)">
               <a class="-label-link" href=""><span class="icon-pencil"></span>{{ 'edit' | translate }}</a>
             </div>
             <div class="link-cont">
               <a class="-label-link" href="" data-ng-click="printPdf(mdView)"><span class="icon-print"></span>{{ 'Print' | translate }}</a>
 			  <iframe id="iframe" style="width:0px;height:0px;display:block;visibility:hidden"/>
             </div>
-
+ -->
             <!-- Metadata links -->
             <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="getInformationLinks(mdView.current.record).length > 1">
               <div class="-label"><span class="icon-info"></span>{{ 'moreInformation' | translate }} <span class="icon-down-dir"></span></div>
