@@ -58,7 +58,7 @@
   <bboxesSection>Geographic täckning</bboxesSection>
   <description>beskrivning</description>
   <graphicOverview>graphic overview</graphicOverview>
-  <spatialRepresentationType>spatial Representation Type</spatialRepresentationType>
+  <spatialRepresentationType>Spatial representationstyp</spatialRepresentationType>
   <equivalentScale>equivalent Scale</equivalentScale>
 
   <!-- XSD error translation -->
@@ -111,7 +111,7 @@
   <lineage>Historik</lineage>
   <spatialResolution>Rumslig upplösning (skala)</spatialResolution>
   <spatialDistance>Rumslig upplösning (distans)</spatialDistance>
-  <accessConstraints>Åtkomst begränsningar</accessConstraints>
+  <accessConstraints>Åtkomstbegränsningar</accessConstraints>
   <useLimitation>Användbarhetsbegränsningar</useLimitation>
   <useConstraints>Use constraints</useConstraints>
   <add-resource-id>Skapa ny identifierare för resurs</add-resource-id>
@@ -127,7 +127,7 @@
   <identificationInfo2>Identifiering av resurs</identificationInfo2>
   <referenceSystemInfo2>Referenssystem</referenceSystemInfo2>
   <distributionInfo2>Distribution</distributionInfo2>
-  <metadata2>Information om metadata</metadata2>
+  <metadata2>Information för metadata</metadata2>
   <extent>Geografisk, temporal och vertikal utsträckning</extent>
   <distributorContact>Distributör</distributorContact>
   <metadataMaintenance2>Underhåll</metadataMaintenance2>
@@ -199,7 +199,7 @@
   <qos_uom>måttenhet (UOM)</qos_uom>
   <qos_description>Beskrivning</qos_description>
   <qos_value>Värde</qos_value>
-  <sds-section-crs>Koordinera referenssystem</sds-section-crs>
+  <sds-section-crs>Koordinat referenssystem</sds-section-crs>
 
   <sds-fix-category>Fixa elementet Kategori</sds-fix-category>
   <sds-fix-categoryHelp>(Rec1) Replace gco:CharacterString with gmx:Anchor in the description metadata element.</sds-fix-categoryHelp>
@@ -223,7 +223,7 @@
   <sds-limitation>Begränsning</sds-limitation>
 
   <sds-section-custodian>Ansvarig förvaring</sds-section-custodian>
-  <sds-addOperation>Lägg till verkan</sds-addOperation>
+  <sds-addOperation>Lägg till operation</sds-addOperation>
   <add-distributor>Lägg till distributör</add-distributor>
 
   <referenceDateAdd>Referensdatum (Händelsedatum)</referenceDateAdd>

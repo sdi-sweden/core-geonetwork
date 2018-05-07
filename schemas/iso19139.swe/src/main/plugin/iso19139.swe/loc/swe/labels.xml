@@ -1260,7 +1260,7 @@ komprimerade data</description>
         <description>Text som beskriver vad bilden visar.</description>
     </element>
     <element id="2.0" name="gmd:fileIdentifier">
-        <label>Identifier for metadata</label>
+        <label>Identifier för metadata</label>
         <description>Unik identifierare för metadatamängden. 
         Sätts automatiskt och kan ej ändras</description>
         <condition>mandatory</condition>
@@ -2867,11 +2867,11 @@ Detta undvikar vi att ange.</description>
             of the parameter</description>
     </element>
     <element name="srv:optionality">
-        <label>Optionality</label>
+        <label>Valfritt</label>
         <description>Indication if the parameter is required</description>
     </element>
     <element name="srv:repeatability">
-        <label>Repeatability</label>
+        <label>Upprepningsbar</label>
         <description>Indication if more than one value of the parameter may be
             provided</description>
     </element>
@@ -3005,7 +3005,7 @@ Detta undvikar vi att ange.</description>
         <description></description>
     </element>
     <element context="gco:TypeName" name="gco:aName">
-        <label>Type name</label>
+        <label>Namn på type</label>
         <description></description>
         <helper>
 			<option value="BOOLEAN">BOOLEAN</option>
