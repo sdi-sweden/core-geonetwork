@@ -27,16 +27,40 @@
 
 package org.fao.geonet.kernel;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Sets;
+import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataUuid;
+import static org.springframework.data.jpa.domain.Specifications.where;
+
+//import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jetty.util.ConcurrentHashSet;
@@ -128,6 +152,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.filter.ElementFilter;
+import org.jdom.output.XMLOutputter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
@@ -141,46 +166,22 @@ import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-//import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.Root;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Function;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
 
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.transaction.TransactionManager;
 import jeeves.transaction.TransactionTask;
 import jeeves.xlink.Processor;
-
-import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataUuid;
-import static org.springframework.data.jpa.domain.Specifications.where;
 
 /**
  * Handles all operations on metadata (select,insert,update,delete etc...).
@@ -1986,13 +1987,27 @@ public class DataManager implements ApplicationEventPublisherAware {
                     Log.debug(Geonet.DATA_MANAGER, "Valid.");
             }
             try {
-                editLib.enumerateTree(md);
+                // Swedish SDI - Don't add edit info - causes schematron rules not working fine with geonet elements
+                // Also the link with failed rules and editor UI elements is not implemented
+                // remove editing info added by enumerateTree
+                // editLib.enumerateTree(md);
                 //Apply custom schematron rules
                 Element errors = applyCustomSchematronRules(schema, Integer.parseInt(metadataId), doc.getRootElement(), lang, validations);
                 valid = valid && errors == null;
-                if (Log.isDebugEnabled(Geonet.DATA_MANAGER))
+                if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
                     Log.debug(Geonet.DATA_MANAGER, "Validation after schematron is : " + valid);
-                editLib.removeEditingInfo(md);
+                    if (errors != null) {
+                        XMLOutputter outp = new XMLOutputter();
+                        String s = outp.outputString(errors);
+                        Log.debug(Geonet.DATA_MANAGER, "Schematron errors found: " + s);
+                        String mds = outp.outputString(md);
+                        Log.debug(Geonet.DATA_MANAGER, "Metadata ("+ metadataId +") being validated: " + mds);
+                    }
+                }
+                // Swedish SDI - Don't add edit info - causes schematron rules not working fine with geonet elements
+                // Also the link with failed rules and editor UI elements is not implemented
+                // remove editing info added by enumerateTree
+                // editLib.removeEditingInfo(md);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.error(Geonet.DATA_MANAGER, "Could not run schematron validation on metadata " + metadataId + ": " + e.getMessage());
