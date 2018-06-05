@@ -42,8 +42,9 @@
                 newUrl = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
             } else if (url.includes("maps-ver.lantmateriet.se")) {
             	newUrl = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
-            }
-             else {
+            } else if (url.includes("api.lantmateriet.se")) {
+        	    newUrl = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
+            } else {
            	    if (!url.includes("https://")) {
              	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
                 }
@@ -70,6 +71,8 @@
         	  url = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
           } else if (url.includes("maps-ver.lantmateriet.se")) {
           	url = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+          } else if (url.includes("api.lantmateriet.se")) {
+          	url = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
           }
           
           //Function to parse layers inside each layergroup 
@@ -154,6 +157,8 @@
 								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
 								      } else if (url.includes("maps-ver.lantmateriet.se")) {
 								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+								      } else if (url.includes("api.lantmateriet.se")) {
+								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
 								      }
         						  }
         					  } 

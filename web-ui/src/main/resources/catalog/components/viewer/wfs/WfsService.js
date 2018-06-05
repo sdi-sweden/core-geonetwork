@@ -90,6 +90,8 @@
                 newUrl = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
             } else if (url.includes("maps-ver.lantmateriet.se")) {
             	newUrl = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+            }  else if (url.includes("api.lantmateriet.se")) {
+            	newUrl = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
             }
              else {
            	    if (!url.includes("https://")) {

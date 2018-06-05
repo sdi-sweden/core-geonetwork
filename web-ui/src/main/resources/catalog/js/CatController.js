@@ -40,6 +40,7 @@
     srvProxyUrl: 'proxy?url=',
     lmProxyUrl: 'lm-proxy?url=',
     lmProxyVerUrl: 'lm-proxy-ver?url=',
+    odProxyUrl: 'od-proxy?url=',
     locale: {},
     isMapViewerEnabled: false,
     requireProxy: [],

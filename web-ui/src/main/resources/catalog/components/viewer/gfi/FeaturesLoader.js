@@ -54,11 +54,10 @@
 //      if (!origin) {
 //		  origin = window.location.protocol + "//" + window.location.hostname;
 //	}
-//    this.lmProxyUrl = origin + '/' + this.$injector.get('gnGlobalSettings').lmProxyUrl;
-//    this.lmProxyVerUrl = origin + '/' + this.$injector.get('gnGlobalSettings').lmProxyVerUrl;
     
     this.lmProxyUrl = '../../' + this.$injector.get('gnGlobalSettings').lmProxyUrl;
     this.lmProxyVerUrl = '../../' + this.$injector.get('gnGlobalSettings').lmProxyVerUrl;
+    this.odProxyUrl = '../../' + this.$injector.get('gnGlobalSettings').odProxyUrl;
     
     this.layer = config.layer;
     this.map = config.map;
@@ -82,6 +81,9 @@
 	}  
 	else if (url.includes("maps-ver.lantmateriet.se")) {
 		return this.lmProxyVerUrl + encodeURIComponent(url)
+	}
+	else if (url.includes("api.lantmateriet.se")) {
+		return this.odProxyUrl + encodeURIComponent(url)
 	}
 	else {
 		return this.gnProxyUrl + encodeURIComponent(url);
