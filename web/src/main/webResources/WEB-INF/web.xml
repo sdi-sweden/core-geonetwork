@@ -327,8 +327,8 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>OdProxy</servlet-name>
-        <url-pattern>/od-proxy</url-pattern>
+        <servlet-name>LmProxy</servlet-name>
+        <url-pattern>/lm-proxy</url-pattern>
     </servlet-mapping>
 
     <servlet>
