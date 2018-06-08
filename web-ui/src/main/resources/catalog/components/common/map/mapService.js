@@ -1094,7 +1094,7 @@
            */
           addWmsAllLayersFromCap: function(map, url, createOnly, md) {
             var $this = this;
-
+console.log("in addWmsAllLayersFromCap with url " + url);
             return gnOwsCapabilities.getWMSCapabilities(url).
                 then(function(capObj) {
 

@@ -454,6 +454,7 @@
         },
         addWmsLayersFromCap: function(url, md) {
           // Open the map panel
+console.log("in addWmsLayersFromCap with url " + url);        	
           $scope.showMapPanel();
           var name = 'layers';
           var match = RegExp('[?&]' + name + '=([^&]*)').exec(url);
@@ -466,16 +467,19 @@
             for (var i = 0; i < layersList.length; i++)
               if (!gnMap.isLayerInMap(viewerMap,
                   layersList[i], url)) {
+console.log("calling addWmsFromScratch");            	  
                 gnMap.addWmsFromScratch(viewerMap, url, layersList[i],
                     false, md);
               }
           } else {
+console.log("calling addWmsAllLayersFromCap");        	  
             gnMap.addWmsAllLayersFromCap(viewerMap, url, false,  md);
           }
 
         },
         addAllMdLayersToMap: function(layers, md) {
           angular.forEach(layers, function(layer) {
+console.log("calling addMdLayerToMap");        	  
             $scope.resultviewFns.addMdLayerToMap(layer, md);
           });
         },

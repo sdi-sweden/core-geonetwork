@@ -34,6 +34,7 @@
       function($http, $q, gnUrlUtils, gnGlobalSettings, gfiOutputFormatCheck) {
 
     	var proxyfyURL = function(url) {
+console.log("in OWSService.proxyfyURL with " + url);    		
     		if (url.includes("proxy") || url.includes("topo-wms")) {
     			return url;    			
     		}
@@ -49,6 +50,7 @@
              	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
                 }
             }
+console.log("proxyfied URL is now " + newUrl);
             return newUrl;
     	}
     	
@@ -208,6 +210,7 @@
 
           getWMSCapabilities: function(url) {
             var defer = $q.defer();
+            console.log("in OWSService.getWMSCapabilities with url " + url);            
             if (url) {
               url = mergeDefaultParams(url, {
                 service: 'WMS',
@@ -215,6 +218,7 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
+console.log("is valid URL " + url);  
              	var proxifiedUrl = proxyfyURL(url);
            	  //send request and decode result
                 $http.get(proxifiedUrl, {
@@ -238,6 +242,7 @@
 
           getWMTSCapabilities: function(url) {
             var defer = $q.defer();
+console.log("in OWSService.getWMTSCapabilities with url " + url);            
             if (url) {
               url = mergeDefaultParams(url, {
                 REQUEST: 'GetCapabilities',
@@ -245,6 +250,7 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
+console.log("is valid URL " + url);            	  
             	  var proxifiedUrl = proxyfyURL(url);
                   $http.get(proxifiedUrl, {
                   cache: true
