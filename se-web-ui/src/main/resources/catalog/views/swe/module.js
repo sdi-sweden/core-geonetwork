@@ -454,7 +454,6 @@
         },
         addWmsLayersFromCap: function(url, md) {
           // Open the map panel
-console.log("in addWmsLayersFromCap with url " + url);        	
           $scope.showMapPanel();
           var name = 'layers';
           var match = RegExp('[?&]' + name + '=([^&]*)').exec(url);
@@ -467,19 +466,16 @@ console.log("in addWmsLayersFromCap with url " + url);
             for (var i = 0; i < layersList.length; i++)
               if (!gnMap.isLayerInMap(viewerMap,
                   layersList[i], url)) {
-console.log("calling addWmsFromScratch");            	  
                 gnMap.addWmsFromScratch(viewerMap, url, layersList[i],
                     false, md);
               }
           } else {
-console.log("calling addWmsAllLayersFromCap");        	  
             gnMap.addWmsAllLayersFromCap(viewerMap, url, false,  md);
           }
 
         },
         addAllMdLayersToMap: function(layers, md) {
           angular.forEach(layers, function(layer) {
-console.log("calling addMdLayerToMap");        	  
             $scope.resultviewFns.addMdLayerToMap(layer, md);
           });
         },
@@ -851,9 +847,11 @@ console.log("calling addMdLayerToMap");
 
 
       $scope.$on('$locationChangeSuccess', function(next, current) {
-        $scope.activeTab = $location.path().
+        var path = $location.path().match(/^(\/[a-zA-Z0-9]*)($|\/.*)/);
+        if (path){
+    	$scope.activeTab = $location.path().
             match(/^(\/[a-zA-Z0-9]*)($|\/.*)/)[1];
-
+        }
         if (gnSearchLocation.isSearch() && (!angular.isArray(
             searchMap.getSize()) || searchMap.getSize()[0] < 0)) {
 
