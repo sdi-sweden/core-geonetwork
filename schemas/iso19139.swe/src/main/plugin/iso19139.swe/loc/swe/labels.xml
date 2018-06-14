@@ -1659,6 +1659,7 @@ Ex. SS-EN ISO 19115.</description>
       <option value="MapInfo Tab">MapInfo Tab</option>
       <option value="ORACLE Spatial">ORACLE Spatial</option>
       <option value="ORACLE">ORACLE</option>
+      <option value="PNG">PNG</option>
       <option value="RIK3">RIK3</option>
       <option value="SQL Server">SQL Server</option>
       <option value="SVG">SVG</option>

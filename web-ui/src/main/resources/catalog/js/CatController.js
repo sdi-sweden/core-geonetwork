@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -37,6 +37,10 @@
 
   module.constant('gnGlobalSettings', {
     proxyUrl: '../../proxy?url=',
+    srvProxyUrl: 'proxy?url=',
+    lmProxyUrl: 'lm-proxy?url=',
+    lmProxyVerUrl: 'lm-proxy-ver?url=',
+    odProxyUrl: 'od-proxy?url=',
     locale: {},
     isMapViewerEnabled: false,
     requireProxy: [],
@@ -50,7 +54,8 @@
         blur: 0
       }
     },
-    current: null
+    current: null,
+    applicationName: 'geodataportalen'
   });
 
   module.constant('gnLangs', {

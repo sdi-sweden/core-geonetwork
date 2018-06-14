@@ -1146,6 +1146,9 @@ public class DataManager implements ApplicationEventPublisherAware {
 
                     e.printStackTrace();
                 }
+                
+                if (Log.isDebugEnabled(Geonet.DATA_MANAGER))
+                    Log.debug(Geonet.DATA_MANAGER, " - report:" + report.getText());
 
                 // -- append report to main XML report.
                 schemaTronXmlOut.addContent(report);

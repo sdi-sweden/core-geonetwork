@@ -1,4 +1,4 @@
-{
+﻿{
     "add-extent-from-geokeywords": "Beräkna täckning utifrån nyckelord",
     "add-extent-from-geokeywords-help": "Sök alla nyckelord i synonymordlistan av typen plats och lägg till matchande utsträckningar.",
     "addCRS-help": "Lägg till en ny CRS",
@@ -211,7 +211,7 @@
     "onlineUseLegendLYR": "Stil för ArcGIS(LYR)-resurs",
     "onlineUseStyleSLD": "Stil för resurser som använder SLD",
     "onlineUseStyleQML": "Stil för QGIS-resurs",
-    "onlineUseLimitation": "Användningsbegränsning",
+    "onlineUseLimitation": "Användbarhetsbegränsning",
     "onlineAccessLimitation": "Tillgänglighetsbegränsning",
     "onlinesrcUploadHelp": "Dra och släpp hit en tjänst",
     "onlineMore": "Mer information",

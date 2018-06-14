@@ -158,6 +158,12 @@
             $scope.searchResults.facet = data.facet;
             $scope.searchResults.dimension = data.dimension;
 
+			// set number of results to 0 to begin with (to avoid pagination to be visible when 0 results)
+			if ($scope.hasPagination) {
+				var paging = $scope.paginationInfo;
+                paging.resultsCount = 0;
+			}
+            
             // compute page number for pagination
             if ($scope.searchResults.records.length > 0 &&
                 $scope.hasPagination) {
