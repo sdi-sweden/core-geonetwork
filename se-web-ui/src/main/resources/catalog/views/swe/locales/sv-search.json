@@ -1,4 +1,4 @@
-{
+﻿{
     "geographicalFilterTooltip-title": "Geografiskt filter",
     "geographicalFilterTooltip-desc": "Förfina sökning baserat på resurser inom angivet område",
     "geographicalFilterTooltip-link": "/geodataportalens-hjalpsidor/forstasidan/avancerad-vy#Geografi",
@@ -103,10 +103,6 @@
     "nonSweMetadata": "Metadata följer inte den senaste Nationella metadataprofilen. När metadata redigeras uppgraderas metadata till denna nya profil. Vill du göra detta ?",
     "showServices": "Visa tjänster",
     "showDatasets": "Dataset",
-    "norwegianMetadata": "Norska Data",
-    "norksaDataTooltip-title": "Norska Data",
-    "norksaDataTooltip-desc": "Via länken kan du nå geodata i Norge. Kan vara till nytta för myndigheter, länsstyrelser och kommuner som har behov av att använda geodata från Norge i gränsöverskridande samarbeten.",
-    "norksaDataTooltip-link": "http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/",
     "mdlink": "Link",
     "downloadlink": "Download",
     "norwegianMetadata": "Norska Data",
@@ -117,5 +113,9 @@
     "readMore": "Läs mer",
     "Graticule": "Rutnät",
     "geographical":"geografisk",
+    "publisherHelp": "Publicerare hjälp",
+    "publisherHelpTooltip-title": "Publicerare hjälp",
+    "publisherHelpTooltip-desc": "Inloggning för publicerare till att jobba på metadata",
+    "publisherHelpTooltip-link": "/geodataportalens-hjalpsidor/forstasidan/for-publicerare",
     "thisisthebottomrow":"Lägg inte till nya rader nedanför!"
 }
