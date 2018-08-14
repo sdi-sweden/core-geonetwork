@@ -28,11 +28,6 @@
 	<swe-geo-technics-filter data-config-url="{{geotechnicsUrl}}" data-show-map-fn="showFullMapPanel"></swe-geo-technics-filter>
     <a data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="../../login" class="header-login header-text">
     <span class="hidden-xs hidden-sm" data-translate="">forPublishers</span>
-      <div data-swe-tooltip=""
-           data-title="{{ 'publisherHelpTooltip-title' | translate }}"
-           data-text="{{ 'publisherHelpTooltip-desc' | translate }}"
-           data-link="{{ 'publisherHelpTooltip-link' | translate }}">
-      </div>
     </a>
 
     <a data-swe-show-dialog="" data-dialog="#newmetadata-popup" data-ng-show="authenticated" href="" class="header-login header-text login-popup-link">
@@ -41,11 +36,6 @@
 
     <a data-ng-show="authenticated" href="catalog.edit" class="header-admin header-text">
     <span class="hidden-xs hidden-sm" data-translate="">administrationMenu</span>
-	<div data-swe-tooltip=""
-         data-title="{{ 'publisherHelpTooltip-title' | translate }}"
-         data-text="{{ 'publisherHelpTooltip-desc' | translate }}"
-         data-link="{{ 'publisherHelpTooltip-link' | translate }}">
-    </div>
     </a>
 
     <a data-ng-show="authenticated" href="/AGLogout" class="header-logout header-text">
