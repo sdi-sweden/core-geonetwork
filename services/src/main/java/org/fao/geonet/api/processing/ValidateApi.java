@@ -139,6 +139,7 @@ public class ValidateApi {
                         report.addMetadataInfos(record.getId(), "Is valid");
                     } else {
                         report.addMetadataInfos(record.getId(), "Is invalid");
+                        report.addMetadataError(record.getId(), new Exception("Validation Exceptions found"));
                     }
                     report.addMetadataId(record.getId());
                     report.incrementProcessedRecords();
