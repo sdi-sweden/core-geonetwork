@@ -149,6 +149,36 @@
         window.open(gnHttp.getService('csv'), windowName, windowOption);
       };
       this.validateMd = function(md) {
+
+        var validateNotification = function(data) {
+          var message = '<h4>' + $translate.instant('validationComplete') +
+            '</h4><dl class="dl-horizontal"><dt>' +
+            $translate.instant('numberOfRecordsProcessed') + '</dt><dd>' +
+            data.data.numberOfRecordsProcessed + '</dd><dt>' +
+            $translate.instant('numberOfRecordsWithErrors') + '</dt><dd>' +
+            data.data.numberOfRecordsWithErrors + '</dd><dt>' +
+            $translate.instant('numberOfRecordsNotEditable') + '</dt><dd>' +
+            data.data.numberOfRecordsNotEditable + '</dd><dt>' +
+            $translate.instant('numberOfRecordNotFound') + '</dt><dd>' +
+            data.data.numberOfRecordNotFound + '</dd><dt>' +
+            $translate.instant('numberOfNullRecords') + '</dt><dd>' +
+            data.data.numberOfNullRecords + '</dd><dt>' +
+            $translate.instant('numberOfRecords') + '<dd>' +
+            data.data.numberOfRecords + '</dd>' +
+            '</dt></dl>';
+
+          var success = 'success';
+// decide if validation has failed or succeeded
+          if ((data.data.numberOfRecordsNotEditable > 0) ||
+            (data.data.numberOfRecordNotFound > 0 ) ||
+            (data.data.numberOfNullRecords > 0) ||
+            (data.data.numberOfRecordsWithErrors > 0)) {
+            success = 'danger';
+          }
+          alertResultAndType(message, success);
+          $rootScope.$broadcast('search');
+        };
+
         if (md) {
           return gnMetadataManager.validate(md.getId()).then(function() {
             $rootScope.$broadcast('mdSelectNone');
@@ -157,14 +187,9 @@
         }
         else {
           return gnHttp.callService('../api/records/validate', null,
-                                    {
-                                      method: 'PUT'
-                                    }).then(function(data) {
-// TODO: dont show message for now - need to process the data returned, similar to publish method                
-//            alertResult(data.data);
-            $rootScope.$broadcast('mdSelectNone');
-            $rootScope.$broadcast('search');
-          });
+            {
+              method: 'PUT'
+            }).then(validateNotification);
         }
       };
 
@@ -303,15 +328,15 @@
                 message = $translate.instant('metadataUnchanged');
               } else if (data.data.disallowed > 0) {
                 message = $translate.instant('accessRestricted');
-              } 
+              }
               success = 'danger';
             }
           } else {
             if ((flag === 'on' && data.data.published === 0) ||
                 (flag !== 'on' && data.data.unpublished === 0)) {
-              if ((data.data.novalid > 0) || 
-                  (data.data.unpublished > 0 ) || 
-                  (data.data.unmodified > 0) || 
+              if ((data.data.novalid > 0) ||
+                  (data.data.unpublished > 0 ) ||
+                  (data.data.unmodified > 0) ||
                   (data.data.disallowed > 0)) {
                 success = 'danger';
               }

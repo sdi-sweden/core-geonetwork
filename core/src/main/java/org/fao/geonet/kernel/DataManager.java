@@ -1996,7 +1996,14 @@ public class DataManager implements ApplicationEventPublisherAware {
                 // editLib.enumerateTree(md);
                 //Apply custom schematron rules
                 Element errors = applyCustomSchematronRules(schema, Integer.parseInt(metadataId), doc.getRootElement(), lang, validations);
-                valid = valid && errors == null;
+//              valid = valid && errors == null;
+
+                boolean validationOk = true;
+                for (MetadataValidation metadataValidation : validations) {
+					boolean valStatus = metadataValidation.isValid();
+					validationOk = validationOk && valStatus;
+				}
+                valid = valid && validationOk;
                 if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
                     Log.debug(Geonet.DATA_MANAGER, "Validation after schematron is : " + valid);
                     if (errors != null) {
