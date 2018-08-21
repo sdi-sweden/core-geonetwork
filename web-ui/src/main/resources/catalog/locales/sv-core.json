@@ -312,6 +312,6 @@
     "typeOfRecord": "Typ av post",
     "load": "Ladda",
     "solrAccessError": "Fel under Solr-åtkomst",
-    "published": "Publicerat",
-    "unpublished": "Opublicerad"
+    "published": "Publicerad",
+    "unpublished": "Av-publicerad"
 }
