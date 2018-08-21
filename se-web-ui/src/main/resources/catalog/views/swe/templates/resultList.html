@@ -75,6 +75,11 @@
         <div class="meta-data">
           <h1><img src="../../catalog/views/swe/images/open-repo.png" class="mobile-repo-img">{{md.title || md.defaultTitle}}
             <div class="star-cont" data-ng-class="{'star-cont': true, 'starred' : containsFavorite(md.getId()) }" data-ng-click="toggleFavorite(md.getId())"><span class="icon-star-empty"></span><span class="icon-star"></span></div>
+
+            <span class="published-label-cont" ng-if="user.isEditorOrMore()">
+              <span data-ng-if="md.isPublished()" data-translate="" class="badge published-label">published</span>
+              <span data-ng-if="!md.isPublished()" data-translate="" class="badge published-label">unpublished</span>
+            </span>
           </h1>
           <span class="excerpt"></span>
         </div>
@@ -135,6 +140,7 @@
     </div>
     <div class="geo-data-toolbar-cont">
       <div class="toolbar-left-list tool-bar-list">
+
         <div class="link-cont"  ng-if="!user.isEditorOrMore()">
           <a href="" data-ng-click="showMetadata($index, md, searchResults.records)" class="-label-link" ><span class="icon-doc-text"></span>{{ 'viewMetadata' | translate }}</a>
         </div>

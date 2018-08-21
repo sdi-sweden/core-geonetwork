@@ -3,5 +3,9 @@
   <li><a href="" class="-text-link" target="_blank" data-ng-href="../api/records/{{md.getUuid()}}/formatters/xml">{{ 'exportISO19139' | translate }}</a></li>
   <!--<li><a href="" class="-text-link" data-ng-click="mdService.metadataRDF(md.getUuid())">{{ 'exportDCAT' | translate }}</a></li>-->
   <li ng-if="user.canEditRecord(md) && user.isEditorOrMore()"><a href="" class="-text-link" target="_blank" data-ng-click="editMetadata(md)">{{ 'edit' | translate }}</a></li>
+  <li ng-if="user.canEditRecord(md) && user.isReviewerOrMore()"><a href="" class="-text-link" data-ng-click="mdService.publish(md)">
+    <span data-ng-if="md.isPublished()" data-translate="" class="ng-scope">unpublish</span>
+    <span data-ng-if="!md.isPublished()" data-translate="" class="ng-scope">publish</span>
+   </a></li>
   <li ng-if="user.canEditRecord(md) && user.isEditorOrMore()"><a href="" class="-text-link" data-ng-click="mdService.deleteMd(md)" data-gn-confirm-click="{{'deleteRecordConfirm' | translate:md}}">{{ 'delete' | translate }}</a></li>
 </ul>

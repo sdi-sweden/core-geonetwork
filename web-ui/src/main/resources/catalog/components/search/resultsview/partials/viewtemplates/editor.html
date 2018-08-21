@@ -16,13 +16,31 @@
          data-ng-href="catalog.search#/metadata/{{md.getUuid()}}"
          title="{{md.abstract}}">{{md.title || md.defaultTitle}}</a>
       <span data-ng-show="md.isTemplate == 's'">{{md.title || md.defaultTitle}}</span>
+
       <br/>
       <div class="gn-record-details">
         <span title="{{'metadataAuthor' | translate}}">{{md.getOwnername()}}</span>
+
         <span class="pull-right text-muted"
               data-ng-class="{'text-success': md.mdStatus == 2, 'text-warning': md.mdStatus == 4}"
               data-ng-show="md.mdStatus">{{('status-' + md.mdStatus) | translate}}</span>
       </div>
+    </td>
+    <td align="right" style="padding-top: 15px">
+      <span>
+          <span data-ng-if="md.isPublished()" data-translate="" class="badge"  style="font-size: 90% !important">published</span>
+          <span data-ng-if="!md.isPublished()" data-translate="" class="badge" style="font-size: 90% !important">unpublished</span>
+      </span>
+    </td>
+    <td>
+      <a class="btn btn-link"
+         data-ng-href=""
+         data-ng-if="user.canEditRecord(md) && user.isReviewerOrMore()"
+         data-ng-click="mdService.publish(md)"
+         data-ng-attr-title="{{md.isPublished() ? ('unpublish'|translate) : ('publish'|translate)}}">
+        <i class="fa text-muted"
+           data-ng-class="md.isPublished() ? 'fa-unlock' : 'fa-lock'"></i>
+      </a>
     </td>
     <td>
       <a class="btn btn-link"
@@ -30,8 +48,7 @@
          data-ng-if="user.canEditRecord(md) && user.isEditorOrMore()"
          data-ng-click="mdService.openPrivilegesPanel(md, getCatScope())"
          title="{{'privileges' | translate}}">
-        <i class="fa text-muted"
-           data-ng-class="md.isPublished() ? 'fa-unlock' : 'fa-lock'"></i>
+        <i class="fa fa-key text-muted"></i>
       </a>
     </td>
     <td>
