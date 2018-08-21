@@ -166,7 +166,6 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
         _boostQueryClass = _luceneConfig.getBoostQueryClass();
         _tokenizedFieldSet = luceneConfig.getTokenizedField();
     }
-
     //
     // MetaSearcher API
     //
@@ -1681,21 +1680,22 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
         _elSummary = results.two();
         _numHits = Integer.parseInt(_elSummary.getAttributeValue("count"));
 
-        indexAndTaxonomy = _sm.getIndexReader(_language.presentationLanguage, _versionToken);
-        _versionToken = indexAndTaxonomy.version;
-        try {
-            results = doSearchAndMakeSummary(_numHits, startHit, startHit+_numHits,
-                _language.presentationLanguage,
-                _summaryConfig, _luceneConfig,
-                indexAndTaxonomy.indexReader,
-                _query, _filter, _sort, indexAndTaxonomy.taxonomyReader,
-                buildSummary);
-        } finally {
-            _sm.releaseIndexReader(indexAndTaxonomy);
+        if (_numHits > 0) {
+            indexAndTaxonomy = _sm.getIndexReader(_language.presentationLanguage, _versionToken);
+            _versionToken = indexAndTaxonomy.version;
+            try {
+                results = doSearchAndMakeSummary(_numHits, startHit, startHit+_numHits,
+                    _language.presentationLanguage,
+                    _summaryConfig, _luceneConfig,
+                    indexAndTaxonomy.indexReader,
+                    _query, _filter, _sort, indexAndTaxonomy.taxonomyReader,
+                    buildSummary);
+            } finally {
+                _sm.releaseIndexReader(indexAndTaxonomy);
+            }
+
+            hits = results.one();
         }
-
-        hits = results.one();
-
 
         if (Log.isDebugEnabled(Geonet.SEARCH_ENGINE))
             Log.debug(Geonet.SEARCH_ENGINE, "Hits found : " + _numHits + "");
