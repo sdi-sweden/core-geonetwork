@@ -32,6 +32,7 @@
   <xsl:include href="base-variables-metadata.xsl"/>
 
   <xsl:variable name="isMinorEdit" select="/root/request/minor"/>
+  <xsl:variable name="publishOnClose" select="/root/request/publishOnClose"/>
 
   <xsl:variable name="showValidationErrors" select="/root/request/showvalidationerrors"/>
 
