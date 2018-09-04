@@ -239,4 +239,6 @@
 
   <SpatialDataServiceCategory>Tjänsteklassificering</SpatialDataServiceCategory>
   <addSpatialDataServiceCategory>Lägg till Tjänsteklassificering</addSpatialDataServiceCategory>
+
+  <addPriorityDataset>INSPIRE Priority Dataset</addPriorityDataset>
 </strings>

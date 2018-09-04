@@ -123,4 +123,6 @@
 
   <geographicExtent>Omskrivande rektangel</geographicExtent>
   <temporalExtent>Temporal utsträckning</temporalExtent>
+
+  <addPriorityDataset>INSPIRE Priority Dataset</addPriorityDataset>
 </strings>
