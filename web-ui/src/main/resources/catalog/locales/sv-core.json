@@ -311,5 +311,7 @@
     "directoryManager": "Hantera katalog",
     "typeOfRecord": "Typ av post",
     "load": "Ladda",
-    "solrAccessError": "Fel under Solr-åtkomst"
+    "solrAccessError": "Fel under Solr-åtkomst",
+    "published": "Publicerad",
+    "unpublished": "Av-publicerad"
 }

@@ -293,6 +293,12 @@
         }
       });
 
+      $scope.$watch('gnCurrentEdit.publishOnClose', function() {
+        if ($('#publishOnClose')[0]) {
+          $('#publishOnClose')[0].value = $scope.gnCurrentEdit.publishOnClose;
+        }
+      });
+
       /**
        * When the form is loaded, this function is called.
        * Use it to retrieve form variables or initialize
@@ -301,6 +307,7 @@
       $scope.onFormLoad = function() {
         gnEditor.onFormLoad();
         $scope.isMinor = gnCurrentEdit.isMinor;
+        $scope.publishOnClose = gnCurrentEdit.publishOnClose;
         $scope.$watch('tocIndex', function(newValue, oldValue) {
           if (angular.isDefined($scope.tocIndex) && $scope.tocIndex !== null) {
             $timeout(function() {
@@ -445,7 +452,7 @@
         $scope.savedStatus = gnCurrentEdit.savedStatus;
         return promise;
       };
-	  
+
 	  // Inspire and MDRelation validation : Start
 	  $scope.inspireValidateMetadata = function() {
         var promise = gnEditor.inspireValidate()
@@ -457,7 +464,7 @@
             });
         return promise;
       };
-	  
+
 	  $scope.mdRelationValidateMetadata = function(refreshForm) {
         var promise = gnEditor.mdRelationValidate()
             .then(function(response) {
@@ -469,7 +476,7 @@
         return promise;
       };
 	  // Inspire and MDRelation validation : End
-	  
+
       var closeEditor = function() {
         $scope.layout.hideTopToolBar = false;
         // Close the editor tab
@@ -509,9 +516,20 @@
             .then(function(form) {
               closeEditor();
             }, function(error) {
+
+              var description = "";
+
+              if (gnCurrentEdit.publishOnClose === true) {
+                error = error.replace(/<\?xml version="1.0".*\?>/, '');
+                var xmlDoc = $.parseXML( error );
+                var xml = $( xmlDoc );
+                description = xml.find( "description" ).text()
+              }
+
               $rootScope.$broadcast('StatusUpdated', {
                 title: $translate.instant('saveMetadataError'),
                 error: error,
+                msg: description,
                 timeout: 0,
                 type: 'danger'});
             });
@@ -546,7 +564,7 @@
 	  $scope.inspireValidate = function() {
         return $scope.inspireValidateMetadata();
       };
-	  
+
 	  $scope.mdRelationValidate = function() {
         return $scope.mdRelationValidateMetadata(false);
       };

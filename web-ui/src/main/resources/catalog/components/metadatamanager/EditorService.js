@@ -124,7 +124,7 @@
              $(downCtrl).removeClass('invisible');
            }
          };
-         var setStatus = function(status) {
+           var setStatus = function(status) {
            gnCurrentEdit.savedStatus = $translate.instant(status.msg);
            gnCurrentEdit.savedTime = moment();
            gnCurrentEdit.saving = status.saving;
@@ -228,7 +228,7 @@
               });
              return defer.promise;
            },
-		   
+
 		   /**
            * MDRelation Validation.
            */
@@ -242,7 +242,7 @@
               });
              return defer.promise;
            },
-		   
+
            /**
            * Reload editor with the html snippet given
            * in parameter. If no snippet is provided, then
@@ -328,6 +328,7 @@
                extent:
                angular.fromJson(getInputValue('extent')),
                isMinor: getInputValue('minor') === 'true',
+               publishOnClose: getInputValue('publishOnClose') === 'true',
                layerConfig:
                angular.fromJson(getInputValue('layerConfig')),
                saving: false

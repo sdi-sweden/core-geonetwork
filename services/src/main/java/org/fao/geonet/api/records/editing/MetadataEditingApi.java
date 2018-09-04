@@ -51,13 +51,13 @@ import org.fao.geonet.repository.MetadataValidationRepository;
 import org.fao.geonet.repository.OperationAllowedRepository;
 import org.fao.geonet.repository.specification.MetadataValidationSpecs;
 import org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin;
+import org.fao.geonet.services.metadata.Publish;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -242,6 +242,10 @@ public class MetadataEditingApi {
             defaultValue = "false"
         )
             boolean minor,
+        @RequestParam(
+            defaultValue = "false"
+        )
+            boolean publishOnClose,
         @ApiParam(
             value = "Save current edits."
         )
@@ -348,6 +352,16 @@ public class MetadataEditingApi {
                 dataMan.doValidate(metadata.getDataInfo().getSchemaId(), metadata.getId() + "",
                     new Document(metadata.getXmlData(false)), context.getLanguage());
                 reindex = true;
+            }
+
+            if (publishOnClose) {
+                if (!dataMan.getAccessManager().isVisibleToAll(id)) {
+                    Publish.PublishReport publishReport = new Publish().publish(languageUtils.getIso3langCode(request.getLocales()), request, id,false);
+
+                    if (publishReport.getPublished() == 0) {
+                        throw new RuntimeException("Metadata can't be published");
+                    }
+                }
             }
 
             boolean automaticUnpublishInvalidMd = sm.getValueAsBool("metadata/workflow/automaticUnpublishInvalidMd");

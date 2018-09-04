@@ -66,11 +66,35 @@
       <i class="fa fa-undo"/>&nbsp;
       <span class="visible-lg" data-translate="">cancel</span>
     </button>
-    <button type="button" class="btn btn-default navbar-btn gn-tooltip"
+
+    <!--<button type="button" class="btn btn-default navbar-btn gn-tooltip"
             title="{{'closeEditor'|translate}}" gn-click-and-spin="close()">
       <i class="fa fa-sign-out"/>&nbsp;
       <span class="visible-lg" data-translate="">closeEditor</span>
-    </button>
+    </button>-->
+
+    <div class="btn-group">
+      <button type="button"
+              data-gn-click-and-spin="close()"
+              class="btn btn-primary">
+        <i class="fa fa-sign-out"/>&nbsp;
+        <span
+          class="visible-lg">{{'closeEditor' | translate}}</span>
+      </button>
+      <button type="button" class="btn btn-primary dropdown-toggle"
+              data-toggle="dropdown" aria-expanded="false">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right" role="menu">
+        <li class="dropdown-header">
+          <label title="{{'minorEditHelp' | translate}}">
+            <input type="checkbox" data-ng-model="gnCurrentEdit.publishOnClose"/>
+            {{'publish' | translate}}
+          </label>
+        </li>
+      </ul>
+    </div>
+
     <div class="btn-group" title="{{(isTemplate() ? 'saveTemplate' : 'saveMetadata') | translate}}">
       <button type="button"
               data-gn-click-and-spin="save(true)"
