@@ -739,6 +739,65 @@
        }, 500);
       };
 
+      var debounce = function(func,wait) {
+        var timeout;
+        return function() {
+            var context = this,
+                args = arguments;
+            var later = function() {
+                timeout = null;
+                func.apply(context,args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+      };
+
+      /**
+       * Resize the full map
+       * 
+       * Only do a resize when the full map is shown
+       */
+      var resizeFullMap = function() {
+
+        if (is_map_maximized.data) {
+
+          is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false;
+          window_width = angular.element($window).width();
+          $map_cont = angular.element('.map-cont');
+          $data_list_cont = angular.element('.data-list-cont');
+
+          // update the size of the map container
+          if (is_side_data_bar_open) {
+            $map_cont.css({
+              width: (window_width - $data_list_cont.width())
+            });
+          } else {
+            $map_cont.css({
+              width: window_width
+            });
+          }
+
+          // refresh the size of the map itself
+          $timeout(function() {
+            viewerMap.updateSize();
+            viewerMap.renderSync();
+          }, 500);
+        }
+      };
+
+      /**
+       * Refresh map panel after a window resize
+       * 
+       * a debounce function is used in order to resize only once after the resizing has stopped,
+       * and not continually resizing the map during resizing the window
+       */
+      angular.element($window).bind('resize', debounce(function (){
+
+        resizeFullMap();
+
+      },200));
+
       /**
        * Hide map panel.
        */
