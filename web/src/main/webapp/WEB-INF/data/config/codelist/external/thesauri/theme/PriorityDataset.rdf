@@ -8,8 +8,8 @@
       stepwise manner. The list also reflects the data gaps identified during the evaluation of the
       state-of-implementation and the fitness of the Directive for its intended purpose (a so-called REFIT evaluation)
     </dc:description>
-    <dcterms:issued xmlns:dcterms="http://purl.org/dc/terms/">2018-09-04T12:31:27</dcterms:issued>
-    <dcterms:modified xmlns:dcterms="http://purl.org/dc/terms/">2018-09-04T12:31:27</dcterms:modified>
+    <dcterms:issued xmlns:dcterms="http://purl.org/dc/terms/">2018-04-04</dcterms:issued>
+    <dcterms:modified xmlns:dcterms="http://purl.org/dc/terms/">2018-04-04</dcterms:modified>
     <skos:hasTopConcept
       rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset/AirQualityManagementZonesAndAgglomerations-dir-2008-50"/>
     <skos:hasTopConcept
