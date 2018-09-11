@@ -82,7 +82,7 @@
     <div class="gn-onlinesrc-panel">
 
       <!-- ******* Display Thumbnails ******* -->
-      <ul class="list-inline">
+      <ul class="list-inline" data-ng-show="isCategoryEnable('thumbnail')">
         <li class="gn-list-thumb thumbnail"
             data-ng-repeat="thumb in relations.thumbnails">
           <img class="thumb-small"
@@ -106,7 +106,7 @@
       </ul>
 
       <!-- ******* List of online resources ******* -->
-      <h4 class="onlinesrc-title" data-ng-show="relations.onlines && relations.onlines.length > 0">
+      <h4 class="onlinesrc-title" data-ng-show="isCategoryEnable('onlinesrc') && relations.onlines && relations.onlines.length > 0">
         <a href=""
            data-ng-click="onlinesrcService.onOpenPopup('onlinesrc')">
           <i class="fa fa-link"></i><i class="icon-external-link"></i>&nbsp;
@@ -114,7 +114,7 @@
           <i class="fa fa-plus"></i>
         </a>
       </h4>
-      <ul class="list-group">
+      <ul class="list-group" data-ng-show="isCategoryEnable('onlinesrc') && relations.onlines && relations.onlines.length > 0">
         <li class="list-group-item" href=""
             data-ng-repeat="resource in relations.onlines | orderBy:sortLinks">
           <div class="row">
@@ -154,7 +154,7 @@
       </ul>
 
       <!-- ******* List of datasets ******* -->
-      <h4 class="onlinesrc-title" data-ng-show="relations.datasets">
+      <h4 class="onlinesrc-title" data-ng-show="isCategoryEnable('dataset') && relations.datasets">
         <a href=""
            data-ng-click="onlinesrcService.onOpenPopup('dataset')">
           <i class="fa fa-files-o"></i><i class="icon-external-link"></i>&nbsp;
@@ -162,7 +162,7 @@
           <i class="fa fa-plus"></i>
         </a>
       </h4>
-      <ul class="list-group">
+      <ul class="list-group" data-ng-show="isCategoryEnable('dataset') && relations.datasets">
         <li class="list-group-item"
             data-ng-repeat="resource in relations.datasets | orderBy:'title'">
           <div class="row">
@@ -185,7 +185,7 @@
       </ul>
 
       <!-- ******* List of services ******* -->
-      <h4 class="onlinesrc-title" data-ng-show="relations.services">
+      <h4 class="onlinesrc-title" data-ng-show="isCategoryEnable('service') && relations.services">
         <a href=""
            data-ng-click="onlinesrcService.onOpenPopup('service')">
           <i class="fa fa-share-square-o"></i>
@@ -194,7 +194,7 @@
           <i class="fa fa-plus"></i>
         </a>
       </h4>
-      <ul class="list-group">
+      <ul class="list-group" data-ng-show="isCategoryEnable('service') && relations.services">
         <li class="list-group-item"
             data-ng-repeat="resource in relations.services | orderBy:'title'">
           <div class="row">
@@ -217,7 +217,7 @@
       </ul>
 
       <!--******* List of parent ******* -->
-      <h4 class="onlinesrc-title" data-ng-show="relations.parent">
+      <h4 class="onlinesrc-title" data-ng-show="isCategoryEnable('parent') && relations.parent">
         <a href=""
            data-ng-click="onlinesrcService.onOpenPopup('parent')">
           <i class="fa fa-sitemap" data-ng-class="onlinesrcService.reload ? 'fa-spin' : ''"></i>
@@ -226,7 +226,7 @@
           <i class="fa fa-plus"></i>
         </a>
       </h4>
-      <ul class="list-group">
+      <ul class="list-group" data-ng-show="isCategoryEnable('parent') && relations.parent">
         <li class="list-group-item"
             data-ng-repeat="resource in relations.parent | orderBy:'title'">
           <div class="row">
@@ -249,7 +249,7 @@
       </ul>
 
       <!-- ******* List of sources ******* -->
-      <h4 class="onlinesrc-title" data-ng-show="relations.sources">
+      <h4 class="onlinesrc-title" data-ng-show="isCategoryEnable('source') && relations.sources">
         <a href=""
            data-ng-click="onlinesrcService.onOpenPopup('source')">
           <i class="fa fa-sitemap fa-rotate-180"
@@ -259,7 +259,7 @@
           <i class="fa fa-plus"></i>
         </a>
       </h4>
-      <ul class="list-group">
+      <ul class="list-group" data-ng-show="isCategoryEnable('source') && relations.sources">
         <li class="list-group-item"
             data-ng-repeat="resource in relations.sources | orderBy:'title'">
           <div class="row">
@@ -282,7 +282,7 @@
       </ul>
 
       <!-- ******* List of feature catalogs ******* -->
-      <h4 class="onlinesrc-title" data-ng-show="relations.fcats">
+      <h4 class="onlinesrc-title" data-ng-show="isCategoryEnable('fcats') && relations.fcats">
         <a href="" data-ng-click="onlinesrcService.onOpenPopup('fcats')">
           <i class="fa fa-table"
              data-ng-class="onlinesrcService.reload ? 'fa-spin' : ''"></i>
@@ -291,7 +291,7 @@
           <i class="fa fa-plus"></i>
         </a>
       </h4>
-      <ul class="list-group">
+      <ul class="list-group" data-ng-show="isCategoryEnable('fcats') && relations.fcats">
         <li class="list-group-item"
             data-ng-repeat="resource in relations.fcats | orderBy:'title'">
           <div class="row">
@@ -314,12 +314,12 @@
       </ul>
 
       <!-- ******* List of datasets associated with this feature catalogs ******* -->
-      <h4 class="onlinesrc-title" data-ng-show="relations.hasfeaturecats">
+      <h4 class="onlinesrc-title" data-ng-show="isCategoryEnable('fcats') && relations.hasfeaturecats">
         <i class="fa fa-files-o"></i>
         <i class="icon-external-link"></i>&nbsp;
         <span data-translate="">hasFeatureCatalog</span>&nbsp;
       </h4>
-      <ul class="list-group">
+      <ul class="list-group" data-ng-show="isCategoryEnable('fcats') && relations.hasfeaturecats">
         <li class="list-group-item"
             data-ng-repeat="resource in relations.hasfeaturecats | orderBy:'title'">
           <div class="row">
@@ -336,7 +336,7 @@
 
 
       <!-- ******* List of siblings ******* -->
-      <h4 class="onlinesrc-title" data-ng-show="relations.siblings">
+      <h4 class="onlinesrc-title" data-ng-show="isCategoryEnable('sibling') && relations.siblings">
         <a href="" data-ng-click="onlinesrcService.onOpenPopup('sibling')">
           <i class="fa fa-sign-out"
              data-ng-class="onlinesrcService.reload ? 'fa-spin' : ''"></i>
@@ -345,7 +345,7 @@
           <i class="fa fa-plus"></i>
         </a>
       </h4>
-      <ul class="list-group">
+      <ul class="list-group" data-ng-show="isCategoryEnable('sibling') && relations.siblings">
         <li class="list-group-item"
             data-ng-repeat="resource in relations.siblings | orderBy:'title'">
           <div class="row">
@@ -369,12 +369,12 @@
       </ul>
 
       <!-- ******* List of associated records (reverse direction of siblings) ******* -->
-      <h4 class="onlinesrc-title" data-ng-show="relations.associated">
+      <h4 class="onlinesrc-title" data-ng-show="isCategoryEnable('sibling') && relations.associated">
         <i class="fa fa-sign-out"></i>
         <i class="icon-external-link"></i>&nbsp;
         <span data-translate="">siblings</span>&nbsp;
       </h4>
-      <ul class="list-group">
+      <ul class="list-group" data-ng-show="isCategoryEnable('sibling') && relations.associated">
         <li class="list-group-item"
             data-ng-repeat="resource in relations.associated | orderBy:'title'">
           <div class="row">
