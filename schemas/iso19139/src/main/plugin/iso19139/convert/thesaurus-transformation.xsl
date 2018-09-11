@@ -202,11 +202,25 @@
               <!-- ... default mode -->
               <xsl:choose>
                 <xsl:when test="$withAnchor">
-                  <!-- TODO multilingual Anchor ? -->
-                  <gmx:Anchor
-                    xlink:href="{$serviceUrl}/xml.keyword.get?thesaurus={thesaurus/key}&amp;id={uri}">
+                  <gmx:Anchor>
+                    <xsl:attribute name="xlink:href">
+                      <xsl:choose>
+                        <xsl:when test="matches(uri, '^http.*')">
+                          <xsl:value-of select="uri"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="concat($serviceUrl, '/xml.keyword.get?thesaurus=', thesaurus/key, '&amp;id=', uri)"/>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:attribute>
                     <xsl:value-of select="value"/>
                   </gmx:Anchor>
+
+                  <!-- TODO multilingual Anchor ? -->
+                 <!--<gmx:Anchor
+                    xlink:href="{$serviceUrl}/xml.keyword.get?thesaurus={thesaurus/key}&amp;id={uri}">
+                    <xsl:value-of select="value"/>
+                  </gmx:Anchor>-->
                 </xsl:when>
                 <xsl:otherwise>
                   <gco:CharacterString>

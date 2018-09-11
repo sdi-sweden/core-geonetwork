@@ -5757,8 +5757,9 @@
             gmd:descriptiveKeywords
             [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'INSPIRE priority data set')]"/>
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
-          <action type="add" btnLabel="priorityDataset"
-                  name="addPriorityDataset"
+          <action type="add"
+                  btnLabel="addPriorityDataset"
+                  name="priorityDataset"
                   or="descriptiveKeywords"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/*"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
