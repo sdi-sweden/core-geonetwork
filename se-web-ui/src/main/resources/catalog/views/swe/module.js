@@ -84,7 +84,7 @@
       var searchMap = gnSearchSettings.searchMap;
 
       $scope.displayInitialMetadata = false;
-      
+
       $scope.vectorLayer = new ol.layer.Vector({
         source: new ol.source.Vector({
           features: []
@@ -149,14 +149,14 @@
          $scope.displayInitialMetadataUUID = "";
        }
      });
-    	  
+
       $scope.$on('aftersearch', function() {
     	  if ($scope.displayInitialMetadata) {
     		 if (($scope.mdView.current.record) &&
     		    ($scope.mdView.current.record.getUuid() ==  $scope.displayInitialMetadataUUID)) {
     		       $scope.displayInitialMetadata = false;
     		       $scope.displayInitialMetadataUUID = "";
-    		  
+
     		       var checkExist = setInterval(function() {
     		         if ($('.geodata-row-popup').length) {
     		           $scope.showMetadata($scope.mdView.current.index,
@@ -212,6 +212,13 @@
 
       $rootScope.$on('$includeContentLoaded', function() {
         $timeout($scope.affixFloatingMap());
+
+        console.log("searchMap refresh");
+        $timeout(function() {
+          searchMap.updateSize();
+          searchMap.renderSync();
+        }, 500);
+
       });
 
       $scope.toggleMap = function() {
@@ -755,7 +762,7 @@
 
       /**
        * Resize the full map
-       * 
+       *
        * Only do a resize when the full map is shown
        */
       var resizeFullMap = function() {
@@ -788,7 +795,7 @@
 
       /**
        * Refresh map panel after a window resize
-       * 
+       *
        * a debounce function is used in order to resize only once after the resizing has stopped,
        * and not continually resizing the map during resizing the window
        */
