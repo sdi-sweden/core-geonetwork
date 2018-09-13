@@ -261,9 +261,19 @@
       <gmd:thesaurusName>
         <gmd:CI_Citation>
           <gmd:title>
-            <gco:CharacterString>
-              <xsl:value-of select="$thesauri/thesaurus[key = $currentThesaurus]/title"/>
-            </gco:CharacterString>
+            <xsl:choose>
+              <xsl:when test="$thesauri/thesaurus[key = $currentThesaurus]/title = 'INSPIRE priority data set'">
+                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset" >INSPIRE priority data set</gmx:Anchor>
+              </xsl:when>
+              <xsl:when test="$thesauri/thesaurus[key = $currentThesaurus]/title = 'GEMET - INSPIRE themes, version 1.0'">
+                <gmx:Anchor xlink:href="http://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
+              </xsl:when>
+              <xsl:otherwise>
+                <gco:CharacterString>
+                  <xsl:value-of select="$thesauri/thesaurus[key = $currentThesaurus]/title"/>
+                </gco:CharacterString>
+              </xsl:otherwise>
+            </xsl:choose>
           </gmd:title>
 
           <xsl:variable name="thesaurusDate"

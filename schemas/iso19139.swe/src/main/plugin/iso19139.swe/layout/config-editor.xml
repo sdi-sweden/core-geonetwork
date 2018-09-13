@@ -5697,7 +5697,7 @@
           <field
                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
             gmd:descriptiveKeywords
-            [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'INSPIRE themes')]"/>
+            [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[1], 'INSPIRE themes')]"/>
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
           <action type="add"
                   name="inspireTheme"
@@ -5707,7 +5707,7 @@
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
                         gmd:descriptiveKeywords[
                           contains(gmd:MD_Keywords/gmd:thesaurusName/
-                                      gmd:CI_Citation/gmd:title/gco:CharacterString,
+                                      gmd:CI_Citation/gmd:title/*[1],
                                    'INSPIRE themes')]) = 0">
             <template>
               <snippet>
@@ -5723,7 +5723,7 @@
                     <gmd:thesaurusName>
                       <gmd:CI_Citation>
                         <gmd:title>
-                          <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
                         </gmd:title>
                         <gmd:date>
                           <gmd:CI_Date>
@@ -5755,7 +5755,7 @@
           <field
                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/
             gmd:descriptiveKeywords
-            [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'INSPIRE priority data set')]"/>
+            [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[1], 'INSPIRE priority data set')]"/>
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
           <action type="add"
                   btnLabel="addPriorityDataset"
@@ -5765,7 +5765,7 @@
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/*/
                         gmd:descriptiveKeywords[
                           contains(gmd:MD_Keywords/gmd:thesaurusName/
-                                      gmd:CI_Citation/gmd:title/gco:CharacterString,
+                                      gmd:CI_Citation/gmd:title/*[1],
                                    'INSPIRE priority data set')]) = 0">
             <template>
               <snippet>
@@ -5781,7 +5781,7 @@
                     <gmd:thesaurusName>
                       <gmd:CI_Citation>
                         <gmd:title>
-                          <gco:CharacterString>INSPIRE priority data set</gco:CharacterString>
+                          <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset" >INSPIRE priority data set</gmx:Anchor>
                         </gmd:title>
                         <gmd:date>
                           <gmd:CI_Date>

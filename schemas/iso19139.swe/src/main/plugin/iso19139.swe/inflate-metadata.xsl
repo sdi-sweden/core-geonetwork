@@ -76,6 +76,63 @@
       <xsl:apply-templates select="gmd:credit" />
       <xsl:apply-templates select="gmd:status" />
       <xsl:apply-templates select="gmd:pointOfContact" />
+
+      <xsl:if test="not(gmd:pointOfContact)">
+        <gmd:pointOfContact>
+          <gmd:CI_ResponsibleParty>
+            <gmd:individualName>
+              <gco:CharacterString/>
+            </gmd:individualName>
+            <gmd:organisationName>
+              <gco:CharacterString/>
+            </gmd:organisationName>
+            <gmd:positionName>
+              <gco:CharacterString/>
+            </gmd:positionName>
+            <gmd:contactInfo>
+              <gmd:CI_Contact>
+                <gmd:phone>
+                  <gmd:CI_Telephone>
+                    <gmd:voice>
+                      <gco:CharacterString/>
+                    </gmd:voice>
+                    <gmd:facsimile>
+                      <gco:CharacterString/>
+                    </gmd:facsimile>
+                  </gmd:CI_Telephone>
+                </gmd:phone>
+                <gmd:address>
+                  <gmd:CI_Address>
+                    <gmd:deliveryPoint>
+                      <gco:CharacterString/>
+                    </gmd:deliveryPoint>
+                    <gmd:city>
+                      <gco:CharacterString/>
+                    </gmd:city>
+                    <gmd:administrativeArea>
+                      <gco:CharacterString/>
+                    </gmd:administrativeArea>
+                    <gmd:postalCode>
+                      <gco:CharacterString/>
+                    </gmd:postalCode>
+                    <gmd:country>
+                      <gco:CharacterString/>
+                    </gmd:country>
+                    <gmd:electronicMailAddress>
+                      <gco:CharacterString/>
+                    </gmd:electronicMailAddress>
+                  </gmd:CI_Address>
+                </gmd:address>
+              </gmd:CI_Contact>
+            </gmd:contactInfo>
+            <gmd:role>
+              <gmd:CI_RoleCode codeListValue="owner"
+                               codeList="./resources/codeList.xml#CI_RoleCode"/>
+            </gmd:role>
+          </gmd:CI_ResponsibleParty>
+        </gmd:pointOfContact>
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:resourceMaintenance" />
       <xsl:apply-templates select="gmd:graphicOverview" />
       <xsl:apply-templates select="gmd:resourceFormat" />
@@ -83,7 +140,7 @@
 
 
       <xsl:if test="count(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'Initiativ']) = 0">
-        <gmd:descriptiveKeywords xmlns:gn="http://www.fao.org/geonetwork" xmlns:srv="http://www.isotc211.org/2005/srv">
+        <gmd:descriptiveKeywords>
           <gmd:MD_Keywords>
             <gmd:keyword>
               <gco:CharacterString></gco:CharacterString>
@@ -413,7 +470,7 @@
       <xsl:apply-templates select="gmd:resourceMaintenance" />
       <xsl:apply-templates select="gmd:graphicOverview" />
       <xsl:apply-templates select="gmd:resourceFormat" />
-      <xsl:apply-templates select="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString != 'Initiativ']" />
+      <xsl:apply-templates select="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[1]/text() != 'Initiativ']" />
 
       <xsl:for-each select="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'Initiativ']">
         <xsl:copy>
