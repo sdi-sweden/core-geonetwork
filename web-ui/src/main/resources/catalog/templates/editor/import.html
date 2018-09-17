@@ -40,6 +40,7 @@
           <form id="gn-import" class="form-horizontal" role="form"
                 method="POST" enctype="{{enctype}}" action="{{action}}"
                 data-file-upload="mdImportUploadOptions">
+            <input type="hidden" name="_csrf" value="{{csrf}}"/>
 
             <!-- Folder Path and subfolder options -->
             <div class="form-group" data-ng-if="importMode === 'importFromDir'">
@@ -199,6 +200,19 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <div class="col-sm-offset-5 col-sm-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"
+                           name="publishToAll"
+                           data-ng-disabled="!user.isReviewerOrMore() || file_type === 'mef'"
+                           data-ng-model="params.publishToAll"/>
+                    <span data-translate="">publish</span>
+                  </label>
+                </div>
+              </div>
+            </div>
 
             <div class="form-group">
               <div class="col-sm-offset-5 col-sm-7">
@@ -206,6 +220,7 @@
                   <label>
                     <input type="checkbox"
                            name="assignToCatalog"
+                           data-ng-disabled="file_type !== 'mef'"
                            data-ng-model="params.assignToCatalog"/>
                     <span data-translate="">assignToCatalog</span>
                   </label>
@@ -241,12 +256,17 @@
               </div>
             </div>
 
-
-            <button type="button" class="btn btn-primary pull-right"
-                    data-ng-click="importRecords('#gn-import')"
-                    title="{{'import' | translate}}">
-              <i class="fa fa-plus"/>&nbsp;<span data-translate="">importRecords</span>
-            </button>
+            <div class="pull-right">
+              <button type="button" class="btn btn-primary"
+                      data-ng-click="importRecords('#gn-import')"
+                      title="{{'import' | translate}}">
+                <i class="fa fa-plus"/>&nbsp;<span data-translate="">importRecords</span>
+              </button>
+              <a href="#/board" class="btn btn-default">
+                <i class="fa fa-close"/>&nbsp;
+                <span data-translate="">cancel</span>
+              </a>
+            </div>
           </form>
         </div>
       </div>
@@ -260,6 +280,7 @@
 
       <div data-ng-repeat="report in reports track by $index">
         <div class="panel panel-default"
+             data-ng-show="report.message || report.infos"
              data-ng-class="report.code || (report.errors && report.errors.length > 0) ?
                           'panel-danger' : 'panel-success'">
           <div class="panel-heading" data-translate="">importReport</div>
@@ -268,23 +289,66 @@
             <p data-ng-show="report.message" translate="">
               {{report.message}}
             </p>
-            <p>
-              <!--id and uuid from single import-->
-              <div data-ng-repeat="(key, value) in report.metadataInfos">
-                <span>{{value[0].message}}</span>
-                <a href='#/metadata/{{key}}' title="{{'edit' | translate}}">
-                  <i class='fa fa-pencil'></i>
-                </a>
+
+            <div class="list-group ng-scope" data-ng-show="report.errorMessages" translate="" style="max-height: 500px; overflow: auto;">
+
+              <!-- XSD errors -->
+              <ul class="import-xsd-error" data-ng-show="report.errorMessages[0].title == 'undefined'">
+                <li class="list-group-item ng-scope text-danger list-group-item-import" data-ng-repeat="errorMsg in report.errorMessages track by $index">
+                  aaa<strong class="ng-binding">{{errorMsg.xpath}}</strong>
+                  <p class="ng-binding">{{errorMsg.message}}</p>
+                </li>
+              </ul>
+
+              <!-- Schematron errors -->
+              <div data-ng-repeat="errorMsg in report.errorMessages track by $index" data-ng-show="report.errorMessages[0].title != ''">
+
+                <div data-ng-show="errorMsg.title">
+                  <p><strong>{{errorMsg.title}}</strong></p>
+
+                  <ul>
+                    <li class="list-group-item ng-scope text-danger list-group-item-import" data-ng-repeat="errorMsg in errorMsg.errorList track by $index">
+                      <p class="ng-binding">{{errorMsg.message}}</p>
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <div data-ng-repeat="(key, value) in report.errors">
-                <span>{{value.message}}</span>
-              </div>
-              <!--Only one exception from single import-->
-              <span ng-show="report.code">{{report.description}}</span>
+
+              <!--<li class="list-group-item ng-scope text-danger list-group-item-import" data-ng-repeat="errorMsg in report.errorMessages track by $index">
+                <strong class="ng-binding">{{errorMsg.xpath}}</strong>
+                <p class="ng-binding">{{errorMsg.message}}</p>
+              </li>-->
+            </div>
+
+            <p data-ng-repeat="(key, value) in report.infos">
+              <span>{{value.message}}</span>
             </p>
+            <!--id and uuid from single import-->
+            <p data-ng-repeat="(key, value) in report.metadataInfos">
+              <span>{{value[0].message}}</span> <a
+              href='#/metadata/{{key}}?redirectUrl=catalog.edit'
+              title="{{'edit' | translate}}"> <i class='fa fa-pencil'></i>
+            </a>
+            </p>
+
+            <ul class="list-group ng-scope"
+                data-ng-repeat="(key, value) in report.errors">
+              <li
+                class="list-group-item ng-scope text-danger list-group-item-import"
+                data-ng-show="value.message">{{value.message}}</li>
+              <li
+                class="list-group-item ng-scope text-danger list-group-item-import"
+                data-ng-show="value.errorMessages"
+                data-ng-repeat="errorMsg in value.errorMessages track by $index">
+                <strong class="ng-binding">{{errorMsg.xpath}}</strong>
+                <p class="ng-binding">{{errorMsg.message}}</p>
+              </li>
+
+            </ul>
+            <!--Only one exception from single import-->
+            <p ng-show="report.code">{{report.description}}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>

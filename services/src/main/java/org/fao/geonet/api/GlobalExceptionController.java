@@ -26,6 +26,7 @@ package org.fao.geonet.api;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.ArrayUtils;
 import org.fao.geonet.api.exception.*;
+import org.fao.geonet.api.records.ValidationErrorsException;
 import org.fao.geonet.exceptions.ServiceNotAllowedEx;
 import org.fao.geonet.exceptions.UserNotFoundEx;
 import org.fao.geonet.exceptions.XSDValidationErrorEx;
@@ -99,6 +100,15 @@ public class GlobalExceptionController {
     })
     public ApiError runtimeExceptionHandler(final Exception exception) {
         return new ApiError("runtime_exception", exception.getClass().getSimpleName(), exception.getMessage());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({
+        ValidationErrorsException.class,
+    })
+    public ApiError runtimeExceptionHandler(final ValidationErrorsException exception) {
+        return new ApiError("metadata_validation_exception", exception.getClass().getSimpleName(), exception.getMessage());
     }
 
     @ResponseBody

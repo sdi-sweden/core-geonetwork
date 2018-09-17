@@ -39,6 +39,7 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.exceptions.BadParameterEx;
+import org.fao.geonet.exceptions.SchematronValidationErrorEx;
 import org.fao.geonet.exceptions.XSDValidationErrorEx;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
@@ -454,16 +455,33 @@ public class MetadataInsertDeleteApi {
             ServiceContext context = ApiUtils.createServiceContext(request);
             for (Path f : files) {
                 if (MEFLib.isValidArchiveExtensionForMEF(f.getFileName().toString())) {
-                    List<String> ids = MEFLib.doImport(
-                        "mef2", uuidProcessing, transformWith,
-                        settingManager.getSiteId(),
-                        metadataType, category, group, rejectIfInvalid,
-                        assignToCatalog, context, f);
-                    for (String id : ids) {
-                        report.addMetadataInfos(Integer.parseInt(id), String.format(
-                            "Metadata imported from MEF with id '%s'", id)
-                        );
-                        report.incrementProcessedRecords();
+                    try {
+                        List<String> ids = MEFLib.doImport(
+                            "mef2", uuidProcessing, transformWith,
+                            settingManager.getSiteId(),
+                            metadataType, category, group, rejectIfInvalid,
+                            assignToCatalog, context, f);
+                        for (String id : ids) {
+                            report.addMetadataInfos(Integer.parseInt(id), String.format(
+                                "Metadata imported from MEF with id '%s'", id)
+                            );
+                            report.incrementProcessedRecords();
+                        }
+                    }  catch (SchematronValidationErrorEx e) {
+                        report.addError(new ValidationErrorsException(e));
+                        report.addInfos(String.format(
+                            "Failed to import MEF file '%s'. Check error for details.",
+                            f.getFileName().toString()));
+                    }  catch (XSDValidationErrorEx e) {
+                        report.addError(new ValidationErrorsException(e));
+                        report.addInfos(String.format(
+                            "Failed to import MEF file '%s'. Check error for details.",
+                            f.getFileName().toString()));
+                    }  catch (Exception e) {
+                        report.addError(e);
+                        report.addInfos(String.format(
+                            "Failed to import MEF file '%s'. Check error for details.",
+                            f.getFileName().toString()));
                     }
                 } else {
                     try {
@@ -473,6 +491,10 @@ public class MetadataInsertDeleteApi {
                         report.addMetadataInfos(pair.one(), String.format(
                             "Metadata imported from server folder with UUID '%s'", pair.two())
                         );
+                    } catch (XSDValidationErrorEx e) {
+                        report.addError(new ValidationErrorsException(e));
+                    } catch (SchematronValidationErrorEx e) {
+                        report.addError(new ValidationErrorsException(e));
                     } catch (Exception e) {
                         report.addError(e);
                     }
@@ -875,7 +897,9 @@ public class MetadataInsertDeleteApi {
                 }
                 DataManager.validateMetadata(schema, xmlElement, context, groupId);
             } catch (XSDValidationErrorEx e) {
-                throw new IllegalArgumentException(e);
+                throw new ValidationErrorsException(e);
+            } catch (SchematronValidationErrorEx e) {
+                throw new ValidationErrorsException(e);
             }
         }
 
