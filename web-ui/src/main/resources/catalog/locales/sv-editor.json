@@ -134,6 +134,7 @@
     "importFromDirReport": "{{success}}/{{records}} post(er) importerades framgångsrikt på {{time}} sekunder.",
     "importRecords": "Import",
     "importReport": "Importera rapport",
+    "ValidationErrorsException": "Valideringsfel",
     "unsupportedFileExtension": "Bara filer med filändelse XML, ZIP eller MEF stödjs.",
     "inGroup": "I",
     "initiativeType": "Typ av initiativ",
