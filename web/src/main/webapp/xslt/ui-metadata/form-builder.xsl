@@ -330,6 +330,7 @@
       <null/>
     </xsl:param>
     <xsl:param name="isDisabled" select="ancestor::node()[@xlink:href]"/>
+    <xsl:param name="tooltipName" select="name()"/>
 
 
     <xsl:variable name="hasXlink" select="@xlink:href"/>
@@ -340,7 +341,7 @@
 
       <legend class="{$cls}"
               data-gn-slide-toggle=""
-              data-gn-field-tooltip="{$schema}|{name()}|{name(..)}|">
+              data-gn-field-tooltip="{$schema}|{$tooltipName}|{name(..)}|">
         <!--
          The toggle title is in conflict with the element title
          required for the element tooltip

@@ -98,6 +98,16 @@
       </xsl:if>
     </xsl:variable>
 
+    <xsl:variable name="tooltipName">
+      <xsl:choose>
+        <xsl:when test="$thesaurusTitle = 'Initiativ'">Initiativ</xsl:when>
+        <xsl:when test="$thesaurusTitle = 'INSPIRE priority data set'">InspirePriorityDataset</xsl:when>
+        <xsl:when test="$thesaurusTitle = 'GEMET - INSPIRE themes, version 1.0'">InspireThemes</xsl:when>
+        <xsl:when test="$thesaurusTitle = 'Amnesomrade'">Amnesomrade</xsl:when>
+        <xsl:when test="$thesaurusTitle = 'Tjänsteklassificering'">Tjänsteklassificering</xsl:when>
+        <xsl:otherwise><xsl:value-of select="name()" /></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
 
     <xsl:call-template name="render-boxed-element">
       <xsl:with-param name="label"
@@ -114,6 +124,7 @@
           <xsl:with-param name="labels" select="$labels"/>
         </xsl:apply-templates>
       </xsl:with-param>
+      <xsl:with-param name="tooltipName" select="$tooltipName" />
     </xsl:call-template>
 
   </xsl:template>

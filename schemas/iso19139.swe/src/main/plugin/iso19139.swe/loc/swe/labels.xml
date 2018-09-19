@@ -12,14 +12,14 @@
 
 	<element context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
 		<label>Identifierare för resurs</label>
-        <description>Identifierare för resurs. Anges som en HTTP länk till metadata. 
+        <description>Identifierare för resurs. Anges som en HTTP länk till metadata.
        Till exempel https://www.geodata.se/geodataportalen/GetMetaDataById?id=_Följt av den aktuella resursens unika identifierare_(70aad9d0-0df3-4c6f-8147-7e58c0d8205d)</description>
        <condition>mandatory</condition>
 	</element>
 
 	<element context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
 		<label>Identifierare för resurs</label>
-        <description>Identifierare för resurs. Anges som en HTTP länk till metadata. 
+        <description>Identifierare för resurs. Anges som en HTTP länk till metadata.
        Till exempel https://www.geodata.se/geodataportalen/GetMetaDataById?id=_Följt av den aktuella resursens unika identifierare_(70aad9d0-0df3-4c6f-8147-7e58c0d8205d)</description>
 	</element>
 
@@ -448,8 +448,8 @@ samma typ.</description>
     </element>
     <element id="205.0" name="gmd:MD_Identifier">
 		<label>Identifierare för resurs</label>
-        <description>Identifierare för resurs. Anges som en HTTP länk till metadata. 
-       Till exempel https://www.geodata.se/geodataportalen/GetMetaDataById?id=_Följt av den aktuella resursens unika identifierare_(70aad9d0-0df3-4c6f-8147-7e58c0d8205d)</description>		
+        <description>Identifierare för resurs. Anges som en HTTP länk till metadata.
+       Till exempel https://www.geodata.se/geodataportalen/GetMetaDataById?id=_Följt av den aktuella resursens unika identifierare_(70aad9d0-0df3-4c6f-8147-7e58c0d8205d)</description>
 		<condition>mandatory</condition>
     </element>
     <element id="243.0" name="gmd:MD_ImageDescription">
@@ -1035,10 +1035,39 @@ bearbetningens genomförande</description>
         <description> Beskrivning av Rollen</description>
     </element>
     <element id="33.0" name="gmd:descriptiveKeywords">
+      <label>Beskrivande nyckelord</label>
+      <description>Nyckelord som beskriver ämnesområde eller liknande.
+        Dessa nyckelord används för att kategorisera och söka data.</description>
+    </element>
+
+    <!-- Custom thesaurus labels -->
+     <element id="33.0" name="Initiativ">
         <label>Initiativ</label>
         <description>Ska ange vad metadata är avsedd för.
         Kugghjulet ger dig möjlighet att ändra hur initativet sparas i xmlfilen</description>
     </element>
+    <element id="33.0" name="InspirePriorityDataset">
+      <label>Inspire prioriterade dataset</label>
+      <description>Nyckelord som beskriver ämnesområde eller liknande.
+        Dessa nyckelord används för att kategorisera och söka data.</description>
+    </element>
+    <element id="33.0" name="InspireThemes">
+      <label>GEMET - INSPIRE themes, version 1.0</label>
+      <description>Nyckelord som beskriver ämnesområde eller liknande.
+        Dessa nyckelord används för att kategorisera och söka data.</description>
+    </element>
+    <element id="33.0" name="Tjänsteklassificering">
+      <label>Tjänsteklassificering</label>
+      <description>Nyckelord som beskriver ämnesområde eller liknande.
+        Dessa nyckelord används för att kategorisera och söka data.</description>
+    </element>
+    <element id="33.0" name="Amnesomrade">
+      <label>Ämnesområden</label>
+      <description>Ämneskategori(er) som beskriver huvudsakligt innehåll
+        i resursen</description>
+    </element>
+    <!-- Custom thesaurus labels -->
+
     <element id="258.0" name="gmd:descriptor">
         <label>Beskrivning</label>
         <description>beskrivning av spännvidden för en cells mätvärde</description>
@@ -1261,7 +1290,7 @@ komprimerade data</description>
     </element>
     <element id="2.0" name="gmd:fileIdentifier">
         <label>Identifier för metadata</label>
-        <description>Unik identifierare för metadatamängden. 
+        <description>Unik identifierare för metadatamängden.
         Sätts automatiskt och kan ej ändras</description>
         <condition>mandatory</condition>
     </element>
@@ -2011,7 +2040,7 @@ ingår i den nya profilen.</description>
     </element>
     <element id="132.0" name="gmd:pass">
         <label>Överensstämmelse</label>
-        <description>Vilken förordning som datamängden ska upfylla. 
+        <description>Vilken förordning som datamängden ska upfylla.
         I Överensstämmelserapport: datamängder används 'KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010...' och för tjänster används 'Kommissionens förordning (EG) nr 976/2009...'
         I Teknisk Specifikation: välj från listan eller skriva information direkt</description>
         <condition>mandatory</condition>
@@ -2156,7 +2185,7 @@ olika användare.</description>
         <label>Överensstämelserapport</label>
         <description>Värde eller mängd av värden som erhållits för ett
 kvalitetsmått eller resultat av jämförelse av detta
-(dessa) mot en specificerad kravnivå.  
+(dessa) mot en specificerad kravnivå.
 Krävs bara för Inspire metadata men Teknisk specifikation är användbar för alla metadata</description>
         <condition>mandatory</condition>
     </element>
@@ -2282,7 +2311,7 @@ Ex. Vektor, Raster, Tabell.</description>
     <element id="38.0" name="gmd:spatialResolution">
         <label>Rumslig upplösning.</label>
         <description>Faktor som ger en övergripande förståelse av
-detaljeringsgraden på rumsliga data i datamängden.  Bara det stjärnmärkta fältet behöver fyllas i om man inte har ett intervall 
+detaljeringsgraden på rumsliga data i datamängden.  Bara det stjärnmärkta fältet behöver fyllas i om man inte har ett intervall
 då anges till och från värden i de två fälten</description>
     </element>
     <element id="63.0" name="gmd:specificUsage">
@@ -3245,11 +3274,11 @@ Detta undvikar vi att ange.</description>
  <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#ImmateriellaRattigheterDatabasKatalogSkydd" value="Immateriella rättigheter - Databas-/katalogskydd">Immateriella rättigheter - Databas-/katalogskydd</option>
  <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#InnehallerUppgifterKansligaAvseendeMiljo" value="Innehåller uppgifter som är känsliga avseende miljö">Innehåller uppgifter som är känsliga avseende miljö</option>
  <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#InnehallerUppgifterSomInteFarSpridas" value="Innehåller information som inte får spridas">Innehåller information som inte får spridas</option>
- <option show="y" title=" https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#ForetagssekretessOSL" value="Företagssekretess SOL (offentlighets- och sekretesslagen (2009:400))">Företagssekretess SOL (offentlighets- och sekretesslagen (2009:400))</option> 
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#SekretessProvas" value="Sekretessprövning skall ske">Sekretessprövning skall ske</option> 
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#TillsynsSekretess" value="TillsynsSekretess">TillsynsSekretess</option> 
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#ForsvarsSekretess" value="FörsvarsSekretess">FörsvarsSekretess</option> 
- 
+ <option show="y" title=" https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#ForetagssekretessOSL" value="Företagssekretess SOL (offentlighets- och sekretesslagen (2009:400))">Företagssekretess SOL (offentlighets- och sekretesslagen (2009:400))</option>
+ <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#SekretessProvas" value="Sekretessprövning skall ske">Sekretessprövning skall ske</option>
+ <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#TillsynsSekretess" value="TillsynsSekretess">TillsynsSekretess</option>
+ <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#ForsvarsSekretess" value="FörsvarsSekretess">FörsvarsSekretess</option>
+
     </helper>
   </element>
 
@@ -3264,7 +3293,7 @@ Detta undvikar vi att ange.</description>
  <option show="y" title="https://resources.geodata.se/kodlistor/metadata/anvandningsrestriktioner.xml#CCby-sa4.0" value="Creative commons Erkännande-DelaLika 4.0 Internationell">Creative commons Erkännande-DelaLika 4.0 Internationell</option>
 
 
-	  
+
 
     </helper>
   </element>
@@ -3287,7 +3316,7 @@ Detta undvikar vi att ange.</description>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g" value="En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.">En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h" value="Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter">Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter</option>
     </helper>
-  </element> 
+  </element>
 
 
   <element id="72.0" name="InspireRegulations">
