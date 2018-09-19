@@ -313,5 +313,5 @@
     "load": "Ladda",
     "solrAccessError": "Fel under Solr-åtkomst",
     "published": "Publicerad",
-    "unpublished": "Av-publicerad"
+    "unpublished": "Ej publicerad"
 }
