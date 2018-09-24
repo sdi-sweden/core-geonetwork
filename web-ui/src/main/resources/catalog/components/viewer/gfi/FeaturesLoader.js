@@ -50,7 +50,15 @@
     this.$injector = $injector;
     this.$http = this.$injector.get('$http');
     this.gnProxyUrl = this.$injector.get('gnGlobalSettings').proxyUrl;
-
+//	var origin = window.location.origin;
+//      if (!origin) {
+//		  origin = window.location.protocol + "//" + window.location.hostname;
+//	}
+    
+    this.lmProxyUrl = '../../' + this.$injector.get('gnGlobalSettings').lmProxyUrl;
+    this.lmProxyVerUrl = '../../' + this.$injector.get('gnGlobalSettings').lmProxyVerUrl;
+    this.odProxyUrl = '../../' + this.$injector.get('gnGlobalSettings').odProxyUrl;
+    
     this.layer = config.layer;
     this.map = config.map;
 
@@ -65,7 +73,21 @@
   };
 
   geonetwork.GnFeaturesLoader.prototype.proxyfyUrl = function(url) {
-    return this.gnProxyUrl + encodeURIComponent(url);
+	if (url.includes("proxy") || url.includes("topo-wms")) {
+		return url;    			
+	}
+	if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+		return this.lmProxyUrl + encodeURIComponent(url)
+	}  
+	else if (url.includes("maps-ver.lantmateriet.se")) {
+		return this.lmProxyVerUrl + encodeURIComponent(url)
+	}
+	else if (url.includes("api.lantmateriet.se")) {
+		return this.odProxyUrl + encodeURIComponent(url)
+	}
+	else {
+		return this.gnProxyUrl + encodeURIComponent(url);
+	}
   };
 
   /**
@@ -115,8 +137,9 @@
    
 
     this.loading = true;
+    var proxyfiedUrl = this.proxyfyUrl(uri);
     this.promise = this.$http.get(
-        this.proxyfyUrl(uri)).then(function(response) {
+    		proxyfiedUrl).then(function(response) {
         this.loading = false;
       if (layer.ncInfo) {
         var doc = ol.xml.parse(response.data);
@@ -133,15 +156,23 @@
         
         if (this.gfiOutputFormat == "GML3"){
           var format = new ol.format.GML();
-          this.features = format.readFeatures(response.data, {
-          featureProjection: map.getView().getProjection()
-        });
+          try {
+               this.features = format.readFeatures(response.data, {
+              featureProjection: map.getView().getProjection()
+            });
+          }
+          catch(err) {
+          }
         }
         else if(this.gfiOutputFormat == "GML2"){
           var format = new ol.format.WMSGetFeatureInfo();
-          this.features = format.readFeatures(response.data, {
-          featureProjection: map.getView().getProjection()
-        });
+          try {
+                this.features = format.readFeatures(response.data, {
+                featureProjection: map.getView().getProjection()
+              });
+          }
+          catch(err) {
+          }
         }
         else{
           //For arcgis wms service
