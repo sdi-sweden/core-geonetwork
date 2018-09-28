@@ -176,6 +176,54 @@
         </gmd:descriptiveKeywords>
       </xsl:if>
 
+      <!--If GEMET Spatial themes exists or Initiativ=Inspire exists in XML then add Priority themes if not in in the metadata -->
+      <xsl:variable name="hasPriorityDataset" select="count(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'INSPIRE priority data set']) > 0" />
+
+      <xsl:if test="not($hasPriorityDataset)">
+        <xsl:variable name="hasInitiativeAsInspire" select="count(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'Initiativ']/gmd:MD_Keywords/gmd:keyword/*[lower-case(text()) = 'inspire']) > 0" />
+
+        <xsl:variable name="hasGEMETThesaurus" select="count(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text()= 'GEMET - INSPIRE themes, version 1.0']) > 0" />
+
+        <xsl:if test="$hasInitiativeAsInspire or $hasGEMETThesaurus">
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gmx:Anchor xlink:href=""></gmx:Anchor>
+              </gmd:keyword>
+              <gmd:type>
+                <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                                        codeListValue="theme"/>
+              </gmd:type>
+              <gmd:thesaurusName>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset" >INSPIRE priority data set</gmx:Anchor>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date>2018-04-04</gco:Date>
+                      </gmd:date>
+                      <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                             codeListValue="publication"/>
+                      </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                  <gmd:identifier>
+                    <gmd:MD_Identifier>
+                      <gmd:code>
+                        <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                                    xlink:href="http://localhost:8080/geonetwork/srv/swe/thesaurus.download?ref=external.theme.PriorityDataset">geonetwork.thesaurus.external.theme.PriorityDataset</gmx:Anchor>
+                      </gmd:code>
+                    </gmd:MD_Identifier>
+                  </gmd:identifier>
+                </gmd:CI_Citation>
+              </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+        </xsl:if>
+      </xsl:if>
 
       <xsl:apply-templates select="gmd:resourceSpecificUsage" />
       <xsl:apply-templates select="gmd:resourceConstraints" />
@@ -456,7 +504,6 @@
     </xsl:copy>
   </xsl:template>
 
-
   <xsl:template match="srv:SV_ServiceIdentification">
     <xsl:copy>
       <xsl:copy-of select="@*" />
@@ -567,6 +614,57 @@
             </gmd:thesaurusName>
           </gmd:MD_Keywords>
         </gmd:descriptiveKeywords>
+      </xsl:if>
+
+
+      <!--If GEMET Spatial themes exists or Initiativ=Inspire exists in XML then add Priority themes if not in in the metadata -->
+      <xsl:variable name="hasPriorityDataset" select="count(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'INSPIRE priority data set']) > 0" />
+      <xsl:message>hasPriorityDataset: <xsl:value-of select="$hasPriorityDataset" /></xsl:message>
+
+      <xsl:if test="not($hasPriorityDataset)">
+        <xsl:variable name="hasInitiativeAsInspire" select="count(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'Initiativ']/gmd:MD_Keywords/gmd:keyword/*[lower-case(text()) = 'inspire']) > 0" />
+
+         <xsl:variable name="hasGEMETThesaurus" select="count(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text()= 'GEMET - INSPIRE themes, version 1.0']) > 0" />
+
+        <xsl:if test="$hasInitiativeAsInspire or $hasGEMETThesaurus">
+          <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+              <gmd:keyword>
+                <gmx:Anchor xlink:href=""></gmx:Anchor>
+              </gmd:keyword>
+              <gmd:type>
+                <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                                        codeListValue="theme"/>
+              </gmd:type>
+              <gmd:thesaurusName>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset" >INSPIRE priority data set</gmx:Anchor>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date>2018-04-04</gco:Date>
+                      </gmd:date>
+                      <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                             codeListValue="publication"/>
+                      </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                  <gmd:identifier>
+                    <gmd:MD_Identifier>
+                      <gmd:code>
+                        <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                                    xlink:href="http://localhost:8080/geonetwork/srv/swe/thesaurus.download?ref=external.theme.PriorityDataset">geonetwork.thesaurus.external.theme.PriorityDataset</gmx:Anchor>
+                      </gmd:code>
+                    </gmd:MD_Identifier>
+                  </gmd:identifier>
+                </gmd:CI_Citation>
+              </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+          </gmd:descriptiveKeywords>
+        </xsl:if>
       </xsl:if>
 
 
