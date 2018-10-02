@@ -61,7 +61,7 @@
     "chi": "Kinesiska",
     "city": "Stad",
     "cl_status": "Status",
-    "associatedResources": "Associerade resurser",
+    "associatedResources": "Sammankopplade resurser",
     "comments": "Kommentar",
     "country": "Land",
     "validateSelectedRecordConfirm": "Vill du verkligen validera de {{selectedCount}} valda posterna?",
