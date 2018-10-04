@@ -804,7 +804,7 @@ presentationsregler som används</description>
     </element>
     <element context="gmd:MD_Metadata" id="8.0" name="gmd:contact">
         <label>Metadatakontakt</label>
-        <description>Ansvarig för metadatamängden. Minst en post med rollen Kontakt måste anges.</description>
+        <description>Kontakt till organisationen. Minst en post med rollen Kontakt måste anges.</description>
         <condition>mandatory</condition>
     </element>
     <element context="gmd:MD_MaintenanceInformation" id="148.1" name="gmd:contact">
@@ -910,7 +910,7 @@ metadatamängden avser</description>
     <element context="gmd:CI_Citation" id="362.0" name="gmd:date">
         <condition>mandatory</condition>
         <label>Referensdatum (Händelsedatum)</label>
-        <description>Händelse angiven med datum för resursen, Tex Publicering, revision, skapande</description>
+        <description>Händelse angiven med datum för resursen, Ex. Publicering, revision, skapande.  Flera händelser kan anges.</description>
         <_condition>M</_condition>
     </element>
     <element context="gmd:CI_Date" id="394.0" name="gmd:date">
@@ -927,7 +927,7 @@ metadatamängden avser</description>
     <element id="9.0" name="gmd:dateStamp">
         <label>Datum för metadata</label>
         <description>Datum då metadata har skapats eller
-		uppdaterats.</description>
+		uppdaterats. (Sätts automatiskt och kan ej ändras)</description>
         <condition>mandatory</condition>
     </element>
     <!--<element name="gmd:dateTime" id="89.0">
@@ -1043,13 +1043,12 @@ bearbetningens genomförande</description>
     <!-- Custom thesaurus labels -->
      <element id="33.0" name="Initiativ">
         <label>Initiativ</label>
-        <description>Ska ange vad metadata är avsedd för.
+        <description>Ska ange vad metadata är avsett för.
         Kugghjulet ger dig möjlighet att ändra hur initativet sparas i xmlfilen</description>
     </element>
     <element id="33.0" name="InspirePriorityDataset">
       <label>Inspire prioriterade dataset</label>
-      <description>Nyckelord som beskriver ämnesområde eller liknande.
-        Dessa nyckelord används för att kategorisera och söka data.</description>
+      <description>Lista med prioriterade dataset avseende miljörapportering.</description>
     </element>
     <element id="33.0" name="InspireThemes">
       <label>GEMET - INSPIRE themes, version 1.0</label>
@@ -1058,10 +1057,9 @@ bearbetningens genomförande</description>
     </element>
     <element id="33.0" name="Tjänsteklassificering">
       <label>Tjänsteklassificering</label>
-      <description>Nyckelord som beskriver ämnesområde eller liknande.
-        Dessa nyckelord används för att kategorisera och söka data.</description>
+      <description>Beskrivning av vilken typ av tjänst som avses.</description>
     </element>
-    <element id="33.0" name="Amnesomrade">
+    <element id="33.0" name="Ämnesområde">
       <label>Ämnesområden</label>
       <description>Ämneskategori(er) som beskriver huvudsakligt innehåll
         i resursen</description>
@@ -1289,7 +1287,7 @@ komprimerade data</description>
         <description>Text som beskriver vad bilden visar.</description>
     </element>
     <element id="2.0" name="gmd:fileIdentifier">
-        <label>Identifier för metadata</label>
+        <label>Identifierare för metadata</label>
         <description>Unik identifierare för metadatamängden.
         Sätts automatiskt och kan ej ändras</description>
         <condition>mandatory</condition>
@@ -1377,7 +1375,7 @@ angivna skyddsklassen.</description>
     <element id="6.0" name="gmd:hierarchyLevel">
         <label>Resurstyp</label>
         <description>Hierarkisk nivå för den resurs som metadatamängden beskriver
-Exempelvis: datamängd, datamängdserie eller tjänst.…</description>
+Exempelvis: datamängd, datamängdserie eller tjänst. (Sätts automatiskt och kan ej ändras)</description>
       <condition>mandatory</condition>
     </element>
     <element id="7.0" name="gmd:hierarchyLevelName">
@@ -1626,13 +1624,12 @@ intervall och omfattning av uppdateringar.</description>
     <element id="10.0" name="gmd:metadataStandardName">
         <label>Metadatastandard</label>
         <description>Namn på den standard som metadatamängden följer
-inklusive namn på eventuell profil
-Ex. SS-EN ISO 19115.</description>
+inklusive namn på eventuell profil.   (Sätts automatiskt och kan ej ändras)</description>
       <condition>mandatory</condition>
     </element>
     <element id="11.0" name="gmd:metadataStandardVersion">
         <label>Version av metadatastandard</label>
-        <description>Version av använd metadatastandard</description>
+        <description>Version av använd metadatastandard.  (Sätts automatiskt och kan ej ändras)</description>
     </element>
     <element id="261.0" name="gmd:minValue">
         <label>Minimivärde</label>
@@ -1671,6 +1668,7 @@ Ex. SS-EN ISO 19115.</description>
       <option value="ESRI ArcSDE">ESRI ArcSDE</option>
       <option value="ESRI Personlig Geodatabas">ESRI Personlig Geodatabas</option>
       <option value="GeoJSON">GeoJSON</option>
+      <option value="GeoPackage">GeoPackage</option>
       <option value="GEOTIFF">GEOTIFF</option>
       <option value="GEOTIFF - LZW">GEOTIFF - LZW</option>
       <option value="GEOTIFF - packbits">GEOTIFF - packbits</option>
@@ -2064,7 +2062,7 @@ ingår i den nya profilen.</description>
     </element>
     <element id="29.0" name="gmd:pointOfContact">
         <label>Resursägare</label>
-        <description>Här anges kontaktinformation till i första hand organisationen med rollen Ägare (Rollen Äagare måste finnas med)</description>
+        <description>Här anges kontaktinformation till i första hand organisationen med rollen Ägare (Rollen Ägare måste finnas med)</description>
     </element>
     <element id="342.0" name="gmd:polygon">
         <label>Polygon</label>
