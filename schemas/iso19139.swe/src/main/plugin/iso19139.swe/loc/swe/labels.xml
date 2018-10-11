@@ -302,7 +302,7 @@ samma typ.</description>
     </element>
     <element id="343.0" name="gmd:EX_GeographicBoundingBox">
         <label>Omskrivande rektangel</label>
-        <description>Rektangel för Sverige är default. Antingen kan man välja i en lista av existerande uträckningsra
+        <description>Rektangel för Sverige är default. Antingen kan man välja i en lista av existerande utsräckningar
 		för län och kommuner eller manuellt rita en rektangel. ANM. Detta är ungefärligt angiven rektangel, referenssystem för
 		koordinaterna skall alltid vara enligt Lat/Long WGS84.</description>
     </element>
@@ -514,7 +514,7 @@ presentationsregler som används</description>
     <element id="149.0" name="gmd:MD_ScopeDescription">
         <label>Omfattning</label>
         <description>Beskrivning av omfattningen
-		ANM. Omfatting kan avse t.ex. information om
+		ANM. Omfatting kan avse tex. information om
 		datakvalitet och underhåll.</description>
         <condition>Either attributes, features, featureInstances, attributeInstnaces, dataset or other must be provided</condition>
     </element>
@@ -1003,7 +1003,7 @@ bearbetningens genomförande</description>
     </element>
     <element context="LI_Source" id="93.0" name="gmd:description">
         <label>Beskrivning</label>
-        <description>detaljerad beskrivning av ursprungsdatamängd, t.ex.
+        <description>detaljerad beskrivning av ursprungsdatamängd, tex.
 		det geografiska område den omfattar</description>
         <_condition>Conditional / sourceExtent not provided?</_condition>
     </element>
@@ -1118,7 +1118,7 @@ ANM. Listan behöver inte vara fullständig.  Minst en kontakt med rollen Distri
     <element id="280.0" name="gmd:distributorContact">
         <label>Kontakt</label>
         <description>Kontaktinformation till distributören som tillhandahåller
-resursen.</description>
+resursen.  Rollen Distributör måste finnas.</description>
         <condition>mandatory</condition>
     </element>
     <element id="282.0" name="gmd:distributorFormat">
@@ -1176,7 +1176,7 @@ angiven som longitud i decimalgrader</description>
     <element id="44.0" name="gmd:environmentDescription">
         <label>Systemmiljö</label>
         <description>beskrivning av resursen i producentens datamiljö
-ANM. Inkluderar t.ex. information om programvara,
+ANM. Inkluderar tex. information om programvara,
 operativsystem, filnamn.</description>
     </element>
     <element id="60.0" name="gmd:equivalentScale">
@@ -1219,7 +1219,7 @@ beskriva geografiska data</description>
     <element id="304.0" name="gmd:extensionOnLineResource">
         <label>Onlineåtkomst</label>
         <description>Information om onlinekälla innehållande namn på den
-nya profilen samt inkluderande alla utökade element</description>
+nya profilen samt inkluderande alla utökade element.</description>
     </element>
     <element context="gmd:MD_DataIdentification" id="45.0" name="gmd:extent">
         <label>Utsträckning</label>
@@ -1544,7 +1544,7 @@ Detta undviker vi att ange, ange istället organisation.</description>
     </element>
     <element id="139.0" name="gmd:level">
         <label>Resurstyp</label>
-        <description>Hierarkisk nivå för de data som kvalitetsrapporteringen omfattar</description>
+        <description>Hierarkisk nivå för de data som kvalitetsrapporteringen omfattar.  Välj från droppdown alternativen.</description>
         <condition>mandatory</condition>
     </element>
     <element id="141.0" name="gmd:levelDescription">
@@ -1567,7 +1567,7 @@ för de data som specificerats under omfattning (79)</description>
     <element id="143.0" name="gmd:maintenanceAndUpdateFrequency">
         <label>Underhållsfrekvens</label>
         <description>Frekvens för underhåll (ändringar och tillägg) efter att
-resursen är färdigställd.</description>
+resursen är färdigställd.  Välj från droppdown alternativen.</description>
         <condition>mandatory</condition>
     </element>
     <element id="148.0" name="gmd:maintenanceNote">
@@ -1892,7 +1892,7 @@ inklusive namn på eventuell profil.   (Sätts automatiskt och kan ej ändras)</
     </element>
     <element id="277.0" name="gmd:onLine">
         <label>Online-källa</label>
-        <description>Referens till onlinekälla som kan användas för att få tillgång till resursen</description>
+        <description>Referens till onlinekälla som kan användas för att få tillgång till resursen.  (Flera olika typer av åtkomst kan anges)</description>
         <condition>mandatory</condition>
     </element>
     <element id="390.0" name="gmd:onlineResource">
@@ -2163,7 +2163,7 @@ referenssystem som används i resursen.</description>
     </element>
     <element id="35.0" name="gmd:resourceConstraints">
         <label>Resursrestriktioner</label>
-        <description>Begränsningar av åtkomst och nyttjande av resursen.  För Inspire krävs minst ett varde för varje fält</description>
+        <description>Begränsningar av åtkomst och nyttjande av resursen.  För Inspire krävs minst ett värde i varje fält</description>
     </element>
     <element id="32.0" name="gmd:resourceFormat">
         <label>Lagringsformat</label>
@@ -2171,7 +2171,7 @@ referenssystem som används i resursen.</description>
     </element>
     <element id="30.0" name="gmd:resourceMaintenance">
         <label>Ajourhållning</label>
-        <description>Information om hur underhåll av resursen utförs, t.ex.
+        <description>Information om hur underhåll av resursen utförs, tex.
 hur ofta (tidsintervall) och i vilken omfattning.</description>
     </element>
     <element id="34.0" name="gmd:resourceSpecificUsage">
@@ -2241,7 +2241,7 @@ som datamängden är en del av</description>
     <element id="308.0" name="gmd:shortName">
         <label>Kortnamn</label>
         <description>kortnamn på metadataelementet som är lämpligt att
-använda för implementering i t.ex. programkod eller
+använda för implementering i tex. programkod eller
 XML</description>
     </element>
     <element id="326.0" name="gmd:softwareDevelopmentFile">
@@ -3253,7 +3253,7 @@ Detta undvikar vi att ange.</description>
 
   <element name="conditionsForAccess">
     <label>Åtkomstrestriktioner</label>
-    <description>Åtkomstrestriktioner</description>
+    <description>Åtkomstrestriktioner beskrinving</description>
     <helper sort="no">
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="villkor okända">villkor okända</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="inga tillämpliga villkor">inga tillämpliga villkor</option>
@@ -3282,7 +3282,7 @@ Detta undvikar vi att ange.</description>
 
   <element name="conditionsForUse">
     <label>Nyttjanderestriktioner</label>
-    <description>Nyttjanderestriktioner</description>
+    <description>Nyttjanderestriktioner beskrivning</description>
     <helper sort="no">
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="villkor okända">villkor okända</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="inga tillämpliga villkor">inga tillämpliga villkor</option>
