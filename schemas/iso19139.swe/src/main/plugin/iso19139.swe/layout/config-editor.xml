@@ -6215,7 +6215,7 @@
           <!-- Vertical element - dataset -->
           <field name="verticalElementSection" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:verticalElement"
-                 if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+                 if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"
                  del="../..">
             <template>
               <values>
@@ -6231,8 +6231,7 @@
 
                 <key label="vertical_crs_datum"
                      xpath="gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title"
-                     >
-<!--                      tooltip="gmd:verticalCRS"> -->
+                      tooltip="gmd:verticalCRS"> 
                   <helper name="gmd:verticalCRS" />
                 </key>
               </values>
@@ -6255,8 +6254,8 @@
           <!-- Vertical element - service -->
           <field name="verticalElementSection" templateModeOnly="true"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:verticalElement"
-                 if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
-            del="../..">
+                 if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"
+                 del="../..">
             <template>
               <values>
                 <key label="vertical_crs_minimum_value"
@@ -6271,8 +6270,8 @@
 
                 <key label="vertical_crs_datum"
                      xpath="gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title"
-                >
-                  <!--                      tooltip="gmd:verticalCRS"> -->
+                     tooltip="gmd:verticalCRS">
+
                   <helper name="gmd:verticalCRS" />
                 </key>
               </values>
@@ -6393,7 +6392,8 @@
                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0"/>-->
 
           <field name="conditionsForUse"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints]"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/
+                 gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints]"
                 />
 
 
