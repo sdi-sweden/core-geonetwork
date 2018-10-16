@@ -83,10 +83,21 @@
     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
              xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
              xmlns:foaf="http://xmlns.com/foaf/0.1/"
-             xmlns:void="http://www.w3.org/TR/void/" xmlns:dcat="http://www.w3.org/ns/dcat#"
+             xmlns:void="http://www.w3.org/TR/void/"
+             xmlns:dcat="http://www.w3.org/ns/dcat#"
              xmlns:dct="http://purl.org/dc/terms/"
-             xmlns:skos="http://www.w3.org/2004/02/skos/core#">
-      <!-- Metadata element -->
+             xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+             xmlns:schema="http://schema.org/"
+             xmlns:adms="http://www.w3.org/ns/adms#"
+             xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+             xmlns:cnt="http://www.w3.org/2011/content#"
+             xmlns:gsp="http://www.opengis.net/ont/geosparql#"
+             xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:dctype="http://purl.org/dc/dcmitype/"
+             xmlns:owl="http://www.w3.org/2002/07/owl#"
+             xmlns:org="http://www.w3.org/ns/org#"
+             xmlns:prov="http://www.w3.org/ns/prov#">
+    <!-- Metadata element -->
 
       <xsl:call-template name="catalogue"/>
 
@@ -133,14 +144,20 @@
 
 
       <!-- The entity responsible for making the catalog online. -->
-      <dct:publisher rdf:resource="{$url}/organization/0"/>
+      <dct:publisher rdf:resource="{$url}/organization/0">
+				<foaf:Agent rdf:about="https://register.geodata.se/register/organisationer/Lantmateriet">
+					<foaf:name>Lantmateriet</foaf:name>
+					<dct:type rdf:resource="http://purl.org/adms/publishertype/NationalAuthority"/>
+					<foaf:mbox rdf:resource="mailto:geodatasupport@lantmateriet.se"/>
+				</foaf:Agent>
+			</dct:publisher>
 
       <!-- The knowledge organization system (KOS) used to classify catalog's datasets.
-      -->
+      
       <xsl:for-each select="/root/gui/thesaurus/thesauri/thesaurus">
         <dcat:themes rdf:resource="{$url}/thesaurus/{key}"/>
       </xsl:for-each>
-
+		-->
 
       <!-- The language of the catalog. This refers to the language used
         in the textual metadata describing titles, descriptions, etc.
@@ -151,9 +168,8 @@
         Multiple values can be used. The publisher might also choose to describe
         the language on the dataset level (see dataset language).
       -->
-      <dct:language>
-        <xsl:value-of select="/root/gui/language"/>
-      </dct:language>
+     	<dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/SWE"/>
+			<dct:license rdf:resource="http://creativecommons.org/licenses/by/4.0/"/>
 
 
       <!-- This describes the license under which the catalog can be used/reused and not the datasets.
@@ -221,7 +237,7 @@
 
   <xsl:template mode="record-reference" match="metadata" priority="2">
     <dcat:dataset rdf:resource="{$url}/resource/{geonet:info/uuid}"/>
-    <dcat:record rdf:resource="{$url}/metadata/{geonet:info/uuid}"/>
+   <!-- <dcat:record rdf:resource="{$url}/metadata/{geonet:info/uuid}"/> -->
   </xsl:template>
 
 
