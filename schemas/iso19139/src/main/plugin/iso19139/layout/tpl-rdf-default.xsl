@@ -5,7 +5,7 @@
   ~ and United Nations Environment Programme (UNEP)
   ~
   ~ This program is free software; you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
+  ~ it under the terms of the GNU General Public License as published byland
   ~ the Free Software Foundation; either version 2 of the License, or (at
   ~ your option) any later version.
   ~
@@ -37,6 +37,7 @@
                 xmlns:gml="http://www.opengis.net/gml"
                 xmlns:ogc="http://www.opengis.net/rdf#"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:vcard  = "http://www.w3.org/2006/vcard/ns#"
                 xmlns:iso19139="http://geonetwork-opensource.org/schemas/iso19139"
                 version="2.0"
                 extension-element-prefixes="saxon" exclude-result-prefixes="#all">
@@ -54,8 +55,15 @@
   <!-- FIME : $url comes from a global variable. -->
   <xsl:template match="gmd:MD_Metadata|*[@gco:isoType='gmd:MD_Metadata']" mode="record-reference-default">
     <!-- TODO : a metadata record may contains aggregate. In that case create one dataset per aggregate member. -->
-    <dcat:dataset rdf:resource="{$url}/resource/{iso19139:getResourceCode(.)}"/>
-    <dcat:record rdf:resource="{$url}/metadata/{gmd:fileIdentifier/gco:CharacterString}"/>
+    <!--MÖ 2018 <dcat:dataset rdf:resource="{$url}/resource/{iso19139:getResourceCode(.)}"/>-->      
+    <xsl:if test="gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString != 'Naturvårdsverket'"  >
+    <dcat:dataset rdf:resource="https://www.geodata.se/geodataportalen/resource/{gmd:fileIdentifier/gco:CharacterString}"/>
+      <!--   <dcat:dataset rdf:resource="http://skogsdataportalen.skogsstyrelsen.se/geonetworks/resource/{gmd:fileIdentifier/gco:CharacterString}"/> -->
+      
+    </xsl:if>
+   <!-- MÖ 2018-02
+     <dcat:record rdf:resource="{$url}/metadata/{gmd:fileIdentifier/gco:CharacterString}"/>-->
+    
   </xsl:template>
 
 
@@ -70,12 +78,15 @@
 
       xpath: //gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']
     -->
+    
+    <!-- MÖ Bortcommenterat 2018-02-08
+    
     <dcat:CatalogRecord rdf:about="{$url}/metadata/{gmd:fileIdentifier/gco:CharacterString}">
-      <!-- Link to a dcat:Dataset or a rdf:Description for services and feature catalogue. -->
+      <!-\- Link to a dcat:Dataset or a rdf:Description for services and feature catalogue. -\->
       <foaf:primaryTopic rdf:resource="{$url}/resource/{iso19139:getResourceCode(.)}"/>
 
-      <!-- Metadata change date.
-      "The date is encoded as a literal in "YYYY-MM-DD" form (ISO 8601 Date and Time Formats)." -->
+      <!-\- Metadata change date.
+      "The date is encoded as a literal in "YYYY-MM-DD" form (ISO 8601 Date and Time Formats)." -\->
       <xsl:variable name="date" select="substring-before(gmd:dateStamp/gco:DateTime, 'T')"/>
       <dct:issued>
         <xsl:value-of select="$date"/>
@@ -83,13 +94,13 @@
       <dct:modified>
         <xsl:value-of select="$date"/>
       </dct:modified>
-      <!-- xpath: gmd:dateStamp/gco:DateTime -->
+      <!-\- xpath: gmd:dateStamp/gco:DateTime -\->
 
       <xsl:call-template name="add-reference">
         <xsl:with-param name="uuid" select="gmd:fileIdentifier/gco:CharacterString"/>
       </xsl:call-template>
     </dcat:CatalogRecord>
-
+-->
     <xsl:apply-templates select="gmd:identificationInfo/*" mode="to-dcat-default"/>
 
   </xsl:template>
@@ -150,32 +161,64 @@
 
       xpath: //gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource
     -->
+    <xsl:variable name="uuid"    select='../../../../../../gmd:fileIdentifier/gco:CharacterString'/>
     <xsl:for-each-group
-      select="//gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource"
+      select="//gmd:distributionInfo//gmd:distributorTransferOptions//gmd:onLine/gmd:CI_OnlineResource"
       group-by="gmd:linkage/gmd:URL">
-      <dcat:Distribution rdf:about="{gmd:linkage/gmd:URL}">
+      <dcat:distribution>
+        <dcat:Distribution rdf:about="{translate(gmd:linkage/gmd:URL,' ','')}/{$uuid}">
         <!--
           "points to the location of a distribution. This can be a direct download link, a link
           to an HTML page containing a link to the actual data, Feed, Web Service etc.
           the semantic is determined by its domain (Distribution, Feed, WebService, Download)."
         -->
-        <dcat:accessURL>
-          <xsl:value-of select="gmd:linkage/gmd:URL"/>
+        <dcat:accessURL  rdf:resource="{translate(gmd:linkage/gmd:URL,' ','')}">
+<!--          <xsl:value-of select="gmd:linkage/gmd:URL"/>-->
         </dcat:accessURL>
         <!-- xpath: gmd:linkage/gmd:URL -->
 
-        <xsl:if test="gmd:name/gco:CharacterString!=''">
+     <!--   <xsl:if test="gmd:name/gco:CharacterStrindcat:themeg!=''">
           <dct:title>
             <xsl:value-of select=" gmd:name/gco:CharacterString"/>
           </dct:title>
         </xsl:if>
+        -->
+        <xsl:if test="gmd:description/gco:CharacterString!=''">
+          <dct:description>
+            <xsl:value-of select=" gmd:description/gco:CharacterString"/>
+          </dct:description>
+        </xsl:if>
+      <!--   MÖ 20180210
+        <xsl:if test="gmd:title/gco:CharacterString!=''">
+          <dct:title>
+            <xsl:value-of select="gmd:title/gco:CharacterString"/>
+          </dct:title>
+        </xsl:if>
+      -->  
+        
+       <!-- MÖ 2018-02-10-->
+        <xsl:choose>
+          <xsl:when  test="gmd:title/gco:CharacterString!=''">
+            <dct:title>
+              <xsl:value-of select="gmd:title/gco:CharacterString"/>
+            </dct:title>
+          </xsl:when>
+          <xsl:otherwise>
+            <dct:title>
+              <xsl:value-of select=" gmd:description/gco:CharacterString"/>
+            </dct:title>
+          </xsl:otherwise>
+        </xsl:choose>
+        
+        
+
         <!-- xpath: gmd:name/gco:CharacterString -->
 
         <!-- "The size of a distribution.":N/A
           <dcat:size></dcat:size>
         -->
 
-        <xsl:if test="gmd:protocol/gco:CharacterString!=''">
+        <xsl:if test="gmd:protocol/gco:CharacterStringg!=''">
           <dct:format>
             <!--
               "the file format of the distribution."
@@ -188,19 +231,35 @@
 
               Mapping between protocol list and mime/type when needed
             -->
-            <dct:IMT>
-              <rdf:value>
-                <xsl:value-of select="gmd:protocol/gco:CharacterString"/>
-              </rdf:value>
-              <rdfs:label>
-                <xsl:value-of select="gmd:protocol/gco:CharacterString"/>
-              </rdfs:label>
-            </dct:IMT>
+            <xsl:choose>
+              <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Nedladdning'">
+                <xsl:value-of select="'Nedladdning'"/>
+              </xsl:when>
+              <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Information'">
+                <xsl:value-of select="'HTML'"/>
+            </xsl:when>
+              <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:OGC:WMS'">
+                <xsl:value-of select="'WMS'"/>
+              </xsl:when>
+              <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:OGC:WFS'">
+                <xsl:value-of select="'WFS'"/>
+              </xsl:when>
+              <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Nedladdning:Atom'">
+                <xsl:value-of select="'ATOM'"/>
+              </xsl:when>
+              <xsl:otherwise>
+               
+              </xsl:otherwise>
+            </xsl:choose>
+            
+            
+           
           </dct:format>
         </xsl:if>
         <!-- xpath: gmd:protocol/gco:CharacterString -->
 
       </dcat:Distribution>
+     </dcat:distribution>
     </xsl:for-each-group>
 
 
@@ -234,9 +293,9 @@
         xpath: //gmd:CI_ResponsibleParty-->
 
       <foaf:Agent rdf:about="{$url}/person/{encode-for-uri(iso19139:getContactId(.))}">
-        <xsl:if test="gmd:individualName/gco:CharacterString">
+        <xsl:if test="gmd:organisationName/gco:CharacterString">
           <foaf:name>
-            <xsl:value-of select="gmd:individualName/gco:CharacterString"/>
+            <xsl:value-of select="gmd:organisationName/gco:CharacterString"/>
           </foaf:name>
         </xsl:if>
         <!-- xpath: gmd:individualName/gco:CharacterString -->
@@ -267,9 +326,11 @@
   <xsl:template
     match="srv:SV_ServiceIdentification|*[contains(@gco:isoType, 'SV_ServiceIdentification')]"
     mode="to-dcat-default">
+<!--<xsl:if test="not(../../gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString = 'Naturvårdsverket')">-->
     <rdf:Description rdf:about="{$url}/resource/{iso19139:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat-default"/>
     </rdf:Description>
+<!--    </xsl:if>-->
   </xsl:template>
 
 
@@ -281,30 +342,33 @@
   -->
   <xsl:template match="gmd:MD_DataIdentification|*[contains(@gco:isoType, 'MD_DataIdentification')]"
                 mode="to-dcat-default">
-    <dcat:Dataset rdf:about="{$url}/resource/{iso19139:getResourceCode(../../.)}">
+	<!--<xsl:if test="not(../../gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString = 'Naturvårdsverket')">-->
+    <rdf:Description rdf:about="{$url}/resource/{iso19139:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat-default"/>
-    </dcat:Dataset>
+    </rdf:Description>
+    <!--</xsl:if>-->
   </xsl:template>
 
 
   <!-- Build a dcat record for a dataset or service -->
   <xsl:template name="to-dcat-default">
     <!-- "A unique identifier of the dataset." -->
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
     <dct:identifier>
       <xsl:value-of select="iso19139:getResourceCode(../../.)"/>
     </dct:identifier>
     <!-- xpath: gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code -->
 
 
-    <dct:title>
+    <dct:title xml:lang="sv">
       <xsl:value-of select="gmd:citation/*/gmd:title/gco:CharacterString"/>
     </dct:title>
     <!-- xpath: gmd:identificationInfo/*/gmd:citation/*/gmd:title/gco:CharacterString -->
 
 
-    <dct:abstract>
+    <dct:description xml:lang="sv">
       <xsl:value-of select="gmd:abstract/gco:CharacterString"/>
-    </dct:abstract>
+    </dct:description>
     <!-- xpath: gmd:identificationInfo/*/gmd:abstract/gco:CharacterString -->
 
 
@@ -319,28 +383,28 @@
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[not(gmd:thesaurusName)]/gmd:keyword/gco:CharacterString -->
 
-
+ 
     <!-- "The main category of the dataset. A dataset can have multiple themes."
       Create dcat:theme if gmx:Anchor or GEMET concepts or INSPIRE themes
     -->
     <xsl:for-each
       select="gmd:descriptiveKeywords/gmd:MD_Keywords[(gmd:thesaurusName)]/gmd:keyword/gco:CharacterString">
       <!-- FIXME maybe only do that, if keyword URI is available (when xlink is used ?) -->
-      <dcat:theme
+     <!-- <dcat:theme
         rdf:resource="{$url}/thesaurus/{iso19139:getThesaurusCode(../../gmd:thesaurusName)}/{.}"/>
-    </xsl:for-each>
+    --></xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gmx:Anchor -->
     <!-- xpath: gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharaceterString -->
     <!-- xpath: gmd:identificationInfo/*/gmd:topicCategory/gmd:MD_TopicCategoryCode -->
     <xsl:for-each select="gmd:topicCategory/gmd:MD_TopicCategoryCode[.!='']">
       <!-- FIXME Is there any public URI pointing to topicCategory enumeration ? -->
-      <dcat:theme rdf:resource="{$url}/thesaurus/iso/topicCategory/{.}"/>
+     <!-- <dcat:theme rdf:resource="{$url}/thesaurus/iso/topicCategory/{.}"/>-->
     </xsl:for-each>
 
     <!-- Thumbnail -->
     <xsl:for-each
       select="gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString">
-      <foaf:thumbnail rdf:resource="{.}"/>
+      <foaf:thumbnail rdf:resource="{translate(.,' ','')}"/>
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString -->
 
@@ -355,21 +419,21 @@
         concat(gmd:westBoundLongitude/gco:Decimal, ' ', gmd:southBoundLatitude/gco:Decimal)
         ">
       </xsl:variable>
-      <dct:spatial>
+    <!--  <dct:spatial>
         <ogc:Polygon>
           <ogc:asWKT rdf:datatype="http://www.opengis.net/rdf#WKTLiteral">
             &lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;
             Polygon((<xsl:value-of select="string-join($coords, ', ')"/>))
           </ogc:asWKT>
         </ogc:Polygon>
-      </dct:spatial>
+      </dct:spatial>-->
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox -->
 
 
     <!-- "The temporal period that the dataset covers." -->
     <!-- TODO could be improved-->
-    <xsl:for-each
+<!--    <xsl:for-each
       select="gmd:extent/*/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod">
       <dct:temporal>
         <xsl:value-of select="gml:beginPosition"/>
@@ -378,35 +442,108 @@
           <xsl:value-of select="gml:endPosition"/>
         </xsl:if>
       </dct:temporal>
-    </xsl:for-each>
+    </xsl:for-each>-->
     <!-- xpath: gmd:identificationInfo/*/gmd:extent/*/gmd:temporalElement -->
 
     <xsl:for-each
-      select="gmd:citation/*/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']">
-      <dct:issued>
+      select="gmd:citation/*/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']">
+      <dct:issued  rdf:datatype="http://www.w3.org/2001/XMLSchema#date">
         <xsl:value-of select="gmd:date/gco:Date|gmd:date/gco:DateTime"/>
       </dct:issued>
     </xsl:for-each>
     <xsl:for-each
-      select="gmd:citation/*/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']">
-      <dct:updated>
+      select="gmd:citation/*/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision'][1]">
+      <dct:updated  rdf:datatype="http://www.w3.org/2001/XMLSchema#date">
         <xsl:value-of select="gmd:date/gco:Date|gmd:date/gco:DateTime"/>
       </dct:updated>
     </xsl:for-each>
 
-    <!-- "An entity responsible for making the dataset available" -->
+    <!-- "An entity responsible for making the dataset available"  -->
+   <!-- MÖ 2018-02-12
     <xsl:for-each select="gmd:pointOfContact/*/gmd:organisationName/gco:CharacterString[.!='']">
       <dct:publisher rdf:resource="{$url}/organization/{encode-for-uri(.)}"/>
+        <foaf:Agent>
+          <foaf:name xml:lang="sv"> <xsl:value-of select="."/></foaf:name>
+          <dct:type rdf:resource="http://purl.org/adms/publishertype/NationalAuthority"/>
+          <foaf:mbox rdf:resource="mailto:data@sgu.se"/>
+        </foaf:Agent>
+     
     </xsl:for-each>
+    -->
+   
+    <xsl:for-each-group
+      select="gmd:pointOfContact/gmd:CI_ResponsibleParty[gmd:organisationName/gco:CharacterString!='']"
+      group-by="gmd:organisationName/gco:CharacterString">
+      <!-- Organization description.
+        Organization could be linked to a catalogue, a catalogue record.
+        
+        xpath: //gmd:organisationName
+      -->
+      <dcat:contactPoint xmlns:adms="http://www.w3.org/ns/adms#">
+      <vcard:Organization rdf:about="{$url}/organization/{encode-for-uri(current-grouping-key())}">
+        <vcard:fn xml:lang="sv">
+          <xsl:value-of select="current-grouping-key()"/>
+        </vcard:fn>
+        <vcard:hasEmail rdf:resource="mailto:{gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString}"/>
+        <!-- xpath: gmd:organisationName/gco:CharacterString -->
+        <xsl:for-each-group
+          select="gmd:pointOfContact/gmd:CI_ResponsibleParty[gmd:organisationName/gco:CharacterString=current-grouping-key()]"
+          group-by="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
+          <vcard:hasEmail rdf:resource="mailto:{current-grouping-key()}"/>
+          <vcard:member
+            rdf:resource="{$url}/organization/{encode-for-uri(iso19139:getContactId(.))}"/>
+        </xsl:for-each-group>
+      </vcard:Organization>
+       
+      </dcat:contactPoint>
+    </xsl:for-each-group>
+    
+    <!-- MÖ kopierat -->
+    <xsl:for-each-group select="gmd:pointOfContact[1]/gmd:CI_ResponsibleParty"
+      group-by="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
+      <!-- Organization memeber
+        
+        xpath: //gmd:CI_ResponsibleParty-->
+      <dct:publisher>
+
+<!--      <foaf:Agent rdf:about="{$url}/person/{encode-for-uri(iso19139:getContactId(.))}"> -->
+      
+      <foaf:Agent rdf:about="{$url}/person/{encode-for-uri(gmd:organisationName/gco:CharacterString)}">
+        <xsl:if test="gmd:organisationName/gco:CharacterString">
+          <foaf:name>
+            <xsl:value-of select="gmd:organisationName/gco:CharacterString"/>
+          </foaf:name>
+        </xsl:if>
+        <!-- xpath: gmd:individualName/gco:CharacterString -->
+        <xsl:if
+          test="gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString">
+          <foaf:phone>
+            <xsl:value-of
+              select="gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString"/>
+          </foaf:phone>
+        </xsl:if>
+        <!-- xpath: gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString -->
+        <xsl:if
+          test="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
+          <foaf:mbox
+            rdf:resource="mailto:{gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString}"/>
+        </xsl:if>
+        <!-- xpath: gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString -->
+      </foaf:Agent>
+     </dct:publisher>
+    </xsl:for-each-group>
+    
+    
+    
+
+    
     <!-- xpath: gmd:identificationInfo/*/gmd:pointOfContact -->
 
 
     <!-- "The frequency with which dataset is published." See placetime.com intervals. -->
     <xsl:for-each
       select="gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode">
-      <dct:accrualPeriodicity>
-        <xsl:value-of select="@codeListValue"/>
-      </dct:accrualPeriodicity>
+      <xsl:apply-templates select="." />
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue -->
 
@@ -424,11 +561,11 @@
       "The language of the dataset."
       "This overrides the value of the catalog language in case of conflict"
     -->
-    <xsl:for-each select="gmd:language/gmd:LanguageCode/@codeListValue">
+  <!--  <xsl:for-each select="gmd:language/gmd:LanguageCode/@codeListValue">
       <dct:language>
         <xsl:value-of select="."/>
       </dct:language>
-    </xsl:for-each>
+    </xsl:for-each>-->
     <!-- xpath: gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue -->
 
 
@@ -445,11 +582,104 @@
       </dct:license>
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:resourceConstraints/??? -->
+    <!-- MÖ adding direct reference to to distribution -->
+    <!--<xsl:for-each select="../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">-->
 
+    <xsl:variable name="anid">
+      <xsl:value-of select="../../gmd:fileIdentifier/gco:CharacterString"/>
+    </xsl:variable>
+        <xsl:variable name="uuid"    select='../../gmd:fileIdentifier/gco:CharacterString'/>
+    <xsl:for-each-group
+      select="../../gmd:distributionInfo//gmd:distributorTransferOptions//gmd:onLine/gmd:CI_OnlineResource"
+      group-by="gmd:linkage/gmd:URL">
+     <xsl:if test="starts-with(lower-case(gmd:linkage/gmd:URL),'http') "> 
+      <dcat:distribution >
+        <dcat:Distribution rdf:about="{translate(gmd:linkage/gmd:URL,' ','')}/{$uuid}">
+          <!--../../../../../../../..
+          "points to the location of a distribution. This can be a direct download link, a link
+          to an HTML page containing a link to the actual data, Feed, Web Service etc.
+          the semantic is determined by its domain (Distribution, Feed, WebService, Download)."
+        -->
+          <dcat:accessURL  rdf:resource="{translate(gmd:linkage/gmd:URL,' ','')}"/>
 
-    <xsl:for-each select="../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
-      <dcat:distribution rdf:resource="{gmd:CI_OnlineResource/gmd:linkage/gmd:URL}"/>
-    </xsl:for-each>
+    
+           
+          
+          <!-- xpath: gmd:linkage/gmd:URL -->
+          
+          <!--   <xsl:if test="gmd:name/gco:CharacterStrindcat:themeg!=''">
+          <dct:title>
+            <xsl:value-of select=" gmd:name/gco:CharacterString"/>
+          </dct:title>
+        </xsl:if>
+        -->
+          <xsl:if test="gmd:description/gco:CharacterString!=''">
+            <dct:description>
+              <xsl:value-of select=" gmd:description/gco:CharacterString"/>
+            </dct:description>
+          </xsl:if>
+          <!--   MÖ 20180210
+        <xsl:if test="gmd:title/gco:CharacterString!=''">
+          <dct:title>
+            <xsl:value-of select="gmd:title/gco:CharacterString"/>
+          </dct:title>
+        </xsl:if>
+      -->  
+          
+          <!-- MÖ 2018-02-10-->
+          <xsl:choose>
+            <xsl:when  test="gmd:name/gco:CharacterString!=''">
+              <dct:title>
+                <xsl:value-of select="gmd:name/gco:CharacterString"/>
+              </dct:title>
+            </xsl:when>
+            <xsl:otherwise>
+              <dct:title>
+                <xsl:value-of select=" gmd:description/gco:CharacterString"/>
+              </dct:title>
+            </xsl:otherwise>
+          </xsl:choose>
+          
+          
+          
+          <!-- xpath: gmd:name/gco:CharacterString -->
+          
+          <!-- "The size of a distribution.":N/A
+          <dcat:size></dcat:size>
+        -->
+          
+          <xsl:if test="gmd:protocol/gco:CharacterString!=''">
+            <dct:format>
+              <xsl:choose>
+                <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Nedladdning'">
+                  <xsl:value-of select="'Nedladdning'"/>
+                </xsl:when>
+                <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Information'">
+                  <xsl:value-of select="'HTML'"/>
+                </xsl:when>
+                <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:OGC:WMS'">
+                  <xsl:value-of select="'WMS'"/>
+                </xsl:when>
+                <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:OGC:WFS'">
+                  <xsl:value-of select="'WFS'"/>
+                </xsl:when>
+                <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Nedladdning:Atom'">
+                  <xsl:value-of select="'ATOM'"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  
+                </xsl:otherwise>
+              </xsl:choose>
+
+            </dct:format>
+          </xsl:if>
+          <!-- xpath: gmd:protocol/gco:CharacterString -->
+          
+        </dcat:Distribution>
+      </dcat:distribution>
+      </xsl:if>  
+    </xsl:for-each-group>
+    
     <!-- xpath: gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource -->
 
 
@@ -468,12 +698,12 @@
       <dct:relation rdf:resource="{$url}/metadata/{.}"/>
     </xsl:for-each>
 
-
+<!-- MÖ Added comment 2018-02-08
     <xsl:for-each select="gmd:aggregationInfo/gmd:MD_AggregateInformation">
       <dct:relation
         rdf:resource="{$url}/metadata/{gmd:aggregateDataSetIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString}"/>
     </xsl:for-each>
-
+-->
     <!-- Source relation -->
     <xsl:for-each select="/root/gui/relation/sources/response/metadata">
       <dct:relation rdf:resource="{$url}/metadata/{geonet:info/uuid}"/>
@@ -518,6 +748,68 @@
 
     <!-- FIXME ?
       <void:dataDump></void:dataDump>-->
+  </xsl:template>
+  <xsl:template match="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode">
+  
+    <!-- The following parameter maps frequency codes used in ISO 19139 metadata to the corresponding ones of the Dublin Core Collection Description Frequency Vocabulary (when available). -->
+  <xsl:param name="FrequencyCodeURI">
+    <xsl:if test="@codeListValue != ''">
+      <xsl:choose>
+        <xsl:when test="@codeListValue = 'continual'">
+          <!--  DC Freq voc
+             <xsl:value-of select="concat($cldFrequency,'continuous')"/>
+-->
+          <xsl:value-of select="concat($opfq,'CONT')"/>
+        </xsl:when>
+        <xsl:when test="@codeListValue = 'daily'">
+          <!--  DC Freq voc
+            <xsl:value-of select="concat($cldFrequency,'daily')"/>
+-->
+          <xsl:value-of select="concat($opfq,'DAILY')"/>
+        </xsl:when>
+        <xsl:when test="@codeListValue = 'weekly'">
+          <!--  DC Freq voc
+            <xsl:value-of select="concat($cldFrequency,'weekly')"/>
+-->
+          <xsl:value-of select="concat($opfq,'WEEKLY')"/>
+        </xsl:when>
+        <xsl:when test="@codeListValue = 'fortnightly'">
+          <!--  DC Freq voc
+            <xsl:value-of select="concat($cldFrequency,'biweekly')"/>
+-->
+          <xsl:value-of select="concat($opfq,'BIWEEKLY')"/>
+        </xsl:when>
+        <xsl:when test="@codeListValue = 'monthly'">
+          <!--  DC Freq voc
+            <xsl:value-of select="concat($cldFrequency,'monthly')"/>
+-->
+          <xsl:value-of select="concat($opfq,'MONTHLY')"/>
+        </xsl:when>
+        <xsl:when test="@codeListValue = 'quarterly'">
+          <!--  DC Freq voc
+            <xsl:value-of select="concat($cldFrequency,'quarterly')"/>
+-->
+          <xsl:value-of select="concat($opfq,'QUARTERLY')"/>
+        </xsl:when>
+        <xsl:when test="@codeListValue = 'biannually'">
+          <!--  DC Freq voc
+            <xsl:value-of select="concat($cldFrequency,'semiannual')"/>
+-->
+          <xsl:value-of select="concat($opfq,'ANNUAL_2')"/>
+        </xsl:when>
+        <xsl:when test="@codeListValue = 'annually'">
+          <!--  DC Freq voc
+            <xsl:value-of select="concat($cldFrequency,'annual')"/>
+-->
+          <xsl:value-of select="concat($opfq,'ANNUAL')"/>
+        </xsl:when>
+    
+      </xsl:choose>
+    </xsl:if>
+  </xsl:param>
+  <xsl:if test="$FrequencyCodeURI != ''">
+    <dct:accrualPeriodicity rdf:resource="{$FrequencyCodeURI}"/>
+  </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>

@@ -1280,6 +1280,7 @@
         'value': '<xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor"/>',
         'valueAttr': '<xsl:value-of select="gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href"/>',
         'mode': '<xsl:value-of select="$mode" />',
+        'schema': '<xsl:value-of select="$schema" />',
         'elementTooltip': '<xsl:value-of select="$toolipValue" />'
       }
     </xsl:variable>

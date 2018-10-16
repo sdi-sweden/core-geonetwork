@@ -39,6 +39,7 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:iso19139="http://geonetwork-opensource.org/schemas/iso19139"
                 version="2.0"
+                
                 extension-element-prefixes="saxon" exclude-result-prefixes="#all">
 
   <xsl:import href="tpl-rdf-default.xsl" />
@@ -124,9 +125,12 @@
   <xsl:function name="iso19139:getResourceCode" as="xs:string">
     <xsl:param name="metadata" as="node()"/>
 
-    <xsl:value-of select="if ($metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString!='')
+   <!--MÖ 2018-02-10 <xsl:value-of 
+      select="if ($metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString!='')
       then $metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString
       else $metadata/gmd:fileIdentifier/gco:CharacterString"/>
+      -->
+      <xsl:value-of select="$metadata/gmd:fileIdentifier/gco:CharacterString" />
   </xsl:function>
 
 
