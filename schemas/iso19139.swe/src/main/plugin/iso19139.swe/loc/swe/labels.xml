@@ -3253,7 +3253,7 @@ Detta undvikar vi att ange.</description>
 
   <element name="conditionsForAccess">
     <label>Åtkomstrestriktioner</label>
-    <description>Åtkomstrestriktioner beskrinving</description>
+    <description>Välj alternativ som är relevanta från listan</description>
     <helper sort="no">
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="villkor okända">villkor okända</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="inga tillämpliga villkor">inga tillämpliga villkor</option>
@@ -3282,7 +3282,7 @@ Detta undvikar vi att ange.</description>
 
   <element name="conditionsForUse">
     <label>Nyttjanderestriktioner</label>
-    <description>Nyttjanderestriktioner beskrivning</description>
+    <description>Välj alternativ som är relevanta från listan</description>
     <helper sort="no">
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="villkor okända">villkor okända</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="inga tillämpliga villkor">inga tillämpliga villkor</option>
