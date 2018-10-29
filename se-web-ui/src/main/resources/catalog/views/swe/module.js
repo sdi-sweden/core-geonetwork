@@ -1444,27 +1444,68 @@
   module.controller('SweGeoSuggestionsController', ['$scope', '$http',
     function($scope, $http) {
     $scope.getNameSearch = function(val) {
-      var posturl = 'https://www.geodata.se/NameWebService/search';
-	  val = encodeURIComponent(val);
-      var params = {
-        'searchstring': val,
-        'callback': 'JSON_CALLBACK'
-      };
-      return $http({
-        method: 'JSONP',
-        url: posturl,
-        params: params
-      }).then(function(res) {
-        var data = res.data;
-        var status = res.status;
-        var headers = res.headers;
-        var config = res.config;
-        var statusText = res.statusText;
-
-
-        return data;
-      });
-    };
+//      var posturl = 'https://www.geodata.se/NameWebService/search';
+//	  val = encodeURIComponent(val);
+//      var params = {
+//        'searchstring': val,
+//        'callback': 'JSON_CALLBACK'
+//      };
+//      return $http({
+//        method: 'JSONP',
+//        url: posturl,
+//        params: params
+//      }).then(function(res) {
+//        var data = res.data;
+//        var status = res.status;
+//        var headers = res.headers;
+//        var config = res.config;
+//        var statusText = res.statusText;
+//
+//
+//        return data;
+//      });
+//    };
+    
+    //TODO: move api url and username to config
+    var url = 'http://api.geonames.org/searchJSON';
+	  //redirect http request via proxy
+ 	  if (!url.includes("https://")) {
+		url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+      }  
+      $http.get(url, {
+        params: {
+          lang: lang,
+          style: 'full',
+          type: 'json',
+          maxRows: 10,
+          name_startsWith: val,
+          country: 'SE',
+          east: 24.1633,
+          west: 10.9614,
+          north: 69.059,
+          south: 55.3363,
+          username: 'georchestra'
+        }
+      }).
+        success(function(response) {
+          var loc;
+          var results = [];
+          for (var i = 0; i < response.geonames.length; i++) {
+            loc = response.geonames[i];
+            if (loc.bbox) {
+              $scope.results.push({
+                name: loc.name,
+                formattedName: formatter(loc),
+                extent: ol.proj.transformExtent([loc.bbox.west,
+                  loc.bbox.south, loc.bbox.east, loc.bbox.north],
+                'EPSG:4326', $scope.map.getView().getProjection())
+              });
+            }
+          }
+          return results;
+        });
+  };
+  
   }]);
 
  /**

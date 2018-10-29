@@ -117,7 +117,7 @@
                                data-ng-model="searchObj.namesearch"
                                data-ng-model-options="modelOptionsFormGeo"  
                                                          
-                               data-typeahead="namesearch as (namesearch.Name + ', ' + namesearch.Type) for namesearch in getNameSearch($viewValue) "
+                               data-typeahead="namesearch as (namesearch.name + ', ' + namesearch.fclName) for namesearch in getNameSearch($viewValue) "
                                data-typeahead-on-select="drawPolygonInMap()"
                                data-typeahead-loading="anyLoading"
                                data-typeahead-min-length="1"
