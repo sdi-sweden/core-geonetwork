@@ -238,7 +238,10 @@ public class RdfOutputManager {
             // Ignore the catalog section
             if (elementName.equalsIgnoreCase("Catalog")) continue;
 
-            if (elementName.equalsIgnoreCase("CatalogRecord")) recordsSectionStarted = true;
+            if (elementName.equalsIgnoreCase("CatalogRecord") ||
+                elementName.equalsIgnoreCase("Description")) {
+                recordsSectionStarted = true;
+            }
 
             if (page == 1) {
                 // For first results page, write also the Organisation section that is between Catalog
