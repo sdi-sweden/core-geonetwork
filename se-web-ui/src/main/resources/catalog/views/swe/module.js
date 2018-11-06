@@ -1465,14 +1465,26 @@
 //        return data;
 //      });
 //    };
-    
+
+    var parent = $scope.$parent;
+    var lang = parent.langs[parent.lang];
+
+    var formatter = function(loc) {
+        var props = [];
+        ['toponymName', 'adminName1', 'countryName'].
+            forEach(function(p) {
+              if (loc[p]) { props.push(loc[p]); }
+            });
+        return (props.length == 0) ? '' : '—' + props.join(', ');
+      };
+
     //TODO: move api url and username to config
     var url = 'http://api.geonames.org/searchJSON';
 	  //redirect http request via proxy
  	  if (!url.includes("https://")) {
-		url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+		url = '../../proxy?url=' + encodeURIComponent(url);
       }  
-      $http.get(url, {
+      return $http.get(url, {
         params: {
           lang: lang,
           style: 'full',
@@ -1487,18 +1499,18 @@
           username: 'georchestra'
         }
       }).
-        success(function(response) {
+        then(function(response) {
           var loc;
           var results = [];
-          for (var i = 0; i < response.geonames.length; i++) {
-            loc = response.geonames[i];
+          for (var i = 0; i < response.data.geonames.length; i++) {
+            loc = response.data.geonames[i];
             if (loc.bbox) {
-              $scope.results.push({
-                name: loc.name,
-                formattedName: formatter(loc),
+              results.push({
+                Name: loc.name,
+                Type: loc.toponymName,
                 extent: ol.proj.transformExtent([loc.bbox.west,
                   loc.bbox.south, loc.bbox.east, loc.bbox.north],
-                'EPSG:4326', $scope.map.getView().getProjection())
+                'EPSG:4326', 'EPSG:3006')
               });
             }
           }
@@ -1521,21 +1533,26 @@
       $scope.drawPolygonInMap = function() {
         //var namesearch = $scope.searchObj.params.namesearch;
         var namesearch = $scope.searchObj.namesearch;
+        var extent = namesearch.extent;
         var coordinates = namesearch.Coordinates;
         var geoJson = new ol.format.GeoJSON();
-        if (coordinates) {
-          var proj = $scope.searchObj.searchMap.getView().getProjection();
+//        if (coordinates) {
+        if (extent) {
+//          var proj = $scope.searchObj.searchMap.getView().getProjection();
 
-          var xy0 = coordinates[0];
-          var xy1 = coordinates[1];
-          var extent = []; // geoBox=10.59|55.15|24.18|69.05
-          extent.push(parseFloat(xy0.X), parseFloat(xy0.Y),
-            parseFloat(xy1.X), parseFloat(xy1.Y));
+//          var xy0 = coordinates[0];
+//          var xy1 = coordinates[1];
+//          var extent = []; // geoBox=10.59|55.15|24.18|69.05
+//          extent.push(parseFloat(xy0.X), parseFloat(xy0.Y),
+//            parseFloat(xy1.X), parseFloat(xy1.Y));
           //To transform projection for metadata list based on polygon drawn
-          proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+//          proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
           //proj4.defs("EPSG:4258","+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs");
-          var geom = gnMap.reprojExtent(extent , 'EPSG:3006', 'EPSG:4326');
-          var geom_wkt = "POLYGON((" + geom[0] + " " + geom[1] + "," + geom[2] + " " + geom[1] + "," + geom[2] + " " + geom[3] + "," + geom[2] + " " + geom[1] + "," + geom[0] + " " + geom[1] + "))";
+//          var geom = gnMap.reprojExtent(extent , 'EPSG:3006', 'EPSG:4326');
+//          var geom_wkt = "POLYGON((" + geom[0] + " " + geom[1] + "," + geom[2] + " " + geom[1] + "," + geom[2] + " " + geom[3] + "," + geom[2] + " " + geom[1] + "," + geom[0] + " " + geom[1] + "))";
+
+          var geom_wkt = "POLYGON((" + extent[0] + " " + extent[1] + "," + extent[2] + " " + extent[1] + "," + extent[2] + " " + extent[3] + "," + extent[2] + " " + extent[1] + "," + extent[0] + " " + extent[1] + "))";
+          
           $scope.searchObj.params.geometry = geom_wkt;
           var feature = new ol.Feature();
           //var feature = gnMap.getPolygonFeature(namesearch, $scope.searchObj.searchMap.getView().getProjection());

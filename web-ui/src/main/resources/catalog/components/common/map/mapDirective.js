@@ -375,44 +375,57 @@
 //                  var statusText = res.statusText;
 //                  return data;
 //                });
-                //TODO: move api url and username to config
-                var url = 'http://api.geonames.org/searchJSON';
-            	  //redirect http request via proxy
-             	  if (!url.includes("https://")) {
-            		url = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                  }  
-                  $http.get(url, {
-                    params: {
-                      lang: lang,
-                      style: 'full',
-                      type: 'json',
-                      maxRows: 10,
-                      name_startsWith: val,
-                      country: 'SE',
-                      east: 24.1633,
-                      west: 10.9614,
-                      north: 69.059,
-                      south: 55.3363,
-                      username: 'georchestra'
-                    }
-                  }).
-                    success(function(response) {
-                      var loc;
-                      var results = [];
-                      for (var i = 0; i < response.geonames.length; i++) {
-                        loc = response.geonames[i];
-                        if (loc.bbox) {
-                          $scope.results.push({
-                            name: loc.name,
-                            formattedName: formatter(loc),
-                            extent: ol.proj.transformExtent([loc.bbox.west,
-                              loc.bbox.south, loc.bbox.east, loc.bbox.north],
-                            'EPSG:4326', $scope.map.getView().getProjection())
-                          });
-                        }
-                      }
-                      return results;
-                    });                
+
+            	    var parent = $scope.$parent;
+            	    var lang = parent.langs[parent.lang];
+
+            	    var formatter = function(loc) {
+            	        var props = [];
+            	        ['toponymName', 'adminName1', 'countryName'].
+            	            forEach(function(p) {
+            	              if (loc[p]) { props.push(loc[p]); }
+            	            });
+            	        return (props.length == 0) ? '' : '—' + props.join(', ');
+            	      };
+
+            	    //TODO: move api url and username to config
+            	    var url = 'http://api.geonames.org/searchJSON';
+            		  //redirect http request via proxy
+            	 	  if (!url.includes("https://")) {
+            			url = '../../proxy?url=' + encodeURIComponent(url);
+            	      }  
+            	      return $http.get(url, {
+            	        params: {
+            	          lang: lang,
+            	          style: 'full',
+            	          type: 'json',
+            	          maxRows: 10,
+            	          name_startsWith: val,
+            	          country: 'SE',
+            	          east: 24.1633,
+            	          west: 10.9614,
+            	          north: 69.059,
+            	          south: 55.3363,
+            	          username: 'georchestra'
+            	        }
+            	      }).
+            	        then(function(response) {
+            	          var loc;
+            	          var results = [];
+            	          for (var i = 0; i < response.data.geonames.length; i++) {
+            	            loc = response.data.geonames[i];
+            	            if (loc.bbox) {
+            	              results.push({
+            	                Name: loc.name,
+            	                Type: loc.toponymName,
+            	                extent: ol.proj.transformExtent([loc.bbox.west,
+            	                  loc.bbox.south, loc.bbox.east, loc.bbox.north],
+            	                'EPSG:4326', 'EPSG:3006')
+            	              });
+            	            }
+            	          }
+            	          return results;
+            	        });
             };
 
              /**
