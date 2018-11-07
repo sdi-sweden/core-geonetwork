@@ -14,7 +14,7 @@
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
   ~ General Public License for more details.
   ~
-  ~ You should have received a copy of the GNU General Public License
+  ~ You should have received a co.py of the GNU General Public License
   ~ along with this program; if not, write to the Free Software
   ~ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
   ~
@@ -56,7 +56,8 @@
   <xsl:template match="gmd:MD_Metadata|*[@gco:isoType='gmd:MD_Metadata']" mode="record-reference-default">
     <!-- TODO : a metadata record may contains aggregate. In that case create one dataset per aggregate member. -->
     <!--MÖ 2018 <dcat:dataset rdf:resource="{$url}/resource/{iso19139:getResourceCode(.)}"/>-->      
-    <xsl:if test="gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString != 'Naturvårdsverket'"  >
+    <!--<xsl:if test="gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString != 'Naturvårdsverket'"  > -->
+    <xsl:if test="gmd:identificationInfo//gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='Initiativ']/gmd:MD_Keywords/gmd:keyword/gco:CharacterString='Öppna data'"  >
     <dcat:dataset rdf:resource="https://www.geodata.se/geodataportalen/resource/{gmd:fileIdentifier/gco:CharacterString}"/>
       <!--   <dcat:dataset rdf:resource="http://skogsdataportalen.skogsstyrelsen.se/geonetworks/resource/{gmd:fileIdentifier/gco:CharacterString}"/> -->
       
@@ -327,10 +328,11 @@
     match="srv:SV_ServiceIdentification|*[contains(@gco:isoType, 'SV_ServiceIdentification')]"
     mode="to-dcat-default">
 <!--<xsl:if test="not(../../gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString = 'Naturvårdsverket')">-->
+    <xsl:if test="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='Initiativ']/gmd:MD_Keywords/gmd:keyword/gco:CharacterString='Öppna data'"  >
     <rdf:Description rdf:about="{$url}/resource/{iso19139:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat-default"/>
     </rdf:Description>
-<!--    </xsl:if>-->
+   </xsl:if>
   </xsl:template>
 
 
@@ -343,10 +345,11 @@
   <xsl:template match="gmd:MD_DataIdentification|*[contains(@gco:isoType, 'MD_DataIdentification')]"
                 mode="to-dcat-default">
 	<!--<xsl:if test="not(../../gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString = 'Naturvårdsverket')">-->
+    <xsl:if test="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='Initiativ']/gmd:MD_Keywords/gmd:keyword/gco:CharacterString='Öppna data'"  >
     <rdf:Description rdf:about="{$url}/resource/{iso19139:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat-default"/>
     </rdf:Description>
-    <!--</xsl:if>-->
+    </xsl:if>
   </xsl:template>
 
 
@@ -403,8 +406,8 @@
 
     <!-- Thumbnail -->
     <xsl:for-each
-      select="gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString">
-      <foaf:thumbnail rdf:resource="{translate(.,' ','')}"/>
+      select="gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString[.!='']">
+      <foaf:thumbnail rdf:resource="{translate(replace(translate(.,' ',''),'C:\\','http://'),'\','/')}"/>
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString -->
 
@@ -446,13 +449,13 @@
     <!-- xpath: gmd:identificationInfo/*/gmd:extent/*/gmd:temporalElement -->
 
     <xsl:for-each
-      select="gmd:citation/*/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']">
+      select="gmd:citation/*/gmd:date[1]/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']">
       <dct:issued  rdf:datatype="http://www.w3.org/2001/XMLSchema#date">
         <xsl:value-of select="gmd:date/gco:Date|gmd:date/gco:DateTime"/>
       </dct:issued>
     </xsl:for-each>
     <xsl:for-each
-      select="gmd:citation/*/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision'][1]">
+      select="gmd:citation/*/gmd:date[1]/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision'][1]">
       <dct:updated  rdf:datatype="http://www.w3.org/2001/XMLSchema#date">
         <xsl:value-of select="gmd:date/gco:Date|gmd:date/gco:DateTime"/>
       </dct:updated>
@@ -480,6 +483,7 @@
         xpath: //gmd:organisationName
       -->
       <dcat:contactPoint xmlns:adms="http://www.w3.org/ns/adms#">
+<!--        <vcard:Kind>-->
       <vcard:Organization rdf:about="{$url}/organization/{encode-for-uri(current-grouping-key())}">
         <vcard:fn xml:lang="sv">
           <xsl:value-of select="current-grouping-key()"/>
@@ -494,6 +498,7 @@
             rdf:resource="{$url}/organization/{encode-for-uri(iso19139:getContactId(.))}"/>
         </xsl:for-each-group>
       </vcard:Organization>
+      <!--  </vcard:Kind>-->
        
       </dcat:contactPoint>
     </xsl:for-each-group>
