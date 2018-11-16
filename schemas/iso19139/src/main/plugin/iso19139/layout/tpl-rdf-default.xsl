@@ -57,11 +57,8 @@
     <!-- TODO : a metadata record may contains aggregate. In that case create one dataset per aggregate member. -->
     <!--MÖ 2018 <dcat:dataset rdf:resource="{$url}/resource/{iso19139:getResourceCode(.)}"/>-->      
     <!--<xsl:if test="gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString != 'Naturvårdsverket'"  > -->
-    <xsl:if test="gmd:identificationInfo//gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='Initiativ']/gmd:MD_Keywords/gmd:keyword/gco:CharacterString='Öppna data'"  >
     <dcat:dataset rdf:resource="https://www.geodata.se/geodataportalen/resource/{gmd:fileIdentifier/gco:CharacterString}"/>
       <!--   <dcat:dataset rdf:resource="http://skogsdataportalen.skogsstyrelsen.se/geonetworks/resource/{gmd:fileIdentifier/gco:CharacterString}"/> -->
-      
-    </xsl:if>
    <!-- MÖ 2018-02
      <dcat:record rdf:resource="{$url}/metadata/{gmd:fileIdentifier/gco:CharacterString}"/>-->
     
@@ -328,11 +325,9 @@
     match="srv:SV_ServiceIdentification|*[contains(@gco:isoType, 'SV_ServiceIdentification')]"
     mode="to-dcat-default">
 <!--<xsl:if test="not(../../gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString = 'Naturvårdsverket')">-->
-    <xsl:if test="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='Initiativ']/gmd:MD_Keywords/gmd:keyword/gco:CharacterString='Öppna data'"  >
     <rdf:Description rdf:about="{$url}/resource/{iso19139:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat-default"/>
     </rdf:Description>
-   </xsl:if>
   </xsl:template>
 
 
@@ -345,11 +340,9 @@
   <xsl:template match="gmd:MD_DataIdentification|*[contains(@gco:isoType, 'MD_DataIdentification')]"
                 mode="to-dcat-default">
 	<!--<xsl:if test="not(../../gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString = 'Naturvårdsverket')">-->
-    <xsl:if test="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='Initiativ']/gmd:MD_Keywords/gmd:keyword/gco:CharacterString='Öppna data'"  >
     <rdf:Description rdf:about="{$url}/resource/{iso19139:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat-default"/>
     </rdf:Description>
-    </xsl:if>
   </xsl:template>
 
 

@@ -60,7 +60,13 @@ public class RdfSearcher {
         searchRequest = SearchDefaults.getDefaultSearch(context, params);
         searchRequest.addContent(new Element(Geonet.SearchResult.BUILD_SUMMARY).setText("false"));
         searchRequest.addContent(new Element("_isTemplate").setText("n"));
+
         searchRequest.addContent(new Element("_op0").setText("1"));
+
+        String initiativKeyword = Util.getParam(params, "initiativKeyword", "");
+        if (StringUtils.isNotEmpty(initiativKeyword)) {
+            searchRequest.addContent(new Element("initiativKeyword").setText(initiativKeyword));
+        }
 
         organisation = Util.getParam(params, "orgName", "");
 
