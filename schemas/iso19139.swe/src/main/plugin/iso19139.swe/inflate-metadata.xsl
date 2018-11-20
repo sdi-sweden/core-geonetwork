@@ -7,7 +7,8 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xmlns:gmx="http://www.isotc211.org/2005/gmx"
                   xmlns:srv="http://www.isotc211.org/2005/srv"
-                  exclude-result-prefixes="gmd xlink gco xsi gmx srv">
+                  xmlns:uuid="java:java.util.UUID"
+                  exclude-result-prefixes="gmd xlink gco xsi gmx srv uuid">
 
   <!-- ================================================================= -->
 
@@ -61,6 +62,54 @@
       <xsl:apply-templates select="gmd:propertyType" />
       <xsl:apply-templates select="gmd:featureType" />
       <xsl:apply-templates select="gmd:featureAttribute" />
+    </xsl:copy>
+  </xsl:template>
+
+
+  <xsl:template match="gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:title" />
+      <xsl:apply-templates select="gmd:alternateTitle" />
+      <xsl:apply-templates select="gmd:date" />
+      <xsl:apply-templates select="gmd:edition" />
+      <xsl:apply-templates select="gmd:editionDate" />
+
+      <xsl:apply-templates select="gmd:identifier" />
+
+      <!-- record of type dataset or dataset series are created we shall automatically add a UUID for resource-identfier -->
+      <xsl:if test="(count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0) or
+            (count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='series']) > 0)">
+
+        <xsl:apply-templates select="gmd:identifier" />
+
+        <xsl:choose>
+          <!-- Code doesn't exists - Add it -->
+          <xsl:when test="not(gmd:identifier/gmd:MD_Identifier)">
+            <xsl:variable name="uid" select="uuid:randomUUID()"/>
+
+            <gmd:identifier>
+              <gmd:MD_Identifier>
+                <gmd:code>
+                  <gco:CharacterString> <xsl:value-of select="$uid"/></gco:CharacterString>
+                </gmd:code>
+              </gmd:MD_Identifier>
+            </gmd:identifier>
+          </xsl:when>
+
+          <!-- Do nothing -->
+          <xsl:otherwise></xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
+
+      <xsl:apply-templates select="gmd:citedResponsibleParty" />
+      <xsl:apply-templates select="gmd:presentationForm" />
+      <xsl:apply-templates select="gmd:series" />
+      <xsl:apply-templates select="gmd:otherCitationDetails" />
+      <xsl:apply-templates select="gmd:collectiveTitle" />
+      <xsl:apply-templates select="gmd:ISBN" />
+      <xsl:apply-templates select="gmd:ISSN" />
     </xsl:copy>
   </xsl:template>
 
