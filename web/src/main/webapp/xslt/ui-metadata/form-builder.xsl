@@ -457,7 +457,14 @@
             </xsl:choose>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:attribute name="data-gn-field-tooltip"><xsl:value-of select="$schema" />|<xsl:value-of select="name()" />|<xsl:value-of select="name(..)" /></xsl:attribute>
+            <xsl:choose>
+              <xsl:when test="string($tooltipEl)">
+                <xsl:attribute name="data-gn-field-tooltip"><xsl:value-of select="$schema" />|<xsl:value-of select="$tooltipEl" /></xsl:attribute>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:attribute name="data-gn-field-tooltip"><xsl:value-of select="$schema" />|<xsl:value-of select="name()" />|<xsl:value-of select="name(..)" /></xsl:attribute>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:value-of select="$name"/>&#160;
