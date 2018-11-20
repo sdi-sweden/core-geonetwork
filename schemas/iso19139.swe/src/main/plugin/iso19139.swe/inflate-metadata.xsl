@@ -82,8 +82,6 @@
       <xsl:if test="(count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0) or
             (count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='series']) > 0)">
 
-        <xsl:apply-templates select="gmd:identifier" />
-
         <xsl:choose>
           <!-- Code doesn't exists - Add it -->
           <xsl:when test="not(gmd:identifier/gmd:MD_Identifier)">
