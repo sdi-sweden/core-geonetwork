@@ -1394,7 +1394,9 @@ Exempelvis: datamängd, datamängdserie eller tjänst. (Sätts automatiskt och k
     </element>
     <element id="573.0" name="gmd:identifier">
         <label>Identifierare för resurs</label>
-        <description>Unik identifierare för resurs</description>
+        <description>Unik identifierare för resurs. 
+        En UUID skapas automatiskt eller skriva ett nytt ID i formatet
+        SE_{producent}_{produkt}_{version}_{tema} </description>
     </element>
     <element context="gmd:CI_Citation" id="573.0" name="gmd:identifier">
         <label></label>
