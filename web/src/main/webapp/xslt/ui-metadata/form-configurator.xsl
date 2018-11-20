@@ -233,6 +233,7 @@
 
       <xsl:variable name="del" select="@del"/>
 
+      <xsl:variable name="tooltipKey" select="@tooltip"/>
 
       <!-- For non existing node create a XML snippet to be edited
         No match in current document. 2 scenario here:
@@ -423,6 +424,7 @@
                   XPATH mode which will create the new element at the
                   correct location. -->
             <xsl:variable name="id" select="concat('_X', gn:element/@ref, '_replace')"/>
+
             <xsl:call-template name="render-element-template-field">
               <xsl:with-param name="name" select="$strings/*[name() = $name]"/>
               <xsl:with-param name="id" select="$id"/>
@@ -431,6 +433,7 @@
               <xsl:with-param name="keyValues" select="$keyValues"/>
               <xsl:with-param name="refToDelete" select="$refToDelete/gn:element"/>
               <xsl:with-param name="isFirst" select="$forceLabel or position() = 1"/>
+              <xsl:with-param name="tooltipEl" select="if (string($tooltipKey)) then $tooltipKey else name($template/snippet/*[1])"/>
             </xsl:call-template>
           </xsl:for-each>
 
@@ -478,7 +481,7 @@
               <xsl:with-param name="keyValues" select="$keyValues"/>
               <xsl:with-param name="template" select="$templateWithoutGnCopyElement"/>
               <xsl:with-param name="isMissingLabel" select="$strings/*[name() = $isMissingLabel]"/>
-              <xsl:with-param name="tooltipEl" select="name($template/snippet/*[1])"/>
+              <xsl:with-param name="tooltipEl" select="if (string($tooltipKey)) then $tooltipKey else name($template/snippet/*[1])"/>
             </xsl:call-template>
           </xsl:if>
         </xsl:when>
@@ -677,6 +680,10 @@
           <!-- TODO: render-element-to-add should contains all
           logic for add field (based on geonet:child/geonet:choose
           and also when having directives or templates. -->
+
+
+
+
           <xsl:call-template name="render-element-template-field">
             <xsl:with-param name="name" select="$name"/>
             <xsl:with-param name="id" select="concat('_X',

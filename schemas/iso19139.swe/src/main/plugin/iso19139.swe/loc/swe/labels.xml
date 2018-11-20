@@ -3348,4 +3348,16 @@ Detta undvikar vi att ange.</description>
       <option show="y" value="INSPIRE Data Specification on Statistical units - Draft Technical Guidelines">INSPIRE Data Specification on Statistical units - Draft Technical Guidelines</option>
     </helper>
   </element>
+
+
+  <element name="sds-tech-spec">
+    <label>Teknisk specifikation</label>
+    <description>Teknisk specifikation</description>
+  </element>
+
+  <element name="sds-reg-spec">
+    <label>Överensstämmelserapport</label>
+    <description>Överensstämmelserapport</description>
+  </element>
+
 </labels>
