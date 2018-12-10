@@ -1395,7 +1395,7 @@ Exempelvis: datamängd, datamängdserie eller tjänst. (Sätts automatiskt och k
     <element id="573.0" name="gmd:identifier">
         <label>Identifierare för resurs</label>
         <description>Unik identifierare för resurs. 
-        En UUID skapas automatiskt eller skriva ett nytt ID i formatet
+        Ett UUID skapas automatiskt eller skriva ett nytt ID i formatet
         SE_{producent}_{produkt}_{version}_{tema} </description>
     </element>
     <element context="gmd:CI_Citation" id="573.0" name="gmd:identifier">
@@ -2047,7 +2047,7 @@ ingår i den nya profilen.</description>
     </element>
     <element id="132.0" name="gmd:pass">
         <label>Överensstämmelse</label>
-        <description>Does it pass the required quality or not</description>
+        <description>Uppfyller data den nödvändiga kvalitetsnivån?</description>
         <condition>mandatory</condition>
     </element>    <element id="263.0" name="gmd:peakResponse">
         <label>Karaktäristisk våglängd</label>
