@@ -1395,7 +1395,7 @@ Exempelvis: datamängd, datamängdserie eller tjänst. (Sätts automatiskt och k
     <element id="573.0" name="gmd:identifier">
         <label>Identifierare för resurs</label>
         <description>Unik identifierare för resurs. 
-        En UUID skapas automatiskt eller skriva ett nytt ID i formatet
+        Ett UUID skapas automatiskt eller skriva ett nytt ID i formatet
         SE_{producent}_{produkt}_{version}_{tema} </description>
     </element>
     <element context="gmd:CI_Citation" id="573.0" name="gmd:identifier">
@@ -2038,14 +2038,18 @@ ingår i den nya profilen.</description>
         <label>Identifierare för överordnade metadata</label>
         <description>Unik identifierare för den metadatamängd som den aktuella metadatamängden är en delmängd av</description>
     </element>
-    <element id="132.0" name="gmd:pass">
+    <element id="132.0" name="gmd:qualityTitle">
         <label>Överensstämmelse</label>
         <description>Vilken förordning som datamängden ska upfylla.
         I Överensstämmelserapport: datamängder används 'KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010...' och för tjänster används 'Kommissionens förordning (EG) nr 976/2009...'
         I Teknisk Specifikation: välj från listan eller skriva information direkt</description>
         <condition>mandatory</condition>
     </element>
-    <element id="263.0" name="gmd:peakResponse">
+    <element id="132.0" name="gmd:pass">
+        <label>Överensstämmelse</label>
+        <description>Uppfyller data den nödvändiga kvalitetsnivån?</description>
+        <condition>mandatory</condition>
+    </element>    <element id="263.0" name="gmd:peakResponse">
         <label>Karaktäristisk våglängd</label>
         <description>våglängd där sensorn är som mest känslig</description>
     </element>
@@ -3354,12 +3358,12 @@ Detta undvikar vi att ange.</description>
 
   <element name="sds-tech-spec">
     <label>Teknisk specifikation</label>
-    <description>Teknisk specifikation</description>
+    <description>Teknisk specifikation är användbar för alla metadata, även de som ej är Inspire. Anges på liknande sätt som överensstämmelserapporten för Inspire, se hjälptexten för respektive fält</description>
   </element>
 
   <element name="sds-reg-spec">
     <label>Överensstämmelserapport</label>
-    <description>Överensstämmelserapport</description>
+    <description>Krävs endast för Inspire data, se hjälptexten för respektive fält</description>
   </element>
 
 </labels>
