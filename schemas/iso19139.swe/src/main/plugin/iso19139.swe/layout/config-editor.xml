@@ -1440,7 +1440,7 @@
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href"/>
                 <key label="reg_conformity_desc"
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/text()"
-                     tooltip="gmd:pass">
+                     tooltip="gmd:qualityTitle">
                   <helper name="InspireRegulations" relAtt="reg_conformity_linkage" />
                 </key>
                 <key label="conformity_date" use="gn-date-picker"
@@ -1530,7 +1530,7 @@
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
-                          <gco:Boolean>true</gco:Boolean>
+                          <gco:Boolean>false</gco:Boolean>
                         </gmd:pass>
                       </gmd:DQ_ConformanceResult>
                     </gmd:result>
@@ -1557,7 +1557,7 @@
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href"/>
                 <key label="conformity_desc"
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/text()"
-                     tooltip="gmd:pass">
+                     tooltip="gmd:technicalTitle">
                   <helper name="InspireTechnicalReport" relAtt="conformity_linkage" />
                 </key>
                 <key label="conformity_date" use="gn-date-picker"
@@ -1648,7 +1648,7 @@
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
-                          <gco:Boolean>true</gco:Boolean>
+                          <gco:Boolean>false</gco:Boolean>
                         </gmd:pass>
                       </gmd:DQ_ConformanceResult>
                     </gmd:result>
@@ -1701,6 +1701,7 @@
             notDisplayedIfMissing="true"
             forceLabel="true"
             name="sds-reg-spec"
+            tooltip="sds-reg-spec"
             del="../.."
             xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://data.europa.eu/eli/reg') ]">
             <template>
@@ -1709,7 +1710,7 @@
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href"/>
                 <key label="reg_conformity_desc"
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/text()"
-                     tooltip="gmd:pass">
+                     tooltip="gmd:qualityTitle">
                   <helper name="InspireRegulations" relAtt="reg_conformity_linkage" />
                 </key>
                 <key label="conformity_date" use="gn-date-picker"
@@ -1761,6 +1762,7 @@
 
           <action type="add"
                   name="sds-add-reg-spec"
+                  tooltip="sds-reg-spec"
                   forceLabel="true"
                   or="report"
                   if="count(gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://data.europa.eu/eli/reg')]) = 0"
@@ -1776,7 +1778,7 @@
                           <gmd:CI_Citation>
                             <gmd:title>
                               <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">
-                                KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster
+                                Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster
                               </gmx:Anchor>
                             </gmd:title>
                             <gmd:date>
@@ -1798,7 +1800,7 @@
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
-                          <gco:Boolean>true</gco:Boolean>
+                          <gco:Boolean>false</gco:Boolean>
                         </gmd:pass>
                       </gmd:DQ_ConformanceResult>
                     </gmd:result>
@@ -1814,6 +1816,7 @@
             notDisplayedIfMissing="true"
             forceLabel="true"
             name="sds-tech-spec"
+            tooltip="sds-tech-spec"
             del="../.."
             xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[
                   not(starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/Category')) and
@@ -1824,7 +1827,7 @@
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href"/>
                 <key label="conformity_desc"
                      xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/text()"
-                     tooltip="gmd:pass">
+                     tooltip="gmd:technicalTitle">
                   <helper name="InspireTechnicalReport" relAtt="conformity_linkage" />
                 </key>
                 <key label="conformity_date" use="gn-date-picker"
@@ -1878,6 +1881,7 @@
 
           <action type="add"
                   name="sds-add-tech-spec"
+                  tooltip="sds-tech-spec"
                   forceLabel="true"
                   or="report"
                   in="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']">
@@ -1914,7 +1918,7 @@
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
-                          <gco:Boolean>true</gco:Boolean>
+                          <gco:Boolean>false</gco:Boolean>
                         </gmd:pass>
                       </gmd:DQ_ConformanceResult>
                     </gmd:result>
