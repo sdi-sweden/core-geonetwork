@@ -23,7 +23,7 @@
 	Scenario: Search with fritext on tva ord in the titel
     Given that the user is in Enkel vy
 		When the user enters the text "Testpost_fritext_titel_tva_ord exakt_Geodatasamverkan" in the fritext field
-		Then '"Testpost_fritext_titel_tva_ord exakt_Geodatasamverkan"' is listed
+		Then "Testpost_fritext_titel_tva_ord exakt_Geodatasamverkan" is listed
 
 	@qa_ready
 	Scenario: Search with amne

@@ -37,7 +37,7 @@ var allaMD = 85
 
         this.Then(/^all filters are removed$/, function (callback) {
            searchfilter.getSelectedFilterList.then(function(items){
-             chai.assert.lengthOf(items,5);
+             chai.assert.lengthOf(items,7);
         		});
             expect(element(by.css('[data-ng-show="searchObj.params.resourceDateFrom"]')).getAttribute('class')).to.eventually.equal('ng-hide');
             expect(element(by.css('[data-ng-show="searchObj.params.resourceDateTo != undefined"]')).getAttribute('class')).to.eventually.equal('ng-hide');

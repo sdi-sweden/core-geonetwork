@@ -19,9 +19,9 @@ Feature: VisaResultat
 @qa_ready
   Scenario: VisaResultatExpanderadLista
     Given that the result list contains metadata poster
-    And the list is collapsed
-	  When the user clicks the button to show the result list expanded
-	  Then the result list is expanded
+     And the list is collapsed
+	 When the user clicks the button to show the result list expanded
+	 Then the result list is expanded
 @qa_dev
   Scenario: VisaResultatKomprimeradLista
     Given that the result list contains metadata poster
