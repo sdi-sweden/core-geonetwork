@@ -7,7 +7,8 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xmlns:gmx="http://www.isotc211.org/2005/gmx"
                   xmlns:srv="http://www.isotc211.org/2005/srv"
-                  exclude-result-prefixes="gmd xlink gco xsi gmx srv">
+                  xmlns:uuid="java:java.util.UUID"
+                  exclude-result-prefixes="gmd xlink gco xsi gmx srv uuid">
 
   <!-- ================================================================= -->
 
@@ -61,6 +62,53 @@
       <xsl:apply-templates select="gmd:propertyType" />
       <xsl:apply-templates select="gmd:featureType" />
       <xsl:apply-templates select="gmd:featureAttribute" />
+    </xsl:copy>
+  </xsl:template>
+
+
+  <xsl:template match="gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:title" />
+      <xsl:apply-templates select="gmd:alternateTitle" />
+      <xsl:apply-templates select="gmd:date" />
+      <xsl:apply-templates select="gmd:edition" />
+      <xsl:apply-templates select="gmd:editionDate" />
+
+      <xsl:apply-templates select="gmd:identifier" />
+
+      <!-- record of type dataset or dataset series are created we shall automatically add a UUID for resource-identfier -->
+      <xsl:if test="(count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0) or
+            (count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='series']) > 0) or 
+            (count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='service']) > 0)">
+
+        <xsl:choose>
+          <!-- Code doesn't exists - Add it -->
+          <xsl:when test="not(gmd:identifier/gmd:MD_Identifier)">
+            <xsl:variable name="uid" select="uuid:randomUUID()"/>
+
+            <gmd:identifier>
+              <gmd:MD_Identifier>
+                <gmd:code>
+                  <gco:CharacterString> <xsl:value-of select="$uid"/></gco:CharacterString>
+                </gmd:code>
+              </gmd:MD_Identifier>
+            </gmd:identifier>
+          </xsl:when>
+
+          <!-- Do nothing -->
+          <xsl:otherwise></xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
+
+      <xsl:apply-templates select="gmd:citedResponsibleParty" />
+      <xsl:apply-templates select="gmd:presentationForm" />
+      <xsl:apply-templates select="gmd:series" />
+      <xsl:apply-templates select="gmd:otherCitationDetails" />
+      <xsl:apply-templates select="gmd:collectiveTitle" />
+      <xsl:apply-templates select="gmd:ISBN" />
+      <xsl:apply-templates select="gmd:ISSN" />
     </xsl:copy>
   </xsl:template>
 
@@ -747,6 +795,59 @@
         <srv:operatesOn
                 xlink:href="" />
       </xsl:if>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="gmd:dataQualityInfo/gmd:DQ_DataQuality">
+
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:scope" />
+      <xsl:apply-templates select="gmd:report" />
+
+      <!-- Conformance report check: add it if not available-->
+      <xsl:if test="count(//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='dataset']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://data.europa.eu/eli/reg')]) = 0">
+        <gmd:report>
+          <gmd:DQ_DomainConsistency>
+            <gmd:result>
+              <gmd:DQ_ConformanceResult>
+                <gmd:specification>
+                  <gmd:CI_Citation>
+                    <gmd:title>
+                      <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">
+                        KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster
+                      </gmx:Anchor>
+                    </gmd:title>
+                    <gmd:date>
+                      <gmd:CI_Date>
+                        <gmd:date>
+                          <gco:Date>2010-12-08</gco:Date>
+                        </gmd:date>
+                        <gmd:dateType>
+                          <gmd:CI_DateTypeCode
+                            codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode"
+                            codeListValue="publication"/>
+                        </gmd:dateType>
+                      </gmd:CI_Date>
+                    </gmd:date>
+                  </gmd:CI_Citation>
+                </gmd:specification>
+                <gmd:explanation>
+                  <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf
+                  </gco:CharacterString>
+                </gmd:explanation>
+                <gmd:pass>
+                  <gco:Boolean>true</gco:Boolean>
+                </gmd:pass>
+              </gmd:DQ_ConformanceResult>
+            </gmd:result>
+          </gmd:DQ_DomainConsistency>
+        </gmd:report>
+
+      </xsl:if>
+
+      <xsl:apply-templates select="gmd:lineage" />
     </xsl:copy>
   </xsl:template>
 
