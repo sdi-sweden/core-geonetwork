@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -33,6 +33,25 @@
       'gnUrlUtils', 'gnGlobalSettings', 'gfiOutputFormatCheck',
       function($http, $q, gnUrlUtils, gnGlobalSettings, gfiOutputFormatCheck) {
 
+    	var proxyfyURL = function(url) {
+    		if (url.includes("proxy") || url.includes("topo-wms")) {
+    			return url;    			
+    		}
+    		var newUrl = url;
+            if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+                newUrl = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+            } else if (url.includes("maps-ver.lantmateriet.se")) {
+            	newUrl = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+            } else if (url.includes("api.lantmateriet.se")) {
+        	    newUrl = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
+            } else {
+           	    if (!url.includes("https://")) {
+             	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+                }
+            }
+            return newUrl;
+    	}
+    	
         var displayFileContent = function(wmsUrl,data) {
           var parser = new ol.format.WMSCapabilities();
           var result = parser.read(data);
@@ -45,6 +64,15 @@
           var parseUrl = wmsUrl.substring(wmsUrl.indexOf("&") + 1).split("&") 
           if (parseUrl.length > 1) {
              var wmsLayers = parseUrl[1].split("=")
+          }
+          
+          // check if URL needs to go through the Lantmäteriet proxy
+          if (url.includes("maps.lantmateriet.se")) {
+        	  url = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+          } else if (url.includes("maps-ver.lantmateriet.se")) {
+          	url = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+          } else if (url.includes("api.lantmateriet.se")) {
+          	url = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
           }
           
           //Function to parse layers inside each layergroup 
@@ -100,7 +128,7 @@
           }
         };
 
-          // Make sur Layer property is an array even if
+          // Make sure Layer property is an array even if
           // there is only one element.
           var setLayerAsArray = function(node) {
             if (node) {
@@ -115,8 +143,34 @@
               }
             }
           };
+
+          // Check if the Style OnlineReource URL needs to go through Lantmäteriet proxy
+          var checkOnlineResourceURL = function(layers) {
+        	  if(layers) {
+        		  for (var j = 0; j < layers.length; j++) {
+        			  if (angular.isDefined(layers[j].Style)) {
+        				  for (var k = 0; k < layers[j].Style.length; k++) {
+        					  if (angular.isDefined(layers[j].Style[k].LegendURL)) {
+        						  for (var l = 0; l < layers[j].Style[k].LegendURL.length; l++) {
+        							  var url = layers[j].Style[k].LegendURL[l].OnlineResource;
+								      if (url.includes("maps.lantmateriet.se")){
+								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+								      } else if (url.includes("maps-ver.lantmateriet.se")) {
+								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+								      } else if (url.includes("api.lantmateriet.se")) {
+								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
+								      }
+        						  }
+        					  } 
+        				  }
+        			  }
+        			  
+        		  }
+        	  }
+          };
           getFlatLayers(result.Capability.Layer);
           setLayerAsArray(result.Capability);
+          checkOnlineResourceURL(layers);
           result.Capability.layers = layers;
           if(parseUrl.length > 1 && wmsLayers[0].toLowerCase() == "layers"){
               result.Capability.Layer[0].Layer = layers;
@@ -146,10 +200,7 @@
               delete defaultParams[p.toLowerCase()];
             }
           }
-
-          return gnUrlUtils.append(parts[0],
-              gnUrlUtils.toKeyValue(defaultParams));
-
+    	  return gnUrlUtils.append(parts[0], gnUrlUtils.toKeyValue(defaultParams));
 
         };
         return {
@@ -163,9 +214,10 @@
                 request: 'GetCapabilities'
               });
 
-              //send request and decode result
               if (gnUrlUtils.isValid(url)) {
-                $http.get(url, {
+             	var proxifiedUrl = proxyfyURL(url);
+           	  //send request and decode result
+                $http.get(proxifiedUrl, {
                   cache: true
                 })
                     .success(function(data) {
@@ -193,8 +245,8 @@
               });
 
               if (gnUrlUtils.isValid(url)) {
-
-                $http.get(url, {
+            	  var proxifiedUrl = proxyfyURL(url);
+                  $http.get(proxifiedUrl, {
                   cache: true
                 })
                     .success(function(data, status, headers, config) {
