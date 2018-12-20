@@ -103,7 +103,7 @@ USA.
     <sch:title>[Geodata.se:104] - Identifierare för resursen  måste anges</sch:title>
     <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']">
       <sch:let name="resourceIdentifier_code"
-               value="normalize-space(//gmd:citation/*/gmd:identifier/*/gmd:code/*/text())"/>
+               value="normalize-space(//gmd:citation/*/gmd:identifier/gmd:MD_Identifier/gmd:code/*/text())"/>
       <sch:assert test="$resourceIdentifier_code">[Geodata.se:104] - Identifierare för resursen krävs</sch:assert>
       <!--Rep	<sch:report test="$resourceIdentifier_code">ID <sch:value-of select="$resourceIdentifier_code"/> </sch:report> -->
     </sch:rule>
