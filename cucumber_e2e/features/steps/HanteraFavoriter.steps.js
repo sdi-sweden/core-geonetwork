@@ -85,8 +85,9 @@ this.Then(/^the post is removed as a favorit$/, function (callback) {
 
     el = element(by.css('span.result-text'));
 		browser.wait(EC.visibilityOf(el), 20000).then(function(){
-			expect(el.$('.ng-binding').getText()).to.eventually.equal('1').and.notify(callback);
+			expect(el.$('.ng-binding').getText()).to.eventually.equal('0').and.notify(callback);
 		});
+		callback();
   });
 
 }

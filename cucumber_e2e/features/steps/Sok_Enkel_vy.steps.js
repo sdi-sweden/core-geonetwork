@@ -39,9 +39,27 @@ module.exports = function() {
 			});
 
 		});
-
+			callback();
 	});
+	this.Then(/^"([^"]*)" and "([^"]*)" is listed$/, function (arg1, arg2, callback) {
+         browser.wait(EC.visibilityOf(element(by.css('div.geo-data-list-cont'))), 20000).then(function(){
+ 			titleElement = list.resultList.get(0).element(by.css('h1.ng-binding'));
+			browser.wait(EC.textToBePresentInElement(titleElement, arg1), 50000)
+			browser.wait(EC.visibilityOf(titleElement), 20000).then(function(){
+			expect(titleElement.getText()).to.eventually.equal(arg1).and.notify(callback);
+			});
 
+		});
+		browser.wait(EC.visibilityOf(element(by.css('div.geo-data-list-cont'))), 20000).then(function(){
+ 			titleElement = list.resultList.get(0).element(by.css('h1.ng-binding'));
+			browser.wait(EC.textToBePresentInElement(titleElement, arg2), 50000)
+			browser.wait(EC.visibilityOf(titleElement), 20000).then(function(){
+			expect(titleElement.getText()).to.eventually.equal(arg2).and.notify(callback);
+			});
+
+		});
+			callback();
+       });
 
 	this.When(/^the user select amne "([^"]*)"$/, function (arg1, callback) {
 		searchfilter.selectCategory(arg1);

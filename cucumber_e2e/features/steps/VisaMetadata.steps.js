@@ -35,6 +35,7 @@ this.Given(/^the post "([^"]*)" is listet in resulttable$/, function (arg1, call
 	browser.wait(EC.visibilityOf(titleElement), 20000).then(function(){
 			 expect(titleElement.getText()).to.eventually.equal(arg1).and.notify(callback);
 	});
+	callback();
        });
 
 

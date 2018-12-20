@@ -9,7 +9,7 @@ module.exports = function() {
 
     this.Given(/^that the user has opend the portal$/, function(callback) {
 
-        login.loginAs("lantt010", "*****", function(result) {
+        login.loginAs("lantt010", "******", function(result) {
             setTimeout(callback, 1000);
         });
     });

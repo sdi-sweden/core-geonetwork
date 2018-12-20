@@ -11,7 +11,7 @@ var EC = protractor.ExpectedConditions;
 module.exports = function() {
 
  this.Given(/^that the user is in contribute view$/, function (callback) {
-     login.loginAs("lantt010","*****", function(result){
+     login.loginAs("lantt010","******", function(result){
          setTimeout(callback, 3000);
      });
      login.goToAdminView(function(result){
@@ -20,6 +20,7 @@ module.exports = function() {
      login.clickOnContribute(function(result){
          setTimeout(callback, 3000);
      });
+	 callback();
  });
  
  this.When(/^the user clicks "([^"]*)"$/, function (button, callback) {
@@ -39,14 +40,17 @@ module.exports = function() {
 //         browser.sleep(2000);
 //     }
      setTimeout(callback, 1000);
+	 callback();
  });
 
  this.Then(/^only metadata belonging to the user should be displayed$/, function (callback) {
      setTimeout(callback, 2000); 
+	 callback();
  });
  
  this.Then(/^only "([^"]*)" should be diplayed$/, function (arg1, callback) {
      setTimeout(callback, 2000);
+	 callback();
  });
  
 }

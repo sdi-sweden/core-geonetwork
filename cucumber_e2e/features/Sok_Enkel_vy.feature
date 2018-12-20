@@ -49,9 +49,8 @@
 	@qa_todo
 	Scenario: Search with 2 Amnen
 	  Given that the user is in Enkel vy
-	  And filter is shown
-		When the user selects Amne "BIOLOGI OCH EKOLOGI"
-	  And the user selects Amne "KUST OCH HAV"
+	  And the user has clicked Amne "BIOLOGI OCH EKOLOGI"
+	  And the user has clicked Amne "KUST OCH HAV"
 	  Then "Testpost_2_Amnen_Geodatasamverkan" and "Testpost_2_Amnen_Oppna_data, Testpost_2_Amnen_Inspire" is listed
 
 	@qa_todo
