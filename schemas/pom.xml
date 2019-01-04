@@ -49,6 +49,7 @@
     <module>iso19110</module>
     <module>iso19139</module>
     <module>iso19139.swe</module>
+    <module>iso19135</module>
   </modules>
   <properties>
     <rootProjectDir>../..</rootProjectDir>
