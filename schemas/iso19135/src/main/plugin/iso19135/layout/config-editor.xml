@@ -90,7 +90,7 @@
                   btnLabel="addRegisterOwner"
                   if="count(grg:RE_Register/grg:owner) = 0"
                   or="owner"
-                  in="/grg:RE_Register">>
+                  in="/grg:RE_Register">
             <template>
               <snippet>
                 <grg:owner>
