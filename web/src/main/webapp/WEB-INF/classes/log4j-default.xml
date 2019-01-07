@@ -32,15 +32,12 @@
     <logger name="org.lmv.geodata.common.server.servlet.filter.header">
         <level value="WARN" />
     </logger>
-
+    
   <!-- Geonetwork module (and submodule) logging -->
   <logger name="geonetwork" additivity="false">
     <level value="WARN"/>
     <appender-ref ref="consoleAppender"/>
     <appender-ref ref="fileAppender"/>
-  </logger>
-   <logger name="geonetwork.lmproxy">
-    <level value="DEBUG"/>
   </logger>
   <logger name="geonetwork.search">
     <level value="WARN"/>
@@ -88,12 +85,9 @@
     <level value="WARN"/>
   </logger>
   <logger name="geonetwork.harvester" additivity="false">
-    <level value="DEBUG"/>
+    <level value="WARN"/>
     <appender-ref ref="consoleAppender"/>
     <appender-ref ref="fileAppender"/>
-  </logger>
-  <logger name="geonetwork.harvest-man">
-    <level value="DEBUG"/>
   </logger>
   <logger name="geonetwork.lucene">
     <level value="WARN"/>
@@ -234,12 +228,6 @@
     <appender-ref ref="fileAppender"/>
   </logger>
 
-  <logger name="org.mapfish.print" additivity="true">
-    <level value="WARN"/>
-    <appender-ref ref="consoleAppender"/>
-    <appender-ref ref="fileAppender"/>
-   </logger>
-  
   <!-- Turn off logging except when explicitly declared below -->
   <root>
     <level value="OFF"></level>

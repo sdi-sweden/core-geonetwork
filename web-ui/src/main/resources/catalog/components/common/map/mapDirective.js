@@ -34,7 +34,8 @@
        'gnMap',
        'gnOwsContextService',
        '$http',
-       function(gnMap, gnOwsContextService, $http) {
+       'gnSearchLocation',
+       function(gnMap, gnOwsContextService, $http, gnSearchLocation) {
          return {
            restrict: 'A',
            replace: true,
@@ -189,9 +190,6 @@
 
              //To set base map of editor
             var extent = [-1200000, 4700000, 2540000, 8500000];
-            var resolutions = [4096.0, 2048.0, 1024.0, 512.0, 256.0,
-              128.0, 64.0, 32.0, 16.0, 8.0];
-            var matrixIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
             proj4.defs(
                 'EPSG:3006',
@@ -206,44 +204,36 @@
 
             var projection = ol.proj.get('EPSG:3006');
 
-            var tileGrid = new ol.tilegrid.WMTS({
-              tileSize: 256,
-              extent: extent,
-              resolutions: resolutions,
-              matrixIds: matrixIds
+            // MapFish requires absolute path to topoweb service
+            var topoWmsUrl = gnSearchLocation.appUrl() + '/topo-wms';
+
+            var wms = new ol.layer.Tile({
+            	group: 'Background layers',
+            	crossOrigin: 'anonymous',
+            	url: topoWmsUrl,
+                source: new ol.source.TileWMS({
+                    url: topoWmsUrl,
+                    params: {
+                        FORMAT: 'image/png',
+                        VERSION: '1.1.1',
+                        SRS: 'EPSG:3006',
+                        LAYERS: 'topowebbkartan'
+                    }
+                })
             });
-
-            var apiKey = 'a9a380d6b6f25f22e232b8640b05ea8';
-
-            var wmts = new ol.layer.Tile({
-              extent: extent,
-              group: 'Background layers',
-              url:  'https://api.lantmateriet.se/open/topowebb-ccby/' +
-              'v1/wmts/token/' + apiKey + '/',
-              source: new ol.source.WMTS({
-                url: 'https://api.lantmateriet.se/open/topowebb-ccby/' +
-                    'v1/wmts/token/' + apiKey + '/',
-                layer: 'topowebb',
-                format: 'image/png',
-                matrixSet: '3006',
-                tileGrid: tileGrid,
-                version: '1.0.0',
-                style: 'default',
-                crossOrigin: 'anonymous'
-              })
-            }); 
-
+            
             var mapsConfig = {
-              resolutions: resolutions,
               extent: extent,
               projection: projection,
               center: [572087, 6802255],
-              zoom: 0
+              maxZoom: 28,
+              minZoom: 2,
+              zoom: 2
             };
 
              var map = new ol.Map({
                layers: [
-                 wmts,
+                 wms,
                  bboxLayer
                ],
                renderer: 'canvas',
@@ -357,24 +347,75 @@
               * Called on for showing geo suggestions.
               */
              scope.getNameSearch = function(val) {
-               var posturl = 'https://www.geodata.se/NameWebService/search';
-                val = encodeURIComponent(val);
-                var params = {
-                  'searchstring': val,
-                  'callback': 'JSON_CALLBACK'
-                };
-                return $http({
-                  method: 'JSONP',
-                  url: posturl,
-                  params: params
-                }).then(function(res) {
-                  var data = res.data;
-                  var status = res.status;
-                  var headers = res.headers;
-                  var config = res.config;
-                  var statusText = res.statusText;
-                  return data;
-                });
+//               var posturl = 'https://www.geodata.se/NameWebService/search';
+//                val = encodeURIComponent(val);
+//                var params = {
+//                  'searchstring': val,
+//                  'callback': 'JSON_CALLBACK'
+//                };
+//                return $http({
+//                  method: 'JSONP',
+//                  url: posturl,
+//                  params: params
+//                }).then(function(res) {
+//                  var data = res.data;
+//                  var status = res.status;
+//                  var headers = res.headers;
+//                  var config = res.config;
+//                  var statusText = res.statusText;
+//                  return data;
+//                });
+
+            	    var parent = $scope.$parent;
+            	    var lang = parent.langs[parent.lang];
+
+            	    var formatter = function(loc) {
+            	        var props = [];
+            	        ['toponymName', 'adminName1', 'countryName'].
+            	            forEach(function(p) {
+            	              if (loc[p]) { props.push(loc[p]); }
+            	            });
+            	        return (props.length == 0) ? '' : '—' + props.join(', ');
+            	      };
+
+            	    //TODO: move api url and username to config
+            	    var url = 'http://api.geonames.org/searchJSON';
+            		  //redirect http request via proxy
+            	 	  if (!url.includes("https://")) {
+            			url = '../../proxy?url=' + encodeURIComponent(url);
+            	      }  
+            	      return $http.get(url, {
+            	        params: {
+            	          lang: lang,
+            	          style: 'full',
+            	          type: 'json',
+            	          maxRows: 10,
+            	          name_startsWith: val,
+            	          country: 'SE',
+            	          east: 24.1633,
+            	          west: 10.9614,
+            	          north: 69.059,
+            	          south: 55.3363,
+            	          username: 'georchestra'
+            	        }
+            	      }).
+            	        then(function(response) {
+            	          var loc;
+            	          var results = [];
+            	          for (var i = 0; i < response.data.geonames.length; i++) {
+            	            loc = response.data.geonames[i];
+            	            if (loc.bbox) {
+            	              results.push({
+            	                Name: loc.name,
+            	                Type: loc.toponymName,
+            	                extent: ol.proj.transformExtent([loc.bbox.west,
+            	                  loc.bbox.south, loc.bbox.east, loc.bbox.north],
+            	                'EPSG:4326', 'EPSG:3006')
+            	              });
+            	            }
+            	          }
+            	          return results;
+            	        });
             };
 
              /**

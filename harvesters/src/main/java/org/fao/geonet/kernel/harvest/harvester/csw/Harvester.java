@@ -657,9 +657,9 @@ class Harvester implements IHarvester<HarvestResult> {
 
     private RecordInfo getRecordInfo(Element record) {
         String name = record.getName();
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
             log.debug("getRecordInfo (name): " + name);
-
+        }
         // get schema
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
         DataManager dm = gc.getBean(DataManager.class);
@@ -667,9 +667,9 @@ class Harvester implements IHarvester<HarvestResult> {
         // get uuid and date modified
         try {
             String schema = dm.autodetectSchema(record);
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("getRecordInfo (schema): " + schema);
-
+            } 
             String identif = dm.extractUUID(schema, record);
             if (identif.length() == 0) {
                 log.warning("Record doesn't have a uuid : " + name);
@@ -678,8 +678,9 @@ class Harvester implements IHarvester<HarvestResult> {
 
             String modified = dm.extractDateModified(schema, record);
             if (modified.length() == 0) modified = null;
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("getRecordInfo: adding " + identif + " with modification date " + modified);
+            }
             return new RecordInfo(identif, modified);
         } catch (Exception e) {
             log.warning("Skipped record not in supported format : " + name);

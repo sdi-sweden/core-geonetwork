@@ -69,11 +69,33 @@
     'gnGlobalSettings',
     'gnMap',
     '$q',
+    'gnUrlUtils',
     function($http, gnOwsCapabilities, gnUrlUtils, gnGlobalSettings,
-             gnMap, $q) {
+             gnMap, $q, gnUrlUtils) {
 
       this.WMS_MIMETYPE = 'application/x-ogc-wms';
 
+	  	var proxyfyURL = function(url) {
+			if (url.includes("proxy") || url.includes("topo-wms")) {
+				return url;    			
+			}
+			var newUrl = url;
+	        if (url.includes("maps.lantmateriet.se") || url.includes("www.geodata.se/gateway/gateto")) {
+	            newUrl = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
+	        } else if (url.includes("maps-ver.lantmateriet.se")) {
+	        	newUrl = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
+	        }  else if (url.includes("api.lantmateriet.se")) {
+            	newUrl = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
+            }
+	         else {
+	       	    if (!url.includes("https://")) {
+	         	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+	            }
+	        }
+	        return newUrl;
+		}
+      
+      
       /**
        * @ngdoc method
        * @methodOf gn_viewer.service:gnWpsService
@@ -96,7 +118,8 @@
 
         //send request and decode result
         if (gnUrlUtils.isValid(url)) {
-          return $http.get(url, {
+          var proxifiedUrl = proxyfyURL(url);	
+          return $http.get(proxifiedUrl, {
             cache: true
           }).then(
               function(response) {
