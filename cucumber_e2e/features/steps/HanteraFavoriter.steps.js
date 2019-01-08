@@ -69,26 +69,25 @@ this.When(/^the user clicks the star next to the post "([^"]*)"$/, function (arg
 	browser.wait(EC.visibilityOf(element(by.css('div.geo-data-list.ng-scope'))), 20000).then(function(){
 
 		 list.removePostAsFavorite(arg1);
-		 callback();
-
+	
 	});
-
+		 callback();
 	  });
 
 this.Then(/^the post is removed as a favorit$/, function (callback) {
     //searchfilter.toggleFavorites;
 		//searchfilter.clearFilter;
-
-
-   browser.driver.sleep(3000);
+	
+	browser.driver.sleep(3000);
     searchfilter.toggleFavorites;
 
 
 
     el = element(by.css('span.result-text'));
-		browser.wait(EC.visibilityOf(el), 2000).then(function(){
+		browser.wait(EC.visibilityOf(el), 20000).then(function(){
 			expect(el.$('.ng-binding').getText()).to.eventually.equal('0').and.notify(callback);
 		});
+		callback();
   });
 
 }

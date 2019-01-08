@@ -37,7 +37,7 @@ var allaMD = 85
 
         this.Then(/^all filters are removed$/, function (callback) {
            searchfilter.getSelectedFilterList.then(function(items){
-             chai.assert.lengthOf(items,5);
+             chai.assert.lengthOf(items,7);
         		});
             expect(element(by.css('[data-ng-show="searchObj.params.resourceDateFrom"]')).getAttribute('class')).to.eventually.equal('ng-hide');
             expect(element(by.css('[data-ng-show="searchObj.params.resourceDateTo != undefined"]')).getAttribute('class')).to.eventually.equal('ng-hide');
@@ -45,7 +45,7 @@ var allaMD = 85
             expect(element(by.css('[data-ng-show="searchObj.params.download == \'true\'"]')).getAttribute('class')).to.eventually.equal('ng-hide').and.notify(callback);
             expect(element(by.css('[data-ng-show="(searchObj.params._id != \'\') && (searchObj.params._id != undefined)"]')).getAttribute('class')).to.eventually.equal('ng-hide').and.notify(callback);
 
-
+			callback();
          });
 
         this.Then(/^all posts are shown$/, function (callback) {
@@ -53,7 +53,8 @@ var allaMD = 85
             allaMD.then(function(a){
               var els = element(by.css('span.result-text'));
               expect(els.$('.ng-binding').getText()).to.eventually.equal(a).and.notify(callback);
-            })
+            });
+			  callback();
          });
 
          this.Given(/^that the result list contains metadata poster$/, function (callback) {
@@ -84,10 +85,9 @@ var allaMD = 85
           browser.driver.manage().window().maximize();
           list.setCompactViewResult;
           list.resultList.get(0).element(by.xpath("//*[contains(text(),'abstract')]")).isDisplayed().then(function(a){
-             assert.isFalse(a, 'Result table is not collapsed');
-               callback();
+             assert.isFalse(a, 'Result table is not collapsed');    
            });
-
+		   callback();
           });
 
           this.When(/^the user clicks the button to show the result list expanded$/, function (callback) {
@@ -98,9 +98,8 @@ var allaMD = 85
          this.Then(/^the result list is expanded$/, function (callback) {
            list.resultList.get(0).element(by.xpath("//*[contains(text(),'abstract')]")).isDisplayed().then(function(a){
            assert.isTrue(a, 'Result table is not expanded');
-                callback();
             });
-
+			callback();
          });
          this.When(/^the user clicks the button to show the result list collapsed$/, function (callback) {
          list.setCompactViewResult;

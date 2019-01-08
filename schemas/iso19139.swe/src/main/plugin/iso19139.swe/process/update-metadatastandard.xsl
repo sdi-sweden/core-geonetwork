@@ -58,6 +58,17 @@
   <xsl:template match="gmd:resourceConstraints" />
 
 
+  <!-- Change gmd:RS_Identifier to gmd:MD_Identifier as required by INSPIRE TG 2.0 -->
+  <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier[gmd:RS_Identifier]">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+      <gmd:MD_Identifier>
+        <xsl:copy-of select="gmd:RS_Identifier/gmd:authority" />
+        <xsl:copy-of select="gmd:RS_Identifier/gmd:code" />
+      </gmd:MD_Identifier>
+    </xsl:copy>
+  </xsl:template>
+  
   <!-- Change specification title to an Anchor if pointing to the INSPIRE spec -->
   <xsl:template match="gmd:specification">
     <xsl:variable name="title" select="gmd:CI_Citation/gmd:title/gco:CharacterString" />

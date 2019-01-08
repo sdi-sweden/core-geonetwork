@@ -566,6 +566,8 @@
               The directive takes care of setting values. -->
               <xsl:for-each select="$template/values/key">
                 <xsl:variable name="valueLabelKey" select="@label"/>
+                <xsl:variable name="keyRequired" select="@required"/>
+                <xsl:variable name="disabled" select="@disabled"/>
                 <xsl:variable name="helper"
                               select="if ($keyValues) then $keyValues/field[@name = $valueLabelKey]/helper else ''"/>
                 <xsl:variable name="codelist"
@@ -576,6 +578,11 @@
                 <!-- Only display label if more than one key to match -->
                 <xsl:if test="count($template/values/key) > 1">
                   <label for="{$id}_{@label}">
+                    <!-- if key has an attr required="true"-->
+                    <xsl:if test="$keyRequired">
+                      <xsl:attribute name="class" select="'gn-required'"/>
+                    </xsl:if>
+
                     <xsl:value-of select="$strings/*[name() = $valueLabelKey]"/>
                   </label>
                 </xsl:if>
@@ -585,7 +592,7 @@
                     <textarea class="form-control"
                               data-gn-field-tooltip="{$schema}|{@tooltip}"
                               id="{$id}_{@label}">
-                      <xsl:if test="$readonly = 'true'">
+                      <xsl:if test="$readonly = 'true' or $disabled = 'true'">
                         <xsl:attribute name="disabled"/>
                       </xsl:if>
                     </textarea>
@@ -594,7 +601,7 @@
                     <select class="form-control input-sm"
                             data-gn-field-tooltip="{$schema}|{@tooltip}"
                             id="{$id}_{@label}">
-                      <xsl:if test="$readonly = 'true'">
+                      <xsl:if test="$readonly = 'true' or $disabled = 'true'">
                         <xsl:attribute name="disabled"/>
                       </xsl:if>
                       <option></option>
@@ -611,7 +618,7 @@
                       <input type="checkbox"
                              data-gn-field-tooltip="{$schema}|{@tooltip}"
                              id="{$id}_{@label}">
-                        <xsl:if test="$readonly = 'true'">
+                        <xsl:if test="$readonly = 'true' or $disabled = 'true'">
                           <xsl:attribute name="disabled"/>
                         </xsl:if>
                       </input>
@@ -671,7 +678,7 @@
                           forms -->
                         <xsl:attribute name="class" select="'hidden'"/>
                       </xsl:if>
-                      <xsl:if test="$readonly = 'true'">
+                      <xsl:if test="$readonly = 'true' or $disabled = 'true'">
                         <xsl:attribute name="disabled"/>
                       </xsl:if>
                     </input>

@@ -40,7 +40,7 @@ this.Then(/^"([^"]*)" is listed in AdvanceView$/, function (arg1, callback) {
 	browser.wait(EC.visibilityOf(titleElement), 20000).then(function(){
 		expect(titleElement.getText()).to.eventually.equal(arg1).and.notify(callback);
 	});
-
+callback();
        });
 
 

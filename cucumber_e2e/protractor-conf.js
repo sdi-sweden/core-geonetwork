@@ -8,7 +8,16 @@ exports.config = {
   frameworkPath: 'node_modules/protractor-cucumber-framework',
 
   specs: [
-    'featuresEditor/FilterMetadataInEditor.feature',
+	
+	'featuresEditor/Login.feature',
+	'features/HanteraFavoriter.feature',
+	'features/Sok_Enkel_vy.feature',
+    'features/Sok_Avancerad_vy.feature',
+	'featuresEditor/FilterMetadataInEditor.feature',
+    'featuresEditor/PubliceraMetadatapost.feature',
+	'features/VisaMetadata.feature',
+	'features/VisaResultat.feature',
+	
   ],
   
   cucumberOpts: {
@@ -18,10 +27,10 @@ exports.config = {
     'features/support/hooks.js',
     'features/steps/Sok_Enkel_vy.steps.js',
     'features/steps/VisaMetadata.steps.js',
-    'features/steps/Sok_advance_view.steps.js',
-    'features/steps/PubliceraMetadatapost.steps.js',
+    'features/steps/Sok_Avancerad_vy.steps.js',
     'features/steps/HanteraFavoriter.steps.js',
     'features/steps/VisaResultat.steps.js',
+	'featuresEditor/steps/PubliceraMetadatapost.steps.js',
     'featuresEditor/steps/Login.steps.js',
     'featuresEditor/steps/FilterMetaDataInEditor.steps.js',
     'featuresEditor/steps/AdministrateMetadata.steps.js'
@@ -29,10 +38,6 @@ exports.config = {
 
     format: 'pretty',
 	keepAlive: true,
-   tags:[
-      '~@qa_readys',
-      '~@qa_todo',
-      '~@qa_dev'
-    ]
+    tags: '@qa_ready'  
   }
 };

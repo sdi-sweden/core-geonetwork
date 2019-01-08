@@ -549,6 +549,11 @@
       <version>${project.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>schema-iso19135</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
     <!-- OWASP Enterprise Security API -->
     <dependency>
@@ -644,6 +649,11 @@
                 </resource>
                 <resource>
                   <directory>${project.basedir}/../schemas/iso19139.swe/src/main/plugin</directory>
+                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                </resource>
+
+                <resource>
+                  <directory>${project.basedir}/../schemas/iso19135/src/main/plugin</directory>
                   <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
                 </resource>
 

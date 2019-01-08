@@ -397,7 +397,7 @@
 				theFrameDocument.close();
 			})
 			.error(function(data) {
-				alert('Error. Unable to print');
+				alert('Fel: Kan inte skriv ut.');
 			});
 		};
 

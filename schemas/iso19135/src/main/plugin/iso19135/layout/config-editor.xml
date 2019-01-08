@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../config-editor.xsd"
+  xmlns:gn="http://www.fao.org/geonetwork"
+  xmlns:grg="http://www.isotc211.org/2005/grg"
+  xmlns:gmd="http://www.isotc211.org/2005/gmd"
+  xmlns:gco="http://www.isotc211.org/2005/gco"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <!-- Form field type configuration. Default is text. -->
+  <fields>
+    <for name="grg:contentSummary" use="textarea"/>
+    <for name="grg:definition" use="textarea"/>
+
+    <for name="gco:Distance" use="number"/>
+    <for name="gco:Decimal" use="number"/>
+    <for name="gco:Integer" use="number"/>
+    <for name="gco:Boolean" use="checkbox"/>
+
+    <for name="gco:Date" use="data-gn-date-picker"/>
+    <for name="gco:DateTime" use="data-gn-date-picker"/>
+  </fields>
+
+  <fieldsWithFieldset>
+    <name>grg:containedItem</name>
+    <name>grg:fieldOfApplication</name>
+    <name>grg:owner</name>
+    <name>grg:submitter</name>
+    <name>grg:manager</name>
+    <name>grg:itemClass</name>
+    <name>grg:containedItemClass</name>
+    <name>grg:operatingLanguage</name>
+  </fieldsWithFieldset>
+
+  <multilingualFields>
+    <!-- In multilingual mode, define which mode
+    the widget should have. If expanded, then one
+    field per language is displayed. -->
+    <expanded>
+      <name>grg:name</name>
+    </expanded>
+    <!-- All fields in ISO could be multilingual.
+    Define element to exlcude. 
+    -->
+    <exclude>
+    </exclude>
+  </multilingualFields>
+
+  <!-- View configuration -->
+  <views>
+    <view name="default">
+      <tab id="default" default="true" mode="flat">
+        <section template="iso19135-list-full-content-index" />
+
+        <section name="registerTab">
+          <field xpath="/grg:RE_Register/grg:name"/>
+          <field xpath="/grg:RE_Register/grg:contentSummary"/>
+          <field xpath="/grg:RE_Register/grg:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code"/>
+
+          <action name="addIdentifier" type="add"
+                  btnLabel="addIdentifier"
+                  forceLabel="true"
+                  if="count(grg:RE_Register/grg:citation/gmd:CI_Citation/gmd:identifier) = 0"
+                  or="citation"
+                  in="/grg:RE_Register">
+            <template>
+              <snippet>
+                <grg:citation>
+                  <gmd:CI_Citation>
+                    <gmd:identifier>
+                      <gmd:MD_Identifier>
+                        <gmd:code>
+                          <gco:CharacterString></gco:CharacterString>
+                        </gmd:code>
+                      </gmd:MD_Identifier>
+                    </gmd:identifier>
+                  </gmd:CI_Citation>
+                </grg:citation>
+              </snippet>
+            </template>
+          </action>
+
+          <field xpath="/grg:RE_Register/grg:uniformResourceIdentifier/gmd:CI_OnlineResource/gmd:linkage"/>
+
+
+          <field xpath="/grg:RE_Register/grg:owner"/>
+
+          <action name="addRegisterOwner" type="add"
+                  forceLabel="true"
+                  btnLabel="addRegisterOwner"
+                  if="count(grg:RE_Register/grg:owner) = 0"
+                  or="owner"
+                  in="/grg:RE_Register">
+            <template>
+              <snippet>
+                <grg:owner>
+                  <grg:RE_RegisterOwner>
+                    <grg:name>
+                      <gco:CharacterString></gco:CharacterString>
+                    </grg:name>
+                    <grg:contact>
+                      <gmd:CI_ResponsibleParty>
+                        <gmd:role>
+                          <gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode"
+                                           codeListValue="owner"/>
+                        </gmd:role>
+                      </gmd:CI_ResponsibleParty>
+                    </grg:contact>
+                  </grg:RE_RegisterOwner>
+                </grg:owner>
+              </snippet>
+            </template>
+          </action>
+        </section>
+
+        <section name="registerItemsTab">
+          <field name="containedItem"
+                 forceLabel="true"
+                 xpath="/grg:RE_Register/grg:containedItem"
+                 templateModeOnly="true">
+            <template>
+              <values>
+                <key label="name" required="true" xpath="grg:RE_RegisterItem/grg:name/gco:CharacterString" tooltip="grg:name" />
+                <key label="id" xpath="@id" tooltip="id" />
+                <key label="xlink" xpath="@xlink:href" tooltip="xlink:href" disabled="true"/>
+                <key label="status" xpath="grg:RE_RegisterItem/grg:status/grg:RE_ItemStatus" tooltip="grg:RE_ItemStatus">
+                  <codelist name="grg:RE_ItemStatus"/>
+                </key>
+                <key label="definition" use="textarea" equired="true" xpath="grg:RE_RegisterItem/grg:definition/gco:CharacterString" tooltip="grg:definition" />
+                <key label="itemclass" required="true" xpath="grg:RE_RegisterItem/grg:itemClass/grg:RE_ItemClass/grg:name/gco:CharacterString" tooltip="grg:itemClass" />
+              </values>
+              <snippet>
+                <grg:containedItem id="{{id}}">
+                  <grg:RE_RegisterItem>
+                    <gn:copy select="grg:itemIdentifier"/>
+                    <grg:name>
+                        <gco:CharacterString>{{name}}</gco:CharacterString>
+                    </grg:name>
+                    <grg:status>
+                      <grg:RE_ItemStatus>{{status}}</grg:RE_ItemStatus>
+                    </grg:status>
+                    <gn:copy select="grg:dateAccepted"/>
+                    <gn:copy select="grg:dateAmended"/>
+                    <grg:definition>
+                      <gco:CharacterString>{{definition}}</gco:CharacterString>
+                    </grg:definition>
+                    <gn:copy select="grg:description"/>
+                    <gn:copy select="grg:fieldOfApplication"/>
+                    <gn:copy select="grg:alternativeExpressions"/>
+                    <gn:copy select="grg:amendmentInformation"/>
+                    <gn:copy select="grg:clarificationInformation"/>
+                    <gn:copy select="grg:clarificationInformation"/>
+                    <gn:copy select="grg:additionInformation"/>
+
+                    <grg:itemClass>
+                      <grg:RE_ItemClass>
+                        <grg:name>
+                          <gco:CharacterString>{{itemclass}}</gco:CharacterString>
+                        </grg:name>
+                        <gn:copy select="grg:technicalStandard"/>
+                        <gn:copy select="grg:alternativeNames"/>
+                        <gn:copy select="grg:describedItem"/>
+                      </grg:RE_ItemClass>
+                    </grg:itemClass>
+
+                    <gn:copy select="grg:specificationSource"/>
+                    <gn:copy select="grg:specificationLineage"/>
+                    <gn:copy select="grg:successor"/>
+                    <gn:copy select="grg:predecessor"/>
+                  </grg:RE_RegisterItem>
+              </grg:containedItem>
+            </snippet>
+            </template>
+          </field>
+
+          <action type="add" name="addItem"
+                  or="containedItem" in="/grg:RE_Register">
+            <template>
+              <snippet>
+                <grg:containedItem>
+                  <grg:RE_RegisterItem>
+                    <grg:itemIdentifier gco:nilReason="inapplicable"/>
+                    <grg:name>
+                      <gco:CharacterString>-</gco:CharacterString>
+                    </grg:name>
+                    <grg:status>
+                      <grg:RE_ItemStatus></grg:RE_ItemStatus>
+                    </grg:status>
+                    <grg:definition>
+                      <gco:CharacterString></gco:CharacterString>
+                    </grg:definition>
+                    <grg:additionInformation gco:nilReason="missing"/>
+                    <grg:itemClass>
+                      <grg:RE_ItemClass>
+                        <grg:name>
+                          <gco:CharacterString></gco:CharacterString>
+                        </grg:name>
+                        <gn:copy select="grg:technicalStandard"/>
+                        <gn:copy select="grg:alternativeNames"/>
+                        <gn:copy select="grg:describedItem"/>
+                      </grg:RE_ItemClass>
+                    </grg:itemClass>
+                  </grg:RE_RegisterItem>
+                </grg:containedItem>
+              </snippet>
+            </template>
+          </action>
+
+        </section>
+      </tab>
+    </view>
+
+    <!-- Enable the following view to provide a TOC of items, intended for very long codelists, as
+      the TOC Filters only the elements starting with the selected letter.
+
+      Format:
+       ITEM NAME FIRST LETTER (COUNT) - ITEM NAME FIRST LETTER (COUNT) - ...
+
+      Requires to click the Save Metadata button to refresh the editor once selected an item (TO IMPROVE).
+     -->
+    <view name="toc" disabled="true">
+      <tab id="toc" default="true" mode="flat">
+        <section>
+          <field xpath="/grg:RE_Register/grg:name"/>
+          <field xpath="/grg:RE_Register/grg:contentSummary"/>
+          <section template="iso19135-table-of-content"/>
+          <!--<section name="concepts"
+                   xpath="/grg:RE_Register/grg:containedItem"
+                    or="containedItem"
+                    in="/grg:RE_Register"/>-->
+
+          <action type="add" name="addItem"
+                  or="containedItem" in="/grg:RE_Register">
+            <template>
+              <snippet>
+                <grg:containedItem>
+                  <grg:RE_RegisterItem>
+                    <grg:itemIdentifier>
+                      <gco:Integer>1</gco:Integer>
+                    </grg:itemIdentifier>
+                    <grg:name>
+                      <gco:CharacterString>-</gco:CharacterString>
+                    </grg:name>
+                    <grg:status>
+                      <grg:RE_ItemStatus></grg:RE_ItemStatus>
+                    </grg:status>
+                    <grg:dateAccepted>
+                      <gco:Date></gco:Date>
+                    </grg:dateAccepted>
+                    <grg:definition>
+                      <gco:CharacterString></gco:CharacterString>
+                    </grg:definition>
+                    <grg:specificationLineage>
+                      <grg:RE_Reference>
+                        <grg:itemIdentifierAtSource>
+                          <gco:CharacterString/>
+                        </grg:itemIdentifierAtSource>
+                        <grg:similarity>
+                          <grg:RE_SimilarityToSource codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#RE_SimilarityToSource"
+                                                     codeListValue=""/>
+                        </grg:similarity>
+                        <grg:sourceCitation/>
+                      </grg:RE_Reference>
+                    </grg:specificationLineage>
+                  </grg:RE_RegisterItem>
+                </grg:containedItem>
+              </snippet>
+            </template>
+          </action>
+        </section>
+      </tab>
+    </view>
+
+    <view name="advanced">
+      <tab id="advanced">
+        <section xpath="/grg:RE_Register"/>
+      </tab>
+    </view>
+    <view name="xml">
+      <tab id="xml" default="true"/>
+    </view>
+  </views>
+</editor>

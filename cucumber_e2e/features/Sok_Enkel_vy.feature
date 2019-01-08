@@ -23,7 +23,7 @@
 	Scenario: Search with fritext on tva ord in the titel
     Given that the user is in Enkel vy
 		When the user enters the text "Testpost_fritext_titel_tva_ord exakt_Geodatasamverkan" in the fritext field
-		Then '"Testpost_fritext_titel_tva_ord exakt_Geodatasamverkan"' is listed
+		Then "Testpost_fritext_titel_tva_ord exakt_Geodatasamverkan" is listed
 
 	@qa_ready
 	Scenario: Search with amne
@@ -49,9 +49,8 @@
 	@qa_todo
 	Scenario: Search with 2 Amnen
 	  Given that the user is in Enkel vy
-	  And filter is shown
-		When the user selects Amne "BIOLOGI OCH EKOLOGI"
-	  And the user selects Amne "KUST OCH HAV"
+	  And the user has clicked Amne "BIOLOGI OCH EKOLOGI"
+	  And the user has clicked Amne "KUST OCH HAV"
 	  Then "Testpost_2_Amnen_Geodatasamverkan" and "Testpost_2_Amnen_Oppna_data, Testpost_2_Amnen_Inspire" is listed
 
 	@qa_todo
