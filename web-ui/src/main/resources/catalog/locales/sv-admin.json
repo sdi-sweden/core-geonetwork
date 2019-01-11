@@ -1086,5 +1086,6 @@
     "map/wfsServer/url": "Geoserver - URL",
     "map/wfsServer/workspace": "Geoserver - workspace",
     "map/wfsServer/layer": "Geoserver - lager",
-    "selectExistingLogo": "Välj en logotyp"
+    "selectExistingLogo": "Välj en logotyp",
+    "update-metadatastandard": "Metadata Swedish profile update process"
 }
