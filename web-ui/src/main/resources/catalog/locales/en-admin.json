@@ -1076,6 +1076,6 @@
     "map/wfsServer": "Geoserver - configuration",
     "map/wfsServer/url": "Geoserver - URL",
     "map/wfsServer/workspace": "Geoserver - workspace",
-    "map/wfsServer/layer": "Geoserver - layer"
-
+    "map/wfsServer/layer": "Geoserver - layer",
+    "update-metadatastandard": "Metadata Swedish profile update process"
 }
