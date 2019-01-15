@@ -401,7 +401,11 @@
     </xsl:if>
     
   </xsl:template>
-  
+
+
+  <!-- Remove gmd:aggregationInfo as not used and some records identifier with invalid content in gmd:aggregateDataSetIdentifier, causing the metadata failing the indexing/display -->
+  <xsl:template match="gmd:aggregationInfo" />
+
   <!-- ================================================================= -->
   <!-- copy everything else as is -->
 

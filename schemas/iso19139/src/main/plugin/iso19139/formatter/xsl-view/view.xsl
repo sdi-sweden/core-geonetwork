@@ -336,7 +336,47 @@
       </dd>
     </dl>
   </xsl:template>
-  
+
+  <!-- A maintenanceAndUpdateFrequency is displayed with its translated codeListValue -->
+  <xsl:template mode="render-field"
+                match="gmd:maintenanceAndUpdateFrequency"
+                priority="100">
+    <xsl:param name="fieldName" select="''" as="xs:string"/>
+
+
+    <dl class="gn-contact">
+      <dt>
+        <xsl:value-of select="if ($fieldName)
+                                  then $fieldName
+                                  else tr:node-label(tr:create($schema), name(), null)"/>
+      </dt>
+      <dd>
+        <xsl:apply-templates mode="render-value"
+                             select="gmd:MD_MaintenanceFrequencyCode/@codeListValue"/>
+
+      </dd>
+    </dl>
+  </xsl:template>
+
+
+  <xsl:template mode="render-field"
+                match="gmd:maintenanceNote"
+                priority="100">
+    <xsl:param name="fieldName" select="''" as="xs:string"/>
+
+    <dl>
+      <dt>
+        <xsl:value-of select="if ($fieldName)
+                                then $fieldName
+                                else tr:node-label(tr:create($schema), name(), null)"/>
+      </dt>
+      <dd>
+        <xsl:apply-templates mode="render-value" select="."/>
+        <xsl:apply-templates mode="render-value" select="@*"/>
+      </dd>
+    </dl>
+  </xsl:template>
+
   <!-- Metadata linkage -->
   <xsl:template mode="render-field"
                 match="gmd:fileIdentifier"
@@ -401,9 +441,10 @@
 						<th class="view-metadata-table-th-2">
 							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkName')"/>
 						</th>
-						<th class="view-metadata-table-th-3">
+            <th class="view-metadata-table-th-3">
 							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkUrl')"/>
 						</th>
+
 					</tr>
 					<xsl:for-each select="parent::node()/gmd:onLine">
 						<xsl:variable name="protocol">
@@ -433,7 +474,7 @@
 						</xsl:variable>
 						<xsl:variable name="name">
 							<xsl:apply-templates mode="render-value" select="*/gmd:name"/>
-						</xsl:variable>
+            </xsl:variable>
 						<xsl:variable name="url">
 							<xsl:apply-templates mode="render-value" select="*/gmd:linkage/gmd:URL"/>
 						</xsl:variable>
@@ -444,7 +485,7 @@
 							<td class="view-metadata-table-td-2">
 								<xsl:value-of select="normalize-space($name)"/>
 							</td>
-							<td class="view-metadata-table-td-3">
+              <td class="view-metadata-table-td-3">
 								<xsl:choose>
 									<xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
 										<a href="{$url}" target="_blank">
