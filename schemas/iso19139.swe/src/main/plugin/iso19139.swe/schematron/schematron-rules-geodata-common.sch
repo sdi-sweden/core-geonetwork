@@ -240,13 +240,14 @@ USA.
 
       <sch:assert test="not(gmd:hierarchyLevel/*/@codeListValue='dataset') or count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints) &gt; 0">[Geodata.se:110e] [Geodata.se:110f] Användningsbegränsningar och användbarhetsbegränsingar skall anges</sch:assert>
 
-	  <sch:let name="useLimitation" value="//gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString/text()"/>
+	  <!--<sch:let name="useLimitation" value="//gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString/text()"/>
       <sch:let name="useLimitation_count" value="count(//gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString/text())"/>
       <sch:assert test="$useLimitation_count = 1">[Geodata.se:110g] Information om användbarhetsbegränsningar måste finnas men får bara anges en gång</sch:assert>
 
       <sch:let name="useLimitationLength" value="//gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString/text()/string-length(.)"/>
       <sch:assert test="$useLimitation and ($useLimitationLength &lt; 2500)">[Geodata.se:110e] Information om användbarhetsbegränsningar måste finnas och vara kortare än 2500 tecken </sch:assert>
-	  
+	  -->
+
       <sch:let name="accessConstraints" value="//gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue"/>
       <sch:let name="accessConstraints_present" value="//gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'copyright' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'patent' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'patentPending' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'trademark' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'license' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'intellectualPropertyRights' or //gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'restricted'"/>
       <sch:let name="classification_present" value="//gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'unclassified' or //gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'restricted' or //gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'confidential' or //gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'secret' or //gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'topSecret'"/>
@@ -268,12 +269,12 @@ USA.
       </sch:report>
     </sch:rule>
 -->    
-    <sch:rule context="//gmd:identificationInfo">
+    <!--<sch:rule context="//gmd:identificationInfo">
       <sch:let name="useLimitation" value="//gmd:resourceConstraints/*/gmd:useLimitation//text()/normalize-space(.)"/>
       <sch:let name="useLimitation_count"
                value="count(//gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/*/gmd:useLimitation/*/text()/normalize-space(.))"/>
       <sch:assert test="$useLimitation_count">[Geodata.se:110e] Information om användbarhetsbegränsningar saknas</sch:assert>
-	</sch:rule>
+	</sch:rule>-->
   </sch:pattern>
 
 
