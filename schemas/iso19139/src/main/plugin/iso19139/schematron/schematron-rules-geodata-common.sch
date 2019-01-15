@@ -205,13 +205,13 @@ USA.
 			<sch:let name="resourceConstraints_count" value="count(gmd:resourceConstraints)"/>
 			<sch:assert test="$resourceConstraints_count > 0 ">[Geodata.se:110c] Information om restriktioner saknas</sch:assert>
 
-			<sch:let name="useLimitation_count" value="count(gmd:resourceConstraints/*/gmd:useLimitation)"/>
+			<!--<sch:let name="useLimitation_count" value="count(gmd:resourceConstraints/*/gmd:useLimitation)"/>
 			<sch:assert test="$useLimitation_count = 1">[Geodata.se:110g] Information om användbarhetsbegränsningar måste finnas men får bara anges en gång</sch:assert>
 
 			<sch:let name="useLimitation" value="gmd:resourceConstraints/*/gmd:useLimitation/*/text()/normalize-space(.)"/>
 			<sch:let name="useLimitationLength" value="gmd:resourceConstraints/*/gmd:useLimitation/*/text()/string-length(normalize-space(.))"/>
 			<sch:assert test="$useLimitation and ($useLimitationLength &lt; 2500)">[Geodata.se:110e] Information om användbarhetsbegränsningar måste finnas och vara kortare än 2500 tecken </sch:assert>
-
+      -->
 			
 			<sch:let name="accessConstraints" value="gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue"/>
 			<sch:let name="accessConstraints_present" value="gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'copyright' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'patent' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'patentPending' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'trademark' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'license' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'intellectualPropertyRights' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'restricted'"/>
