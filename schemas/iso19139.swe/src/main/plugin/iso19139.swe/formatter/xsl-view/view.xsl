@@ -347,7 +347,46 @@
       </dd>
     </dl>
   </xsl:template>
-  
+
+  <!-- A maintenanceAndUpdateFrequency is displayed with its translated codeListValue -->
+  <xsl:template mode="render-field"
+                match="gmd:maintenanceAndUpdateFrequency"
+                priority="100">
+    <xsl:param name="fieldName" select="''" as="xs:string"/>
+
+
+    <dl class="gn-contact">
+      <dt>
+        <xsl:value-of select="if ($fieldName)
+                                  then $fieldName
+                                  else tr:node-label(tr:create($schema), name(), null)"/>
+      </dt>
+      <dd>
+        <xsl:apply-templates mode="render-value"
+                             select="gmd:MD_MaintenanceFrequencyCode/@codeListValue"/>
+
+      </dd>
+    </dl>
+  </xsl:template>
+
+  <xsl:template mode="render-field"
+                match="gmd:maintenanceNote"
+                priority="100">
+    <xsl:param name="fieldName" select="''" as="xs:string"/>
+
+    <dl>
+      <dt>
+        <xsl:value-of select="if ($fieldName)
+                                  then $fieldName
+                                  else tr:node-label(tr:create($schema), name(), null)"/>
+      </dt>
+      <dd>
+        <xsl:apply-templates mode="render-value" select="."/>
+        <xsl:apply-templates mode="render-value" select="@*"/>
+      </dd>
+    </dl>
+  </xsl:template>
+
   <!-- A Resurskontakt is displayed with its role=owner -->
   <xsl:template mode="render-field"
                 match="gmd:pointOfContact"
@@ -501,84 +540,85 @@
       </dd>
     </dl>
   </xsl:template> -->
-  
+
   <xsl:template mode="render-field"
                 match="gmd:onLine[1]"
                 priority="100">
-	
-		<dl class="gn-link">
-			<dt>
-				<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLinkLinks')"/>
-			</dt>
-			<dd>
-				<table class="view-metadata-table">
-					<tr>
-						<th class="view-metadata-table-th-1">
-							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkProtocol')"/>
-						</th>
-						<th class="view-metadata-table-th-2">
-							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkName')"/>
-						</th>
-						<th class="view-metadata-table-th-3">
-							<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkUrl')"/>
-						</th>
-					</tr>
-					<xsl:for-each select="parent::node()/gmd:onLine">
-						<xsl:variable name="protocol">
-							<xsl:apply-templates mode="render-value" select="*/gmd:protocol"/>
-						</xsl:variable>
-						<xsl:variable name="aliasProtocol">
-							<xsl:choose>
-								<xsl:when test="normalize-space($protocol) = 'HTTP:OGC:WFS'">
-									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_ogc_wfs')"/>
-								</xsl:when>
-								<xsl:when test="normalize-space($protocol) = 'HTTP:OGC:WMS'">
-									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_ogc_wms')"/>
-								</xsl:when>
-								<xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
-									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_information')"/>
-								</xsl:when>
-								<xsl:when test="normalize-space($protocol) = 'HTTP:Nedladdning'">
-									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_nedladdning')"/>
-								</xsl:when>
-								<xsl:when test="normalize-space($protocol) = 'HTTP:Nedladdning:ATOM'">
-									<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_nedladdning_atom')"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="$protocol"/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</xsl:variable>
-						<xsl:variable name="name">
-							<xsl:apply-templates mode="render-value" select="*/gmd:name"/>
-						</xsl:variable>
-						<xsl:variable name="url">
-							<xsl:apply-templates mode="render-value" select="*/gmd:linkage/gmd:URL"/>
-						</xsl:variable>
-						<tr>
-							<td class="view-metadata-table-td-1">
-								<xsl:value-of select="normalize-space($aliasProtocol)"/>
-							</td>
-							<td class="view-metadata-table-td-2">
-								<xsl:value-of select="normalize-space($name)"/>
-							</td>
-							<td class="view-metadata-table-td-3">
-								<xsl:choose>
-									<xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
-										<a href="{$url}" target="_blank">
-											<xsl:value-of select="normalize-space($url)"/>
-										</a>
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:value-of select="normalize-space($url)"/>
-									</xsl:otherwise>
-								</xsl:choose>
-							</td>
-						</tr>
-					</xsl:for-each>	
-				</table>				
-			</dd>
-		</dl>
+
+    <dl class="gn-link">
+      <dt>
+        <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLinkLinks')"/>
+      </dt>
+      <dd>
+        <table class="view-metadata-table">
+          <tr>
+            <th class="view-metadata-table-th-1">
+              <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkProtocol')"/>
+            </th>
+            <th class="view-metadata-table-th-2">
+              <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkName')"/>
+            </th>
+            <th class="view-metadata-table-th-3">
+              <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkUrl')"/>
+            </th>
+
+          </tr>
+          <xsl:for-each select="parent::node()/gmd:onLine">
+            <xsl:variable name="protocol">
+              <xsl:apply-templates mode="render-value" select="*/gmd:protocol"/>
+            </xsl:variable>
+            <xsl:variable name="aliasProtocol">
+              <xsl:choose>
+                <xsl:when test="normalize-space($protocol) = 'HTTP:OGC:WFS'">
+                  <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_ogc_wfs')"/>
+                </xsl:when>
+                <xsl:when test="normalize-space($protocol) = 'HTTP:OGC:WMS'">
+                  <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_ogc_wms')"/>
+                </xsl:when>
+                <xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
+                  <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_information')"/>
+                </xsl:when>
+                <xsl:when test="normalize-space($protocol) = 'HTTP:Nedladdning'">
+                  <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_nedladdning')"/>
+                </xsl:when>
+                <xsl:when test="normalize-space($protocol) = 'HTTP:Nedladdning:ATOM'">
+                  <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'http_nedladdning_atom')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$protocol"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="name">
+              <xsl:apply-templates mode="render-value" select="*/gmd:name"/>
+            </xsl:variable>
+            <xsl:variable name="url">
+              <xsl:apply-templates mode="render-value" select="*/gmd:linkage/gmd:URL"/>
+            </xsl:variable>
+            <tr>
+              <td class="view-metadata-table-td-1">
+                <xsl:value-of select="normalize-space($aliasProtocol)"/>
+              </td>
+              <td class="view-metadata-table-td-2">
+                <xsl:value-of select="normalize-space($name)"/>
+              </td>
+              <td class="view-metadata-table-td-3">
+                <xsl:choose>
+                  <xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
+                    <a href="{$url}" target="_blank">
+                      <xsl:value-of select="normalize-space($url)"/>
+                    </a>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="normalize-space($url)"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </td>
+            </tr>
+          </xsl:for-each>
+        </table>
+      </dd>
+    </dl>
   </xsl:template>
 
   <xsl:template mode="render-field" match="gmd:onLine[position() > 1]" priority="100"/>
