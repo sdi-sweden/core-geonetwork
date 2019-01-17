@@ -211,6 +211,20 @@
         }
       };
 
+      this.confirmSchema = function(md, event) {
+        var schema = md['geonet:info'].schema;
+
+        if (schema != 'iso19139.swe') {
+          if (!confirm($translate.instant('nonSweMetadata'))) {
+
+            event.preventDefault();
+            return false;
+          }
+        }
+
+        return true;
+      };
+
       this.openPrivilegesPanel = function(md, scope) {
         openModal({
           title: $translate.instant('privileges') + ' - ' +

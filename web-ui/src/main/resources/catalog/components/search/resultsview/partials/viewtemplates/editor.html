@@ -55,6 +55,7 @@
       <!-- TODO: subtemplate link for editing is different -->
       <a class="btn btn-link"
          data-ng-show="user.canEditRecord(md) && md.isTemplate != 's'"
+         data-ng-click="mdService.confirmSchema(md, $event)"
          data-ng-href="#/metadata/{{md['geonet:info'].id}}"
          title="{{'edit' | translate}}">
         <i class="fa fa-pencil"></i>
