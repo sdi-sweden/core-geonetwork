@@ -2045,6 +2045,15 @@ ingår i den nya profilen.</description>
         I Teknisk Specifikation: välj från listan eller skriva information direkt</description>
         <condition>mandatory</condition>
     </element>
+
+    <element id="132.0" name="gmd:technicalTitle">
+      <label>Överensstämmelse</label>
+      <description>Vilken förordning som datamängden ska upfylla.
+        I Överensstämmelserapport: datamängder används 'KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010...' och för tjänster används 'Kommissionens förordning (EG) nr 976/2009...'
+        I Teknisk Specifikation: välj från listan eller skriva information direkt</description>
+      <condition>mandatory</condition>
+    </element>
+
     <element id="132.0" name="gmd:pass">
         <label>Överensstämmelse</label>
         <description>Uppfyller data den nödvändiga kvalitetsnivån?</description>
