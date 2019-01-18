@@ -202,7 +202,11 @@
   <xsl:template name="dateWithLastDayOfMonth">
     <xsl:param name="given-date"></xsl:param>
 
+    <xsl:variable name="isDate" select="if ($given-date castable as xs:date) then true() else false()" />
+
+    <xsl:if test="$isDate">
     <xsl:value-of select="xs:date($given-date) - xs:dayTimeDuration(concat('P', day-from-date($given-date) - 1, 'D')) + xs:yearMonthDuration('P1M') - xs:dayTimeDuration('P1D')" />
+    </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>
