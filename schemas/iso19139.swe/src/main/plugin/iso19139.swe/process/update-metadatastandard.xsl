@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
-                  xmlns:gmd="http://www.isotc211.org/2005/gmd"
-                  xmlns:xlink='http://www.w3.org/1999/xlink'
-                  xmlns:gco="http://www.isotc211.org/2005/gco"
-                  xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                  xmlns:srv="http://www.isotc211.org/2005/srv"
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  exclude-result-prefixes="gmd xlink gco xsi gmx srv">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
+                xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                xmlns:xlink='http://www.w3.org/1999/xlink'
+                xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                xmlns:srv="http://www.isotc211.org/2005/srv"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xls="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="gmd xlink gco xsi gmx srv">
 
   <!-- ================================================================= -->
 
@@ -150,6 +150,50 @@
       <xsl:apply-templates select="gmd:resourceMaintenance" />
       <xsl:apply-templates select="gmd:graphicOverview" />
       <xsl:apply-templates select="gmd:resourceFormat" />
+
+      <!-- Convert invalid gmd:topicCategory in services to related keywords in a vocabulary -->
+      <xsl:if test="gmd:topicCategory">
+        <gmd:descriptiveKeywords>
+          <gmd:MD_Keywords>
+            <xsl:for-each select="gmd:topicCategory/gmd:MD_TopicCategoryCode">
+              <gmd:keyword>
+                <gco:CharacterString><xls:value-of select="." /></gco:CharacterString>
+              </gmd:keyword>
+            </xsl:for-each>
+            <gmd:type>
+              <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+                                      codeListValue="theme"/>
+            </gmd:type>
+            <gmd:thesaurusName>
+              <gmd:CI_Citation>
+                <gmd:title>
+                  <gco:CharacterString>Amnesomrade</gco:CharacterString>
+                </gmd:title>
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date>2008-04-17</gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                           codeListValue="publication"/>
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+                <gmd:identifier>
+                  <gmd:MD_Identifier>
+                    <gmd:code>
+                      <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                                  xlink:href="http://localhost:8080/geonetwork/srv/swe/thesaurus.download?ref=external.theme.Initiativ">geonetwork.thesaurus.external.theme.topic-categories</gmx:Anchor>
+                    </gmd:code>
+                  </gmd:MD_Identifier>
+                </gmd:identifier>
+              </gmd:CI_Citation>
+            </gmd:thesaurusName>
+          </gmd:MD_Keywords>
+        </gmd:descriptiveKeywords>
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:descriptiveKeywords" />
       <xsl:apply-templates select="gmd:resourceSpecificUsage" />
 
@@ -169,6 +213,14 @@
       <xsl:apply-templates select="srv:operatesOn" />
 
     </xsl:copy>
+  </xsl:template>
+
+
+  <!-- Fix invalid INSPIRE themes title in some metadata, should contain a , character -->
+  <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:title[gco:CharacterString = 'GEMET - INSPIRE themes version 1.0']">
+    <gmd:title>
+      <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+    </gmd:title>
   </xsl:template>
 
   <!-- Template to process gmd:resourceConstraints to upgrade them to TG 2.0.
