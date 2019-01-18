@@ -216,6 +216,13 @@
   </xsl:template>
 
 
+  <!-- Fix invalid INSPIRE themes title in some metadata, should contain a , character -->
+  <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:title[gco:CharacterString = 'GEMET - INSPIRE themes version 1.0']">
+    <gmd:title>
+      <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+    </gmd:title>
+  </xsl:template>
+
   <!-- Template to process gmd:resourceConstraints to upgrade them to TG 2.0.
     
         - Step 1) If the metadata has gmd:resourceConstraints "without" gmd:MD_LegalConstraints/gmd:otherConstraints ->  gmd:resourceConstraints are just copied.
