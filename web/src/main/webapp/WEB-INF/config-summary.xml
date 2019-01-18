@@ -133,7 +133,7 @@
     <summaryType name="swe-details" format="DIMENSION">
       <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20" sortBy="label" sortOrder="asc" />
       <item facet="initiativKeyword" max="20" sortBy="label" sortOrder="asc" />
-      <item facet="orgNameOwner" max="25" sortBy="label" sortOrder="asc" />
+      <item facet="orgNameOwner" max="50" sortBy="label" sortOrder="asc" />
     </summaryType>
 
     <summaryType name="details" format="DIMENSION">
