@@ -2045,6 +2045,13 @@ ingår i den nya profilen.</description>
         I Teknisk Specifikation: välj från listan eller skriva information direkt</description>
         <condition>mandatory</condition>
     </element>
+
+    <element id="132.0" name="gmd:technicalTitle">
+      <label>Teknisk Titel</label>
+      <description>Någonting här för Tekniskt Titel</description>
+      <condition>mandatory</condition>
+    </element>
+
     <element id="132.0" name="gmd:pass">
         <label>Överensstämmelse</label>
         <description>Uppfyller data den nödvändiga kvalitetsnivån?</description>
