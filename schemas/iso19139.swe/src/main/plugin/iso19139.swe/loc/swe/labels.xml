@@ -2047,10 +2047,8 @@ ingår i den nya profilen.</description>
     </element>
 
     <element id="132.0" name="gmd:technicalTitle">
-      <label>Överensstämmelse</label>
-      <description>Vilken förordning som datamängden ska upfylla.
-        I Överensstämmelserapport: datamängder används 'KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010...' och för tjänster används 'Kommissionens förordning (EG) nr 976/2009...'
-        I Teknisk Specifikation: välj från listan eller skriva information direkt</description>
+      <label>Teknisk Titel</label>
+      <description>Någonting här för Tekniskt Titel</description>
       <condition>mandatory</condition>
     </element>
 
