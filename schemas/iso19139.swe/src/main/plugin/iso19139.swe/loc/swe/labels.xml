@@ -2047,8 +2047,8 @@ ingår i den nya profilen.</description>
     </element>
 
     <element id="132.0" name="gmd:technicalTitle">
-      <label>Teknisk Titel</label>
-      <description>Någonting här för Tekniskt Titel</description>
+      <label>Teknisk Specifikation Titel</label>
+      <description>Välj från listan rekommenderade värden eller skriv titeln i fältet</description>
       <condition>mandatory</condition>
     </element>
 

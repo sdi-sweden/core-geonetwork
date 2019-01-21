@@ -1625,8 +1625,8 @@
                         <gmd:specification>
                           <gmd:CI_Citation>
                             <gmd:title>
-                              <gmx:Anchor xlink:href="http://link,to/the.technical.specification">
-                                Description of technical specification
+                              <gmx:Anchor xlink:href="http://link.till/teknisk.specification">
+                                Beskrivning av teknisk specifikation
                               </gmx:Anchor>
                             </gmd:title>
                             <gmd:date>
@@ -1895,8 +1895,8 @@
                         <gmd:specification>
                           <gmd:CI_Citation>
                             <gmd:title>
-                              <gmx:Anchor xlink:href="http://link,to/the.technical.specification">
-                                Description of technical specification
+                              <gmx:Anchor xlink:href="http://link.till/teknisk.specification">
+                                Beskrivning av teknisk specifikation
                               </gmx:Anchor>
                             </gmd:title>
                             <gmd:date>
@@ -2423,9 +2423,9 @@
                           <gmd:specification>
                             <gmd:CI_Citation>
                               <gmd:title>
-                                <gmx:Anchor xlink:href="http://link,to/the.technical.specification">
-                                  Description of technical specification
-                                </gmx:Anchor>
+                              <gmx:Anchor xlink:href="http://link.till/teknisk.specification">
+                                Beskrivning av teknisk specifikation
+                              </gmx:Anchor>
                               </gmd:title>
                               <gmd:date>
                                 <gmd:CI_Date>
@@ -2446,7 +2446,7 @@
                             </gco:CharacterString>
                           </gmd:explanation>
                           <gmd:pass>
-                            <gco:Boolean>true</gco:Boolean>
+                            <gco:Boolean>false</gco:Boolean>
                           </gmd:pass>
                         </gmd:DQ_ConformanceResult>
                       </gmd:result>
@@ -4174,8 +4174,8 @@
                         <gmd:specification>
                           <gmd:CI_Citation>
                             <gmd:title>
-                              <gmx:Anchor xlink:href=" http://link,to/the.technical.specification">
-                                Description of technical specification
+                              <gmx:Anchor xlink:href="http://link.till/teknisk.specification">
+                                Beskrivning av teknisk specifikation
                               </gmx:Anchor>
                             </gmd:title>
                             <gmd:date>
@@ -4193,11 +4193,11 @@
                           </gmd:CI_Citation>
                         </gmd:specification>
                         <gmd:explanation>
-                          <gco:CharacterString>Conformant to the cited specifications.
+                          <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf
                           </gco:CharacterString>
                         </gmd:explanation>
                         <gmd:pass>
-                          <gco:Boolean>true</gco:Boolean>
+                          <gco:Boolean>false</gco:Boolean>
                         </gmd:pass>
                       </gmd:DQ_ConformanceResult>
                     </gmd:result>
