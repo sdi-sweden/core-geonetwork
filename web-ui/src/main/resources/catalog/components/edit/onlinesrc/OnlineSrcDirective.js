@@ -114,6 +114,20 @@
                 }
               };
 
+              scope.isDisplayPanel = function() {
+                return (gnCurrentEdit.schemaConfig.related.readonly !== true) &&
+                  (
+                    scope.isCategoryEnable('thumbnail') ||
+                    scope.isCategoryEnable('onlinesrc') ||
+                    scope.isCategoryEnable('parent') ||
+                    (scope.isCategoryEnable('service') && !gnCurrentEdit.isService) ||
+                    (scope.isCategoryEnable('dataset') && gnCurrentEdit.isService) ||
+                    scope.isCategoryEnable('source') ||
+                    scope.isCategoryEnable('fcats') ||
+                    scope.isCategoryEnable('sibling')
+                  );
+              };
+
               // Reload relations when a directive requires it
               scope.$watch('onlinesrcService.reload', function() {
                 if (scope.onlinesrcService.reload) {
