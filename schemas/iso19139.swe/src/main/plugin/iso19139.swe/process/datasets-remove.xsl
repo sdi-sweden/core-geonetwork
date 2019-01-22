@@ -26,5 +26,5 @@
 Stylesheet used to remove a reference to a online resource.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
-  <xsl:import href="../../iso19139/process/dataset-remove.xsl"/>
+  <xsl:import href="../../iso19139/process/datasets-remove.xsl"/>
 </xsl:stylesheet>
