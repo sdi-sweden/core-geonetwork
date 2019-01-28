@@ -458,6 +458,10 @@
   <!-- Remove gmd:aggregationInfo as not used and some records identifier with invalid content in gmd:aggregateDataSetIdentifier, causing the metadata failing the indexing/display -->
   <xsl:template match="gmd:aggregationInfo" />
 
+
+  <!-- When importing records or opening records in editor remove transferoption -->
+  <xsl:template match="gmd:transferOptions" />
+
   <!-- ================================================================= -->
   <!-- copy everything else as is -->
 
