@@ -508,14 +508,14 @@ USA.
   <sch:pattern fpi="[Geodata.se:127]">
     <sch:title>[Geodata.se:127] Om en kvantitativ kvalitetsrapport anges måste den vara fullständig </sch:title>
 
-    <sch:rule context="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report//gmd:DQ_QuantitativeResult">
-      <sch:let name="recordType" value="gmd:valueType/gco:RecordType/text()"/>
-      <sch:let name="valueUnit" value="gmd:valueUnit/@xlink:title"/>
+    <sch:rule context="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*/gmd:DQ_QuantitativeResult">
       <sch:let name="value" value="gmd:value/gco:Record/text()"/>
+<!--      <sch:let name="recordType" value="gmd:valueType/gco:RecordType/text()"/>
+      <sch:let name="valueUnit" value="gmd:valueUnit/@xlink:title"/>
       <sch:let name="recordTypeLen" value="gmd:valueType/gco:RecordType/text()"/>
       <sch:let name="valueUnitLen" value="gmd:valueUnit/@xlink:title"/>
       <sch:let name="valueLen" value="gmd:value/gco:Record/text()"/>
-
+-->
 
       <!--	<sch:report test="$recordType">	<sch:value-of select="$recordType"/></sch:report>
         <sch:report test="$valueUnit">	<sch:value-of select="$valueUnit"/></sch:report>
