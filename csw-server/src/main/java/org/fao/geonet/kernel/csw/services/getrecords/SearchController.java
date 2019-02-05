@@ -33,7 +33,6 @@ import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.csw.common.Csw;
 import org.fao.geonet.csw.common.ElementSetName;
-import org.fao.geonet.csw.common.OutputSchema;
 import org.fao.geonet.csw.common.ResultType;
 import org.fao.geonet.csw.common.exceptions.CatalogException;
 import org.fao.geonet.csw.common.exceptions.InvalidParameterValueEx;
@@ -49,6 +48,7 @@ import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.geotools.gml2.GMLConfiguration;
+import org.jdom.Attribute;
 import org.jdom.Content;
 import org.jdom.Element;
 import org.jdom.Namespace;
@@ -56,7 +56,6 @@ import org.springframework.context.ApplicationContext;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -120,6 +119,22 @@ public class SearchController {
             Element info = res.getChild(Edit.RootChild.INFO, Edit.NAMESPACE);
             String schema = info.getChildText(Edit.Info.Elem.SCHEMA);
 
+
+            // Add schemaLocation from schema config if not present in the metadata
+            Attribute schemaLocAtt = scm.getSchemaLocation(
+                schema, context);
+
+            if (schemaLocAtt != null) {
+                if (res.getAttribute(
+                    schemaLocAtt.getName(),
+                    schemaLocAtt.getNamespace()) == null) {
+                    res.setAttribute(schemaLocAtt);
+                    // make sure namespace declaration for schemalocation is present -
+                    // remove it first (does nothing if not there) then add it
+                    res.removeNamespaceDeclaration(schemaLocAtt.getNamespace());
+                    res.addNamespaceDeclaration(schemaLocAtt.getNamespace());
+                }
+            }
 
             // apply stylesheet according to setName and schema
             //

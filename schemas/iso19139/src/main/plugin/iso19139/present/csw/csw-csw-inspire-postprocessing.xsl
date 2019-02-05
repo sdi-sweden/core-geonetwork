@@ -126,7 +126,7 @@
 		<gml:beginPosition>1968</gml:beginPosition>
 		<gml:endPosition />
 	</gml:TimePeriod>-->
-	
+
 	<!-- add attribute @gml:id to gml:timeperiod if missing -->
 	<xsl:template match="gml:TimePeriod[not(@gml:id) or normalize-space(@gml:id)='' or normalize-space(@gml:id)='Temporal']">        
         <gml:TimePeriod>
@@ -253,17 +253,32 @@
 	</xsl:param>
 
 	<!-- 3. Remove non-digits from temporal dates -->
+  <!-- Set indeterminatePosition to now on end date if begindate as value an enddate is empty -->
+  <!-- Verify that GML ID has proper value -->
 	<xsl:template match="gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod">
 		<xsl:copy>
-			<xsl:variable name="newBeginPosition" select="translate(gml:beginPosition/text(), translate(.,'0123456789-',''), '')"/>	
-			<xsl:variable name="newEndPosition" select="translate(gml:endPosition/text(), translate(.,'0123456789-',''), '')"/>
-			
-			<beginPosition>
+      <xsl:copy-of select="@*" />
+
+      <xsl:if test="not(string(@gml:id))">
+        <xsl:attribute name="gml:id">
+          <xsl:value-of select="generate-id(.)"/>
+        </xsl:attribute>
+      </xsl:if>
+
+      <xsl:variable name="newBeginPosition" select="translate(gml:beginPosition/text(), translate(.,'0123456789-',''), '')"/>
+      <xsl:variable name="newEndPosition" select="translate(gml:endPosition/text(), translate(.,'0123456789-',''), '')"/>
+
+			<gml:beginPosition>
+
 				<xsl:value-of select="$newBeginPosition"/>
-			</beginPosition>
-			<endPosition>
+			</gml:beginPosition>
+			<gml:endPosition>
+        <xsl:if test="not(string($newEndPosition))">
+          <xsl:attribute name="indeterminatePosition">now</xsl:attribute>
+        </xsl:if>
+
 				<xsl:value-of select="$newEndPosition"/>
-			</endPosition>
+			</gml:endPosition>
 		</xsl:copy>
 	</xsl:template>
 	
@@ -275,4 +290,35 @@
 		</xsl:copy>
 	</xsl:template>
 
+			
+  <!-- 5. Remove temporal extent if empty beginPosition and endPosition -->
+  <xsl:template match="gmd:temporalElement[gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition]">
+    <xsl:choose>
+    	<xsl:when test="not(string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition)) and
+    		not(string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition))">
+          <!-- Remove element if empty values in beginPosition and endPosition -->
+      </xsl:when>
+
+      <xsl:otherwise>
+        <xsl:copy>
+          <xsl:copy-of select="@*" />
+          <xsl:apply-templates select="*" />
+        </xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!-- 6. Verify that GML ID has a proper value -->
+  <xsl:template match="@gml:id">
+    <xsl:choose>
+      <xsl:when test="normalize-space(.)=''">
+        <xsl:attribute name="gml:id">
+          <xsl:value-of select="generate-id(.)"/>
+        </xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 </xsl:stylesheet>
