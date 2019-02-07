@@ -1,4 +1,4 @@
-@qa_dev1
+
 Feature: VisaResultat
 @qa_ready
   Scenario: VisaAllaResurser

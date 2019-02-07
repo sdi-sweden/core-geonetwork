@@ -1,4 +1,4 @@
-@qa_todo
+
 Feature: Visa metadata
 @qa_ready
   Scenario: VisaMetadataSomAnvandare

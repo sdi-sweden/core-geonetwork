@@ -3,22 +3,26 @@ exports.config = {
   baseUrl: 'http://tst.geodata.se/geodataportalen/srv/swe/catalog.search?',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   getPageTimeout: 60000,
-  allScriptsTimeout: 500000,
+  allScriptsTimeout: 300000,
   framework: 'custom',
   frameworkPath: 'node_modules/protractor-cucumber-framework',
+  capabilities: {
+    browserName:'chrome',
+    args: ['no-sandbox']
+  },
   
   specs: [
-  
-    'features/Sok_Generellt.feature',
+
+	'features/HanteraFavoriter.feature',
 	'features/Sok_Enkel_vy.feature',
-    'features/Sok_Avancerad_vy.feature',
 	'features/VisaResultat.feature',
+	'features/Sok_Avancerad_vy.feature',
 	'features/VisaMetadata.feature',
+	'features/Sok_Generellt.feature',
 	'features/VisaDoljFiltrering.feature',
 	'features/VisaHjalptexter.feature',
 	'features/VisaKarttjanster.feature',
-	'features/VisaRekommenderadeDatasamlingar.feature',
-	'features/HanteraFavoriter.feature'
+	'features/VisaRekommenderadeDatasamlingar.feature'
   ],
   
   cucumberOpts: {
@@ -29,6 +33,7 @@ exports.config = {
     'features/steps/Sok_Enkel_vy.steps.js',
     'features/steps/VisaMetadata.steps.js',
     'features/steps/Sok_Avancerad_vy.steps.js',
+	'features/steps/Sok_Generellt.steps.js',
     'features/steps/HanteraFavoriter.steps.js',
     'features/steps/VisaResultat.steps.js',
 	'features/steps/Kartnavigering.steps.js',
@@ -37,8 +42,10 @@ exports.config = {
     'featuresEditor/steps/Login.steps.js',
     'featuresEditor/steps/FilterMetaDataInEditor.steps.js',
     'featuresEditor/steps/AdministrateMetadata.steps.js'
-],
+    ],
 
+    strict: true,
+	failfast: true,
     format: 'pretty',
 	keepAlive: true,
     tags: '@qa_ready'  

@@ -10,135 +10,175 @@ var expect = chai.expect;
 var EC = protractor.ExpectedConditions;
 var Filter = function () {};
 
- Filter.prototype = Object.create({}, {
+Filter.prototype = Object.create({}, {
 
-   veiwFilter: {get: function(){
+		veiwFilter: {
+			get: function () {
 
-     return 	element(by.xpath("//*[contains(text(),'visa filtrering ')]")).click();
-   }},
-   searchElement:{get: function(){
- 		return element(by.id('gn-or-field'));
-  }},
+				return element(by.xpath("//*[contains(text(),'visa filtrering ')]")).click();
+			}
+		},
+		searchElement: {
+			get: function () {
+				return element(by.id('gn-or-field'));
+			}
+		},
 
-	pageTitle: {get: function(){
-      browser.ignoreSynchronization = true;
-      return browser.getTitle();
-      }},
+		pageTitle: {
+			get: function () {
+				browser.ignoreSynchronization = true;
+				return browser.getTitle();
+			}
+		},
 
-	basicCategoryList: {get: function(){
-		return  element.all(by.repeater('topic in topicCategories | orderBy: orderByTranslated'));
-	}},
+		basicCategoryList: {
+			get: function () {
+				return element.all(by.repeater('topic in topicCategories | orderBy: orderByTranslated'));
+			}
+		},
 
-	doFreeTextSearch: {get: function(){
-	    var el = element(by.id('gn-or-field'));
-	    browser.driver.sleep(500);
-		return el.sendKeys(protractor.Key.ENTER);
-//    return element(by.xpath("//*[@id='gn-or-field']")).sendKeys(protractor.Key.ENTER);
-	}},
+		doFreeTextSearch: {
+			get: function () {
+				var el = element(by.id('gn-or-field'));
+				browser.driver.sleep(500);
+				return el.sendKeys(protractor.Key.ENTER);
+				//    return element(by.xpath("//*[@id='gn-or-field']")).sendKeys(protractor.Key.ENTER);
+			}
+		},
 
-	typeSearchPhrase:{value: function(searchPhrase){
-		return element(by.id('gn-or-field')).sendKeys(searchPhrase);
-	}},
+		typeSearchPhrase: {
+			value: function (searchPhrase) {
+				return element(by.id('gn-or-field')).sendKeys(searchPhrase);
+			}
+		},
 
-	clearFilter: {get: function(){
-		return element(by.css('[data-ng-click="viewAllMetadata()"]')).click();
+		clearFilter: {
+			get: function () {
+				return element(by.css('[data-ng-click="viewAllMetadata()"]')).click();
 
-   }},
+			}
+		},
 
+		clearFreetext: {
+			get: function () {
+				element(by.xpath("//*[@id='gn-or-field']")).clear();
+				//this.doFreeTextSearch;
+			}
+		},
 
-	clearFreetext:{get: function(){
-		element(by.xpath("//*[@id='gn-or-field']")).clear();
-		//this.doFreeTextSearch;
-	}},
+		freeTextSearch: {
+			value: function (searchPhrase) {
+				//this.clearFilter;
+				this.typeSearchPhrase(searchPhrase);
 
-	freeTextSearch: {value: function(searchPhrase){
-    //this.clearFilter;
-		this.typeSearchPhrase(searchPhrase);
+				this.doFreeTextSearch;
 
-		this.doFreeTextSearch;
+			}
+		},
 
+		selectCategory: {
+			value: function (bc) {
+				browser.wait(EC.visibilityOf(element(by.partialLinkText(bc))), 2000).then(function () {
+					element(by.partialLinkText(bc)).click();
+				});
+			}
+		},
 
-	}},
+		openAdvanceView: {
+			get: function () {
 
-	selectCategory: {value: function(bc){
-    browser.wait(EC.visibilityOf(element(by.partialLinkText(bc))), 2000).then(function(){
-				element(by.partialLinkText(bc)).click();
-		});
-  }},
+				var isClickable = EC.elementToBeClickable(element(by.css('[data-ng-click="toggleAdvancedOptions()"]')));
+				browser.wait(isClickable, 50000);
+				return element(by.css('[data-ng-click="toggleAdvancedOptions()"]')).click();
+			}
+		},
 
-  openAdvanceView: {get: function(){
+		addFromDate: {
+			value: function (fromDate) {
+				element(by.model('searchObj.params.resourceDateFrom')).sendKeys(fromDate);
+				element(by.model('searchObj.params.resourceDateFrom')).sendKeys(protractor.Key.ENTER);
+			}
+		},
+		addToDate: {
+			value: function (toDate) {
+				Element(by.model('searchObj.params.resourceDateTo')).sendKeys(toDate);
+				Element(by.model('searchObj.params.resourceDateTo')).sendKeys(protractor.Key.ENTER);
+			}
+		},
+		ViewMetadata: {
+			value: function (index) {
 
-   var isClickable = EC.elementToBeClickable(element(by.css('[data-ng-click="toggleAdvancedOptions()"]')));
-   browser.wait(isClickable, 50000);
-   return element(by.css('[data-ng-click="toggleAdvancedOptions()"]')).click();
-  }},
+				browser.wait(EC.visibilityOf('[data-ng-click="showMetadata(0, md, searchResults.records)"]'), 20000).then(function () {
+					return element(by.css('[data-ng-click="showMetadata(0, md, searchResults.records)"]')).click();
+				});
+			}
+		},
 
-  addFromDate: {value: function(fromDate){
-    element(by.model('searchObj.params.resourceDateFrom')).sendKeys(fromDate);
-    element(by.model('searchObj.params.resourceDateFrom')).sendKeys(protractor.Key.ENTER);
-  }},
-  addToDate: {value: function(toDate){
-    Element(by.model('searchObj.params.resourceDateTo')).sendKeys(toDate);
-    Element(by.model('searchObj.params.resourceDateTo')).sendKeys(protractor.Key.ENTER);
-  }},
-  ViewMetadata: {value: function(index){
+		selectOrganisation: {
+			value: function (org) {
 
-   browser.wait(EC.visibilityOf('[data-ng-click="showMetadata(0, md, searchResults.records)"]'), 20000).then(function(){
-     return element(by.css('[data-ng-click="showMetadata(0, md, searchResults.records)"]')).click();
-   });
- }},
+				var catlist = element.all(by.repeater('c in category')).map(function (orgNameOwner, indx) {
+						return {
+							organisationName: orgNameOwner.element(by.css('p.ng-binding')).getText(),
+							index: indx
+						}
+					});
+				catlist.then(function (value) {
+					for (var i = 0; i < value.length; ++i) {
+						if (org === value[i].organisationName) {
+							element.all(by.repeater('c in category')).get(value[i].index).click();
+						}
+					}
+				});
+			}
+		},
+		getSelectedFilterList: {
+			get: function () {
+				var items = element.all(by.css('.selected-filter-list li')).map(function (elm, index) {
+						return {
+							index: index,
 
- selectOrganisation:{value: function(org){
+							class: elm.getAttribute('class')
+						};
+					});
 
-   var catlist=	element.all(by.repeater('c in category')).map(function(orgNameOwner, indx) {
-     return{
-       organisationName: orgNameOwner.element(by.css('p.ng-binding')).getText(),
-       index:indx
-     }
-    });
-    catlist.then(function (value) {
-      for (var i = 0; i < value.length; ++i) {
-        if(org === value[i].organisationName){
-          element.all(by.repeater('c in category')).get(value[i].index).click();
-        }
-      }
- });
- }},
- getSelectedFilterList:{get: function(){
-   var items = element.all(by.css('.selected-filter-list li')).map(function(elm, index) {
-     return {
-       index: index,
+				return items;
 
-       class: elm.getAttribute('class')
-  };
-});
+			}
+		},
 
+		toggleFavorite: {
+			get: function () {
 
-   return items;
+				return element(by.css('[data-ng-click="toggleExclusiveFilter(\'favorites\')"]')).click();
 
- }},
+			}
+		},
 
- toggleFavorite:{get: function(){
+		toggleMapResources: {
+			get: function () {
 
-   return element(by.css('[data-ng-click="toggleExclusiveFilter(\'favorites\')"]')).click();
+				return element(by.css('[data-ng-click="toggleExclusiveFilter(\'map\', \'true\')"]')).click();
 
- }},
+			}
+		},
 
- toggleMapResources:{get: function(){
+		toggleDownloadResources: {
+			get: function () {
 
-   return element(by.css('[data-ng-click="toggleExclusiveFilter(\'favorites\')"]')).click();
+				return element(by.css('[data-ng-click="toggleExclusiveFilter(\'download\', \'true\'))"]')).click();
 
- }},
+			}
+		},
 
+		toggleDatasets: {
+			get: function () {
 
+				return element(by.css('[data-ng-click="toggleExclusiveFilter(\'type\', [\'dataset\', \series\'])"]')).click();
 
- toggleDownloadResources:{get: function(){
+			}
+		}
 
-   return element(by.css('[data-ng-click="toggleExclusiveFilter(\'favorites\')"]')).click();
-
- }}
-
-
-   });
+	});
 
 module.exports = Filter;

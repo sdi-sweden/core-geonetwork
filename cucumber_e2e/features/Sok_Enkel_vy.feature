@@ -1,7 +1,7 @@
 
-	@qa_ready
+	
 	﻿Feature: Sokning i enkel vy
-	@qa_readymm
+	@qa_ready
 	Scenario: Search with fritext on titel
     Given that the user is in Enkel vy
 		When the user enters the text "Testpost_1_ämne_fritext_titel_Geodatasamverkan" in the fritext field

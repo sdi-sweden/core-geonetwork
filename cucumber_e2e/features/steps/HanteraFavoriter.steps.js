@@ -34,11 +34,13 @@ module.exports = function () {
 	});
 
 	this.Then(/^the post is added as a favorit$/, function (callback) {
-		searchfilter.toggleFavorite;
-
-		browser.driver.sleep(3000);
-		el = element(by.css('span.result-text'));
+//        browser.driver.sleep(3000);
+    	searchfilter.toggleFavorite;
+//		browser.driver.sleep(3000);
+		
+		var el = element(by.css('span.result-text'));
 		expect(el.$('.ng-binding').getText()).to.eventually.equal('1').and.notify(callback);
+//		expect(list.getNumberOfRecords()).to.equal('1').and.notify(callback);
 	});
 
 	this.Given(/^the post "([^"]*)" is a favorite$/, function (arg1, callback) {
@@ -46,9 +48,9 @@ module.exports = function () {
 			searchfilter.freeTextSearch(arg1);
 		});
 
-		browser.driver.sleep(3000);
+//		browser.driver.sleep(3000);
 		list.setPostAsFavorite(arg1);
-		browser.driver.sleep(3000);
+//		browser.driver.sleep(3000);
 
 		//searchfilter.toggleFavorite;
 		el = element(by.css('span.result-text'));
@@ -57,7 +59,7 @@ module.exports = function () {
 	});
 
 	this.When(/^the user clicks the star next to the post "([^"]*)"$/, function (arg1, callback) {
-		browser.driver.sleep(3000);
+//		browser.driver.sleep(3000);
 		list.setPostAsFavorite(arg1);
 		callback();
 
@@ -77,7 +79,7 @@ module.exports = function () {
 		//searchfilter.toggleFavorites;
 		//searchfilter.clearFilter;
 
-		browser.driver.sleep(3000);
+//		browser.driver.sleep(3000);
 		searchfilter.toggleFavorites;
 
 		el = element(by.css('span.result-text'));
