@@ -100,7 +100,7 @@
     "print_legend_field": "Teckenförklaring",
     "geotechnic": "Geoteknik",
     "layer": "Lager",
-    "nonSweMetadata": "Metadata följer inte den senaste Nationella metadataprofilen. När metadata redigeras uppgraderas metadata till denna nya profil. Vill du göra detta ?",
+    "nonSweMetadata": "Metadata följer inte den senaste Nationella metadataprofilen. När metadata redigeras uppgraderas metadata till denna nya profil. Vill du göra detta ? \n\nOBSERVERA!\nVid konvertering till den nya profilen hanteras Åtkomst och Användningsrestriktioner med nya metadata-element.\nDetta går inte göra helt automatiskt.\nExisterande restriktioner har därför slagits samman och lagts i fältet Användbarhetsbegränsningar\nDu behöver därför läsa informationen som finns i Användbarhetsbegränsningar och uppdatera.elementen:\n-Begränsningar i Publik Åtkomst\n-Åtkomstrestriktioner\n-Användningsrestriktioner",
     "showServices": "Visa tjänster",
     "showDatasets": "Dataset",
     "mdlink": "Link",
