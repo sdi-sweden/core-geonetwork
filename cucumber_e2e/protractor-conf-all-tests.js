@@ -6,6 +6,15 @@ exports.config = {
   allScriptsTimeout: 500000,
   framework: 'custom',
   frameworkPath: 'node_modules/protractor-cucumber-framework',
+  multiCapabilities: [
+    {
+	  browserName: 'chrome'
+    },
+	{
+	  browserName: 'internet explorer',
+	  version: "ANY"
+	}
+  ],
   
   specs: [
   

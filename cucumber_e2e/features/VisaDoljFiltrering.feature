@@ -1,4 +1,4 @@
-@qa_ready
+@qa_todo
 Feature: Visa eller dolj filtrering
   
   Scenario: Visa filtrering 

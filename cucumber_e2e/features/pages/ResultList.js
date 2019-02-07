@@ -14,9 +14,10 @@ var ResultList = function () {};
    resultList: {get: function(){
          return  element.all(by.repeater('md in searchResults.records'));
    }},
+   
  getPostByTitle:{value: function(title){
 
-   var reslist=	 element.all(by.repeater('md in searchResults.records')).map(function(post, indx) {
+ var reslist=	 element.all(by.repeater('md in searchResults.records')).map(function(post, indx) {
      return{
        title: post.element(by.css('h1.ng-binding')).getText(),
        index:indx
@@ -24,6 +25,7 @@ var ResultList = function () {};
     });
     return reslist;
  }},
+ 
  setPostAsFavorite:{value: function(title){
 
    var reslist=	 element.all(by.repeater('md in searchResults.records')).map(function(post, indx) {
@@ -43,6 +45,25 @@ var ResultList = function () {};
    });
  }},
 
+ removePostAsFavorite:{value: function(title){
+
+   var reslist=	 element.all(by.repeater('md in searchResults.records')).map(function(post, indx) {
+     return{
+       title: post.element(by.css('h1.ng-binding')).getText(),
+       index:indx
+     }
+    });
+    reslist.then(function (res) {
+      for (var i = 0; i < res.length; ++i) {
+        if(title === res[i].title){
+
+          return element.all(by.repeater('md in searchResults.records')).get(res[i].index).element(by.css('div.star-cont')).click();
+
+        }
+      }
+   });
+ }},
+ 
  getNumberOfRecords:{get:function(){
    var el = element(by.css('span.result-text'));
    return el.$('.ng-binding');

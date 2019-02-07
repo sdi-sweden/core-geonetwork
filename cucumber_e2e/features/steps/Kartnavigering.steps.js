@@ -8,11 +8,12 @@ chai.use(chaiAsPromised);
 var	EC = protractor.ExpectedConditions;
 
 var expect = chai.expect;
-var AngularPage = require('../pages/basic_filter.js');
+//var AngularPage = require('../pages/basic_filter.js');
+var AngularPage = require('../pages/filter.js');
 page = new AngularPage();
-var ViewMetadata = require('../pages/ViewMetadata.js');
+var ViewMetadata = require('../pages/viewMetadata.js');
 viewmetadata = new ViewMetadata();
-var KartVisare = require('../pages/KartVisare.js');
+var KartVisare = require('../pages/kartVisare.js');
 KartVisare = new KartVisare();
 
 module.exports = function() {

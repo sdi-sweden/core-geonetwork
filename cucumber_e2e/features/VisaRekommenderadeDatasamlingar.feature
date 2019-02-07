@@ -1,5 +1,4 @@
-@qa_ready
-  
+@qa_todo  
   Feature: Visa rekommenderade datasamlingar
   
   Scenario: Visa rekommenderade datasamlingar
