@@ -17,17 +17,16 @@ exports.config = {
   ],
   
   specs: [
-  
-    'features/Sok_Generellt.feature',
+    'features/HanteraFavoriter.feature',
 	'features/Sok_Enkel_vy.feature',
-    'features/Sok_Avancerad_vy.feature',
 	'features/VisaResultat.feature',
-	'features/VisaMetadata.feature',
+    'features/Sok_Avancerad_vy.feature',
+	'features/VisaMetadata.feature',	
+    'features/Sok_Generellt.feature',
 	'features/VisaDoljFiltrering.feature',
 	'features/VisaHjalptexter.feature',
 	'features/VisaKarttjanster.feature',
-	'features/VisaRekommenderadeDatasamlingar.feature',
-	'features/HanteraFavoriter.feature'
+	'features/VisaRekommenderadeDatasamlingar.feature'
   ],
   
   cucumberOpts: {
