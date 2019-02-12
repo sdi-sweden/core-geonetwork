@@ -155,6 +155,7 @@
   <onLinkLinks>Online-länkar</onLinkLinks>
   <onLineLinkProtocol>Länktyp</onLineLinkProtocol>
   <onLineLinkName>Namn</onLineLinkName>
+  <onLineLinkDescription>Beskrivning av webbplats</onLineLinkDescription>
   <onLineLinkUrl>Url</onLineLinkUrl>
   <http_ogc_wfs>Karttjänst (WFS)</http_ogc_wfs>
   <http_ogc_wms>Karttjänst (WMS)</http_ogc_wms>
