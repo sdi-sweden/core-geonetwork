@@ -7,7 +7,7 @@ var EC = protractor.ExpectedConditions;
 var Login = function () {};
 Login.prototype = Object.create({}, {
     loginAs: {value: function(username, password, callback){
-       var loginUrl = 'http://tst.geodata.se/geodataportalen/login';
+       var loginUrl = 'https://tst.geodata.se/geodataportalen/login';
        browser.get(loginUrl);
 //     var loginButton = element(by.css('a.header-login.header-text'));
 //     browser.wait(EC.visibilityOf(loginButton), 20000).then(function(){
@@ -32,7 +32,7 @@ Login.prototype = Object.create({}, {
   
     goToAdminView:{value:function(callback){
        
-       var adminConsoleUrl = 'http://tst.geodata.se/geodataportalen/admin.console';
+       var adminConsoleUrl = 'https://tst.geodata.se/geodataportalen/admin.console';
        browser.get(adminConsoleUrl);
        var contribute = element.all(by.className("fa fa-plus")).first();
        browser.wait(EC.elementToBeClickable(contribute),5000).then(function(){

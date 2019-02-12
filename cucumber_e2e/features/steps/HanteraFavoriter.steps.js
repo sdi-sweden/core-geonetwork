@@ -36,11 +36,11 @@ module.exports = function () {
 	this.Then(/^the post is added as a favorit$/, function (callback) {
 //        browser.driver.sleep(3000);
     	searchfilter.toggleFavorite;
-//		browser.driver.sleep(3000);
+		browser.driver.sleep(3000);
 		
 		var el = element(by.css('span.result-text'));
 		expect(el.$('.ng-binding').getText()).to.eventually.equal('1').and.notify(callback);
-//		expect(list.getNumberOfRecords()).to.equal('1').and.notify(callback);
+//		expect(list.getNumberOfRecords()).to.eventually.equal('1').and.notify(callback);
 	});
 
 	this.Given(/^the post "([^"]*)" is a favorite$/, function (arg1, callback) {
