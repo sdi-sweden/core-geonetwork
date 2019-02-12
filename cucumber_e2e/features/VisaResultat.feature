@@ -1,4 +1,4 @@
-@qa_dev1
+
 Feature: VisaResultat
 @qa_ready
   Scenario: VisaAllaResurser
@@ -6,11 +6,6 @@ Feature: VisaResultat
 	  When the user clicks the button to visa alla resurser
 	  Then all filters are removed
 	  And all posts are shown
-@qa_todo
-  Scenario: VisaResultatLista
-    Given that the list does not contains any metadata posts
-	  When the user enters a search criteria
-	  Then the result is displayed in the result list
  @qa_ready
    Scenario: VisaAntalTraffar
     Given that the result list contains metadata poster
@@ -28,6 +23,11 @@ Feature: VisaResultat
     And the result list is expanded
 	  When the user clicks the button to show the result list collapsed
 	  Then the result list is collapsed
+@qa_todo
+  Scenario: VisaResultatLista
+    Given that the list does not contains any metadata posts
+	  When the user enters a search criteria
+	  Then the result is displayed in the result list
 @qa_todo
   Scenario: SorteraResultatLista
     Given that the result list contains metadata poster

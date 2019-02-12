@@ -10,53 +10,87 @@ var expect = chai.expect;
 var EC = protractor.ExpectedConditions;
 var ResultList = function () {};
 
- ResultList.prototype = Object.create({}, {
-   resultList: {get: function(){
-         return  element.all(by.repeater('md in searchResults.records'));
-   }},
- getPostByTitle:{value: function(title){
+ResultList.prototype = Object.create({}, {
+		resultList: {
+			get: function () {
+				return element.all(by.repeater('md in searchResults.records'));
+			}
+		},
 
-   var reslist=	 element.all(by.repeater('md in searchResults.records')).map(function(post, indx) {
-     return{
-       title: post.element(by.css('h1.ng-binding')).getText(),
-       index:indx
-     }
-    });
-    return reslist;
- }},
- setPostAsFavorite:{value: function(title){
+		getPostByTitle: {
+			value: function (title) {
 
-   var reslist=	 element.all(by.repeater('md in searchResults.records')).map(function(post, indx) {
-     return{
-       title: post.element(by.css('h1.ng-binding')).getText(),
-       index:indx
-     }
-    });
-    reslist.then(function (res) {
-      for (var i = 0; i < res.length; ++i) {
-        if(title === res[i].title){
+				var reslist = element.all(by.repeater('md in searchResults.records')).map(function (post, indx) {
+						return {
+							title: post.element(by.css('h1.ng-binding')).getText(),
+							index: indx
+						}
+					});
+				return reslist;
+			}
+		},
 
-          return element.all(by.repeater('md in searchResults.records')).get(res[i].index).element(by.css('div.star-cont')).click();
+		setPostAsFavorite: {
+			value: function (title) {
 
-        }
-      }
-   });
- }},
+				var reslist = element.all(by.repeater('md in searchResults.records')).map(function (post, indx) {
+						return {
+							title: post.element(by.css('h1.ng-binding')).getText(),
+							index: indx
+						}
+					});
+				reslist.then(function (res) {
+					for (var i = 0; i < res.length; ++i) {
+						if (title === res[i].title) {
 
- getNumberOfRecords:{get:function(){
-   var el = element(by.css('span.result-text'));
-   return el.$('.ng-binding');
- }},
+							return element.all(by.repeater('md in searchResults.records')).get(res[i].index).element(by.css('div.star-cont')).click();
 
-setFullViewResult: {get:function(){
-    return element(by.css('[data-ng-click="setFullViewResults()"]')).click();
-}},
+						}
+					}
+				});
+			}
+		},
 
-setCompactViewResult: {get:function(){
-    return element(by.css('[data-ng-click="setCompactViewResults()"]')).click()
-}}
+		removePostAsFavorite: {
+			value: function (title) {
 
+				var reslist = element.all(by.repeater('md in searchResults.records')).map(function (post, indx) {
+						return {
+							title: post.element(by.css('h1.ng-binding')).getText(),
+							index: indx
+						}
+					});
+				reslist.then(function (res) {
+					for (var i = 0; i < res.length; ++i) {
+						if (title === res[i].title) {
 
-  });
+							return element.all(by.repeater('md in searchResults.records')).get(res[i].index).element(by.css('div.star-cont')).click();
 
-module.exports =ResultList;
+						}
+					}
+				});
+			}
+		},
+
+		getNumberOfRecords: {
+			get: function () {
+				var el = element(by.css('span.result-text'));
+				return el.$('.ng-binding');
+			}
+		},
+
+		setFullViewResult: {
+			get: function () {
+				return element(by.css('[data-ng-click="setFullViewResults()"]')).click();
+			}
+		},
+
+		setCompactViewResult: {
+			get: function () {
+				return element(by.css('[data-ng-click="setCompactViewResults()"]')).click()
+			}
+		}
+
+	});
+
+module.exports = ResultList;

@@ -1,4 +1,4 @@
-@qa_ready
+@qa_todo
 Feature: Sokning med generella alternativ
   
 	Scenario: Search with Direktatkomliga resurser 

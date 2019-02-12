@@ -1,24 +1,21 @@
 
 exports.config = {
-  baseUrl: 'https://tst.geodata.se/geodataportalen/srv/swe/catalog.search#/home',
-//  baseUrl: 'http://localhost:8080/geodataportalen',
+  baseUrl: 'https://tst.geodata.se/geodataportalen/srv/swe/catalog.search?',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   getPageTimeout: 60000,
-  allScriptsTimeout: 240000,
+  allScriptsTimeout: 500000,
   framework: 'custom',
   frameworkPath: 'node_modules/protractor-cucumber-framework',
-  multiCapabilities: 
+  multiCapabilities: [
     {
-	  shardTestFiles: true,
-	  browserName: 'chrome',
-	  chromeOptions: {
-            args: [
-//                   'headless', 
-			       'disable-gpu',			
-				   'no-sandbox'
-				  ]
-        }	  
+	  browserName: 'chrome'
     },
+	{
+	  browserName: 'internet explorer',
+	  version: "ANY"
+	}
+  ],
+  
   specs: [
     'features/HanteraFavoriter.feature',
 	'features/Sok_Enkel_vy.feature',
@@ -40,7 +37,6 @@ exports.config = {
     'features/steps/Sok_Enkel_vy.steps.js',
     'features/steps/VisaMetadata.steps.js',
     'features/steps/Sok_Avancerad_vy.steps.js',
-	'features/steps/Sok_Generellt.steps.js',
     'features/steps/HanteraFavoriter.steps.js',
     'features/steps/VisaResultat.steps.js',
 	'features/steps/Kartnavigering.steps.js',
@@ -49,25 +45,10 @@ exports.config = {
     'featuresEditor/steps/Login.steps.js',
     'featuresEditor/steps/FilterMetaDataInEditor.steps.js',
     'featuresEditor/steps/AdministrateMetadata.steps.js'
-    ],
+],
 
-    strict: true,
-	failfast: true,
-    format: ['pretty', 'json:reports/report.json'],
-	keepAlive: false,
-	ignoreUncaughtExceptions: true,
-	untrackOutstandingTimeouts: true,
+    format: 'pretty',
+	keepAlive: true,
     tags: '@qa_ready'  
   }
-  ,
-  plugins: [{
-        package: 'protractor-multiple-cucumber-html-reporter-plugin',
-        options:{
-		    automaticallyGenerateReport: true,
-            removeExistingJsonReportFile: true,
-			jsonOutputPath: 'reports/',
-			openReportInBrowser: true
-        }
-  }]
-  
 };

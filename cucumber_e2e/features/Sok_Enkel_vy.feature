@@ -1,7 +1,7 @@
 
-	@qa_ready
+	
 	﻿Feature: Sokning i enkel vy
-	@qa_readymm
+	@qa_ready
 	Scenario: Search with fritext on titel
     Given that the user is in Enkel vy
 		When the user enters the text "Testpost_1_ämne_fritext_titel_Geodatasamverkan" in the fritext field
@@ -18,12 +18,6 @@
     Given that the user is in Enkel vy
 		When the user enters the text "Testpost_fritext_fält_Samman_fattning_Geodatasamverkan" in the fritext field
 		Then "Testpost_fritext_fält_Samman_fattning_Geodatasamverkan" is listed
-
-	@qa_todo
-	Scenario: Search with fritext on tva ord in the titel
-    Given that the user is in Enkel vy
-		When the user enters the text "Testpost_fritext_titel_tva_ord exakt_Geodatasamverkan" in the fritext field
-		Then "Testpost_fritext_titel_tva_ord exakt_Geodatasamverkan" is listed
 
 	@qa_ready
 	Scenario: Search with amne
@@ -45,6 +39,13 @@
 		When the user deselects Amne "GEOVETENSKAP"
 		And clicks Amne "EKONOMI"
 		Then "Testpost_referensdatum_till_Geodatasamverkan" is listed
+
+
+	@qa_todo
+	Scenario: Search with fritext on tva ord in the titel
+    Given that the user is in Enkel vy
+		When the user enters the text "Testpost_fritext_titel_tva_ord exakt_Geodatasamverkan" in the fritext field
+		Then "Testpost_fritext_titel_tva_ord exakt_Geodatasamverkan" is listed
 
 	@qa_todo
 	Scenario: Search with 2 Amnen

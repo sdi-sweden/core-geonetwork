@@ -15,8 +15,8 @@ public class HarvestLogFileParser {
 	@Ignore
 	public void parseLogFile() throws IOException {
 
-//	    String path = "C:\\tmp\\harvester_csw_SMHI_201901280515.log";
-	    String path = "C:\\tmp\\harvester_csw_Naturv_rdsverket_201901280500.log";
+	    String path = "C:\\tmp\\harvester_csw_SMHI_201902010515.log";
+//	    String path = "C:\\tmp\\harvester_csw_Naturv_rdsverket_201902010500.log";
 	    File theFile = FileUtils.getFile(path);
 	    LineIterator it = FileUtils.lineIterator(theFile, "UTF-8");
 	    Integer lineCount = 0;
