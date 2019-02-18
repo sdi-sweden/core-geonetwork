@@ -49,6 +49,7 @@ USA.
   <sch:ns prefix="geonet" uri="http://www.fao.org/geonetwork"/>
   <sch:ns prefix="skos" uri="http://www.w3.org/2004/02/skos/core#"/>
   <sch:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
+  <sch:ns prefix="gmx" uri="http://www.isotc211.org/2005/gmx"/>
   <!-- INSPIRE metadata rules / START -->
   <!-- ############################################ -->
   <sch:pattern fpi="[Geodata.se:101] - En titel måste anges">
@@ -104,10 +105,12 @@ USA.
     <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']">
       <sch:let name="resourceIdentifier_code"
                value="normalize-space(//gmd:citation/*/gmd:identifier/gmd:MD_Identifier/gmd:code/*/text())"/>
-      <sch:assert test="$resourceIdentifier_code">[Geodata.se:104] - Identifierare för resursen krävs</sch:assert>
+      <sch:let name="resourceIdentifier_uri"
+               value="normalize-space(//gmd:citation/*/gmd:identifier/gmd:MD_Identifier/gmd:code/gmx:Anchor/@xlink:href)"/>               
+      <sch:assert test="$resourceIdentifier_code or $resourceIdentifier_uri">[Geodata.se:104] - Identifierare för resursen krävs</sch:assert>
       <!--Rep	<sch:report test="$resourceIdentifier_code">ID <sch:value-of select="$resourceIdentifier_code"/> </sch:report> -->
+      <!--Rep	<sch:report test="$resourceIdentifier_uri">URI <sch:value-of select="$resourceIdentifier_uri"/> </sch:report> -->
     </sch:rule>
-
   </sch:pattern>
 
   <sch:pattern fpi="[Geodata.se:105] - Ämnesområde  måste anges ">
