@@ -800,14 +800,22 @@
 
   <xsl:template match="gmd:dataQualityInfo/gmd:DQ_DataQuality">
 
+    <xsl:variable name="isInspireMetadata" select="count(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[*/text() = 'Inspire' and ../gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'Initiativ']) > 0" />
+    <xsl:variable name="isDataset" select="//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='dataset'" />
+    <xsl:variable name="isService" select="//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service'" />
+
     <xsl:copy>
       <xsl:copy-of select="@*" />
 
       <xsl:apply-templates select="gmd:scope" />
       <xsl:apply-templates select="gmd:report" />
 
-      <!-- Conformance report check: add it if not available-->
-      <xsl:if test="count(//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='dataset']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://data.europa.eu/eli/reg')]) = 0">
+      <!-- Conformance report check: add it if not available (dataset) -->
+      <xsl:if test="$isInspireMetadata and
+                    $isDataset and
+                    count(//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='dataset']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://data.europa.eu/eli/reg')]) = 0">
+
+        <xsl:message>dataset</xsl:message>
         <gmd:report>
           <gmd:DQ_DomainConsistency>
             <gmd:result>
@@ -834,8 +842,51 @@
                   </gmd:CI_Citation>
                 </gmd:specification>
                 <gmd:explanation>
-                  <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf
-                  </gco:CharacterString>
+                  <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf</gco:CharacterString>
+                </gmd:explanation>
+                <gmd:pass>
+                  <gco:Boolean>true</gco:Boolean>
+                </gmd:pass>
+              </gmd:DQ_ConformanceResult>
+            </gmd:result>
+          </gmd:DQ_DomainConsistency>
+        </gmd:report>
+
+      </xsl:if>
+
+      <!-- Conformance report check: add it if not available (service) -->
+      <xsl:if test="$isInspireMetadata and
+                    $isService and
+                    count(//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://data.europa.eu/eli/reg')]) = 0">
+
+        <xsl:message>service</xsl:message>
+        <gmd:report>
+          <gmd:DQ_DomainConsistency>
+            <gmd:result>
+              <gmd:DQ_ConformanceResult>
+                <gmd:specification>
+                  <gmd:CI_Citation>
+                    <gmd:title>
+                      <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2009/976">
+                        Kommissionens förordning (eg) nr 976/2009 av den 19 oktober 2009 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg med avseende på nättjänster
+                      </gmx:Anchor>
+                    </gmd:title>
+                    <gmd:date>
+                      <gmd:CI_Date>
+                        <gmd:date>
+                          <gco:Date>2009-10-20</gco:Date>
+                        </gmd:date>
+                        <gmd:dateType>
+                          <gmd:CI_DateTypeCode
+                            codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode"
+                            codeListValue="publication"/>
+                        </gmd:dateType>
+                      </gmd:CI_Date>
+                    </gmd:date>
+                  </gmd:CI_Citation>
+                </gmd:specification>
+                <gmd:explanation>
+                  <gco:CharacterString>Enligt ovanstående specifikation</gco:CharacterString>
                 </gmd:explanation>
                 <gmd:pass>
                   <gco:Boolean>true</gco:Boolean>
