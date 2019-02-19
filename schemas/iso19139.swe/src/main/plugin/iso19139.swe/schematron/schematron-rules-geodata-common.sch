@@ -511,27 +511,28 @@ USA.
   <sch:pattern fpi="[Geodata.se:127]">
     <sch:title>[Geodata.se:127] Om en kvantitativ kvalitetsrapport anges måste den vara fullständig </sch:title>
 
-    <sch:rule context="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*/gmd:DQ_QuantitativeResult">
-      <sch:let name="value" value="gmd:value/gco:Record/text()"/>
+<!--    <sch:rule context="//gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*/gmd:DQ_QuantitativeResult"> -->
+    <sch:rule context="//gmd:DQ_QuantitativeResult">
+      <sch:let name="value" value="gmd:value/gco:Record"/>
 <!--      <sch:let name="recordType" value="gmd:valueType/gco:RecordType/text()"/>
       <sch:let name="valueUnit" value="gmd:valueUnit/@xlink:title"/>
       <sch:let name="recordTypeLen" value="gmd:valueType/gco:RecordType/text()"/>
       <sch:let name="valueUnitLen" value="gmd:valueUnit/@xlink:title"/>
-      <sch:let name="valueLen" value="gmd:value/gco:Record/text()"/>
 -->
+      <sch:let name="valueLen" value="string-length(normalize-space(gmd:value/gco:Record/text()))"/>
 
       <!--	<sch:report test="$recordType">	<sch:value-of select="$recordType"/></sch:report>
         <sch:report test="$valueUnit">	<sch:value-of select="$valueUnit"/></sch:report>
         <sch:report test="$value">	<sch:value-of select="$value"/></sch:report>
+        <sch:report test="$valueLen">	<sch:value-of select="$valueLen"/></sch:report>
         <sch:report test="$recordType and $valueUnit and $value">	</sch:report>-->
 
-
-<!-- disable for now - templates and editor need to be updated to support gco:recordType and @xlink:title
+<!--  Harvested metadata doesn't get the xlink:title and xlink:href fields (something in Geonetwork removes them). This now matches the schematron rules in the old portal
       <sch:assert test="$recordType and $valueUnit and $value" >[Geodata.se:127] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges Värde=<sch:value-of select="$value"/>   Värdetyp=<sch:value-of select="$recordType"/>  Värdeenhet=<sch:value-of select="$valueUnit"/>  </sch:assert>
       <sch:assert test="$recordType" >[Geodata.se:127a] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värdetyp saknas </sch:assert>
       <sch:assert test="$valueUnit" >[Geodata.se:127b] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värdeenhet saknas </sch:assert>
 -->
-      <sch:assert test="$value" >[Geodata.se:127c] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värde saknas </sch:assert>
+      <sch:assert test="($valueLen &gt; 0)" >[Geodata.se:127c] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värde saknas </sch:assert>
 
     </sch:rule>
   </sch:pattern>
