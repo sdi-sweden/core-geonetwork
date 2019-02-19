@@ -101,10 +101,13 @@ USA.
 
   <sch:pattern fpi="[Geodata.se:104] - Identifierare för resursen  måste anges">
     <sch:title>[Geodata.se:104] - Identifierare för resursen  måste anges</sch:title>
-    <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']">
+<!--    <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']"> -->
+    <sch:rule context="//gmd:identificationInfo">
       <sch:let name="resourceIdentifier_code"
                value="normalize-space(//gmd:citation/*/gmd:identifier/*/gmd:code/*/text())"/>
-      <sch:assert test="$resourceIdentifier_code">[Geodata.se:104] - Identifierare för resursen krävs</sch:assert>
+      <sch:let name="resourceIdentifier_present"
+               value="string-length(normalize-space(//gmd:citation/*/gmd:identifier/*/gmd:code/*/text())) &gt; 0"/>      
+      <sch:assert test="$resourceIdentifier_present">[Geodata.se:104] - Identifierare för resursen krävs</sch:assert>
       <!--Rep	<sch:report test="$resourceIdentifier_code">ID <sch:value-of select="$resourceIdentifier_code"/> </sch:report> -->
     </sch:rule>
 
@@ -334,7 +337,7 @@ USA.
   <sch:pattern fpi="[Geodata.se:116] Datum för metadata måste anges">
     <sch:title>[Geodata.se:116] Datum för metadata måste anges </sch:title>
     <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
-      <sch:assert test="(gmd:dateStamp/*/text())">[Geodata.se:116] Datum för metadata måste anges</sch:assert>
+      <sch:assert test="string-length(normalize-space(gmd:dateStamp/*/text())) &gt; 0">[Geodata.se:116] Datum för metadata måste anges</sch:assert>
     </sch:rule>
   </sch:pattern>
 
