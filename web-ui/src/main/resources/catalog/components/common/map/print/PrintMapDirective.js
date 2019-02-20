@@ -58,7 +58,7 @@
         // force scale values to be int compatible
         for (var i = 0; i < data.scales.length; i++) {
           var nameArr = data.scales[i].name.split(":");
-          var name = nameArr[1].replace(",", "").replace(/\s+/g, '');
+          var name = nameArr[1].replace(/,/g,'');
           var value = parseInt(name);
           data.scales[i].value = value;
         }
