@@ -1,6 +1,6 @@
 
 exports.config = {
-  baseUrl: 'http://tst.geodata.se/geodataportalen/srv/swe/catalog.search?',
+  baseUrl: 'https://tst.geodata.se/geodataportalen/srv/swe/catalog.search?',
   seleniumAddress: 'http://localhost:4444/wd/hub',
   getPageTimeout: 60000,
   allScriptsTimeout: 500000,

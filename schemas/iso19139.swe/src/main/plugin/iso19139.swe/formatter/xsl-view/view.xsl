@@ -559,6 +559,9 @@
               <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkName')"/>
             </th>
             <th class="view-metadata-table-th-3">
+              <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkDescription')"/>
+            </th>
+            <th class="view-metadata-table-th-4">
               <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLineLinkUrl')"/>
             </th>
 
@@ -592,6 +595,9 @@
             <xsl:variable name="name">
               <xsl:apply-templates mode="render-value" select="*/gmd:name"/>
             </xsl:variable>
+            <xsl:variable name="description">
+              <xsl:apply-templates mode="render-value" select="*/gmd:description"/>
+            </xsl:variable>
             <xsl:variable name="url">
               <xsl:apply-templates mode="render-value" select="*/gmd:linkage/gmd:URL"/>
             </xsl:variable>
@@ -603,6 +609,9 @@
                 <xsl:value-of select="normalize-space($name)"/>
               </td>
               <td class="view-metadata-table-td-3">
+                <xsl:value-of select="normalize-space($description)"/>
+              </td>
+              <td class="view-metadata-table-td-4">
                 <xsl:choose>
                   <xsl:when test="normalize-space($protocol) = 'HTTP:Information'">
                     <a href="{$url}" target="_blank">

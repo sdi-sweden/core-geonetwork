@@ -101,10 +101,13 @@ USA.
 
   <sch:pattern fpi="[Geodata.se:104] - Identifierare för resursen  måste anges">
     <sch:title>[Geodata.se:104] - Identifierare för resursen  måste anges</sch:title>
-    <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']">
+<!--    <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']"> -->
+    <sch:rule context="//gmd:identificationInfo">
       <sch:let name="resourceIdentifier_code"
                value="normalize-space(//gmd:citation/*/gmd:identifier/*/gmd:code/*/text())"/>
-      <sch:assert test="$resourceIdentifier_code">[Geodata.se:104] - Identifierare för resursen krävs</sch:assert>
+      <sch:let name="resourceIdentifier_present"
+               value="string-length(normalize-space(//gmd:citation/*/gmd:identifier/*/gmd:code/*/text())) &gt; 0"/>      
+      <sch:assert test="$resourceIdentifier_present">[Geodata.se:104] - Identifierare för resursen krävs</sch:assert>
       <!--Rep	<sch:report test="$resourceIdentifier_code">ID <sch:value-of select="$resourceIdentifier_code"/> </sch:report> -->
     </sch:rule>
 
@@ -334,7 +337,7 @@ USA.
   <sch:pattern fpi="[Geodata.se:116] Datum för metadata måste anges">
     <sch:title>[Geodata.se:116] Datum för metadata måste anges </sch:title>
     <sch:rule context="//gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']">
-      <sch:assert test="(gmd:dateStamp/*/text())">[Geodata.se:116] Datum för metadata måste anges</sch:assert>
+      <sch:assert test="string-length(normalize-space(gmd:dateStamp/*/text())) &gt; 0">[Geodata.se:116] Datum för metadata måste anges</sch:assert>
     </sch:rule>
   </sch:pattern>
 
@@ -466,27 +469,28 @@ USA.
   <sch:pattern fpi="[Geodata.se:127]">
     <sch:title>[Geodata.se:127] Om en kvantitativ kvalitetsrapport anges måste den vara fullständig </sch:title>
 
-    <sch:rule context="/gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*/gmd:DQ_QuantitativeResult">
-      <sch:let name="value" value="gmd:value/gco:Record/text()"/>
+<!--    <sch:rule context="//gmd:MD_Metadata/gmd:dataQualityInfo/*/gmd:report/*/gmd:DQ_QuantitativeResult"> -->
+    <sch:rule context="//gmd:DQ_QuantitativeResult">
+      <sch:let name="value" value="gmd:value/gco:Record"/>
 <!--      <sch:let name="recordType" value="gmd:valueType/gco:RecordType/text()"/>
       <sch:let name="valueUnit" value="gmd:valueUnit/@xlink:title"/>
       <sch:let name="recordTypeLen" value="gmd:valueType/gco:RecordType/text()"/>
       <sch:let name="valueUnitLen" value="gmd:valueUnit/@xlink:title"/>
-      <sch:let name="valueLen" value="gmd:value/gco:Record/text()"/>
 -->
+      <sch:let name="valueLen" value="string-length(normalize-space(gmd:value/gco:Record/text()))"/>
 
       <!--	<sch:report test="$recordType">	<sch:value-of select="$recordType"/></sch:report>
         <sch:report test="$valueUnit">	<sch:value-of select="$valueUnit"/></sch:report>
         <sch:report test="$value">	<sch:value-of select="$value"/></sch:report>
+        <sch:report test="$valueLen">	<sch:value-of select="$valueLen"/></sch:report>
         <sch:report test="$recordType and $valueUnit and $value">	</sch:report>-->
 
 <!--  Harvested metadata doesn't get the xlink:title and xlink:href fields (something in Geonetwork removes them). This now matches the schematron rules in the old portal
-
       <sch:assert test="$recordType and $valueUnit and $value" >[Geodata.se:127] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges Värde=<sch:value-of select="$value"/>   Värdetyp=<sch:value-of select="$recordType"/>  Värdeenhet=<sch:value-of select="$valueUnit"/>  </sch:assert>
       <sch:assert test="$recordType" >[Geodata.se:127a] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värdetyp saknas </sch:assert>
       <sch:assert test="$valueUnit" >[Geodata.se:127b] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värdeenhet saknas </sch:assert>
 -->
-      <sch:assert test="$value" >[Geodata.se:127c] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värde saknas </sch:assert>
+      <sch:assert test="($valueLen &gt; 0)" >[Geodata.se:127c] Om en kvantitativ kvalitetsrapport skall anges måste värde, värdeenhet och värdetyp anges - värde saknas </sch:assert>
 
     </sch:rule>
   </sch:pattern>

@@ -527,7 +527,7 @@
       $scope.editMetadata = function(md) {
         var schema = md['geonet:info'].schema;
 
-        if (schema != 'iso19139.swe') {
+        if (schema == 'iso19139') {
           if (!confirm($translate.instant('nonSweMetadata'))) {
             return;
           }
@@ -951,11 +951,13 @@
         },
         defaultParams: {
           'facet.q': '',
-          resultType: gnSearchSettings.facetsSummaryType || 'details'
+          resultType: gnSearchSettings.facetsSummaryType || 'details',
+          _schema: 'iso19139*',
         },
         params: {
           'facet.q': '',
-          resultType: gnSearchSettings.facetsSummaryType || 'details'
+          resultType: gnSearchSettings.facetsSummaryType || 'details',
+          _schema: 'iso19139*',
         }
       }, gnSearchSettings.sortbyDefault);
 

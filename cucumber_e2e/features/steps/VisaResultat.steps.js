@@ -2,17 +2,17 @@
 
 //http://chaijs.com/
 var chai = require('chai');
-var expect = require('expect')
-	var jasmine = require('jasmine')
-	//https://github.com/domenic/chai-as-promised/
-	var chaiAsPromised = require('chai-as-promised');
+//var expect = require('expect')
+//var jasmine = require('jasmine')
+//https://github.com/domenic/chai-as-promised/
+var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 var expect = chai.expect;
 var assert = chai.assert;
-chai.should();
+//chai.should();
 var EC = protractor.ExpectedConditions;
 
-var expect = chai.expect;
+//var expect = chai.expect;
 var ResultList = require('../pages/ResultList.js');
 list = new ResultList();
 
@@ -22,13 +22,13 @@ searchfilter = new SearchFilter();
 module.exports = function () {
 	var allaMD = 85
 
-		this.Given(/^that the user has selected some fiters$/, function (callback) {
-			browser.driver.sleep(3000);
-			var el = element(by.css('span.result-text'));
-			allaMD = el.$('.ng-binding').getText();
-			searchfilter.selectCategory("EKONOMI");
-			callback();
-		});
+	this.Given(/^that the user has selected some fiters$/, function (callback) {
+		browser.driver.sleep(3000);
+		var el = element(by.css('span.result-text'));
+		allaMD = el.$('.ng-binding').getText();
+		searchfilter.selectCategory("EKONOMI");
+		callback();
+	});
 
 	this.When(/^the user clicks the button to visa alla resurser$/, function (callback) {
 		searchfilter.clearFilter;

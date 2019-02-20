@@ -16,5 +16,5 @@ var UserAccount = function UserAccount(callback) {
 
 module.exports.World = World;
 
-var user = ["swpojoje","lantt009"]
-var psw = ["******","*******"]
+var user = ["pete","admin"]
+var psw = ["password","admin"]
