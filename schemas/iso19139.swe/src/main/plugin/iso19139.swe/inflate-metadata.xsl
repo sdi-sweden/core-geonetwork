@@ -80,8 +80,7 @@
 
       <!-- record of type dataset or dataset series are created we shall automatically add a UUID for resource-identfier -->
       <xsl:if test="(count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0) or
-            (count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='series']) > 0) or 
-            (count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='service']) > 0)">
+            (count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='series']) > 0)">
 
         <xsl:choose>
           <!-- Code doesn't exists - Add it -->
