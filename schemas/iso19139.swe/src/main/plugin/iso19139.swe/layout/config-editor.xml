@@ -736,9 +736,14 @@
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact"
                />
 
-          <!-- Thumbnails -->
+          <!-- Thumbnails - dataset -->
           <field name="graphicOverview"
                  xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview" />
+                 
+          <!-- Thumbnails - service -->
+          <field name="graphicOverview"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:graphicOverview" />
+          
         </section>
 
         <!-- Geografisk, temporal och vertikal utsträckning -->
