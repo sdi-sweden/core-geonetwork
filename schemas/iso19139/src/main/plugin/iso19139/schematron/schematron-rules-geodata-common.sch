@@ -101,8 +101,7 @@ USA.
 
   <sch:pattern fpi="[Geodata.se:104] - Identifierare för resursen  måste anges">
     <sch:title>[Geodata.se:104] - Identifierare för resursen  måste anges</sch:title>
-<!--    <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']"> -->
-    <sch:rule context="//gmd:identificationInfo">
+    <sch:rule context="//gmd:MD_DataIdentification|//*[@gco:isoType='gmd:MD_DataIdentification']">
       <sch:let name="resourceIdentifier_code"
                value="normalize-space(//gmd:citation/*/gmd:identifier/*/gmd:code/*/text())"/>
       <sch:let name="resourceIdentifier_present"

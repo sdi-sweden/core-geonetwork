@@ -2007,9 +2007,9 @@ inklusive namn på eventuell profil.   (Sätts automatiskt och kan ej ändras)</
 
 <!--			&lt;!&ndash;<option show="y" value="inga begransningar">Inga begränsningar</option>
 			<option show="y" value="-&#45;&#45;&#45;&#45;Restriktioner tillämpliga för Inspire">-&#45;&#45;&#45;&#45;Restriktioner tillämpliga för Inspire</option>-->
-      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations" value="inga begränsningar">inga begränsningar</option>
-      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a" value="Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag">Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag</option>
-      <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b" value="Internationella förbindelser, allmän säkerhet eller nationellt försvar">Internationella förbindelser, allmän säkerhet eller nationellt försvar</option>
+            <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations" value="inga begränsningar">inga begränsningar</option>
+            <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a" value="Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag">Sekretess som omfattar offentliga myndigheters förfaranden, då sådan sekretess föreskrivs enligt lag</option>
+            <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b" value="Internationella förbindelser, allmän säkerhet eller nationellt försvar">Internationella förbindelser, allmän säkerhet eller nationellt försvar</option>
 			<option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c" value="Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.">Domstolsförfaranden, personers möjlighet att få en rättvis rättegång eller en offentlig myndighets möjligheter att genomföra en undersökning av straffrättslig eller disciplinär art.</option>
 			<option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1d" value="Sekretess som omfattar kommersiell eller industriell information, där sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning i syfte att skydda legitima ekonomiska intressen, inbegripet det allmänna intresset att upprätthålla sekretess för statistiska uppgifter och skattesekretess">Sekretess som omfattar kommersiell eller industriell information, där sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning i syfte att skydda legitima ekonomiska intressen, inbegripet det allmänna intresset att upprätthålla sekretess för statistiska uppgifter och skattesekretess</option>
 			<option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1e" value="Immateriella rättigheter">Immateriella rättigheter</option>
@@ -3270,26 +3270,24 @@ Detta undvikar vi att ange.</description>
     <helper sort="no">
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="villkor okända">villkor okända</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="inga tillämpliga villkor">inga tillämpliga villkor</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#AnnanBegransning" value="Annan begränsning">Annan begränsning</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#IngenBegransning" value="Ingen begränsning">Ingen begränsning</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#OmfattasAvSekretess" value="Omfattas av sekretess">Omfattas av sekretess</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#OmfattasAvSekretessAbsolutSekretess" value="Omfattas av sekretess - Absolut sekretess">Omfattas av sekretess - Absolut sekretess</option>
-
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#OmfattasAvSekretessSekretessSomHuvudregel" value="Omfattas av sekretess - Sekretess som huvudregel">Omfattas av sekretess - Sekretess som huvudregel</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#OmfattasAvSekretessEventuellSekretess" value="Omfattas av sekretess - Eventuell sekretess">Omfattas av sekretess - Eventuell sekretess</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#InnehallerPersonUppgifter" value="Innehåller personuppgifter">Innehåller personuppgifter</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#InnehallerPersonUppgifterKansliga" value="Innehåller personuppgifter - Känsliga">Innehåller personuppgifter - Känsliga</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#InnehallerPersonUppgifterIckeKansliga" value="Innehåller personuppgifter - Icke Känsliga">Innehåller personuppgifter - Icke Känsliga</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#ImmateriellaRattigheter" value="Immateriella rättigheter">Immateriella rättigheter</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#ImmateriellaRattigheterUpphovsratt" value="Immateriella rättigheter - Upphovsrätt">Immateriella rättigheter - Upphovsrätt</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#ImmateriellaRattigheterDatabasKatalogSkydd" value="Immateriella rättigheter - Databas-/katalogskydd">Immateriella rättigheter - Databas-/katalogskydd</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#InnehallerUppgifterKansligaAvseendeMiljo" value="Innehåller uppgifter som är känsliga avseende miljö">Innehåller uppgifter som är känsliga avseende miljö</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#InnehallerUppgifterSomInteFarSpridas" value="Innehåller information som inte får spridas">Innehåller information som inte får spridas</option>
- <option show="y" title=" https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#ForetagssekretessOSL" value="Företagssekretess SOL (offentlighets- och sekretesslagen (2009:400))">Företagssekretess SOL (offentlighets- och sekretesslagen (2009:400))</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#SekretessProvas" value="Sekretessprövning skall ske">Sekretessprövning skall ske</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#TillsynsSekretess" value="TillsynsSekretess">TillsynsSekretess</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/atkomstrestriktioner.xml#ForsvarsSekretess" value="FörsvarsSekretess">FörsvarsSekretess</option>
-
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#AnnanBegransning" value="Annan begränsning">Annan begränsning</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#IngenBegransning" value="Ingen begränsning">Ingen begränsning</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#OmfattasAvSekretess" value="Omfattas av sekretess">Omfattas av sekretess</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#OmfattasAvSekretessAbsolutSekretess" value="Omfattas av sekretess - Absolut sekretess">Omfattas av sekretess - Absolut sekretess</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#OmfattasAvSekretessSekretessSomHuvudregel" value="Omfattas av sekretess - Sekretess som huvudregel">Omfattas av sekretess - Sekretess som huvudregel</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#OmfattasAvSekretessEventuellSekretess" value="Omfattas av sekretess - Eventuell sekretess">Omfattas av sekretess - Eventuell sekretess</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#InnehallerPersonUppgifter" value="Innehåller personuppgifter">Innehåller personuppgifter</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#InnehallerPersonUppgifterKansliga" value="Innehåller personuppgifter - Känsliga">Innehåller personuppgifter - Känsliga</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#InnehallerPersonUppgifterIckeKansliga" value="Innehåller personuppgifter - Icke Känsliga">Innehåller personuppgifter - Icke Känsliga</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#ImmateriellaRattigheter" value="Immateriella rättigheter">Immateriella rättigheter</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#ImmateriellaRattigheterUpphovsratt" value="Immateriella rättigheter - Upphovsrätt">Immateriella rättigheter - Upphovsrätt</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#ImmateriellaRattigheterDatabasKatalogSkydd" value="Immateriella rättigheter - Databas-/katalogskydd">Immateriella rättigheter - Databas-/katalogskydd</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#InnehallerUppgifterKansligaAvseendeMiljo" value="Innehåller uppgifter som är känsliga avseende miljö">Innehåller uppgifter som är känsliga avseende miljö</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#InnehallerUppgifterSomInteFarSpridas" value="Innehåller information som inte får spridas">Innehåller information som inte får spridas</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#ForetagssekretessOSL" value="Företagssekretess SOL (offentlighets- och sekretesslagen (2009:400))">Företagssekretess SOL (offentlighets- och sekretesslagen (2009:400))</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#SekretessProvas" value="Sekretessprövning skall ske">Sekretessprövning skall ske</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#TillsynsSekretess" value="TillsynsSekretess">TillsynsSekretess</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/atkomstrestriktioner.xml#ForsvarsSekretess" value="FörsvarsSekretess">FörsvarsSekretess</option>
     </helper>
   </element>
 
@@ -3299,13 +3297,9 @@ Detta undvikar vi att ange.</description>
     <helper sort="no">
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" value="villkor okända">villkor okända</option>
       <option show="y" title="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" value="inga tillämpliga villkor">inga tillämpliga villkor</option>
-      <option show="y" title="http://resources.geodata.se/kodlistor/metadata/anvandningsrestriktioner.xml#CC01.0" value="Creative commons  CC0 1.0 Universiell">Creative commons  CC0 1.0 Universiell</option>
-    <option show="y" title="https://resources.geodata.se/kodlistor/metadata/anvandningsrestriktioner.xml#CCby4.0" value="Creative commons Erkännande 4.0 Internationell">Creative commons Erkännande 4.0 Internationell</option>
- <option show="y" title="https://resources.geodata.se/kodlistor/metadata/anvandningsrestriktioner.xml#CCby-sa4.0" value="Creative commons Erkännande-DelaLika 4.0 Internationell">Creative commons Erkännande-DelaLika 4.0 Internationell</option>
-
-
-
-
+      <option show="y" title="http://resources.geodata.se/codelist/metadata/anvandningsrestriktioner.xml#CC01.0" value="Creative commons  CC0 1.0 Universiell">Creative commons  CC0 1.0 Universiell</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/anvandningsrestriktioner.xml#CCby4.0" value="Creative commons Erkännande 4.0 Internationell">Creative commons Erkännande 4.0 Internationell</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/anvandningsrestriktioner.xml#CCby-sa4.0" value="Creative commons Erkännande-DelaLika 4.0 Internationell">Creative commons Erkännande-DelaLika 4.0 Internationell</option>
     </helper>
   </element>
 
