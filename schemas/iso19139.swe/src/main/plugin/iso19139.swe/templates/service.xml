@@ -182,6 +182,8 @@
                     </gmd:role>
                 </gmd:CI_ResponsibleParty>
         	</gmd:pointOfContact>
+        	<gmd:resourceMaintenance/>
+        	<gmd:graphicOverview/>
             <gmd:descriptiveKeywords>
                 <gmd:MD_Keywords>
                     <gmd:keyword>
