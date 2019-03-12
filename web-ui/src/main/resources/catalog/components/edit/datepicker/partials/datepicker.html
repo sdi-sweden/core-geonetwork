@@ -32,7 +32,7 @@
              data-ng-class="hideTime == 'true' ? 'hidden' : ''"
              data-ng-model="time"
              data-ng-show="mode === ''"/>
-      <div class="input-group-btn" data-ng-show="!hideDateModes">
+      <div class="input-group-btn" data-ng-hide="hideDateModes === true">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-clock-o"></i>&nbsp;<span class="caret"></span>
         </button>
