@@ -305,25 +305,28 @@
 		service metadata to datasets. This will avoid to have
 		error on XSD validation. -->
 
-	<xsl:template match="srv:operatesOn|gmd:featureCatalogueCitation">
-        <xsl:copy>
-        <xsl:copy-of select="@uuidref"/>
-        <xsl:if test="@uuidref">
-            <xsl:choose>
-                <xsl:when test="not(string(@xlink:href)) or starts-with(@xlink:href, $serviceUrl)">
-                    <xsl:attribute name="xlink:href">
-                        <xsl:value-of select="concat($serviceUrl,'csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id=',@uuidref)"/>
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:copy-of select="@xlink:href"/>
-                </xsl:otherwise>
-            </xsl:choose>
+  <xsl:template match="srv:operatesOn|gmd:featureCatalogueCitation">
+    <xsl:copy>
+      <xsl:copy-of select="@uuidref"/>
+      <xsl:if test="@uuidref">
+        <xsl:choose>
+          <xsl:when test="not(string(@xlink:href)) or starts-with(@xlink:href, $serviceUrl)">
+            <xsl:attribute name="xlink:href">
+              <xsl:value-of select="concat($serviceUrl,'csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id=',@uuidref)"/>
+            </xsl:attribute>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="@xlink:href"/>
+          </xsl:otherwise>
+        </xsl:choose>
 
-        </xsl:if>
-        </xsl:copy>
+      </xsl:if>
+    </xsl:copy>
 
-	</xsl:template>
+  </xsl:template>
+
+
+
 
 
 	<!-- ================================================================= -->
@@ -629,7 +632,8 @@
 	-->
 	<xsl:template match="gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'ConditionsApplyingToAccessAndUse')) and
 	                                          not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAccess')) and
-	                                           not(contains(gmx:Anchor/@xlink:href, 'anvandningsrestriktioner.xml'))]" priority="1000">
+	                                           not(contains(gmx:Anchor/@xlink:href, 'anvandningsrestriktioner.xml')) and
+	                                           not(contains(gmx:Anchor/@xlink:href, 'atkomstrestriktioner.xml'))]" priority="1000">
 		<xsl:variable name="value" select="*/text()" />
 
 		<xsl:variable name="valueInHelper" select="$labelsFile/labels/element[@name='gmd:otherConstraints']/helper/option[contains($value, @value)]/@title" />
