@@ -3,6 +3,12 @@
   "type": "fixed-params",
   "params": [
   ]
+  },
+  {
+    "key": "transfer-options-migrate",
+    "type": "fixed-params",
+    "params": [
+    ]
   },{
     "key": "url-host-relocator",
     "type": "fixed-params",
