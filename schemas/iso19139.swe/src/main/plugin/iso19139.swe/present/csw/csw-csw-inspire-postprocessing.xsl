@@ -1,18 +1,19 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
-    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gco="http://www.isotc211.org/2005/gco"
-    xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd" 
-    xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gse="http://www.geodata.se/gse"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	exclude-result-prefixes="#all">
+                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gse="http://www.geodata.se/gse"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                exclude-result-prefixes="#all">
 	
-    <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes" indent="yes"/>
-    
-    <!-- Template for Copy data -->
-    <xsl:template name="copyData" match="@*|node()">
-        <xsl:copy>
-            <xsl:apply-templates select="@*|node()"/>
-        </xsl:copy>
-    </xsl:template>
+  <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes" indent="yes"/>
+
+  <!-- Template for Copy data -->
+  <xsl:template name="copyData" match="@*|node()">
+      <xsl:copy>
+          <xsl:apply-templates select="@*|node()"/>
+      </xsl:copy>
+  </xsl:template>
 	
 	<!-- InspireCSWProxy rules are copied here -->
 	
@@ -23,8 +24,56 @@
 			<xsl:apply-templates select="@*|node()"/>
 		</xsl:element>
 	</xsl:template>
-	
-	<!-- remove the parent of DQ_UsabilityElement, if DQ_UsabilityElement is present -->
+
+
+  <xsl:template match="gmd:metadataStandardName">
+    <gmd:metadataStandardName>
+      <gco:CharacterString>SS-EN ISO 19115:2005-geodata.se</gco:CharacterString>
+    </gmd:metadataStandardName>
+  </xsl:template>
+
+  <xsl:template match="gmd:metadataStandardVersion">
+    <gmd:metadataStandardVersion>
+      <gco:CharacterString>3.1.1</gco:CharacterString>
+    </gmd:metadataStandardVersion>
+  </xsl:template>
+
+
+
+  <xsl:template match="gmd:MD_DataIdentification">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:citation" />
+      <xsl:apply-templates select="gmd:abstract" />
+      <xsl:apply-templates select="gmd:purpose" />
+      <xsl:apply-templates select="gmd:credit" />
+      <xsl:apply-templates select="gmd:status" />
+      <xsl:apply-templates select="gmd:pointOfContact" />
+      <xsl:apply-templates select="gmd:resourceMaintenance" />
+      <xsl:apply-templates select="gmd:graphicOverview" />
+      <xsl:apply-templates select="gmd:resourceFormat" />
+      <xsl:apply-templates select="gmd:descriptiveKeywords" />
+      <xsl:apply-templates select="gmd:resourceSpecificUsage" />
+
+      <!-- Process gmd:resourceConstraints for INSPIRE TG 2.0 -->
+      <xsl:apply-templates select="." mode="process-resource-constraints" />
+
+      <xsl:apply-templates select="gmd:aggregationInfo" />
+      <xsl:apply-templates select="gmd:spatialRepresentationType" />
+      <xsl:apply-templates select="gmd:spatialResolution" />
+      <xsl:apply-templates select="gmd:language" />
+      <xsl:apply-templates select="gmd:characterSet" />
+      <xsl:apply-templates select="gmd:topicCategory" />
+      <xsl:apply-templates select="gmd:environmentDescription" />
+      <xsl:apply-templates select="gmd:extent" />
+      <xsl:apply-templates select="gmd:supplementalInformation" />
+
+    </xsl:copy>
+  </xsl:template>
+
+
+  <!-- remove the parent of DQ_UsabilityElement, if DQ_UsabilityElement is present -->
 	<xsl:template match="*[gmd:DQ_UsabilityElement]"/>
 	
 	<!-- remove all aggregateInformation -->
@@ -198,8 +247,39 @@
 		(d.2) If srv:operatesOn is missing, add srv:containsOperations as last child of srv:SV_ServiceIdentification -->
 	<xsl:template match="gmd:MD_Metadata[gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue = 'service']/gmd:identificationInfo/srv:SV_ServiceIdentification">
 		<xsl:copy>
-			<xsl:apply-templates select="node()[not(self::srv:couplingType)][not(self::srv:containsOperations)][not(self::srv:operatesOn)][not(self::gmd:topicCategory)]"/>
+			<!--<xsl:apply-templates select="node()[not(self::srv:couplingType)][not(self::srv:containsOperations)][not(self::srv:operatesOn)][not(self::gmd:topicCategory)]"/>-->
 			
+		  <xsl:apply-templates select="gmd:citation" />
+		  <xsl:apply-templates select="gmd:abstract" />
+		  <xsl:apply-templates select="gmd:purpose" />
+		  <xsl:apply-templates select="gmd:credit" />
+		  <xsl:apply-templates select="gmd:status" />
+		  <xsl:apply-templates select="gmd:pointOfContact" />
+		  <xsl:apply-templates select="gmd:resourceMaintenance" />
+		  <xsl:apply-templates select="gmd:graphicOverview" />
+		  <xsl:apply-templates select="gmd:resourceFormat" />
+      <!-- Don't copy gmd:topicCategory -->
+		  <!--<xsl:apply-templates select="gmd:topicCategory" />-->
+		  
+		  <xsl:apply-templates select="gmd:descriptiveKeywords" />
+		  <xsl:apply-templates select="gmd:resourceSpecificUsage" />
+		  
+		  <!-- Process gmd:resourceConstraints for INSPIRE TG 1.3 (backport) -->
+		  <xsl:apply-templates select="." mode="process-resource-constraints" />
+		  
+		  <xsl:apply-templates select="gmd:aggregationInfo" />
+		  <xsl:apply-templates select="srv:serviceType" />
+		  <xsl:apply-templates select="srv:serviceTypeVersion" />
+		  <xsl:apply-templates select="srv:accessProperties" />
+		  <xsl:apply-templates select="srv:restrictions" />
+		  <xsl:apply-templates select="srv:keywords" />
+		  <xsl:apply-templates select="srv:extent" />
+		  <xsl:apply-templates select="srv:coupledResource" />
+		  <!-- Don't copy srv:couplingType, srv:containsOperations, srv:operatesOn -->
+		  <!--<xsl:apply-templates select="srv:couplingType" />
+		  <xsl:apply-templates select="srv:containsOperations" />
+		  <xsl:apply-templates select="srv:operatesOn" />-->
+		  
 			<xsl:choose>
 				<xsl:when test="srv:operatesOn">
 					<srv:couplingType>
@@ -319,5 +399,70 @@
         <xsl:copy-of select="."/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+
+
+  <xsl:template match="gmd:MD_DataIdentification|srv:SV_ServiceIdentification" mode="process-resource-constraints">
+
+    <!-- Step 1) Remove use limitation, ignore gmd:resourceConstraints[gmd:MD_Constraints/gmd:useLimitation] and create it from access restrictions and use constraints  -->
+
+    <!-- Step 1.1) Move access restrictions and use constraints to use Limitation -->
+  	<xsl:variable name="countAccessRestrictions" select="count(gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))]])" />
+  	<xsl:variable name="countUseConstraints" select="count(gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints])" />
+  	
+  	<xsl:if test="($countAccessRestrictions + $countUseConstraints) > 0"> 
+		<xsl:variable name="useLimitationsValue">
+		    <xsl:for-each select="gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))]]">
+		    	<xsl:value-of select="gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))]/gmx:Anchor" />
+		    	<xsl:if test="position() > 1">
+		    		###################
+		    	</xsl:if>
+		    </xsl:for-each>
+		    
+		    <xsl:if test="$countAccessRestrictions = 1 and $countUseConstraints > 0">
+		    	###################
+		    </xsl:if>
+		    
+		    <xsl:for-each select="gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints]">
+		    	<xsl:value-of select="gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints/gmx:Anchor" />
+		    	<xsl:if test="position() > 1">
+		    		###################
+		    	</xsl:if>
+		    </xsl:for-each>
+		</xsl:variable>
+  		
+      <gmd:resourceConstraints>
+        <gmd:MD_Constraints>
+          <gmd:useLimitation>
+            <gco:CharacterString>
+            	<xsl:value-of select="$useLimitationsValue" />             
+            </gco:CharacterString>
+          </gmd:useLimitation>
+        </gmd:MD_Constraints>
+      </gmd:resourceConstraints>
+    </xsl:if>
+  	
+    <!-- Step 2) Copy Limitations on public access: LimitationsOnPublicAccess, removing the Anchor -->
+   	<xsl:for-each select="gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]]">
+	  <xsl:copy>     
+	    <xsl:copy-of select="@*" />
+
+	  	<xsl:for-each select="gmd:MD_LegalConstraints">
+	  	  <xsl:copy>     
+	  	    <xsl:copy-of select="@*" />
+	  			
+	  		<xsl:apply-templates select="gmd:accessConstraints" />
+	  			
+	  		<gmd:otherConstraints>
+	  		  <gco:CharacterString><xsl:value-of select="gmd:otherConstraints/gmx:Anchor" /></gco:CharacterString>
+	  		</gmd:otherConstraints>	  
+	  	  </xsl:copy>
+	  	</xsl:for-each>	  			
+	  </xsl:copy> 	  	
+  	</xsl:for-each>
+	
+    <!-- Step 3) Copy gmd:resourceConstraints[gmd:MD_SecurityConstraints] -->
+    <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_SecurityConstraints]" />
   </xsl:template>
 </xsl:stylesheet>

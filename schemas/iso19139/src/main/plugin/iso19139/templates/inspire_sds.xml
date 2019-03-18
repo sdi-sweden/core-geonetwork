@@ -461,9 +461,7 @@
                   <gmd:date>
                     <gmd:CI_Date>
                       <gmd:date>
-                        <gco:Date>
                           <gco:Date>2014-12-11</gco:Date>
-                        </gco:Date>
                       </gmd:date>
                       <gmd:dateType>
                         <gmd:CI_DateTypeCode
