@@ -186,11 +186,12 @@
       <xsl:apply-templates select="gmd:descriptiveKeywords" />
 
 
-      <xsl:if test="count(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'Initiativ']) = 0">
+      <xsl:if test="count(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'Initiativ' or
+                                                  gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gmx:Anchor = 'Initiativ']) = 0">
         <gmd:descriptiveKeywords>
           <gmd:MD_Keywords>
             <gmd:keyword>
-              <gco:CharacterString></gco:CharacterString>
+              <gmx:Anchor xlink:href=""></gmx:Anchor>
             </gmd:keyword>
             <gmd:type>
               <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode" codeListValue="theme"/>
@@ -198,12 +199,12 @@
             <gmd:thesaurusName>
               <gmd:CI_Citation>
                 <gmd:title>
-                  <gco:CharacterString>Initiativ</gco:CharacterString>
+                  <gmx:Anchor xlink:href="https://resources.geodata.se/codelist/metadata/initiativ.xml">Initiativ</gmx:Anchor>
                 </gmd:title>
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date>2011-04-04</gco:Date>
+                      <gco:Date>2017-01-01</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
@@ -244,7 +245,7 @@
               <gmd:thesaurusName>
                 <gmd:CI_Citation>
                   <gmd:title>
-                    <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset" >INSPIRE priority data set</gmx:Anchor>
+                    <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset">INSPIRE priority data set</gmx:Anchor>
                   </gmd:title>
                   <gmd:date>
                     <gmd:CI_Date>

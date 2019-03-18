@@ -328,10 +328,13 @@
 			<xsl:for-each select="//gmd:MD_Keywords">
 				<!-- Index all keywords as text or anchor -->
 
-				<xsl:variable name="thesaurusName"
-                      select="normalize-space(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString)"/>
+        <xsl:variable name="thesaurusName" select="if (normalize-space(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString/text()) != '')
+						                                            then normalize-space(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString/text())
+                                                        else normalize-space(gmd:thesaurusName/gmd:CI_Citation/gmd:title/gmx:Anchor/text())"/>
 
-				<xsl:variable name="listOfKeywords"
+        <!--<xsl:message>INDEXING thesaurusName: <xsl:value-of select="$thesaurusName" /></xsl:message>-->
+
+        <xsl:variable name="listOfKeywords"
                       select="gmd:keyword/gco:CharacterString|
                                         gmd:keyword/gmx:Anchor"/>
 				<xsl:for-each select="$listOfKeywords">
@@ -409,22 +412,35 @@
                    string="{substring-after($thesaurusIdentifier,'geonetwork.thesaurus.')}"
                    store="true" index="true"/>
 					</xsl:if>
-					<xsl:if test="gmd:title/gco:CharacterString/text() != ''">
+
+          <xsl:variable name="thesaurusTitle" select="if (normalize-space(gmd:title/gco:CharacterString/text()) != '')
+						                                            then normalize-space(gmd:title/gco:CharacterString/text())
+                                                        else normalize-space(gmd:title/gmx:Anchor/text())"/>
+          <!--<xsl:message>INDEXING thesaurusTitle: <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
+
+          <xsl:if test="$thesaurusTitle != ''">
 						<Field name="thesaurusName"
                    string="{gmd:title/gco:CharacterString/text()}"
                    store="true" index="true"/>
 					</xsl:if>
 					<!-- SDI-Sweden extension -->
-					<xsl:if test="gmd:title/gco:CharacterString/text() != ''">
-						<xsl:variable name="thesaurusTitle" select="gmd:title/gco:CharacterString/text()"/>
-						<xsl:if test="$thesaurusTitle='Initiativ'  or $thesaurusTitle='Initiative'">
-							<xsl:for-each select="//gmd:MD_Keywords/gmd:keyword/gco:CharacterString/text()">
-								<xsl:variable name="keywordLower"  select="lower-case(.)"/>
-								<xsl:if test="$keywordLower='inspire'">
-									<Field name="inspireinitiativ" string="true" store="false" index="true"/>
-									<!--<xsl:message>IsInspireTheme: <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
-								</xsl:if>
-								<!--<xsl:message>keyword: <xsl:value-of select="$keywordLower" /></xsl:message>-->
+					<xsl:if test="$thesaurusTitle != ''">
+
+            <xsl:if test="$thesaurusTitle='Initiativ'  or $thesaurusTitle='Initiative'">
+							<xsl:for-each select="//gmd:MD_Keywords/gmd:keyword">
+
+                <xsl:variable name="keywordValue" select="if (gco:CharacterString/text() != '')
+						                                            then gco:CharacterString/text()
+                                                        else gmx:Anchor/text()"/>
+                <!--<xsl:message>INDEXING keywordValue: <xsl:value-of select="$keywordValue" /></xsl:message>-->
+                <xsl:if test="string($keywordValue)">
+                  <xsl:variable name="keywordLower"  select="lower-case(.)"/>
+                  <xsl:if test="$keywordLower='inspire'">
+                    <Field name="inspireinitiativ" string="true" store="false" index="true"/>
+                    <!--<xsl:message>IsInspireTheme: <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
+                  </xsl:if>
+                  <!--<xsl:message>keyword: <xsl:value-of select="$keywordLower" /></xsl:message>-->
+                </xsl:if>
 							</xsl:for-each>
 						</xsl:if>
 						<!--<xsl:message>Thesaurus namme (index): <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
