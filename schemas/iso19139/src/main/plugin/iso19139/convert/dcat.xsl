@@ -83,9 +83,7 @@
       </rdfs:label>
 
       <!-- The homepage of the catalog -->
-      <foaf:homepage>
-        <xsl:value-of select="$url"/>
-      </foaf:homepage>
+      <foaf:homepage rdf:resource="{$url}" />
 
       <!-- FIXME : void:Dataset -->
       <void:openSearchDescription><xsl:value-of select="$url"/>/srv/eng/portal.opensearch
