@@ -5,26 +5,26 @@
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 	xmlns:skos="http://www.w3.org/2004/02/skos/core#">
 	
-	<skos:ConceptScheme rdf:about="http://www.geodata.com/thesaurus/initiative">
+	<skos:ConceptScheme rdf:about="https://resources.geodata.se/codelist/metadata/initiativ.xml">
 		<dc:title>Initiativ</dc:title>
 		<dc:description>Initiativ vocabulary.</dc:description>
-		<dcterms:issued>2011-04-04 12:00:00</dcterms:issued>
-		<dcterms:modified>2011-04-04 12:00:00</dcterms:modified>
+		<dcterms:issued>2017-01-01 12:00:00</dcterms:issued>
+		<dcterms:modified>2017-01-01 12:00:00</dcterms:modified>
 	</skos:ConceptScheme>
 	
-	<skos:Concept rdf:about="http://www.geodata.com/thesaurus#inspire">
+	<skos:Concept rdf:about="https://resources.geodata.se/codelist/metadata/initiativ.xml#inspire">
 		<skos:prefLabel xml:lang="sv">Inspire</skos:prefLabel>
-		<skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+		<skos:inScheme rdf:resource="https://resources.geodata.se/codelist/metadata/initiativ.xml"/>
 	</skos:Concept>
 	
-	<skos:Concept rdf:about="http://www.geodata.com/thesaurus#geodatasamverkan">
+	<skos:Concept rdf:about="https://resources.geodata.se/codelist/metadata/initiativ.xml#geodatasamverkan">
 		<skos:prefLabel xml:lang="sv">Geodatasamverkan</skos:prefLabel>
-		<skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+		<skos:inScheme rdf:resource="https://resources.geodata.se/codelist/metadata/initiativ.xml"/>
 	</skos:Concept>
 	
 	
 	<skos:Concept rdf:about="http://www.geodata.com/thesaurus#oppnadata">
 		<skos:prefLabel xml:lang="sv">Öppna data</skos:prefLabel>
-		<skos:inScheme rdf:resource="http://www.geodata.com/thesaurus/initiative"/>
+		<skos:inScheme rdf:resource="https://resources.geodata.se/codelist/metadata/initiativ.xml"/>
 	</skos:Concept>
 </rdf:RDF>

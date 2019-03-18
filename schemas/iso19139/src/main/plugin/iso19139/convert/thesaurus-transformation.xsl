@@ -268,6 +268,9 @@
               <xsl:when test="$thesauri/thesaurus[key = $currentThesaurus]/title = 'GEMET - INSPIRE themes, version 1.0'">
                 <gmx:Anchor xlink:href="http://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
               </xsl:when>
+              <xsl:when test="$thesauri/thesaurus[key = $currentThesaurus]/title = 'Initiativ'">
+                <gmx:Anchor xlink:href="https://resources.geodata.se/codelist/metadata/initiativ.xml">Initiativ</gmx:Anchor>
+              </xsl:when>
               <xsl:otherwise>
                 <gco:CharacterString>
                   <xsl:value-of select="$thesauri/thesaurus[key = $currentThesaurus]/title"/>
