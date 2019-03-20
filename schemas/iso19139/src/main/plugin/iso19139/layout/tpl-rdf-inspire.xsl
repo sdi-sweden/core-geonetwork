@@ -309,26 +309,26 @@
 
     -->
 
-    <xsl:param name="ResourceUri">
+  <xsl:param name="ResourceUri">
       <xsl:variable name="rURI" select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/*/gmd:code/gco:CharacterString"/>
-      <xsl:if test="$rURI != '' and ( starts-with($rURI, 'http://') or starts-with($rURI, 'https://') )">
-        <xsl:value-of select="$rURI"/>
-      </xsl:if>
-    </xsl:param>
+    <xsl:if test="$rURI != '' and ( starts-with($rURI, 'http://') or starts-with($rURI, 'https://') )">
+      <xsl:value-of select="$rURI"/>
+    </xsl:if>
+  </xsl:param>
 
-    <xsl:param name="MetadataUri">
-      <xsl:variable name="mURI" select="gmd:fileIdentifier/gco:CharacterString"/>
-      <xsl:if test="$mURI != '' and ( starts-with($mURI, 'http://') or starts-with($mURI, 'https://') )">
-        <xsl:value-of select="$mURI"/>
-      </xsl:if>
-    </xsl:param>
+  <xsl:param name="MetadataUri">
+    <xsl:variable name="mURI" select="gmd:fileIdentifier/gco:CharacterString"/>
+    <xsl:if test="$mURI != '' and ( starts-with($mURI, 'http://') or starts-with($mURI, 'https://') )">
+      <xsl:value-of select="$mURI"/>
+    </xsl:if>
+  </xsl:param>
 
-    <!--
+  <!--
 
-      Other parameters
-      ================
+    Other parameters
+    ================
 
-    -->
+  -->
 
     <!-- Metadata language: corresponding Alpha-2 codes -->
 
@@ -1322,12 +1322,12 @@
     </xsl:param>
     <xsl:param name="URL">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-        <foaf:workplaceHomepage rdf:resource="{normalize-space(.)}"/>
+        <foaf:workplaceHomepage rdf:resource="{iso19139:addUrlProtocol(normalize-space(.))}"/>
       </xsl:for-each>
     </xsl:param>
     <xsl:param name="URL-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-        <vcard:hasURL rdf:resource="{normalize-space(.)}"/>
+        <vcard:hasURL rdf:resource="{iso19139:addUrlProtocol(normalize-space(.))}"/>
       </xsl:for-each>
     </xsl:param>
     <xsl:param name="Telephone">
@@ -2808,5 +2808,15 @@
     <xsl:value-of select="if ($responsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString!='')
       then $responsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString
       else generate-id($responsibleParty)"/>
+  </xsl:function>
+
+
+  <xsl:function name="iso19139:addUrlProtocol" as="xs:string">
+    <xsl:param name="url" as="xs:string"/>
+
+    <xsl:choose>
+      <xsl:when test="starts-with($url, 'http')"><xsl:value-of select="$url" /></xsl:when>
+      <xsl:otherwise><xsl:value-of select="concat('http://', $url)" /></xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 </xsl:stylesheet>

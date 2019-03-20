@@ -72,7 +72,9 @@
       </dct:title>
 
       <!-- free-text account of the catalog. -->
-      <dct:description/>
+      <dct:description xml:lang="{$iso2letterLanguageCode}">
+        <xsl:value-of select="/root/gui/env/site/name"/>
+      </dct:description>
 
       <rdfs:label xml:lang="{$iso2letterLanguageCode}">
         <xsl:value-of select="/root/gui/env/site/name"/> (<xsl:value-of
