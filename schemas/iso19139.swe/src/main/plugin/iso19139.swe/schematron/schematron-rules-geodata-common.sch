@@ -383,7 +383,7 @@ USA.
 
   <sch:pattern fpi="[Geodata.se:119]">
     <sch:title>[Geodata.se:118] och [Geodata.se:119] </sch:title>
-    <sch:rule context="//gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*">
+    <sch:rule context="//gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
       <sch:let name="resourceLocator" value="gmd:linkage/*/text()"/>
       <sch:let name="protocol" value="gmd:protocol/*/text()"/>
 
