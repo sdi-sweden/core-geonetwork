@@ -75,7 +75,9 @@
       </dct:title>
 
       <!-- free-text account of the catalog. -->
-      <dct:description/>
+      <dct:description xml:lang="{$iso2letterLanguageCode}">
+        <xsl:value-of select="/root/gui/env/site/name"/>
+      </dct:description>
 
       <rdfs:label xml:lang="{$iso2letterLanguageCode}">
         <xsl:value-of select="/root/gui/env/site/name"/> (<xsl:value-of
@@ -83,9 +85,7 @@
       </rdfs:label>
 
       <!-- The homepage of the catalog -->
-      <foaf:homepage>
-        <xsl:value-of select="$url"/>
-      </foaf:homepage>
+      <foaf:homepage rdf:resource="{$url}" />
 
       <!-- FIXME : void:Dataset -->
       <void:openSearchDescription><xsl:value-of select="$url"/>/srv/eng/portal.opensearch

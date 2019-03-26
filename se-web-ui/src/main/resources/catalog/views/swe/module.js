@@ -952,12 +952,12 @@
         defaultParams: {
           'facet.q': '',
           resultType: gnSearchSettings.facetsSummaryType || 'details',
-          _schema: 'iso19139*',
+          _schema: 'iso19139*'
         },
         params: {
           'facet.q': '',
           resultType: gnSearchSettings.facetsSummaryType || 'details',
-          _schema: 'iso19139*',
+          _schema: 'iso19139*'
         }
       }, gnSearchSettings.sortbyDefault);
 

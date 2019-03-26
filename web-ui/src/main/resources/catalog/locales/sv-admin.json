@@ -1087,5 +1087,6 @@
     "map/wfsServer/workspace": "Geoserver - workspace",
     "map/wfsServer/layer": "Geoserver - lager",
     "selectExistingLogo": "Välj en logotyp",
-    "update-metadatastandard": "Metadata Swedish profile update process"
+    "update-metadatastandard": "Metadata Swedish profile update process",
+    "transfer-options-migrate": "Process to migrate transfer options to distributor transfer options"
 }

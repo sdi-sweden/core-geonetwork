@@ -450,7 +450,7 @@
           <!--<input name="date" type="text" class="form-control" data-ng-model="selectedRow.date" />-->
           <div data-gn-date-picker="{{{{editRow.date}}}}"
                data-hide-time="true"
-               data-hide-date-modes="true"
+               data-hide-date-modes="false"
                data-label=""
                data-tag-name=""
                data-element-ref="datevalue">
