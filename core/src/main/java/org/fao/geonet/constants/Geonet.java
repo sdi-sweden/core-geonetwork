@@ -53,6 +53,7 @@ public final class Geonet {
     public static final String HARVESTER = GEONETWORK + ".harvester";
     public static final String SETTINGS = GEONETWORK + ".settings";
     public static final String DATA_MANAGER = GEONETWORK + ".datamanager";
+    public static final String SCHEMATRON_VALIDATION = GEONETWORK + ".schematronvalidation";
     public static final String ACCESS_MANAGER = GEONETWORK + ".accessmanager";
     public static final String SVN_MANAGER = GEONETWORK + ".svnmanager";
     public static final String SCHEMA_MANAGER = GEONETWORK + ".schemamanager";

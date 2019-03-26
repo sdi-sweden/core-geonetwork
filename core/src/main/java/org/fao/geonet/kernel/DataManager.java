@@ -31,22 +31,12 @@ import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataU
 import static org.springframework.data.jpa.domain.Specifications.where;
 
 //import java.io.File;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.Vector;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -63,10 +53,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.DailyRollingFileAppender;
+import org.apache.log4j.PatternLayout;
 import org.eclipse.jetty.util.ConcurrentHashSet;
 //import org.eclipse.jetty.util.StringUtil;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
+import org.fao.geonet.Logger;
 import org.fao.geonet.NodeInfo;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
@@ -213,6 +206,7 @@ public class DataManager implements ApplicationEventPublisherAware {
     private java.nio.file.Path stylePath;
     private String baseURL;
     private ApplicationEventPublisher applicationEventPublisher;
+    private static Logger validationLog;
 
     /**
      * Validates metadata against XSD and schematron files related to metadata schema throwing
@@ -282,10 +276,10 @@ public class DataManager implements ApplicationEventPublisherAware {
             Element failedSchematronVerification = Xml.selectElement(schemaTronReport, "geonet:report/geonet:schematronVerificationError", theNSs);
 
             if ((failedAssert != null) || (failedSchematronVerification != null)) {
-                if (Log.isDebugEnabled(Geonet.DATA_MANAGER)) {
-                    Log.debug(Geonet.DATA_MANAGER, "Schematron Validation Fail: FailedAssert = " + failedAssert);
-                    Log.debug(Geonet.DATA_MANAGER, "Schematron Validation Fail: failedSchematronVerification = " + failedSchematronVerification);
-                }
+
+                    validationLog.debug( "Schematron Validation Fail: FailedAssert = " + failedAssert);
+                    validationLog.debug( "Schematron Validation Fail: failedSchematronVerification = " + failedSchematronVerification);
+
                 throw new SchematronValidationErrorEx("Schematron errors detected for file " + fileName + " - "
                     + Xml.getString(schemaTronReport) + " for more details", schemaTronReport);
             }
@@ -450,6 +444,8 @@ public class DataManager implements ApplicationEventPublisherAware {
                 Log.debug(Geonet.DATA_MANAGER, "- removed record (" + id + ") from index");
             }
         }
+       validationLog = initializeLog ( context );
+
     }
 
     /**
@@ -2009,9 +2005,9 @@ public class DataManager implements ApplicationEventPublisherAware {
                     if (errors != null) {
                         XMLOutputter outp = new XMLOutputter();
                         String s = outp.outputString(errors);
-                        Log.debug(Geonet.DATA_MANAGER, "Schematron errors found: " + s);
+                        validationLog.debug( "Schematron errors found: " + s);
                         String mds = outp.outputString(md);
-                        Log.debug(Geonet.DATA_MANAGER, "Metadata ("+ metadataId +") being validated: " + mds);
+                        validationLog.debug( "Metadata ("+ metadataId +") being validated: " + mds);
                     }
                 }
                 // Swedish SDI - Don't add edit info - causes schematron rules not working fine with geonet elements
@@ -2137,7 +2133,14 @@ public class DataManager implements ApplicationEventPublisherAware {
 
         if (error != null) {
             errorReport.addContent(error);
-        }
+            validationLog.debug("Validation after schematron is : " + error);
+                XMLOutputter outp = new XMLOutputter();
+                String s = outp.outputString(error);
+            validationLog.debug("Schematron errors found: " + s);
+                String mds = outp.outputString(md);
+            validationLog.debug("Metadata ("+ metadataId +") being validated: " + mds);
+            }
+
 
         // Save report in session (invalidate by next update) and db
         try {
@@ -3448,5 +3451,41 @@ public class DataManager implements ApplicationEventPublisherAware {
     @Override
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
+    }
+    private synchronized Logger initializeLog(ServiceContext context ) {
+
+        // configure personalized logger
+        String packagename = getClass().getPackage().getName();
+        String[] packages = packagename.split("\\.");
+        String packageType = packages[packages.length - 1];
+        final String validationName = "validation";
+        Logger log = Log.createLogger(validationName,
+            "geonetwork.schematronvalidation");
+
+        String directory = log.getFileAppender();
+
+        if (directory == null || directory.isEmpty()) {
+            directory = context.getBean(GeonetworkDataDirectory.class).getSystemDataDir().toString();
+        }
+        File d = new File(directory);
+        if (!d.isDirectory()) {
+            directory = d.getParent() + File.separator;
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        DailyRollingFileAppender fa = new DailyRollingFileAppender();
+        fa.setName(validationName);
+        String logfile = directory
+            + validationName + "_"
+            + dateFormat.format(new Date(System.currentTimeMillis()))
+            + ".log";
+        fa.setFile(logfile);
+        fa.setLayout(new PatternLayout("%d{ISO8601} %-5p [%c] - %m%n"));
+        fa.setThreshold(log.getThreshold());
+        fa.setAppend(true);
+        fa.activateOptions();
+
+        log.setAppender(fa);
+
+        return log;
     }
 }
