@@ -434,7 +434,7 @@
                                                         else gmx:Anchor/text()"/>
                 <!--<xsl:message>INDEXING keywordValue: <xsl:value-of select="$keywordValue" /></xsl:message>-->
                 <xsl:if test="string($keywordValue)">
-                  <xsl:variable name="keywordLower"  select="lower-case(.)"/>
+                  <xsl:variable name="keywordLower"  select="lower-case($keywordValue)"/>
                   <xsl:if test="$keywordLower='inspire'">
                     <Field name="inspireinitiativ" string="true" store="false" index="true"/>
                     <!--<xsl:message>IsInspireTheme: <xsl:value-of select="$thesaurusTitle" /></xsl:message>-->
@@ -813,7 +813,7 @@
 					</xsl:if>
 
 					<!-- SWE customisation -->
-					<xsl:if test="lower-case($protocol) = 'http:ogc:wfs' or lower-case($protocol) = 'http:nedladdning'">
+					<xsl:if test="lower-case($protocol) = 'http:ogc:wfs' or starts-with(lower-case($protocol), 'http:nedladdning')">
 						<Field name="download" string="true" store="false" index="true"/>
 					</xsl:if>
 

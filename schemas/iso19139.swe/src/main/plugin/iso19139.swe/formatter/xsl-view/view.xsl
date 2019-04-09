@@ -69,6 +69,8 @@
                 select="/root/gmd:MD_Metadata"/>
 
 
+  <xsl:variable name="schemaLabels"
+                select="/root/schemas/*[name() = $schema]/labels"/>
 
 
   <!-- Specific schema rendering -->
@@ -470,31 +472,57 @@
   <xsl:template mode="render-field"
                 match="gmd:MD_LegalConstraints"
                 priority="100">
-	<xsl:param name="tabName" select="''" as="xs:string"/>
-	<xsl:for-each select="gmd:otherConstraints">
-		<dl class="gn-contact">
-		  <dt>
-			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'otherConstraints')"/>
-		  </dt>
-		  <dd>		  
-			<xsl:value-of select="gco:CharacterString"/>		
-		  </dd>
-		</dl>
-	</xsl:for-each>
-	<xsl:if test="gmd:accessConstraints">
-		<dl class="gn-contact">
-		  <dt>
-			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'accessConstraints')"/>
-		  </dt>
-		   <dd>	
-			  <xsl:for-each select="gmd:accessConstraints">
-					<xsl:value-of select="gco:CharacterString"/>
-					<xsl:apply-templates mode="render-value" select="gmd:MD_RestrictionCode/@codeListValue"/>	
-					<xsl:if test="position()!=last()">,</xsl:if>				
-			  </xsl:for-each>
-		  </dd>
-		</dl>
-	</xsl:if>
+    <xsl:param name="tabName" select="''" as="xs:string"/>
+    <xsl:for-each select="gmd:otherConstraints">
+      <dl class="gn-contact">
+        <dt>
+          <xsl:choose>
+            <xsl:when test="count(../gmd:accessConstraints) > 0 and gmx:Anchor and contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')">
+              <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'limitationsPublicAccess')"/>
+            </xsl:when>
+
+            <xsl:when test="count(../gmd:accessConstraints) > 0 and gmx:Anchor and not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))">
+              <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'conditionsForAccess')"/>
+            </xsl:when>
+
+            <xsl:when test="count(../gmd:useConstraints) > 0 and gmx:Anchor">
+              <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'conditionsForUse')"/>
+            </xsl:when>
+
+            <xsl:otherwise>
+              <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'otherConstraints')"/>
+            </xsl:otherwise>
+
+          </xsl:choose>
+        </dt>
+        <dd>
+          <xsl:value-of select="gco:CharacterString|gmx:Anchor"/>
+
+          <xsl:if test="gmx:Anchor">
+            <xsl:variable name="anchorHref" select="gmx:Anchor/@xlink:href" />
+
+            <xsl:choose>
+              <xsl:when test="count(../gmd:accessConstraints) > 0 and contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')">
+                (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="$schemaLabels/element[@name='LimitationsOnPublicAcces']/helper/option[@title = $anchorHref]"/>)
+              </xsl:when>
+
+              <xsl:when test="count(../gmd:accessConstraints) > 0 and not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))">
+                (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="$schemaLabels/element[@name='conditionsForAccess']/helper/option[@title = $anchorHref]"/>)
+              </xsl:when>
+
+              <xsl:when test="count(../gmd:useConstraints) > 0">
+                (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="$schemaLabels/element[@name='conditionsForUse']/helper/option[@title = $anchorHref]"/>)
+              </xsl:when>
+
+              <xsl:otherwise>
+                <xsl:value-of select="$anchorHref"/>
+              </xsl:otherwise>
+
+            </xsl:choose>
+          </xsl:if>
+        </dd>
+      </dl>
+    </xsl:for-each>
   </xsl:template>
   
   <!-- Metadata linkage -->

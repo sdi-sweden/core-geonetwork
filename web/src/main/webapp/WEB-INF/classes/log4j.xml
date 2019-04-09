@@ -51,6 +51,11 @@
   <logger name="geonetwork.database">
     <level value="WARN"/>
   </logger>
+  <logger name="geonetwork.schematronvalidation"  additivity="false">
+    <level value="DEBUG"/>
+	<appender-ref ref="consoleAppender"/>
+    <appender-ref ref="fileAppender"/>
+  </logger>
   <logger name="geonetwork.editor">
     <level value="WARN"/>
   </logger>
