@@ -79,7 +79,7 @@ class Harvester implements IHarvester<HarvestResult> {
     private final static String ATTRIB_SEARCHRESULT_NEXT = "nextRecord";
 
     //---------------------------------------------------------------------------
-    private static int GETRECORDS_REQUEST_MAXRECORDS = 20;
+    private static int GETRECORDS_REQUEST_MAXRECORDS = 15; //20;
 
     //---------------------------------------------------------------------------
     private static String CONSTRAINT_LANGUAGE_VERSION = "1.1.0";
