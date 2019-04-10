@@ -49,7 +49,7 @@
 	
 	 <service name="csw-inspire">
       <class name=".services.main.CswDiscoveryDispatcher">
-        <param name="filter" value="+inspireinitiativ"/>
+        <param name="filter" value="+keyword:Inspire"/>
       </class>
     </service>
     <service name="csw-integration-test">
