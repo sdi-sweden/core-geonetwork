@@ -125,10 +125,11 @@
             <gco:CharacterString>Svenska - Mall för datamängd
             </gco:CharacterString>
           </gmd:title>
+          <gmd:alternateTitle gco:nilReason="missing"/>
           <gmd:date>
             <gmd:CI_Date>
               <gmd:date>
-                <gco:DateTime/>
+                <gco:Date>2008-01-01</gco:Date>
               </gmd:date>
               <gmd:dateType>
                 <gmd:CI_DateTypeCode codeListValue="publication"
