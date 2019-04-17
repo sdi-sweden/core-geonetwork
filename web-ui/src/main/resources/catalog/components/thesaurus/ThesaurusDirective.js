@@ -540,10 +540,6 @@
                    scope.textgroupOnly).then(
                function(data) {
                  scope.snippet = data;
-
-                 if (scope.thesaurusKey === 'external.theme.Initiativ') {
-                   console.log(scope.snippet);
-                 }
                });
              };
 
