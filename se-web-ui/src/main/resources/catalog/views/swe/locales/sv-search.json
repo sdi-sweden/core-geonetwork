@@ -117,5 +117,10 @@
     "publisherHelpTooltip-title": "Publicerare hjälp",
     "publisherHelpTooltip-desc": "Inloggning för publicerare till att jobba på metadata",
     "publisherHelpTooltip-link": "/geodataportalens-hjalpsidor/forstasidan/for-publicerare",
+    "freetextSearchTooltip-title" : "Fritextsökning",
+    "freetextSearchTooltip-desc" : "Här kan du skriva in valfritt sökord och söka  i metadataposterna. Asterix används som ett Wild card för att kunna söka på delar av ord. Tex. *skog eller skog* eller s*og eller *skog*",
+    "searchResultTooltip-title": "Resultat",
+    "searchResultTooltip-desc": "Här får du en första överblick av sökresultatet",
+    "searchResultTooltip-link":"/geodataportalens-hjalpsidor/forstasidan/resultat/",
     "thisisthebottomrow":"Lägg inte till nya rader nedanför!"
 }

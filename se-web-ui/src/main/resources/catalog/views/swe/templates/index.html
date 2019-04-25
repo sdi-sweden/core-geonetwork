@@ -209,6 +209,13 @@
           <div data-ng-include="'../../catalog/views/swe/templates/searchForm.html'"></div>
 
           <div class="geo-data-list-cont">
+        	  <div class="result-help">
+			     <div data-swe-tooltip=""
+					data-title="{{ 'searchResultTooltip-title' | translate }}"
+					data-text="{{ 'searchResultTooltip-desc' | translate }}"
+					data-link="{{ 'searchResultTooltip-link' | translate }}">
+			    </div>
+			  </div>
               <!-- Sort and change view -->
               <div class="list-filter-cont">
                 <div class="sort-filter-cont">
@@ -223,11 +230,13 @@
                     </div>
                   </div>
                 </div>
-                <div data-gn-pagination="paginationInfo"
-                     data-hits-values="searchObj.hitsperpageValues"
-                    class="pagination-cont"
-                     data-enable-hot-keys=""></div>
-
+                <span>
+	                <div data-gn-pagination="paginationInfo"
+	                     data-hits-values="searchObj.hitsperpageValues"
+	                    class="pagination-cont"
+	                     data-enable-hot-keys="">
+                </div>
+                </span>
                 <div class="loggedin-filter-link-cont">
                   <a href="">skapa ny metadatapost</a>
                   <a href="">export data</a>
