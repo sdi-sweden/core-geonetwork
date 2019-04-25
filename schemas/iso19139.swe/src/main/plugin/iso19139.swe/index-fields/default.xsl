@@ -507,7 +507,15 @@
                store="true" index="false"/>
 
 				<xsl:if test="$role = 'owner'">
-					<Field name="orgNameOwner" string="{string(.)}" store="true" index="true"/>
+          <!-- Group "Länsstyrelsen" organisations -->
+          <xsl:variable name="orgNameOwner">
+            <xsl:choose>
+              <xsl:when test="starts-with(lower-case(.), 'länsstyrelsen') ">Länsstyrelsen</xsl:when>
+              <xsl:otherwise><xsl:value-of select="." /></xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          
+					<Field name="orgNameOwner" string="{string(normalize-space($orgNameOwner))}" store="true" index="true"/>
 				</xsl:if>
 			</xsl:for-each>
 
