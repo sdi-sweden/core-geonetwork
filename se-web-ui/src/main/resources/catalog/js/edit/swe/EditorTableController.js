@@ -175,10 +175,15 @@
       $scope.addRow = function() {
         $scope.mode = 'add';
 
+        $scope.editRow = {ref: ''};
+
+        // Initialize the row with the model properties
+        angular.forEach($scope.rowsModel, function (rowModel) {
+          $scope.editRow[rowModel.name] = '';
+        });
+
         if (($scope.mdType === 'sds') && ($scope.name === 'distributorContact')) {
-          $scope.editRow = {ref: '', role: 'custodian'};
-        } else {
-          $scope.editRow = {ref: ''};
+          $scope.editRow['role'] = 'custodian';
         }
 
         $($scope.dialog).modal('show');

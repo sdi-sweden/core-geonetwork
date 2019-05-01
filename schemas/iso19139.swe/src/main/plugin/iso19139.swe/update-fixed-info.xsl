@@ -475,7 +475,16 @@
 			<xsl:apply-templates select="gmd:status" />
 			<xsl:apply-templates select="gmd:pointOfContact" />
 			<xsl:apply-templates select="gmd:resourceMaintenance" />
-			<xsl:apply-templates select="gmd:graphicOverview" />
+
+      <!-- Copy only non-empty gmd:graphicOverview -->
+      <xsl:for-each select="gmd:graphicOverview">
+        <xsl:if test="string(gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString) or
+                      string(gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString) or
+                      string(gmd:MD_BrowseGraphic/gmd:fileType/gco:CharacterString)">
+          <xsl:apply-templates select="." />
+        </xsl:if>
+      </xsl:for-each>
+
 			<xsl:apply-templates select="gmd:resourceFormat" />
 			<xsl:apply-templates select="gmd:descriptiveKeywords" />
 			<xsl:apply-templates select="gmd:resourceSpecificUsage" />
@@ -560,6 +569,7 @@
 			<xsl:apply-templates select="gmd:distributorContact" />
 			<xsl:apply-templates select="gmd:distributionOrderProcess" />
 
+      <!-- Copy only non-empty distributor formats -->
 			<xsl:for-each select="gmd:distributorFormat">
 				<xsl:variable name="hasInfo" select="string(gmd:MD_Format/gmd:name/*) or
 																						 string(gmd:MD_Format/gmd:version/*) or
@@ -577,6 +587,32 @@
 		</xsl:copy>
 	</xsl:template>
 
+
+  <xsl:template match="gmd:MD_DigitalTransferOptions">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:unitsOfDistribution" />
+      <xsl:apply-templates select="gmd:transferSize" />
+
+      <!-- Copy only non-empty online resources -->
+      <xsl:for-each select="gmd:onLine">
+        <xsl:variable name="hasInfo" select="string(gmd:CI_OnlineResource/gmd:linkage/*) or
+																						 string(gmd:CI_OnlineResource/gmd:protocol/*) or
+																						 string(gmd:CI_OnlineResource/gmd:applicationProfile/*) or
+																						 string(gmd:CI_OnlineResource/gmd:name /*) or
+																						 string(gmd:CI_OnlineResource/gmd:description/*) or
+																						 string(gmd:CI_OnlineResource/gmd:function/*)" />
+
+        <xsl:if test="$hasInfo">
+          <xsl:apply-templates select="." />
+        </xsl:if>
+      </xsl:for-each>
+
+      <xsl:apply-templates select="gmd:offLine" />
+
+    </xsl:copy>
+  </xsl:template>
 
   <!-- ================================================================= -->
 	<!-- Adjust the namespace declaration - In some cases name() is used to get the

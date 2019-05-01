@@ -329,7 +329,7 @@
     <xsl:variable name="dialog-id" select="generate-id()" />
 
     <div class="form-group gn-field" data-ng-controller="SweEditorTableController"
-         data-ng-init="init({$refSystemModel}, {$refSystemTableModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '{local-name()}', '#refsystem-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
+         data-ng-init="init({$refSystemModel}, {$refSystemTableModel}, '{$refSystemXmlSnippet}', {../../../gn:element/@ref}, '{local-name(../..)}', '#refsystem-popup-{$dialog-id}', '{$labelConfig/label}', '{$labelConfig/condition}', 'iso19139.swe|{name()}|{name(..)}')" >
 
       <div data-swe-editor-table-directive="" />
 
@@ -836,7 +836,8 @@
 
     <xsl:variable name="thumbnailXmlSnippet">
       <![CDATA[
-          <gmd:graphicOverview>
+          <gmd:graphicOverview xmlns:gmd="http://www.isotc211.org/2005/gmd"
+              xmlns:gco="http://www.isotc211.org/2005/gco">
               <gmd:MD_BrowseGraphic>
                  <gmd:fileName>
                     <gco:CharacterString>{{editRow.fname}}</gco:CharacterString>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-                  xmlns:gmd="http://www.isotc211.org/2005/gmd"
-                  xmlns:xlink='http://www.w3.org/1999/xlink'
-                  xmlns:gco="http://www.isotc211.org/2005/gco"
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                  xmlns:srv="http://www.isotc211.org/2005/srv"
-                  xmlns:uuid="java:java.util.UUID"
-                  exclude-result-prefixes="gmd xlink gco xsi gmx srv uuid">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+                xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                xmlns:xlink='http://www.w3.org/1999/xlink'
+                xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                xmlns:srv="http://www.isotc211.org/2005/srv"
+                xmlns:uuid="java:java.util.UUID"
+                exclude-result-prefixes="gmd xlink gco xsi gmx srv uuid">
 
   <!-- ================================================================= -->
 
@@ -48,6 +48,21 @@
       <xsl:apply-templates select="gmd:locale" />
       <xsl:apply-templates select="gmd:spatialRepresentationInfo" />
       <xsl:apply-templates select="gmd:referenceSystemInfo" />
+
+      <xsl:if test="not(gmd:referenceSystemInfo)">
+        <gmd:referenceSystemInfo>
+          <gmd:MD_ReferenceSystem>
+            <gmd:referenceSystemIdentifier>
+              <gmd:RS_Identifier>
+                <gmd:code>
+                  <gco:CharacterString></gco:CharacterString>
+                </gmd:code>
+              </gmd:RS_Identifier>
+            </gmd:referenceSystemIdentifier>
+          </gmd:MD_ReferenceSystem>
+        </gmd:referenceSystemInfo>
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:metadataExtensionInfo" />
       <xsl:apply-templates select="gmd:identificationInfo" />
       <xsl:apply-templates select="gmd:contentInfo" />
@@ -181,7 +196,61 @@
       </xsl:if>
 
       <xsl:apply-templates select="gmd:resourceMaintenance" />
-      <xsl:apply-templates select="gmd:graphicOverview" />
+
+      <!-- Process graphic overview -->
+      <xsl:for-each select="gmd:graphicOverview">
+        <xsl:copy>
+          <xsl:copy-of select="@*" />
+
+          <xsl:choose>
+            <xsl:when test="gmd:MD_BrowseGraphic">
+              <xsl:for-each select="gmd:MD_BrowseGraphic">
+                <xsl:copy>
+                  <xsl:copy-of select="@*" />
+
+                  <xsl:apply-templates select="gmd:fileName"/>
+                  <xsl:apply-templates select="gmd:fileDescription"/>
+
+                  <xsl:if test="not(gmd:fileDescription)">
+                    <gmd:fileDescription>
+                      <gco:CharacterString></gco:CharacterString>
+                    </gmd:fileDescription>
+                  </xsl:if>
+                  <xsl:apply-templates select="gmd:fileType"/>
+
+                </xsl:copy>
+              </xsl:for-each>
+            </xsl:when>
+
+            <xsl:otherwise>
+              <gmd:MD_BrowseGraphic>
+                <gmd:fileName>
+                  <gco:CharacterString></gco:CharacterString>
+                </gmd:fileName>
+                <gmd:fileDescription>
+                  <gco:CharacterString></gco:CharacterString>
+                </gmd:fileDescription>
+              </gmd:MD_BrowseGraphic>
+            </xsl:otherwise>
+          </xsl:choose>
+
+        </xsl:copy>
+      </xsl:for-each>
+
+      <xsl:if test="not(gmd:graphicOverview)">
+        <gmd:graphicOverview>
+          <gmd:MD_BrowseGraphic>
+            <gmd:fileName>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:fileName>
+            <gmd:fileDescription>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:fileDescription>
+          </gmd:MD_BrowseGraphic>
+        </gmd:graphicOverview>
+      </xsl:if>
+
+
       <xsl:apply-templates select="gmd:resourceFormat" />
       <xsl:apply-templates select="gmd:descriptiveKeywords" />
 
@@ -528,14 +597,170 @@
     </xsl:copy>
   </xsl:template>
 
-  <!-- Inflate format -->
+  <!-- Inflate format and distributor transfer options -->
   <xsl:template match="gmd:MD_Distributor">
     <xsl:copy>
       <xsl:copy-of select="@*" />
 
-      <xsl:apply-templates select="gmd:distributorContact" />
+      <!-- Process distributor contacts -->
+      <xsl:for-each select="gmd:distributorContact">
+        <xsl:copy>
+          <xsl:copy-of select="@*" />
+
+          <xsl:choose>
+            <xsl:when test="gmd:CI_ResponsibleParty">
+              <xsl:for-each select="gmd:CI_ResponsibleParty">
+                <xsl:copy>
+                  <xsl:copy-of select="@*" />
+
+                  <xsl:apply-templates select="*"/>
+                </xsl:copy>
+              </xsl:for-each>
+            </xsl:when>
+
+            <xsl:otherwise>
+              <gmd:CI_ResponsibleParty>
+                <gmd:individualName gco:nilReason="missing">
+                  <gco:CharacterString/>
+                </gmd:individualName>
+                <gmd:organisationName gco:nilReason="missing">
+                  <gco:CharacterString/>
+                </gmd:organisationName>
+                <gmd:positionName gco:nilReason="missing">
+                  <gco:CharacterString/>
+                </gmd:positionName>
+                <gmd:contactInfo>
+                  <gmd:CI_Contact>
+                    <gmd:phone>
+                      <gmd:CI_Telephone>
+                        <gmd:voice gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gmd:voice>
+                        <gmd:facsimile gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gmd:facsimile>
+                      </gmd:CI_Telephone>
+                    </gmd:phone>
+                    <gmd:address>
+                      <gmd:CI_Address>
+                        <gmd:deliveryPoint gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gmd:deliveryPoint>
+                        <gmd:city gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gmd:city>
+                        <gmd:administrativeArea gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gmd:administrativeArea>
+                        <gmd:postalCode gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gmd:postalCode>
+                        <gmd:country gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gmd:country>
+                        <gmd:electronicMailAddress gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gmd:electronicMailAddress>
+                      </gmd:CI_Address>
+                    </gmd:address>
+                  </gmd:CI_Contact>
+                </gmd:contactInfo>
+                <gmd:role>
+                  <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue=""/>
+                </gmd:role>
+              </gmd:CI_ResponsibleParty>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:copy>
+      </xsl:for-each>
+
+      <xsl:if test="not(gmd:distributorContact)">
+        <gmd:distributorContact>
+          <gmd:CI_ResponsibleParty>
+            <gmd:individualName gco:nilReason="missing">
+              <gco:CharacterString/>
+            </gmd:individualName>
+            <gmd:organisationName gco:nilReason="missing">
+              <gco:CharacterString/>
+            </gmd:organisationName>
+            <gmd:positionName gco:nilReason="missing">
+              <gco:CharacterString/>
+            </gmd:positionName>
+            <gmd:contactInfo>
+              <gmd:CI_Contact>
+                <gmd:phone>
+                  <gmd:CI_Telephone>
+                    <gmd:voice gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:voice>
+                    <gmd:facsimile gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:facsimile>
+                  </gmd:CI_Telephone>
+                </gmd:phone>
+                <gmd:address>
+                  <gmd:CI_Address>
+                    <gmd:deliveryPoint gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:deliveryPoint>
+                    <gmd:city gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:city>
+                    <gmd:administrativeArea gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:administrativeArea>
+                    <gmd:postalCode gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:postalCode>
+                    <gmd:country gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:country>
+                    <gmd:electronicMailAddress gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:electronicMailAddress>
+                  </gmd:CI_Address>
+                </gmd:address>
+              </gmd:CI_Contact>
+            </gmd:contactInfo>
+            <gmd:role>
+              <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue=""/>
+            </gmd:role>
+          </gmd:CI_ResponsibleParty>
+        </gmd:distributorContact>
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:distributionOrderProcess" />
-      <xsl:apply-templates select="gmd:distributorFormat" />
+
+      <!-- Process distributor formats -->
+      <xsl:for-each select="gmd:distributorFormat">
+        <xsl:copy>
+          <xsl:copy-of select="@*" />
+
+          <xsl:choose>
+            <xsl:when test="gmd:MD_Format">
+              <xsl:for-each select="gmd:MD_Format">
+                <xsl:copy>
+                  <xsl:copy-of select="@*" />
+
+                  <xsl:apply-templates select="*"/>
+                </xsl:copy>
+              </xsl:for-each>
+            </xsl:when>
+
+            <xsl:otherwise>
+              <gmd:MD_Format>
+                <gmd:name gco:nilReason='missing'>
+                  <gco:CharacterString></gco:CharacterString>
+                </gmd:name>
+                <gmd:version gco:nilReason='missing'>
+                  <gco:CharacterString></gco:CharacterString>
+                </gmd:version>
+              </gmd:MD_Format>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:copy>
+      </xsl:for-each>
+
       <xsl:if test="not(gmd:distributorFormat)">
         <gmd:distributorFormat>
           <gmd:MD_Format>
@@ -548,7 +773,156 @@
           </gmd:MD_Format>
         </gmd:distributorFormat>
       </xsl:if>
-      <xsl:apply-templates select="gmd:distributorTransferOptions" />
+
+      <!-- Process distributor transfer options -->
+      <xsl:for-each select="gmd:distributorTransferOptions">
+        <xsl:copy>
+          <xsl:copy-of select="@*" />
+
+          <xsl:choose>
+            <xsl:when test="gmd:MD_DigitalTransferOptions">
+              <xsl:for-each select="gmd:MD_DigitalTransferOptions">
+                <xsl:copy>
+                  <xsl:copy-of select="@*" />
+
+                  <xsl:for-each select="gmd:onLine">
+                  <xsl:copy>
+                    <xsl:copy-of select="@*" />
+
+                    <xsl:choose>
+                      <xsl:when test="gmd:CI_OnlineResource">
+
+                        <xsl:for-each select="gmd:CI_OnlineResource">
+                          <xsl:copy>
+                            <xsl:copy-of select="@*" />
+
+                            <xsl:apply-templates select="gmd:linkage"/>
+
+                            <xsl:apply-templates select="gmd:protocol"/>
+
+                            <xsl:if test="not(gmd:protocol)">
+                              <gmd:protocol>
+                                <gco:CharacterString></gco:CharacterString>
+                              </gmd:protocol>
+                            </xsl:if>
+
+                            <xsl:apply-templates select="gmd:applicationProfile"/>
+
+                            <xsl:apply-templates select="gmd:name"/>
+
+                            <xsl:if test="not(gmd:name)">
+                              <gmd:name>
+                                <gco:CharacterString></gco:CharacterString>
+                              </gmd:name>
+                            </xsl:if>
+
+                            <xsl:apply-templates select="gmd:description"/>
+
+                            <xsl:if test="not(gmd:description)">
+                              <gmd:description>
+                                <gco:CharacterString></gco:CharacterString>
+                              </gmd:description>
+                            </xsl:if>
+
+
+                            <xsl:apply-templates select="gmd:function"/>
+                          </xsl:copy>
+
+                        </xsl:for-each>
+
+                      </xsl:when>
+
+                      <xsl:otherwise>
+                        <gmd:CI_OnlineResource>
+                          <gmd:linkage>
+                            <gmd:URL></gmd:URL>
+                          </gmd:linkage>
+                          <gmd:protocol gco:nilReason='missing'>
+                            <gco:CharacterString></gco:CharacterString>
+                          </gmd:protocol>
+                          <gmd:name gco:nilReason='missing'>
+                            <gco:CharacterString></gco:CharacterString>
+                          </gmd:name>
+                          <gmd:description gco:nilReason='missing'>
+                            <gco:CharacterString></gco:CharacterString>
+                          </gmd:description>
+                        </gmd:CI_OnlineResource>
+                      </xsl:otherwise>
+                    </xsl:choose>
+                  </xsl:copy>
+                </xsl:for-each>
+
+                  <xsl:if test="not(gmd:onLine)">
+                    <gmd:onLine>
+                      <gmd:CI_OnlineResource>
+                        <gmd:linkage>
+                          <gmd:URL></gmd:URL>
+                        </gmd:linkage>
+                        <gmd:protocol gco:nilReason="missing">
+                          <gco:CharacterString></gco:CharacterString>
+                        </gmd:protocol>
+                        <gmd:name gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gmd:name>
+                        <gmd:description gco:nilReason="missing">
+                          <gco:CharacterString/>
+                        </gmd:description>
+                      </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                  </xsl:if>
+                </xsl:copy>
+
+              </xsl:for-each>
+
+            </xsl:when>
+
+            <xsl:otherwise>
+              <gmd:MD_DigitalTransferOptions>
+                <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                    <gmd:linkage>
+                      <gmd:URL></gmd:URL>
+                    </gmd:linkage>
+                    <gmd:protocol gco:nilReason="missing">
+                      <gco:CharacterString></gco:CharacterString>
+                    </gmd:protocol>
+                    <gmd:name gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:name>
+                    <gmd:description gco:nilReason="missing">
+                      <gco:CharacterString/>
+                    </gmd:description>
+                  </gmd:CI_OnlineResource>
+                </gmd:onLine>
+              </gmd:MD_DigitalTransferOptions>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:copy>
+
+      </xsl:for-each>
+
+      <xsl:if test="not(gmd:distributorTransferOptions)">
+        <gmd:distributorTransferOptions>
+          <gmd:MD_DigitalTransferOptions>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL></gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol gco:nilReason="missing">
+                  <gco:CharacterString></gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name gco:nilReason="missing">
+                  <gco:CharacterString/>
+                </gmd:name>
+                <gmd:description gco:nilReason="missing">
+                  <gco:CharacterString/>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+          </gmd:MD_DigitalTransferOptions>
+        </gmd:distributorTransferOptions>
+      </xsl:if>
     </xsl:copy>
   </xsl:template>
 
@@ -563,7 +937,60 @@
       <xsl:apply-templates select="gmd:status" />
       <xsl:apply-templates select="gmd:pointOfContact" />
       <xsl:apply-templates select="gmd:resourceMaintenance" />
-      <xsl:apply-templates select="gmd:graphicOverview" />
+
+      <!-- Process graphic overview -->
+      <xsl:for-each select="gmd:graphicOverview">
+        <xsl:copy>
+          <xsl:copy-of select="@*" />
+
+          <xsl:choose>
+            <xsl:when test="gmd:MD_BrowseGraphic">
+              <xsl:for-each select="gmd:MD_BrowseGraphic">
+                <xsl:copy>
+                  <xsl:copy-of select="@*" />
+
+                  <xsl:apply-templates select="gmd:fileName"/>
+                  <xsl:apply-templates select="gmd:fileDescription"/>
+
+                  <xsl:if test="not(gmd:fileDescription)">
+                    <gmd:fileDescription>
+                      <gco:CharacterString></gco:CharacterString>
+                    </gmd:fileDescription>
+                  </xsl:if>
+                  <xsl:apply-templates select="gmd:fileType"/>
+
+                </xsl:copy>
+              </xsl:for-each>
+            </xsl:when>
+
+            <xsl:otherwise>
+              <gmd:MD_BrowseGraphic>
+                <gmd:fileName>
+                  <gco:CharacterString></gco:CharacterString>
+                </gmd:fileName>
+                <gmd:fileDescription>
+                  <gco:CharacterString></gco:CharacterString>
+                </gmd:fileDescription>
+              </gmd:MD_BrowseGraphic>
+            </xsl:otherwise>
+          </xsl:choose>
+
+        </xsl:copy>
+      </xsl:for-each>
+
+      <xsl:if test="not(gmd:graphicOverview)">
+        <gmd:graphicOverview>
+          <gmd:MD_BrowseGraphic>
+            <gmd:fileName>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:fileName>
+            <gmd:fileDescription>
+              <gco:CharacterString></gco:CharacterString>
+            </gmd:fileDescription>
+          </gmd:MD_BrowseGraphic>
+        </gmd:graphicOverview>
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:resourceFormat" />
       <xsl:apply-templates select="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[1]/text() != 'Initiativ']" />
 
