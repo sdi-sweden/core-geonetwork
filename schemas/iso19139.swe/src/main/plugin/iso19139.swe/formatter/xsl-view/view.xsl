@@ -94,7 +94,7 @@
   <xsl:template mode="render-field"
                 match="*[gco:CharacterString|gco:Integer|gco:Decimal|
        gco:Boolean|gco:Real|gco:Measure|gco:Length|gco:Distance|
-       gco:Angle|gmx:FileName|
+       gco:Angle|gmx:FileName|gmx:Anchor|
        gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|
        gmd:PT_FreeText|gml:beginPosition|gml:endPosition|
        gco:Date|gco:DateTime|*/@codeListValue]"
@@ -395,10 +395,10 @@
                 priority="100">
 	<xsl:param name="tabName" select="''" as="xs:string"/>
 	<xsl:variable name="role" select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue"/>
-	<xsl:if test="$role='owner'">
+	<xsl:if test="($role='owner' and $tabName='introduction') or ($tabName != 'introduction')">
 		<dl class="gn-contact">
 		  <dt>
-			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'pointOfContact')"/>
+			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'pointOfContact')"/> (<xsl:apply-templates mode="render-value" select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue"/>)
 		  </dt>
 		  <dd>
 			 <dl class="gn-contact">
@@ -410,7 +410,10 @@
 				</xsl:variable>
 				<address>
 					<strong>
-						<xsl:value-of select="$orgName"/>, 
+						<xsl:value-of select="$orgName"/>,
+            <xsl:if test="string(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString)">
+              <i class="fa fa-phone"></i> <xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString"/>,
+            </xsl:if>
 						<i class="fa fa-envelope"></i>
 						<a href="mailto:{normalize-space($email)}">
 							<xsl:value-of select="$email"/>
@@ -926,7 +929,9 @@
       </dd>
     </dl>
   </xsl:template>
-  
+
+
+
   <!-- Traverse the tree -->
   <xsl:template mode="render-field"
                 match="*">
@@ -1028,6 +1033,18 @@
   <xsl:template mode="render-value"
                 match="gmd:language/gco:CharacterString">
     <span data-translate=""><xsl:value-of select="."/></span>
+  </xsl:template>
+
+
+  <xsl:template mode="render-value"
+                match="gmx:Anchor">
+    <span><xsl:value-of select="." /></span>
+    <xsl:if test="@xlink:href">
+      <xsl:choose>
+        <xsl:when test="starts-with(@xlink:href, 'http')">(<a href="{@xlink:href}"><xsl:value-of select="@xlink:href" /></a>)</xsl:when>
+        <xsl:otherwise>(<xsl:value-of select="@xlink:href" />)</xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
   </xsl:template>
 
   <!-- ... Codelists -->
