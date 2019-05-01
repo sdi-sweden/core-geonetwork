@@ -285,10 +285,6 @@
                      <gmd:code>
                         <gco:CharacterString>{{editRow.code}}</gco:CharacterString>
                      </gmd:code>
-                     <gmd:codeSpace>
-                        <gco:CharacterString>{{editRow.codespace}}</gco:CharacterString>
-                     </gmd:codeSpace>
-
                   </gmd:RS_Identifier>
                </gmd:referenceSystemIdentifier>
             </gmd:MD_ReferenceSystem>
@@ -315,11 +311,9 @@
         {
         'ref': '<xsl:value-of select="../../../gn:element/@ref" />',
         'refChildren': {
-          'code': '<xsl:value-of select="gmd:RS_Identifier/gmd:code/gco:CharacterString/gn:element/@ref" />',
-          'codespace': '<xsl:value-of select="gmd:RS_Identifier/gmd:codeSpace/gco:CharacterString/gn:element/@ref" />',
+          'code': '<xsl:value-of select="gmd:RS_Identifier/gmd:code/gco:CharacterString/gn:element/@ref" />'
         },
-        'code': '<xsl:value-of select="normalize-space(gmd:RS_Identifier/gmd:code/gco:CharacterString )" />',
-        'codespace': '<xsl:value-of select="normalize-space(gmd:RS_Identifier/gmd:codeSpace/gco:CharacterString)" />'
+        'code': '<xsl:value-of select="normalize-space(gmd:RS_Identifier/gmd:code/gco:CharacterString )" />'
         }
         <xsl:if test="position() != last()">,</xsl:if>
       </xsl:for-each>
