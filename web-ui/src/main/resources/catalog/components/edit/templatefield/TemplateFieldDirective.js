@@ -121,7 +121,7 @@
 
           // Replace all occurence of {{fieldname}} by its value
           var generateSnippet = function() {
-            var xmlSnippet = xmlSnippetTemplate, isOneFieldDefined = false;
+            var xmlSnippet = xmlSnippetTemplate;
 
             angular.forEach(fields, function(fieldName) {
               var field = $('#' + scope.id + '_' + fieldName);
@@ -137,10 +137,6 @@
                     '{{' + fieldName + '}}',
                     value.replace(/\&/g, '&amp;amp;')
                     .replace(/\"/g, '&quot;'));
-
-                // If one value is defined the field
-                // is defined
-                isOneFieldDefined = true;
               } else {
                 xmlSnippet = xmlSnippet.replace(
                     '{{' + fieldName + '}}',
@@ -148,20 +144,7 @@
               }
             });
 
-            // Usually when a template field is link to a
-            // gnTemplateFieldAddButton directive, the keys
-            // is empty.
-            if (scope.keys === undefined || scope.keys === '') {
-              isOneFieldDefined = true;
-            }
-
-            // Reset the snippet if no match were found
-            // which means that no fields have values
-            if (isOneFieldDefined) {
-              element[0].innerHTML = xmlSnippet;
-            } else {
-              element[0].innerHTML = '';
-            }
+            element[0].innerHTML = xmlSnippet;
           };
           var init = function() {
             // Initialize all values
