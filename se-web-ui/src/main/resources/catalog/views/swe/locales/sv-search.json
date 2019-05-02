@@ -119,6 +119,7 @@
     "publisherHelpTooltip-link": "/geodataportalens-hjalpsidor/forstasidan/for-publicerare",
     "freetextSearchTooltip-title" : "Fritextsökning",
     "freetextSearchTooltip-desc" : "Här kan du skriva in valfritt sökord och söka  i metadataposterna. Asterix används som ett Wild card för att kunna söka på delar av ord. Tex. *skog eller skog* eller s*og eller *skog*",
+    "freetextSearchTooltip-link" : "/geodataportalens-hjalpsidor/forstasidan",
     "searchResultTooltip-title": "Resultat",
     "searchResultTooltip-desc": "Här får du en första överblick av sökresultatet",
     "searchResultTooltip-link":"/geodataportalens-hjalpsidor/forstasidan/resultat/",

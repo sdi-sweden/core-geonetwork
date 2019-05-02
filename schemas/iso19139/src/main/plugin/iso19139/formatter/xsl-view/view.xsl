@@ -715,28 +715,31 @@
                 priority="100">
 	<xsl:param name="tabName" select="''" as="xs:string"/>
 	<xsl:variable name="role" select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue"/>
-	<xsl:if test="$role='owner'">
-		<dl class="gn-contact">
-		  <dt>
-			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'pointOfContact')"/>
-		  </dt>
-		  <dd>
-			 <dl class="gn-contact">
-				<xsl:variable name="orgName">
-					<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
-				</xsl:variable>
-				<xsl:variable name="email">
-					<xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/>
-				</xsl:variable>
-				<address>
-					<strong>
-						<xsl:value-of select="$orgName"/>, 
-						<i class="fa fa-envelope"></i>
-						<a href="mailto:{normalize-space($email)}">
-							<xsl:value-of select="$email"/>
-						</a>
-					</strong>
-				</address>
+  <xsl:if test="($role='owner' and $tabName='introduction') or ($tabName != 'introduction')">
+    <dl class="gn-contact">
+      <dt>
+        <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'pointOfContact')"/> (<xsl:apply-templates mode="render-value" select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue"/>)
+      </dt>
+      <dd>
+        <dl class="gn-contact">
+          <xsl:variable name="orgName">
+            <xsl:value-of select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/>
+          </xsl:variable>
+          <xsl:variable name="email">
+            <xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/>
+          </xsl:variable>
+          <address>
+            <strong>
+              <xsl:value-of select="$orgName"/>,
+              <xsl:if test="string(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString)">
+                <i class="fa fa-phone"></i> <xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString"/>,
+              </xsl:if>
+              <i class="fa fa-envelope"></i>
+              <a href="mailto:{normalize-space($email)}">
+                <xsl:value-of select="$email"/>
+              </a>
+            </strong>
+          </address>
 
 				<!-- <table border="1" style="width:100%" bordercolor="#D3D3D3">
 					<tr>

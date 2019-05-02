@@ -504,6 +504,7 @@
           <xsl:variable name="orgNameOwner">
             <xsl:choose>
               <xsl:when test="starts-with(lower-case(.), 'länsstyrelsen') ">Länsstyrelsen</xsl:when>
+              <xsl:when test="starts-with(lower-case(.), 'sveriges geologiska undersökning') ">Sveriges Geologiska Undersökning</xsl:when>
               <xsl:otherwise><xsl:value-of select="." /></xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
