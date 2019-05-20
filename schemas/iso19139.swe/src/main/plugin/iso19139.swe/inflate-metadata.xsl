@@ -91,30 +91,89 @@
       <xsl:apply-templates select="gmd:edition" />
       <xsl:apply-templates select="gmd:editionDate" />
 
-      <xsl:apply-templates select="gmd:identifier" />
+      <xsl:choose>
+        <!-- record of type dataset or dataset series are created we shall automatically add a UUID for resource-identifier -->
+        <xsl:when test="(count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0) or
+              (count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='series']) > 0)">
 
-      <!-- record of type dataset or dataset series are created we shall automatically add a UUID for resource-identfier -->
-      <xsl:if test="(count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0) or
-            (count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='series']) > 0)">
+          <xsl:choose>
+            <!-- Identifier doesn't exists - Add it -->
+            <xsl:when test="not(gmd:identifier)">
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gco:CharacterString><xsl:value-of select="uuid:randomUUID()"/></gco:CharacterString>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </xsl:when>
 
-        <xsl:choose>
-          <!-- Code doesn't exists - Add it -->
-          <xsl:when test="not(gmd:identifier/gmd:MD_Identifier)">
-            <xsl:variable name="uid" select="uuid:randomUUID()"/>
+            <!-- Identifier incomplete doesn't exists - Add it -->
+            <xsl:when test="count(gmd:identifier) = 1 and not(gmd:identifier/gmd:MD_Identifier)">
+              <xsl:for-each select="gmd:identifier">
+                <xsl:copy>
+                  <xsl:copy-of select="@*" />
 
-            <gmd:identifier>
-              <gmd:MD_Identifier>
-                <gmd:code>
-                  <gco:CharacterString> <xsl:value-of select="$uid"/></gco:CharacterString>
-                </gmd:code>
-              </gmd:MD_Identifier>
-            </gmd:identifier>
-          </xsl:when>
+                  <gmd:MD_Identifier>
+                    <gmd:code>
+                      <gco:CharacterString><xsl:value-of select="uuid:randomUUID()"/></gco:CharacterString>
+                    </gmd:code>
+                  </gmd:MD_Identifier>
 
-          <!-- Do nothing -->
-          <xsl:otherwise></xsl:otherwise>
-        </xsl:choose>
-      </xsl:if>
+                </xsl:copy>
+              </xsl:for-each>
+            </xsl:when>
+
+            <!-- Process identifiers to check at least 1 has a code -->
+            <xsl:otherwise>
+
+              <xsl:choose>
+                <!-- No identifier with code value - Add it -->
+                <xsl:when test="count(gmd:identifier[string(gmd:MD_Identifier/gmd:code/gco:CharacterString)]) = 0">
+                  <xsl:for-each select="gmd:identifier[gmd:MD_Identifier]">
+                    <xsl:choose>
+                      <!-- Add to first element -->
+                      <xsl:when test="position() = 1">
+                        <xsl:copy>
+                          <xsl:copy-of select="@*" />
+
+                          <xsl:for-each select="gmd:MD_Identifier">
+                            <xsl:copy>
+                              <xsl:copy-of select="@*" />
+                              <gmd:code>
+                                <gco:CharacterString><xsl:value-of select="uuid:randomUUID()"/></gco:CharacterString>
+                              </gmd:code>
+                            </xsl:copy>
+                          </xsl:for-each>
+                        </xsl:copy>
+                      </xsl:when>
+
+                      <!-- Copy the rest -->
+                      <xsl:otherwise>
+                        <xsl:copy-of select="." />
+                      </xsl:otherwise>
+                    </xsl:choose>
+
+                  </xsl:for-each>
+                </xsl:when>
+
+                <!-- identifiers with code - process identifiers -->
+                <xsl:otherwise>
+                  <xsl:apply-templates select="gmd:identifier" />
+                </xsl:otherwise>
+              </xsl:choose>
+
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:when>
+
+        <!-- other type fo records - process identifiers -->
+        <xsl:otherwise>
+          <xsl:apply-templates select="gmd:identifier" />
+        </xsl:otherwise>
+      </xsl:choose>
+
+
 
       <xsl:apply-templates select="gmd:citedResponsibleParty" />
       <xsl:apply-templates select="gmd:presentationForm" />
