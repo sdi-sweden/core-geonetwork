@@ -27,23 +27,52 @@
       <p class="alert alert-warning"
          data-ng-show="alertMsg">{{alertMsg}}</p>
 
-      <h4 data-ng-show="mode == 'dataset' && layers.length > 0">
-        <span data-translate="">chooseZeroOrMoreLayerFromService</span>
-        <span>{{currentMdTitle}}</span>
+      <hr data-ng-show="layers.length || atomInfo" />
+
+      <h4 data-ng-show="layers.length || atomInfo">
+        <span data-translate="">informationFromService</span>
+        <span data-ng-show="linkServiceType !== null">: {{linkServiceType | uppercase}}</span>
       </h4>
-      <h4 data-ng-show="mode == 'service' && layers.length > 0">
-        <span data-translate="">chooseZeroOrMoreLayer</span>
-        <span>{{currentMdTitle}}</span>
-      </h4>
-      <div data-gn-layers-grid
-           data-gn-selection-mode="layerSelectionMode"
-           data-layers="layers"
-           data-selection="srcParams.selectedLayers">
+
+      <div data-ng-if="addOnlineSrcInDataset && (layers.length > 0)">
+        <h5 data-ng-show="mode == 'dataset'">
+          <span data-translate="">chooseZeroOrMoreLayerFromService</span>
+          <span>{{currentMdTitle}}</span>
+        </h5>
+
+        <h5 data-ng-show="mode == 'service'">
+          <span data-translate="">chooseZeroOrMoreLayer</span>
+          <span>{{currentMdTitle}}</span>
+        </h5>
+
+        <!-- Layer selector -->
+        <div data-gn-layers-grid
+             data-gn-selection-mode="layerSelectionMode"
+             data-layers="layers"
+             data-selection="srcParams.selectedLayers">
+        </div>
+      </div>
+
+      <div data-ng-if="!addOnlineSrcInDataset && (layers.length > 0)">
+        <!-- Layer list -->
+        <ul>
+          <li data-ng-repeat='l in layers' data-ng-if="l.Name">{{l.Name}}</li>
+        </ul>
+      </div>
+
+      <div data-ng-show="mode == 'dataset' && atomInfo">
+        <h5>
+          <span>{{atomInfo.title}}</span>
+        </h5>
+
+        <ul>
+          <li data-ng-repeat='entry in atomInfo.entries'>{{entry.title}}</li>
+        </ul>
       </div>
     </div>
     <div class="">
       <button type="button" class="btn navbar-btn btn-success"
-              data-gn-click-and-spin="linkTo()"
+              data-gn-click-and-spin="linkTo(addOnlineSrcInDataset)"
               data-ng-class="{'disabled': (stateObj.selectRecords.length < 1)}">
         <i class="fa gn-icon-service"/>&nbsp;
         <span data-translate="" data-ng-show="mode == 'service'">linkToService</span>

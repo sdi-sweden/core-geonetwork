@@ -328,5 +328,6 @@
     "associatedConcept":"Associated concepts",
     "xsd": "Schema validation",
     "resourceConstraintReference": "Reference",
-    "resourceConstraintText": "Text"
+    "resourceConstraintText": "Text",
+    "informationFromService": "Information from underlying service"
 }
