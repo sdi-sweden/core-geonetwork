@@ -24,3 +24,6 @@
 [submodule "web-ui/src/main/resources/catalog/lib/angulartics"]
 	path = web-ui/src/main/resources/catalog/lib/angulartics
 	url = https://github.com/angulartics/angulartics.git
+[submodule "web-ui/src/main/resources/catalog/lib/angulartics-piwik"]
+	path = web-ui/src/main/resources/catalog/lib/angulartics-piwik
+	url = https://github.com/angulartics/angulartics-piwik
