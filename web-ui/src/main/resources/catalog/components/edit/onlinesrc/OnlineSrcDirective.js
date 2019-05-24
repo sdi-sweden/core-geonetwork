@@ -87,6 +87,7 @@
               scope.gnCurrentEdit = gnCurrentEdit;
               scope.allowEdits = true;
               scope.lang = scope.$parent.lang;
+              scope.addOnlineSrcInDataset = true;
 
               /**
                * Calls service 'relations.get' to load
@@ -1309,9 +1310,10 @@
         'gnCurrentEdit',
         '$rootScope',
         '$translate',
+        '$http',
         'gnGlobalSettings',
         function(gnOnlinesrc, Metadata, gnOwsCapabilities,
-            gnCurrentEdit, $rootScope, $translate, gnGlobalSettings) {
+            gnCurrentEdit, $rootScope, $translate, $http, gnGlobalSettings) {
           return {
             restrict: 'A',
             scope: {},
@@ -1331,6 +1333,10 @@
                   scope.popupid = '#linkto' + scope.mode + '-popup';
                   scope.alertMsg = null;
                   scope.layerSelectionMode = 'multiple';
+                  scope.onlineSrcLink = '';
+                  // SDI Sweden - Don't add WMS/WFS service to dataset,
+                  // just the operatesOn in the service
+                  scope.addOnlineSrcInDataset = false;
 
                   gnOnlinesrc.register(scope.mode, function() {
                     $(scope.popupid).modal('show');
@@ -1350,19 +1356,36 @@
                       // TODO: If service URL is added, user need to reload
                       // editor to get URL or current record.
                       var links = [];
-                      links = links.concat(
-                          gnCurrentEdit.metadata.getLinksByType('OGC:WMS'));
-                      links = links.concat(
-                          gnCurrentEdit.metadata.getLinksByType('wms'));
+
+                      var serviceType = gnCurrentEdit.metadata.serviceType;
+
+                      if (serviceType == 'view') {
+                        links = links.concat(
+                          gnCurrentEdit.metadata.getLinksByType('#HTTP:OGC:WMS'));
+                      } else if (serviceType == 'download') {
+                        links = links.concat(
+                          gnCurrentEdit.metadata.getLinksByType('#HTTP:Nedladdning:Atom', '#HTTP:OGC:WFS'));
+                      }
+
                       if (angular.isArray(links) && links.length == 1) {
-                        var serviceUrl = links[0].url;
-                        scope.loadCurrentLink(serviceUrl);
-                        scope.srcParams.url = serviceUrl;
+                        scope.onlineSrcLink = links[0].url;
                         scope.srcParams.protocol = links[0].protocol || '';
+                        scope.loadCurrentLink(scope.onlineSrcLink);
+                        scope.srcParams.url = scope.onlineSrcLink;
                         scope.srcParams.uuidSrv = gnCurrentEdit.uuid;
+
+                        scope.addOnlineSrcInDataset = false;
                       } else {
                         scope.alertMsg =
                             $translate.instant('linkToServiceWithoutURLError');
+
+                        // If no WMS found, suggest to add a link to the service landing page
+                        // Default is false.
+                        // Build a link to the service metadata record
+                        scope.onlineSrcLink = gnConfigService.getServiceURL() +
+                          "api/records/" + gnCurrentEdit.uuid;
+
+                        scope.addOnlineSrcInDataset = false;
                       }
                     }
                   });
@@ -1382,16 +1405,61 @@
                    */
                   scope.loadCurrentLink = function(url) {
                     scope.alertMsg = null;
-                    return gnOwsCapabilities.getWMSCapabilities(url)
+                    scope.atomInfo = null;
+                    scope.linkServiceType = null;
+
+                    var serviceType = scope.srcParams.protocol.toLowerCase();
+                    if (serviceType.indexOf('ogc') !== -1) {
+
+                      scope.linkServiceType =  serviceType.indexOf('wfs') !== -1 ?
+                        'wfs' : 'wms';
+
+                      return gnOwsCapabilities[
+                        serviceType.indexOf('wfs') !== -1 ?
+                          'getWFSCapabilities' : 'getWMSCapabilities'](url)
                         .then(function(capabilities) {
                           scope.layers = [];
                           scope.srcParams.selectedLayers = [];
-                          scope.layers.push(capabilities.Layer[0]);
-                          angular.forEach(scope.layers[0].Layer, function(l) {
-                            scope.layers.push(l);
-                            // TODO: We may have more than one level
-                          });
+
+                          if (capabilities.Layer) {
+                            scope.layers.push(capabilities.Layer[0]);
+                            angular.forEach(scope.layers[0].Layer, function(l) {
+                              scope.layers.push(l);
+                              // TODO: We may have more than one level
+                            });
+                          } else if (capabilities.featureTypeList) {
+                            angular.forEach(capabilities.featureTypeList.featureType, function(l) {
+                              var name = l.name.prefix + ":" + l.name.localPart;
+                              var layer = {
+                                'Name': name,
+                                'Title': l.title || name,
+                                'abstract': l.abstract || ''
+                              };
+
+                              scope.layers.push(layer);
+                            });
+                          }
                         });
+                    } else if (serviceType.indexOf('atom') !== -1) {
+                      scope.linkServiceType = "atom";
+
+                      $http.get(url).then(function(response) {
+                        var xmlDoc = $.parseXML(response.data);
+                        var $xml = $(xmlDoc);
+
+                        scope.atomInfo = {
+                          title: $xml.find("feed").find("title").text(),
+                          entries: []
+                        };
+                        $xml.find("feed").find("entry").each(function(index){
+                          var entry = {
+                            title: $(this).find('title').text()
+                          };
+                          scope.atomInfo.entries.push(entry);
+                        });
+
+                      });
+                    }
                   };
 
                   /**
@@ -1438,13 +1506,13 @@
                    *  - link a service to a dataset
                    * Hide modal on success.
                    */
-                  scope.linkTo = function() {
+                  scope.linkTo = function(addOnlineSrcInDataset) {
                     if (scope.mode == 'service') {
                       return gnOnlinesrc.
                           linkToService(scope.srcParams, scope.popupid);
                     } else {
                       return gnOnlinesrc.
-                          linkToDataset(scope.srcParams, scope.popupid);
+                          linkToDataset(scope.srcParams, scope.popupid, addOnlineSrcInDataset);
                     }
                   };
                 }

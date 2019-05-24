@@ -399,30 +399,51 @@
          * @param {Object} params for the batch
          * @param {string} popupid id of the popup to close after process.
          */
-        linkToDataset: function(params, popupid) {
-          var qParams = setParams('onlinesrc-add', params);
+        linkToDataset: function(params, popupid, addOnlineSrcToDataset) {
+          // Define if when linking a service with a dataset
+          // a online source element should be added to the dataset
+          // first or not.
           var scope = this;
 
-          return gnBatchProcessing.runProcessMd({
-            name: qParams.name,
-            desc: qParams.desc,
-            url: qParams.url,
-            uuidref: qParams.uuidSrv,
-            uuid: qParams.uuidDS,
-            protocol: qParams.protocol,
-            process: qParams.process
-          }).then(function() {
+          var addDatasetToServiceFn = function() {
             var qParams = setParams('dataset-add', params);
 
-            runProcess(scope, {
+            return runProcess(scope, {
               scopedName: qParams.name,
               uuidref: qParams.uuidDS,
               uuid: qParams.uuidSrv,
+              source: qParams.identifier || '',
               process: qParams.process
             }).then(function() {
               closePopup(popupid);
             });
-          });
+          };
+
+          if (addOnlineSrcToDataset) {
+            var qParams = setParams('onlinesrc-add', params);
+            return gnBatchProcessing.runProcessMd({
+              name: qParams.name,
+              desc: qParams.desc,
+              url: qParams.url,
+              uuidref: qParams.uuidSrv,
+              uuid: qParams.uuidDS,
+              source: qParams.source,
+              protocol: qParams.protocol,
+              process: qParams.process
+            }, true).then(addDatasetToServiceFn, function(error) {
+              // Current user may not be able to edit
+              // the targeted dataset. Notify user in this case
+              // that only the service will be updated.
+              $rootScope.$broadcast('StatusUpdated', {
+                title: $translate.instant('linkToServiceError'),
+                msg: $translate.instant('cantAddLinkToDataset'),
+                timeout: 0,
+                type: 'danger'});
+              addDatasetToServiceFn();
+            });
+          } else {
+            return addDatasetToServiceFn();
+          }
         },
 
         /**
