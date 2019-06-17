@@ -884,6 +884,7 @@ public abstract class AbstractHarvester<T extends HarvestResult> {
             add(res, "updated", result.updatedMetadata);
             add(res, "thumbnails", result.thumbnails);
             add(res, "thumbnailsFailed", result.thumbnailsFailed);
+            add(res, "managedByOtherHarvester", result.managedByOtherHarvester);
         } else if (this.loadedInfo != null) {
             return (Element) this.loadedInfo.clone();
         }

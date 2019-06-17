@@ -325,6 +325,7 @@ public class Aligner extends BaseAligner {
             if (log.isDebugEnabled()) {
                 log.debug("  - Skipped metadata managed by another harvesting node (date == null). uuid:" + ri.uuid + ", name:" + params.getName());
             }
+            result.managedByOtherHarvester++;
         } else {
             if (!ri.isMoreRecentThan(date)) {
                 if (log.isDebugEnabled()) {
