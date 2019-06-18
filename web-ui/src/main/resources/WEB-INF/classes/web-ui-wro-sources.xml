@@ -88,7 +88,7 @@
     <!-- angulartics -->
     <jsSource webappPath="/catalog/lib/angulartics/dist/angulartics.min.js" minimize="false"/>
     <jsSource webappPath="/catalog/lib/angulartics/dist/angulartics-debug.min.js" minimize="false"/>
-    <jsSource webappPath="/catalog/lib/angulartics/dist/angulartics-gtm.min.js" minimize="false"/>
+    <jsSource webappPath="/catalog/lib/angulartics-piwik/dist/angulartics-piwik.min.js" minimize="false"/>
   </declarative>
   <!-- Same as previous + ol3cesium -->
   <declarative name="lib3d" pathOnDisk="web-ui/src/main/resources">
@@ -160,6 +160,6 @@
     <!-- angulartics -->
     <jsSource webappPath="/catalog/lib/angulartics/dist/angulartics.min.js" minimize="false"/>
     <jsSource webappPath="/catalog/lib/angulartics/dist/angulartics-debug.min.js" minimize="false"/>
-    <jsSource webappPath="/catalog/lib/angulartics/dist/angulartics-gtm.min.js" minimize="false"/>
+    <jsSource webappPath="/catalog/lib/angulartics-piwik/dist/angulartics-piwik.min.js" minimize="false"/>
   </declarative>
 </sources>

@@ -39,7 +39,7 @@
   var module = angular.module('gn_admin', [
     'gn_module',
     'gn_admin_controller',
-    'angulartics', 'angulartics.google.tagmanager', 'angulartics.debug'
+    'angulartics', 'angulartics.piwik', 'angulartics.debug'
   ]);
 
 

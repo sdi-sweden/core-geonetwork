@@ -54,7 +54,7 @@
     'ui.ace',
     'swe_editor_table_controller',
     'swe_editor_table_directive',
-    'angulartics', 'angulartics.google.tagmanager', 'angulartics.debug'
+    'angulartics', 'angulartics.piwik', 'angulartics.debug'
   ]);
 
   module.constant('gnViewerSettings', {});

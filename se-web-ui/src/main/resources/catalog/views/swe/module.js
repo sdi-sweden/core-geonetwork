@@ -41,7 +41,7 @@
     'gn_related_directive', 'gn_search',
     'gn_resultsview', 'cookie_warning',
     'swe_search_config', 'swe_directives', 'ngStorage',
-    'angulartics', 'angulartics.google.tagmanager', 'angulartics.debug']);
+    'angulartics', 'angulartics.piwik', 'angulartics.debug']);
 
   module.controller('gnsSwe', [
     '$rootScope',
