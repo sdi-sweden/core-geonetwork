@@ -168,8 +168,11 @@
     		   }
     	  }
 
-    	  $analytics.eventTrack('siteSearch', {  searchQuery: $location.search(),
-              searchQueryResult: ($scope.searchResults.count > 0)?'hit':'no-hit' });
+//    	  $analytics.eventTrack('siteSearch', {  searchQuery: $location.search(),
+//              searchQueryResult: ($scope.searchResults.count > 0)?'hit':'no-hit' });
+    	  
+    	  $analytics.eventTrack('Fritextsök', { category: 'SiteSearch', label: $location.search().or + ' : ' + $scope.searchResults.count });
+     	  $analytics.trackSiteSearch($location.search().or, 'SiteSearch', $scope.searchResults.count);
       });
 
       $scope.$on('layerView', function(event) {
