@@ -186,24 +186,24 @@
     	  //  $analytics.eventTrack('eventName', {  category: 'category', label: 'label' });
     	  //  $analytics.trackSiteSearch(keyword, [category], [count])
     	  if ($location.search().or) {
-    	      $analytics.eventTrack('Fritextsök', { category: 'SiteSearch', label: $location.search().or + ' : ' + $scope.searchResults.count });
+    	      $analytics.eventTrack('Fritextsök', { category: 'SiteSearch', label: $location.search().or + ' : ' + ($scope.searchResults.count > 0)?'hit':'no-hit' });
          	  $analytics.trackSiteSearch($location.search().or, 'FreetextSearch', $scope.searchResults.count);
     	  }
     	  if ($location.search().type) {
-    		  $analytics.eventTrack('Filtreringsök', { category: 'SiteSearch', label: 'dataset/series' + ' : ' + $scope.searchResults.count });
+    		  $analytics.eventTrack('Filtreringsök', { category: 'SiteSearch', label: 'dataset/series' + ' : ' + ($scope.searchResults.count > 0)?'hit':'no-hit' });
          	  $analytics.trackSiteSearch('dataset/series', 'FilterSearch', $scope.searchResults.count);
     	  }
     	  if ($location.search().dynamic) {
-     		  $analytics.eventTrack('Filtreringsök', { category: 'SiteSearch', label: 'mapservices' + ' : ' + $scope.searchResults.count });
+     		  $analytics.eventTrack('Filtreringsök', { category: 'SiteSearch', label: 'mapservices' + ' : ' + ($scope.searchResults.count > 0)?'hit':'no-hit' });
          	  $analytics.trackSiteSearch('map services', 'FilterSearch', $scope.searchResults.count);
      	  }
     	  if ($location.search().download) {
-      		  $analytics.eventTrack('Filtreringsök', { category: 'SiteSearch', label: 'download' + ' : ' + $scope.searchResults.count });
+      		  $analytics.eventTrack('Filtreringsök', { category: 'SiteSearch', label: 'download' + ' : ' + ($scope.searchResults.count > 0)?'hit':'no-hit' });
          	  $analytics.trackSiteSearch('download services', 'FilterSearch', $scope.searchResults.count);
       	  }
     	  if ("facet.q" in $location.search()) {
     		  var facet = searchObj["facet.q"];
-     		  $analytics.eventTrack('Advanceradsök', { category: 'SiteSearch', label: facet + ' : ' + $scope.searchResults.count });
+     		  $analytics.eventTrack('Advanceradsök', { category: 'SiteSearch', label: facet + ' : ' + ($scope.searchResults.count > 0)?'hit':'no-hit' });
          	  $analytics.trackSiteSearch(facet, 'AdvancedSearch', $scope.searchResults.count);
        	  }
     	  
