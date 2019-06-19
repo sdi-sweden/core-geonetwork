@@ -154,7 +154,7 @@
 
         <script src="{$uiResourcesPath}lib/angulartics/dist/angulartics.min.js"></script>
         <script src="{$uiResourcesPath}lib/angulartics/dist/angulartics-debug.min.js"></script>
-        <script src="{$uiResourcesPath}lib/angulartics/dist/angulartics-piwik.min.js"></script>
+        <script src="{$uiResourcesPath}lib/angulartics-piwik/dist/angulartics-piwik.min.js"></script>
       </xsl:when>
       <xsl:otherwise>
       </xsl:otherwise>
