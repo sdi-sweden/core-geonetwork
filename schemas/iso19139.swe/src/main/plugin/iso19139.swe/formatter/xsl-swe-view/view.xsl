@@ -896,18 +896,17 @@
 			
 			            <xsl:choose>
 			              <xsl:when test="count(../gmd:accessConstraints) > 0 and contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')">
- 			                <!-- (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="$schemaLabels/element[@name='LimitationsOnPublicAcces']/helper/option[@title = $anchorHref]"/>) -->
-			                (<xsl:value-of select="$anchorHref" />)
+ 			                (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="gmx:Anchor/text()"/>)
 			              </xsl:when>
 			
 			              <xsl:when test="count(../gmd:accessConstraints) > 0 and not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))">
-			                <!-- (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="$schemaLabels/element[@name='conditionsForAccess']/helper/option[@title = $anchorHref]"/>) -->
-			                (<xsl:value-of select="$anchorHref" />)
+			                (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="gmx:Anchor/text()"/>)
 			              </xsl:when>
 			
 			              <xsl:when test="count(../gmd:useConstraints) > 0">
-			                <!-- (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="$schemaLabels/element[@name='conditionsForUse']/helper/option[@title = $anchorHref]"/>) -->
-			                (<xsl:value-of select="$anchorHref" />)
+			                (<xsl:value-of select="$anchorHref" /> 
+						     <!-- need to figure out how to translate the gmx:Anchor attribute to Swedish -->
+						    )
 			              </xsl:when>
 			
 			              <xsl:otherwise>
