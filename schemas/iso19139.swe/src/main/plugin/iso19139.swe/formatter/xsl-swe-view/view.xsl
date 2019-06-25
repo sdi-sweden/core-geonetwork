@@ -3,6 +3,7 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 	xmlns:gml="http://www.opengis.net/gml" 
 	xmlns:gco="http://www.isotc211.org/2005/gco" 
+	xmlns:gmx="http://www.isotc211.org/2005/gmx"
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" 
 	xmlns:gts="http://www.isotc211.org/2005/gts" 
 	xmlns:GSE="http://www.geodata.se/gse" 
@@ -849,7 +850,7 @@
 			<tr>
 				<td class="Level-1-element">Användbarhetsbegränsningar</td>
 				<td>
-					<xsl:value-of select="gco:CharacterString/text()"/>
+					<xsl:value-of select="*/text()"/>
 				</td>
 			</tr>
 		</xsl:for-each>
@@ -860,16 +861,65 @@
 	<xsl:template match="gmd:resourceConstraints/gmd:MD_LegalConstraints">
 		<xsl:variable name="preId" select="generate-id()"/>
 		<xsl:for-each select="gmd:otherConstraints">
-			<tr>
-				<td class="Level-1-element">Andra restriktioner</td>
+		 	<tr>
+			<!--	<td class="Level-1-element">Andra restriktioner</td>
 				<td>
 					<div id="otherConst">
 						<xsl:value-of select="gco:CharacterString"/>
 					</div>
+				</td> -->
+				<td  class="Level-1-element">
+			          <xsl:choose>
+			            <xsl:when test="count(../gmd:accessConstraints) > 0 and gmx:Anchor and contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')">
+			              Begränsningar i offentlig åtkomst
+			            </xsl:when>
+			
+			            <xsl:when test="count(../gmd:accessConstraints) > 0 and gmx:Anchor and not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))">
+			              Åtkomstrestriktioner
+			            </xsl:when>
+			
+			            <xsl:when test="count(../gmd:useConstraints) > 0 and gmx:Anchor">
+			              Nyttjanderestriktioner
+			            </xsl:when>
+			
+			            <xsl:otherwise>
+			              Andra restriktioner
+			            </xsl:otherwise>
+			
+			          </xsl:choose>
 				</td>
-			</tr>
+                <td>
+			          <xsl:value-of select="gco:CharacterString|gmx:Anchor"/>
+			
+			          <xsl:if test="gmx:Anchor">
+			            <xsl:variable name="anchorHref" select="gmx:Anchor/@xlink:href" />
+			
+			            <xsl:choose>
+			              <xsl:when test="count(../gmd:accessConstraints) > 0 and contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')">
+ 			                (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="gmx:Anchor/text()"/>)
+			              </xsl:when>
+			
+			              <xsl:when test="count(../gmd:accessConstraints) > 0 and not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))">
+			                (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="gmx:Anchor/text()"/>)
+			              </xsl:when>
+			
+			              <xsl:when test="count(../gmd:useConstraints) > 0">
+			                (<xsl:value-of select="$anchorHref" /> 
+						     <!-- need to figure out how to translate the gmx:Anchor attribute to Swedish -->
+						    )
+			              </xsl:when>
+			
+			              <xsl:otherwise>
+			                <xsl:value-of select="$anchorHref"/>
+			              </xsl:otherwise>
+			
+			            </xsl:choose>
+			          </xsl:if>                
+ 
+                </td>				
+			</tr> 
 		</xsl:for-each>
-		<xsl:if test="gmd:accessConstraints">
+		<!-- <xsl:if test="gmd:accessConstraints">
 			<tr>
 				<td class="Level-1-element">Åtkomst begränsningar</td>
 				<td>
@@ -880,7 +930,7 @@
 					</xsl:for-each>
 				</td>
 			</tr>
-		</xsl:if>
+		</xsl:if> -->
 		<!-- <xsl:if test="gmd:useConstraints">
 			<tr>
 				<td class="Level-1-element">Nyttjanderestriktioner:</td>
@@ -893,7 +943,7 @@
 				</td>
 			</tr>
 		</xsl:if> -->
-		<xsl:for-each select="gmd:useLimitation/gco:CharacterString">
+		<!-- <xsl:for-each select="gmd:useLimitation/gco:CharacterString">
 			<tr>
 				<td class="Level-1-element">Begränsningar i användning</td>
 				<td>
@@ -903,7 +953,7 @@
 					<script type="text/javascript">setLinkClickable('useLimitation');</script>
 				</td>
 			</tr>
-		</xsl:for-each>
+		</xsl:for-each> -->
 	</xsl:template>
 	<!--Restrictions code list (B.5.24 MD_RestrictionCode) -->
 	<!--<xsl:template match = "RestrictCd">-->
