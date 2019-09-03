@@ -6,10 +6,17 @@
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:srv="http://www.isotc211.org/2005/srv"
+                xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xls="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="gmd xlink gco xsi gmx srv">
+                exclude-result-prefixes="gmd xlink gco xsi gmx srv skos rdf">
 
   <!-- ================================================================= -->
+
+  <xsl:param name="thesauriDir" />
+
+  <xsl:variable name="inspire-thesaurus" select="document(concat('file:///', $thesauriDir, '/external/thesauri/theme/inspire-theme.rdf'))"/>
+  <xsl:variable name="inspire-theme" select="$inspire-thesaurus//skos:Concept"/>
 
   <xsl:template match="gmd:MD_Metadata">
     <xsl:copy>
@@ -222,6 +229,27 @@
       <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
     </gmd:title>
   </xsl:template>
+
+  <!-- Convert GEMET keywords to Anchors -->
+  <xsl:template match="gmd:keyword[../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'GEMET - INSPIRE themes, version 1.0' or
+                                   ../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'GEMET - INSPIRE themes version 1.0']">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:choose>
+        <xsl:when test="gco:CharacterString">
+          <xsl:variable name="value" select="lower-case(gco:CharacterString)" />
+          <xsl:variable name="key" select="$inspire-theme[skos:prefLabel[@xml:lang='sv' and lower-case(text()) = $value]]/@rdf:about" />
+
+          <gmx:Anchor xlink:href="{$key}"><xsl:value-of select="gco:CharacterString" /></gmx:Anchor>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="*" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
+
 
   <!-- Template to process gmd:resourceConstraints to upgrade them to TG 2.0.
     

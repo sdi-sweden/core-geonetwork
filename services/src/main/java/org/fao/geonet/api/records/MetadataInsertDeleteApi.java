@@ -44,6 +44,7 @@ import org.fao.geonet.exceptions.XSDValidationErrorEx;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
+import org.fao.geonet.kernel.ThesaurusManager;
 import org.fao.geonet.kernel.mef.Importer;
 import org.fao.geonet.kernel.mef.MEFLib;
 import org.fao.geonet.kernel.search.SearchManager;
@@ -76,11 +77,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletRequest;
@@ -858,7 +855,10 @@ public class MetadataInsertDeleteApi {
             Path folder = dataDirectory.getWebappDir().resolve(Geonet.Path.IMPORT_STYLESHEETS);
             Path xslFile = folder.resolve(transformWith + ".xsl");
             if (Files.exists(xslFile)) {
-                xmlElement = Xml.transform(xmlElement, xslFile);
+                Map<String, Object> xslParameter = new HashMap<>();
+                xslParameter.put("thesauriDir", context.getBean(ThesaurusManager.class).getThesauriDirectory().toString());
+
+                xmlElement = Xml.transform(xmlElement, xslFile, xslParameter);
             } else {
                 throw new ResourceNotFoundException(String.format(
                     "XSL transformation '%s' not found.",
