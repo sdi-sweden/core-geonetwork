@@ -23,7 +23,7 @@
 	</skos:Concept>
 	
 	
-	<skos:Concept rdf:about="http://www.geodata.com/thesaurus#oppnadata">
+	<skos:Concept rdf:about="https://resources.geodata.se/codelist/metadata/initiativ.xml#oppnadata">
 		<skos:prefLabel xml:lang="sv">Öppna data</skos:prefLabel>
 		<skos:inScheme rdf:resource="https://resources.geodata.se/codelist/metadata/initiativ.xml"/>
 	</skos:Concept>
