@@ -456,6 +456,36 @@
   </xsl:template>
 
 
+  <!-- Identifier change from Anchor to CharacterString -->
+  <xsl:template match="gmd:identifier[gmd:MD_Identifier/gmd:code/gmx:Anchor]/gmd:MD_Identifier/gmd:code">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <gco:CharacterString><xsl:value-of select="gmx:Anchor/@xlink:href" /></gco:CharacterString>
+    </xsl:copy>
+  </xsl:template>
+
+	<!-- Fixed values for GEMET thesaurus name. Date type requires text value also -->
+	<xsl:template match="gmd:thesaurusName[gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']">
+		<gmd:thesaurusName>
+			<gmd:CI_Citation>
+				<gmd:title>
+					<gmx:Anchor xlink:href="http://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
+				</gmd:title>
+				<gmd:date>
+					<gmd:CI_Date>
+						<gmd:date>
+							<gco:Date>2008-06-01</gco:Date>
+						</gmd:date>
+						<gmd:dateType>
+							<gmd:CI_DateTypeCode codeListValue="publication" codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode">publication</gmd:CI_DateTypeCode>
+						</gmd:dateType>
+					</gmd:CI_Date>
+				</gmd:date>
+			</gmd:CI_Citation>
+		</gmd:thesaurusName>
+	</xsl:template>
+
 
   <xsl:template match="gmd:MD_DataIdentification|srv:SV_ServiceIdentification" mode="process-resource-constraints">
 
