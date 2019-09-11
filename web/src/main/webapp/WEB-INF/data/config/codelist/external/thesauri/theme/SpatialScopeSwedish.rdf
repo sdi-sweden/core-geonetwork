@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <skos:ConceptScheme xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope">
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="sv">Geografisk utsträckning</dc:title>
+    <dcterms:issued xmlns:dcterms="http://purl.org/dc/terms/">2019-09-11T06:37:41</dcterms:issued>
+    <dcterms:modified xmlns:dcterms="http://purl.org/dc/terms/">2019-09-11T06:37:41</dcterms:modified>
+  </skos:ConceptScheme>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national">
+    <skos:prefLabel xml:lang="sv">Nationell</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Syftet med datamängden är att täcka in det nationella territoriet.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional">
+    <skos:prefLabel xml:lang="sv">Regional</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Syftet med datamängden är att täcka en eller flera administrativa enheter på subnationell nivå.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/local">
+    <skos:prefLabel xml:lang="sv">Lokal</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Syftet med datamängden är att täcka en eller flera lokala administrativa enheters territorium.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/global">
+    <skos:prefLabel xml:lang="sv">Global</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Syftet med datamängden är att täcka hela jorden.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope" />
+  </skos:Concept>
+  <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/european">
+    <skos:prefLabel xml:lang="sv">Europeisk</skos:prefLabel>
+    <skos:scopeNote xml:lang="sv">Syftet med datamängden är att omfatta Europa.</skos:scopeNote>
+    <skos:inScheme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope" />
+  </skos:Concept>
+</rdf:RDF>
+
