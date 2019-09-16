@@ -126,4 +126,6 @@
 
   <priorityDataset>INSPIRE Priority Dataset</priorityDataset>
   <addPriorityDataset>Lägg till Priority Dataset</addPriorityDataset>
+
+  <addSpatialScope>Lägg till Geografisk utsträckning</addSpatialScope>
 </strings>

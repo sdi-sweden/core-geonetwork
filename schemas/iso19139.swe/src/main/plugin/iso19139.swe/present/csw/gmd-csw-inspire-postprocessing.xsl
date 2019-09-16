@@ -1,30 +1,33 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
     xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gco="http://www.isotc211.org/2005/gco"
-    xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd" 
+    xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:gmx="http://www.isotc211.org/2005/gmx"
     xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gse="http://www.geodata.se/gse"
-                xmlns:gmx="http://www.isotc211.org/2005/gmx"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 exclude-result-prefixes="#all">
-	
+
     <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes" indent="yes"/>
-    
+
     <!-- Template for Copy data -->
     <xsl:template name="copyData" match="@*|node()">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
     </xsl:template>
-	
+
 	<!-- InspireCSWProxy rules are copied here -->
-	
+
 	<!-- remove namespace declaration of gse from root element -->
 	<xsl:template match="gmd:MD_Metadata">
 		<xsl:element name="{name()}" namespace="{namespace-uri()}">
 			<xsl:copy-of select="namespace::*[not(name() = 'gse')]" />
-			<xsl:apply-templates select="@*|node()"/>
+
+      <!-- Fixed value for schemaLocation -->
+      <xsl:attribute name="xsi:schemaLocation">http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd  http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd  http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd</xsl:attribute>
+			<xsl:apply-templates select="@*[name() != 'xsi:schemaLocation']|node()"/>
 		</xsl:element>
 	</xsl:template>
-	
+
 
   <xsl:template match="gmd:metadataStandardName">
     <gmd:metadataStandardName>
@@ -54,6 +57,34 @@
       <xsl:apply-templates select="gmd:graphicOverview" />
       <xsl:apply-templates select="gmd:resourceFormat" />
       <xsl:apply-templates select="gmd:descriptiveKeywords" />
+
+      <xsl:if test="not(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/text() = 'Spatial scope'])">
+        <gmd:descriptiveKeywords>
+          <gmd:MD_Keywords>
+            <gmd:keyword>
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national">Nationell</gmx:Anchor>
+            </gmd:keyword>
+            <gmd:thesaurusName>
+              <gmd:CI_Citation>
+                <gmd:title>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope">Spatial scope</gmx:Anchor>
+                </gmd:title>
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date>2019-05-22</gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+              </gmd:CI_Citation>
+            </gmd:thesaurusName>
+          </gmd:MD_Keywords>
+        </gmd:descriptiveKeywords>
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:resourceSpecificUsage" />
 
       <!-- Process gmd:resourceConstraints for INSPIRE TG 2.0 -->
@@ -75,16 +106,16 @@
 
 	<!-- remove the parent of DQ_UsabilityElement, if DQ_UsabilityElement is present -->
 	<xsl:template match="*[gmd:DQ_UsabilityElement]"/>
-	
+
 	<!-- remove all aggregateInformation -->
 	<xsl:template match="gmd:aggregateInformation"/>
-	
+
 	<!-- remove all topic categories for service type records -->
 	<xsl:template match="//gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:topicCategory"/>
-	
+
 	<!-- remove GeodataSe node with namespace gse and remove namespace gse declaration from metadata (see above) -->
 	<xsl:template match="gse:GeodataSe"/>
-	
+
 	<!-- fix keyword value if value contains period character (.) -->
 	<xsl:template match="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[contains(gco:CharacterString, '.')]">
 		<xsl:variable name="keywordValue" select="gco:CharacterString" />
@@ -92,32 +123,60 @@
 			<gco:CharacterString><xsl:value-of select="substring-after($keywordValue,' ')" /></gco:CharacterString>
 		</xsl:copy>
 	</xsl:template>
-	
+
 	<!--  remove gmd:type node from gmd:MD_Keywords -->
-	<xsl:template match="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:type"/>	
-	
+	<xsl:template match="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:type"/>
+
 	<!-- Remove "distributorFormat" from metadata if "version" node not present or version value emtpy -->
 	<xsl:template match="gmd:distributorFormat[
-							gmd:MD_Format/gmd:version[. = ''] 
+							gmd:MD_Format/gmd:version[. = '']
 							or
 							normalize-space(gmd:MD_Format/gmd:version/gco:CharacterString)='']"/>
-							
+
 	<!--  remove gmd:function from gmd:onLine if present -->
-	<xsl:template match="gmd:onLine/gmd:function"/>	
-	
+	<xsl:template match="gmd:onLine/gmd:function"/>
+
 	<!--  fix title for DQ_ConformanceResult -->
-	<xsl:template match="DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title">	
-		<gmd:title>
-			<gco:CharacterString>KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster</gco:CharacterString>
-		</gmd:title>
+	<xsl:template match="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title[gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976' or
+	      gmx:Anchor/@xlink:href='https://eur-lex.europa.eu/eli/reg/2010/1089']">
+	    <xsl:variable name="isService" select="count(//srv:SV_ServiceIdentification) > 0" />
+
+	    <xsl:copy>
+		    <xsl:choose>
+		      <xsl:when test="$isService">
+		        <gco:CharacterString>Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster</gco:CharacterString>
+		      </xsl:when>
+		      <xsl:otherwise>
+		        <gco:CharacterString>Kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster</gco:CharacterString>
+		      </xsl:otherwise>
+		    </xsl:choose>
+	    </xsl:copy>
 	</xsl:template>
-	
+
+
+  <!--  fix date for DQ_ConformanceResult -->
+  <xsl:template match="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date[gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976' or
+	      gmx:Anchor/@xlink:href='https://eur-lex.europa.eu/eli/reg/2010/1089']">
+    <xsl:variable name="isService" select="count(//srv:SV_ServiceIdentification) > 0" />
+
+    <xsl:copy>
+	    <xsl:choose>
+	      <xsl:when test="$isService">
+	        <gco:Date>2009-10-20</gco:Date>
+	      </xsl:when>
+	      <xsl:otherwise>
+	        <gco:Date>2010-12-08</gco:Date>
+	      </xsl:otherwise>
+	    </xsl:choose>
+  	</xsl:copy>
+	</xsl:template>
+
 	<!--  remove spatial resolution if gco:Distance is not present or is empty -->
 	<xsl:template match="gmd:spatialResolution[
 							gmd:MD_Resolution/gmd:distance/gco:Distance[. = '']
 							or
 							normalize-space(gmd:MD_Resolution/gmd:distance/gco:Distance)='']" />
-							
+
 	<!-- remove whole vertical element if both min and max values are empty or not present -->
 	<xsl:template match="gmd:extent/gmd:EX_Extent/gmd:verticalElement">
 		<xsl:choose>
@@ -135,49 +194,50 @@
 		</xsl:choose>
 	</xsl:template>
 	<xsl:template match="gmd:verticalElement[. = '']" />
-	
+
 	<!-- If gmd:EX_VerticalExtent/gmd:minimumValue is empty, remove it -->
 	<xsl:template match="gmd:EX_VerticalExtent/gmd:minimumValue[. = '' or gco:Real = '']" />
 	<!-- If gmd:EX_VerticalExtent/gmd:maximumValue is empty, remove it -->
 	<xsl:template match="gmd:EX_VerticalExtent/gmd:maximumValue[. = '' or gco:Real = '']" />
-	
-	
+
+
 	<!-- ensure codespace always comes after code -->
 	<xsl:template match="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier">
 		<xsl:copy>
 			<xsl:apply-templates select="@*"/>
 			<xsl:copy-of select="gmd:code"/>
 			<xsl:copy-of select="gmd:codeSpace"/>
-		</xsl:copy>		
+		</xsl:copy>
 	</xsl:template>
-	
+
 	<!-- rename element gmd:AbstractDQ_Completeness to gmd:DQ_CompletenessOmission -->
 	<xsl:template match="gmd:AbstractDQ_Completeness">
 		<gmd:DQ_CompletenessOmission>
 			<xsl:apply-templates select="@*|node()"/>
-		</gmd:DQ_CompletenessOmission>		
+		</gmd:DQ_CompletenessOmission>
 	</xsl:template>
-	
+
 	<!-- remove following elements -->
-	<xsl:template match="mdSGU" />   
+	<xsl:template match="mdSGU" />
 	<xsl:template match="gmd:applicationSchemaInfo" />
-	
+
 	<!-- Remove descriptiveKeywords if thesaurus title starts with 'SGU' text. -->
 	<xsl:template match="gmd:descriptiveKeywords[starts-with(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'SGU')]" />
-	
+
 	<!-- end of InspireCSWProxy rules -->
-	
-	
+
+
 	<!-- Additional rules which are not in InspireCSWProxy -->
-	
-	<!-- example of timeperiod
-	<gml:TimePeriod gml:id="Temporal">
-		<gml:beginPosition>1968</gml:beginPosition>
-		<gml:endPosition />
-	</gml:TimePeriod>-->
-	
+
+
+  <!-- example of timeperiod
+  <gml:TimePeriod gml:id="Temporal">
+    <gml:beginPosition>1968</gml:beginPosition>
+    <gml:endPosition />
+  </gml:TimePeriod>-->
+
 	<!-- add attribute @gml:id to gml:timeperiod if missing -->
-	<xsl:template match="gml:TimePeriod[not(@gml:id) or normalize-space(@gml:id)='' or normalize-space(@gml:id)='Temporal']">        
+	<xsl:template match="gml:TimePeriod[not(@gml:id) or normalize-space(@gml:id)='' or normalize-space(@gml:id)='Temporal']">
         <gml:TimePeriod>
 			<xsl:choose>
 				<xsl:when test="normalize-space(@gml:id)='' or normalize-space(@gml:id)='Temporal'">
@@ -190,52 +250,52 @@
 				</xsl:otherwise>
 			</xsl:choose>
 			<xsl:copy-of select="gml:beginPosition"/>
-			<xsl:copy-of select="gml:endPosition"/>	
+			<xsl:copy-of select="gml:endPosition"/>
 		</gml:TimePeriod>
     </xsl:template>
-	
+
 	<!-- remove online at this place -->
 	<!-- Comment for testing -->
 	<!--<xsl:template match="//gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine" />-->
-		
+
 	<!-- delete environmentDescription element -->
 	<xsl:template match="//gmd:environmentDescription"/>
-	
+
 	<!-- extents correction -->
-	<xsl:template match="gmd:geographicElement/gmd:EX_GeographicBoundingBox">   
+	<xsl:template match="gmd:geographicElement/gmd:EX_GeographicBoundingBox">
 		<xsl:variable name="westValue" select="gmd:westBoundLongitude/gco:Decimal" as="xs:float" />
 		<xsl:variable name="eastValue" select="gmd:eastBoundLongitude/gco:Decimal" as="xs:float" />
 		<xsl:variable name="southValue" select="gmd:southBoundLatitude/gco:Decimal" as="xs:float" />
-		<xsl:variable name="northValue" select="gmd:northBoundLatitude/gco:Decimal" as="xs:float"/>		
+		<xsl:variable name="northValue" select="gmd:northBoundLatitude/gco:Decimal" as="xs:float"/>
 		<xsl:copy>
-			<xsl:copy-of select="gmd:westBoundLongitude"/>			
+			<xsl:copy-of select="gmd:westBoundLongitude"/>
 			<gmd:eastBoundLongitude>
 				<xsl:choose>
 					<xsl:when test="$westValue eq $eastValue">
 						<gco:Decimal><xsl:value-of select="$eastValue + 0.0001"/></gco:Decimal>
 					</xsl:when>
 					<xsl:otherwise>
-						<gco:Decimal><xsl:value-of select="$eastValue"/></gco:Decimal>				
-					</xsl:otherwise>	
-				</xsl:choose>					
-			</gmd:eastBoundLongitude>			
-			<xsl:copy-of select="gmd:southBoundLatitude"/>			
+						<gco:Decimal><xsl:value-of select="$eastValue"/></gco:Decimal>
+					</xsl:otherwise>
+				</xsl:choose>
+			</gmd:eastBoundLongitude>
+			<xsl:copy-of select="gmd:southBoundLatitude"/>
 			<gmd:northBoundLatitude>
 				<xsl:choose>
 					<xsl:when test="$southValue eq $northValue">
 						<gco:Decimal><xsl:value-of select="$northValue + 0.0001"/></gco:Decimal>
 					</xsl:when>
 					<xsl:otherwise>
-						<gco:Decimal><xsl:value-of select="$northValue"/></gco:Decimal>				
-					</xsl:otherwise>	
-				</xsl:choose>						
-			</gmd:northBoundLatitude>			
-		</xsl:copy>		
+						<gco:Decimal><xsl:value-of select="$northValue"/></gco:Decimal>
+					</xsl:otherwise>
+				</xsl:choose>
+			</gmd:northBoundLatitude>
+		</xsl:copy>
 	</xsl:template>
-	
-	<!-- end of additional rules -->   
-	
-	
+
+	<!-- end of additional rules -->
+
+
 	<!-- 1. If metadata type is service, then
 	(a) remove exisiting gmd:identificationInfo/srv:SV_ServiceIdentification/srv:couplingType
 	(b) remove existing gmd:identificationInfo/srv:SV_ServiceIdentification/srv:containsOperations
@@ -262,6 +322,34 @@
 		  <!--<xsl:apply-templates select="gmd:topicCategory" />-->
 
 		  <xsl:apply-templates select="gmd:descriptiveKeywords" />
+
+      <xsl:if test="not(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/text() = 'Spatial scope'])">
+        <gmd:descriptiveKeywords>
+          <gmd:MD_Keywords>
+            <gmd:keyword>
+              <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national">Nationell</gmx:Anchor>
+            </gmd:keyword>
+            <gmd:thesaurusName>
+              <gmd:CI_Citation>
+                <gmd:title>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope">Spatial scope</gmx:Anchor>
+                </gmd:title>
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date>2019-05-22</gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+              </gmd:CI_Citation>
+            </gmd:thesaurusName>
+          </gmd:MD_Keywords>
+        </gmd:descriptiveKeywords>
+      </xsl:if>
+
 		  <xsl:apply-templates select="gmd:resourceSpecificUsage" />
 
 		  <!-- Process gmd:resourceConstraints for INSPIRE TG 1.3 (backport) -->
@@ -279,7 +367,7 @@
 		  <!--<xsl:apply-templates select="srv:couplingType" />
 		  <xsl:apply-templates select="srv:containsOperations" />
 		  <xsl:apply-templates select="srv:operatesOn" />-->
-			
+
 			<xsl:choose>
 				<xsl:when test="srv:operatesOn">
 					<srv:couplingType>
@@ -287,21 +375,21 @@
 							<xsl:value-of select="'missing'"/>
 						</xsl:attribute>
 					</srv:couplingType>
-					
+
 					<srv:containsOperations>
 						<xsl:attribute name="gco:nilReason">
 							<xsl:value-of select="'missing'"/>
 						</xsl:attribute>
 					</srv:containsOperations>
-					
-					<xsl:copy-of select="srv:operatesOn"/>					
+
+					<xsl:copy-of select="srv:operatesOn"/>
 				</xsl:when>
-				<xsl:otherwise>					
+				<xsl:otherwise>
 					<srv:couplingType>
 						<xsl:attribute name="gco:nilReason">
 							<xsl:value-of select="'missing'"/>
 						</xsl:attribute>
-					</srv:couplingType>				
+					</srv:couplingType>
 					<srv:containsOperations>
 						<xsl:attribute name="gco:nilReason">
 							<xsl:value-of select="'missing'"/>
@@ -311,26 +399,46 @@
 			</xsl:choose>
 		</xsl:copy>
 	</xsl:template>
-    
+
     <!--2. If gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions is missing, then
     (a) for each gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor,
     	(a.1) create a clone(copy) of element gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions
     	(a.2) create a new element gmd:transferOptions and add the cloned gmd:MD_DigitalTransferOptions under it.
     (b) Add all newly created gmd:transferOptions as children of gmd:distributionInfo/gmd:MD_Distribution (add after all existing children of gmd:MD_Distribution).-->
-	<xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution[not(gmd:transferOptions)]">
+	<xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution">
+	    <xsl:variable name="addtransferOptions">
+	    	<xsl:for-each select="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/*/gmd:distributorTransferOptions">
+	        <gmd:transferOptions>
+	          <xsl:copy-of select="gmd:MD_DigitalTransferOptions"/>
+	        </gmd:transferOptions>
+	      </xsl:for-each>
+	    </xsl:variable>
+
+		<xsl:variable name="addformatsOptions">
+			<xsl:for-each select="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/*/gmd:distributorFormat">
+				<gmd:distributionFormat>
+					<xsl:copy-of select="gmd:MD_Format"/>
+				</gmd:distributionFormat>
+			</xsl:for-each>
+		</xsl:variable>
+
 		<xsl:copy>
+			<xsl:choose>
+				<xsl:when test="not(gmd:distributionFormat)"><xsl:copy-of select="$addformatsOptions"/></xsl:when>
+				<xsl:otherwise><xsl:copy-of select="gmd:distributionFormat"/></xsl:otherwise>
+			</xsl:choose>
+
 			<xsl:copy-of select="gmd:distributor"/>
-			<xsl:copy-of select="$addtransferOptions"/>	
+
+			<xsl:choose>
+				<xsl:when test="not(gmd:transferOptions)"><xsl:copy-of select="$addtransferOptions"/></xsl:when>
+				<xsl:otherwise><xsl:copy-of select="gmd:transferOptions"/></xsl:otherwise>
+			</xsl:choose>
+
 		</xsl:copy>
     </xsl:template>
-	
-	<xsl:param name="addtransferOptions">
-		<xsl:for-each select="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor">						
-			<gmd:transferOptions>
-				<xsl:copy-of select="gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions"/>	
-			</gmd:transferOptions>
-		</xsl:for-each>
-	</xsl:param>
+
+
 
 	<!-- 3. Remove non-digits from temporal dates -->
   <!-- Set indeterminatePosition to now on end date if begindate as value an enddate is empty -->
@@ -347,7 +455,7 @@
 
 			<xsl:variable name="newBeginPosition" select="translate(gml:beginPosition/text(), translate(.,'0123456789-',''), '')"/>
 			<xsl:variable name="newEndPosition" select="translate(gml:endPosition/text(), translate(.,'0123456789-',''), '')"/>
-			
+
       <gml:beginPosition>
 
 				<xsl:value-of select="$newBeginPosition"/>
@@ -361,7 +469,7 @@
       </gml:endPosition>
 		</xsl:copy>
 	</xsl:template>
-	
+
 	<!-- 4. For each gco:Date element, remove non-digits from date value -->
 	<xsl:template match="gco:Date">
 		<xsl:copy>
@@ -401,6 +509,36 @@
     </xsl:choose>
   </xsl:template>
 
+
+  <!-- Identifier change from Anchor to CharacterString -->
+  <xsl:template match="gmd:identifier[gmd:MD_Identifier/gmd:code/gmx:Anchor]/gmd:MD_Identifier/gmd:code">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <gco:CharacterString><xsl:value-of select="gmx:Anchor/@xlink:href" /></gco:CharacterString>
+    </xsl:copy>
+  </xsl:template>
+
+	<!-- Fixed values for GEMET thesaurus name. Date type requires text value also -->
+	<xsl:template match="gmd:thesaurusName[gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']">
+		<gmd:thesaurusName>
+			<gmd:CI_Citation>
+				<gmd:title>
+					<gmx:Anchor xlink:href="http://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
+				</gmd:title>
+				<gmd:date>
+					<gmd:CI_Date>
+						<gmd:date>
+							<gco:Date>2008-06-01</gco:Date>
+						</gmd:date>
+						<gmd:dateType>
+							<gmd:CI_DateTypeCode codeListValue="publication" codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode">publication</gmd:CI_DateTypeCode>
+						</gmd:dateType>
+					</gmd:CI_Date>
+				</gmd:date>
+			</gmd:CI_Citation>
+		</gmd:thesaurusName>
+	</xsl:template>
 
 
   <xsl:template match="gmd:MD_DataIdentification|srv:SV_ServiceIdentification" mode="process-resource-constraints">

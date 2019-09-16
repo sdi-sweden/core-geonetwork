@@ -94,6 +94,7 @@
   <conformity_date>Datum</conformity_date>
   <explanation>Förklaring</explanation>
   <pass>Överensstämmelse</pass>
+  <pass-detail-page>Uppfyller kraven</pass-detail-page>
   <indeterminatePosition>Obestämbar position</indeterminatePosition>
   <pointOfContact>Resurskontakt</pointOfContact>
   <distributorContactView>Distributionskontakt</distributorContactView>
@@ -243,4 +244,6 @@
 
   <priorityDataset>INSPIRE Priority Dataset</priorityDataset>
   <addPriorityDataset>Lägg till Priority Dataset</addPriorityDataset>
+
+  <addSpatialScope>Lägg till Geografisk utsträckning</addSpatialScope>
 </strings>
