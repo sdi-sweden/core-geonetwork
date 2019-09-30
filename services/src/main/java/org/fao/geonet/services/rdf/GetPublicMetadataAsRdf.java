@@ -35,7 +35,10 @@ import java.io.File;
 import java.nio.file.Path;
 
 public class GetPublicMetadataAsRdf implements Service {
+    private String catalogRecordElementNames;
+
     public void init(Path appPath, ServiceConfig params) throws Exception {
+        this.catalogRecordElementNames = params.getMandatoryValue("catalogRecordElementNames");
     }
 
     //--------------------------------------------------------------------------
@@ -47,7 +50,7 @@ public class GetPublicMetadataAsRdf implements Service {
     public Element exec(Element params, ServiceContext context) throws Exception {
         Element thesaurusEl = new GetList().exec(params, context);
 
-        RdfOutputManager manager = new RdfOutputManager((Element) thesaurusEl.getChild("thesauri").detach());
+        RdfOutputManager manager = new RdfOutputManager((Element) thesaurusEl.getChild("thesauri").detach(), catalogRecordElementNames);
 
         RdfSearcher rdfHarvestSearcher = new RdfSearcher(params, context);
         File rdfFile = manager.createRdfFile(context, rdfHarvestSearcher);
