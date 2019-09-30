@@ -105,7 +105,7 @@ USA.
       <sch:let name="resourceIdentifier_code"
                value="normalize-space(//gmd:citation/*/gmd:identifier/*/gmd:code/*/text())"/>
       <sch:let name="resourceIdentifier_present"
-               value="string-length(normalize-space(//gmd:citation/*/gmd:identifier/*/gmd:code/*/text())) &gt; 0"/>      
+               value="string-length(normalize-space(//gmd:citation/*/gmd:identifier/*/gmd:code/*/text())) &gt; 0"/>
       <sch:assert test="$resourceIdentifier_present">[Geodata.se:104] - Identifierare för resursen krävs</sch:assert>
       <!--Rep	<sch:report test="$resourceIdentifier_code">ID <sch:value-of select="$resourceIdentifier_code"/> </sch:report> -->
     </sch:rule>
@@ -171,8 +171,8 @@ USA.
       <!--<sch:report test="$serviceType_present">[Geodata.se:106e] Typ av tjänst måste anges(discovery, view, download etc): <sch:value-of select="$serviceType"/>
       </sch:report>-->
     </sch:rule>
-  </sch:pattern> 
-  
+  </sch:pattern>
+
   <sch:pattern fpi="[Geodata.se:107b] Referensdatum måste anges">
     <sch:title>[Geodata.se:107b] Referensdatum måste anges </sch:title>
     <sch:rule context="//gmd:identificationInfo">
@@ -199,11 +199,11 @@ USA.
 
 	<sch:pattern fpi="[Geodata.se:110] Information om restriktioner">
 		<sch:title>[Geodata.se:110] Information om restriktioner</sch:title>
-		
+
 		<sch:rule context="//gmd:MD_DataIdentification|
 			//*[@gco:isoType='gmd:MD_DataIdentification']|
 			//srv:SV_ServiceIdentification|
-			//*[@gco:isoType='srv:SV_ServiceIdentification']">			
+			//*[@gco:isoType='srv:SV_ServiceIdentification']">
 			<sch:let name="resourceConstraints_count" value="count(gmd:resourceConstraints)"/>
 			<sch:assert test="$resourceConstraints_count > 0 ">[Geodata.se:110c] Information om restriktioner saknas</sch:assert>
 
@@ -214,13 +214,13 @@ USA.
 			<sch:let name="useLimitationLength" value="gmd:resourceConstraints/*/gmd:useLimitation/*/text()/string-length(normalize-space(.))"/>
 			<sch:assert test="$useLimitation and ($useLimitationLength &lt; 2500)">[Geodata.se:110e] Information om användbarhetsbegränsningar måste finnas och vara kortare än 2500 tecken </sch:assert>
       -->
-			
+
 			<sch:let name="accessConstraints" value="gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue"/>
 			<sch:let name="accessConstraints_present" value="gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'copyright' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'patent' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'patentPending' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'trademark' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'license' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'intellectualPropertyRights' or gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'restricted'"/>
 
 			<sch:let name="classification" value="gmd:resourceConstraints/*/gmd:classification/*/@codeListValue"/>
 			<sch:let name="classification_present" value="gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'unclassified' or gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'restricted' or gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'confidential' or gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'secret' or gmd:resourceConstraints/*/gmd:classification/*/@codeListValue = 'topSecret'"/>
-			
+
 			<sch:let name="otherConstraints_condition" value="gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue = 'otherRestrictions'"/>
 			<sch:let name="otherConstraints" value="gmd:resourceConstraints/*/gmd:otherConstraints/*/text()"/>
 			<sch:let name="otherConstraintsLength" value="gmd:resourceConstraints/*/gmd:otherConstraints/*/text()/string-length(.)"/>
@@ -235,12 +235,12 @@ USA.
 			<sch:report test="$classification_present">$classification_present:
               <sch:value-of select="$classification_present"/>
             </sch:report>
- -->			
+ -->
 			<sch:assert test="$accessConstraints_present or $classification_present or $otherConstraints_present">[Geodata.se:110f] Information om åtkomstrestriktioner saknas eller har fel värde, andra begränsningar får ha max 1000 tecken</sch:assert>
-			
-		</sch:rule>		
+
+		</sch:rule>
 	</sch:pattern>
-  
+
   <sch:pattern fpi="[Geodata.se:112a] Resurskontakt måste anges">
     <sch:title>[Geodata.se:112a] Resurskontakt måste anges </sch:title>
     <sch:rule context="//gmd:identificationInfo[1]/*">
@@ -291,7 +291,7 @@ USA.
       <!--			<sch:report test="$organisationName">(2.10.1) Organisation name (Resource) found:
               <sch:value-of select="$organisationName"/>
             </sch:report>
-      -->			
+      -->
 	  <sch:assert test="$emailAddress">[Geodata.se:112e] Kontaktinformation måste anges med epost </sch:assert>
       <sch:assert test="$role_present">[Geodata.se:112d] Ansvarsområde är angiven med felaktig roll</sch:assert>
     </sch:rule>
@@ -313,7 +313,7 @@ USA.
       >[Geodata.se:113c] Metadatakontakt måste ha epostadress och organisation angiven</sch:assert>
     </sch:rule>
   </sch:pattern>
-  
+
   <sch:pattern fpi="[Geodata.se:113d] Metadatakontakt måste ha rollen Kontakt(pointOfContact) angiven ">
     <sch:title>[Geodata.se:113d] Metadatakontakt måste ha rollen Kontakt(pointOfContact) angiven </sch:title>
     <sch:rule context="//gmd:MD_Metadata">
@@ -372,7 +372,7 @@ USA.
 
       </sch:assert>
     </sch:rule>
-	
+
 	<!-- rule 118 no longer need as it is replaced by XSD validation -->
 	<!--
     <sch:rule context="//gmd:distributionInfo">
@@ -413,6 +413,12 @@ USA.
       <sch:let name="east" value="//gmd:geographicElement/*/gmd:eastBoundLongitude[1]/*"/>
       <sch:let name="north" value="//gmd:geographicElement/*/gmd:northBoundLatitude[1]/*"/>
       <sch:let name="south" value="//gmd:geographicElement/*/gmd:southBoundLatitude[1]/*"/>
+
+      <sch:let name="westDecimals" value="concat('',substring(substring-after($west[1], '.'), 1, 2))"/>
+      <sch:let name="eastDecimals" value="concat('',substring(substring-after($east[1], '.'), 1, 2))"/>
+      <sch:let name="northDecimals" value="concat('',substring(substring-after($north[1], '.'), 1, 2))"/>
+      <sch:let name="southDecimals" value="concat('',substring(substring-after($south[1], '.'), 1, 2))"/>
+
       <!--			<sch:let name="west" value="number(//gmd:geographicElement/*/gmd:westBoundLongitude[1]/*)"/>
             <sch:let name="east" value="number(//gmd:geographicElement/*/gmd:eastBoundLongitude[1]/*)"/>
             <sch:let name="north" value="number(//gmd:geographicElement/*/gmd:northBoundLatitude[1]/*)"/>
@@ -424,14 +430,22 @@ USA.
       <sch:report test="$south">South: <sch:value-of select="$south[1]"/>	</sch:report>
       <sch:report test="$north">North: <sch:value-of select="$north[1]"/>	</sch:report>-->
 
-      <sch:assert test="(-180.00 &lt;= $west[1]) and ( $west[1] &lt;= 180.00)">[Geodata.se:125] Västlig koordinat saknas eller har fel värde:  <sch:value-of select="$west[1]"/></sch:assert>
+      <sch:assert test="string($west[1]) and (-180.00 &lt;= $west[1]) and ( $west[1] &lt;= 180.00)">[Geodata.se:125] Västlig koordinat saknas eller har fel värde:  <sch:value-of select="$west[1]"/></sch:assert>
 
-      <sch:assert test="(-180.00 &lt;= $east[1]) and ($east[1] &lt;= 180.00)">[Geodata.se:125] Östlig koordinat saknas eller har fel värde</sch:assert>
+      <sch:assert test="string($east[1]) and (-180.00 &lt;= $east[1]) and ($east[1] &lt;= 180.00)">[Geodata.se:125] Östlig koordinat saknas eller har fel värde</sch:assert>
 
-      <sch:assert test="(-90.00 &lt;= $south[1]) and ($south[1] &lt;= $north)">[Geodata.se:125] Syd koordinat saknas eller har fel värde</sch:assert>
+      <sch:assert test="string($south[1]) and (-90.00 &lt;= $south[1]) and ($south[1] &lt;= $north)">[Geodata.se:125] Syd koordinat saknas eller har fel värde</sch:assert>
 
-      <sch:assert test="($south[1] &lt;= $north[1]) and ($north[1] &lt;= 90.00)">[Geodata.se:125] Nordlig koordinat saknas eller har fel värde</sch:assert>
+      <sch:assert test="string($north[1]) and ($south[1] &lt;= $north[1]) and ($north[1] &lt;= 90.00)">[Geodata.se:125] Nordlig koordinat saknas eller har fel värde</sch:assert>
 
+      <!-- Check the number of decimals equal or greater than 2 -->
+      <sch:assert test="not(string($west[1])) or string-length($westDecimals) >= 2">Västlig koordinat kräver 2 decimaler</sch:assert>
+
+      <sch:assert test="not(string($east[1])) or string-length($eastDecimals) >= 2">Östlig koordinat kräver 2 decimaler</sch:assert>
+
+      <sch:assert test="not(string($south[1])) or string-length($southDecimals) >= 2">Syd koordinat kräver 2 decimaler</sch:assert>
+
+      <sch:assert test="not(string($north[1])) or string-length($northDecimals) >= 2">Nordlig koordinat kräver 2 decimaler</sch:assert>
     </sch:rule>
   </sch:pattern>
 
@@ -447,7 +461,7 @@ USA.
       <sch:assert	test="$MDFormat and $MDFormatVers and ($MDFormatLen &gt; 1) and  ($MDFormatVersLen &gt; 0)" >
         [Geodata.se:126]Om format anges skall även version för formatet anges: <sch:value-of select="$MDFormat" />
       </sch:assert>
-<!--	  
+<!--
       <sch:report test="$MDFormat"><sch:value-of select="$MDFormat" />
         !<sch:value-of select="$MDFormatVers" />
         !<sch:value-of select="$MDFormatLen" />

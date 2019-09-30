@@ -106,7 +106,7 @@ USA.
       <sch:let name="resourceIdentifier_code"
                value="normalize-space(//gmd:citation/*/gmd:identifier/gmd:MD_Identifier/gmd:code/*/text())"/>
       <sch:let name="resourceIdentifier_uri"
-               value="normalize-space(//gmd:citation/*/gmd:identifier/gmd:MD_Identifier/gmd:code/gmx:Anchor/@xlink:href)"/>               
+               value="normalize-space(//gmd:citation/*/gmd:identifier/gmd:MD_Identifier/gmd:code/gmx:Anchor/@xlink:href)"/>
       <sch:assert test="$resourceIdentifier_code or $resourceIdentifier_uri">[Geodata.se:104] - Identifierare för resursen krävs</sch:assert>
       <!--Rep	<sch:report test="$resourceIdentifier_code">ID <sch:value-of select="$resourceIdentifier_code"/> </sch:report> -->
       <!--Rep	<sch:report test="$resourceIdentifier_uri">URI <sch:value-of select="$resourceIdentifier_uri"/> </sch:report> -->
@@ -176,7 +176,7 @@ USA.
       </sch:report>-->
     </sch:rule>
   </sch:pattern>
-  
+
   <sch:pattern fpi="[Geodata.se:107b] Referensdatum måste anges">
     <sch:title>[Geodata.se:107b] Referensdatum måste anges </sch:title>
     <sch:rule context="//gmd:identificationInfo">
@@ -263,7 +263,7 @@ USA.
       <sch:assert test="$accessConstraints_present or $classification_present or $otherConstraints_present">[Geodata.se:110f] Information om åtkomstrestriktioner saknas eller har fel värde, andra begränsningar får ha max 1000 tecken</sch:assert>
 
     </sch:rule>
- <!--   
+ <!--
     <sch:rule context="//gmd:identificationInfo//gmd:resourceConstraints//gmd:otherConstraints/*">
       <sch:let name="accessConstraints_value" value="../../gmd:accessConstraints//@codeListValue"/>
       <sch:assert test="$accessConstraints_value = 'otherRestrictions'">[Geodata.se:110d] Åtkomstrestriktioner måste ha värdet 'otherRestrictions' om det finns förekomster av text i 'otherConstraints'</sch:assert>
@@ -271,7 +271,7 @@ USA.
                 <sch:value-of select="."/>
       </sch:report>
     </sch:rule>
--->    
+-->
     <!--<sch:rule context="//gmd:identificationInfo">
       <sch:let name="useLimitation" value="//gmd:resourceConstraints/*/gmd:useLimitation//text()/normalize-space(.)"/>
       <sch:let name="useLimitation_count"
@@ -332,7 +332,7 @@ USA.
       <!--			<sch:report test="$organisationName">(2.10.1) Organisation name (Resource) found:
               <sch:value-of select="$organisationName"/>
             </sch:report>
-      -->			
+      -->
 	  <sch:assert test="$emailAddress">[Geodata.se:112e] Kontaktinformation måste anges med epost </sch:assert>
       <sch:assert test="$role_present">[Geodata.se:112d] Ansvarsområde är angiven med felaktig roll</sch:assert>
     </sch:rule>
@@ -354,7 +354,7 @@ USA.
         angiven</sch:assert>
     </sch:rule>
   </sch:pattern>
-  
+
   <sch:pattern fpi="[Geodata.se:113d] Metadatakontakt måste ha rollen Kontakt(pointOfContact) angiven ">
     <sch:title>[Geodata.se:113d] Metadatakontakt måste ha rollen Kontakt(pointOfContact) angiven </sch:title>
     <sch:rule context="//gmd:MD_Metadata">
@@ -452,6 +452,12 @@ USA.
       <sch:let name="east" value="//gmd:geographicElement/*/gmd:eastBoundLongitude[1]/*"/>
       <sch:let name="north" value="//gmd:geographicElement/*/gmd:northBoundLatitude[1]/*"/>
       <sch:let name="south" value="//gmd:geographicElement/*/gmd:southBoundLatitude[1]/*"/>
+
+      <sch:let name="westDecimals" value="concat('',substring(substring-after($west[1], '.'), 1, 2))"/>
+      <sch:let name="eastDecimals" value="concat('',substring(substring-after($east[1], '.'), 1, 2))"/>
+      <sch:let name="northDecimals" value="concat('',substring(substring-after($north[1], '.'), 1, 2))"/>
+      <sch:let name="southDecimals" value="concat('',substring(substring-after($south[1], '.'), 1, 2))"/>
+
       <!--			<sch:let name="west" value="number(//gmd:geographicElement/*/gmd:westBoundLongitude[1]/*)"/>
             <sch:let name="east" value="number(//gmd:geographicElement/*/gmd:eastBoundLongitude[1]/*)"/>
             <sch:let name="north" value="number(//gmd:geographicElement/*/gmd:northBoundLatitude[1]/*)"/>
@@ -463,14 +469,24 @@ USA.
       <sch:report test="$south">South: <sch:value-of select="$south[1]"/>	</sch:report>
       <sch:report test="$north">North: <sch:value-of select="$north[1]"/>	</sch:report>-->
 
-      <sch:assert test="(-180.00 &lt;= $west[1]) and ( $west[1] &lt;= 180.00)">[Geodata.se:125] Västlig koordinat saknas eller har fel värde:  <sch:value-of select="$west[1]"/></sch:assert>
+      <!-- Check values are filled and with valid values -->
+      <sch:assert test="string($west[1]) and (-180.00 &lt;= $west[1]) and ( $west[1] &lt;= 180.00)">[Geodata.se:125] Västlig koordinat saknas eller har fel värde:  <sch:value-of select="$west[1]"/></sch:assert>
 
-      <sch:assert test="(-180.00 &lt;= $east[1]) and ($east[1] &lt;= 180.00)">[Geodata.se:125] Östlig koordinat saknas eller har fel värde</sch:assert>
+      <sch:assert test="string($east[1]) and (-180.00 &lt;= $east[1]) and ($east[1] &lt;= 180.00)">[Geodata.se:125] Östlig koordinat saknas eller har fel värde</sch:assert>
 
-      <sch:assert test="(-90.00 &lt;= $south[1]) and ($south[1] &lt;= $north)">[Geodata.se:125] Syd koordinat saknas eller har fel värde</sch:assert>
+      <sch:assert test="string($south[1]) and (-90.00 &lt;= $south[1]) and ($south[1] &lt;= $north)">[Geodata.se:125] Syd koordinat saknas eller har fel värde</sch:assert>
 
-      <sch:assert test="($south[1] &lt;= $north[1]) and ($north[1] &lt;= 90.00)">[Geodata.se:125] Nordlig koordinat saknas eller har fel värde</sch:assert>
+      <sch:assert test="string(north[1]) and  ($south[1] &lt;= $north[1]) and ($north[1] &lt;= 90.00)">[Geodata.se:125] Nordlig koordinat saknas eller har fel värde</sch:assert>
 
+
+      <!-- Check the number of decimals equal or greater than 2 -->
+      <sch:assert test="not(string($west[1])) or string-length($westDecimals) >= 2">Västlig koordinat kräver 2 decimaler</sch:assert>
+
+      <sch:assert test="not(string($east[1])) or string-length($eastDecimals) >= 2">Östlig koordinat kräver 2 decimaler</sch:assert>
+
+      <sch:assert test="not(string($south[1])) or string-length($southDecimals) >= 2">Syd koordinat kräver 2 decimaler</sch:assert>
+
+      <sch:assert test="not(string($north[1])) or string-length($northDecimals) >= 2">Nordlig koordinat kräver 2 decimaler</sch:assert>
     </sch:rule>
   </sch:pattern>
 
@@ -480,7 +496,7 @@ USA.
     <sch:rule context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor">
  	  <sch:let name="MDFormatPresent" value="count(/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat) > 0" />
     </sch:rule>
-	
+
     <sch:rule context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorFormat">
       <sch:let name="MDFormat" value="normalize-space(gmd:MD_Format/gmd:name/gco:CharacterString)" />
       <sch:let name="MDFormatVers" value="normalize-space(gmd:MD_Format/gmd:version/gco:CharacterString)" />
@@ -490,7 +506,7 @@ USA.
       <sch:assert	test="$MDFormat and $MDFormatVers and ($MDFormatLen &gt; 1) and  ($MDFormatVersLen &gt; 0)" >
         [Geodata.se:126]Om format anges skall även version för formatet anges: <sch:value-of select="$MDFormat" />
       </sch:assert>
-<!--	  
+<!--
       <sch:report test="$MDFormat"><sch:value-of select="$MDFormat" />
         !<sch:value-of select="$MDFormatVers" />
         !<sch:value-of select="$MDFormatLen" />
