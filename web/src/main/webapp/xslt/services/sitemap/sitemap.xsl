@@ -133,10 +133,16 @@
               </xsl:when>
 
               <xsl:otherwise>
-                <xsl:value-of select="$env/system/server/protocol"/>://<xsl:value-of
-                select="$env/system/server/host"/>:<xsl:value-of
-                select="$env/system/server/port"/><xsl:value-of select="/root/gui/url"/>/?uuid=<xsl:value-of
-                select="$uuid"/>
+                <xsl:variable name="metadataUrl">
+                  <xsl:choose>
+                    <xsl:when test="contains(upper-case(normalize-space($env/system/server/sitemapLinkUrl)), '{{UUID}}')"><xsl:value-of select="replace($env/system/server/sitemapLinkUrl, '\{\{UUID\}\}', $uuid, 'i' )"/></xsl:when>
+                    <xsl:otherwise><xsl:value-of select="$env/system/server/protocol"/>://<xsl:value-of
+                      select="$env/system/server/host"/>:<xsl:value-of
+                      select="$env/system/server/port"/><xsl:value-of select="/root/gui/url"/>/?uuid=<xsl:value-of
+                      select="$uuid"/></xsl:otherwise>
+                  </xsl:choose>
+                </xsl:variable>
+                <xsl:value-of select="$metadataUrl"/>
               </xsl:otherwise>
             </xsl:choose>
           </loc>
