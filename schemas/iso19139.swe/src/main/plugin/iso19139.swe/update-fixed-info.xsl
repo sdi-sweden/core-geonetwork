@@ -28,6 +28,7 @@
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:geonet="http://www.fao.org/geonetwork"
+  xmlns:uuid="java:java.util.UUID"
   xmlns:java="java:org.fao.geonet.util.XslUtil" exclude-result-prefixes="#all">
 
 	<xsl:include href="../iso19139/convert/functions.xsl"/>
@@ -297,6 +298,109 @@
 		</xsl:copy>
 	</xsl:template>
 
+  <xsl:template match="gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:title" />
+      <xsl:apply-templates select="gmd:alternateTitle" />
+      <xsl:apply-templates select="gmd:date" />
+      <xsl:apply-templates select="gmd:edition" />
+      <xsl:apply-templates select="gmd:editionDate" />
+
+      <xsl:choose>
+        <!-- record of type dataset or dataset series are created we shall automatically add a UUID for resource-identifier -->
+        <xsl:when test="(count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0) or
+              (count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='series']) > 0)">
+
+          <xsl:choose>
+            <!-- Identifier doesn't exists - Add it -->
+            <xsl:when test="not(gmd:identifier)">
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gco:CharacterString><xsl:value-of select="uuid:randomUUID()"/></gco:CharacterString>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </xsl:when>
+
+            <!-- Identifier incomplete doesn't exists - Add it -->
+            <xsl:when test="count(gmd:identifier) = 1 and not(gmd:identifier/gmd:MD_Identifier)">
+              <xsl:for-each select="gmd:identifier">
+                <xsl:copy>
+                  <xsl:copy-of select="@*" />
+
+                  <gmd:MD_Identifier>
+                    <gmd:code>
+                      <gco:CharacterString><xsl:value-of select="uuid:randomUUID()"/></gco:CharacterString>
+                    </gmd:code>
+                  </gmd:MD_Identifier>
+
+                </xsl:copy>
+              </xsl:for-each>
+            </xsl:when>
+
+            <!-- Process identifiers to check at least 1 has a code -->
+            <xsl:otherwise>
+
+              <xsl:choose>
+                <!-- No identifier with code value - Add it -->
+                <xsl:when test="count(gmd:identifier[string(gmd:MD_Identifier/gmd:code/gco:CharacterString)]) = 0">
+                  <xsl:for-each select="gmd:identifier[gmd:MD_Identifier]">
+                    <xsl:choose>
+                      <!-- Add to first element -->
+                      <xsl:when test="position() = 1">
+                        <xsl:copy>
+                          <xsl:copy-of select="@*" />
+
+                          <xsl:for-each select="gmd:MD_Identifier">
+                            <xsl:copy>
+                              <xsl:copy-of select="@*" />
+                              <gmd:code>
+                                <gco:CharacterString><xsl:value-of select="uuid:randomUUID()"/></gco:CharacterString>
+                              </gmd:code>
+                            </xsl:copy>
+                          </xsl:for-each>
+                        </xsl:copy>
+                      </xsl:when>
+
+                      <!-- Copy the rest -->
+                      <xsl:otherwise>
+                        <xsl:copy-of select="." />
+                      </xsl:otherwise>
+                    </xsl:choose>
+
+                  </xsl:for-each>
+                </xsl:when>
+
+                <!-- identifiers with code - process identifiers -->
+                <xsl:otherwise>
+                  <xsl:apply-templates select="gmd:identifier" />
+                </xsl:otherwise>
+              </xsl:choose>
+
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:when>
+
+        <!-- other type fo records - process identifiers -->
+        <xsl:otherwise>
+          <xsl:apply-templates select="gmd:identifier" />
+        </xsl:otherwise>
+      </xsl:choose>
+
+
+
+      <xsl:apply-templates select="gmd:citedResponsibleParty" />
+      <xsl:apply-templates select="gmd:presentationForm" />
+      <xsl:apply-templates select="gmd:series" />
+      <xsl:apply-templates select="gmd:otherCitationDetails" />
+      <xsl:apply-templates select="gmd:collectiveTitle" />
+      <xsl:apply-templates select="gmd:ISBN" />
+      <xsl:apply-templates select="gmd:ISSN" />
+    </xsl:copy>
+  </xsl:template>
 
 	<!-- ================================================================= -->
 
