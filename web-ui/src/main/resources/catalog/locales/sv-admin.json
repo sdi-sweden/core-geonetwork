@@ -838,6 +838,8 @@
     "system/server/protocol": "Föredraget protokoll",
     "system/server/securePort": "Säker port",
     "system/server/log": "Loggningsnivå",
+    "system/server/sitemapLinkUrl": "Sitemap URL template",
+    "system/server/sitemapLinkUrl-help": "Template to build the links to medatada document in catalogue sitemap. String {{UUID}} will be replaced by the metadata UUID. For example, for the template http://www.example.com/external/metadata/html?uuid={{UUID}} the resulting URL in sitemap document would be http://www.example.com/external/metadata/html?uuid=this-is-the-actual-uuid",
     "system/site": "Beskrivning av katalog",
     "system/site/name": "Katalognamn",
     "system/site/name-help": "Namnet som visas i olika medier (nyhetsflöden).",
