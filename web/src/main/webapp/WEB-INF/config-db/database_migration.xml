@@ -159,6 +159,7 @@
       <list>
         <value>java:org.fao.geonet.api.records.attachments.MetadataResourceDatabaseMigration</value>
         <value>WEB-INF/classes/setup/sql/migrate/v310/migrate-</value>
+        <value>WEB-INF/classes/setup/sql/migrate/v310/migrate-sitemap-</value>
       </list>
     </entry>
   </util:map>
