@@ -1561,8 +1561,6 @@
                      tooltip="gmd:qualityTitle">
                   <helper name="InspireRegulations" relAtt="reg_conformity_linkage" />
                 </key>
-                <key label="conformity_date" use="gn-date-picker"
-                     xpath="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date"/>
                 <key label="explanation" use="text" tooltip="gmd:explanation"
                      xpath="gmd:DQ_ConformanceResult/gmd:explanation/gco:CharacterString"/>
                 <key label="pass"
@@ -1584,18 +1582,7 @@
                           <gmx:Anchor xlink:href="{{reg_conformity_linkage}}">{{reg_conformity_desc}}
                           </gmx:Anchor>
                         </gmd:title>
-                        <gmd:date>
-                          <gmd:CI_Date>
-                            <gmd:date>
-                              {{conformity_date}}
-                            </gmd:date>
-                            <gmd:dateType>
-                              <gmd:CI_DateTypeCode
-                                codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode"
-                                codeListValue="publication"/>
-                            </gmd:dateType>
-                          </gmd:CI_Date>
-                        </gmd:date>
+                        <gn:copy select="gmd:date" />
                       </gmd:CI_Citation>
                     </gmd:specification>
                     <gmd:explanation>
