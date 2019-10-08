@@ -859,6 +859,23 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- Remove temporal extent if empty beginPosition and endPosition -->
+  <xsl:template match="gmd:temporalElement[gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition]">
+    <xsl:choose>
+      <xsl:when test="not(string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition)) and
+                      not(string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition))">
+        <!-- Remove element if empty values in beginPosition and endPosition -->
+      </xsl:when>
+
+      <xsl:otherwise>
+        <xsl:copy>
+          <xsl:copy-of select="@*" />
+          <xsl:apply-templates select="*" />
+        </xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 <!-- ================================================================= -->
 	<!-- copy everything else as is -->
 

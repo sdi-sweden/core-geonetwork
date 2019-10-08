@@ -7,8 +7,9 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:srv="http://www.isotc211.org/2005/srv"
+                xmlns:gml="http://www.opengis.net/gml"
                 xmlns:uuid="java:java.util.UUID"
-                exclude-result-prefixes="gmd xlink gco xsi gmx srv uuid">
+                exclude-result-prefixes="gmd xlink gco xsi gmx srv gml uuid">
 
   <!-- ================================================================= -->
 
@@ -542,6 +543,26 @@
       <xsl:apply-templates select="gmd:topicCategory" />
       <xsl:apply-templates select="gmd:environmentDescription" />
       <xsl:apply-templates select="gmd:extent" />
+
+      <xsl:if test="count(gmd:extent/*/gmd:temporalElement) = 0">
+        <xsl:message>temporal extent</xsl:message>
+        <gmd:extent>
+          <gmd:EX_Extent>
+            <gmd:description/>
+            <gmd:temporalElement>
+              <gmd:EX_TemporalExtent>
+                <gmd:extent>
+                  <gml:TimePeriod gml:id="">
+                    <gml:beginPosition/>
+                    <gml:endPosition/>
+                  </gml:TimePeriod>
+                </gmd:extent>
+              </gmd:EX_TemporalExtent>
+            </gmd:temporalElement>
+          </gmd:EX_Extent>
+        </gmd:extent>
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:supplementalInformation" />
     </xsl:copy>
   </xsl:template>
