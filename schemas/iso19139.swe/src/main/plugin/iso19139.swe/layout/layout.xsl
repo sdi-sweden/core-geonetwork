@@ -79,7 +79,7 @@
   </xsl:template>
 
   <!-- Readonly elements -->
-  <xsl:template mode="mode-iso19139" priority="2005" match="gmd:metadataStandardName">
+  <xsl:template mode="mode-iso19139" priority="2005" match="gmd:metadataStandardName|gmd:metadataStandardVersion">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
