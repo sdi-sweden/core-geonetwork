@@ -886,6 +886,15 @@
     </xsl:choose>
   </xsl:template>
 
+
+  <!-- Fix metadata contact role to pointOfContact -->
+  <xsl:template match="gmd:contact/gmd:CI_ResponsibleParty/gmd:role" priority="10">
+    <gmd:role>
+      <gmd:CI_RoleCode codeListValue="pointOfContact"
+                       codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"/>
+    </gmd:role>
+  </xsl:template>
+
 <!-- ================================================================= -->
 	<!-- copy everything else as is -->
 

@@ -583,6 +583,7 @@
       ]
     </xsl:variable>
 
+    <!-- For gmd:contact role is fixed to pointOfContact -->
     <xsl:variable name="contactModel">
       [
       <xsl:for-each select="../*[name() = $elementName]">
@@ -597,7 +598,7 @@
         'organisation': '<xsl:value-of select="normalize-space(gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString)" />',
         'phone': '<xsl:value-of select="normalize-space(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString)" />',
         'email': '<xsl:value-of select="normalize-space(gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString)" />',
-        'role': '<xsl:value-of select="normalize-space(gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue)" />'
+        'role': '<xsl:value-of select="if ($elementName = 'gmd:contact') then 'pointOfContact' else normalize-space(gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue)" />'
         }
         <xsl:if test="position() != last()">,</xsl:if>
       </xsl:for-each>
@@ -674,15 +675,31 @@
                                   $codelists,
                                   .)"/>
 
+            <xsl:choose>
+              <xsl:when test="name() = 'gmd:contact'">
+                <!-- Readonly role for gmd:contact -->
+                <select class="" data-ng-model="editRow.role" data-ng-disabled="true">
+                  <xsl:for-each select="$codelist/entry">
+                    <xsl:sort select="label"/>
+                    <option value="{code}" title="{normalize-space(description)}">
+                      <xsl:if test="code = 'pointOfContact'"><xsl:attribute name="selected">selected</xsl:attribute></xsl:if>
+                      <xsl:value-of select="label"/>
+                    </option>
+                  </xsl:for-each>
+                </select>
+              </xsl:when>
+              <xsl:otherwise>
+                <select class="" data-ng-model="editRow.role" data-ng-disabled="mdType == 'sds' &amp;&amp; name == 'distributorContact'">
+                  <xsl:for-each select="$codelist/entry">
+                    <xsl:sort select="label"/>
+                    <option value="{code}" title="{normalize-space(description)}">
+                      <xsl:value-of select="label"/>
+                    </option>
+                  </xsl:for-each>
+                </select>
+              </xsl:otherwise>
+            </xsl:choose>
 
-            <select class="" data-ng-model="editRow.role" data-ng-disabled="mdType == 'sds' &amp;&amp; name == 'distributorContact'">
-              <xsl:for-each select="$codelist/entry">
-                <xsl:sort select="label"/>
-                <option value="{code}" title="{normalize-space(description)}">
-                  <xsl:value-of select="label"/>
-                </option>
-              </xsl:for-each>
-            </select>
           </div>
 
 
