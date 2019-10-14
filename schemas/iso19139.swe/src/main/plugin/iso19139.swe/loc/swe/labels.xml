@@ -1498,6 +1498,15 @@ Detta undviker vi att ange, ange istället organisation.</description>
             <code>fiu</code>
             <label>Tornedalsfinska(fiu)</label>
           </entry>
+          <entry>
+            <code>yid</code>
+            <label>Yiddish(yid)</label>
+          </entry>
+          <entry>
+            <code>rom</code>
+            <label>Romani chib(rom)</label>
+          </entry>
+
         </codelist>
     </element>
 	<element id="390.0" name="gmd:language">
