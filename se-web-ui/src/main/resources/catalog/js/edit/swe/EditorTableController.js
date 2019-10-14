@@ -186,6 +186,10 @@
           $scope.editRow['role'] = 'custodian';
         }
 
+        if ($scope.name === 'contact') {
+          $scope.editRow['role'] = 'pointOfContact';
+        }
+
         $($scope.dialog).modal('show');
       };
 
@@ -270,7 +274,9 @@
 	    var role = '';
       //$scope.mode = 'add'; // set the mode to 'add' always.
       // Role is always empty (except in SDS distributor, keep the value)
-      if(($scope.mdType === 'sds') && ($scope.name === 'distributorContact')) {
+      if (($scope.mdType === 'sds') && ($scope.name === 'distributorContact')) {
+        role = $scope.editRow.role;
+      } else if ($scope.name === 'contact') {
         role = $scope.editRow.role;
       }
 
@@ -281,7 +287,7 @@
       $scope.editRow.organisation = selectedOrganisation.split('~')[0]; // 0 always org
       $scope.editRow.email = selectedOrganisation.split('~')[1]; // 1 always email
       $scope.editRow.phone = selectedOrganisation.split('~')[2]; // 2 always phone
-      $scope.editRow.role = role; // Role is always empty (except in SDS distributor, keep the value)
+      $scope.editRow.role = role; // Role is always empty (except in SDS distributor, keep the value) and metadata contact (fixed)
 
 
 		//$scope.saveRow(); // Put the selected record from drop down into table-grid
