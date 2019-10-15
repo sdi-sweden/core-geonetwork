@@ -136,9 +136,11 @@
             Transforming RS_Identifier in MD_Identifier
         </xsl:message>
         <xsl:variable name="rsIdentifierContent" select="./gmd:RS_Identifier/*"/>
-        <gmd:MD_Identifier>
-            <xsl:copy-of select="$rsIdentifierContent"/>
-        </gmd:MD_Identifier>
+        <gmd:identifier>
+            <gmd:MD_Identifier>
+                <xsl:copy-of select="$rsIdentifierContent"/>
+            </gmd:MD_Identifier>
+        </gmd:identifier>
     </xsl:template>
     
     
