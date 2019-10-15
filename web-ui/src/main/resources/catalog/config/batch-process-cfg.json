@@ -236,7 +236,7 @@
           "iso19139\\..*\\.voice",
           "iso19139\\..*\\.facsimile"
         ]
-      }, 
+      },
       "dublin-core": {
         "elements": [
           "dublin-core.simpledc.creator",
@@ -244,5 +244,10 @@
         ]
       }
     }
+  },{
+    "key": "add-gmd-identifier-rs-identifier",
+    "type": "fixed-params",
+    "params": [
+    ]
   }]
 }
