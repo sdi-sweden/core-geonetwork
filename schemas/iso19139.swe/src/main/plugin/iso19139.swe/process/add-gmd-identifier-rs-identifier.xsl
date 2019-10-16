@@ -56,7 +56,7 @@
     <xsl:template match="geonet:*" priority="2"/>
     
     
-    <xsl:template match="gmd:identificationInfo/*/gmd:citation/
+    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/
         gmd:CI_Citation" priority="2">
         
         <xsl:copy>
@@ -70,21 +70,17 @@
             <xsl:variable name="updatedIdentifier">
                 <xsl:choose>
                     <xsl:when test="not(gmd:identifier/gmd:RS_Identifier)">
-                        <xsl:message>
-                            2) metadata doesn't have gmd:identifier with gmd:RS_Identifier
-                        </xsl:message>
+                        <!-- 2) metadata doesn't have gmd:identifier with gmd:RS_Identifier-->
+                        
                         <xsl:choose>
                             <xsl:when test="count(gmd:identifier/gmd:MD_Identifier/gmd:code[normalize-space(gco:CharacterString)!='{{code}}' and normalize-space(gco:CharacterString)!='']) != 0">
-                                <xsl:message>
-                                    2.1) If any gmd:identifier with gmd:MD_Identifier with value in gmd:code/gco:CharacterString and it's not the placeholder {{code}} --> Keep it and remove the rest of gmd:identifier
-                                </xsl:message>
+                                <!-- 2.1) If any gmd:identifier with gmd:MD_Identifier with value in gmd:code/gco:CharacterString and it's not the placeholder {{code}} -\-> Keep it and remove the rest of gmd:identifier-->
+                                
                                 <xsl:variable name="identifierNotPlaceholder" select="gmd:identifier[not(gmd:MD_Identifier/gmd:code[normalize-space(gco:CharacterString)='{{code}}' or normalize-space(gco:CharacterString)=''])]"/>
                                 <xsl:copy-of select="$identifierNotPlaceholder"/> 
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:message>
-                                    2.2) Otherwise create one using &lt;xsl:value-of select="uuid:randomUUID()"/&gt; and remove the rest of gmd:identifier with gmd:MD_Identifier
-                                </xsl:message>
+                                    <!-- 2.2) Otherwise create one using &lt;xsl:value-of select="uuid:randomUUID()"/&gt; and remove the rest of gmd:identifier with gmd:MD_Identifier-->
                                 <xsl:variable name="newUuid" select="uuid:randomUUID()"/>
                                 <gmd:identifier>
                                     <gmd:MD_Identifier>
@@ -100,16 +96,12 @@
                         </xsl:choose>
                     </xsl:when>
                     <xsl:when test="count(gmd:identifier[string(gmd:RS_Identifier/gmd:code/gco:CharacterString/text())]) > 0 and count(gmd:identifier[string(gmd:MD_Identifier/gmd:code/gco:CharacterString/text())]) > 0">
-                        <xsl:message>
-                            3) If metadata has gmd:identifier with gmd:RS_Identifier and also has other gmd:identifier with gmd:MD_Identifier don't do any processing
-                        </xsl:message>
+                        <!-- 3) If metadata has gmd:identifier with gmd:RS_Identifier and also has other gmd:identifier with gmd:MD_Identifier don't do any processing-->
                         <!-- just copy these gmd:identiers -->
                         <xsl:copy-of select="gmd:identifier"/>
                     </xsl:when>
                     <xsl:when test="count(gmd:identifier[string(gmd:RS_Identifier/gmd:code/gco:CharacterString/text())]) > 0 and count(gmd:identifier[string(gmd:MD_Identifier/gmd:code/gco:CharacterString/text())]) = 0">
-                        <xsl:message>
-                            4) If metadata has gmd:identifier with gmd:RS_Identifier and also has NO other gmd:identifier with gmd:MD_Identifier
-                        </xsl:message>
+                            <!-- 4) If metadata has gmd:identifier with gmd:RS_Identifier and also has NO other gmd:identifier with gmd:MD_Identifier -->
                         <xsl:apply-templates select="gmd:identifier" mode="transform_RS_Identifier_into_MD_Identifier" />
                     </xsl:when>
                 </xsl:choose>
