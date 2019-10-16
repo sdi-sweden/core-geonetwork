@@ -35,8 +35,8 @@
     xmlns:uuid="java:java.util.UUID" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exclude-result-prefixes="#all" 
     xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd 
-        http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd 
-        http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd">
+    http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd 
+    http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd">
     
     <xsl:import href="process-utility.xsl"/>
     
@@ -74,11 +74,11 @@
                             2) metadata doesn't have gmd:identifier with gmd:RS_Identifier
                         </xsl:message>
                         <xsl:choose>
-                            <xsl:when test="count(gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString[normalize-space(text())='{{code}}']) != 0">
+                            <xsl:when test="count(gmd:identifier/gmd:MD_Identifier/gmd:code[normalize-space(gco:CharacterString)!='{{code}}' and normalize-space(gco:CharacterString)!='']) != 0">
                                 <xsl:message>
                                     2.1) If any gmd:identifier with gmd:MD_Identifier with value in gmd:code/gco:CharacterString and it's not the placeholder {{code}} --> Keep it and remove the rest of gmd:identifier
                                 </xsl:message>
-                                <xsl:variable name="identifierNotPlaceholder" select="gmd:identifier[gmd:MD_Identifier/gmd:code/gco:CharacterString[normalize-space(text())!='{{code}}']]"/>
+                                <xsl:variable name="identifierNotPlaceholder" select="gmd:identifier[not(gmd:MD_Identifier/gmd:code[normalize-space(gco:CharacterString)='{{code}}' or normalize-space(gco:CharacterString)=''])]"/>
                                 <xsl:copy-of select="$identifierNotPlaceholder"/> 
                             </xsl:when>
                             <xsl:otherwise>
@@ -99,14 +99,14 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:when>
-                    <xsl:when test="count(gmd:identifier[string(gmd:RS_Identifier/gmd:code/text())]) > 0 and count(gmd:identifier[string(gmd:MD_Identifier/gmd:code/text())]) > 0">
+                    <xsl:when test="count(gmd:identifier[string(gmd:RS_Identifier/gmd:code/gco:CharacterString/text())]) > 0 and count(gmd:identifier[string(gmd:MD_Identifier/gmd:code/gco:CharacterString/text())]) > 0">
                         <xsl:message>
                             3) If metadata has gmd:identifier with gmd:RS_Identifier and also has other gmd:identifier with gmd:MD_Identifier don't do any processing
                         </xsl:message>
                         <!-- just copy these gmd:identiers -->
                         <xsl:copy-of select="gmd:identifier"/>
                     </xsl:when>
-                    <xsl:when test="count(gmd:identifier[string(gmd:RS_Identifier/gmd:code/text())]) > 0 and count(gmd:identifier[string(gmd:MD_Identifier/gmd:code/text())]) = 0">
+                    <xsl:when test="count(gmd:identifier[string(gmd:RS_Identifier/gmd:code/gco:CharacterString/text())]) > 0 and count(gmd:identifier[string(gmd:MD_Identifier/gmd:code/gco:CharacterString/text())]) = 0">
                         <xsl:message>
                             4) If metadata has gmd:identifier with gmd:RS_Identifier and also has NO other gmd:identifier with gmd:MD_Identifier
                         </xsl:message>
