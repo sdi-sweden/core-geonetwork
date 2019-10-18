@@ -653,7 +653,7 @@
     </xsl:if>
   </xsl:template>
 
-  <!-- Remove gmd:distributorTransferOptions in no online resources with valid values: url, name and protocol should be filled,
+  <!-- Remove gmd:distributorTransferOptions if no online resources with valid values: url, name and protocol should be filled,
        and only copy filled online resources -->
   <xsl:template match="gmd:distributorTransferOptions">
   	<xsl:variable name="onlineResources">
@@ -693,7 +693,7 @@
 
   </xsl:template>
 
-  <!-- Remove gmd:transferOptions in no online resources with valid values: url, name and protocol should be filled,
+  <!-- Remove gmd:transferOptions if no online resources with valid values: url, name and protocol should be filled,
        and only copy filled online resources -->
   <xsl:template match="gmd:transferOptions">
   	<xsl:variable name="onlineResources">
