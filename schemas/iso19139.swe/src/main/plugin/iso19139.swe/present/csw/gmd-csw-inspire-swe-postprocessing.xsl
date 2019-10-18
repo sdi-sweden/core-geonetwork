@@ -127,11 +127,6 @@
 	<!--  remove gmd:type node from gmd:MD_Keywords -->
 	<xsl:template match="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:type"/>
 
-	<!-- Remove "distributorFormat" from metadata if "version" node not present or version value emtpy -->
-	<xsl:template match="gmd:distributorFormat[
-							gmd:MD_Format/gmd:version[. = '']
-							or
-							normalize-space(gmd:MD_Format/gmd:version/gco:CharacterString)='']"/>
 
 	<!--  remove gmd:function from gmd:onLine if present -->
 	<xsl:template match="gmd:onLine/gmd:function"/>
@@ -392,19 +387,24 @@
 
 		<xsl:variable name="addformatsOptions">
 			<xsl:for-each select="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/*/gmd:distributorFormat">
-				<gmd:distributionFormat>
-					<xsl:copy-of select="gmd:MD_Format"/>
-				</gmd:distributionFormat>
+		        <xsl:variable name="nameValue" select="gmd:MD_Format/gmd:name/gco:CharacterString" />
+		        <xsl:variable name="versionValue" select="gmd:MD_Format/gmd:version/gco:CharacterString" />
+
+		        <xsl:if test="string(normalize-space($nameValue)) and string(normalize-space($versionValue))">
+              <gmd:distributionFormat>
+                <xsl:copy-of select="gmd:MD_Format"/>
+              </gmd:distributionFormat>
+		        </xsl:if>
 			</xsl:for-each>
 		</xsl:variable>
 
 		<xsl:copy>
 			<xsl:choose>
 				<xsl:when test="not(gmd:distributionFormat)"><xsl:copy-of select="$addformatsOptions"/></xsl:when>
-				<xsl:otherwise><xsl:copy-of select="gmd:distributionFormat"/></xsl:otherwise>
+				<xsl:otherwise><xsl:apply-templates select="gmd:distributionFormat"/></xsl:otherwise>
 			</xsl:choose>
 
-			<xsl:copy-of select="gmd:distributor"/>
+			<xsl:apply-templates select="gmd:distributor"/>
 
 			<xsl:choose>
 				<xsl:when test="not(gmd:transferOptions)"><xsl:copy-of select="$addtransferOptions"/></xsl:when>
@@ -591,6 +591,32 @@
   		(string(gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title) and gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title != '{{vertical_crs_datum}}')" />
 
     <xsl:if test="$validMinimumValue and $validMaximumValue and $validVerticalCRS">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+        <xsl:apply-templates select="*" />
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- Remove gmd:distributorFormat in no valid values -->
+  <xsl:template match="gmd:distributorFormat">
+    <xsl:variable name="nameValue" select="gmd:MD_Format/gmd:name/gco:CharacterString" />
+    <xsl:variable name="versionValue" select="gmd:MD_Format/gmd:version/gco:CharacterString" />
+
+    <xsl:if test="string(normalize-space($nameValue)) and string(normalize-space($versionValue))">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+        <xsl:apply-templates select="*" />
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- Remove gmd:distributionFormat in no valid values -->
+  <xsl:template match="gmd:distributionFormat">
+    <xsl:variable name="nameValue" select="gmd:MD_Format/gmd:name/gco:CharacterString" />
+    <xsl:variable name="versionValue" select="gmd:MD_Format/gmd:version/gco:CharacterString" />
+
+    <xsl:if test="string(normalize-space($nameValue)) and string(normalize-space($versionValue))">
       <xsl:copy>
         <xsl:copy-of select="@*" />
         <xsl:apply-templates select="*" />
