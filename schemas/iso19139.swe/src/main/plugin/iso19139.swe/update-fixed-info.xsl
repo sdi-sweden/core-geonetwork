@@ -577,14 +577,19 @@
 
   <!-- auto complete qa resurstyp based on md resurstyp -->
   <xsl:template match="gmd:DQ_Scope">
-     <xsl:copy>
-            <gmd:level>
-              <gmd:MD_ScopeCode codeListValue="{//gmd:hierarchyLevel[1]/gmd:MD_ScopeCode/@codeListValue}"
-                                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"/>
-            </gmd:level>
-     </xsl:copy>
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+      
+      <gmd:level>
+        <gmd:MD_ScopeCode codeListValue="{//gmd:hierarchyLevel[1]/gmd:MD_ScopeCode/@codeListValue}"
+          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"/>
+      </gmd:level>
+      
+      <xsl:apply-templates select="gmd:extent" />
+      <xsl:apply-templates select="gmd:levelDescription" />
+    </xsl:copy>
   </xsl:template>
-
+  
 	<xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification">
 		<xsl:copy>
 			<xsl:copy-of select="@*" />
