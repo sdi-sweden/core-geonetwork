@@ -1477,8 +1477,20 @@
           <field
                   name="spatialRepresentationType"
                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType"
-                  or="spatialRepresentationType"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/*" />
+                  or="spatialRepresentationType" />
+
+           <action type="add" name="spatialRepresentationType" or="spatialRepresentationType" 
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType) = 0"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+            <template>
+              <snippet>
+                <gmd:spatialRepresentationType>
+                    <gmd:MD_SpatialRepresentationTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelist.xml#MD_SpatialRepresentationTypeCode"
+                                                          codeListValue=""/>
+                </gmd:spatialRepresentationType>
+              </snippet>
+            </template>
+          </action>
 
 
           <section name="scales" tooltip="gmd:spatialResolution">
