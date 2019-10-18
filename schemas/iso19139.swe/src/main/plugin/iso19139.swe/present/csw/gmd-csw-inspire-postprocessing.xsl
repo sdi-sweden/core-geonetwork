@@ -583,7 +583,6 @@
 
   <!-- Remove gmd:verticalElement in no valid values -->
   <xsl:template match="gmd:verticalElement">
-  	<xsl:message>dsdas</xsl:message>
     <xsl:variable name="minimumValue" select="gmd:EX_VerticalExtent/gmd:minimumValue/gco:Real" />
     <xsl:variable name="maximumValue" select="gmd:EX_VerticalExtent/gmd:maximumValue/gco:Real" />
 
