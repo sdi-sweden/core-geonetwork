@@ -177,30 +177,6 @@
 							or
 							normalize-space(gmd:MD_Resolution/gmd:distance/gco:Distance)='']" />
 
-	<!-- remove whole vertical element if both min and max values are empty or not present -->
-	<xsl:template match="gmd:extent/gmd:EX_Extent/gmd:verticalElement">
-		<xsl:choose>
-			<xsl:when test="gmd:EX_VerticalExtent/gmd:minimumValue[. = '']
-							and
-							gmd:EX_VerticalExtent/gmd:maximumValue[. = '']"></xsl:when>
-			<xsl:when test="gmd:EX_VerticalExtent/gmd:minimumValue/gco:Real = ''
-							and
-							gmd:EX_VerticalExtent/gmd:maximumValue/gco:Real = ''"></xsl:when>
-			<xsl:otherwise>
-				<xsl:copy>
-				<xsl:apply-templates select="@*|node()"/>
-				</xsl:copy>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-	<xsl:template match="gmd:verticalElement[. = '']" />
-
-	<!-- If gmd:EX_VerticalExtent/gmd:minimumValue is empty, remove it -->
-	<xsl:template match="gmd:EX_VerticalExtent/gmd:minimumValue[. = '' or gco:Real = '']" />
-	<!-- If gmd:EX_VerticalExtent/gmd:maximumValue is empty, remove it -->
-	<xsl:template match="gmd:EX_VerticalExtent/gmd:maximumValue[. = '' or gco:Real = '']" />
-
-
 	<!-- ensure codespace always comes after code -->
 	<xsl:template match="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier">
 		<xsl:copy>
@@ -602,5 +578,24 @@
 
     <!-- Step 3) Copy gmd:resourceConstraints[gmd:MD_SecurityConstraints] -->
     <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_SecurityConstraints]" />
+  </xsl:template>
+
+  <!-- Remove gmd:verticalElement in no valid values -->
+  <xsl:template match="gmd:verticalElement">
+    <xsl:message>dsdas</xsl:message>
+    <xsl:variable name="minimumValue" select="gmd:EX_VerticalExtent/gmd:minimumValue/gco:Real" />
+    <xsl:variable name="maximumValue" select="gmd:EX_VerticalExtent/gmd:maximumValue/gco:Real" />
+
+    <xsl:variable name="validMinimumValue" select="$minimumValue castable as xs:double" />
+    <xsl:variable name="validMaximumValue" select="$maximumValue castable as xs:double" />
+    <xsl:variable name="validVerticalCRS" select="count(gmd:EX_VerticalExtent/gmd:verticalCRS/*) > 0 or
+  		(string(gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title) and gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title != '{{vertical_crs_datum}}')" />
+
+    <xsl:if test="$validMinimumValue and $validMaximumValue and $validVerticalCRS">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+        <xsl:apply-templates select="*" />
+      </xsl:copy>
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
