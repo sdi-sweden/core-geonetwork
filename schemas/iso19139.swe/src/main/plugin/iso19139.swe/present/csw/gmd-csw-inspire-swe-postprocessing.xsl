@@ -379,9 +379,38 @@
 	<xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution">
 	    <xsl:variable name="addtransferOptions">
 	    	<xsl:for-each select="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/*/gmd:distributorTransferOptions">
-	        <gmd:transferOptions>
-	          <xsl:copy-of select="gmd:MD_DigitalTransferOptions"/>
-	        </gmd:transferOptions>
+
+	        	<xsl:for-each select="gmd:MD_DigitalTransferOptions">
+              <!-- Copy only only resources with url, name and protocol -->
+	        		<xsl:variable name="onlineResources">
+                <xsl:for-each select="gmd:onLine">
+	        				<xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
+	        				<xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
+	        				<xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
+
+	        				<xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
+	        					string(normalize-space($nameValue))">
+	        					<xsl:copy-of select="." />
+	        				</xsl:if>
+	        			</xsl:for-each>
+	        		</xsl:variable>
+
+              <!-- Only add container if has  valid online resources -->
+	        		<xsl:if test="count($onlineResources/*) > 0">
+	              <gmd:transferOptions>
+	        				<xsl:copy>
+	        					<xsl:copy-of select="@*" />
+	        					<xsl:copy-of select="gmd:unitsOfDistribution" />
+	        					<xsl:copy-of select="gmd:transferSize" />
+
+	        					<xsl:copy-of select="$onlineResources" />
+
+	        					<xsl:copy-of select="gmd:unitsOfDistribution" />
+	        					<xsl:copy-of select="gmd:offLine" />
+	        				</xsl:copy>
+	              </gmd:transferOptions>
+	        		</xsl:if>
+	        	</xsl:for-each>
 	      </xsl:for-each>
 	    </xsl:variable>
 
@@ -408,7 +437,7 @@
 
 			<xsl:choose>
 				<xsl:when test="not(gmd:transferOptions)"><xsl:copy-of select="$addtransferOptions"/></xsl:when>
-				<xsl:otherwise><xsl:copy-of select="gmd:transferOptions"/></xsl:otherwise>
+				<xsl:otherwise><xsl:apply-templates select="gmd:transferOptions"/></xsl:otherwise>
 			</xsl:choose>
 
 		</xsl:copy>
@@ -622,5 +651,86 @@
         <xsl:apply-templates select="*" />
       </xsl:copy>
     </xsl:if>
+  </xsl:template>
+
+  <!-- Remove gmd:distributorTransferOptions in no online resources with valid values: url, name and protocol should be filled,
+       and only copy filled online resources -->
+  <xsl:template match="gmd:distributorTransferOptions">
+  	<xsl:variable name="onlineResources">
+	    <xsl:for-each select="gmd:MD_DigitalTransferOptions">
+	        <xsl:for-each select="gmd:onLine">
+	          <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
+	          <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
+	          <xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
+
+	          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
+		        					string(normalize-space($nameValue))">
+	            <xsl:copy-of select="." />
+	          </xsl:if>
+	        </xsl:for-each>
+	    </xsl:for-each>
+    </xsl:variable>
+
+    <!-- Only add container if has  valid online resources -->
+    <xsl:if test="count($onlineResources/*) > 0">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+
+        <xsl:for-each select="gmd:MD_DigitalTransferOptions">
+          <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="gmd:unitsOfDistribution" />
+            <xsl:copy-of select="gmd:transferSize" />
+
+            <xsl:copy-of select="$onlineResources" />
+
+            <xsl:copy-of select="gmd:unitsOfDistribution" />
+            <xsl:copy-of select="gmd:offLine" />
+          </xsl:copy>
+        </xsl:for-each>
+      </xsl:copy>
+    </xsl:if>
+
+  </xsl:template>
+
+  <!-- Remove gmd:transferOptions in no online resources with valid values: url, name and protocol should be filled,
+       and only copy filled online resources -->
+  <xsl:template match="gmd:transferOptions">
+  	<xsl:variable name="onlineResources">
+	    <xsl:for-each select="gmd:MD_DigitalTransferOptions">
+	        <xsl:for-each select="gmd:onLine">
+	          <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
+	          <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
+	          <xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
+
+	          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
+		        					string(normalize-space($nameValue))">
+	            <xsl:copy-of select="." />
+	          </xsl:if>
+	        </xsl:for-each>
+	    </xsl:for-each>
+    </xsl:variable>
+
+    <!-- Only add container if has  valid online resources -->
+    <xsl:if test="count($onlineResources/*) > 0">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+
+        <xsl:for-each select="gmd:MD_DigitalTransferOptions">
+          <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="gmd:unitsOfDistribution" />
+            <xsl:copy-of select="gmd:transferSize" />
+
+            <xsl:copy-of select="$onlineResources" />
+
+            <xsl:copy-of select="gmd:unitsOfDistribution" />
+            <xsl:copy-of select="gmd:offLine" />
+          </xsl:copy>
+        </xsl:for-each>
+
+      </xsl:copy>
+    </xsl:if>
+
   </xsl:template>
 </xsl:stylesheet>
