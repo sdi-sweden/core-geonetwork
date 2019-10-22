@@ -164,13 +164,13 @@
       select="//gmd:distributionInfo//gmd:distributorTransferOptions//gmd:onLine/gmd:CI_OnlineResource"
       group-by="gmd:linkage/gmd:URL">
       <dcat:distribution>
-        <dcat:Distribution rdf:about="{translate(gmd:linkage/gmd:URL,' ','')}/{$uuid}">
+        <dcat:Distribution rdf:about="{iso19139:processUrl(gmd:linkage/gmd:URL)}/{$uuid}">
         <!--
           "points to the location of a distribution. This can be a direct download link, a link
           to an HTML page containing a link to the actual data, Feed, Web Service etc.
           the semantic is determined by its domain (Distribution, Feed, WebService, Download)."
         -->
-        <dcat:accessURL  rdf:resource="{translate(gmd:linkage/gmd:URL,' ','')}">
+        <dcat:accessURL  rdf:resource="{iso19139:processUrl(gmd:linkage/gmd:URL)}">
 <!--          <xsl:value-of select="gmd:linkage/gmd:URL"/>-->
         </dcat:accessURL>
         <!-- xpath: gmd:linkage/gmd:URL -->
@@ -591,14 +591,14 @@
       select="../../gmd:distributionInfo//gmd:distributorTransferOptions//gmd:onLine/gmd:CI_OnlineResource"
       group-by="gmd:linkage/gmd:URL">
      <xsl:if test="starts-with(lower-case(gmd:linkage/gmd:URL),'http') ">
-      <dcat:distribution >
-        <dcat:Distribution rdf:about="{translate(gmd:linkage/gmd:URL,' ','')}/{$uuid}">
+      <dcat:distribution>
+        <dcat:Distribution rdf:about="{iso19139:processUrl(gmd:linkage/gmd:URL)}/{$uuid}">
           <!--../../../../../../../..
           "points to the location of a distribution. This can be a direct download link, a link
           to an HTML page containing a link to the actual data, Feed, Web Service etc.
           the semantic is determined by its domain (Distribution, Feed, WebService, Download)."
         -->
-          <dcat:accessURL  rdf:resource="{translate(gmd:linkage/gmd:URL,' ','')}"/>
+          <dcat:accessURL  rdf:resource="{iso19139:processUrl(gmd:linkage/gmd:URL)}"/>
 
 
 
