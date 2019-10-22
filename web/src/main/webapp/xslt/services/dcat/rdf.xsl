@@ -75,8 +75,9 @@
   <!-- TODO: should use Java language code mapper -->
   <xsl:variable name="iso2letterLanguageCode" select="substring(/root/gui/language, 1, 2)"/>
 
-
-  <xsl:variable name="inspireEnabled" select="$env/system/inspire/enable = 'true'"/>
+  <!-- Force to use tpl-rdf-default, even if INSPIRE setting is enabled to use custom Swedish DCAT-AP instead of JRC ones -->
+  <!--<xsl:variable name="inspireEnabled" select="$env/system/inspire/enable = 'true'"/>-->
+  <xsl:variable name="inspireEnabled" select="false()"/>
 
   <xsl:template match="/">
 
@@ -153,7 +154,7 @@
 			</dct:publisher>
 
       <!-- The knowledge organization system (KOS) used to classify catalog's datasets.
-      
+
       <xsl:for-each select="/root/gui/thesaurus/thesauri/thesaurus">
         <dcat:themes rdf:resource="{$url}/thesaurus/{key}"/>
       </xsl:for-each>

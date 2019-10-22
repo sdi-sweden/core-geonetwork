@@ -216,7 +216,7 @@
           <dcat:size></dcat:size>
         -->
 
-        <xsl:if test="gmd:protocol/gco:CharacterStringg!=''">
+        <xsl:if test="gmd:protocol/gco:CharacterString!=''">
           <dct:format>
             <!--
               "the file format of the distribution."

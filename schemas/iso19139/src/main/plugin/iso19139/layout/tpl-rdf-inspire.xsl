@@ -310,7 +310,8 @@
     -->
 
   <xsl:param name="ResourceUri">
-      <xsl:variable name="rURI" select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/*/gmd:code/gco:CharacterString"/>
+      <!-- Select 1st identifier with a code value -->
+      <xsl:variable name="rURI" select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier[string(*/gmd:code/gco:CharacterString)][1]/*/gmd:code/gco:CharacterString"/>
     <xsl:if test="$rURI != '' and ( starts-with($rURI, 'http://') or starts-with($rURI, 'https://') )">
       <xsl:value-of select="$rURI"/>
     </xsl:if>
@@ -1232,7 +1233,9 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:param>
+    <xsl:if test="string($id)">
     <dct:identifier rdf:datatype="{$idDatatypeURI}"><xsl:value-of select="$id"/></dct:identifier>
+    </xsl:if>
   </xsl:template>
 
   <!-- Responsible Organisation -->
