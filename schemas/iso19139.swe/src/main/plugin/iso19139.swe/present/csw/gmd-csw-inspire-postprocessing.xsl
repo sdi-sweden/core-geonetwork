@@ -381,15 +381,13 @@
 	    	<xsl:for-each select="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/*/gmd:distributorTransferOptions">
 
 	        	<xsl:for-each select="gmd:MD_DigitalTransferOptions">
-              <!-- Copy only only resources with url, name and protocol -->
+              <!-- Copy only only resources with url and protocol -->
 	        		<xsl:variable name="onlineResources">
 	        			<xsl:for-each select="gmd:onLine">
 	        				<xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
 	        				<xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
-	        				<xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
 
-	        				<xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
-	        					string(normalize-space($nameValue))">
+	        				<xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
 	        					<xsl:copy-of select="." />
 	        				</xsl:if>
 	        			</xsl:for-each>
@@ -654,7 +652,7 @@
     </xsl:if>
   </xsl:template>
 
-  <!-- Remove gmd:distributorTransferOptions if no online resources with valid values: url, name and protocol should be filled,
+  <!-- Remove gmd:distributorTransferOptions if no online resources with valid values: url  and protocol should be filled,
        and only copy filled online resources -->
   <xsl:template match="gmd:distributorTransferOptions">
   	<xsl:variable name="onlineResources">
@@ -662,10 +660,8 @@
 	        <xsl:for-each select="gmd:onLine">
 	          <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
 	          <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
-	          <xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
 
-	          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
-		        					string(normalize-space($nameValue))">
+	          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
 	            <xsl:copy-of select="." />
 	          </xsl:if>
 	        </xsl:for-each>
@@ -694,7 +690,7 @@
 
   </xsl:template>
 
-  <!-- Remove gmd:transferOptions if no online resources with valid values: url, name and protocol should be filled,
+  <!-- Remove gmd:transferOptions if no online resources with valid values: url and protocol should be filled,
        and only copy filled online resources -->
   <xsl:template match="gmd:transferOptions">
   	<xsl:variable name="onlineResources">
@@ -702,10 +698,8 @@
 	        <xsl:for-each select="gmd:onLine">
 	          <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
 	          <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
-	          <xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
 
-	          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
-		        					string(normalize-space($nameValue))">
+	          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
 	            <xsl:copy-of select="." />
 	          </xsl:if>
 	        </xsl:for-each>
@@ -733,5 +727,24 @@
       </xsl:copy>
     </xsl:if>
 
+  </xsl:template>
+
+
+  <!-- Remove gmd:pointOfContact details if ALL (organisation name, email, phone and role) are empty -->
+  <xsl:template match="gmd:pointOfContact">
+    <xsl:variable name="organisationNameValue" select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString" />
+    <xsl:variable name="electronicMailAddressValue" select="gmd:CI_ResponsibleParty/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString" />
+    <xsl:variable name="phoneValue" select="gmd:CI_ResponsibleParty/gmd:contactInfo/*/gmd:phone/*/gmd:electronicMailAddress/gco:CharacterString" />
+    <xsl:variable name="roleValue" select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue" />
+
+    <xsl:if test="string(normalize-space($organisationNameValue)) or
+                  string(normalize-space($phoneValue)) or
+                  string(normalize-space($electronicMailAddressValue)) or
+                  string(normalize-space($roleValue))">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+        <xsl:apply-templates select="*" />
+      </xsl:copy>
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
