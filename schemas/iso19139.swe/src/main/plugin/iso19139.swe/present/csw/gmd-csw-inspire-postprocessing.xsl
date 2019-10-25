@@ -747,4 +747,33 @@
       </xsl:copy>
     </xsl:if>
   </xsl:template>
+
+	<xsl:template match="gmd:resourceMaintenance">
+		<xsl:choose>
+			<!-- Remove gmd:resourceMaintenance if placeholder of empty -->
+			<xsl:when test="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode[not(@codeListValue) or @codeListValue='' or @codeListValue='{{maintenance_frequency}}']">
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:copy>
+					<xsl:apply-templates select="@*|node()" mode="resourceMaintenance"/>
+				</xsl:copy>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	<xsl:template match="gmd:maintenanceNote" mode="resourceMaintenance">
+		<xsl:choose>
+			<xsl:when test="string-length(normalize-space(gco:CharacterString))=0
+				or normalize-space(gco:CharacterString)='{{maintenance_note}}'">
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:copy>
+					<xsl:apply-templates select="@*|node()"/>
+				</xsl:copy></xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	<xsl:template match="@*|node()" mode="resourceMaintenance">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" mode="resourceMaintenance"/>
+		</xsl:copy>
+	</xsl:template>
 </xsl:stylesheet>

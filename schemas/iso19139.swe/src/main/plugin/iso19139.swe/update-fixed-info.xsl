@@ -900,6 +900,24 @@
     </gmd:role>
   </xsl:template>
 
+
+  <!-- if a gmd:ResourceMaintenance doesn't contain info (no codelist for MD_MaintenanceFrequencyCode and empty gmd:maintenanceNote, remove it
+	-->
+  <xsl:template match="gmd:resourceMaintenance">
+    <xsl:choose>
+      <!-- Remove gmd:resourceMaintenance if empty -->
+      <xsl:when test="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode[@codeListValue='' or not(codeListValue)]
+        and string-length(normalize-space(gmd:MD_MaintenanceInformation/gmd:maintenanceNote/gco:CharacterString))=0">
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy>
+          <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
 <!-- ================================================================= -->
 	<!-- copy everything else as is -->
 
