@@ -255,7 +255,22 @@
         </gmd:pointOfContact>
       </xsl:if>
 
+      <!-- Add a resource maintenance element if there isn't any -->
       <xsl:apply-templates select="gmd:resourceMaintenance" />
+      <xsl:if test="not(gmd:resourceMaintenance)">
+        <gmd:resourceMaintenance>
+          <gmd:MD_MaintenanceInformation>
+            <gmd:maintenanceAndUpdateFrequency>
+              <gmd:MD_MaintenanceFrequencyCode
+                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_MaintenanceFrequencyCode"
+                codeListValue=""></gmd:MD_MaintenanceFrequencyCode>
+            </gmd:maintenanceAndUpdateFrequency>
+          </gmd:MD_MaintenanceInformation>
+        </gmd:resourceMaintenance>
+        <gmd:maintenanceNote>
+            <gco:CharacterString></gco:CharacterString>
+        </gmd:maintenanceNote>
+      </xsl:if>
 
       <!-- Process graphic overview -->
       <xsl:for-each select="gmd:graphicOverview">
@@ -1016,7 +1031,23 @@
       <xsl:apply-templates select="gmd:credit" />
       <xsl:apply-templates select="gmd:status" />
       <xsl:apply-templates select="gmd:pointOfContact" />
+
+      <!-- Add a resource maintenance element if there isn't any -->
       <xsl:apply-templates select="gmd:resourceMaintenance" />
+      <xsl:if test="not(gmd:resourceMaintenance)">
+        <gmd:resourceMaintenance>
+          <gmd:MD_MaintenanceInformation>
+            <gmd:maintenanceAndUpdateFrequency>
+              <gmd:MD_MaintenanceFrequencyCode
+                codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_MaintenanceFrequencyCode"
+                codeListValue=""></gmd:MD_MaintenanceFrequencyCode>
+            </gmd:maintenanceAndUpdateFrequency>
+          </gmd:MD_MaintenanceInformation>
+        </gmd:resourceMaintenance>
+        <gmd:maintenanceNote>
+          <gco:CharacterString></gco:CharacterString>
+        </gmd:maintenanceNote>
+      </xsl:if>
 
       <!-- Process graphic overview -->
       <xsl:for-each select="gmd:graphicOverview">
