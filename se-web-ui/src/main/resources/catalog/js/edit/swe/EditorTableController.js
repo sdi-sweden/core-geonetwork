@@ -53,6 +53,8 @@
         console.log("mdType:" + mdType);
         $scope.mdType = mdType;
 
+
+
 		//$scope.organisationNames = null;
 		//if(name === 'distributorContact' || name === 'contact' || name === 'pointOfContact') {
 		if(name === 'pointOfContact' || name === 'contact' || name === 'distributorContact') {
@@ -145,6 +147,18 @@
 			});
 
 		}
+      };
+
+
+      $scope.allowAddElement = function() {
+        return ($scope.name !== 'distributorContact') ||
+          (($scope.name === 'distributorContact') && ($scope.rows.length == 0));
+
+      };
+
+      $scope.allowRemoveElement = function () {
+        return  ($scope.name !== 'distributorContact') ||
+          (($scope.name === 'distributorContact') && ($scope.rows.length > 1));
       };
 
       /**

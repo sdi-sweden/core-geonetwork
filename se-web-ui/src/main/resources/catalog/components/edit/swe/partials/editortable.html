@@ -4,10 +4,10 @@
 
   <div class="geo-data-toolbar-cont">
     <div class="toolbar-right-list tool-bar-list">
-      <div class="link-cont ng-scope">
+      <div class="link-cont ng-scope" data-ng-if="allowAddElement()">
         <a class="-label-link" href="" data-ng-click="addRow()" ><span class="fa fa-plus"></span>Lägg till</a>
       </div>
-      <div class="link-cont ng-scope">
+      <div class="link-cont ng-scope" data-ng-if="allowRemoveElement()">
         <a class="-label-link" href="" data-ng-class="{'not-active':selectedRowIndex == null}" data-ng-click="removeRow()" ><span class="icon-trash"></span>Ta bort</a>
       </div>
       <div class="link-cont ng-scope">
