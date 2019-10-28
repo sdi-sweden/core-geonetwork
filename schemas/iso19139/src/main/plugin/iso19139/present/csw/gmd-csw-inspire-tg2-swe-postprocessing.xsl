@@ -28,7 +28,6 @@
   </xsl:template>
 
   <xsl:template match="gmlOld:*">
-    <xsl:message>name: <xsl:value-of select="name()"/></xsl:message>
     <xsl:element name="{name()}" namespace="http://www.opengis.net/gml/3.2">
       <xsl:copy-of select="namespace::*[not(name() = 'gml')]" />
 
@@ -372,19 +371,14 @@
 
       <!-- Step 1) Copy gmd:resourceConstraints as they are defined when no gmd:MD_LegalConstraints/gmd:otherConstraints -->
       <xsl:when test="count(gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:otherConstraints]) = 0">
-        <xsl:message>Step 1</xsl:message>
         <xsl:apply-templates select="gmd:resourceConstraints" />
       </xsl:when>
 
       <!-- Step 2) Otherwise process the gmd:resourceConstraints -->
       <xsl:otherwise>
-        <xsl:message>Step 2</xsl:message>
-
         <xsl:choose>
           <!-- Step 2.1) Exists gmd:resourceConstraints[gmd:MD_Constraints] -->
           <xsl:when test="gmd:resourceConstraints[gmd:MD_Constraints]">
-            <xsl:message>Step 2.1</xsl:message>
-
             <!-- Copy gmd:MD_LegalConstraints/gmd:otherConstraints to first gmd:MD_Constraints/gmd:useLimitation -->
             <xsl:for-each select="gmd:resourceConstraints[gmd:MD_Constraints]">
               <xsl:choose>
@@ -438,8 +432,6 @@
 
           <!-- Step 2.2) Doesn't exist gmd:resourceConstraints[gmd:MD_Constraints] -> Create it -->
           <xsl:otherwise>
-            <xsl:message>Step 2.2</xsl:message>
-
             <gmd:resourceConstraints>
               <gmd:MD_Constraints>
                 <gmd:useLimitation>
@@ -481,9 +473,7 @@
         <xsl:for-each select="gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString]">
           <xsl:variable name="hasOtherConstraintsRelatedToInspire"
                         select="count(gmd:MD_LegalConstraints/gmd:otherConstraints[gco:CharacterString = $restrictions/restrictions/restriction/@value ]) > 0" />
-
-          <xsl:message>Step 5) <xsl:value-of select="$hasOtherConstraintsRelatedToInspire" /></xsl:message>
-          <xsl:choose>
+           <xsl:choose>
             <xsl:when test="$hasOtherConstraintsRelatedToInspire">
               <!-- If has any gmd:otherConstraints related to INSPIRE copy the gmd:resourceConstraints block and change
                    gmd:useConstraints to an Anchor -->
@@ -665,21 +655,23 @@
   </gml:TimePeriod>-->
 
   <!-- add attribute @gml:id to gml:timeperiod if missing -->
-  <xsl:template match="gml:TimePeriod[not(@gml:id) or normalize-space(@gml:id)='' or normalize-space(@gml:id)='Temporal']">
-    <gml:TimePeriod>
+  <xsl:template match="gmlOld:TimePeriod[not(@gmlOld:id) or normalize-space(@gmlOld:id)='' or normalize-space(@gmlOld:id)='Temporal']">
+    <xsl:element name="gml:TimePeriod" namespace="http://www.opengis.net/gml/3.2">
       <xsl:choose>
-        <xsl:when test="normalize-space(@gml:id)='' or normalize-space(@gml:id)='Temporal'">
+        <xsl:when test="normalize-space(@gmlOld:id)='' or normalize-space(@gmlOld:id)='Temporal'">
           <xsl:attribute name="gml:id">
-            <xsl:value-of select="generate-id(gml:TimePeriod)"/>
+            <xsl:value-of select="generate-id(gmlOld:TimePeriod)"/>
           </xsl:attribute>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:copy-of select="@gml:id"/>
+          <xsl:attribute name="gml:id">
+            <xsl:value-of select="@gmlOld:id"/>
+          </xsl:attribute>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:copy-of select="gml:beginPosition"/>
-      <xsl:copy-of select="gml:endPosition"/>
-    </gml:TimePeriod>
+      <xsl:apply-templates select="gmlOld:beginPosition"/>
+      <xsl:apply-templates select="gmlOld:endPosition"/>
+    </xsl:element>
   </xsl:template>
 
   <!-- remove online at this place -->
@@ -909,18 +901,24 @@
   <!-- 3. Remove non-digits from temporal dates -->
   <!-- Set indeterminatePosition to now on end date if begindate as value an enddate is empty -->
   <!-- Verify that GML ID has proper value -->
-  <xsl:template match="gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod">
-    <xsl:copy copy-namespaces="no">
-      <xsl:copy-of select="@*" />
+  <xsl:template match="gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gmlOld:TimePeriod">
 
-      <xsl:if test="not(string(@gml:id))">
-        <xsl:attribute name="gml:id">
-          <xsl:value-of select="generate-id(.)"/>
-        </xsl:attribute>
-      </xsl:if>
+    <xsl:element name="gml:TimePeriod" namespace="http://www.opengis.net/gml/3.2">
+      <xsl:choose>
+        <xsl:when test="normalize-space(@gmlOld:id)='' or normalize-space(@gmlOld:id)='Temporal'">
+          <xsl:attribute name="gml:id">
+            <xsl:value-of select="generate-id(gmlOld:TimePeriod)"/>
+          </xsl:attribute>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="gml:id">
+            <xsl:value-of select="@gmlOld:id"/>
+          </xsl:attribute>
+        </xsl:otherwise>
+      </xsl:choose>
 
-      <xsl:variable name="newBeginPosition" select="translate(gml:beginPosition/text(), translate(.,'0123456789-',''), '')"/>
-      <xsl:variable name="newEndPosition" select="translate(gml:endPosition/text(), translate(.,'0123456789-',''), '')"/>
+      <xsl:variable name="newBeginPosition" select="translate(gmlOld:beginPosition/text(), translate(.,'0123456789-',''), '')"/>
+      <xsl:variable name="newEndPosition" select="translate(gmlOld:endPosition/text(), translate(.,'0123456789-',''), '')"/>
 
       <gml:beginPosition>
 
@@ -933,7 +931,8 @@
 
         <xsl:value-of select="$newEndPosition"/>
       </gml:endPosition>
-    </xsl:copy>
+
+    </xsl:element>
   </xsl:template>
 
   <!-- 4. For each gco:Date element, remove non-digits from date value -->
@@ -945,10 +944,10 @@
   </xsl:template>
 
   <!-- 5. Remove temporal extent if empty beginPosition and endPosition -->
-  <xsl:template match="gmd:temporalElement[gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition]">
+  <xsl:template match="gmd:temporalElement[gmd:EX_TemporalExtent/gmd:extent/gmlOld:TimePeriod/gmlOld:beginPosition]">
     <xsl:choose>
-      <xsl:when test="not(string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition))  and
-                      not(string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition))">
+      <xsl:when test="not(string(gmd:EX_TemporalExtent/gmd:extent/gmlOld:TimePeriod/gmlOld:beginPosition))  and
+                      not(string(gmd:EX_TemporalExtent/gmd:extent/gmlOld:TimePeriod/gmlOld:endPosition))">
         <!-- Remove element if empty values in beginPosition and endPosition -->
       </xsl:when>
 
@@ -962,7 +961,7 @@
   </xsl:template>
 
   <!-- 6. Verify that GML ID has a proper value -->
-  <xsl:template match="@gml:id">
+  <xsl:template match="@gmlOld:id">
     <xsl:choose>
       <xsl:when test="normalize-space(.)=''">
         <xsl:attribute name="gml:id">
@@ -1150,5 +1149,51 @@
         <xsl:apply-templates select="*" />
       </xsl:copy>
     </xsl:if>
+  </xsl:template>
+
+
+  <!-- Some metadata has empty distributor contact (cardinality is 1:1). Remove empty element -->
+  <xsl:template match="gmd:distributor/gmd:MD_Distributor">
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of select="@*" />
+
+      <xsl:choose>
+        <xsl:when test="count(gmd:distributorContact) > 1">
+          <xsl:variable name="distributorContacts">
+            <xsl:for-each select="gmd:distributorContact">
+              <xsl:variable name="organisationNameValue" select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString" />
+              <xsl:variable name="electronicMailAddressValue" select="gmd:CI_ResponsibleParty/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString" />
+              <xsl:variable name="phoneValue" select="gmd:CI_ResponsibleParty/gmd:contactInfo/*/gmd:phone/*/gmd:electronicMailAddress/gco:CharacterString" />
+              <xsl:variable name="roleValue" select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue" />
+
+              <xsl:if test="string(normalize-space($organisationNameValue)) or
+                  string(normalize-space($phoneValue)) or
+                  string(normalize-space($electronicMailAddressValue)) or
+                  string(normalize-space($roleValue))">
+                <xsl:copy-of select="." />
+              </xsl:if>
+            </xsl:for-each>
+          </xsl:variable>
+
+          <xsl:choose>
+            <xsl:when test="count($distributorContacts/*) > 0">
+              <!-- Keep first with filled information -->
+              <xsl:copy-of select="$distributorContacts[1]" copy-namespaces="no"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="gmd:distributorContact" />
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="gmd:distributorContact" />
+        </xsl:otherwise>
+      </xsl:choose>
+
+      <xsl:apply-templates select="gmd:distributionOrderProcess" />
+      <xsl:apply-templates select="gmd:distributorFormat" />
+      <xsl:apply-templates select="gmd:distributorTransferOptions" />
+
+    </xsl:copy>
   </xsl:template>
 </xsl:stylesheet>
