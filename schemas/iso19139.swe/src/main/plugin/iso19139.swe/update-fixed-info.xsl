@@ -579,17 +579,17 @@
   <xsl:template match="gmd:DQ_Scope">
     <xsl:copy>
       <xsl:copy-of select="@*" />
-      
+
       <gmd:level>
         <gmd:MD_ScopeCode codeListValue="{//gmd:hierarchyLevel[1]/gmd:MD_ScopeCode/@codeListValue}"
           codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"/>
       </gmd:level>
-      
+
       <xsl:apply-templates select="gmd:extent" />
       <xsl:apply-templates select="gmd:levelDescription" />
     </xsl:copy>
   </xsl:template>
-  
+
 	<xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification">
 		<xsl:copy>
 			<xsl:copy-of select="@*" />
@@ -906,7 +906,7 @@
   <xsl:template match="gmd:resourceMaintenance">
     <xsl:choose>
       <!-- Remove gmd:resourceMaintenance if empty -->
-      <xsl:when test="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode[@codeListValue='' or not(codeListValue)]
+      <xsl:when test="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode[@codeListValue='' or not(@codeListValue)]
         and string-length(normalize-space(gmd:MD_MaintenanceInformation/gmd:maintenanceNote/gco:CharacterString))=0">
       </xsl:when>
       <xsl:otherwise>
