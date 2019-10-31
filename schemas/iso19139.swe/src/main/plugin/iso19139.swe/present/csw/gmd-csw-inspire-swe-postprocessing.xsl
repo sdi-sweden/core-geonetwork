@@ -775,4 +775,49 @@
       <xsl:apply-templates select="@*|node()" mode="resourceMaintenance"/>
     </xsl:copy>
   </xsl:template>
+
+  <!-- Some metadata has empty distributor contact (cardinality is 1:1). Remove empty element -->
+  <xsl:template match="gmd:distributor/gmd:MD_Distributor">
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of select="@*" />
+
+      <xsl:choose>
+        <xsl:when test="count(gmd:distributorContact) > 1">
+          <xsl:variable name="distributorContacts">
+            <xsl:for-each select="gmd:distributorContact">
+              <xsl:variable name="organisationNameValue" select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString" />
+              <xsl:variable name="electronicMailAddressValue" select="gmd:CI_ResponsibleParty/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString" />
+              <xsl:variable name="phoneValue" select="gmd:CI_ResponsibleParty/gmd:contactInfo/*/gmd:phone/*/gmd:electronicMailAddress/gco:CharacterString" />
+              <xsl:variable name="roleValue" select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue" />
+
+              <xsl:if test="string(normalize-space($organisationNameValue)) or
+                  string(normalize-space($phoneValue)) or
+                  string(normalize-space($electronicMailAddressValue)) or
+                  string(normalize-space($roleValue))">
+                <xsl:copy-of select="." />
+              </xsl:if>
+            </xsl:for-each>
+          </xsl:variable>
+
+          <xsl:choose>
+            <xsl:when test="count($distributorContacts/*) > 0">
+              <!-- Keep first with filled information -->
+              <xsl:copy-of select="$distributorContacts[1]" copy-namespaces="no"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="gmd:distributorContact" />
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="gmd:distributorContact" />
+        </xsl:otherwise>
+      </xsl:choose>
+
+      <xsl:apply-templates select="gmd:distributionOrderProcess" />
+      <xsl:apply-templates select="gmd:distributorFormat" />
+      <xsl:apply-templates select="gmd:distributorTransferOptions" />
+
+    </xsl:copy>
+  </xsl:template>
 </xsl:stylesheet>
