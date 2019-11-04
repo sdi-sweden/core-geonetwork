@@ -873,4 +873,7 @@
   <!-- Remove non existing gmd:hierarchyLevelDescription that is defined in some metadata -->
   <xsl:template match="gmd:hierarchyLevelDescription" />
 
+  <!-- Remove point of contact with invalid role value informationOwner  -->
+  <xsl:template match="gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:CI_RoleCode/@codeListValue = 'informationOwner']" />
+
 </xsl:stylesheet>
