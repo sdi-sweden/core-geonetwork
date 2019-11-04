@@ -2,6 +2,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gco="http://www.isotc211.org/2005/gco"
     xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd"
     xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                xmlns:lst="http://www.lansstyrelsen.se"
     xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gse="http://www.geodata.se/gse"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 exclude-result-prefixes="#all">
@@ -150,8 +151,8 @@
 
 
   <!--  fix date for DQ_ConformanceResult -->
-  <xsl:template match="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date[gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976' or
-	      gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089']">
+  <xsl:template match="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation[gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976' or
+	      gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089']/gmd:date/gmd:CI_Date/gmd:date">
     <xsl:variable name="isService" select="count(//srv:SV_ServiceIdentification) > 0" />
 
     <xsl:copy>
@@ -165,6 +166,15 @@
 	    </xsl:choose>
   	</xsl:copy>
 	</xsl:template>
+
+
+  <!--  fix pass for DQ_ConformanceResult -->
+  <xsl:template match="gmd:DQ_ConformanceResult[gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976' or
+	      gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089']/gmd:pass">
+    <gmd:pass>
+      <gco:Boolean>true</gco:Boolean>
+    </gmd:pass>
+  </xsl:template>
 
 	<!--  remove spatial resolution if gco:Distance is not present or is empty -->
 	<xsl:template match="gmd:spatialResolution[
@@ -821,4 +831,46 @@
 
     </xsl:copy>
   </xsl:template>
+
+
+  <!-- Remove gmd:report with empty values in gmd:result -->
+  <xsl:template match="gmd:report[gmd:DQ_DomainConsistency]">
+    <xsl:variable name="specificationTitle" select="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title/*/text()" />
+    <xsl:variable name="specificationDate" select="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:date/*/gmd:date/*/text()" />
+
+  	<xsl:message>spec title: <xsl:value-of select="$specificationTitle"/></xsl:message>
+  	<xsl:message>spec date: <xsl:value-of select="$specificationDate"/></xsl:message>
+
+  	<xsl:if test="string(normalize-space($specificationTitle)) and
+			  	  string(normalize-space($specificationDate))
+                  ">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+        <xsl:apply-templates select="*" />
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
+
+  <!-- Fix invalid gco:DateTime -->
+  <xsl:template match="gco:DateTime">
+    <xsl:variable name="value" select="." />
+
+    <xsl:choose>
+      <xsl:when test="string-length($value) &lt; 11">
+        <gco:Date><xsl:value-of select="." /></gco:Date>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="." />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!-- Remove invalid lst namespace elements -->
+  <xsl:template match="lst:*" />
+
+
+  <!-- Remove non existing gmd:hierarchyLevelDescription that is defined in some metadata -->
+  <xsl:template match="gmd:hierarchyLevelDescription" />
+
 </xsl:stylesheet>
