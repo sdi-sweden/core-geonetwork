@@ -5,7 +5,7 @@
 // ----- topics
 .gn-row-topics {
   background-color: rgba(255, 255, 255, 0.4);
-  padding: 10px 20px 10px 20px;
+  padding: 0 20px 10px 20px;
   h4 {
     font-size: 16px;
     margin-bottom: 20px;
@@ -13,34 +13,53 @@
       margin-bottom: 0;
     }
   }
+  a {
+    cursor: pointer;
+  }
   .chips-card {
     padding-bottom: 0px;
   }
 }
-.gn-row-topics-header {
+.gn-row-topics-collapse {
+  margin-top: 10px;
+  padding-bottom: 15px;
   border-bottom: 1px solid @se-border-color;
-  padding: 10px 5px;
-  margin-bottom: 15px;
-  .search-over {
-    color: #000;
-    text-align: left;
-    strong {
-      color: #333;
+  .gn-row-topics-header {
+    border-bottom: 1px solid @se-border-color;
+    padding: 10px 5px;
+    margin-bottom: 15px;
+    .search-over {
+      color: #000;
+      text-align: left;
+      margin-top: 0;
+      strong {
+        color: #333;
+      }
+    }
+    a {
+      color: @se-green;
+      text-transform: uppercase;
+      font-size: 10px;
+      margin-top: 5px;
     }
   }
 }
 .gn-row-topics-footer {
-  border-top: 1px solid @se-border-color;
-  padding: 10px 5px;
-  margin-top: 15px;
+  padding: 15px 5px 10px 5px;
   .search-over {
     color: #000;
     text-align: left;
     text-transform: uppercase;
     font-size: 10px;
+    margin-top: 0;
     strong {
       color: #333;
     }
+  }
+  a {
+    color: @se-green;
+    text-transform: uppercase;
+    font-size: 10px;
   }
 }
 // badges
