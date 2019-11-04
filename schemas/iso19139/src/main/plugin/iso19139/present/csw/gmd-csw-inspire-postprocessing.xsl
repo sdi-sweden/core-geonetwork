@@ -86,10 +86,7 @@
       </xsl:if>
 
       <xsl:apply-templates select="gmd:resourceSpecificUsage" />
-
-      <!-- Process gmd:resourceConstraints for INSPIRE TG 2.0 -->
-      <xsl:apply-templates select="." mode="process-resource-constraints" />
-
+      <xsl:apply-templates select="gmd:resourceConstraints" />
       <xsl:apply-templates select="gmd:aggregationInfo" />
       <xsl:apply-templates select="gmd:spatialRepresentationType" />
       <xsl:apply-templates select="gmd:spatialResolution" />
@@ -321,10 +318,7 @@
       </xsl:if>
 
 		  <xsl:apply-templates select="gmd:resourceSpecificUsage" />
-
-		  <!-- Process gmd:resourceConstraints for INSPIRE TG 1.3 (backport) -->
-		  <xsl:apply-templates select="." mode="process-resource-constraints" />
-
+      <xsl:apply-templates select="gmd:resourceConstraints" />
 		  <xsl:apply-templates select="gmd:aggregationInfo" />
 		  <xsl:apply-templates select="srv:serviceType" />
 		  <xsl:apply-templates select="srv:serviceTypeVersion" />
