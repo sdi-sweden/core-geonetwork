@@ -8,7 +8,7 @@
   padding-top: 15px;
 }
 .gn-row-tools {
-  .btn-default, .pagination > li > a, .pagination > li > span, .btn span, .btn-group.open {
+  .btn-default, .pagination > li > a, .pagination > li > span, .dropdown-toggle span:not(.caret), .btn-group.open {
     background: none !important;
     border: none !important;
     color: @se-green;
@@ -24,17 +24,31 @@
         background: transparent;
       }
     }
-    .dropdown-menu {
-      > li > a {
-        font-size: 12px;;
-        &:hover, &focus {
-          background-color: @se-green;
-          color: #fff;
-        }
+  }
+  .badge {
+    background: @se-green;
+  }
+}
+// dropdowns and toggles
+.btn-group.open .dropdown-toggle {
+  box-shadow: none;
+}
+.dropdown-menu {
+  > li  {
+    font-size: 12px;
+    &:hover, &focus {
+      background: none;
+    }
+    > a {
+      padding: 8px 20px !important;
+      &:hover, &focus {
+        background-color: @se-green;
+        color: #fff;
       }
     }
   }
 }
+
 // search terms
 .searchterm {
   margin: 0 5px 5px 0;
