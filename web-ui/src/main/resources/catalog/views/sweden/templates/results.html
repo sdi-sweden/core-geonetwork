@@ -1,11 +1,36 @@
 <div data-ng-search-form=""
      data-runSearch="true">
+  <form class="form-horizontal"
+        role="form"
+        data-ng-controller="gnsSearchTopEntriesController"
+        data-ng-search-form=""
+        data-runSearch="true"
+        data-ng-show="searchResults.records.length > 0">
+    <div class="panel panel-default gn-top-maps" role="row">
+      <div class="panel-heading"
+            data-gn-slide-toggle="">
+      </div>
+      <div class="panel-body">
+        <div data-ng-class="fluidLayout ? 'container-fluid' : 'container'">
+          <h4 data-translate="">topMaps</h4>
+
+          <input type="hidden" name="_csrf" value="{{csrf}}"/>
+
+          <div data-ng-show="searchResults.records.length > 0"
+              data-gn-results-container=""
+              data-search-results="searchResults"
+              data-template-url="resultTemplate"></div>
+        </div>
+      </div>
+    </div>
+    <!-- /.gn-top-records -->
+  </form>
 
   <div class="row gn-row-topics" data-ng-show="searchInfo.count > 0">
     <div class="container">
       <div class="col-sm-12 col-md-12" data-ng-show="browse !== ''">
 
-        <div id="gn-row-topics-collapse" class="gn-row-topics-collapse in">
+        <div id="gn-row-topics-collapse-home" class="gn-row-topics-collapse in">
           <div class="gn-row-topics-header clearfix">
             <div data-translate=""
                   class="search-over pull-left"
@@ -62,9 +87,9 @@
                data-translate-values="{records: '{{searchInfo.count}}'}">searchOver</div>
           <a class="pull-right"
              data-toggle="collapse"
-             data-target="#gn-row-topics-collapse"
+             data-target="#gn-row-topics-collapse-home"
              aria-expanded="false"
-             aria-controls="gn-row-topics-collapse">
+             aria-controls="gn-row-topics-collapse-home">
              Dölj Filtering
           </a>
         </div>
