@@ -152,7 +152,10 @@
 
   <!--  fix date for DQ_ConformanceResult -->
   <xsl:template match="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation[gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976' or
-	      gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089']/gmd:date/gmd:CI_Date/gmd:date">
+	      lower-case(normalize-space(gmd:title/gco:CharacterString)) = 'kommissionens förordning (eg) nr 976/2009 av den 19 oktober 2009 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg med avseende på nättjänster' or
+	      gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089' or
+        lower-case(normalize-space(gmd:title/gco:CharacterString)) = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster'
+	      ]/gmd:date/gmd:CI_Date/gmd:date">
     <xsl:variable name="isService" select="count(//srv:SV_ServiceIdentification) > 0" />
 
     <xsl:copy>
@@ -170,7 +173,9 @@
 
   <!--  fix pass for DQ_ConformanceResult -->
   <xsl:template match="gmd:DQ_ConformanceResult[gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976' or
-	      gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089']/gmd:pass">
+	      lower-case(normalize-space(gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString)) = 'kommissionens förordning (eg) nr 976/2009 av den 19 oktober 2009 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg med avseende på nättjänster' or
+	      gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089' or
+	      lower-case(normalize-space(gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString)) = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster']/gmd:pass">
     <gmd:pass>
       <gco:Boolean>true</gco:Boolean>
     </gmd:pass>
@@ -874,6 +879,6 @@
   <xsl:template match="gmd:hierarchyLevelDescription" />
 
   <!-- Remove point of contact with invalid role value informationOwner  -->
-  <xsl:template match="gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:CI_RoleCode/@codeListValue = 'informationOwner']" />
+  <xsl:template match="gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'informationOwner']" />
 
 </xsl:stylesheet>
