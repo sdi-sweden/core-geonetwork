@@ -254,25 +254,29 @@
     <xsl:variable name="southValue" select="gmd:southBoundLatitude/gco:Decimal" as="xs:float" />
     <xsl:variable name="northValue" select="gmd:northBoundLatitude/gco:Decimal" as="xs:float"/>
     <xsl:copy>
-      <xsl:copy-of select="gmd:westBoundLongitude"/>
+      <gmd:westBoundLongitude>
+        <gco:Decimal><xsl:value-of select="format-number($westValue, '#.00')"/></gco:Decimal>
+      </gmd:westBoundLongitude>
       <gmd:eastBoundLongitude>
         <xsl:choose>
           <xsl:when test="$westValue eq $eastValue">
-            <gco:Decimal><xsl:value-of select="$eastValue + 0.0001"/></gco:Decimal>
+            <gco:Decimal><xsl:value-of select="format-number($eastValue + 0.0001, '#.00')"/></gco:Decimal>
           </xsl:when>
           <xsl:otherwise>
-            <gco:Decimal><xsl:value-of select="$eastValue"/></gco:Decimal>
+            <gco:Decimal><xsl:value-of select="format-number($eastValue, '#.00')"/></gco:Decimal>
           </xsl:otherwise>
         </xsl:choose>
       </gmd:eastBoundLongitude>
-      <xsl:copy-of select="gmd:southBoundLatitude"/>
+      <gmd:southBoundLatitude>
+        <gco:Decimal><xsl:value-of select="format-number($southValue, '#.00')"/></gco:Decimal>
+      </gmd:southBoundLatitude>
       <gmd:northBoundLatitude>
         <xsl:choose>
           <xsl:when test="$southValue eq $northValue">
-            <gco:Decimal><xsl:value-of select="$northValue + 0.0001"/></gco:Decimal>
+            <gco:Decimal><xsl:value-of select="format-number($northValue + 0.0001, '#.00')"/></gco:Decimal>
           </xsl:when>
           <xsl:otherwise>
-            <gco:Decimal><xsl:value-of select="$northValue"/></gco:Decimal>
+            <gco:Decimal><xsl:value-of select="format-number($northValue, '#.00')"/></gco:Decimal>
           </xsl:otherwise>
         </xsl:choose>
       </gmd:northBoundLatitude>
