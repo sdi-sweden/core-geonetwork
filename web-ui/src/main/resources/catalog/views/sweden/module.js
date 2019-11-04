@@ -123,6 +123,7 @@
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
 
+console.log(gnSearchSettings);      
 
       $scope.modelOptions = angular.copy(gnGlobalSettings.modelOptions);
       $scope.modelOptionsForm = angular.copy(gnGlobalSettings.modelOptions);
@@ -133,7 +134,8 @@
       $scope.formatter = gnGlobalSettings.gnCfg.mods.search.formatter;
       $scope.listOfResultTemplate = gnGlobalSettings.gnCfg.mods.search.resultViewTpls;
       $scope.resultTemplate = gnSearchSettings.resultTemplate;
-      $scope.advandedSearchTemplate = gnSearchSettings.advancedSearchTemplate;
+      $scope.advancedSearchTemplate = gnSearchSettings.advancedSearchTemplate ||
+      '../../catalog/views/sweden/templates/advancedSearchForm/defaultAdvancedSearchForm.html';
       $scope.facetsSummaryType = gnSearchSettings.facetsSummaryType;
       $scope.facetConfig = gnSearchSettings.facetConfig;
       $scope.facetTabField = gnSearchSettings.facetTabField;
