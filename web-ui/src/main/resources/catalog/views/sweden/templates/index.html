@@ -1,0 +1,52 @@
+<header class="gn-header"
+        data-ng-show="gnCfg.mods.header.enabled && gnCfg.mods.header.isLogoInHeader">
+  <div class="container">
+    <div class=row>
+      <div class="col-md-12 text-{{gnCfg.mods.header.logoInHeaderPosition}}">
+        <a data-gn-active-tb-item="{{gnCfg.mods.home.appUrl}}">
+          <img class="{{gnCfg.mods.header.logoInHeaderPosition}}"
+               alt="{{'siteLogo' | translate}}"
+               data-ng-src="{{gnUrl}}../images/logos/{{info['node/id'] || info['system/site/siteId']}}.png?random{{info['system/site/lastUpdate']}}"/>
+          </a>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="navbar navbar-default gn-top-bar"
+     role="navigation"
+     data-ng-show="gnCfg.mods.header.enabled"
+     data-ng-include="'../../catalog/views/sweden/templates/top-toolbar.html'"
+     xmlns="http://www.w3.org/1999/html">
+</div>
+
+<div class="gn-search-page"
+     role="main"
+     data-ng-controller="GnSearchController">
+  <cookiewarning></cookiewarning>
+  <div class=""
+       data-ng-controller="gnsSweden">
+    <gn-extend-mainctrl></gn-extend-mainctrl>
+
+    <div data-gn-saved-selections="">
+      <div data-ng-include="'../../catalog/views/sweden/templates/home.html'"
+           data-ng-show="activeTab == '/home'"/>
+      <div data-ng-include="'../../catalog/views/sweden/templates/results.html'"
+           data-ng-show="activeTab == '/search'"/>
+      <div data-ng-if="isMapViewerEnabled && !isExternalViewerEnabled"
+           data-ng-include="'../../catalog/views/sweden/templates/map.html'"
+           data-ng-show="activeTab == '/map'"/>
+      <div data-ng-include="'../../catalog/views/sweden/templates/recordView.html'"
+           data-ng-show="activeTab == '/metadata'" class="gn-view-approved"/>
+      <div data-ng-include="'../../catalog/views/sweden/templates/recordView.html'"
+           data-ng-show="activeTab == '/metadraf'" class="gn-view-not-approved"/>
+      <div data-ng-include="'../../catalog/views/sweden/templates/page.html'"
+           data-ng-if="activeTab == '/page'"/>
+    </div>
+  </div>
+</div>
+
+
+<div class="navbar navbar-default gn-bottom-bar" role="navigation"
+     data-ng-show="gnCfg.mods.footer.enabled"
+     data-ng-include="'../../catalog/views/sweden/templates/footer.html'">
+</div>

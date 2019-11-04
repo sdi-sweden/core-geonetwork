@@ -1,0 +1,84 @@
+@import "../../../style/gn_bootstrap.less";
+@import "gn_variables_default.less";
+
+// row for the info lists
+.gn-row-info {
+  padding: 30px 20px 40px 20px;
+  background: none;
+  .nav-pills {
+    text-align: left !important;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+}
+// all
+.gn-info-list {
+  li {
+    .resultcard {
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+      .title {
+        h4 {
+          font-size: 16px;
+        }
+        a {
+          color: #000;
+        }
+      }
+    }
+  }
+}
+// large
+.gn-info-list-large {
+  .gn-info-list {
+    li {
+      .resultcard {
+        background-color: #fff;
+        padding: 35px;
+      }
+    }
+  }
+}
+// small
+.gn-info-list-small {
+  .gn-info-list {
+    li {
+      .resultcard {
+        background-color: #fff;
+        border: 0;
+        padding: 10px 15px;
+        .title {
+          padding: 12px 0;
+          h4 {
+            font-size: 13px;
+          }
+        }
+      }
+      .abstract {
+        display: none;
+      }
+    }
+  }
+}
+// custom colors for the blocks in the info list
+.gn-info-list-blocks {
+  .gn-info-list {
+    li {
+      .resultcard {
+        .title {
+          background: @gn-resultcard-title-background-color;
+          border: @gn-resultcard-title-border;
+          h4 {
+            color: @gn-resultcard-title-color;
+          }
+        }
+      }
+      .resultcard.hasThumbnail {
+        &:hover {
+          .title {
+            background: @gn-resultcard-title-background-color-hover;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,86 @@
+// list of LESS variables to be used in GeoNetwork
+//
+// this file must be first on the list of @import
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body, html {
+  font-family: 'Roboto', sans-serif, 'Helvetica Neue', Helvetica, Arial;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+// general
+@gn-border-radius: 3px;
+
+// sweden
+@se-bg: #e3ebea;
+@se-green: #27605d;
+@se-border-color: #d0d0d0;
+
+// override bootstrap variables
+@badge-bg: @gray;
+@brand-primary: @se-green;
+
+// body background (image & color)
+//
+// when there is an empty string, no background image is used.
+@gn-background-image: '../catalog/views/sweden/images/bg.jpg';
+@gn-background-color: @se-bg;
+
+// overwrite color for accessibility
+@navbar-default-link-color: @gray;
+@navbar-default-link-hover-color: @gray-dark;
+@text-muted: #707070;
+// width of modal dialog
+@modal-md: 700px;
+@navbar-default-color: #333;
+// slightly darker primary color, now color contrast on light gray backgrounds is high enough
+@brand-primary: #3277B3;
+@dropdown-border: @navbar-default-border;
+
+// header
+@gn-header-background: #fff;
+// menu bar
+@gn-menubar-height: 64px;
+@gn-menubar-background: #fff;
+@gn-menubar-background-active: #fff;
+@gn-menubar-color-active: @navbar-default-link-color;
+@gn-menubar-color: #000;
+@gn-menubar-color-hover: @navbar-default-link-hover-color;
+@gn-menubar-background-hover: #fff;
+@gn-menubar-border-color: @navbar-default-border;
+
+// bottombar
+@gn-bottombar-height: auto;
+@gn-bottombar-background: #333;
+@gn-bottombar-border-color: #333;
+@gn-bottombar-color: #fff;
+@gn-bottombar-color-hover: #fff;
+
+// home page
+//
+// ----- search input
+@gn-search-outline-color: @se-green;
+@gn-search-button-background-color: #fff;
+@gn-search-button-color: #b8b8b8;
+
+@gn-search-outline-color-red: red(@gn-search-outline-color);
+@gn-search-outline-color-green: green(@gn-search-outline-color);
+@gn-search-outline-color-blue: blue(@gn-search-outline-color);
+// ----- topics block
+@gn-topics-background-color: @well-bg;
+// ----- info block
+@gn-info-background-color: @body-bg;
+// ----- resultcards
+@gn-resultcard-background-color: @body-bg;
+@gn-resultcard-title-background-color: #505050;
+@gn-resultcard-title-background-color-hover: #333;
+@gn-resultcard-title-color: #fff; // @navbar-default-link-color;
+@gn-resultcard-title-border: 0px solid @navbar-default-border;
+
+// search results page
+@gn-results-background-color: @body-bg;
+
+// metadata page
+@gn-md-view-background-color: @body-bg;

@@ -1,0 +1,18 @@
+/* Defined here any custom style for the view
+   which has to be applied for all apps
+   (ie. admin, search, login, editor). */
+
+
+   // import default view styles
+   @import "../../default/less/gn_view.less";
+   
+   // margin for small devices
+   @media (max-width: 750px) {
+     .gn-xs-margin-bottom {
+       margin-bottom: @gn-spacing !important;
+     }
+   }
+
+   body {
+     font-size: 11px;
+   }

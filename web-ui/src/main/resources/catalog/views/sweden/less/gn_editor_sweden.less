@@ -1,0 +1,121 @@
+@import "gn_search_sweden.less";
+@import "../../../style/gn_editor.less";
+@import "gn_view_sweden.less";
+// import default editor styles
+@import "../../default/less/gn_editor_default.less";
+// variables for manipulating the theme
+@import "gn_variables_sweden.less"; // must be last
+
+.gn-results-editor {
+  .gn-status {
+    font-weight: 500;
+  }
+}
+
+[ng-app="gn_editor"] {
+  body {
+    background-image: url('../catalog/views/sweden/images/bg.jpg'); 
+  }
+  font-size: 14px;
+  a {
+    font-size: 14px;;
+  }
+  .panel {
+    .panel-heading {
+      font-size: 16px;
+    }
+    .panel-body {
+      font-size: 14px;
+    }
+  }
+  .navbar-default .navbar-nav > li > a, .navbar-default .navbar-nav > .open > a,
+  .navbar-default .navbar-nav > .active > a {
+    line-height: 20px;
+  }
+  [data-gn-results-container] {
+    background: #fff;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    padding: 0 10px;
+    .table.gn-results-editor tr:first-child td {
+      border-top: 0;
+    }
+  }
+  .gn-facet-list {
+    .list-group-item {
+      background: none;
+    }
+    .gn-facet .gn-facet-toggle {
+      width: 1px;
+    }
+  }
+  form.gn-editor {
+    // fieldsets
+    fieldset {
+      border: 1px solid @panel-default-border;
+      padding: 10px;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+      label.radio-inline {
+        padding-left: 20px;
+        span {
+          line-height: 22px;
+        }
+      }
+      legend {
+        color: #000;
+        font-size: 16px;
+        padding: 8px 10px 8px 30px;
+        margin-left: -11px;
+        width: calc(~"100% + 22px");
+        border: 1px solid @panel-default-border;
+        background-color: @panel-default-heading-bg;
+        .btn {
+          padding: 6px 4px;
+        }
+      }
+      .col-sm-2 {
+        width: 25%;
+      }
+      .col-sm-9 {
+        width: 66%;
+      }
+      .col-sm-6.gn-value {
+        width: 41%;
+      }
+      .gn-control {
+        padding-left: 0;
+        padding-right: 6px;
+        .btn {
+          padding: 6px 2px;
+        }
+      }
+      .field-tooltip {
+        padding: 6px 2px;
+      }
+      .control-label {
+        font-weight: bold;
+        font-size: 14px;
+        text-align: left;
+        overflow: hidden;
+        max-width: 100%;
+        text-overflow: ellipsis;
+        padding-right: 0;
+      }
+      fieldset {
+        margin: 10px 0;
+        padding: 10px;
+        legend {
+          font-size: 16px;
+          background: @panel-default-heading-bg;
+          border: 1px solid @panel-default-border;
+        }
+        .gn-table {
+          margin-left: -10px;
+          margin-right: -10px;
+          margin-top: -5px;
+          width: calc(~"100% + 20px");
+          max-width: calc(~"100% + 20px");
+        }
+      }
+    }
+  }
+}

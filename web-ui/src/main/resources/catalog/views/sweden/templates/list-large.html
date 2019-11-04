@@ -1,0 +1,79 @@
+<ul class="list-group gn-resultview gn-resultview-sumup">
+  <li class="list-group-item gn-list gn-list-large"
+      data-ng-repeat="md in searchResults.records"
+      data-gn-fix-mdlinks=""
+      data-gn-displayextent-onhover=""
+      data-gn-zoomto-onclick="">
+
+    <div class="row gn-md-title clearfix">
+      <input data-gn-selection-md type="checkbox"
+             class="pull-left gn-margin-right"
+             data-ng-model="md['geonet:info'].selected"
+             aria-label="{{'clickToSelect' | translate}}"
+             data-ng-change="change()"/>
+      <h3 class="pull-left gn-margin-right">
+        <a href=""
+           gn-metadata-open="md"
+           gn-records="searchResults.records"
+           gn-formatter="formatter.defaultUrl"
+           title="{{md.title || md.defaultTitle}}">
+
+          <i class="fa gn-icon-{{md.type[0]}}" title="{{md.type[0] | translate}}"/>
+          {{(md.title || md.defaultTitle) | characters:80}}</a>
+      </h3>
+      <div data-gn-metadata-rate="md"
+           class="pull-left"
+           data-readonly="true"/>
+    </div>
+
+    <!--start middle row-->
+    <div title="{{(md.abstract || md.defaultAbstract) | striptags}}"
+         gn-metadata-open="md"
+         gn-records="searchResults.records"
+         gn-formatter="formatter.defaultUrl">
+
+      <div class="row gn-padding-bottom gn-margin-top">
+        <div class="col-md-3 col-sm-12">
+          <label translate="">Ansvarig Part</label>
+        </div>
+        <div class="col-md-9 col-sm-12">
+
+            <p data-ng-repeat="r in md.responsibleParty track by $index" 
+               data-ng-show=" r.indexOf('Ägare') != -1" class="ng-binding ng-scope">
+              {{r}}
+            </p>
+          
+        </div>
+      </div>
+      <div class="row gn-padding-bottom">
+        <div class="col-md-3 col-sm-12">
+          <label translate="">abstract</label>
+        </div>
+        <div class="col-md-9 col-sm-12">
+          <div class="gn-md-abstract">{{(md.abstract || md.defaultAbstract)}}</div>
+        </div>
+      </div>
+
+    </div>
+    <!--end middle row-->
+
+    <!--start bottom row-->
+    <div class="gn-toolbar clearfix">
+      <!-- Display the first metadata status (apply to ISO19139 record) -->
+      <div data-ng-if="md.status_text.length > 0"
+            title="{{md.status_text[0]}}"
+            class="gn-status gn-status-{{md.status[0]}}">{{md.status_text[0]}}
+      </div> 
+      <gn-links-btn class="pull-right"></gn-links-btn>
+      <div gn-grid-related gn-grid-related-uuid="::md.getUuid()"
+            class="pull-right"
+            template="../../catalog/views/default/templates/gridRelated.html"></div>
+      <div data-ng-if="md.draft == 'e'"
+            title="{{'workingCopy' | translate}}"
+            class="gn-workingcopy-status pull-right">
+        <i class="fa fa-pencil"></i>
+        <span>{{'workingCopy' | translate}}</span>
+      </div>
+    </div>
+  </li>
+</ul>

@@ -1,0 +1,70 @@
+@import "../../../style/gn_search.less";
+// variables for manipulating the theme
+@import "gn_variables_sweden.less"; // must be last
+
+.gn-full {
+  min-height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+html, body {
+  height:100%;
+}
+
+// header
+.gn-header {
+  background-color: @gn-header-background;
+}
+// background image and color
+// [ng-app^="gn_search_"] body, [ng-app="gn_login"] body {
+body {
+  background-image: url(@gn-background-image); 
+  background-color: @gn-background-color;
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.gn-row-main {
+  margin: 5em 0 3em;
+  .gn-form-any {
+    padding: 0 25px;
+    background: #fff;
+    border-radius: 30px;
+    &:focus {
+      border-color: @gn-search-outline-color;
+      box-shadow: rgba(0, 0, 0, 0.075) 0px 1px 1px inset, rgba(@gn-search-outline-color-red, @gn-search-outline-color-green, @gn-search-outline-color-blue, 0.6) 0px 0px 8px;
+    }
+    .input-lg {
+      border: 0;
+      height: 56px;
+    }
+    .btn {
+      background-color: @gn-search-button-background-color;
+      // border-color: darken(@gn-search-button-background-color, 5%);
+      border: 0;
+      color: @gn-search-button-color;
+      &:hover {
+        background-color: darken(@gn-search-button-background-color, 10%);
+        border-color: darken(@gn-search-button-background-color, 15%);
+      }
+    }
+  }
+}
+
+.gn-row-info {
+  padding-top: 20px;
+  background-color: @gn-info-background-color;
+}
+
+.cookie-warning {
+  .alert;
+  .alert-info;
+}

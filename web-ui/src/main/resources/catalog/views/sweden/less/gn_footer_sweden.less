@@ -1,0 +1,80 @@
+@import "../../../style/gn_bootstrap.less"; // must be first
+// variables for manipulating the theme
+@import "gn_variables_sweden.less"; // must be last
+
+.gn-footer-text {
+  margin-top: 15px;
+}
+.gn-footer-text > span {
+  padding-right: 5px;
+  padding-left: 15px;
+  color: #777;
+}
+.socialmedia {
+  margin-top: 15px;
+  margin-right: 15px;
+}
+.socialmedia a{
+  margin-top: 15px;
+  display:inline !important;
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+  color: #777;
+}
+
+/*
+    Place bottom-bar at the bottom of page; approach is based on http://matthewjamestaylor.com/blog/bottom-footer-demo.htm
+*/
+.gn-bottom-bar {
+  height: @gn-bottombar-height;
+  font-size: 13px;
+  padding: 40px 0;
+  margin-top: 50px;
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 0;
+  border-radius: 0;
+  border-width: 1px 0 0 0;
+  background: @gn-bottombar-background;
+  border-color: @gn-bottombar-border-color;
+  color: @gn-bottombar-color !important;
+  h3 {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 1em;
+  }
+  p {
+    margin-top: 23px;
+    line-height: 20px;
+  }
+  a {
+    color: @gn-bottombar-color !important;
+    text-decoration: underline;
+    &:hover {
+      color: @gn-bottombar-color-hover !important;
+      text-decoration: none;
+    }
+  }
+  .about-site {
+    padding: 0 30px 0 30px;
+  }
+  .site-map {
+    padding: 0 30px 0 30px;
+    ul {
+      margin-top: 0px;
+      list-style: none;
+      margin-left: 0;
+      padding-left: 0;
+      li {
+        display: inline-block;
+        width: 30%;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .geodata-contact {
+    padding: 0 30px 0 30px;
+  }
+}

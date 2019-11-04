@@ -1,0 +1,104 @@
+@import "../../../style/gn_search.less";
+// variables for manipulating the theme
+@import "gn_variables_sweden.less"; // must be last
+
+// ----- topics
+.gn-row-topics {
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 10px 20px 10px 20px;
+  h4 {
+    font-size: 16px;
+    margin-bottom: 20px;
+    label {
+      margin-bottom: 0;
+    }
+  }
+  .chips-card {
+    padding-bottom: 0px;
+  }
+}
+.gn-row-topics-header {
+  border-bottom: 1px solid @se-border-color;
+  padding: 10px 5px;
+  margin-bottom: 15px;
+  .search-over {
+    color: #000;
+    text-align: left;
+    strong {
+      color: #333;
+    }
+  }
+}
+.gn-row-topics-footer {
+  border-top: 1px solid @se-border-color;
+  padding: 10px 5px;
+  margin-top: 15px;
+  .search-over {
+    color: #000;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 10px;
+    strong {
+      color: #333;
+    }
+  }
+}
+// badges
+// 
+// ----- image/icon
+.badge-result {
+  border-radius: 20px !important;
+  float: left;
+  height: 40px;
+  line-height: 43px;
+  text-align: center;
+  vertical-align: bottom;
+  width: auto;
+  font-size: 12px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  background: transparent;
+  a {
+    border-radius: 50px; 
+    padding: 0px 15px;
+    transition: all 300ms linear;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    background: none;
+    color: #000;
+    &:hover {
+      background-color: @se-green;
+      color: #fff;
+    }
+  }
+
+}
+// ----- colors
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+  .gn-row-topics {
+    .badge-text {
+      max-width: 34vw;
+    }
+  }
+  .container {
+    .gn-row-topics {
+      .badge-text {
+        max-width: 26vw;
+      }
+    }
+  }
+}
+@media (max-width: @screen-xs-max) {
+  .gn-row-topics {
+    .badge-text {
+      max-width: 56vw;
+    }
+  }
+  .container {
+    .gn-row-topics {
+      .badge-text {
+        max-width: 48vw;
+      }
+    }
+  }
+}
