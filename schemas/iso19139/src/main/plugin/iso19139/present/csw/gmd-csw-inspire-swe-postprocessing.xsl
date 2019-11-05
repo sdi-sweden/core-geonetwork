@@ -749,4 +749,18 @@
   <!-- Remove point of contact with invalid role value informationOwner  -->
   <xsl:template match="gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'informationOwner']" />
 
+  <!-- Replace serviceType ogc:wfs as valid value for INSPIRE: download -->
+  <xsl:template match="srv:serviceType[lower-case(gco:LocalName) = 'ogc:wfs']/gco:LocalName">
+    <gco:LocalName>download</gco:LocalName>
+  </xsl:template>
+
+  <!-- Fix invalid characterset value: 004 -->
+  <xsl:template match="gmd:MD_CharacterSetCode[@codeListValue = '004']">
+    <xsl:copy>
+      <xsl:copy-of select="@*[name() != 'codeListValue']" />
+      <xsl:attribute name="codeListValue">utf8</xsl:attribute>
+
+      <xsl:value-of select="." />
+    </xsl:copy>
+  </xsl:template>
 </xsl:stylesheet>
