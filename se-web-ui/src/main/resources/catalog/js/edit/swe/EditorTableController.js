@@ -50,7 +50,6 @@
         $scope.title = title;
         $scope.mandatory = mandatory;
         $scope.tooltip = tooltip;
-        console.log("mdType:" + mdType);
         $scope.mdType = mdType;
 
 
@@ -214,29 +213,28 @@
         // TODO: Move to a custom controller for the edit dialog
         $scope.editRow.date = document.getElementsByName('datevalue')[0].value;
 
-        if ($scope.mode == 'add') {
-          if ($scope.xmlSnippet != '') {
-            var content = $compile($scope.xmlSnippet)($scope);
+        if ($scope.xmlSnippet != '') {
+          var content = $compile($scope.xmlSnippet)($scope);
 
-            $scope.editRow.xmlSnippet = content[0].innerHTML;
-          }
-
-          var template = $scope.xmlSnippet;
-          for (var property in $scope.editRow) {
-            if ($scope.editRow.hasOwnProperty(property)) {
-              template = template.replace('{{editRow.' + property + '}}',
-                  $scope.editRow[property]);
-            }
-          }
-          $scope.editRow.xmlSnippet = template;
-
-          $scope.selectedRow = angular.copy($scope.editRow);
-          $scope.rows.push($scope.selectedRow);
-        } else {
-          $scope.selectedRow = angular.copy($scope.editRow);
-          $scope.rows[$scope.selectedRowIndex] = $scope.selectedRow;
+          $scope.editRow.xmlSnippet = content[0].innerHTML;
         }
 
+        var template = $scope.xmlSnippet;
+        for (var property in $scope.editRow) {
+          if ($scope.editRow.hasOwnProperty(property)) {
+            template = template.replace('{{editRow.' + property + '}}',
+              $scope.editRow[property]);
+          }
+        }
+        $scope.editRow.xmlSnippet = template;
+
+        $scope.selectedRow = angular.copy($scope.editRow);
+
+        if ($scope.mode == 'add') {
+          $scope.rows.push($scope.selectedRow);
+        } else {
+          $scope.rows[$scope.selectedRowIndex] = $scope.selectedRow;
+        }
 
         // TODO: Check, removes the element added
         //$scope.save(true);
