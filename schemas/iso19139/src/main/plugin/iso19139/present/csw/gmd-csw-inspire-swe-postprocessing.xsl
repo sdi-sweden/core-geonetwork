@@ -25,7 +25,37 @@
 
       <!-- Fixed value for schemaLocation -->
       <xsl:attribute name="xsi:schemaLocation">http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd  http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd  http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd</xsl:attribute>
-      <xsl:apply-templates select="@*[name() != 'xsi:schemaLocation']|node()"/>
+      <xsl:apply-templates select="@*[name() != 'xsi:schemaLocation']"/>
+
+      <!-- List explicitly the elements as some old records have invalid order for language and characterSet at least -->
+      <xsl:apply-templates select="gmd:fileIdentifier"/>
+      <xsl:apply-templates select="gmd:language"/>
+      <xsl:apply-templates select="gmd:characterSet"/>
+      <xsl:apply-templates select="gmd:parentIdentifier"/>
+      <xsl:apply-templates select="gmd:hierarchyLevel"/>
+      <xsl:apply-templates select="gmd:hierarchyLevelName"/>
+      <xsl:apply-templates select="gmd:contact"/>
+      <xsl:apply-templates select="gmd:dateStamp"/>
+      <xsl:apply-templates select="gmd:metadataStandardName"/>
+      <xsl:apply-templates select="gmd:metadataStandardVersion"/>
+      <xsl:apply-templates select="gmd:dataSetURI"/>
+      <xsl:apply-templates select="gmd:locale"/>
+      <xsl:apply-templates select="gmd:spatialRepresentationInfo"/>
+      <xsl:apply-templates select="gmd:referenceSystemInfo"/>
+      <xsl:apply-templates select="gmd:metadataExtensionInfo"/>
+      <xsl:apply-templates select="gmd:identificationInfo"/>
+      <xsl:apply-templates select="gmd:contentInfo"/>
+      <xsl:apply-templates select="gmd:distributionInfo"/>
+      <xsl:apply-templates select="gmd:dataQualityInfo"/>
+      <xsl:apply-templates select="gmd:portrayalCatalogueInfo"/>
+      <xsl:apply-templates select="gmd:metadataConstraints"/>
+      <xsl:apply-templates select="gmd:applicationSchemaInfo"/>
+      <xsl:apply-templates select="gmd:metadataMaintenance"/>
+      <xsl:apply-templates select="gmd:series"/>
+      <xsl:apply-templates select="gmd:describes"/>
+      <xsl:apply-templates select="gmd:propertyType"/>
+      <xsl:apply-templates select="gmd:featureType"/>
+      <xsl:apply-templates select="gmd:featureAttribute"/>
     </xsl:element>
   </xsl:template>
 
