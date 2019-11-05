@@ -1,6 +1,6 @@
 <div class="gn-md-links">
 
-  <a class="gn-md-edit-btn btn btn-default"
+  <a class="gn-md-edit-btn btn btn-link gn-md-link"
      data-ng-show="user.canEditRecord(md)"
      data-ng-href="catalog.edit#/metadata/{{md['geonet:info'].id}}?redirectUrl=catalog.search%23%2Fmetadata%2F{{md['geonet:info'].uuid}}"
      title="{{'edit' | translate}}"
@@ -18,7 +18,7 @@
        data-ng-class="::links.length > 0 ? '' : 'hidden'">
     <button type="button"
             role="button"
-            class="btn btn-default dropdown-toggle"
+            class="btn btn-link gn-md-link dropdown-toggle"
             data-toggle="dropdown"
             title="{{'weblink' | translate}}"
             aria-label="{{'weblink' | translate}}">
@@ -37,7 +37,7 @@
        data-ng-if="isMapViewerEnabled && layers.length > 1">
     <button type="button"
             role="button"
-            class="btn btn-default dropdown-toggle"
+            class="btn btn-link gn-md-link dropdown-toggle"
             data-toggle="dropdown"
             title="{{'layers' | translate}}"
             aria-label="{{'layers' | translate}}">
@@ -68,7 +68,7 @@
   </div>
   <button type="button"
           role="button"
-          class="btn btn-default"
+          class="btn btn-link gn-md-link"
           data-ng-disabled="md['geonet:info'].dynamic == 'false'"
           data-ng-if="isMapViewerEnabled && layers.length == 1"
           data-ng-click="resultviewFns.addMdLayerToMap(layers[0], md)"
@@ -83,7 +83,7 @@
        data-ng-class="maps.length > 0 ? '' : 'invisible'">
     <button type="button"
             role="button"
-            class="btn btn-default dropdown-toggle"
+            class="btn btn-link gn-md-link dropdown-toggle"
             data-toggle="dropdown"
             title="{{'maps' | translate}}"
             aria-label="{{'maps' | translate}}">
@@ -102,7 +102,7 @@
        data-ng-class="::downloads.length > 0 ? '' : 'hidden'">
     <button type="button"
             role="button"
-            class="btn btn-default dropdown-toggle"
+            class="btn btn-link gn-md-link dropdown-toggle"
             data-toggle="dropdown"
             title="{{'downloads' | translate}}"
             aria-label="{{'downloads' | translate}}">

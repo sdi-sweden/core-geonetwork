@@ -1,6 +1,7 @@
 @import "../../../style/gn_search.less";
 // import default styles
 @import "../../default/less/gn_view.less";
+@import "gn_view_sweden.less";
 // variables for manipulating the theme
 @import "gn_variables_sweden.less"; // must be last
 
@@ -44,6 +45,15 @@
       &:hover, &focus {
         background-color: @se-green;
         color: #fff;
+      }
+    }
+  }
+}
+.pagination {
+  .dropdown-menu {
+    > li  {
+      > a {
+        padding: 3px 10px !important;
       }
     }
   }
@@ -142,11 +152,21 @@ ul.gn-resultview {
   .gn-md-abstract {
     cursor: pointer;
     color: @gray-darker;
+    font-size: 12px;
   }
   .gn-md-abstract.ellipsis:after {
     background: none;
   }
-  
+  .gn-update-tag {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    font-size: 12px;
+    color: #a2a2a2;
+    line-height: 18px;
+  }
   li.gn-grid {
     @grid-bottom-margin: 2px;
     
@@ -303,25 +323,71 @@ ul.gn-resultview {
       padding: 10px 30px;
       margin-top: 10px;
       background-color: #f1f5f4;
+      .gn-md-link {
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #000;
+        line-height: 34px;
+        font-size: 10px;
+        padding: 0 12px;
+        letter-spacing: 1px;
+        .fa {
+          color: @se-green;
+          font-size: 15px;
+        }
+      }
+      [data-gn-saved-selections-action] {
+        .btn-group {
+          .btn-default {
+            .btn-link();
+            i {
+              color: @se-green;
+              font-size: 15px;
+            }
+            .caret {
+              color: #000;
+            }
+            &:hover, &:focus {
+              text-decoration: none;
+            }
+          }
+        }
+      }
       .gn-md-links {
         font-size: 100%;
         line-height: 1;
         background: none;
+        .gn-md-link {
+          line-height: 16px;
+        }
       }
       .btn-group {
         margin: 0;
       }
-      .btn {
-        margin: 0 0 0 5px;
+      // special icon cases
+      [class^="icon-"], [class*=" icon-"] {
+        font-size: 15px;
+        color: @se-green;
+      }
+      // badge
+      .badge {
+        padding: 4px 8px;
+        font-size: 11px;
+        margin-left: 5px;
       }
     }
   }
   li.gn-list-small {
     .gn-md-title {
       margin-bottom: 8px;
+      padding-top: 0;
     }
     .gn-md-links {
       margin-top: 2px;
+      background: none;
+      .btn-link {
+        color: #b2b9bc;
+      }
     }
   }
 }

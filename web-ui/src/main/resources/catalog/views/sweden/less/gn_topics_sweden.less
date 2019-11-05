@@ -24,6 +24,7 @@
   margin-top: 10px;
   padding-bottom: 15px;
   border-bottom: 1px solid @se-border-color;
+  transition: color 300ms linear;
   .gn-row-topics-header {
     border-bottom: 1px solid @se-border-color;
     padding: 10px 5px;
@@ -44,6 +45,12 @@
     }
   }
 }
+.gn-row-topics-collapse.gn-filter-hide {
+  display: none;
+}
+.gn-row-topics-collapse.gn-filter-show {
+  display: block;
+}
 .gn-row-topics-footer {
   padding: 20px 5px 10px 5px;
   .search-over {
@@ -61,6 +68,21 @@
     text-transform: uppercase;
     font-size: 10px;
   }
+  .gn-filter-toggle-show {
+    display: block;
+  }
+  .gn-filter-toggle-hide {
+    display: none;
+  }
+  .gn-filter-show {
+    .gn-filter-toggle-show {
+      display: none;
+    }
+    .gn-filter-toggle-hide {
+      display: block;
+    }
+  }
+  
 }
 // badges
 // 

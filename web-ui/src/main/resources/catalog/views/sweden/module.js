@@ -123,8 +123,6 @@
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
 
-console.log(gnSearchSettings);      
-
       $scope.modelOptions = angular.copy(gnGlobalSettings.modelOptions);
       $scope.modelOptionsForm = angular.copy(gnGlobalSettings.modelOptions);
       $scope.isFilterTagsDisplayedInSearch = gnGlobalSettings.gnCfg.mods.search.isFilterTagsDisplayedInSearch;
@@ -220,6 +218,13 @@ console.log(gnSearchSettings);
        */
       $scope.toggleListType = function(type) {
         $scope.type = type;
+      };
+
+      /**
+       * Toggles the filter panel.
+       */
+      $scope.toggleFilterPanel = function(doShow) {
+        $scope.doShow = doShow;
       };
       
       $scope.infoTabs = {

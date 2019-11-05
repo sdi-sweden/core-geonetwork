@@ -30,18 +30,19 @@
     <div class="container">
       <div class="col-sm-12 col-md-12" data-ng-show="browse !== ''">
 
-        <div id="gn-row-topics-collapse-home" class="gn-row-topics-collapse in">
+        <div id="gn-row-topics-collapse" class="gn-row-topics-collapse" data-ng-class="{'gn-filter-show': doShow === 'showFilter' || doShow === undefined, 'gn-filter-hide': doShow === 'hideFilter'}">
           <div class="gn-row-topics-header clearfix">
             <div data-translate=""
                   class="search-over pull-left"
                   data-translate-values="{records: '{{searchInfo.count}}'}">searchOver</div>
             <a class="pull-right"
-              title="{{'advanced' | translate}}"
-              data-ng-model="searchObj.advancedMode"
-              btn-checkbox=""
-              btn-checkbox-true="1"
-              btn-checkbox-false="0">
-              <span data-translate="">advanced</span>
+               title="{{'advanced' | translate}}"
+               data-ng-model="searchObj.advancedMode"
+               btn-checkbox=""
+               btn-checkbox-true="1"
+               btn-checkbox-false="0">
+              <span class="show-advanced" data-ng-hide="searchObj.advancedMode" data-translate="">viewAdvance</span>
+              <span class="hide-advanced" data-ng-show="searchObj.advancedMode" data-translate="">hideAdvance</span>
             </a>
           </div>
           <div class="row" data-ng-hide="searchObj.advancedMode">
@@ -85,13 +86,21 @@
           <div data-translate=""
                class="search-over pull-left"
                data-translate-values="{records: '{{searchInfo.count}}'}">searchOver</div>
-          <a class="pull-right"
-             data-toggle="collapse"
-             data-target="#gn-row-topics-collapse-home"
-             aria-expanded="false"
-             aria-controls="gn-row-topics-collapse-home">
-             Dölj Filtering
-          </a>
+          <div class="pull-right" data-ng-class="{'gn-filter-show': doShow === 'showFilter' || doShow === undefined, 'gn-filter-hide': doShow === 'hideFilter'}">
+            <a data-ng-click="toggleFilterPanel('showFilter')"
+               data-ng-model="doShow"
+               class="gn-filter-toggle-show">
+              <span class="show-filtering" data-translate="">showFiltering</span>
+              <span class="icon-down-dir"></span>
+            </a>
+            <a data-ng-click="toggleFilterPanel('hideFilter')"
+               data-ng-model="doShow"
+               class="gn-filter-toggle-hide">
+              <span class="hide-filtering" data-translate="">hideFiltering</span>
+              <span class="icon-up-dir"></span>
+            </a>
+          </div>
+          
         </div>
 
       </div>
@@ -146,10 +155,10 @@
               data-tab-field="facetTabField"></div>
 
           <div class="col-md-9 col-sm-9 clearfix" data-ng-show="searchResults.records.length > 0">
-            <div class="pull-left gn-margin-right"
+            <div class="pull-left"
                  data-gn-selection-widget=""
                  data-results="searchResults"></div>
-            <div class="pull-left gn-margin-right"
+            <div class="pull-left"
                  data-sortby-combo=""
                  data-params="searchObj.params"
                  data-gn-sortby-values="searchObj.sortbyValues"></div>

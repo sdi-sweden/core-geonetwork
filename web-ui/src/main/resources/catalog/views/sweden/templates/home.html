@@ -17,14 +17,6 @@
             <div data-translate=""
                   class="search-over pull-left"
                   data-translate-values="{records: '{{searchInfo.count}}'}">searchOver</div>
-            <a class="pull-right"
-              title="{{'advanced' | translate}}"
-              data-ng-model="searchObj.advancedMode"
-              btn-checkbox=""
-              btn-checkbox-true="1"
-              btn-checkbox-false="0">
-              <span data-translate="">advanced</span>
-            </a>
           </div>
           <div class="row">
             <span data-ng-repeat="(key, facet) in searchInfo.facet['topicCats']"
