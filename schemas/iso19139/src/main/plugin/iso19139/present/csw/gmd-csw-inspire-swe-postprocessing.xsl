@@ -927,6 +927,11 @@
     <gco:LocalName>download</gco:LocalName>
   </xsl:template>
 
+  <!-- Replace serviceType ogc:wms as valid value for INSPIRE: view -->
+  <xsl:template match="srv:serviceType[lower-case(gco:LocalName) = 'ogc:wms']/gco:LocalName">
+    <gco:LocalName>view</gco:LocalName>
+  </xsl:template>
+
   <!-- Fix invalid characterset value: 004 -->
   <xsl:template match="gmd:MD_CharacterSetCode[@codeListValue = '004']">
     <xsl:copy>
