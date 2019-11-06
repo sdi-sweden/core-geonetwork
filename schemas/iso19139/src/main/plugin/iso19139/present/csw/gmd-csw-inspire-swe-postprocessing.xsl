@@ -678,6 +678,7 @@
   </xsl:template>
 
 
+
   <!-- Fixed values for GEMET thesaurus name. Date type requires text value also -->
   <xsl:template match="gmd:thesaurusName[gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']">
     <gmd:thesaurusName>
@@ -941,4 +942,7 @@
       <xsl:value-of select="." />
     </xsl:copy>
   </xsl:template>
+
+  <!-- Remove template section for GEMET INSPIRE Themes in some metadata -->
+  <xsl:template match="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:keyword[1]/gco:CharacterString = '--- INSPIRE Tema']" />
 </xsl:stylesheet>
