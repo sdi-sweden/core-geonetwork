@@ -925,7 +925,7 @@
           <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/*/text()" />
 
           <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
-            <xsl:copy-of select="." />
+            <xsl:copy-of select="." copy-namespaces="no" />
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
