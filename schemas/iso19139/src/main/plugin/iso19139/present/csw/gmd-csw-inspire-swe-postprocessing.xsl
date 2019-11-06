@@ -122,6 +122,14 @@
       <xsl:apply-templates select="gmd:spatialRepresentationType" />
       <xsl:apply-templates select="gmd:spatialResolution" />
       <xsl:apply-templates select="gmd:language" />
+
+      <!-- Some metadata misses this mandatory element -->
+      <xsl:if test="not(gmd:language)">
+        <gmd:language>
+          <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="swe"/>
+        </gmd:language>
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:characterSet" />
       <xsl:apply-templates select="gmd:topicCategory" />
       <xsl:apply-templates select="gmd:environmentDescription" />
@@ -819,6 +827,36 @@
       <xsl:apply-templates select="gmd:distributorTransferOptions" />
 
     </xsl:copy>
+  </xsl:template>
+
+  <!-- Remove gmd:report with empty values in gmd:result -->
+  <xsl:template match="gmd:report[gmd:DQ_DomainConsistency]">
+    <xsl:variable name="specificationTitle" select="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title/*/text()" />
+    <xsl:variable name="specificationDate" select="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:date/*/gmd:date/*/text()" />
+
+    <xsl:if test="string(normalize-space($specificationTitle)) and
+			  	  string(normalize-space($specificationDate))
+                  ">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+        <xsl:apply-templates select="*" />
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
+
+  <!-- Fix invalid gco:DateTime -->
+  <xsl:template match="gco:DateTime">
+    <xsl:variable name="value" select="." />
+
+    <xsl:choose>
+      <xsl:when test="string-length($value) &lt; 11">
+        <gco:Date><xsl:value-of select="." /></gco:Date>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="." />
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- Remove invalid lst namespace elements -->
