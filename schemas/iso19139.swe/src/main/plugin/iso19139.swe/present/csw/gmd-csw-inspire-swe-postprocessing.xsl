@@ -111,6 +111,14 @@
       <xsl:apply-templates select="gmd:spatialRepresentationType" />
       <xsl:apply-templates select="gmd:spatialResolution" />
       <xsl:apply-templates select="gmd:language" />
+
+      <!-- Some metadata misses this mandatory element -->
+      <xsl:if test="not(gmd:language)">
+        <gmd:language>
+          <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="swe"/>
+        </gmd:language>
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:characterSet" />
       <xsl:apply-templates select="gmd:topicCategory" />
       <xsl:apply-templates select="gmd:environmentDescription" />
