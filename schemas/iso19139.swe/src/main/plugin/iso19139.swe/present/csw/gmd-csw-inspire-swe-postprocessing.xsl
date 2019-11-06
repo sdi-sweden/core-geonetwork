@@ -1,27 +1,47 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
-                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gco="http://www.isotc211.org/2005/gco"
-                xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:gml="http://www.opengis.net/gml"
+                xmlns:gml32="http://www.opengis.net/gml/3.2"
+                xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:lst="http://www.lansstyrelsen.se"
-                xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gse="http://www.geodata.se/gse"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:srv="http://www.isotc211.org/2005/srv"
+                xmlns:gse="http://www.geodata.se/gse"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 exclude-result-prefixes="#all">
 
   <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes" indent="yes"/>
 
   <!-- Template for Copy data -->
   <xsl:template name="copyData" match="@*|node()">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
 
-  <!-- InspireCSWProxy rules are copied here -->
+
+  <xsl:template match="gml32:*">
+    <xsl:element name="{name()}" namespace="http://www.opengis.net/gml">
+      <xsl:copy-of select="namespace::*[not(name() = 'gml')]" />
+
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template match="@gml32:*">
+    <xsl:attribute name="{name()}" namespace="http://www.opengis.net/gml">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
 
   <!-- remove namespace declaration of gse from root element -->
   <xsl:template match="gmd:MD_Metadata">
     <xsl:element name="{name()}" namespace="{namespace-uri()}">
-      <xsl:copy-of select="namespace::*[not(name() = 'gse')]" />
+      <xsl:copy-of select="namespace::*[not(name() = 'gse') and not(name() = 'gml')]" />
+      <xsl:namespace name="gmx" select="'http://www.isotc211.org/2005/gmx'"/>
+      <xsl:namespace name="gml" select="'http://www.opengis.net/gml'"/>
 
       <!-- Fixed value for schemaLocation -->
       <xsl:attribute name="xsi:schemaLocation">http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd  http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd  http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd</xsl:attribute>
@@ -45,7 +65,7 @@
 
 
   <xsl:template match="gmd:MD_DataIdentification">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*" />
 
       <xsl:apply-templates select="gmd:citation" />
@@ -120,7 +140,7 @@
   <!-- fix keyword value if value contains period character (.) -->
   <xsl:template match="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[contains(gco:CharacterString, '.')]">
     <xsl:variable name="keywordValue" select="gco:CharacterString" />
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <gco:CharacterString><xsl:value-of select="substring-after($keywordValue,' ')" /></gco:CharacterString>
     </xsl:copy>
   </xsl:template>
@@ -137,7 +157,7 @@
 	      gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089']">
     <xsl:variable name="isService" select="count(//srv:SV_ServiceIdentification) > 0" />
 
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:choose>
         <xsl:when test="$isService">
           <gco:CharacterString>Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster</gco:CharacterString>
@@ -158,7 +178,7 @@
 	      ]/gmd:date/gmd:CI_Date/gmd:date">
     <xsl:variable name="isService" select="count(//srv:SV_ServiceIdentification) > 0" />
 
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:choose>
         <xsl:when test="$isService">
           <gco:Date>2009-10-20</gco:Date>
@@ -240,10 +260,10 @@
 
   <!-- ensure codespace always comes after code -->
   <xsl:template match="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*"/>
-      <xsl:copy-of select="gmd:code"/>
-      <xsl:copy-of select="gmd:codeSpace"/>
+      <xsl:apply-templates select="gmd:code"/>
+      <xsl:apply-templates select="gmd:codeSpace"/>
     </xsl:copy>
   </xsl:template>
 
@@ -275,7 +295,7 @@
 
   <!-- add attribute @gml:id to gml:timeperiod if missing -->
   <xsl:template match="gml:TimePeriod[not(@gml:id) or normalize-space(@gml:id)='' or normalize-space(@gml:id)='Temporal']">
-    <gml:TimePeriod>
+    <xsl:element name="gml:TimePeriod" namespace="http://www.opengis.net/gml">
       <xsl:choose>
         <xsl:when test="normalize-space(@gml:id)='' or normalize-space(@gml:id)='Temporal'">
           <xsl:attribute name="gml:id">
@@ -288,7 +308,26 @@
       </xsl:choose>
       <xsl:copy-of select="gml:beginPosition"/>
       <xsl:copy-of select="gml:endPosition"/>
-    </gml:TimePeriod>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template match="gml32:TimePeriod[not(@gml32:id) or normalize-space(@gml32:id)='' or normalize-space(@gml32:id)='Temporal']">
+    <xsl:element name="gml:TimePeriod" namespace="http://www.opengis.net/gml">
+      <xsl:choose>
+        <xsl:when test="normalize-space(@gml32:id)='' or normalize-space(@gml32:id)='Temporal'">
+          <xsl:attribute name="gml:id">
+            <xsl:value-of select="generate-id(gml32:TimePeriod)"/>
+          </xsl:attribute>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="gml:id">
+            <xsl:value-of select="@gml32:id"/>
+          </xsl:attribute>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates select="gml32:beginPosition"/>
+      <xsl:apply-templates select="gml32:endPosition"/>
+    </xsl:element>
   </xsl:template>
 
   <!-- remove online at this place -->
@@ -304,7 +343,7 @@
     <xsl:variable name="eastValue" select="gmd:eastBoundLongitude/gco:Decimal" as="xs:float" />
     <xsl:variable name="southValue" select="gmd:southBoundLatitude/gco:Decimal" as="xs:float" />
     <xsl:variable name="northValue" select="gmd:northBoundLatitude/gco:Decimal" as="xs:float"/>
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <gmd:westBoundLongitude>
         <gco:Decimal><xsl:value-of select="format-number($westValue, '#.00')"/></gco:Decimal>
       </gmd:westBoundLongitude>
@@ -347,7 +386,7 @@
     (d.1) If gmd:identificationInfo/srv:SV_ServiceIdentification/srv:operatesOn is present, add srv:containsOperations after srv:couplingType and before srv:operatesOn
     (d.2) If srv:operatesOn is missing, add srv:containsOperations as last child of srv:SV_ServiceIdentification -->
   <xsl:template match="gmd:MD_Metadata[gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue = 'service']/gmd:identificationInfo/srv:SV_ServiceIdentification">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <!--<xsl:apply-templates select="node()[not(self::srv:couplingType)][not(self::srv:containsOperations)][not(self::srv:operatesOn)][not(self::gmd:topicCategory)]"/>-->
 
       <xsl:apply-templates select="gmd:citation" />
@@ -423,7 +462,7 @@
             </xsl:attribute>
           </srv:containsOperations>
 
-          <xsl:copy-of select="srv:operatesOn"/>
+          <xsl:apply-templates select="srv:operatesOn"/>
         </xsl:when>
         <xsl:otherwise>
           <srv:couplingType>
@@ -458,7 +497,7 @@
               <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
 
               <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
-                <xsl:copy-of select="." />
+                <xsl:copy-of select="." copy-namespaces="no" />
               </xsl:if>
             </xsl:for-each>
           </xsl:variable>
@@ -466,15 +505,15 @@
           <!-- Only add container if has valid online resources -->
           <xsl:if test="count($onlineResources/*) > 0">
             <gmd:transferOptions>
-              <xsl:copy>
+              <xsl:copy copy-namespaces="no">
                 <xsl:copy-of select="@*" />
-                <xsl:copy-of select="gmd:unitsOfDistribution" />
-                <xsl:copy-of select="gmd:transferSize" />
+                <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no"/>
+                <xsl:copy-of select="gmd:transferSize" copy-namespaces="no"/>
 
                 <xsl:copy-of select="$onlineResources" />
 
-                <xsl:copy-of select="gmd:unitsOfDistribution" />
-                <xsl:copy-of select="gmd:offLine" />
+                <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no"/>
+                <xsl:copy-of select="gmd:offLine" copy-namespaces="no"/>
               </xsl:copy>
             </gmd:transferOptions>
           </xsl:if>
@@ -489,13 +528,13 @@
 
         <xsl:if test="string(normalize-space($nameValue)) and string(normalize-space($versionValue))">
           <gmd:distributionFormat>
-            <xsl:copy-of select="gmd:MD_Format"/>
+            <xsl:copy-of select="gmd:MD_Format" copy-namespaces="no"/>
           </gmd:distributionFormat>
         </xsl:if>
       </xsl:for-each>
     </xsl:variable>
 
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:choose>
         <xsl:when test="not(gmd:distributionFormat)"><xsl:copy-of select="$addformatsOptions"/></xsl:when>
         <xsl:otherwise><xsl:apply-templates select="gmd:distributionFormat"/></xsl:otherwise>
@@ -517,7 +556,7 @@
   <!-- Set indeterminatePosition to now on end date if begindate as value an enddate is empty -->
   <!-- Verify that GML ID has proper value -->
   <xsl:template match="gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod">
-    <xsl:copy>
+    <xsl:element name="gml:TimePeriod" namespace="http://www.opengis.net/gml">
       <xsl:copy-of select="@*" />
 
       <xsl:if test="not(string(@gml:id))">
@@ -540,12 +579,46 @@
 
         <xsl:value-of select="$newEndPosition"/>
       </gml:endPosition>
-    </xsl:copy>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template match="gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml32:TimePeriod">
+    <xsl:message>1</xsl:message>
+    <xsl:element name="gml:TimePeriod" namespace="http://www.opengis.net/gml">
+
+      <xsl:choose>
+        <xsl:when test="normalize-space(@gml32:id)='' or normalize-space(@gml32:id)='Temporal'">
+          <xsl:attribute name="gml:id">
+            <xsl:value-of select="generate-id(gml32:TimePeriod)"/>
+          </xsl:attribute>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="gml:id">
+            <xsl:value-of select="@gml32:id"/>
+          </xsl:attribute>
+        </xsl:otherwise>
+      </xsl:choose>
+
+      <xsl:variable name="newBeginPosition" select="translate(gml32:beginPosition/text(), translate(.,'0123456789-',''), '')"/>
+      <xsl:variable name="newEndPosition" select="translate(gml32:endPosition/text(), translate(.,'0123456789-',''), '')"/>
+
+      <gml:beginPosition>
+
+        <xsl:value-of select="$newBeginPosition"/>
+      </gml:beginPosition>
+      <gml:endPosition>
+        <xsl:if test="not(string($newEndPosition))">
+          <xsl:attribute name="indeterminatePosition">now</xsl:attribute>
+        </xsl:if>
+
+        <xsl:value-of select="$newEndPosition"/>
+      </gml:endPosition>
+    </xsl:element>
   </xsl:template>
 
   <!-- 4. For each gco:Date element, remove non-digits from date value -->
   <xsl:template match="gco:Date">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:variable name="newDate" select="translate(text(), translate(.,'0123456789-',''), '')"/>
       <xsl:value-of select="$newDate"/>
     </xsl:copy>
@@ -560,7 +633,23 @@
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:copy>
+        <xsl:copy copy-namespaces="no">
+          <xsl:copy-of select="@*" />
+          <xsl:apply-templates select="*" />
+        </xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="gmd:temporalElement[gmd:EX_TemporalExtent/gmd:extent/gml32:TimePeriod/gml32:beginPosition]">
+    <xsl:choose>
+      <xsl:when test="not(string(gmd:EX_TemporalExtent/gmd:extent/gml32:TimePeriod/gml32:beginPosition))  and
+        not(string(gmd:EX_TemporalExtent/gmd:extent/gml32:TimePeriod/gml32:endPosition))">
+        <!-- Remove element if empty values in beginPosition and endPosition -->
+      </xsl:when>
+
+      <xsl:otherwise>
+        <xsl:copy copy-namespaces="no">
           <xsl:copy-of select="@*" />
           <xsl:apply-templates select="*" />
         </xsl:copy>
@@ -582,10 +671,24 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="@gml32:id">
+    <xsl:choose>
+      <xsl:when test="normalize-space(.)=''">
+        <xsl:attribute name="gml:id">
+          <xsl:value-of select="generate-id(.)"/>
+        </xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:attribute name="gml:id">
+          <xsl:value-of select="."/>
+        </xsl:attribute>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
   <!-- Identifier change from Anchor to CharacterString -->
   <xsl:template match="gmd:identifier[gmd:MD_Identifier/gmd:code/gmx:Anchor]/gmd:MD_Identifier/gmd:code">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*" />
 
       <gco:CharacterString><xsl:value-of select="gmx:Anchor/@xlink:href" /></gco:CharacterString>
@@ -657,11 +760,11 @@
 
     <!-- Step 2) Copy Limitations on public access: LimitationsOnPublicAccess, removing the Anchor -->
     <xsl:for-each select="gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]]">
-      <xsl:copy>
+      <xsl:copy copy-namespaces="no">
         <xsl:copy-of select="@*" />
 
         <xsl:for-each select="gmd:MD_LegalConstraints">
-          <xsl:copy>
+          <xsl:copy copy-namespaces="no">
             <xsl:copy-of select="@*" />
 
             <xsl:apply-templates select="gmd:accessConstraints" />
@@ -689,7 +792,7 @@
   		(string(gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title) and gmd:EX_VerticalExtent/gmd:verticalCRS/@xlink:title != '{{vertical_crs_datum}}')" />
 
     <xsl:if test="$validMinimumValue and $validMaximumValue and $validVerticalCRS">
-      <xsl:copy>
+      <xsl:copy copy-namespaces="no">
         <xsl:copy-of select="@*" />
         <xsl:apply-templates select="*" />
       </xsl:copy>
@@ -702,7 +805,7 @@
     <xsl:variable name="versionValue" select="gmd:MD_Format/gmd:version/gco:CharacterString" />
 
     <xsl:if test="string(normalize-space($nameValue)) and string(normalize-space($versionValue))">
-      <xsl:copy>
+      <xsl:copy copy-namespaces="no">
         <xsl:copy-of select="@*" />
         <xsl:apply-templates select="*" />
       </xsl:copy>
@@ -715,7 +818,7 @@
     <xsl:variable name="versionValue" select="gmd:MD_Format/gmd:version/gco:CharacterString" />
 
     <xsl:if test="string(normalize-space($nameValue)) and string(normalize-space($versionValue))">
-      <xsl:copy>
+      <xsl:copy copy-namespaces="no">
         <xsl:copy-of select="@*" />
         <xsl:apply-templates select="*" />
       </xsl:copy>
@@ -732,7 +835,7 @@
           <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
 
           <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
-            <xsl:copy-of select="." />
+            <xsl:copy-of select="." copy-namespaces="no" />
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
@@ -740,19 +843,19 @@
 
     <!-- Only add container if has  valid online resources -->
     <xsl:if test="count($onlineResources/*) > 0">
-      <xsl:copy>
+      <xsl:copy copy-namespaces="no">
         <xsl:copy-of select="@*" />
 
         <xsl:for-each select="gmd:MD_DigitalTransferOptions">
-          <xsl:copy>
+          <xsl:copy copy-namespaces="no">
             <xsl:copy-of select="@*" />
-            <xsl:copy-of select="gmd:unitsOfDistribution" />
-            <xsl:copy-of select="gmd:transferSize" />
+            <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no" />
+            <xsl:copy-of select="gmd:transferSize" copy-namespaces="no" />
 
             <xsl:copy-of select="$onlineResources" />
 
-            <xsl:copy-of select="gmd:unitsOfDistribution" />
-            <xsl:copy-of select="gmd:offLine" />
+            <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no" />
+            <xsl:copy-of select="gmd:offLine" copy-namespaces="no" />
           </xsl:copy>
         </xsl:for-each>
       </xsl:copy>
@@ -778,19 +881,19 @@
 
     <!-- Only add container if has  valid online resources -->
     <xsl:if test="count($onlineResources/*) > 0">
-      <xsl:copy>
+      <xsl:copy copy-namespaces="no">
         <xsl:copy-of select="@*" />
 
         <xsl:for-each select="gmd:MD_DigitalTransferOptions">
-          <xsl:copy>
+          <xsl:copy copy-namespaces="no">
             <xsl:copy-of select="@*" />
-            <xsl:copy-of select="gmd:unitsOfDistribution" />
-            <xsl:copy-of select="gmd:transferSize" />
+            <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no" />
+            <xsl:copy-of select="gmd:transferSize" copy-namespaces="no" />
 
             <xsl:copy-of select="$onlineResources" />
 
-            <xsl:copy-of select="gmd:unitsOfDistribution" />
-            <xsl:copy-of select="gmd:offLine" />
+            <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no" />
+            <xsl:copy-of select="gmd:offLine" copy-namespaces="no" />
           </xsl:copy>
         </xsl:for-each>
 
@@ -811,7 +914,7 @@
                   string(normalize-space($phoneValue)) or
                   string(normalize-space($electronicMailAddressValue)) or
                   string(normalize-space($roleValue))">
-      <xsl:copy>
+      <xsl:copy copy-namespaces="no">
         <xsl:copy-of select="@*" />
         <xsl:apply-templates select="*" />
       </xsl:copy>
@@ -824,7 +927,7 @@
       <xsl:when test="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode[not(@codeListValue) or @codeListValue='' or @codeListValue='{{maintenance_frequency}}']">
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy>
+        <xsl:copy copy-namespaces="no">
           <xsl:apply-templates select="@*|node()" mode="resourceMaintenance"/>
         </xsl:copy>
       </xsl:otherwise>
@@ -836,13 +939,13 @@
 				or normalize-space(gco:CharacterString)='{{maintenance_note}}'">
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy>
+        <xsl:copy copy-namespaces="no">
           <xsl:apply-templates select="@*|node()"/>
         </xsl:copy></xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xsl:template match="@*|node()" mode="resourceMaintenance">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*|node()" mode="resourceMaintenance"/>
     </xsl:copy>
   </xsl:template>
@@ -865,7 +968,7 @@
                   string(normalize-space($phoneValue)) or
                   string(normalize-space($electronicMailAddressValue)) or
                   string(normalize-space($roleValue))">
-                <xsl:copy-of select="." />
+                <xsl:copy-of select="." copy-namespaces="no" />
               </xsl:if>
             </xsl:for-each>
           </xsl:variable>
@@ -898,13 +1001,10 @@
     <xsl:variable name="specificationTitle" select="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title/*/text()" />
     <xsl:variable name="specificationDate" select="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:date/*/gmd:date/*/text()" />
 
-    <xsl:message>spec title: <xsl:value-of select="$specificationTitle"/></xsl:message>
-    <xsl:message>spec date: <xsl:value-of select="$specificationDate"/></xsl:message>
-
     <xsl:if test="string(normalize-space($specificationTitle)) and
 			  	  string(normalize-space($specificationDate))
                   ">
-      <xsl:copy>
+      <xsl:copy copy-namespaces="no">
         <xsl:copy-of select="@*" />
         <xsl:apply-templates select="*" />
       </xsl:copy>
@@ -921,7 +1021,7 @@
         <gco:Date><xsl:value-of select="." /></gco:Date>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy-of select="." />
+        <xsl:copy-of select="." copy-namespaces="no" />
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -943,7 +1043,7 @@
 
   <!-- Fix invalid characterset value: 004 -->
   <xsl:template match="gmd:MD_CharacterSetCode[@codeListValue = '004']">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*[name() != 'codeListValue']" />
       <xsl:attribute name="codeListValue">utf8</xsl:attribute>
 
