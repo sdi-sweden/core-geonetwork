@@ -512,7 +512,6 @@
 
                 <xsl:copy-of select="$onlineResources" />
 
-                <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no"/>
                 <xsl:copy-of select="gmd:offLine" copy-namespaces="no"/>
               </xsl:copy>
             </gmd:transferOptions>
@@ -854,7 +853,6 @@
 
             <xsl:copy-of select="$onlineResources" />
 
-            <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no" />
             <xsl:copy-of select="gmd:offLine" copy-namespaces="no" />
           </xsl:copy>
         </xsl:for-each>
@@ -892,7 +890,6 @@
 
             <xsl:copy-of select="$onlineResources" />
 
-            <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no" />
             <xsl:copy-of select="gmd:offLine" copy-namespaces="no" />
           </xsl:copy>
         </xsl:for-each>
