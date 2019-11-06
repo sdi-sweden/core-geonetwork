@@ -234,9 +234,7 @@
                 <gmd:specification>
                   <gmd:CI_Citation>
                     <gmd:title>
-                      <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2009/976">
-                        Kommissionens förordning (eg) nr 976/2009 av den 19 oktober 2009 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg med avseende på nättjänster
-                      </gmx:Anchor>
+                      <gco:CharacterString>Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster</gco:CharacterString>
                     </gmd:title>
                     <gmd:date>
                       <gmd:CI_Date>
@@ -254,6 +252,56 @@
                 </gmd:specification>
                 <gmd:explanation>
                   <gco:CharacterString>Enligt ovanstående specifikation</gco:CharacterString>
+                </gmd:explanation>
+                <gmd:pass>
+                  <gco:Boolean>true</gco:Boolean>
+                </gmd:pass>
+              </gmd:DQ_ConformanceResult>
+            </gmd:result>
+          </gmd:DQ_DomainConsistency>
+        </gmd:report>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!-- Remove old report for Kommissionens förordning nr 1089/2009 vad gäller interoperabilitet för rumsliga datamängder och datatjänster, if the new report exists,
+       otherwise replace it -->
+  <xsl:template match="gmd:report[lower-case(normalize-space(gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString)) = 'kommissionens förordning nr 1089/2009 vad gäller interoperabilitet för rumsliga datamängder och datatjänster']"
+                priority="10">
+
+    <xsl:variable name="existsNewReport" select="count(//gmd:report[gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089' or
+      lower-case(normalize-space(gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString)) = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster']) > 0" />
+
+    <xsl:choose>
+      <!-- Remove it -->
+      <xsl:when test="$existsNewReport = true()"></xsl:when>
+      <!-- Replace it with correct entry -->
+      <xsl:otherwise>
+        <gmd:report>
+          <gmd:DQ_DomainConsistency>
+            <gmd:result>
+              <gmd:DQ_ConformanceResult>
+                <gmd:specification>
+                  <gmd:CI_Citation>
+                    <gmd:title>
+                      <gco:CharacterString>Kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster</gco:CharacterString>
+                    </gmd:title>
+                    <gmd:date>
+                      <gmd:CI_Date>
+                        <gmd:date>
+                          <gco:Date>2010-12-08</gco:Date>
+                        </gmd:date>
+                        <gmd:dateType>
+                          <gmd:CI_DateTypeCode
+                            codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode"
+                            codeListValue="publication"/>
+                        </gmd:dateType>
+                      </gmd:CI_Date>
+                    </gmd:date>
+                  </gmd:CI_Citation>
+                </gmd:specification>
+                <gmd:explanation>
+                  <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf</gco:CharacterString>
                 </gmd:explanation>
                 <gmd:pass>
                   <gco:Boolean>true</gco:Boolean>
