@@ -1,15 +1,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gml="http://www.opengis.net/gml"
-                xmlns:gml32="http://www.opengis.net/gml/3.2"
-                xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                xmlns:gml32="http://www.opengis.net/gml/3.2" xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:lst="http://www.lansstyrelsen.se"
-                xmlns:srv="http://www.isotc211.org/2005/srv"
-                xmlns:gse="http://www.geodata.se/gse"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gse="http://www.geodata.se/gse"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 exclude-result-prefixes="#all">
 
   <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes" indent="yes"/>
@@ -494,7 +490,7 @@
           <xsl:variable name="onlineResources">
             <xsl:for-each select="gmd:onLine">
               <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
-              <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
+              <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/*/text()" />
 
               <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
                 <xsl:copy-of select="." copy-namespaces="no" />
@@ -831,7 +827,7 @@
       <xsl:for-each select="gmd:MD_DigitalTransferOptions">
         <xsl:for-each select="gmd:onLine">
           <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
-          <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
+          <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/*/text()" />
 
           <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
             <xsl:copy-of select="." copy-namespaces="no" />
@@ -868,7 +864,7 @@
       <xsl:for-each select="gmd:MD_DigitalTransferOptions">
         <xsl:for-each select="gmd:onLine">
           <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
-          <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
+          <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/*/text()" />
 
           <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
             <xsl:copy-of select="." />

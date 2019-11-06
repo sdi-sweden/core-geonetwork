@@ -433,7 +433,7 @@
 	        		<xsl:variable name="onlineResources">
 	        			<xsl:for-each select="gmd:onLine">
 	        				<xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
-	        				<xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
+                  <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/*/text()" />
 	        				<xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
 
 	        				<xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
@@ -651,7 +651,7 @@
 	    <xsl:for-each select="gmd:MD_DigitalTransferOptions">
 	        <xsl:for-each select="gmd:onLine">
 	          <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
-	          <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
+            <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/*/text()" />
 	          <xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
 
 	          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
@@ -690,7 +690,7 @@
 	    <xsl:for-each select="gmd:MD_DigitalTransferOptions">
 	        <xsl:for-each select="gmd:onLine">
 	          <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
-	          <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString" />
+            <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/*/text()" />
 	          <xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
 
 	          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
