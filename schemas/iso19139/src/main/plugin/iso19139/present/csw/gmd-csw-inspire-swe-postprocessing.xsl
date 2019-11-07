@@ -72,7 +72,14 @@
     </gmd:metadataStandardVersion>
   </xsl:template>
 
-
+  <!-- Some metadata has href attribute without the namespace (xlink) - Fix this case managing also the correct case with the namespace --> 
+  <xsl:template match="gmx:Anchor">
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of select="@*[name() != 'href' and name() != 'xlink:href']" />
+      <xsl:attribute name="xlink:href" select="@xlink:href|@href" />
+      <xsl:value-of select="." />  
+    </xsl:copy>
+  </xsl:template>
 
   <xsl:template match="gmd:MD_DataIdentification">
     <xsl:copy>
