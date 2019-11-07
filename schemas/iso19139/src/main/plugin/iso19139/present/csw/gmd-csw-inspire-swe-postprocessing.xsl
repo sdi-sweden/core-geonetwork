@@ -994,4 +994,37 @@
       <xsl:copy-of select="gmd:MD_SecurityConstraints" copy-namespaces="no" />
     </gmd:resourceConstraints>
   </xsl:template>
+
+
+  <!-- Add date for data specification  "inspire data specifications on transport networks - guidelines" if missing: https://inspire.ec.europa.eu/id/document/tg/tn
+       Published Date: Thursday, April 17, 2014
+   -->
+  <xsl:template match="gmd:specification/gmd:CI_Citation[not(gmd:date) and lower-case(gmd:title/*/text()) = 'inspire data specifications on transport networks - guidelines']">
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="gmd:title" />
+      <xsl:apply-templates select="gmd:alternateTitle" />
+
+      <gmd:date>
+        <gmd:CI_Date>
+          <gmd:date>
+            <gco:Date>2014-04-17</gco:Date>
+          </gmd:date>
+          <gmd:dateType>
+            <gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+          </gmd:dateType>
+        </gmd:CI_Date>
+      </gmd:date>
+
+      <xsl:apply-templates select="gmd:edition" />
+      <xsl:apply-templates select="gmd:editionDate" />
+      <xsl:apply-templates select="gmd:identifier" />
+      <xsl:apply-templates select="gmd:citedResponsibleParty" />
+      <xsl:apply-templates select="gmd:presentationForm" />
+      <xsl:apply-templates select="gmd:series" />
+      <xsl:apply-templates select="gmd:otherCitationDetails" />
+      <xsl:apply-templates select="gmd:collectiveTitle" />
+      <xsl:apply-templates select="gmd:ISBN" />
+      <xsl:apply-templates select="gmd:ISSN" />
+    </xsl:copy>
+  </xsl:template>
 </xsl:stylesheet>
