@@ -982,4 +982,16 @@
 
   <!-- Remove template section for GEMET INSPIRE Themes in some metadata -->
   <xsl:template match="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:keyword[1]/gco:CharacterString = '--- INSPIRE Tema']" />
+
+  <!-- Split gmd:resourceConstraints having gmd:MD_Constraints and gmd:MD_SecurityConstraints.
+        Some metadata has the 2 elements in 1 gmd:resourceConstraints, what is invalid -->
+  <xsl:template match="gmd:resourceConstraints[gmd:MD_Constraints and gmd:MD_SecurityConstraints]">
+    <gmd:resourceConstraints>
+      <xsl:copy-of select="gmd:MD_Constraints" copy-namespaces="no" />
+    </gmd:resourceConstraints>
+
+    <gmd:resourceConstraints>
+      <xsl:copy-of select="gmd:MD_SecurityConstraints" copy-namespaces="no" />
+    </gmd:resourceConstraints>
+  </xsl:template>
 </xsl:stylesheet>
