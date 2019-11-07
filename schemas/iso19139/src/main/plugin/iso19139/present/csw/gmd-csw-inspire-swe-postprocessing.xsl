@@ -72,12 +72,12 @@
     </gmd:metadataStandardVersion>
   </xsl:template>
 
-  <!-- Some metadata has href attribute without the namespace (xlink) - Fix this case managing also the correct case with the namespace --> 
+  <!-- Some metadata has href attribute without the namespace (xlink) - Fix this case managing also the correct case with the namespace -->
   <xsl:template match="gmx:Anchor">
     <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*[name() != 'href' and name() != 'xlink:href']" />
       <xsl:attribute name="xlink:href" select="@xlink:href|@href" />
-      <xsl:value-of select="." />  
+      <xsl:value-of select="." />
     </xsl:copy>
   </xsl:template>
 
@@ -222,6 +222,36 @@
     </gmd:pass>
   </xsl:template>
 
+  <!-- Fix metadata with conformance report 'kommissionens förordning (eu) nr 1089/2010...'  without mandatory explanation element -->
+  <xsl:template match="gmd:DQ_ConformanceResult[not(gmd:explanation) and (
+	      gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089' or
+	      lower-case(normalize-space(gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString)) = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster')]">
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:specification" />
+      <gmd:explanation>
+        <gco:CharacterString>https://www.geodata.se/globalassets/dokumentarkiv/regelverk/inspire/ir_interoperabilitet.pdf</gco:CharacterString>
+      </gmd:explanation>
+      <xsl:apply-templates select="gmd:pass" />
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- Fix metadata with conformance report 'kommissionens förordning (eg) nr 976/2009...'  without mandatory explanation element -->
+  <xsl:template match="gmd:DQ_ConformanceResult[not(gmd:explanation) and (
+	      gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976' or
+	      lower-case(normalize-space(gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString)) = 'kommissionens förordning (eg) nr 976/2009 av den 19 oktober 2009 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg med avseende på nättjänster')]">
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:specification" />
+      <gmd:explanation>
+        <gco:CharacterString>Enligt ovanstående specifikation</gco:CharacterString>
+      </gmd:explanation>
+      <xsl:apply-templates select="gmd:pass" />
+    </xsl:copy>
+  </xsl:template>
+
   <!-- Remove old report for Kommissionens förordning nr 976/2009 avseende nättjänster, if the new report exists,
       otherwise replace it-->
   <xsl:template match="gmd:report[lower-case(normalize-space(gmd:DQ_CompletenessOmission/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString)) = 'kommissionens förordning nr 976/2009 avseende nättjänster']">
@@ -322,7 +352,7 @@
   </xsl:template>
 
   <!-- Remove unused report for measure Yttäckning - täckningsgrad -->
-  <xsl:template match="gmd:report[lower-case(gmd:DQ_CompletenessOmission/gmd:nameOfMeasure/gco:CharacterString) = 'yttäckning - täckningsgrad']" />
+  <xsl:template match="gmd:report[lower-case(gmd:DQ_CompletenessOmission/gmd:nameOfMeasure/gco:CharacterString) = 'yttäckning - täckningsgrad']" priority="10" />
 
   <!--  remove spatial resolution if gco:Distance is not present or is empty -->
   <xsl:template match="gmd:spatialResolution[
