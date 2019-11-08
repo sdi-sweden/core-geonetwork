@@ -96,7 +96,7 @@
       <xsl:apply-templates select="gmd:resourceFormat" />
       <xsl:apply-templates select="gmd:descriptiveKeywords" />
 
-      <xsl:if test="not(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/text() = 'Spatial scope'])">
+      <xsl:if test="not(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'Spatial scope'])">
         <gmd:descriptiveKeywords>
           <gmd:MD_Keywords>
             <gmd:keyword>
@@ -491,7 +491,7 @@
 
       <xsl:apply-templates select="gmd:descriptiveKeywords" />
 
-      <xsl:if test="not(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/text() = 'Spatial scope'])">
+      <xsl:if test="not(gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'Spatial scope'])">
         <gmd:descriptiveKeywords>
           <gmd:MD_Keywords>
             <gmd:keyword>
