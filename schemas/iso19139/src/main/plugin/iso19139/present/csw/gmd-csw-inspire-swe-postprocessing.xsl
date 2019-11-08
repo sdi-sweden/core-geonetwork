@@ -995,7 +995,6 @@
     </gmd:resourceConstraints>
   </xsl:template>
 
-
   <!-- Add date for data specification  "inspire data specifications on transport networks - guidelines" if missing: https://inspire.ec.europa.eu/id/document/tg/tn
        Published Date: Thursday, April 17, 2014
    -->
@@ -1027,4 +1026,7 @@
       <xsl:apply-templates select="gmd:ISSN" />
     </xsl:copy>
   </xsl:template>
+
+  <!-- Some metadata has invalid gmd:RS_Identifier in gmd:referenceSystemInfo, without gmd:code - remove the element -->
+  <xsl:template match="gmd:referenceSystemInfo[not(gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code)]" />
 </xsl:stylesheet>
