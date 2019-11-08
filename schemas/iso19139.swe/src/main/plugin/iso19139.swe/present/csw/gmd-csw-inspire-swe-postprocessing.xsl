@@ -1062,6 +1062,19 @@
     </xsl:if>
   </xsl:template>
 
+  <!-- Add missing gmd:explanation (mandatory element) for metadata missing it in gmd:DQ_ConformanceResult -->
+  <xsl:template match="gmd:DQ_ConformanceResult[not(gmd:explanation)]">
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:specification" />
+      <gmd:explanation gco:nilReason='missing'>
+        <gco:CharacterString></gco:CharacterString>
+      </gmd:explanation>
+
+      <xsl:apply-templates select="gmd:pass" />
+    </xsl:copy>
+  </xsl:template>
 
   <!-- Fix invalid gco:DateTime -->
   <xsl:template match="gco:DateTime">
@@ -1106,4 +1119,8 @@
       <xsl:value-of select="." />
     </xsl:copy>
   </xsl:template>
+
+  <!-- Some metadata has invalid gmd:RS_Identifier in gmd:referenceSystemInfo, without gmd:code - remove the element -->
+  <xsl:template match="gmd:referenceSystemInfo[not(gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code)]" />
+
 </xsl:stylesheet>
