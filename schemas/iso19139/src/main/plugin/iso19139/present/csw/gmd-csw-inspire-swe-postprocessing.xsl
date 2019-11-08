@@ -1049,4 +1049,18 @@
       <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{gco:CharacterString}" />
     </xsl:copy>
   </xsl:template>
+
+  <!-- Fix date for GEMET thesaurus -->
+  <xsl:template match="gmd:thesaurusName[gmd:CI_Citation/gmd:title/*/text() = 'GEMET – INSPIRE themes, version 1.0']/gmd:CI_Citation/gmd:date">
+    <gmd:date>
+      <gmd:CI_Date>
+        <gmd:date>
+          <gco:Date>2008-06-01</gco:Date>
+        </gmd:date>
+        <gmd:dateType>
+          <gmd:CI_DateTypeCode codeListValue="publication" codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode">publication</gmd:CI_DateTypeCode>
+        </gmd:dateType>
+      </gmd:CI_Date>
+    </gmd:date>
+  </xsl:template>
 </xsl:stylesheet>
