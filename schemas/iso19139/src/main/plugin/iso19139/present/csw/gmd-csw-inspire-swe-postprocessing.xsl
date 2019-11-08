@@ -1042,4 +1042,11 @@
 
   <!-- Some metadata has invalid gmd:RS_Identifier in gmd:referenceSystemInfo, without gmd:code - remove the element -->
   <xsl:template match="gmd:referenceSystemInfo[not(gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code)]" />
+
+  <!-- Change gmd:language with gco:CharacterString to gmd:LanguageCode -->
+  <xsl:template match="gmd:language[gco:CharacterString]">
+    <xsl:copy copy-namespaces="no">
+      <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{gco:CharacterString}" />
+    </xsl:copy>
+  </xsl:template>
 </xsl:stylesheet>
