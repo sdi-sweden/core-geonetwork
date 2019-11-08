@@ -333,7 +333,7 @@
   <xsl:template match="gmd:applicationSchemaInfo" />
 
   <!-- Remove descriptiveKeywords if thesaurus title starts with 'SGU' text. -->
-  <xsl:template match="gmd:descriptiveKeywords[starts-with(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'SGU')]" />
+  <xsl:template match="gmd:descriptiveKeywords[starts-with(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'SGU')]" priority="10"/>
 
   <!-- end of InspireCSWProxy rules -->
 
@@ -1123,4 +1123,16 @@
   <!-- Some metadata has invalid gmd:RS_Identifier in gmd:referenceSystemInfo, without gmd:code - remove the element -->
   <xsl:template match="gmd:referenceSystemInfo[not(gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code)]" />
 
+  <!-- Remove gmd:descriptiveKeywords without any gmd:keyword with values -->
+  <xsl:template match="gmd:descriptiveKeywords">
+    <xsl:variable name="countNonEmptyKeywords" select="count(gmd:MD_Keywords/gmd:keyword[normalize-space(*/text()) != ''])"/>
+
+    <xsl:if test="$countNonEmptyKeywords > 0">
+      <xsl:copy copy-namespaces="no">
+        <xsl:copy-of select="@*" />
+
+        <xsl:apply-templates select="*" />
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
 </xsl:stylesheet>
