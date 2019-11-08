@@ -1106,4 +1106,8 @@
       <xsl:value-of select="." />
     </xsl:copy>
   </xsl:template>
+            
+  <!-- Some metadata has invalid gmd:RS_Identifier in gmd:referenceSystemInfo, without gmd:code - remove the element --> 
+  <xsl:template match="gmd:referenceSystemInfo[not(gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code)]" />
+  
 </xsl:stylesheet>
