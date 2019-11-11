@@ -668,7 +668,7 @@
   <xsl:template match="gco:Date">
     <xsl:copy>
       <xsl:variable name="newDate" select="translate(text(), translate(.,'0123456789-',''), '')"/>
-      <xsl:value-of select="$newDate"/>
+          <xsl:value-of select="$newDate"/>
     </xsl:copy>
   </xsl:template>
 
@@ -983,8 +983,8 @@
     <gco:LocalName>view</gco:LocalName>
   </xsl:template>
 
-  <!-- Fix invalid characterset value: 004 -->
-  <xsl:template match="gmd:MD_CharacterSetCode[@codeListValue = '004']">
+  <!-- Fix invalid characterset value: 004 or empty -->
+  <xsl:template match="gmd:MD_CharacterSetCode[@codeListValue = '004' or @codeListValue = '']">
     <xsl:copy>
       <xsl:copy-of select="@*[name() != 'codeListValue']" />
       <xsl:attribute name="codeListValue">utf8</xsl:attribute>
