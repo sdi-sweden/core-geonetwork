@@ -652,14 +652,63 @@
       <xsl:variable name="newBeginPosition" select="translate(gml:beginPosition/text(), translate(.,'0123456789-',''), '')"/>
       <xsl:variable name="newEndPosition" select="translate(gml:endPosition/text(), translate(.,'0123456789-',''), '')"/>
 
+      <xsl:variable name="newBeginPosition2">
+        <xsl:choose>
+          <!-- Handle year-month format not allowed in INSPIRE validator (requires YYYY-MM-DD) -->
+          <xsl:when test="string-length($newBeginPosition) = 7">
+            <xsl:value-of select="$newBeginPosition"/>-01
+          </xsl:when>
+
+          <!-- Handle year format not allowed in INSPIRE validator (requires YYYY) -->
+          <xsl:when test="string-length($newBeginPosition) = 4">
+            <xsl:value-of select="$newBeginPosition"/>-01-01
+          </xsl:when>
+
+          <xsl:otherwise>
+            <xsl:value-of select="$newBeginPosition"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+
+      <xsl:variable name="newEndPosition2">
+        <xsl:choose>
+          <!-- Handle year-month format not allowed in INSPIRE validator (requires YYYY-MM-DD) -->
+          <xsl:when test="string-length($newEndPosition) = 7">
+            <xsl:variable name="newEndPositionAsString" select="concat($newEndPosition, '-01')" />
+
+            <xsl:choose>
+              <xsl:when test="$newEndPositionAsString castable as xs:date">
+                <xsl:variable name="dtNewEndPosition" as="xs:date" select="xs:date($newEndPositionAsString)"/>
+                <xsl:variable name="finalDate" select="xs:date($dtNewEndPosition) - xs:dayTimeDuration(concat('P', day-from-date($dtNewEndPosition) - 1, 'D')) + xs:yearMonthDuration('P1M') - xs:dayTimeDuration('P1D')" />
+                <xsl:value-of select="$finalDate" />
+              </xsl:when>
+
+              <xsl:otherwise>
+               <!-- Keep original value: will not validate as the original date will not be valid. Will require manual fixing -->
+               <xsl:value-of select="$newEndPosition" />
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+
+          <!-- Handle year format not allowed in INSPIRE validator (requires YYYY) -->
+          <xsl:when test="string-length($newEndPosition) = 4">
+            <xsl:value-of select="$newEndPosition" />-12-31
+          </xsl:when>
+
+          <xsl:otherwise>
+            <xsl:value-of select="$newEndPosition"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+
       <gml:beginPosition>
-        <xsl:value-of select="$newBeginPosition"/>
+        <xsl:value-of select="$newBeginPosition2"/>
       </gml:beginPosition>
       <gml:endPosition>
-        <xsl:if test="not(string($newEndPosition))">
+        <xsl:if test="not(string($newEndPosition2))">
           <xsl:attribute name="indeterminatePosition">now</xsl:attribute>
         </xsl:if>
-        <xsl:value-of select="$newEndPosition"/>
+        <xsl:value-of select="$newEndPosition2"/>
       </gml:endPosition>
     </xsl:copy>
   </xsl:template>
@@ -668,7 +717,22 @@
   <xsl:template match="gco:Date">
     <xsl:copy>
       <xsl:variable name="newDate" select="translate(text(), translate(.,'0123456789-',''), '')"/>
+
+      <xsl:choose>
+        <!-- Handle year-month format not allowed in INSPIRE validator (requires YYYY-MM-DD) -->
+        <xsl:when test="string-length($newDate) = 7">
+          <xsl:value-of select="$newDate"/>-01
+        </xsl:when>
+
+        <!-- Handle year format not allowed in INSPIRE validator (requires YYYY) -->
+        <xsl:when test="string-length($newDate) = 4">
+          <xsl:value-of select="$newDate"/>-01-01
+        </xsl:when>
+
+        <xsl:otherwise>
           <xsl:value-of select="$newDate"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:copy>
   </xsl:template>
 
