@@ -1282,4 +1282,20 @@
       <xsl:copy-of select="gmd:MD_SecurityConstraints" copy-namespaces="no" />
     </gmd:resourceConstraints>
   </xsl:template>
+
+
+  <!-- Remove gmd:report with empty values in gmd:result -->
+  <xsl:template match="gmd:report[gmd:DQ_DomainConsistency]">
+    <xsl:variable name="specificationTitle" select="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title/*/text()" />
+    <xsl:variable name="specificationDate" select="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:date/*/gmd:date/*/text()" />
+
+    <xsl:if test="string(normalize-space($specificationTitle)) and
+			  	  string(normalize-space($specificationDate))
+                  ">
+      <xsl:copy copy-namespaces="no">
+        <xsl:copy-of select="@*" />
+        <xsl:apply-templates select="*" />
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
 </xsl:stylesheet>

@@ -25,9 +25,9 @@
       <xsl:for-each select="@gmlOld:*">
         <xsl:attribute name="{name()}" namespace="http://www.opengis.net/gml/3.2">
           <xsl:value-of select="."/>
-        </xsl:attribute>      
+        </xsl:attribute>
       </xsl:for-each>
-      
+
       <xsl:apply-templates select="@*[namespace-uri() != 'http://www.opengis.net/gml']|node()"/>
     </xsl:element>
   </xsl:template>
@@ -239,10 +239,10 @@
   <!-- Set gco:Distance in spatial resolution as float (2 decimals -->
   <xsl:template match="gmd:spatialResolution/gmd:MD_Resolution/gmd:distance[string(normalize-space(gco:Distance))]/gco:Distance">
     <xsl:variable name="value" select="." as="xs:float" />
-    
+
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*" />
-      
+
       <xsl:value-of select="format-number($value, '#.00')"/>
     </xsl:copy>
   </xsl:template>
@@ -404,8 +404,7 @@
 
       <xsl:apply-templates select="gmd:resourceSpecificUsage" />
 
-      <!-- Process gmd:resourceConstraints for INSPIRE TG 1.3 (backport) -->
-      <xsl:apply-templates select="." mode="process-resource-constraints" />
+      <xsl:apply-templates select="gmd:resourceConstraints" />
 
       <xsl:apply-templates select="gmd:aggregationInfo" />
       <xsl:apply-templates select="srv:serviceType" />
@@ -867,5 +866,21 @@
 
       <xsl:value-of select="." />
     </xsl:copy>
+  </xsl:template>
+
+
+  <!-- Remove gmd:report with empty values in gmd:result -->
+  <xsl:template match="gmd:report[gmd:DQ_DomainConsistency]">
+    <xsl:variable name="specificationTitle" select="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title/*/text()" />
+    <xsl:variable name="specificationDate" select="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:date/*/gmd:date/*/text()" />
+
+    <xsl:if test="string(normalize-space($specificationTitle)) and
+			  	  string(normalize-space($specificationDate))
+                  ">
+      <xsl:copy copy-namespaces="no">
+        <xsl:copy-of select="@*" />
+        <xsl:apply-templates select="*" />
+      </xsl:copy>
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
