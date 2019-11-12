@@ -91,7 +91,7 @@
   <!-- INSPIRE Validator requires publication date -->
   <xsl:template match="gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType">
     <gmd:dateType>
-      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                            codeListValue="publication">publication</gmd:CI_DateTypeCode>
     </gmd:dateType>
   </xsl:template>
@@ -197,7 +197,23 @@
       <xsl:apply-templates select="gmd:spatialRepresentationType" />
       <xsl:apply-templates select="gmd:spatialResolution" />
       <xsl:apply-templates select="gmd:language" />
-      <xsl:apply-templates select="gmd:characterSet" />
+
+      <!-- If only utf8 remove it, otherwise the interoperability tests fail as consider that is default and should not be added -->
+      <xsl:if test="count(gmd:characterSet) > 0">
+        <xsl:variable name="countUtf8" select="count(gmd:characterSet[*/@codeListValue = 'utf8']) " />
+        <xsl:variable name="countNonUtf8" select="count(gmd:characterSet[*/@codeListValue != 'utf8' and */@codeListValue != '']) " />
+
+        <xsl:choose>
+          <!-- Remove gmd:characterSet as not required to specify utf8 (default value) -->
+          <xsl:when test="($countUtf8 > 0) and ($countNonUtf8 = 0)"></xsl:when>
+
+          <!-- Copy the elements -->
+          <xsl:otherwise>
+            <xsl:apply-templates select="gmd:characterSet[*/@codeListValue != '']" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:topicCategory" />
       <xsl:apply-templates select="gmd:environmentDescription" />
       <xsl:apply-templates select="gmd:extent" />
@@ -230,7 +246,7 @@
               </gmd:keyword>
             </xsl:for-each>
             <gmd:type>
-              <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+              <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_KeywordTypeCode"
                                       codeListValue="theme"/>
             </gmd:type>
             <gmd:thesaurusName>
@@ -244,7 +260,7 @@
                       <gco:Date>2008-04-17</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
-                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                            codeListValue="publication"/>
                     </gmd:dateType>
                   </gmd:CI_Date>
@@ -939,7 +955,22 @@
   <xsl:template match="gco:Date">
     <xsl:copy copy-namespaces="no">
       <xsl:variable name="newDate" select="translate(text(), translate(.,'0123456789-',''), '')"/>
-      <xsl:value-of select="$newDate"/>
+
+      <xsl:choose>
+        <!-- Handle year-month format not allowed in INSPIRE validator (requires YYYY-MM-DD) -->
+        <xsl:when test="string-length($newDate) = 7">
+          <xsl:value-of select="$newDate"/>-01
+        </xsl:when>
+
+        <!-- Handle year format not allowed in INSPIRE validator (requires YYYY) -->
+        <xsl:when test="string-length($newDate) = 4">
+          <xsl:value-of select="$newDate"/>-01-01
+        </xsl:when>
+
+        <xsl:otherwise>
+          <xsl:value-of select="$newDate"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:copy>
   </xsl:template>
 
@@ -1157,6 +1188,7 @@
 
       <xsl:choose>
         <xsl:when test="count(gmd:distributorContact) > 1">
+          <!-- Keep first with filled information -->
           <xsl:variable name="distributorContacts">
             <xsl:for-each select="gmd:distributorContact">
               <xsl:variable name="organisationNameValue" select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString" />
@@ -1205,4 +1237,25 @@
   <!-- Remove point of contact with invalid role value informationOwner  -->
   <xsl:template match="gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'informationOwner']" />
 
+  <!-- Update url in codeList -->
+  <xsl:template match="*[@codeList and name() != 'gmd:LanguageCode']" priority="100">
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of select="@*[name() != 'codeList']" />
+      <xsl:attribute name="codeList">http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#<xsl:value-of select="tokenize(@codeList, '#')[2]"/></xsl:attribute>
+
+      <xsl:value-of select="." />
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- Fix invalid characterset value: 004 or empty -->
+  <xsl:template match="gmd:MD_CharacterSetCode[@codeListValue = '004' or @codeListValue = '']" priority="200">
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of select="@*[name() != 'codeListValue' and name() != 'codeList']" />
+      <xsl:attribute name="codeList">http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#<xsl:value-of select="tokenize(@codeList, '#')[2]"/></xsl:attribute>
+
+      <xsl:attribute name="codeListValue">utf8</xsl:attribute>
+
+      <xsl:value-of select="." />
+    </xsl:copy>
+  </xsl:template>
 </xsl:stylesheet>
