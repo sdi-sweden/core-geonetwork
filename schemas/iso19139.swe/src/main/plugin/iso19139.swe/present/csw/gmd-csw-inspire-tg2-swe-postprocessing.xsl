@@ -5,6 +5,7 @@
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gse="http://www.geodata.se/gse"
+                xmlns:lst="http://www.lansstyrelsen.se"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 exclude-result-prefixes="#all">
 
@@ -787,4 +788,15 @@
 
     </xsl:copy>
   </xsl:template>
+
+  <!-- Remove invalid lst namespace elements -->
+  <xsl:template match="lst:*" />
+
+
+  <!-- Remove non existing gmd:hierarchyLevelDescription that is defined in some metadata -->
+  <xsl:template match="gmd:hierarchyLevelDescription" />
+
+  <!-- Remove point of contact with invalid role value informationOwner  -->
+  <xsl:template match="gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'informationOwner']" />
+
 </xsl:stylesheet>
