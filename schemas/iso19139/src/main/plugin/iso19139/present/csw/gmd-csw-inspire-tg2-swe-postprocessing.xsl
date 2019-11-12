@@ -636,6 +636,18 @@
 							or
 							normalize-space(gmd:MD_Resolution/gmd:distance/gco:Distance)='']" />
 
+
+  <!-- Set gco:Distance in spatial resolution as float (2 decimals -->
+  <xsl:template match="gmd:spatialResolution/gmd:MD_Resolution/gmd:distance[string(normalize-space(gco:Distance))]/gco:Distance">
+    <xsl:variable name="value" select="." as="xs:float" />
+
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="@*" />
+
+      <xsl:value-of select="format-number($value, '#.00')"/>
+    </xsl:copy>
+  </xsl:template>
+
   <!-- ensure codespace always comes after code -->
   <xsl:template match="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier">
     <xsl:copy copy-namespaces="no">
@@ -1257,5 +1269,17 @@
 
       <xsl:value-of select="." />
     </xsl:copy>
+  </xsl:template>
+
+  <!-- Split gmd:resourceConstraints having gmd:MD_Constraints and gmd:MD_SecurityConstraints.
+       Some metadata has the 2 elements in 1 gmd:resourceConstraints, what is invalid -->
+  <xsl:template match="gmd:resourceConstraints[gmd:MD_Constraints and gmd:MD_SecurityConstraints]">
+    <gmd:resourceConstraints>
+      <xsl:copy-of select="gmd:MD_Constraints" copy-namespaces="no" />
+    </gmd:resourceConstraints>
+
+    <gmd:resourceConstraints>
+      <xsl:copy-of select="gmd:MD_SecurityConstraints" copy-namespaces="no" />
+    </gmd:resourceConstraints>
   </xsl:template>
 </xsl:stylesheet>

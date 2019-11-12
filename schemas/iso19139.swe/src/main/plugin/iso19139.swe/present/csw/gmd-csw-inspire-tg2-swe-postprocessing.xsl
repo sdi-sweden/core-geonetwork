@@ -20,9 +20,15 @@
 
   <xsl:template match="gmlOld:*">
     <xsl:element name="{name()}" namespace="http://www.opengis.net/gml/3.2">
-      <xsl:copy-of select="namespace::*[not(name() = 'gml')]" />
+      <xsl:copy-of select="namespace::*[not(name() = 'gml')]" copy-namespaces="no" />
 
-      <xsl:apply-templates select="@*|node()"/>
+      <xsl:for-each select="@gmlOld:*">
+        <xsl:attribute name="{name()}" namespace="http://www.opengis.net/gml/3.2">
+          <xsl:value-of select="."/>
+        </xsl:attribute>      
+      </xsl:for-each>
+      
+      <xsl:apply-templates select="@*[namespace-uri() != 'http://www.opengis.net/gml']|node()"/>
     </xsl:element>
   </xsl:template>
 
@@ -230,12 +236,23 @@
 							or
 							normalize-space(gmd:MD_Resolution/gmd:distance/gco:Distance)='']" />
 
+  <!-- Set gco:Distance in spatial resolution as float (2 decimals -->
+  <xsl:template match="gmd:spatialResolution/gmd:MD_Resolution/gmd:distance[string(normalize-space(gco:Distance))]/gco:Distance">
+    <xsl:variable name="value" select="." as="xs:float" />
+    
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="@*" />
+      
+      <xsl:value-of select="format-number($value, '#.00')"/>
+    </xsl:copy>
+  </xsl:template>
+
   <!-- ensure codespace always comes after code -->
   <xsl:template match="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier">
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*"/>
-      <xsl:copy-of select="gmd:code"/>
-      <xsl:copy-of select="gmd:codeSpace"/>
+      <xsl:copy-of select="gmd:code" copy-namespaces="no"/>
+      <xsl:copy-of select="gmd:codeSpace" copy-namespaces="no" />
     </xsl:copy>
   </xsl:template>
 
