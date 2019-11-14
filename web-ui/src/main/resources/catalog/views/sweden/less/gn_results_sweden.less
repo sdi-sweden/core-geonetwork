@@ -38,6 +38,8 @@
   box-shadow: none;
 }
 .dropdown-menu {
+  border-radius: 0;
+  border: 0;
   > li  {
     font-size: 12px;
     &:hover, &focus {
@@ -46,8 +48,9 @@
     > a {
       padding: 8px 20px !important;
       &:hover, &focus {
-        background-color: @se-green;
-        color: #fff;
+        background-color: #fff;
+text-decoration: underline;
+        // color: #fff;
       }
     }
   }
@@ -357,10 +360,10 @@ ul.gn-resultview {
           padding: 0 10px 0 6px;
           margin-top: -3px;
         }
-        // rating
-        [data-gn-metadata-rate] {
-          margin-top: 8px;
-        }
+      }
+      // rating
+      [data-gn-metadata-rate] {
+        margin-top: 5px;
       }
     }
     .gn-md-content {
