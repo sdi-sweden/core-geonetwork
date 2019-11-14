@@ -1,0 +1,101 @@
+﻿<!-- Metadata page popup -->
+<div id="metadata-popup" class="modal fade" data-ng-controller="GnMdViewController">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal""><span aria-hidden="true">&times;</span></button>
+        <img src="../../catalog/views/sweden/images/open-repo.png" class="repo-img">
+        <div class="meta-data">
+          <h1>{{mdView.current.record.title || mdView.current.record.defaultTitle}}
+            <div class="star-cont" data-ng-class="{'star-cont': true, 'starred' : containsFavorite(mdView.current.record['geonet:info'].id) }" data-ng-click="toggleFavorite(mdView.current.record['geonet:info'].id)"><span class="icon-star-empty"></span><span class="icon-star"></span></div>
+          </h1>
+          <span class="excerpt"></span>
+        </div>
+
+        <div class="update-tag">
+          <span>Senast uppdaterad 
+            <span data-gn-humanize-time="{{mdView.current.record['geonet:info'].changeDate}}"
+                  data-from-now=""></span>
+          </span>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div id="gn-metadata-display"></div>
+      </div>
+      <div class="modal-footer">
+        <div class="geo-data-toolbar-cont">
+          <div class="data-repo-status">
+            <img src="../../catalog/views/sweden/images/open-repo.png" class="popup-repo-img">
+            <span>Datamängd direktåtkomlig för hämtning</span>
+          </div>
+          <div class="toolbar-right-list tool-bar-list">
+            <!--Print metadata-->
+            <div class="link-cont" ng-if="user.isEditorOrMore() && user.canEditRecord(mdView.current.record)">
+              <a class="-label-link" href=""><span class="icon-pencil"></span>{{ 'edit' | translate }}</a>
+            </div>
+
+            <div class="link-cont">
+              <a class="-label-link" href="" data-ng-click="printPdf(mdView)"><span class="icon-print"></span>{{ 'Print' | translate }}</a>
+              <iframe id="iframe" style="width:0px;height:0px;display:block;visibility:hidden"/>
+            </div>
+    
+            <!-- Metadata links -->
+            <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="getInformationLinks(mdView.current.record).length > 1">
+              <div class="-label"><span class="icon-info"></span>{{ 'moreInformation' | translate }} <span class="icon-down-dir"></span></div>
+              <ul class="-list">
+                <li data-ng-repeat="l in getInformationLinks(mdView.current.record)">
+                  <a href="{{l.url}}" title="{{l.desc || l.name}}" class="-text-link" target="_blank">
+                    <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                    <span data-ng-show="l.name == ''">{{ 'mdlink' | translate }} {{$index + 1}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+    
+            <div class="link-cont" data-ng-show="getInformationLinks(mdView.current.record).length == 1">
+              <a href="{{getInformationLinks(mdView.current.record)[0].url}}" class="-label-link" target="_blank"><span class="icon-info"></span>{{ 'moreInformation' | translate }}</a>
+            </div>
+    
+            <!-- Map links -->
+            <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="getMapLinks(mdView.current.record).length > 1">
+              <div class="-label"><span class="icon-map"></span>{{ 'showOnMap' | translate }} <span class="icon-down-dir"></span></div>
+              <ul class="-list">
+                <li data-ng-repeat="l in getMapLinks(mdView.current.record)">
+                  <a href="" class="-text-link" title="{{l.desc || l.name}}" data-ng-click="resultviewFns.addWmsLayersFromCap(l, mdView.current.record)">
+                    <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                    <span data-ng-show="l.name == ''">{{ 'layer' | translate }} {{$index + 1}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+    
+            <div class="link-cont" data-ng-show="getMapLinks(mdView.current.record).length == 1">
+              <a href="" class="-label-link" data-ng-click="resultviewFns.addWmsLayersFromCap(getMapLinks(mdView.current.record)[0], mdView.current.record)"><span class="icon-map"></span>{{ 'showOnMap' | translate }}</a>
+            </div>
+    
+            <!-- Download links -->
+            <div data-swe-toggle-style="" class="dropdown-cont more-info-dropdown" data-ng-show="getDownloadLinks(mdView.current.record).length > 1">
+              <div class="-label"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>{{ 'downloadDataset' | translate }} <span class="icon-down-dir"></span></div>
+              <ul class="-list">
+                <li data-ng-repeat="l in getDownloadLinks(mdView.current.record)">
+                  <a href="{{l.url}}" title="{{l.desc || l.name}}" class="-text-link" target="_blank">
+                    <span data-ng-show="l.name !== ''">{{l.name}}</span>
+                    <span data-ng-show="l.name == ''">{{ 'downloadlink' | translate }} {{$index + 1}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+    
+            <div class="link-cont" data-ng-show="getDownloadLinks(mdView.current.record).length == 1">
+              <a href="{{getDownloadLinks(mdView.current.record)[0].url}}" download="{{getDownloadLinks(mdView.current.record)[0].desc}}" class="-label-link" target="_blank"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>{{ 'downloadDataset' | translate }}</a>
+            </div>
+          </div>
+          <!-- /.toolbar-right-list tool-bar-list -->
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /#metadata-popup -->

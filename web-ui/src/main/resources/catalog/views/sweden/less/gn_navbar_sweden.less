@@ -11,6 +11,10 @@
   border-color: @gn-menubar-border-color;
   border-width: 0 0 1px 0;
   z-index: 100;
+  .navbar-nav {
+    display: inline-block;
+    float: none;
+  }
   .navbar-nav > li > a, .navbar-nav > .open > a, .navbar-nav > .active > a {
     height: @gn-menubar-height;
     color: @gn-menubar-color;
@@ -19,7 +23,8 @@
     letter-spacing: 1px;
     line-height: 30px;
     padding-top: 17px;
-    i {
+    // special icon cases
+    [class^="icon-"], [class*=" icon-"], i {
       color: @se-green;
     }
     &:hover, &:focus {
@@ -35,8 +40,13 @@
   .navbar-nav li.dropdown-hover > .dropdown-toggle:after {
     position: static;
   }
+  .navbar-nav > li > .dropdown-menu {
+    border-top: 0;
+    box-shadow: none;
+  }
   .gn-logo-link {
     padding-top: 13px !important;
+    padding-left: 10px;
   }
   .dropdown-menu {
     > li {

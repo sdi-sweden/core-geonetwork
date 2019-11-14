@@ -27,7 +27,7 @@
   transition: color 300ms linear;
   .gn-row-topics-header {
     border-bottom: 1px solid @se-border-color;
-    padding: 10px 5px;
+    padding: 10px 5px 0 5px;
     margin-bottom: 15px;
     .search-over {
       color: #000;
@@ -40,8 +40,42 @@
     a {
       color: @se-green;
       text-transform: uppercase;
-      font-size: 10px;
-      margin-top: 5px;
+      font-size: 11px;
+      line-height: 30px;
+    }
+    .filter-label {
+      display: block;
+      margin-top: 4px;
+    }
+    .type-filter-list {
+      list-style: none;
+      margin: 0 0 20px 18px;
+      padding: 0;
+      li {
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        a {
+          display: inline-block;
+          color: #000;
+          text-decoration: none !important;
+          padding: 0 15px 0 10px;
+          border-radius: 15px;
+          transition: all 300ms linear;
+          .fa, [class^="icon-"]:before, [class*=" icon-"]:before {
+            color: @se-green;
+            font-size: 14px;
+            margin-right: 5px;
+          }
+          &:hover, &:active {
+            color: #fff;
+            background-color: @se-green;
+            .fa, [class^="icon-"]:before, [class*=" icon-"]:before {
+              color: #fff;
+            }
+          }
+        }
+      }
     }
   }
 }

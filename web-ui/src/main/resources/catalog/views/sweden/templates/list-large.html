@@ -6,23 +6,18 @@
       data-gn-zoomto-onclick="">
 
     <div class="row gn-md-title clearfix">
-      <!-- checkbox to select metadata -->
-      <input data-gn-selection-md type="checkbox"
-             class="pull-left gn-margin-right"
-             data-ng-model="md['geonet:info'].selected"
-             aria-label="{{'clickToSelect' | translate}}"
-             data-ng-change="change()"/>
       <!-- title -->
-      <h3 class="pull-left gn-margin-right">
+      <h1 class="pull-left gn-margin-right">
         <a href=""
            gn-metadata-open="md"
            gn-records="searchResults.records"
            gn-formatter="formatter.defaultUrl"
            title="{{md.title || md.defaultTitle}}">
 
-          <i class="fa gn-icon-{{md.type[0]}}" title="{{md.type[0] | translate}}"/>
+          <!-- <i class="fa gn-icon-{{md.type[0]}}" title="{{md.type[0] | translate}}"/> -->
+          <img data-ng-src="{{fetchInitiativKeyword(md)}}" class="repo-img">
           {{(md.title || md.defaultTitle) | characters:80}}</a>
-      </h3>
+      </h1>
       <!-- rating -->
       <div data-gn-metadata-rate="md"
            class="pull-left"
@@ -32,11 +27,6 @@
         <span data-ng-if="md.isPublished()" data-translate="" class="badge published-label">published</span>
         <span data-ng-if="!md.isPublished()" data-translate="" class="badge published-label">unpublished</span>
       </span>
-      <!-- Display the first metadata status (apply to ISO19139 record) -->
-      <!-- <div data-ng-if="md.status_text.length > 0"
-           title="{{md.status_text[0]}}"
-           class="gn-status gn-status-{{md.status[0]}}">{{md.status_text[0]}}
-      </div> -->
       <!-- last update -->
       <div class="gn-update-tag">
         <span>{{ 'lastUpdate' | translate }} 
@@ -325,7 +315,6 @@
         <div class="pull-left" data-ng-show="md.geoBox !== undefined">
           <a class="gn-md-link" href="" data-ng-click="showMetadataGeometry(md)">
             <span class="icon-location"></span>
-            <!-- <span class="icon-myspace"></span> -->
             {{ 'showBBOX' | translate }}
           </a>
         </div>

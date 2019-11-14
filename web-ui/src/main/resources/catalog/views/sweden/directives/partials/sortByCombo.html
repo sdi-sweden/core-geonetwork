@@ -1,0 +1,23 @@
+<div style="display: inline-block" class="filter-cont" data-swe-toggle-style="">
+<div style="display: inline-block" class="-label">{{params.sortBy | translate}} <span class="icon-down-dir"></span></div>
+  <ul class="-list">
+    <li data-ng-repeat="v in ::values"
+        data-ng-class="v.sortBy === params.sortBy ? 'disabled' : ''">
+      <a class="-text-link" data-ng-click="sortBy(v)">{{v.sortBy | translate}}</a>
+    </li>
+  </ul>
+</div>
+</div>
+
+<div style="display: inline-block" class="filter-cont" data-swe-toggle-style="">
+  <div style="display: inline-block" class="-label">{{sortOrder | translate}}<span class="icon-down-dir"></span></div>
+  <ul class="-list open">
+    <li>
+      <a class="-text-link" data-ng-click="sortByOrder('')">{{'descending' | translate}}</a>
+    </li>
+    <li>
+      <a class="-text-link" data-ng-click="sortByOrder('reverse')">{{'ascending' | translate}}</a>
+    </li>
+  </ul>
+</div>
+</div>

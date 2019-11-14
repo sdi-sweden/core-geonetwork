@@ -1,0 +1,68 @@
+
+<div class="row category-filter gn-search-filter-lists">
+  <div class="category-filter-colm-cont col-md-4">
+    <label class="control-label">
+      <span class="control-label-span" data-translate="">searchOrganisation</span>
+    </label>
+
+    <div class="gn-facet-list category-filter-colm">
+      <div data-ng-repeat="f in dimension | filter:{ '@name': 'orgNameOwner' }"
+            class="gn-facet gn-facet-{{f['@label']}}"
+            data-ng-show="f.category">
+
+        <div data-swe-facet-dimension-category="f.category"
+              data-category-key="f['@label']"
+              data-params="params"
+              data-facet-config="facetConfig"
+              data-ng-class="{'collapse': collapsed}">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="category-filter-colm-cont col-md-4">
+    <label class="control-label">
+      <span class="control-label-span" data-translate="">searchTopicCategory</span>
+    </label>
+    <div class="category-filter-colm">
+      <div class="gn-facet-list category-filter-colm">
+        <div data-ng-repeat="f in dimension | filter:{ '@name': 'topicCat' }"
+              class="gn-facet gn-facet-{{f['@label']}}"
+              data-ng-show="f.category">
+
+          <div data-swe-facet-dimension-category="f.category"
+                data-category-key="f['@label']"
+                data-params="params"
+                data-facet-config="facetConfig"
+                data-ng-class="{'collapse': collapsed}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="category-filter-colm-cont col-md-4">
+    <label class="control-label">
+      <span class="control-label-span" data-translate="">searchKeyword</span>
+    </label>
+
+    <div class="gn-facet-list category-filter-colm">
+      <div data-ng-repeat="f in dimension | filter:{ '@name': 'initiativKeyword' }"
+            class="gn-facet gn-facet-{{f['@label']}}"
+            data-ng-show="f.category">
+
+        <div data-swe-facet-dimension-category="f.category"
+              data-category-key="f['@label']"
+              data-params="params"
+              data-facet-config="facetConfig"
+              data-ng-class="{'collapse': collapsed}">
+        </div>
+      </div>
+    </div>
+    <div class="facet">
+      <div data-swe-tooltip=""
+            data-title="{{ 'facetsFilterTooltip-title' | translate }}"
+            data-text="{{ 'facetsFilterTooltip-desc' | translate }}"
+            data-link="{{ 'facetsFilterTooltip-link' | translate }}">
+      </div>
+    </div>
+  </div>
+</div>

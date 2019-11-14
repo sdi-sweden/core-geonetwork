@@ -6,6 +6,47 @@
             data-date-to="searchObj.params.creationDateTo"
             class="gn-search-filter-datepicker">
       </div>
+      <div data-swe-tooltip=""
+           data-title="{{ 'dateFilterTooltip-title' | translate }}"
+           data-text="{{ 'dateFilterTooltip-desc' | translate }}"
+           data-link="{{ 'dateFilterTooltip-link' | translate }}"></div>
+    </div>
+    <div class="col-md-4">
+      <!-- <div class="filter-colm geo-filter-cont" id="abId0.6149162834088198">
+        <label data-translate="searchGeographicFilter"></label>
+        <div class="live-search-dd-cont" id="abId0.436428290830839" data-ng-controller="SweGeoSuggestionsController">
+          <div class="custom-fld-cont" id="abId0.04694894537269523" abineguid="642F5A31C48A429E83484111F435AA09">
+            <span class="icon-search"></span>
+            <input id="namesearch-id" type="text" placeholder="" class="live-search-query"
+                   data-ng-model="searchObj.namesearch"
+                   data-ng-model-options="modelOptionsFormGeo"  
+                   data-typeahead="namesearch as (namesearch.Name + ', ' + namesearch.Type) for namesearch in getNameSearch($viewValue) "
+                   data-typeahead-on-select="drawPolygonInMap()"
+                   data-typeahead-loading="anyLoading"
+                   data-typeahead-min-length="1"
+                   data-typeahead-focus-first="false"
+                   data-ng-controller="SweGeoWfsGetFeatureController">
+          </div>
+          <ul class="live-search-cont">
+            <li><a href="">malmo<span>kommun</span></a></li>
+            <li><a href="">malmo<span>kommun</span></a></li>
+            <li><a href="">malmo<span>kommun</span></a></li>
+            <li><a href="">malmo<span>kommun</span></a></li>
+          </ul>
+        </div>
+      </div> -->
+      <!-- /.filter-colm geo-filter-cont -->
+      <!-- <div class="filter-colm draw-map-link-colm" data-ng-controller="SweGeoFreeHandPolygonController" >
+        <div data-ng-click="drawFreeHandPolygonInMap()">
+          <a href="" class="fltr-link draw-map-link"><span data-translate="">drawingOnMap</span></a>
+        </div>
+        <div data-swe-tooltip=""
+          data-title="{{ 'geographicalFilterTooltip-title' | translate }}"
+          data-text="{{ 'geographicalFilterTooltip-desc' | translate }}"
+          data-link="{{ 'geographicalFilterTooltip-link' | translate }}">
+        </div>
+      </div> -->
+      <!-- /.filter-colm draw-map-link-colm -->
     </div>
   </div>
   <!-- /.gn-search-filter-datepickers -->
@@ -52,4 +93,12 @@
     </div>
   </div>
   <!-- /.gn-search-filter-lists -->
+
+  <!-- Facets -->
+  <div data-ng-show="searchResults.records.length > 0"
+       data-swe-facet-dimension-list="searchResults.dimension"
+       data-params="searchObj.params"
+       data-facet-type="facetsSummaryType"
+       data-current-facets="currentFacets">
+  </div>
 </div>

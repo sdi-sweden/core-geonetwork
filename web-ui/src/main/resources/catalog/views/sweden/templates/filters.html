@@ -1,0 +1,230 @@
+﻿<div class="site-filter-cont open" >
+  <div class="site-filter-wrapper">
+    <!-- Search filters -->
+    <div class="site-filter-section-wrapper">
+      <div class="site-filter-section">
+        <div class="site-geo-type-filter">
+          <!-- <div class="clearfix pull-left search-show-only">
+			<div data-swe-tooltip=""
+                 data-title="{{ 'searchShowOnlyTooltip-title' | translate }}"
+                 data-text="{{ 'searchShowOnlyTooltip-desc' | translate }}"
+                 data-link="{{ 'searchShowOnlyTooltip-link' | translate }}"></div>
+            <span class="filter-label" data-translate="">searchShowOnly</span>
+          </div>
+          <ul class="type-filter-list">
+            <li>
+              <a href="" data-ng-click="toggleExclusiveFilter('type', ['dataset', 'series'])"
+                 data-ng-class="{'active': (searchObj.params.type.indexOf('dataset') > -1)}">
+                <span class="icon-buffer"></span><span data-translate="">showDatasets</span></a>
+            </li>
+            <li>
+              <a href="" data-ng-click="toggleExclusiveFilter('map', 'true')"
+                 data-ng-class="{'active': (searchObj.params.dynamic == 'true')}">
+                <span class="icon-map"></span><span data-translate="">mapServices</span></a>
+            </li>
+            <li>
+              <a href="" data-ng-click="toggleExclusiveFilter('download', 'true')"
+                 data-ng-class="{'active': (searchObj.params.download == 'true')}"><span class="download-icn-cont">
+                <span class="icon-down-fat"></span></span><span data-translate="">downloadableResources</span></a>
+            </li>
+            <li><a href="" data-ng-click="toggleExclusiveFilter('favorites')"
+                   data-ng-class="{'active': (searchObj.params._id != '')&&(searchObj.params._id != undefined)}">
+                <span class="icon-star"></span>favoriter</a>
+            </li>
+			<li>
+				 <span>|</span>
+			</li>
+			<li>
+				<a href="" data-ng-click="viewAllMetadata()">
+				  <span class="home fa fa-home"></span> <!-- Not able to use icon-home like other class icon-star, icon-map, icon-buffer so using fa fa-home. Seem fontello doesn't contain home icon -->
+				  <span data-translate="">viewAllResources</span>
+				</a>
+			</li>
+          </ul> -->
+          <div class="other-filters">
+            <!-- <a href="" data-ng-click="viewAllMetadata()" class="fltr-link resource-link" data-translate="">viewAllResources</a> -->
+            <a href="" data-ng-click="toggleAdvancedOptions()" class="fltr-link advance-link">
+              <span class="show-advanced" data-translate="">viewAdvance</span>
+              <span class="hide-advanced" data-translate="">hideAdvance</span>
+            </a>
+
+            <div data-swe-tooltip=""
+                 data-title="{{ 'advancedSearchTooltip-title' | translate }}"
+                 data-text="{{ 'advancedSearchTooltip-desc' | translate }}"
+                 data-link="{{ 'advancedSearchTooltip-link' | translate }}"></div>
+          </div>
+        </div>
+        <div class="filter-options-cont">
+          <div class="basic-filters-cont active">
+            <ul class="geo-categories">
+              <div class="geo-cat">
+<!-- 			    <div data-swe-tooltip=""
+				  data-title="{{ 'search-title' | translate }}"
+				  data-text="{{ 'search-desc' | translate }}"
+				  data-link="{{ 'search-link' | translate }}">
+				</div> -->
+			  </div>
+              <li data-ng-repeat="topic in topicCategories | orderBy: translatedTopicCat"
+                  data-ng-click="toggleTopicCategory(topic)"
+                  data-ng-class="{'active': isTopicCategorySelected(topic)}"><a href="" data-translate="">{{topic}}</a></li>
+            </ul>
+          </div>
+
+          <!-- Advanced panel -->
+          <div class="advance-filters-cont">
+            <div class="advance-filter">
+              <div class="date-filter">
+                <div class="left-side-filter clearfix" id="abId0.901597265871972" abineguid="B24E06EA694549E08380FB3D35F8BC85">
+
+                  <div class="filter-colm clearfix pull-left" id="abId0.3915931191863504">
+                    <label data-translate="searchFromDate" class="date-label pull-left"></label>
+
+                    <div class="input-group date custom-fld-cont pull-left" data-date="" data-date-format="yyyy-mm-dd"
+                         gn-bootstrap-datepicker="searchObj.params.resourceDateFrom" data-date-language="sv" lang="lang">
+                      <input class="form-control" type="text"
+                             data-ng-model="searchObj.params.resourceDateFrom" 
+                             placeholder="åååå-mm-dd" data-ng-change="triggerSearch()">
+
+                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>                    
+
+                  </div>
+                  <div class="filter-colm till-date-colm clearfix pull-left" id="abId0.746339667914671">
+                    <label data-translate="searchToDate" class="date-label pull-left"></label>
+
+                    <div class="input-group date custom-fld-cont pull-left" data-date="" data-date-format="yyyy-mm-dd"
+                         gn-bootstrap-datepicker="searchObj.params.resourceDateTo" data-date-language="sv" lang="lang">
+                      <input class="form-control" type="text"
+                             data-ng-model="searchObj.params.resourceDateTo" 
+                             placeholder="åååå-mm-dd" data-ng-change="triggerSearch()">
+
+                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+
+                    <div data-swe-tooltip=""
+                         data-title="{{ 'dateFilterTooltip-title' | translate }}"
+                         data-text="{{ 'dateFilterTooltip-desc' | translate }}"
+                         data-link="{{ 'dateFilterTooltip-link' | translate }}"></div>
+                  </div>
+                </div>
+                <div class="right-side-filter">
+                  <div class="filter-colm geo-filter-cont" id="abId0.6149162834088198">
+                    <label data-translate="searchGeographicFilter"></label>
+                    <div class="live-search-dd-cont" id="abId0.436428290830839" data-ng-controller="SweGeoSuggestionsController">
+                      <div class="custom-fld-cont" id="abId0.04694894537269523" abineguid="642F5A31C48A429E83484111F435AA09">
+                        <span class="icon-search"></span>
+                        <input id="namesearch-id" type="text" placeholder="" class="live-search-query"
+                               data-ng-model="searchObj.namesearch"
+                               data-ng-model-options="modelOptionsFormGeo"  
+                                                         
+                               data-typeahead="namesearch as (namesearch.Name + ', ' + namesearch.Type) for namesearch in getNameSearch($viewValue) "
+                               data-typeahead-on-select="drawPolygonInMap()"
+                               data-typeahead-loading="anyLoading"
+                               data-typeahead-min-length="1"
+                               data-typeahead-focus-first="false"
+                               data-ng-controller="SweGeoWfsGetFeatureController"
+
+                        >
+                      </div>
+                      <ul class="live-search-cont">
+                        <li><a href="">malmo<span>kommun</span></a></li>
+                        <li><a href="">malmo<span>kommun</span></a></li>
+                        <li><a href="">malmo<span>kommun</span></a></li>
+                        <li><a href="">malmo<span>kommun</span></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="filter-colm draw-map-link-colm" data-ng-controller="SweGeoFreeHandPolygonController" >
+                  <div data-ng-click="drawFreeHandPolygonInMap()">
+                    <a href="" class="fltr-link draw-map-link"><span data-translate="">drawingOnMap</span></a>
+                  </div>
+                  <div data-swe-tooltip=""
+                    data-title="{{ 'geographicalFilterTooltip-title' | translate }}"
+                    data-text="{{ 'geographicalFilterTooltip-desc' | translate }}"
+                    data-link="{{ 'geographicalFilterTooltip-link' | translate }}"></div>
+                  </div>
+                  
+                </div>
+              </div>
+
+              <!-- Facets -->
+              <div data-ng-show="searchResults.records.length > 0"
+                   data-swe-facet-dimension-list="searchResults.dimension"
+                   data-params="searchObj.params"
+                   data-facet-type="facetsSummaryType"
+                   data-current-facets="currentFacets">
+              </div>
+
+<!--               <div data-swe-tooltip=""
+                   data-title="{{ 'facetsFilterTooltip-title' | translate }}"
+                   data-text="{{ 'facetsFilterTooltip-desc' | translate }}"
+                   data-link="{{ 'facetsFilterTooltip-link' | translate }}"></div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="hr"></span>
+  </div>
+</div>
+
+<!-- <div class="site-filter-result-cont filter-is-open">
+  <div class="data-result-cont">
+    <span class="result-text" data-ng-show="searchResults.count >= 0"><span data-translate="">shows</span> <b>{{searchResults.count}}</b> <span data-translate="">results</span></span>
+    <ul class="selected-filter-list">
+      <li data-ng-show="searchObj.params.resourceDateFrom">
+        <a href="" data-ng-click="unselectResourceDateFrom()">
+          <span>från datum {{searchObj.params.resourceDateFrom | date : 'yyyy-MM-dd'}}</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="searchObj.params.resourceDateTo != undefined">
+        <a href="" data-ng-click="unselectResourceDateTo()">
+          <span>till datum {{searchObj.params.resourceDateTo | date : 'yyyy-MM-dd'}}</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="searchObj.params.type.indexOf('dataset') > -1">
+        <a href="" data-ng-click="toggleExclusiveFilter('type', '')">
+          <span data-translate="">showDatasets</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="searchObj.params.dynamic == 'true'">
+        <a href="" data-ng-click="toggleExclusiveFilter('map', '')">
+          <span data-translate="">mapServices</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="searchObj.params.download == 'true'">
+        <a href="" data-ng-click="toggleExclusiveFilter('download', '')">
+          <span data-translate="">downloadableResources</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="(searchObj.params._id != '') && (searchObj.params._id != undefined)">
+        <a href="" data-ng-click="toggleExclusiveFilter('favorites', '')">
+          <span data-translate="">favourites</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-show="(searchObj.params.geometry != '') && (searchObj.params.geometry != undefined)">
+        <a href="" data-ng-click="unselectGeoResources()">
+          <span data-translate="">geographical</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+      <li data-ng-repeat="topic in selectedTopicCategories | orderBy: translatedTopicCat">
+        <a href="" data-ng-click="unselectTopicCategory(topic)">
+          <span data-translate="">{{topic}}</span>
+          <span class="icon-cancel"></span>
+        </a>
+      </li>
+
+    </ul>
+    <a href="" data-ng-click="toggleFilterPanel()" class="filter-toggle-link opens-filter-section">
+      <span class="show-filtering" data-translate="">showFiltering</span>
+      <span class="hide-filtering" data-translate="">hideFiltering</span> <span class="icon-up-dir"></span><span class="icon-down-dir"></span>
+    </a>
+  </div>
+</div> -->

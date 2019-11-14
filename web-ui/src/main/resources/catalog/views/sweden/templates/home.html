@@ -1,5 +1,29 @@
 <div>
+    <form class="form-horizontal"
+    role="form"
+    data-ng-controller="gnsSearchTopEntriesController"
+    data-ng-search-form=""
+    data-runSearch="true"
+    data-ng-show="searchResults.records.length > 0">
+<div class="panel panel-default gn-top-maps" role="row">
+  <div class="panel-heading"
+        data-gn-slide-toggle="">
+  </div>
+  <div class="panel-body">
+    <div data-ng-class="fluidLayout ? 'container-fluid' : 'container'">
+      <h4 data-translate="">topMaps</h4>
 
+      <input type="hidden" name="_csrf" value="{{csrf}}"/>
+
+      <div data-ng-show="searchResults.records.length > 0"
+          data-gn-results-container=""
+          data-search-results="searchResults"
+          data-template-url="resultTemplate"></div>
+    </div>
+  </div>
+</div>
+<!-- /.gn-top-records -->
+</form>
   <div class="row" data-ng-show="searchInfo.count == 0">
     <div data-ng-class="fluidLayout ? 'container-fluid' : 'container'">
       <div data-ng-show="searchInfo.count == 0"

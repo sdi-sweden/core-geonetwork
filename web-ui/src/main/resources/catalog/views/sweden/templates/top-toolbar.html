@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid gn-nopadding-left gn-nopadding-right">
   <div class="navbar-header">
     <a class="hidden-sm hidden-md hidden-lg pull-left gn-logo-link" data-gn-active-tb-item="{{gnCfg.mods.home.appUrl}}" data-ng-hide="{{gnCfg.mods.header.isLogoInHeader}}">
       <img class="gn-logo"
@@ -24,8 +24,8 @@
       <span class="icon-bar"></span>
     </button>
   </div>
-  <div id="navbar" class="navbar-collapse collapse">
-    <ul class="nav navbar-nav gn-menu-xs" role="menu">
+  <div id="navbar" class="navbar-collapse collapse text-center">
+    <ul class="nav navbar-nav navbar-left gn-menu-xs" role="menu">
       <li class="clearfix hidden-xs" data-ng-if="gnCfg.mods.home.enabled">
         <a class="pull-left gn-logo-link" data-gn-active-tb-item="{{gnCfg.mods.home.appUrl}}" data-ng-hide="{{gnCfg.mods.header.isLogoInHeader}}">
           <img class="gn-logo"
@@ -33,21 +33,41 @@
                 data-ng-src="{{gnUrl}}../images/logos/{{info['node/id'] || info['system/site/siteId']}}.png?random{{info['system/site/lastUpdate']}}"/>
         </a>
       </li>
-      <li class="gn-menuitem-xs" data-ng-if="gnCfg.mods.search.enabled">
-        <a data-gn-active-tb-item="{{gnCfg.mods.search.appUrl}}"
-          title="{{'search' | translate}}">
-          <i class="fa fa-fw fa-search hidden-sm"></i>
-          <span translate>search</span>
+    </ul>
+    <ul class="nav navbar-nav gn-menu-xs" role="menu">
+      <li>
+        <a href="" data-toggle="modal" data-target="#mail-popup">
+          <span class="text hidden-xs hidden-sm" data-translate="">leaveComment</span>
         </a>
       </li>
-      <li class="gn-menuitem-xs" data-ng-if="gnCfg.mods.map.enabled">
-        <a data-gn-active-tb-item="{{isExternalViewerEnabled ? externalViewerUrl : gnCfg.mods.map.appUrl}}"
-          title="{{'map' | translate}}">
-          <i class="fa fa-fw fa-globe hidden-sm"></i>
-          <span translate>makeYourMap</span>
-          <span data-gnv-layer-indicator=""/>
+      <li class="dropdown dropdown-hover open">
+        <a title="{{'otherGeodata' | translate}}"
+           class="dropdown-toggle gn-menuheader-xs"
+           role="button"
+           aria-expanded="false">
+          <i class="fa fa-ellipsis-h"></i>
+          <span translate>otherGeodata</span>
+        </a>
+        <ul class="dropdown-menu gn-menu-xs clearfix" role="list">
+          <li class="gn-menuitem-xs" role="menuitem">
+            <a class="-text-link" target="_blank" href="https://maps.slu.se/">
+              <span data-translate="">getService</span>
+            </a>
+          </li>
+          <li class="gn-menuitem-xs" role="menuitem">
+            <a class="-text-link" target="_blank" href="http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/">
+              <span data-translate="">norwegianMetadata</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <swe-geo-technics-filter data-config-url="{{geotechnicsUrl}}" data-show-map-fn="showFullMapPanel"></swe-geo-technics-filter>
+      <li>
+        <a data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="../../login" class="header-login header-text">
+          <span class="hidden-xs hidden-sm" data-translate="">forPublishers</span>
         </a>
       </li>
+        
       <li class="dropdown dropdown-hover open gn-clear-xs" data-ng-if="gnCfg.mods.editor.enabled"
           data-ng-show="authenticated && user.isEditorOrMore()"
           id="gn-login-dropdown">
@@ -129,18 +149,6 @@
       </li>
       <li gn-static-pages-list-viewer data-section="top" data-language="{{lang}}" />
     </ul>
-
-    <!-- <form class="navbar-form navbar-right language-switcher">
-      <span class="gn-menuheader-xs visible-xs"
-            data-ng-if="!authenticated && service !== 'catalog.signin' && service !== 'new.account' && !shibbolethEnabled"
-            data-translate="">language</span>
-      <div class="form-group"
-           data-gn-language-switcher="lang"
-           data-langs="langs"
-           data-lang-labels="langLabels">
-      </div>
-    </form> -->
-
     <ul data-ng-if="gnCfg.mods.signin.enabled"
         class="nav navbar-nav navbar-right username-dropdown">
       <li class="dropdown dropdown-hover open" data-ng-show="authenticated">

@@ -1,30 +1,5 @@
 <div data-ng-search-form=""
      data-runSearch="true">
-  <form class="form-horizontal"
-        role="form"
-        data-ng-controller="gnsSearchTopEntriesController"
-        data-ng-search-form=""
-        data-runSearch="true"
-        data-ng-show="searchResults.records.length > 0">
-    <div class="panel panel-default gn-top-maps" role="row">
-      <div class="panel-heading"
-            data-gn-slide-toggle="">
-      </div>
-      <div class="panel-body">
-        <div data-ng-class="fluidLayout ? 'container-fluid' : 'container'">
-          <h4 data-translate="">topMaps</h4>
-
-          <input type="hidden" name="_csrf" value="{{csrf}}"/>
-
-          <div data-ng-show="searchResults.records.length > 0"
-              data-gn-results-container=""
-              data-search-results="searchResults"
-              data-template-url="resultTemplate"></div>
-        </div>
-      </div>
-    </div>
-    <!-- /.gn-top-records -->
-  </form>
 
   <div class="row gn-row-topics" data-ng-show="searchInfo.count > 0">
     <div class="container">
@@ -32,18 +7,72 @@
 
         <div id="gn-row-topics-collapse" class="gn-row-topics-collapse" data-ng-class="{'gn-filter-show': doShow === 'showFilter' || doShow === undefined, 'gn-filter-hide': doShow === 'hideFilter'}">
           <div class="gn-row-topics-header clearfix">
-            <div data-translate=""
-                  class="search-over pull-left"
-                  data-translate-values="{records: '{{searchInfo.count}}'}">searchOver</div>
-            <a class="pull-right"
-               title="{{'advanced' | translate}}"
-               data-ng-model="searchObj.advancedMode"
-               btn-checkbox=""
-               btn-checkbox-true="1"
-               btn-checkbox-false="0">
-              <span class="show-advanced" data-ng-hide="searchObj.advancedMode" data-translate="">viewAdvance</span>
-              <span class="hide-advanced" data-ng-show="searchObj.advancedMode" data-translate="">hideAdvance</span>
-            </a>
+
+            <div class="clearfix pull-left search-show-only">
+              <button type="button"
+                      class="btn btn-link btn-help" 
+                      data-container="body" 
+                      data-toggle="popover" 
+                      data-placement="right"
+                      data-html="true"
+                      title="{{ 'searchShowOnlyTooltip-title' | translate }}"
+                      data-content="{{ 'searchShowOnlyTooltip-desc' | translate }}<br>{{ 'searchShowOnlyTooltip-link' | translate }}">
+                <span class="icon-help"></span>
+              </button>
+              <span class="filter-label" data-translate="">searchShowOnly</span>
+            </div>
+            <ul class="type-filter-list pull-left">
+              <li>
+                <a href="" data-ng-click="toggleExclusiveFilter('type', ['dataset', 'series'])"
+                    data-ng-class="{'active': (searchObj.params.type.indexOf('dataset') > -1)}">
+                  <span class="icon-buffer"></span><span data-translate="">showDatasets</span></a>
+              </li>
+              <li>
+                <a href="" data-ng-click="toggleExclusiveFilter('map', 'true')"
+                    data-ng-class="{'active': (searchObj.params.dynamic == 'true')}">
+                  <span class="icon-map"></span><span data-translate="">mapServices</span></a>
+              </li>
+              <li>
+                <a href="" data-ng-click="toggleExclusiveFilter('download', 'true')"
+                    data-ng-class="{'active': (searchObj.params.download == 'true')}"><span class="download-icn-cont">
+                  <span class="icon-down-fat"></span></span><span data-translate="">downloadableResources</span></a>
+              </li>
+              <li><a href="" data-ng-click="toggleExclusiveFilter('favorites')"
+                      data-ng-class="{'active': (searchObj.params._id != '')&&(searchObj.params._id != undefined)}">
+                  <span class="icon-star"></span>favoriter</a>
+              </li>
+              <li>
+                  <span>|</span>
+              </li>
+              <li>
+                <a href="" data-ng-click="viewAllMetadata()">
+                  <span class="home fa fa-home"></span> <!-- Not able to use icon-home like other class icon-star, icon-map, icon-buffer so using fa fa-home. Seem fontello doesn't contain home icon -->
+                  <span data-translate="">viewAllResources</span>
+                </a>
+              </li>
+            </ul>
+            <div class="pull-right">
+              <a
+                title="{{'advanced' | translate}}"
+                data-ng-model="searchObj.advancedMode"
+                btn-checkbox=""
+                btn-checkbox-true="1"
+                btn-checkbox-false="0">
+                <span class="show-advanced" data-ng-hide="searchObj.advancedMode" data-translate="">viewAdvance</span>
+                <span class="hide-advanced" data-ng-show="searchObj.advancedMode" data-translate="">hideAdvance</span>
+              </a>
+
+              <button type="button"
+                      class="btn btn-link btn-help" 
+                      data-container="body" 
+                      data-toggle="popover" 
+                      data-placement="left"
+                      data-html="true"
+                      title="{{ 'advancedSearchTooltip-title' | translate }}"
+                      data-content="{{ 'advancedSearchTooltip-desc' | translate }}<br>{{ 'advancedSearchTooltip-link' | translate }}">
+                <span class="icon-help"></span>
+              </button>
+            </div>
           </div>
           <div class="row" data-ng-hide="searchObj.advancedMode">
             <span data-ng-repeat="(key, facet) in searchInfo.facet['topicCats']"
@@ -83,10 +112,63 @@
           </div>
         </div>
         <div class="gn-row-topics-footer clearfix">
-          <div data-translate=""
-               class="search-over pull-left"
-               data-translate-values="{records: '{{searchInfo.count}}'}">searchOver</div>
-          <div class="pull-right" data-ng-class="{'gn-filter-show': doShow === 'showFilter' || doShow === undefined, 'gn-filter-hide': doShow === 'hideFilter'}">
+          <div class="col-md-2 text-left gn-nopadding-left">
+            <span class="result-text" data-ng-show="searchResults.count >= 0"><span data-translate="">shows</span> <b>{{searchResults.count}}</b> <span data-translate="">results</span></span>
+          </div>
+          <div class="col-md-8 text-center">
+            <ul class="selected-filter-list">
+              <li data-ng-show="searchObj.params.resourceDateFrom">
+                <a href="" data-ng-click="unselectResourceDateFrom()">
+                  <span>från datum {{searchObj.params.resourceDateFrom | date : 'yyyy-MM-dd'}}</span>
+                  <span class="icon-cancel"></span>
+                </a>
+              </li>
+              <li data-ng-show="searchObj.params.resourceDateTo != undefined">
+                <a href="" data-ng-click="unselectResourceDateTo()">
+                  <span>till datum {{searchObj.params.resourceDateTo | date : 'yyyy-MM-dd'}}</span>
+                  <span class="icon-cancel"></span>
+                </a>
+              </li>
+              <li data-ng-show="searchObj.params.type.indexOf('dataset') > -1">
+                <a href="" data-ng-click="toggleExclusiveFilter('type', '')">
+                  <span data-translate="">showDatasets</span>
+                  <span class="icon-cancel"></span>
+                </a>
+              </li>
+              <li data-ng-show="searchObj.params.dynamic == 'true'">
+                <a href="" data-ng-click="toggleExclusiveFilter('map', '')">
+                  <span data-translate="">mapServices</span>
+                  <span class="icon-cancel"></span>
+                </a>
+              </li>
+              <li data-ng-show="searchObj.params.download == 'true'">
+                <a href="" data-ng-click="toggleExclusiveFilter('download', '')">
+                  <span data-translate="">downloadableResources</span>
+                  <span class="icon-cancel"></span>
+                </a>
+              </li>
+              <li data-ng-show="(searchObj.params._id != '') && (searchObj.params._id != undefined)">
+                <a href="" data-ng-click="toggleExclusiveFilter('favorites', '')">
+                  <span data-translate="">favourites</span>
+                  <span class="icon-cancel"></span>
+                </a>
+              </li>
+              <li data-ng-show="(searchObj.params.geometry != '') && (searchObj.params.geometry != undefined)">
+                <a href="" data-ng-click="unselectGeoResources()">
+                  <span data-translate="">geographical</span>
+                  <span class="icon-cancel"></span>
+                </a>
+              </li>
+              <li data-ng-repeat="topic in selectedTopicCategories | orderBy: translatedTopicCat">
+                <a href="" data-ng-click="unselectTopicCategory(topic)">
+                  <span data-translate="">{{topic}}</span>
+                  <span class="icon-cancel"></span>
+                </a>
+              </li>
+        
+            </ul>
+          </div>
+          <div class="col-md-2 text-right gn-nopadding-right" data-ng-class="{'gn-filter-show': doShow === 'showFilter' || doShow === undefined, 'gn-filter-hide': doShow === 'hideFilter'}">
             <a data-ng-click="toggleFilterPanel('showFilter')"
                data-ng-model="doShow"
                class="gn-filter-toggle-show">
@@ -112,31 +194,6 @@
   <div gn-grid-related-query="searchResults.records"></div>
   <div class="row gn-row-results">
     <div class="container">
-      <!-- <div class="col-md-3 gn-search-facet">
-
-        <div data-ng-show="searchResults.records.length > 0"
-            data-gn-saved-selections-panel="user"></div>
-
-        <div data-gn-user-searches-panel="user"></div> -->
-
-        <!-- Hierachical facet mode -->
-        <!-- <div class="panel panel-default"
-            data-ng-show="searchResults.records.length > 0">
-          <div class="panel-heading" data-gn-slide-toggle="">
-            <i class="fa fa-search"/>&nbsp;
-            <span data-translate="">filter</span>
-          </div>
-          <div class="panel-body">
-            <div data-gn-facet-dimension-list="searchResults.dimension"
-                data-params="searchObj.params"
-                data-facet-type="facetsSummaryType"
-                data-facet-list="facetConfig"
-                data-current-facets="currentFacets">
-            </div>
-          </div>
-        </div>
-      </div> -->
-
       <div class="col-md-12 container-fluid">
         <div class="row" data-ng-show="isFilterTagsDisplayedInSearch">
           <div class="col-xs-12">
@@ -147,17 +204,24 @@
         </div>
         <div class="row gn-row-tools">
           <div class="col-xs-12 col-md-12"
-              data-gn-facet-dimension-list="searchResults.dimension"
-              data-params="searchObj.params"
-              data-facet-type="facetsSummaryType"
-              data-facet-list="facetConfig"
-              data-current-facets="currentFacets"
-              data-tab-field="facetTabField"></div>
+               data-gn-facet-dimension-list="searchResults.dimension"
+               data-params="searchObj.params"
+               data-facet-type="facetsSummaryType"
+               data-facet-list="facetConfig"
+               data-current-facets="currentFacets"
+               data-tab-field="facetTabField"></div>
 
           <div class="col-md-9 col-sm-9 clearfix" data-ng-show="searchResults.records.length > 0">
-            <div class="pull-left"
-                 data-gn-selection-widget=""
-                 data-results="searchResults"></div>
+            <button type="button"
+                    class="btn btn-link btn-help pull-left" 
+                    data-container="body" 
+                    data-toggle="popover" 
+                    data-placement="right"
+                    data-html="true"
+                    title="{{ 'searchResultTooltip-title' | translate }}"
+                    data-content="{{ 'searchResultTooltip-desc' | translate }}<br>{{ 'searchResultTooltip-link' | translate }}">
+              <span class="icon-help"></span>
+            </button>
             <div class="pull-left"
                  data-sortby-combo=""
                  data-params="searchObj.params"
@@ -170,10 +234,9 @@
           </div>
 
           <div class="col-md-3 col-sm-3"
-            data-ng-show="searchResults.records.length > 0">
+               data-ng-show="searchResults.records.length > 0">
             <div class="pull-right"
-                data-gn-results-tpl-switcher=""></div>
-            
+                 data-gn-results-tpl-switcher=""></div>
           </div>
       </div>
 
@@ -183,7 +246,7 @@
                 data-ng-show="searching"></span>
 
           <div class="alert alert-warning" role="alert"
-              ng-if="!searching && searchResults.count == 0">
+               ng-if="!searching && searchResults.count == 0">
             <i class="fa fa-frown-o"></i>
             <span data-translate="">zarooResult</span>
           </div>

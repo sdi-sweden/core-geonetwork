@@ -1,0 +1,9 @@
+<ul class="category-list">
+  <li data-ng-repeat="c in category"
+      data-ng-init="path = buildPath(c); isSelected = isOnDrillDownPath(c)"
+      data-ng-class="{active: isInFilter(c)}"
+      data-ng-click="filter(c, $event)">
+    <p class="category">{{(c['@label'] || c['@value']) | characters:60}}</p>
+    <span class="count">{{c['@count']}}</span>
+  </li>
+</ul>
