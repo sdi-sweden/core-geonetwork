@@ -540,6 +540,8 @@
     (a.2) create a new element gmd:transferOptions and add the cloned gmd:MD_DigitalTransferOptions under it.
   (b) Add all newly created gmd:transferOptions as children of gmd:distributionInfo/gmd:MD_Distribution (add after all existing children of gmd:MD_Distribution).-->
   <xsl:template match="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution">
+    <xsl:variable name="isDownloadService" select="count(//srv:serviceType[gco:LocalName = 'download']) > 0" as="xs:boolean" />
+
     <xsl:variable name="addtransferOptions">
       <xsl:for-each select="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/*/gmd:distributorTransferOptions">
 
@@ -558,17 +560,50 @@
 
           <!-- Only add container if has valid online resources -->
           <xsl:if test="count($onlineResources/*) > 0">
-            <gmd:transferOptions>
-              <xsl:copy copy-namespaces="no">
-                <xsl:copy-of select="@*" />
-                <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no"/>
-                <xsl:copy-of select="gmd:transferSize" copy-namespaces="no"/>
+            <xsl:choose>
+              <xsl:when test="$isDownloadService = true() and count($onlineResources/*) > 1">
 
-                <xsl:copy-of select="$onlineResources" />
+                <xsl:variable name="hasDownloadLinkWfs" select="count($onlineResources/*[gmd:CI_OnlineResource/gmd:protocol/*/text() = 'HTTP:OGC:WFS']) > 0" />
+                <xsl:variable name="hasDownloadLinkAtom" select="count($onlineResources/*[gmd:CI_OnlineResource/gmd:protocol/*/text() = 'HTTP:Nedladdning:Atom']) > 0" />
 
-                <xsl:copy-of select="gmd:offLine" copy-namespaces="no"/>
-              </xsl:copy>
-            </gmd:transferOptions>
+                <gmd:transferOptions>
+                  <xsl:copy copy-namespaces="no">
+                    <xsl:copy-of select="@*" />
+                    <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no"/>
+                    <xsl:copy-of select="gmd:transferSize" copy-namespaces="no"/>
+
+                    <xsl:choose>
+                      <xsl:when test="$hasDownloadLinkWfs = true()">
+                        <xsl:copy-of select="$onlineResources/*[gmd:CI_OnlineResource/gmd:protocol/*/text() = 'HTTP:OGC:WFS']" />
+                      </xsl:when>
+                      <xsl:when test="$hasDownloadLinkAtom = true()">
+                        <xsl:copy-of select="$onlineResources/*[gmd:CI_OnlineResource/gmd:protocol/*/text() = 'HTTP:Nedladdning:Atom']" />
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <xsl:copy-of select="$onlineResources" />
+                      </xsl:otherwise>
+                    </xsl:choose>
+
+                    <xsl:copy-of select="gmd:offLine" copy-namespaces="no"/>
+                  </xsl:copy>
+                </gmd:transferOptions>
+
+              </xsl:when>
+
+              <xsl:otherwise>
+                <gmd:transferOptions>
+                  <xsl:copy copy-namespaces="no">
+                    <xsl:copy-of select="@*" />
+                    <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no"/>
+                    <xsl:copy-of select="gmd:transferSize" copy-namespaces="no"/>
+
+                    <xsl:copy-of select="$onlineResources" />
+
+                    <xsl:copy-of select="gmd:offLine" copy-namespaces="no"/>
+                  </xsl:copy>
+                </gmd:transferOptions>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
@@ -588,18 +623,11 @@
     </xsl:variable>
 
     <xsl:copy copy-namespaces="no">
-      <xsl:choose>
-        <xsl:when test="not(gmd:distributionFormat)"><xsl:copy-of select="$addformatsOptions"/></xsl:when>
-        <xsl:otherwise><xsl:apply-templates select="gmd:distributionFormat"/></xsl:otherwise>
-      </xsl:choose>
+      <xsl:copy-of select="$addformatsOptions"/>
 
       <xsl:apply-templates select="gmd:distributor"/>
 
-      <xsl:choose>
-        <xsl:when test="not(gmd:transferOptions)"><xsl:copy-of select="$addtransferOptions"/></xsl:when>
-        <xsl:otherwise><xsl:apply-templates select="gmd:transferOptions"/></xsl:otherwise>
-      </xsl:choose>
-
+      <xsl:copy-of select="$addtransferOptions"/>
     </xsl:copy>
   </xsl:template>
 
@@ -1025,8 +1053,10 @@
   </xsl:template>
 
   <!-- Remove gmd:transferOptions if no online resources with valid values: url and protocol should be filled,
-       and only copy filled online resources -->
+      and only copy filled online resources -->
   <xsl:template match="gmd:transferOptions">
+    <xsl:variable name="isDownloadService" select="count(//srv:serviceType[gco:LocalName = 'download']) > 0" as="xs:boolean" />
+
     <xsl:variable name="onlineResources">
       <xsl:for-each select="gmd:MD_DigitalTransferOptions">
         <xsl:for-each select="gmd:onLine">
@@ -1042,22 +1072,59 @@
 
     <!-- Only add container if has  valid online resources -->
     <xsl:if test="count($onlineResources/*) > 0">
-      <xsl:copy copy-namespaces="no">
-        <xsl:copy-of select="@*" />
+      <xsl:choose>
+        <xsl:when test="$isDownloadService = true() and count($onlineResources/*) > 1">
 
-        <xsl:for-each select="gmd:MD_DigitalTransferOptions">
+          <xsl:variable name="hasDownloadLinkWfs" select="count($onlineResources/*[gmd:CI_OnlineResource/gmd:protocol/*/text() = 'HTTP:OGC:WFS']) > 0" />
+          <xsl:variable name="hasDownloadLinkAtom" select="count($onlineResources/*[gmd:CI_OnlineResource/gmd:protocol/*/text() = 'HTTP:Nedladdning:Atom']) > 0" />
+
           <xsl:copy copy-namespaces="no">
             <xsl:copy-of select="@*" />
-            <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no" />
-            <xsl:copy-of select="gmd:transferSize" copy-namespaces="no" />
 
-            <xsl:copy-of select="$onlineResources" />
+            <xsl:for-each select="gmd:MD_DigitalTransferOptions">
+              <xsl:copy copy-namespaces="no">
+                <xsl:copy-of select="@*" />
+                <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no" />
+                <xsl:copy-of select="gmd:transferSize" copy-namespaces="no" />
 
-            <xsl:copy-of select="gmd:offLine" copy-namespaces="no" />
+                <xsl:choose>
+                  <xsl:when test="$hasDownloadLinkWfs = true()">
+                    <xsl:copy-of select="$onlineResources/*[gmd:CI_OnlineResource/gmd:protocol/*/text() = 'HTTP:OGC:WFS']" />
+                  </xsl:when>
+                  <xsl:when test="$hasDownloadLinkAtom = true()">
+                    <xsl:copy-of select="$onlineResources/*[gmd:CI_OnlineResource/gmd:protocol/*/text() = 'HTTP:Nedladdning:Atom']" />
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:copy-of select="$onlineResources" />
+                  </xsl:otherwise>
+                </xsl:choose>
+
+                <xsl:copy-of select="gmd:offLine" copy-namespaces="no" />
+              </xsl:copy>
+            </xsl:for-each>
           </xsl:copy>
-        </xsl:for-each>
 
-      </xsl:copy>
+        </xsl:when>
+
+        <xsl:otherwise>
+          <xsl:copy copy-namespaces="no">
+            <xsl:copy-of select="@*" />
+
+            <xsl:for-each select="gmd:MD_DigitalTransferOptions">
+              <xsl:copy copy-namespaces="no">
+                <xsl:copy-of select="@*" />
+                <xsl:copy-of select="gmd:unitsOfDistribution" copy-namespaces="no" />
+                <xsl:copy-of select="gmd:transferSize" copy-namespaces="no" />
+
+                <xsl:copy-of select="$onlineResources" />
+
+                <xsl:copy-of select="gmd:offLine" copy-namespaces="no" />
+              </xsl:copy>
+            </xsl:for-each>
+
+          </xsl:copy>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
 
   </xsl:template>

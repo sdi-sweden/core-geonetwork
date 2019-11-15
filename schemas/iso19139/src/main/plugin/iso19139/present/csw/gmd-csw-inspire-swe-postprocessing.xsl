@@ -654,17 +654,11 @@
     </xsl:variable>
 
     <xsl:copy>
-      <xsl:choose>
-        <xsl:when test="not(gmd:distributionFormat)"><xsl:copy-of select="$addformatsOptions"/></xsl:when>
-        <xsl:otherwise><xsl:apply-templates select="gmd:distributionFormat"/></xsl:otherwise>
-      </xsl:choose>
+      <xsl:copy-of select="$addformatsOptions"/>
 
       <xsl:apply-templates select="gmd:distributor"/>
 
-      <xsl:choose>
-        <xsl:when test="not(gmd:transferOptions)"><xsl:copy-of select="$addtransferOptions"/></xsl:when>
-        <xsl:otherwise><xsl:apply-templates select="gmd:transferOptions"/></xsl:otherwise>
-      </xsl:choose>
+      <xsl:copy-of select="$addtransferOptions"/>
 
     </xsl:copy>
   </xsl:template>
