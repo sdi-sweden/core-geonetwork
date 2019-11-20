@@ -14,3 +14,131 @@
   }
 }
 
+.tool-tip-cont {
+  position: absolute;
+  width: 250px;
+  padding: 0 30px;
+  box-sizing: border-box;
+  background-color: #27605d;
+  left: 50%;
+  margin-left: -130px;
+  top: 34px;
+  z-index: 100;
+  display: none;
+  &.open {
+    display: block;
+  }
+  .tool-tip {
+    *zoom: 1;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    position: relative;
+    &:before, &:after {
+      display: table;
+      content: "";
+    }
+    &:after {
+      clear: both;
+    }
+  }
+  .triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 9px solid transparent;
+    border-bottom: 9px solid #27605d;
+    border-right: 9px solid transparent;
+    top: -38px;
+    left: 95px;
+  }
+  h2 {
+    color: #fff;
+    margin: 0 0 10px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  p {
+    color: #fff !important;
+    margin: 0 0 14px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    font-size: 12px;
+    white-space: normal;
+  }
+  a {
+    border-bottom: 1px solid #fff;
+  }
+}
+.help-icn-cont {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  .help-icn-circle {
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    border: 2px solid #bfbfbf;
+    margin-left: 5px;
+  }
+  .icon-help {
+    text-align: center;
+    position: relative;
+    top: 0px;
+    left: -0.5px;
+    &:before {
+      color: #bfbfbf;
+    }
+  }
+}
+.predef-map-help {
+  top: 22px;
+  left: 86%;
+  position: relative;
+  .tool-tip-cont {
+    position: absolute;
+    width: 360px;
+    padding: 0 30px;
+    box-sizing: border-box;
+    background-color: #27605d;
+    left: -80px;
+    margin-left: -130px;
+    top: 185px;
+    z-index: 1000;
+    display: none;
+    &.open {
+      display: block;
+    }
+    .tool-tip {
+      *zoom: 1;
+      width: 100%;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      position: relative;
+    }
+    .triangle {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 9px solid transparent;
+      border-bottom: 9px solid #27605d;
+      border-right: 9px solid transparent;
+      top: -38px;
+      left: 95px;
+    }
+  }
+  .help-icn-cont {
+    .help-icn-circle {
+      border: 0;
+      margin-left: 8px;
+      .icon-help {
+        &:before {
+          color: #bfbfbf;
+          background-color: #27605d;
+        }
+      }
+    }
+
+  } 
+}

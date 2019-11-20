@@ -248,7 +248,7 @@
             }
           });
 
-    	  $rootScope.$on('closePredefMap', function() {
+    	    $rootScope.$on('closePredefMap', function() {
               scope.selectedItem = -1;
               var predefMapArrow = angular.element('#predefmapsArrow');
               if(!predefMapArrow.hasClass('cls-btn icon-down-dir')){
@@ -629,5 +629,65 @@
         }
       };
     }]);
+
+    /**
+   * @ngdoc directive
+   * @name sweTooltip
+   * @function
+   *
+   * @description
+   * Displays a tooltip element.
+   *
+   */
+  module.directive('sweTooltip', ['$timeout','$rootScope','gnConfig','gnConfigService',
+    function($timeout, $rootScope, gnConfig, gnConfigService) {
+      return {
+        restrict: 'A',
+        replace: true,
+        templateUrl: '../../catalog/views/sweden/directives/' +
+          'partials/tooltip.html',
+        scope: {
+          title: '@',
+          text: '@',
+          link: '@'
+        },
+        link: function(scope, elem) {
+          gnConfigService.loadPromise.then(function() {
+            scope.prefix = gnConfig['system.ui.tooltiphelpurlprefix'];
+
+            scope.prefix = 'https://geodata.se';
+          });
+
+          $timeout(function () {
+            elem.on('click', '.help-icn-circle', function () {
+              var tooltipElem = elem.find('.tool-tip-cont');
+              if (tooltipElem.hasClass('open')) {
+                tooltipElem.removeClass('open');
+              } else {
+                tooltipElem.addClass('open');
+              }
+              $rootScope.$emit('closetooltip', tooltipElem);
+            });
+          });
+
+          $rootScope.$on('closetooltip', function (event, tooltipElem) {
+            var tmpElem = elem.find('.tool-tip-cont');
+            if(tmpElem != undefined && tooltipElem != undefined){
+                if(tmpElem.get(0) !== tooltipElem.get(0)){
+              if (tmpElem.hasClass('open')) {
+                        tmpElem.removeClass('open');
+                }
+              }
+            }
+          });
+
+          scope.openPopup = function() {
+            var url = scope.prefix + scope.link;
+        	  $rootScope.$emit('openhelppopup', url);
+		      };
+        }
+      };
+    }
+  ]);
 
 })();

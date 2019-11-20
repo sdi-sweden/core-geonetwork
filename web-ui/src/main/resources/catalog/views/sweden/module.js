@@ -120,13 +120,14 @@
     'gnMdFormatter',
     'gnConfig',
     'gnConfigService',
+    'gnPopup',
     function($rootScope, $scope, $location, $filter,
              suggestService, $http, $sce, $compile, $window, $translate,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
              hotkeys, gnGlobalSettings, gnExternalViewer,
-             gnMdFormatter, gnConfig, gnConfigService) {
+             gnMdFormatter, gnConfig, gnConfigService, gnPopup) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -268,6 +269,42 @@
       $scope.toggleFilterPanel = function(doShow) {
         $scope.doShow = doShow;
       };
+
+      /**
+       * Open the tooltip and add custom contents
+       */
+      $rootScope.showTooltip = function($event) {
+
+        var tooltipElement = angular.element($event.currentTarget);
+
+        // TODO: get the variable in the database
+        // var prefix = gnConfig['system.ui.tooltiphelpurlprefix'];
+        var prefix = 'https://ver.geodata.se/';
+        // construct the content
+        var tooltipDesc = '<p>' + tooltipElement.data().desc + '</p>';
+        var tooltipLink = '<a data-ng-click="openHelpPopup(\'' + prefix + tooltipElement.data().link + '\')">' + tooltipElement.data().readMore + '</a>';
+        // add the content and open the popover
+        var options = {
+          content: tooltipDesc + tooltipLink
+        };
+        tooltipElement.popover(options);
+        tooltipElement.popover('show');
+      };
+
+      $rootScope.openHelpPopup = function(url) {
+
+        gnPopup.createModal({
+          class: 'disclaimer-popup',
+          title: $translate.instant('inspirePopupReportTitle'),
+          content: '<div>' +
+          $translate.instant('inspirePopupReportText') +
+          status + '</br></br>' +
+          '<a href=\'' + url + '\' target=\'_blank\'>' +
+          $translate.instant('inspirePopupReportLink') + '</a></div>'
+        }, scope);
+
+      };
+      
       
       $scope.infoTabs = {
         lastRecords: {
@@ -551,25 +588,28 @@
 
   /**
    * Controller for help popup.
-   *
    */
   module.controller('SweHelpController', [
-    '$cookies', '$scope', '$http', '$rootScope', '$sce',
-    function($cookies, $scope, $http, $rootScope, $sce) {
+    '$cookies', '$scope', '$http', '$rootScope', '$sce', 'gnPopup', '$translate',
+    function($cookies, $scope, $http, $rootScope, $sce, gnPopup, $translate) {
 
 	  $rootScope.$on('openhelppopup', function (event, data) {
-		  $scope.link = data;
-		  });
-	  $scope.trustSrc = function(link) {
-		   return $sce.trustAsResourceUrl(link);
-		};
-      $scope.close = function() {
-        // Cleanup and close the dialog
-        angular.element('#help-popup').removeClass('show');
-      };
-    }]);
 
+      // TODO: translate the error
+      var helpContent = '<h3>' + $translate.instant('error') + '</h3>' + 
+        '<p>Unable to open directly. <a href="' + data + '" target="_blank">Click to open in new page</a>';
+      // get the help content
+      $.post(data, function(result) {
+        helpContent = result;
+      });
 
+      gnPopup.createModal({
+        class: 'help-popup',
+        title: $translate.instant('help'),
+        content: helpContent
+      }, $scope);
+		});
+  }]);
 
   /**
    * Controller for new metadata popup.

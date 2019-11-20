@@ -9,16 +9,10 @@
           <div class="gn-row-topics-header clearfix">
 
             <div class="clearfix pull-left search-show-only">
-              <button type="button"
-                      class="btn btn-link btn-help" 
-                      data-container="body" 
-                      data-toggle="popover" 
-                      data-placement="right"
-                      data-html="true"
-                      title="{{ 'searchShowOnlyTooltip-title' | translate }}"
-                      data-content="{{ 'searchShowOnlyTooltip-desc' | translate }}<br>{{ 'searchShowOnlyTooltip-link' | translate }}">
-                <span class="icon-help"></span>
-              </button>
+              <div data-swe-tooltip=""
+                   data-title="{{ 'searchShowOnlyTooltip-title' | translate }}"
+                   data-text="{{ 'searchShowOnlyTooltip-desc' | translate }}"
+                   data-link="{{ 'searchShowOnlyTooltip-link' | translate }}"></div>
               <span class="filter-label" data-translate="">searchShowOnly</span>
             </div>
             <ul class="type-filter-list pull-left">
@@ -62,16 +56,10 @@
                 <span class="hide-advanced" data-ng-show="searchObj.advancedMode" data-translate="">hideAdvance</span>
               </a>
 
-              <button type="button"
-                      class="btn btn-link btn-help" 
-                      data-container="body" 
-                      data-toggle="popover" 
-                      data-placement="left"
-                      data-html="true"
-                      title="{{ 'advancedSearchTooltip-title' | translate }}"
-                      data-content="{{ 'advancedSearchTooltip-desc' | translate }}<br>{{ 'advancedSearchTooltip-link' | translate }}">
-                <span class="icon-help"></span>
-              </button>
+              <div data-swe-tooltip=""
+                   data-title="{{ 'advancedSearchTooltip-title' | translate }}"
+                   data-text="{{ 'advancedSearchTooltip-desc' | translate }}"
+                   data-link="{{ 'advancedSearchTooltip-link' | translate }}"></div>
             </div>
           </div>
           <div class="row" data-ng-hide="searchObj.advancedMode">
@@ -212,16 +200,10 @@
                data-tab-field="facetTabField"></div>
 
           <div class="col-md-9 col-sm-9 clearfix" data-ng-show="searchResults.records.length > 0">
-            <button type="button"
-                    class="btn btn-link btn-help pull-left" 
-                    data-container="body" 
-                    data-toggle="popover" 
-                    data-placement="right"
-                    data-html="true"
-                    title="{{ 'searchResultTooltip-title' | translate }}"
-                    data-content="{{ 'searchResultTooltip-desc' | translate }}<br>{{ 'searchResultTooltip-link' | translate }}">
-              <span class="icon-help"></span>
-            </button>
+              <div data-swe-tooltip=""
+                   data-title="{{ 'searchResultTooltip-title' | translate }}"
+                   data-text="{{ 'searchResultTooltip-desc' | translate }}"
+                   data-link="{{ 'searchResultTooltip-link' | translate }}"></div>
             <div class="pull-left"
                  data-sortby-combo=""
                  data-params="searchObj.params"

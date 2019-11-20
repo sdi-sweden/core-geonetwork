@@ -79,27 +79,7 @@
 <!-- /#mail-popup -->
 
 <!-- Help page popup -->
-<div id="help-popup" class="modal fade" dragable="" data-ng-controller="SweHelpController">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal""><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" data-translate="">help</h4>
-      </div>
-      <div class="modal-body">
-        <iframe src="{{trustSrc(link)}}">
-          <p>Your browser does not support iframes.</p>
-        </iframe>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" data-translate="">cancel</button>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /#help-popup -->
+<div data-ng-controller="SweHelpController"></div>
 
 <!-- Create metadata popup -->
 <div id="newmetadata-popup" class="modal fade" data-ng-controller="SweNewMetadataController">
