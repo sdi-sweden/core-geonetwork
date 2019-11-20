@@ -84,7 +84,44 @@
 
       <!-- Fixed value for schemaLocation -->
       <xsl:attribute name="xsi:schemaLocation">http://www.isotc211.org/2005/gmd https://inspire.ec.europa.eu/draft-schemas/inspire-md-schemas-temp/apiso-inspire/apiso-inspire.xsd</xsl:attribute>
-      <xsl:apply-templates select="@*[name() != 'xsi:schemaLocation']|node()"/>
+      <xsl:apply-templates select="@*[name() != 'xsi:schemaLocation']"/>
+
+      <xsl:apply-templates select="gmd:fileIdentifier" />
+      <xsl:apply-templates select="gmd:language" />
+      <xsl:apply-templates select="gmd:characterSet" />
+      <xsl:apply-templates select="gmd:parentIdentifier" />
+      <xsl:apply-templates select="gmd:hierarchyLevel" />
+      <xsl:apply-templates select="gmd:hierarchyLevelName" />
+
+      <!-- Add required gmd:hierarchyLevelName for services if missing -->
+      <xsl:if test="not(gmd:hierarchyLevelName) and count(//srv:SV_ServiceIdentification) > 0">
+        <gmd:hierarchyLevelName>
+          <gco:CharacterString>Tjänst</gco:CharacterString>
+        </gmd:hierarchyLevelName>
+      </xsl:if>
+
+      <xsl:apply-templates select="gmd:contact" />
+      <xsl:apply-templates select="gmd:dateStamp" />
+      <xsl:apply-templates select="gmd:metadataStandardName" />
+      <xsl:apply-templates select="gmd:metadataStandardVersion" />
+      <xsl:apply-templates select="gmd:dataSetURI" />
+      <xsl:apply-templates select="gmd:locale" />
+      <xsl:apply-templates select="gmd:spatialRepresentationInfo" />
+      <xsl:apply-templates select="gmd:referenceSystemInfo" />
+      <xsl:apply-templates select="gmd:metadataExtensionInfo" />
+      <xsl:apply-templates select="gmd:identificationInfo" />
+      <xsl:apply-templates select="gmd:contentInfo" />
+      <xsl:apply-templates select="gmd:distributionInfo" />
+      <xsl:apply-templates select="gmd:dataQualityInfo" />
+      <xsl:apply-templates select="gmd:portrayalCatalogueInfo" />
+      <xsl:apply-templates select="gmd:metadataConstraints" />
+      <xsl:apply-templates select="gmd:applicationSchemaInfo" />
+      <xsl:apply-templates select="gmd:metadataMaintenance" />
+      <xsl:apply-templates select="gmd:series" />
+      <xsl:apply-templates select="gmd:describes" />
+      <xsl:apply-templates select="gmd:propertyType" />
+      <xsl:apply-templates select="gmd:featureType" />
+      <xsl:apply-templates select="gmd:featureAttribute" />
     </xsl:element>
   </xsl:template>
 
@@ -158,6 +195,15 @@
 
       <xsl:apply-templates select="gmd:aggregationInfo" />
       <xsl:apply-templates select="gmd:spatialRepresentationType" />
+      
+      <!-- Add default value of vector if missing -->
+      <xsl:if test="count(gmd:spatialRepresentationType) = 0">
+        <gmd:spatialRepresentationType>
+          <gmd:MD_SpatialRepresentationTypeCode codeListValue="vector"
+            codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" />            
+        </gmd:spatialRepresentationType>
+      </xsl:if>
+      
       <xsl:apply-templates select="gmd:spatialResolution" />
       <xsl:apply-templates select="gmd:language" />
 
@@ -950,7 +996,6 @@
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*" />
 
-
       <xsl:apply-templates select="gmd:title" />
       <xsl:apply-templates select="gmd:alternateTitle" />
 
@@ -1006,6 +1051,34 @@
       <xsl:apply-templates select="gmd:ISBN" />
       <xsl:apply-templates select="gmd:ISSN" />
 
+    </xsl:copy>
+  </xsl:template>
+  
+  <!-- Set the value to gmd:hierarchyLevel value -->
+  <xsl:template match="gmd:level">   
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="@*" />
+      
+      <xsl:choose>
+        <xsl:when test="count(//gmd:hierarchyLevel[string(gmd:MD_ScopeCode/@codeListValue)]) > 0">
+          <xsl:variable name="hierarchyLevelCodelistValue" select="//gmd:hierarchyLevel[string(gmd:MD_ScopeCode/@codeListValue)][1]/gmd:MD_ScopeCode/@codeListValue" />
+          <xsl:variable name="hierarchyLevelValue" select="//gmd:hierarchyLevel[string(gmd:MD_ScopeCode/@codeListValue)][1]/gmd:MD_ScopeCode" />
+          
+          <gmd:MD_ScopeCode 
+            codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+            codeListValue="{$hierarchyLevelCodelistValue}"><xsl:value-of select="$hierarchyLevelValue"/></gmd:MD_ScopeCode>     
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:for-each select="gmd:MD_ScopeCode">
+            <xsl:copy copy-namespaces="no">
+              <xsl:apply-templates select="@*[name() != 'codeList']" />
+              <xsl:attribute name="codeList">http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#<xsl:value-of select="tokenize(@codeList, '#')[2]"/></xsl:attribute>
+
+              <xsl:apply-templates select="*" />
+            </xsl:copy>
+          </xsl:for-each>        
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:copy>
   </xsl:template>
 </xsl:stylesheet>
