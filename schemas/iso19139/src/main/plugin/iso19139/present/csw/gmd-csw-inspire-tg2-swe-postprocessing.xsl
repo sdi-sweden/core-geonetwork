@@ -1566,4 +1566,31 @@
       </xsl:choose>
     </xsl:copy>
   </xsl:template>
+
+  <!-- Service metadata: add gmd:levelDescription if missing -->
+  <xsl:template match="gmd:scope/gmd:DQ_Scope[not(gmd:levelDescription) and count(//srv:SV_ServiceIdentification) > 0]">
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="@*" />
+
+      <xsl:apply-templates select="gmd:level" />
+      <xsl:apply-templates select="gmd:extent" />
+
+      <gmd:levelDescription>
+        <gmd:MD_ScopeDescription>
+          <gmd:other>
+            <gco:CharacterString>Tjänst</gco:CharacterString>
+          </gmd:other>
+        </gmd:MD_ScopeDescription>
+      </gmd:levelDescription>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- Some metadata has href attribute without the namespace (xlink) - Fix this case managing also the correct case with the namespace -->
+  <xsl:template match="gmx:Anchor">
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of select="@*[name() != 'href' and name() != 'xlink:href']" />
+      <xsl:attribute name="xlink:href" select="@xlink:href|@href" />
+      <xsl:value-of select="." />
+    </xsl:copy>
+  </xsl:template>
 </xsl:stylesheet>

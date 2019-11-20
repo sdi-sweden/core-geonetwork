@@ -195,15 +195,15 @@
 
       <xsl:apply-templates select="gmd:aggregationInfo" />
       <xsl:apply-templates select="gmd:spatialRepresentationType" />
-      
+
       <!-- Add default value of vector if missing -->
       <xsl:if test="count(gmd:spatialRepresentationType) = 0">
         <gmd:spatialRepresentationType>
           <gmd:MD_SpatialRepresentationTypeCode codeListValue="vector"
-            codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" />            
+            codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" />
         </gmd:spatialRepresentationType>
       </xsl:if>
-      
+
       <xsl:apply-templates select="gmd:spatialResolution" />
       <xsl:apply-templates select="gmd:language" />
 
@@ -1053,20 +1053,20 @@
 
     </xsl:copy>
   </xsl:template>
-  
+
   <!-- Set the value to gmd:hierarchyLevel value -->
-  <xsl:template match="gmd:level">   
+  <xsl:template match="gmd:level">
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*" />
-      
+
       <xsl:choose>
         <xsl:when test="count(//gmd:hierarchyLevel[string(gmd:MD_ScopeCode/@codeListValue)]) > 0">
           <xsl:variable name="hierarchyLevelCodelistValue" select="//gmd:hierarchyLevel[string(gmd:MD_ScopeCode/@codeListValue)][1]/gmd:MD_ScopeCode/@codeListValue" />
           <xsl:variable name="hierarchyLevelValue" select="//gmd:hierarchyLevel[string(gmd:MD_ScopeCode/@codeListValue)][1]/gmd:MD_ScopeCode" />
-          
-          <gmd:MD_ScopeCode 
+
+          <gmd:MD_ScopeCode
             codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
-            codeListValue="{$hierarchyLevelCodelistValue}"><xsl:value-of select="$hierarchyLevelValue"/></gmd:MD_ScopeCode>     
+            codeListValue="{$hierarchyLevelCodelistValue}"><xsl:value-of select="$hierarchyLevelValue"/></gmd:MD_ScopeCode>
         </xsl:when>
         <xsl:otherwise>
           <xsl:for-each select="gmd:MD_ScopeCode">
@@ -1076,9 +1076,27 @@
 
               <xsl:apply-templates select="*" />
             </xsl:copy>
-          </xsl:for-each>        
+          </xsl:for-each>
         </xsl:otherwise>
       </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- Service metadata: add gmd:levelDescription if missing -->
+  <xsl:template match="gmd:scope/gmd:DQ_Scope[not(gmd:levelDescription) and count(//srv:SV_ServiceIdentification) > 0]">
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="@*" />
+
+      <xsl:apply-templates select="gmd:level" />
+      <xsl:apply-templates select="gmd:extent" />
+
+      <gmd:levelDescription>
+        <gmd:MD_ScopeDescription>
+          <gmd:other>
+            <gco:CharacterString>Tjänst</gco:CharacterString>
+          </gmd:other>
+        </gmd:MD_ScopeDescription>
+      </gmd:levelDescription>
     </xsl:copy>
   </xsl:template>
 </xsl:stylesheet>
