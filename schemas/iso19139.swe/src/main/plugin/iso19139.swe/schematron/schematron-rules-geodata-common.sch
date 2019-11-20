@@ -50,7 +50,7 @@ USA.
   <sch:ns prefix="skos" uri="http://www.w3.org/2004/02/skos/core#"/>
   <sch:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
   <sch:ns prefix="gmx" uri="http://www.isotc211.org/2005/gmx"/>
-  <!-- INSPIRE metadata rules / START -->
+  <!-- Common metadata rules / START -->
   <!-- ############################################ -->
   <sch:pattern fpi="[Geodata.se:101] - En titel måste anges">
     <sch:title>[Geodata.se:101] - En titel måste anges</sch:title>
@@ -476,7 +476,7 @@ USA.
 
       <sch:assert test="string($south[1]) and (-90.00 &lt;= $south[1]) and ($south[1] &lt;= $north)">[Geodata.se:125] Syd koordinat saknas eller har fel värde</sch:assert>
 
-      <sch:assert test="string(north[1]) and  ($south[1] &lt;= $north[1]) and ($north[1] &lt;= 90.00)">[Geodata.se:125] Nordlig koordinat saknas eller har fel värde</sch:assert>
+      <sch:assert test="string($north[1]) and  ($south[1] &lt;= $north[1]) and ($north[1] &lt;= 90.00)">[Geodata.se:125] Nordlig koordinat saknas eller har fel värde</sch:assert>
 
 
       <!-- Check the number of decimals equal or greater than 2 -->
