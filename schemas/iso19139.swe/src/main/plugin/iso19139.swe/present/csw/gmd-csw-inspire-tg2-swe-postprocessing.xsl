@@ -540,11 +540,9 @@
             <xsl:for-each select="gmd:onLine">
               <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
               <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/*/text()" />
-              <xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
 
-              <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
-	        					string(normalize-space($nameValue))">
-                <xsl:copy-of select="." />
+              <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
+                <xsl:copy-of select="." copy-namespaces="no" />
               </xsl:if>
             </xsl:for-each>
           </xsl:variable>
@@ -773,11 +771,9 @@
         <xsl:for-each select="gmd:onLine">
           <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
           <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/*/text()" />
-          <xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
 
-          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
-		        					string(normalize-space($nameValue))">
-            <xsl:copy-of select="." />
+          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
+            <xsl:copy-of select="." copy-namespaces="no" />
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
@@ -812,11 +808,9 @@
         <xsl:for-each select="gmd:onLine">
           <xsl:variable name="linkageValue" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL" />
           <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/*/text()" />
-          <xsl:variable name="nameValue" select="gmd:CI_OnlineResource/gmd:name/gco:CharacterString" />
 
-          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue)) and
-		        					string(normalize-space($nameValue))">
-            <xsl:copy-of select="." />
+          <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
+            <xsl:copy-of select="." copy-namespaces="no" />
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
