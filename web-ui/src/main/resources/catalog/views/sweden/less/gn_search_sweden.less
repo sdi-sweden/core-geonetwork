@@ -488,8 +488,8 @@ gn-wps-process-form {
   margin: 0;
   .panel-heading {
     background-color: @se-green;
-    height: 1.8em;
-    line-height: 1.8em;
+    height: @se-top-maps-heading-height;
+    line-height: @se-top-maps-heading-height;
     border-radius: 0;
     border: 0;
   }
@@ -503,12 +503,13 @@ gn-wps-process-form {
   }
   .panel-body {
     padding: 0;
+    height: @se-top-maps-body-height;
   }
   h4 {
-    margin-top: 15px;
+    margin-top: 0;
     font-size: 12px;
     text-transform: uppercase;
-    margin-bottom: 15px;
+    margin-bottom: 0;
   }
 }
 .site-image-filter {
@@ -557,7 +558,7 @@ gn-wps-process-form {
 }
 .site-image-filter .img-list li {
   display: inline-block;
-  margin: 0 0 18px 12px;
+  margin: 0 0 15px 12px;
   padding: 0;
 }
 .site-image-filter .img-list li:first-child {

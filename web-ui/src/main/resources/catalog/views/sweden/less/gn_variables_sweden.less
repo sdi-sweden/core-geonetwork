@@ -17,6 +17,10 @@ body, html {
 @se-bg: #e3ebea;
 @se-green: #27605d;
 @se-border-color: #d0d0d0;
+@se-top-maps-body-height: 210px;
+@se-top-maps-heading-height: 20px;
+@se-map-md-width: 360px;
+@se-toolbar-background: #f1f5f4;
 
 // override bootstrap variables
 @badge-bg: @gray;
@@ -52,7 +56,7 @@ body, html {
 @gn-menubar-border-color: @navbar-default-border;
 
 // bottombar
-@gn-bottombar-height: auto;
+@gn-bottombar-height: 300px;
 @gn-bottombar-background: #333;
 @gn-bottombar-border-color: #333;
 @gn-bottombar-color: #fff;
@@ -84,3 +88,11 @@ body, html {
 
 // metadata page
 @gn-md-view-background-color: @body-bg;
+
+// transitions
+.se-transition() {
+  -webkit-transition: width 500ms linear;
+  -moz-transition: width 500ms linear;
+  -o-transition: width 500ms linear;
+  transition: width 500ms linear;
+}

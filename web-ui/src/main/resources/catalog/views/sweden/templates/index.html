@@ -165,7 +165,8 @@
       <!-- pre-defined maps -->
       <div class="panel panel-default gn-top-maps" role="row">
         <div class="panel-heading"
-            data-gn-slide-toggle="">
+             data-ng-click="toggleTopMaps()"
+             data-gn-slide-toggle="">
         </div>
         <div class="panel-body">
           <div class="site-image-filter" data-ng-class="fluidLayout ? 'container-fluid' : 'container'">
@@ -184,12 +185,12 @@
       </div>
 
       <!-- Map -->
-      <!-- <div class="floating-map"
+      <div class="gn-search-map"
           data-gn-map-field="searchObj.searchMap"
-          data-template-url="../../catalog/views/sweden/directives/partials/mapfield.html"
+          data-template="../../catalog/views/sweden/directives/partials/mapfield.html"
           data-gn-map-field-geom="searchObj.params.geometry"
           data-gn-map-field-opt="searchObj.mapfieldOption">
-      </div> -->
+      </div>
 
       <div data-gn-saved-selections="">
         <!-- search results -->
@@ -199,37 +200,38 @@
       </div>
 
     </div>
-    <!-- <div class="site-side-map-cont" data-ng-search-form="">
-        <div class="site-side-map-wrapper">
+    <div class="site-side-map-cont" data-ng-search-form="">
+      <div class="site-side-map-wrapper">
+        <div class="map-cont">
+          <div class="tools resize-tools">
+            <button class="btn btn-default"
+                    type="button"
+                    id="map-panel-resize"
+                    data-ng-click="showFullMap()">
+              <span class="icon-cursor"></span>
+            </button>
+            <button class="btn btn-default"
+                    type="button"
+                    id="map-panel-resize-max"
+                    data-ng-click="showSmallMap()">
+              <span class="icon-cursor icon-flipped"></span>
+            </button>
+            <button class="btn btn-default"
+                    type="button"
+                    id="map-panel-resize-medium"
+                    data-ng-click="hideMapPanel()">
+              <span class="icon-cursor icon-flipped"></span>
+            </button>
+          </div>
 
-          <div class="map-cont">
-            <ul class="map-tool-list" style="z-index: 1000">
-              <li data-ng-show="!mapFullView" id="map-panel-resize" class="resize full">
-                 <a href="" data-ng-click="resizeMapPanel()">
-                    <span class="icon-cursor">
-                    </span>
-                 </a>
-              </li>
-              <li data-ng-show="mapFullView" id="map-panel-resize-max">
-                 <a href="" data-ng-click="resizeMapPanel()">
-                    <span class="onMaximised">
-                    </span>
-                 </a>
-              </li>
-              <li data-ng-show="!mapFullView" id="map-panel-resize-medium">
-                 <a href="" data-ng-click="hideMapPanel()">
-                    <span class="onMediumSized">
-                    </span>
-                 </a>
-              </li>
-            </ul>
-            <div gn-main-viewer=""
-                 data-map="searchObj.viewerMap">
-            </div>
+          <div gn-main-viewer=""
+                data-map="searchObj.viewerMap">
           </div>
         </div>
-      </div> -->
-
+        <!-- /.map-cont -->
+      </div>
+    </div>
+    <!-- /.site-side-map-cont -->
   </div>
 </div>
 

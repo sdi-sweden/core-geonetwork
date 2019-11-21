@@ -1,8 +1,199 @@
 @import "../../../style/gn_search.less";
 // import default map styles
 @import "../../default/less/gn_map_default.less";
+// variables for manipulating the theme
+@import "gn_variables_sweden.less"; // must be last
 
 // drag/zoom box for on the map
 .ol-dragzoom {
-  border: 2px solid #00274e;
+  border: 2px solid @se-green;
+}
+// floating map
+.floating-map-cont {
+  cursor: pointer;
+  position: fixed;
+  width: 110px;
+  height: 235px;
+  z-index: 100;
+  right: 20px;
+  bottom: 0;
+  margin-bottom: 25px;
+  filter: alpha(opacity=100);
+  -moz-opacity: 1;
+  opacity: 1;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  .se-transition();
+  .floating-map {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 5px solid #fff;
+    .ol-attribution {
+      display: none;
+    }
+    .cursor-cont {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background-color: #fff;
+      z-index: 200;
+      .icon-cursor {
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: @se-green;
+        font-size: 12px;
+      }
+    }
+  }
+  // affix for floating map
+  //
+  // when the user scrolls to the bottom of the page, the floating map
+  // should stay above the footer
+  &.affix-bottom {
+    position: absolute;
+    bottom: @gn-bottombar-height;
+  }
+}
+// full map
+.site-side-map-cont {
+  display: none;
+  position: fixed;
+  top: calc(~"@{se-top-maps-body-height} + @{se-top-maps-heading-height} + @{gn-menubar-height} + 1px");
+  right: 0;
+  height: 100%;
+  z-index: 500;
+  .se-transition();
+  .site-side-map-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .map-cont {
+    width: @se-map-md-width;
+    position: relative;
+    height: 100%;
+    background-color: white;
+    display: inline-block;
+    [gn-main-viewer] {
+      height: 100%;
+      [ngeo-map] {
+        height: 100%;
+      }
+    }
+  }
+  // tools
+  .tools {
+    border: 0;
+    button {
+      height: 2.4em;
+      border: 0;
+      background: #fff;
+      color: @se-green;
+      margin-bottom: 5px;
+      &:hover {
+        [role=tooltip] {
+          background: @se-green;
+        }
+      }
+      &.active {
+        background: @se-green;
+        color: #fff;
+      }
+    }
+  }
+  .control-tools {
+    bottom: 1em;
+    button {
+      margin-bottom: 0;
+      margin-top: 5px;
+    }
+  }
+  .search-container {
+    left: 3.5em;
+    width: 17.5em;
+    .input-group-addon, .input-group-btn {
+      display: none;
+    }
+    .input-group {
+      width: 100%;
+    }
+    .form-control {
+      border: 0;
+    }
+    .clear {
+      right: 0.7em;
+    }
+  }
+  .resize-tools {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    width: 25px;
+    z-index: 1001;
+    button {
+      height: 25px;
+      width: 25px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: #fff;
+      color: @se-green;
+      margin-bottom: 6px;
+      &:hover {
+        color: #fff;
+        background: @se-green;
+      }
+     }
+    .icon-minimize {
+      height: 25px;
+      width: 25px; 
+      display: block;
+      background-image: url(../catalog/views/sweden/images/arrow-pointing-down-right.png);
+      &:hover{
+        background-image: url(../catalog/views/sweden/images/arrow.png);
+      }
+    }
+  }
+  .panel-tools {
+    z-index: 1002;
+    border: 0;
+    right: 4.3em;
+    max-width: calc(~"100% - 4.7em");
+    .close {
+      color: @se-green;
+    }
+  }
+}
+.small-map-view, .large-map-view {
+  .site-side-map-cont {
+    display: block;
+  }
+}
+.small-map-view {
+  // hide button
+  #map-panel-resize-max {
+    display: none;
+  }
+}
+.large-map-view {
+  .site-side-map-cont {
+    width: 100%;
+    .map-cont {
+      width: 100%;
+    }
+  }
+  // hide buttons
+  #map-panel-resize, #map-panel-resize-medium {
+    display: none;
+  }
+}
+.topmaps-is-collapsed {
+  .site-side-map-cont {
+    top: calc(~"@{se-top-maps-heading-height} + @{gn-menubar-height} + 1px");
+  }
 }

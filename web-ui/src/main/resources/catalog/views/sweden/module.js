@@ -121,13 +121,14 @@
     'gnConfig',
     'gnConfigService',
     'gnPopup',
+    '$timeout',
     function($rootScope, $scope, $location, $filter,
              suggestService, $http, $sce, $compile, $window, $translate,
              gnUtilityService, gnSearchSettings, gnViewerSettings,
              gnMap, gnMdView, mdView, gnWmsQueue,
              gnSearchLocation, gnOwsContextService,
              hotkeys, gnGlobalSettings, gnExternalViewer,
-             gnMdFormatter, gnConfig, gnConfigService, gnPopup) {
+             gnMdFormatter, gnConfig, gnConfigService, gnPopup, $timeout) {
 
       var viewerMap = gnSearchSettings.viewerMap;
       var searchMap = gnSearchSettings.searchMap;
@@ -305,7 +306,259 @@
 
       };
       
+      // MAPS --------------------------------------------------------
+
+      // prevent the floating map from positioning on top of the footer
+      $scope.affixFloatingMap = function() {
+
+        $(window).scroll(function (event) {
+          var windowTop = $(this).scrollTop() + $(window).height();
+
+          if (windowTop >= $('.gn-bottom-bar').offset().top) {
+            $('.floating-map-cont').addClass('affix-bottom');
+          } else {
+            $('.floating-map-cont').removeClass('affix-bottom');
+          }
+        });
+      };
+
+      /**
+       * Actions for when the content is loaded
+       */
+      $rootScope.$on('$includeContentLoaded', function() {
+        $timeout($scope.affixFloatingMap());
+
+        $scope.updateSearchMap();
+      });
+
+      /**
+       * Toggle top maps
+       * 
+       * Set the state
+       */
+      $scope.toggleTopMaps = function() {
+        if ($('.gn-top-maps .panel-heading').hasClass('collapsed')) {
+          $('body').removeClass('topmaps-is-collapsed').addClass('topmaps-is-open');
+        } else {
+          $('body').removeClass('topmaps-is-open').addClass('topmaps-is-collapsed');
+        }
+      };
+
+      /**
+       * Show map panel.
+       * 
+       * Resizing is done with CSS based on 2 classes
+       */
+      $scope.showSmallMap = function() {
+        // hide floating map
+        $('.floating-map-cont').hide();
+        // show small map
+        $('body').removeClass('large-map-view').addClass('small-map-view');
+        // refresh the map
+        $scope.updateViewerMap();
+      };
       
+      var debounce = function(func,wait) {
+        var timeout;
+        return function() {
+          var context = this,
+              args = arguments;
+          var later = function() {
+              timeout = null;
+              func.apply(context,args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      };
+
+      /**
+       * Refresh map panel after a window resize
+       *
+       * a debounce function is used in order to resize only once after the resizing has stopped,
+       * and not continually resizing the map during resizing the window
+       */
+      angular.element($window).bind('resize', debounce(function (){
+
+        // resizeFullMap();
+        $scope.updateViewerMap();
+
+      },200));
+
+      /**
+       * Resize the full map
+       *
+       * Only do a resize when the full map is shown
+       */
+      var resizeFullMap = function() {
+
+        if ($('body').hasClass('large-map-view')) {
+
+          is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false;
+          window_width = angular.element($window).width();
+          $map_cont = angular.element('.map-cont');
+          $data_list_cont = angular.element('.data-list-cont');
+
+          // update the size of the map container
+          if (is_side_data_bar_open) {
+            $map_cont.css({
+              width: (window_width - $data_list_cont.width())
+            });
+          } else {
+            $map_cont.css({
+              width: window_width
+            });
+          }
+
+          // refresh the size of the map itself
+          $scope.updateViewerMap();
+        }
+      };
+
+      /**
+       * Hide map panel.
+       */
+      $scope.hideMapPanel = function() {
+        $predefMap = angular.element('.selected-img');
+        $predefMap.removeClass('selected-img').addClass('bg-img');
+
+        $('.floating-map-cont').show();
+        $('body').removeClass('small-map-view full-map-view medium-map-view large-map-view');
+
+        $scope.updateSearchMap();
+      };
+
+      /**
+       * Show the full map
+       */
+      $scope.showFullMap = function() {
+
+        $('body').removeClass('small-map-view').addClass('large-map-view');
+
+        $scope.updateViewerMap();
+
+      };
+
+      /**
+       * Update viewer map
+       */
+      $scope.updateViewerMap = function() {
+        $timeout(function() {
+
+console.log('update viewer map');
+
+          // update map
+          viewerMap.updateSize();
+          viewerMap.renderSync();
+        }, 500);
+      };
+
+      /**
+       * Update viewer map
+       */
+      $scope.updateSearchMap = function() {
+        $timeout(function() {
+          searchMap.updateSize();
+          searchMap.renderSync();
+        }, 500);
+      };
+
+      /**
+       * Resize the map panel
+       */
+      $scope.resizeMapPanel = function() {
+
+        $predefMap = angular.element('.selected-img');
+        $predefMap.removeClass('selected-img').addClass('bg-img');
+        
+        angular.element('#imageFilter').scope().is_image_clicked = false;
+        $timeout(function() {
+              angular.element('.bg-img').css("opacity", "1");
+              angular.element('.selected-img').css("opacity", "1");
+        }, 250);
+
+        $scope.mapFullView =! $scope.mapFullView;
+        var $b = angular.element(document).find('body');
+        window_width = angular.element($window).width(),
+        $map_data_list_cont = angular.element('.map-data-list-cont'),
+        is_side_data_bar_open = ($map_data_list_cont.hasClass('open')) ? true : false,
+        is_full_view_map = ($b.hasClass('full-map-view')) ? true : false,
+        is_large_view_map = ($b.hasClass('large-map-view')) ? true : false,
+        $data_list_cont = angular.element('.data-list-cont'),
+        $map_cont = angular.element('.map-cont'),
+        $obj = angular.element('#map-panel-resize');
+		$objMax = angular.element('#map-panel-resize-max');
+		$objMedium = angular.element('#map-panel-resize-medium');
+        //To restrict GFI only when map are maximized
+        is_map_maximized.data = !is_full_view_map;
+        if (is_full_view_map) {
+
+          $scope.mapFullView = false;
+
+          if (is_side_data_bar_open) {
+            $scope.$emit('body:class:remove', 'full-map-view');
+            $scope.$emit('body:class:add', 'medium-map-view');
+          }
+          else {
+            $scope.$emit('body:class:remove', 'full-map-view');
+            $scope.$emit('body:class:add', 'small-map-view');
+          }
+          $obj.removeClass('small').addClass('full');
+          $scope.$emit('body:class:remove', 'scroll-blocked');
+    	  $obj.removeClass('ng-hide');
+		  $objMax.addClass('ng-hide');
+		  $objMedium.removeClass('ng-hide');
+        }
+        else if (is_large_view_map) {
+          if (is_side_data_bar_open) {
+            $scope.$emit('body:class:remove', 'large-map-view');
+            $scope.$emit('body:class:add', 'medium-map-view');
+          } else {
+            $scope.$emit('body:class:remove', 'large-map-view');
+            $scope.$emit('body:class:add', 'small-map-view');
+          }
+          $obj.removeClass('small').addClass('full');
+          $scope.$emit('body:class:remove', 'scroll-blocked');
+    	}
+        else {
+          $scope.$emit('body:class:remove', 'large-map-view');
+          $scope.$emit('body:class:remove', 'medium-map-view');
+          $scope.$emit('body:class:remove', 'small-map-view');
+          $scope.$emit('body:class:add', 'full-map-view');
+
+          if (is_side_data_bar_open) {
+            $map_cont.css({
+              width: (window_width - $data_list_cont.width())
+            });
+            }
+          else {
+            $map_cont.css({
+              width: window_width
+              });
+          }
+         $obj.removeClass('full').addClass('small');
+         $scope.$emit('body:class:add', 'scroll-blocked');
+        }
+
+        // Refresh the viewer map
+
+		$scope.actual_height = $('.site-image-filter').height();
+        exampleResize.onResize($rootScope, $scope);
+
+        $timeout(function() {
+          viewerMap.updateSize();
+          viewerMap.renderSync();
+
+          $("div.bootstrap-table div.fixed-table-container div.fixed-table-body table").each(function( ) {
+            $( this ).bootstrapTable('resetView');
+          });
+
+        }, 500);
+
+        return false;
+      };
+
+
       $scope.infoTabs = {
         lastRecords: {
           title: 'lastRecords',
