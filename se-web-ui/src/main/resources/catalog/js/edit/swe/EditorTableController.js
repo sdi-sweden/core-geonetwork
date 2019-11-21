@@ -222,8 +222,19 @@
         var template = $scope.xmlSnippet;
         for (var property in $scope.editRow) {
           if ($scope.editRow.hasOwnProperty(property)) {
+            // Encode xml elements
+            var valueEncoded = $scope.editRow[property];
+
+            if($.type($scope.editRow[property]) === "string") {
+              valueEncoded = valueEncoded.replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&apos;');
+            }
+
             template = template.replace('{{editRow.' + property + '}}',
-              $scope.editRow[property]);
+              valueEncoded);
           }
         }
         $scope.editRow.xmlSnippet = template;

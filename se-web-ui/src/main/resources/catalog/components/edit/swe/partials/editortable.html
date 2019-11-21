@@ -31,7 +31,7 @@
   <input type="hidden" data-ng-repeat="row in rows | filter: isNewItem" data-ng-value="row.xmlSnippet" name="_X{{parent}}_gmdCOLON{{name}}" />
 
   <div class="fixed-table-container">
-    <table class="table table-hover table-bordered" style="background-color: #ffffff">
+    <table class="table table-hover table-bordered" style="table-layout: fixed; width: 100%; background-color: #ffffff">
       <thead>
       <tr>
         <th data-ng-repeat="m in rowsModel">{{m.title}}</th>
@@ -39,7 +39,7 @@
       </thead>
       <tbody>
       <tr data-ng-repeat="row in rows" data-ng-class="{'selected':$index == selectedRowIndex}" data-ng-click="setClickedRow($index)">
-        <td data-ng-repeat="m in rowsModel">{{row[m.name] | translate}}</td>
+        <td style="word-wrap: break-word" data-ng-repeat="m in rowsModel">{{row[m.name] | translate}}</td>
       </tr>
       </tbody>
     </table>
