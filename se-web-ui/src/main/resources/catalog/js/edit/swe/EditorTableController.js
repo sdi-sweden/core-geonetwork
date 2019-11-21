@@ -29,7 +29,7 @@
 
 
   module.controller('SweEditorTableController', ['$scope', '$document',
-    '$compile', 'gnHttp', 'Metadata', function($scope, $document, $compile, gnHttp, Metadata) {
+    '$compile', '$timeout', 'gnHttp', 'Metadata', function($scope, $document, $compile, $timeout, gnHttp, Metadata) {
 
       // Selected row index in the table
       $scope.selectedRowIndex = null;
@@ -236,10 +236,11 @@
           $scope.rows[$scope.selectedRowIndex] = $scope.selectedRow;
         }
 
-        // TODO: Check, removes the element added
-        //$scope.save(true);
-
         $($scope.dialog).modal('hide');
+
+        $timeout(function() {
+          $scope.save(true);
+        });
       };
 
       /**
@@ -251,8 +252,9 @@
         $scope.rows.splice($scope.selectedRowIndex, 1);
         $scope.selectedRow = null;
 
-        // TODO: Check, doesn't remove the element added
-        //$scope.save(true);
+        $timeout(function() {
+          $scope.save(true);
+        });
       };
 
       /**
