@@ -55,13 +55,13 @@
   <!-- FIME : $url comes from a global variable. -->
   <xsl:template match="gmd:MD_Metadata|*[@gco:isoType='gmd:MD_Metadata']" mode="record-reference-default">
     <!-- TODO : a metadata record may contains aggregate. In that case create one dataset per aggregate member. -->
-    <!--MÖ 2018 <dcat:dataset rdf:resource="{$url}/resource/{iso19139:getResourceCode(.)}"/>-->      
+    <!--MÖ 2018 <dcat:dataset rdf:resource="{$url}/resource/{iso19139:getResourceCode(.)}"/>-->
     <!--<xsl:if test="gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString != 'Naturvårdsverket'"  > -->
     <dcat:dataset rdf:resource="https://www.geodata.se/geodataportalen/resource/{gmd:fileIdentifier/gco:CharacterString}"/>
       <!--   <dcat:dataset rdf:resource="http://skogsdataportalen.skogsstyrelsen.se/geonetworks/resource/{gmd:fileIdentifier/gco:CharacterString}"/> -->
    <!-- MÖ 2018-02
      <dcat:record rdf:resource="{$url}/metadata/{gmd:fileIdentifier/gco:CharacterString}"/>-->
-    
+
   </xsl:template>
 
 
@@ -76,9 +76,9 @@
 
       xpath: //gmd:MD_Metadata|//*[@gco:isoType='gmd:MD_Metadata']
     -->
-    
+
     <!-- MÖ Bortcommenterat 2018-02-08
-    
+
     <dcat:CatalogRecord rdf:about="{$url}/metadata/{gmd:fileIdentifier/gco:CharacterString}">
       <!-\- Link to a dcat:Dataset or a rdf:Description for services and feature catalogue. -\->
       <foaf:primaryTopic rdf:resource="{$url}/resource/{iso19139:getResourceCode(.)}"/>
@@ -164,13 +164,13 @@
       select="//gmd:distributionInfo//gmd:distributorTransferOptions//gmd:onLine/gmd:CI_OnlineResource"
       group-by="gmd:linkage/gmd:URL">
       <dcat:distribution>
-        <dcat:Distribution rdf:about="{translate(gmd:linkage/gmd:URL,' ','')}/{$uuid}">
+        <dcat:Distribution rdf:about="{iso19139:processUrl(gmd:linkage/gmd:URL)}/{$uuid}">
         <!--
           "points to the location of a distribution. This can be a direct download link, a link
           to an HTML page containing a link to the actual data, Feed, Web Service etc.
           the semantic is determined by its domain (Distribution, Feed, WebService, Download)."
         -->
-        <dcat:accessURL  rdf:resource="{translate(gmd:linkage/gmd:URL,' ','')}">
+        <dcat:accessURL  rdf:resource="{iso19139:processUrl(gmd:linkage/gmd:URL)}">
 <!--          <xsl:value-of select="gmd:linkage/gmd:URL"/>-->
         </dcat:accessURL>
         <!-- xpath: gmd:linkage/gmd:URL -->
@@ -192,8 +192,8 @@
             <xsl:value-of select="gmd:title/gco:CharacterString"/>
           </dct:title>
         </xsl:if>
-      -->  
-        
+      -->
+
        <!-- MÖ 2018-02-10-->
         <xsl:choose>
           <xsl:when  test="gmd:title/gco:CharacterString!=''">
@@ -207,8 +207,8 @@
             </dct:title>
           </xsl:otherwise>
         </xsl:choose>
-        
-        
+
+
 
         <!-- xpath: gmd:name/gco:CharacterString -->
 
@@ -216,7 +216,7 @@
           <dcat:size></dcat:size>
         -->
 
-        <xsl:if test="gmd:protocol/gco:CharacterStringg!=''">
+        <xsl:if test="gmd:protocol/gco:CharacterString!=''">
           <dct:format>
             <!--
               "the file format of the distribution."
@@ -246,12 +246,12 @@
                 <xsl:value-of select="'ATOM'"/>
               </xsl:when>
               <xsl:otherwise>
-               
+
               </xsl:otherwise>
             </xsl:choose>
-            
-            
-           
+
+
+
           </dct:format>
         </xsl:if>
         <!-- xpath: gmd:protocol/gco:CharacterString -->
@@ -379,7 +379,7 @@
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[not(gmd:thesaurusName)]/gmd:keyword/gco:CharacterString -->
 
- 
+
     <!-- "The main category of the dataset. A dataset can have multiple themes."
       Create dcat:theme if gmx:Anchor or GEMET concepts or INSPIRE themes
     -->
@@ -463,16 +463,16 @@
           <dct:type rdf:resource="http://purl.org/adms/publishertype/NationalAuthority"/>
           <foaf:mbox rdf:resource="mailto:data@sgu.se"/>
         </foaf:Agent>
-     
+
     </xsl:for-each>
     -->
-   
+
     <xsl:for-each-group
       select="gmd:pointOfContact/gmd:CI_ResponsibleParty[gmd:organisationName/gco:CharacterString!='']"
       group-by="gmd:organisationName/gco:CharacterString">
       <!-- Organization description.
         Organization could be linked to a catalogue, a catalogue record.
-        
+
         xpath: //gmd:organisationName
       -->
       <dcat:contactPoint xmlns:adms="http://www.w3.org/ns/adms#">
@@ -492,20 +492,20 @@
         </xsl:for-each-group>
       </vcard:Organization>
       <!--  </vcard:Kind>-->
-       
+
       </dcat:contactPoint>
     </xsl:for-each-group>
-    
+
     <!-- MÖ kopierat -->
     <xsl:for-each-group select="gmd:pointOfContact[1]/gmd:CI_ResponsibleParty"
       group-by="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
       <!-- Organization memeber
-        
+
         xpath: //gmd:CI_ResponsibleParty-->
       <dct:publisher>
 
 <!--      <foaf:Agent rdf:about="{$url}/person/{encode-for-uri(iso19139:getContactId(.))}"> -->
-      
+
       <foaf:Agent rdf:about="{$url}/person/{encode-for-uri(gmd:organisationName/gco:CharacterString)}">
         <xsl:if test="gmd:organisationName/gco:CharacterString">
           <foaf:name>
@@ -530,11 +530,11 @@
       </foaf:Agent>
      </dct:publisher>
     </xsl:for-each-group>
-    
-    
-    
 
-    
+
+
+
+
     <!-- xpath: gmd:identificationInfo/*/gmd:pointOfContact -->
 
 
@@ -568,15 +568,15 @@
 
 
     <!-- "The license under which the dataset is published and can be reused." -->
-    <xsl:for-each select="gmd:resourceConstraints/gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode">
+    <xsl:for-each select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode">
       <dct:license>
         <xsl:value-of select="@codeListValue"/>
       </dct:license>
     </xsl:for-each>
     <xsl:for-each
-      select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString">
+      select="gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints">
       <dct:license>
-        <xsl:value-of select="."/>
+        <xsl:value-of select="*/text()"/>
       </dct:license>
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:resourceConstraints/??? -->
@@ -590,21 +590,21 @@
     <xsl:for-each-group
       select="../../gmd:distributionInfo//gmd:distributorTransferOptions//gmd:onLine/gmd:CI_OnlineResource"
       group-by="gmd:linkage/gmd:URL">
-     <xsl:if test="starts-with(lower-case(gmd:linkage/gmd:URL),'http') "> 
-      <dcat:distribution >
-        <dcat:Distribution rdf:about="{translate(gmd:linkage/gmd:URL,' ','')}/{$uuid}">
+     <xsl:if test="starts-with(lower-case(gmd:linkage/gmd:URL),'http') ">
+      <dcat:distribution>
+        <dcat:Distribution rdf:about="{iso19139:processUrl(gmd:linkage/gmd:URL)}/{$uuid}">
           <!--../../../../../../../..
           "points to the location of a distribution. This can be a direct download link, a link
           to an HTML page containing a link to the actual data, Feed, Web Service etc.
           the semantic is determined by its domain (Distribution, Feed, WebService, Download)."
         -->
-          <dcat:accessURL  rdf:resource="{translate(gmd:linkage/gmd:URL,' ','')}"/>
+          <dcat:accessURL  rdf:resource="{iso19139:processUrl(gmd:linkage/gmd:URL)}"/>
 
-    
-           
-          
+
+
+
           <!-- xpath: gmd:linkage/gmd:URL -->
-          
+
           <!--   <xsl:if test="gmd:name/gco:CharacterStrindcat:themeg!=''">
           <dct:title>
             <xsl:value-of select=" gmd:name/gco:CharacterString"/>
@@ -622,8 +622,8 @@
             <xsl:value-of select="gmd:title/gco:CharacterString"/>
           </dct:title>
         </xsl:if>
-      -->  
-          
+      -->
+
           <!-- MÖ 2018-02-10-->
           <xsl:choose>
             <xsl:when  test="gmd:name/gco:CharacterString!=''">
@@ -637,15 +637,15 @@
               </dct:title>
             </xsl:otherwise>
           </xsl:choose>
-          
-          
-          
+
+
+
           <!-- xpath: gmd:name/gco:CharacterString -->
-          
+
           <!-- "The size of a distribution.":N/A
           <dcat:size></dcat:size>
         -->
-          
+
           <xsl:if test="gmd:protocol/gco:CharacterString!=''">
             <dct:format>
               <xsl:choose>
@@ -665,19 +665,19 @@
                   <xsl:value-of select="'ATOM'"/>
                 </xsl:when>
                 <xsl:otherwise>
-                  
+
                 </xsl:otherwise>
               </xsl:choose>
 
             </dct:format>
           </xsl:if>
           <!-- xpath: gmd:protocol/gco:CharacterString -->
-          
+
         </dcat:Distribution>
       </dcat:distribution>
-      </xsl:if>  
+      </xsl:if>
     </xsl:for-each-group>
-    
+
     <!-- xpath: gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource -->
 
 
@@ -748,7 +748,7 @@
       <void:dataDump></void:dataDump>-->
   </xsl:template>
   <xsl:template match="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode">
-  
+
     <!-- The following parameter maps frequency codes used in ISO 19139 metadata to the corresponding ones of the Dublin Core Collection Description Frequency Vocabulary (when available). -->
   <xsl:param name="FrequencyCodeURI">
     <xsl:if test="@codeListValue != ''">
@@ -801,7 +801,7 @@
 -->
           <xsl:value-of select="concat($opfq,'ANNUAL')"/>
         </xsl:when>
-    
+
       </xsl:choose>
     </xsl:if>
   </xsl:param>

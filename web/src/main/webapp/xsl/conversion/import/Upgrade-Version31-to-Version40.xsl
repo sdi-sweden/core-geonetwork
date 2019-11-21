@@ -75,7 +75,7 @@
       </gmd:MD_Identifier>
     </xsl:copy>
   </xsl:template>
-  
+
   <!-- Change specification title to an Anchor if pointing to the INSPIRE spec -->
   <xsl:template match="gmd:specification">
     <xsl:variable name="title" select="gmd:CI_Citation/gmd:title/gco:CharacterString" />
@@ -132,8 +132,8 @@
       <xsl:apply-templates select="gmd:resourceSpecificUsage" />
 
       <!-- Process gmd:resourceConstraints for INSPIRE TG 2.0 -->
-      <xsl:apply-templates select="." mode="process-resource-constraints" />           
-      
+      <xsl:apply-templates select="." mode="process-resource-constraints" />
+
       <xsl:apply-templates select="gmd:aggregationInfo" />
       <xsl:apply-templates select="gmd:spatialRepresentationType" />
       <xsl:apply-templates select="gmd:spatialResolution" />
@@ -166,7 +166,7 @@
           <gmd:MD_Keywords>
             <xsl:for-each select="gmd:topicCategory/gmd:MD_TopicCategoryCode">
               <gmd:keyword>
-                <gco:CharacterString><xls:value-of select="." /></gco:CharacterString>
+                <gco:CharacterString><xsl:value-of select="." /></gco:CharacterString>
               </gmd:keyword>
             </xsl:for-each>
             <gmd:type>
@@ -207,7 +207,7 @@
       <xsl:apply-templates select="gmd:resourceSpecificUsage" />
 
       <!-- Process gmd:resourceConstraints for INSPIRE TG 2.0 -->
-      <xsl:apply-templates select="." mode="process-resource-constraints" />      
+      <xsl:apply-templates select="." mode="process-resource-constraints" />
 
       <xsl:apply-templates select="gmd:aggregationInfo" />
       <xsl:apply-templates select="srv:serviceType" />
@@ -256,35 +256,35 @@
   </xsl:template>
 
   <!-- Template to process gmd:resourceConstraints to upgrade them to TG 2.0.
-    
+
         - Step 1) If the metadata has gmd:resourceConstraints "without" gmd:MD_LegalConstraints/gmd:otherConstraints ->  gmd:resourceConstraints are just copied.
-        
+
         - Step 2) Otherwise process the gmd:resourceConstraints like:
-        
+
             - Step 2.1) Exists gmd:resourceConstraints[gmd:MD_Constraints]
                 - Copy all gmd:resourceConstraints[gmd:MD_Constraints]
                 - In the first gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitations:
-                    - copy the values from all gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString 
+                    - copy the values from all gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString
                       (separated by ##### block) ONLY if the value is not related to an INSPIRE constraint (See variable "restrictions")
-                
+
             - Step 2.2) Doesn't exist gmd:resourceConstraints[gmd:MD_Constraints]
                  - Create a block gmd:resourceConstraints[gmd:MD_Constraints]
-                 - Proceed with same steps as Case 2.1)        
-                 
+                 - Proceed with same steps as Case 2.1)
+
         - Step 3) Copy gmd:resourceConstraints/gmd:MD_LegalConstraints without gmd:otherConstraints
-        
+
         - Step 4) Copy gmd:resourceConstraints/gmd:MD_LegalConstraints MD_LegalConstraints with gmd:otherConstraints/gmx:Anchor
-        
+
         - Step 5) Process gmd:resourceConstraints/gmd:MD_LegalConstraints with gmd:otherConstraints/gco:CharacterString
                - If gmd:otherConstraints/gco:CharacterString is related to INSPIRE constraint (See variable "restrictions"), change it to a gmx:Anchor
                - Otherwise remove the gmd:resourceConstraints block
-                                            
+
         - Step 6) Copy gmd:resourceConstraints[gmd:MD_SecurityConstraints]
-        
+
         - Step 7) Use Limitation = "inga tillämpliga villkor" -> Add gmd:useConstraints with No conditions apply to access and use (if not defined already)
-  -->  
+  -->
   <xsl:template match="gmd:MD_DataIdentification|srv:SV_ServiceIdentification" mode="process-resource-constraints">
-    
+
     <!-- Restrictions related to INSPIRE -->
     <xsl:variable name="restrictions">
       <restrictions>
@@ -296,61 +296,61 @@
         <restriction value="Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning" code="INSPIRE_Directive_Article13_1f" description="Sekretess som omfattar personuppgifter och/eller akter om en fysisk person, om denna person inte har gett sitt medgivande till att informationen lämnas ut till allmänheten, om sådan sekretess föreskrivs i nationell lagstiftning eller gemenskapslagstiftning (INSPIRE_Directive_Article13_1f)" URL="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1f"/>
         <restriction value="En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut." code="INSPIRE_Directive_Article13_1g" description="En persons intressen eller skyddet av en person, om denne frivilligt tillhandahållit den begärda informationen utan att vara skyldig att göra detta enligt lag eller utan att kunna tvingas att göra detta enligt lag, såvida inte denna person gett sitt medgivande till att informationen lämnas ut.(INSPIRE_Directive_Article13_1g)" URL="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g"/>
         <restriction value="Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter" code="INSPIRE_Directive_Article13_1h" description="Skydd av den miljö som informationen avser, exempelvis lokalisering av sällsynta arter.(INSPIRE_Directive_Article13_1h)" URL="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h"/>
-        <restriction value="Inga begränsningar i publik åtkomst" code="noLimitations" description="There are no limitations on public access to spatial data sets and services." URL="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations"/>	
-        <restriction value="Inga begränsningar" code="noLimitations" description="There are no limitations on public access to spatial data sets and services." URL="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations"/>	
-      </restrictions>   
+        <restriction value="Inga begränsningar i publik åtkomst" code="noLimitations" description="There are no limitations on public access to spatial data sets and services." URL="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations"/>
+        <restriction value="Inga begränsningar" code="noLimitations" description="There are no limitations on public access to spatial data sets and services." URL="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations"/>
+      </restrictions>
     </xsl:variable>
 
 
     <xsl:choose>
-      
+
       <!-- Step 1) Copy gmd:resourceConstraints as they are defined when no gmd:MD_LegalConstraints/gmd:otherConstraints -->
       <xsl:when test="count(gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:otherConstraints]) = 0">
-        <xsl:apply-templates select="gmd:resourceConstraints" />            
+        <xsl:apply-templates select="gmd:resourceConstraints" />
       </xsl:when>
-      
+
       <!-- Step 2) Otherwise process the gmd:resourceConstraints -->
       <xsl:otherwise>
-       
+
         <xsl:choose>
           <!-- Step 2.1) Exists gmd:resourceConstraints[gmd:MD_Constraints] -->
           <xsl:when test="gmd:resourceConstraints[gmd:MD_Constraints]">
-            
+
             <!-- Copy gmd:MD_LegalConstraints/gmd:otherConstraints to first gmd:MD_Constraints/gmd:useLimitation -->
-            <xsl:for-each select="gmd:resourceConstraints[gmd:MD_Constraints]"> 
+            <xsl:for-each select="gmd:resourceConstraints[gmd:MD_Constraints]">
               <xsl:choose>
                 <xsl:when test="position() = 1">
                   <xsl:copy>
                     <xsl:copy-of select="@*" />
-                    
+
                     <xsl:for-each select="gmd:MD_Constraints">
                       <xsl:copy>
                         <xsl:copy-of select="@*" />
-                        
+
                         <gmd:useLimitation>
                           <gco:CharacterString>
                             <xsl:variable name="currentUseLimitation" select="gmd:useLimitation/gco:CharacterString"/>
                             <xsl:value-of select="gmd:useLimitation/gco:CharacterString" />
-                            
-                            <xsl:for-each select="//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[string(gco:CharacterString)]">            
-                              <xsl:variable name="currentValue" select="gco:CharacterString" />     
-                              
+
+                            <xsl:for-each select="//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[string(gco:CharacterString)]">
+                              <xsl:variable name="currentValue" select="gco:CharacterString" />
+
                               <!-- If the value is is the same as the current use limitations, don't copy it -->
                               <xsl:if test="$currentValue != $currentUseLimitation">
                                 <xsl:choose>
                                   <!-- Is the text related to INSPIRE -> DON'T COPY IT -->
                                   <xsl:when test="string($restrictions/restrictions/restriction[lower-case(@value) = lower-case($currentValue)]/@value)">
-                                      
+
                                   </xsl:when>
                                   <!-- Otherwise copy it -->
                                   <xsl:otherwise>
                                     ###################
-                                    <xsl:value-of select="gco:CharacterString" />                                   
+                                    <xsl:value-of select="gco:CharacterString" />
                                   </xsl:otherwise>
-                                </xsl:choose>     
+                                </xsl:choose>
                               </xsl:if>
                             </xsl:for-each>
-                            
+
                           </gco:CharacterString>
                         </gmd:useLimitation>
                       </xsl:copy>
@@ -358,95 +358,95 @@
                   </xsl:copy>
                 </xsl:when>
                 <xsl:otherwise>
-                  
-                  <xsl:apply-templates select="." />                    
+
+                  <xsl:apply-templates select="." />
                 </xsl:otherwise>
               </xsl:choose>
-              
+
             </xsl:for-each>
-            
+
           </xsl:when>
-          
+
           <!-- Step 2.2) Doesn't exist gmd:resourceConstraints[gmd:MD_Constraints] -> Create it -->
-          <xsl:otherwise>         
-            
+          <xsl:otherwise>
+
             <gmd:resourceConstraints>
               <gmd:MD_Constraints>
                 <gmd:useLimitation>
                  <gco:CharacterString>
                    <!-- Copy gmd:MD_LegalConstraints/gmd:otherConstraints -->
-                   <xsl:for-each select="//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[string(gco:CharacterString)]"> 
-                     
-                     <xsl:variable name="currentValue" select="gco:CharacterString" />     
-                     
+                   <xsl:for-each select="//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[string(gco:CharacterString)]">
+
+                     <xsl:variable name="currentValue" select="gco:CharacterString" />
+
                      <xsl:choose>
                        <!-- Is the text related to INSPIRE -> DON'T COPY IT -->
                        <xsl:when test="string($restrictions/restrictions/restriction[@value = $currentValue]/@value)">
-                                               
+
                        </xsl:when>
                        <!-- Otherwise copy it -->
                        <xsl:otherwise>
-                         <xsl:value-of select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString" /> 
+                         <xsl:value-of select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString" />
                          ###################
                        </xsl:otherwise>
-                     </xsl:choose>                                
+                     </xsl:choose>
                    </xsl:for-each>
                  </gco:CharacterString>
                 </gmd:useLimitation>
               </gmd:MD_Constraints>
             </gmd:resourceConstraints>
-            
+
           </xsl:otherwise>
         </xsl:choose>
-        
+
         <!-- Step 3) Copy gmd:resourceConstraints/gmd:MD_LegalConstraints without gmd:otherConstraints -->
         <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_LegalConstraints and not(gmd:MD_LegalConstraints/gmd:otherConstraints)]" />
- 
+
         <!-- Step 4) Copy gmd:resourceConstraints/gmd:MD_LegalConstraints with gmd:otherConstraints/gmx:Anchor -->
-        <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_LegalConstraints and 
+        <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_LegalConstraints and
                                       gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor and
                                       not(gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString)]" />
-          
+
         <!-- Step 5) Process gmd:resourceConstraints/MD_LegalConstraints with gmd:otherConstraints/gco:CharacterString -->
         <xsl:for-each select="gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString]">
-          <xsl:variable name="hasOtherConstraintsRelatedToInspire" 
+          <xsl:variable name="hasOtherConstraintsRelatedToInspire"
             select="count(gmd:MD_LegalConstraints/gmd:otherConstraints[gco:CharacterString = $restrictions/restrictions/restriction/@value ]) > 0" />
-                   
+
           <xsl:choose>
             <xsl:when test="$hasOtherConstraintsRelatedToInspire">
-              <!-- If has any gmd:otherConstraints related to INSPIRE copy the gmd:resourceConstraints block and change 
+              <!-- If has any gmd:otherConstraints related to INSPIRE copy the gmd:resourceConstraints block and change
                    gmd:useConstraints to an Anchor -->
               <xsl:copy>
                 <xsl:copy-of select="@*" />
-                
+
                 <xsl:for-each select="gmd:MD_LegalConstraints">
                   <xsl:copy>
                     <xsl:copy-of select="@*" />
-                    
+
                     <xsl:apply-templates select="gmd:useLimitation" />
                     <xsl:apply-templates select="gmd:accessConstraints" />
                     <xsl:apply-templates select="gmd:useConstraints" />
-                    
+
                     <xsl:apply-templates select="gmd:otherConstraints[gmx:Anchor]" />
-                    
+
                     <xsl:for-each select="gmd:otherConstraints[gco:CharacterString]">
-                      <xsl:variable name="currentValue" select="gco:CharacterString" />                
+                      <xsl:variable name="currentValue" select="gco:CharacterString" />
                       <xsl:choose>
                         <!-- Is the text related to INSPIRE -> Fill the anchor with the related INSPIRE restriction -->
                         <xsl:when test="string($restrictions/restrictions/restriction[lower-case(@value) = lower-case($currentValue)]/@value)">
                           <xsl:variable name="res" select="$restrictions/restrictions/restriction[lower-case(@value) = lower-case($currentValue)]" />
-                          
+
                           <gmd:otherConstraints>
                             <gmx:Anchor xlink:href="{$res/@URL}"><xsl:value-of select="$currentValue" /></gmx:Anchor>
-                          </gmd:otherConstraints>    
+                          </gmd:otherConstraints>
                         </xsl:when>
                         <!-- Otherwise don't copy it -->
                         <xsl:otherwise>
-                                   
+
                         </xsl:otherwise>
                       </xsl:choose>
                     </xsl:for-each>
-                    
+
                   </xsl:copy>
                 </xsl:for-each>
               </xsl:copy>
@@ -455,20 +455,20 @@
               <!-- Remove the gmd:resourceConstraints block -->
             </xsl:otherwise>
           </xsl:choose>
-          
- 
+
+
         </xsl:for-each>
-        
+
         <!-- Step 6) Copy gmd:resourceConstraints[gmd:MD_SecurityConstraints] -->
         <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_SecurityConstraints]" />
       </xsl:otherwise>
     </xsl:choose>
- 
-  
+
+
     <!-- Step 7) Use Limitation = "inga tillämpliga villkor" -> Add gmd:useConstraints with No conditions apply to access and use (if not defined already) -->
-    <xsl:if test="(count(gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation[lower-case(gco:CharacterString) = 'inga tillämpliga villkor'] ) > 0) and 
+    <xsl:if test="(count(gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation[lower-case(gco:CharacterString) = 'inga tillämpliga villkor'] ) > 0) and
       (count(//gmd:resourceConstraints[gmd:MD_LegalConstraints[gmd:useConstraints and gmd:otherConstraints/gmx:Anchor='inga tillämpliga villkor']]) = 0)">
-            
+
       <gmd:resourceConstraints>
         <gmd:MD_LegalConstraints>
           <gmd:useConstraints>
@@ -483,7 +483,7 @@
         </gmd:MD_LegalConstraints>
       </gmd:resourceConstraints>
     </xsl:if>
-    
+
   </xsl:template>
 
 

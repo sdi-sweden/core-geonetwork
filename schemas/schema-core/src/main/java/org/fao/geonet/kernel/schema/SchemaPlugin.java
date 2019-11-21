@@ -81,4 +81,14 @@ public abstract class SchemaPlugin implements CSWPlugin {
     public Set<Namespace> getNamespaces() {
         return allNamespaces;
     }
+
+    private List<String> xpathTitle;
+
+    public void setXpathTitle(List<String> xpathTitle) {
+        this.xpathTitle = xpathTitle;
+    }
+
+    public List<String> getXpathTitle() {
+        return xpathTitle;
+    }
 }

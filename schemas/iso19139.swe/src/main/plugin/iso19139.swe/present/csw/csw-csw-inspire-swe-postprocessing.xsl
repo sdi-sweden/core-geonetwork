@@ -140,7 +140,7 @@
 
 	<!--  fix title for DQ_ConformanceResult -->
 	<xsl:template match="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title[gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976' or
-	      gmx:Anchor/@xlink:href='https://eur-lex.europa.eu/eli/reg/2010/1089']">
+	      gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089']">
 	    <xsl:variable name="isService" select="count(//srv:SV_ServiceIdentification) > 0" />
 
 	    <xsl:copy>
@@ -158,7 +158,7 @@
 
   <!--  fix date for DQ_ConformanceResult -->
   <xsl:template match="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date[gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976' or
-	      gmx:Anchor/@xlink:href='https://eur-lex.europa.eu/eli/reg/2010/1089']">
+	      gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089']">
     <xsl:variable name="isService" select="count(//srv:SV_ServiceIdentification) > 0" />
 
     <xsl:copy>

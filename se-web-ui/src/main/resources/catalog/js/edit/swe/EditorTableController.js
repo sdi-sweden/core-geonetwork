@@ -29,7 +29,7 @@
 
 
   module.controller('SweEditorTableController', ['$scope', '$document',
-    '$compile', 'gnHttp', 'Metadata', function($scope, $document, $compile, gnHttp, Metadata) {
+    '$compile', '$timeout', 'gnHttp', 'Metadata', function($scope, $document, $compile, $timeout, gnHttp, Metadata) {
 
       // Selected row index in the table
       $scope.selectedRowIndex = null;
@@ -50,8 +50,9 @@
         $scope.title = title;
         $scope.mandatory = mandatory;
         $scope.tooltip = tooltip;
-        console.log("mdType:" + mdType);
         $scope.mdType = mdType;
+
+
 
 		//$scope.organisationNames = null;
 		//if(name === 'distributorContact' || name === 'contact' || name === 'pointOfContact') {
@@ -147,6 +148,18 @@
 		}
       };
 
+
+      $scope.allowAddElement = function() {
+        return ($scope.name !== 'distributorContact') ||
+          (($scope.name === 'distributorContact') && ($scope.rows.length == 0));
+
+      };
+
+      $scope.allowRemoveElement = function () {
+        return  ($scope.name !== 'distributorContact') ||
+          (($scope.name === 'distributorContact') && ($scope.rows.length > 1));
+      };
+
       /**
      * Selects a row in the table.
      *
@@ -186,6 +199,10 @@
           $scope.editRow['role'] = 'custodian';
         }
 
+        if ($scope.name === 'contact') {
+          $scope.editRow['role'] = 'pointOfContact';
+        }
+
         $($scope.dialog).modal('show');
       };
 
@@ -196,34 +213,45 @@
         // TODO: Move to a custom controller for the edit dialog
         $scope.editRow.date = document.getElementsByName('datevalue')[0].value;
 
-        if ($scope.mode == 'add') {
-          if ($scope.xmlSnippet != '') {
-            var content = $compile($scope.xmlSnippet)($scope);
+        if ($scope.xmlSnippet != '') {
+          var content = $compile($scope.xmlSnippet)($scope);
 
-            $scope.editRow.xmlSnippet = content[0].innerHTML;
-          }
+          $scope.editRow.xmlSnippet = content[0].innerHTML;
+        }
 
-          var template = $scope.xmlSnippet;
-          for (var property in $scope.editRow) {
-            if ($scope.editRow.hasOwnProperty(property)) {
-              template = template.replace('{{editRow.' + property + '}}',
-                  $scope.editRow[property]);
+        var template = $scope.xmlSnippet;
+        for (var property in $scope.editRow) {
+          if ($scope.editRow.hasOwnProperty(property)) {
+            // Encode xml elements
+            var valueEncoded = $scope.editRow[property];
+
+            if($.type($scope.editRow[property]) === "string") {
+              valueEncoded = valueEncoded.replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&apos;');
             }
-          }
-          $scope.editRow.xmlSnippet = template;
 
-          $scope.selectedRow = angular.copy($scope.editRow);
+            template = template.replace('{{editRow.' + property + '}}',
+              valueEncoded);
+          }
+        }
+        $scope.editRow.xmlSnippet = template;
+
+        $scope.selectedRow = angular.copy($scope.editRow);
+
+        if ($scope.mode == 'add') {
           $scope.rows.push($scope.selectedRow);
         } else {
-          $scope.selectedRow = angular.copy($scope.editRow);
           $scope.rows[$scope.selectedRowIndex] = $scope.selectedRow;
         }
 
-
-        // TODO: Check, removes the element added
-        //$scope.save(true);
-
         $($scope.dialog).modal('hide');
+
+        $timeout(function() {
+          $scope.save(true);
+        });
       };
 
       /**
@@ -235,8 +263,9 @@
         $scope.rows.splice($scope.selectedRowIndex, 1);
         $scope.selectedRow = null;
 
-        // TODO: Check, doesn't remove the element added
-        //$scope.save(true);
+        $timeout(function() {
+          $scope.save(true);
+        });
       };
 
       /**
@@ -270,7 +299,9 @@
 	    var role = '';
       //$scope.mode = 'add'; // set the mode to 'add' always.
       // Role is always empty (except in SDS distributor, keep the value)
-      if(($scope.mdType === 'sds') && ($scope.name === 'distributorContact')) {
+      if (($scope.mdType === 'sds') && ($scope.name === 'distributorContact')) {
+        role = $scope.editRow.role;
+      } else if ($scope.name === 'contact') {
         role = $scope.editRow.role;
       }
 
@@ -281,7 +312,7 @@
       $scope.editRow.organisation = selectedOrganisation.split('~')[0]; // 0 always org
       $scope.editRow.email = selectedOrganisation.split('~')[1]; // 1 always email
       $scope.editRow.phone = selectedOrganisation.split('~')[2]; // 2 always phone
-      $scope.editRow.role = role; // Role is always empty (except in SDS distributor, keep the value)
+      $scope.editRow.role = role; // Role is always empty (except in SDS distributor, keep the value) and metadata contact (fixed)
 
 
 		//$scope.saveRow(); // Put the selected record from drop down into table-grid
