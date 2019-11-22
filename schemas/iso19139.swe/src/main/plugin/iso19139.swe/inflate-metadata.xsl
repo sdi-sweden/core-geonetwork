@@ -560,7 +560,6 @@
       <xsl:apply-templates select="gmd:extent" />
 
       <xsl:if test="count(gmd:extent/*/gmd:temporalElement) = 0">
-        <xsl:message>temporal extent</xsl:message>
         <gmd:extent>
           <gmd:EX_Extent>
             <gmd:description/>

@@ -875,20 +875,40 @@
   </xsl:template>
 
   <!-- Remove temporal extent if empty beginPosition and endPosition -->
-  <xsl:template match="gmd:temporalElement[gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition]">
-    <xsl:choose>
-      <xsl:when test="not(string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition)) and
-                      not(string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition))">
-        <!-- Remove element if empty values in beginPosition and endPosition -->
-      </xsl:when>
+  <xsl:template match="gmd:extent[not(gmd:EX_Extent/gmd:geographicElement) and
+                                  not(gmd:EX_Extent/gmd:verticalElement) and
+                                  gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition]">
+    <xsl:variable name="existTemporaExtentWithValues"
+                  select="count(gmd:EX_Extent/gmd:temporalElement[string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition) or string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition)]) > 0" />
 
-      <xsl:otherwise>
-        <xsl:copy>
-          <xsl:copy-of select="@*" />
-          <xsl:apply-templates select="*" />
-        </xsl:copy>
-      </xsl:otherwise>
-    </xsl:choose>
+    <!-- Copy the gmd:extent if there are temporal extent(s) filled -->
+    <xsl:if test="$existTemporaExtentWithValues = true()">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+
+        <xsl:for-each select="gmd:EX_Extent">
+          <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:apply-templates select="node()" />
+          </xsl:copy>
+        </xsl:for-each>
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
+
+  <xsl:template match="gmd:temporalElement[gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition]">
+    <xsl:variable name="temporalExtentWithValues"
+                  select="string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition) or
+                          string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition)" />
+
+    <!-- Copy the element if values in beginPosition or endPosition -->
+    <xsl:if test="$temporalExtentWithValues = true()">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+        <xsl:apply-templates select="*" />
+      </xsl:copy>
+    </xsl:if>
   </xsl:template>
 
 
