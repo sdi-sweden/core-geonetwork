@@ -140,4 +140,13 @@
           });
 
         }]);
+
+  module.config(['$LOCALES', function($LOCALES) {
+    $LOCALES.push('../../catalog/views/sweden/locales/|search');
+    /*$LOCALES.push('/../api/0.1/standards/iso19139.swe/' +
+      'codelists/gmd%3ACI_RoleCode');
+    $LOCALES.push('/../api/0.1/standards/iso19139.swe/' +
+      'codelists/gmd%3ACI_DateTypeCode');*/
+
+  }]);
 })();

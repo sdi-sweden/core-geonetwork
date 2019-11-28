@@ -45,5 +45,6 @@
   module.config(['$LOCALES',
     function($LOCALES) {
       $LOCALES.push('admin');
+      $LOCALES.push('../../catalog/views/sweden/locales/|admin');
     }]);
 })();

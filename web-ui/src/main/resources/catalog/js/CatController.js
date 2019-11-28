@@ -52,7 +52,7 @@ goog.require('gn_alert');
       'langDetector': {
         'fromHtmlTag': false,
         'regexp': '^(?:\/.+)?/.+\/([a-z]{2,3})\/.+',
-        'default': 'eng'
+        'default': 'swe'
       },
       'nodeDetector': {
         'regexp': '^(?:\/.+)?\/(.+)\/[a-z]{2,3}\/.+',
@@ -91,7 +91,8 @@ goog.require('gn_alert');
             'por': 'pt',
             'rus': 'ru',
             'chi': 'zh',
-            'slo': 'sk'
+            'slo': 'sk',
+            'swe': 'sv'
           },
           'isLogoInHeader': false,
           'logoInHeaderPosition': 'left'
