@@ -30,5 +30,6 @@
     "metadata/validator/mdrelationUrl": "MD Relation validation url",
     "metadata/validator/mdrelationXml": "MD Relation validation xml",
     "system/ui/tooltiphelpurlprefix": "Prefix url for tooltip external links",
-    "system/ui/tooltiphelpurlprefix-help": "Prefix url for tooltip external links"
+    "system/ui/tooltiphelpurlprefix-help": "Prefix url for tooltip external links",
+    "remove-freetext-keywords": "Remove free-text keywords from non-harvested metadata"
 }

@@ -5,6 +5,12 @@
   ]
   },
   {
+    "key": "remove-freetext-keywords",
+    "type": "fixed-params",
+    "params": [
+    ]
+  },
+  {
     "key": "transfer-options-migrate",
     "type": "fixed-params",
     "params": [
