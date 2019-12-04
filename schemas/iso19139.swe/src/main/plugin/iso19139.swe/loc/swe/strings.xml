@@ -246,4 +246,5 @@
   <addPriorityDataset>Lägg till Priority Dataset</addPriorityDataset>
 
   <addSpatialScope>Lägg till Geografisk utsträckning</addSpatialScope>
+  <uncheck-initiative-inspire>Unchecking the Inspire value, the Inspire specific metadata elements will be removed when saved. Do you want to uncheck it?</uncheck-initiative-inspire>
 </strings>

@@ -188,6 +188,7 @@
              lang: '@',
              label: '@',
              textgroupOnly: '@',
+             checkboxActions: '@',
 
              // Max number of tags allowed. Use 1 to restrict to only
              // on keyword.
@@ -240,6 +241,13 @@
              }
              scope.mainLang = langs[0];
              scope.langs = langs.join(',');
+
+             scope.checkboxActionsList = {actions:[]};
+             try {
+               scope.checkboxActionsList = JSON.parse(scope.checkboxActions);
+             } catch (e) {
+              // Ignore
+             }
 
              // Check initial keywords are available in the thesaurus
              scope.sortKeyword = function(a, b) {
@@ -470,6 +478,24 @@
 
              // function for the selected state of the checkbox
             scope.toggleSelection = function($event) {
+              var keywordUri = this.keyword.props.uri;
+              var stopPropagation = false;
+
+              angular.forEach(scope.checkboxActionsList.actions, function(element) {
+                if ((element.value == keywordUri) &&
+                    ((element.triggerAction == 'unchecked' && !$event.currentTarget.checked) ||
+                      (element.triggerAction == 'checked' && $event.currentTarget.checked))) {
+                  var r = confirm(element.message);
+                  if (r == false) {
+                    stopPropagation = true;
+                  }
+                }
+              });
+
+              if (stopPropagation) {
+                $event.preventDefault();
+                return;
+              }
 
               // Update selection and snippet
               if ($event.currentTarget.checked) {
