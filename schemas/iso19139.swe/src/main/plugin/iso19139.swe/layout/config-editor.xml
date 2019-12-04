@@ -343,35 +343,13 @@
               <values>
                 <key label="code"
                      xpath="gmd:MD_Identifier/gmd:code/gco:CharacterString"
-                     tooltip="gmd:code|gmd:MD_Identifier"/>
+                     tooltip="gmd:code|gmd:MD_Identifier"
+                     required="true"/>
               </values>
               <snippet>
                 <gmd:identifier>
                   <gmd:MD_Identifier>
                     <gn:copy select="gmd:authority"/>
-                    <gmd:code>
-                      <gco:CharacterString>{{code}}</gco:CharacterString>
-                      <gn:copy select="gmd:PT_FreeText"/>
-                    </gmd:code>
-                  </gmd:MD_Identifier>
-                </gmd:identifier>
-              </snippet>
-            </template>
-          </field>
-
-          <field name="identifier" templateModeOnly="true"
-                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier"
-                 del="."
-                 if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
-            <template>
-              <values>
-                <key label="code"
-                     xpath="gmd:MD_Identifier/gmd:code/gco:CharacterString"
-                     tooltip="gmd:code|gmd:MD_Identifier"/>
-              </values>
-              <snippet>
-                <gmd:identifier>
-                  <gmd:MD_Identifier>
                     <gmd:code>
                       <gco:CharacterString>{{code}}</gco:CharacterString>
                       <gn:copy select="gmd:PT_FreeText"/>
@@ -1479,7 +1457,7 @@
                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType"
                   or="spatialRepresentationType" />
 
-           <action type="add" name="spatialRepresentationType" or="spatialRepresentationType" 
+           <action type="add" name="spatialRepresentationType" or="spatialRepresentationType"
                   if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialRepresentationType) = 0"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
             <template>
