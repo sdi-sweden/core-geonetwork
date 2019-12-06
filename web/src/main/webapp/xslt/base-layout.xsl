@@ -70,15 +70,22 @@
       -->
       <body data-ng-controller="GnCatController">
         <xsl:if test="string($env/system/site/googleTagManagerKey)">
-          <!-- Google Tag Manager, replace GTM-XXXXX with your container ID -->
-          <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={$env/system/site/googleTagManagerKey}"
-                            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-          <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','<xsl:value-of select="$env/system/site/googleTagManagerKey" />');</script>
-          <!-- End Google Tag Manager -->
+          <!-- Matomo -->
+          <script type="text/javascript">
+                  var _paq = window._paq || [];
+                  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+                  _paq.push(['trackPageView']);
+                  _paq.push(['enableLinkTracking']);
+                  (function() {
+                    var u="//matomo.lantmateriet.se/";
+                    _paq.push(['setTrackerUrl', u+'matomo.php']);
+                    _paq.push(['setSiteId', '14']);
+                    _paq.push(['setDocumentTitle', document.domain + "/" + document.title]);
+                    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+                  })();
+         </script>
+         <!-- End Matomo Code --> 
         </xsl:if>
 
         <xsl:choose>
