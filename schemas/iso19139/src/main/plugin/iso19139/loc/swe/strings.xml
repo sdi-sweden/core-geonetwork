@@ -222,5 +222,5 @@
   <sds-section-custodian>Responsible custodian</sds-section-custodian>
   <sds-addOperation>Add Operation</sds-addOperation>
 
-  <uncheck-initiative-inspire>Unchecking the Inspire value, the Inspire specific metadata elements will be removed when saved. Do you want to uncheck it?</uncheck-initiative-inspire>
+  <uncheck-initiative-inspire>Om du avmarkerar Inspire-värdet kommer de Inspire-specifika metadataelementen att tas bort när de sparas. Vill du avmarkera det?</uncheck-initiative-inspire>
 </strings>
