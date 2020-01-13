@@ -2818,14 +2818,33 @@
 
     <xsl:variable name="urlFixedProtocol" select="iso19139:addUrlProtocol(translate($url, ' ', ''))" />
 
-    <xsl:value-of select="$urlFixedProtocol" />
+    <!-- Replace placeholder elements in url between [] symbols, removing the []. Example:
+
+      http://www.trafikverket.se/TrvSeFiler/Foretag/[API-key]/Bygga_och_underhalla/Vag
+
+      is updated to
+
+      http://www.trafikverket.se/TrvSeFiler/Foretag/API-key/Bygga_och_underhalla/Vag
+  -->
+    <xsl:variable name="newUrl">
+      <xsl:analyze-string select="$urlFixedProtocol" regex="\[(.*?)\]">
+        <xsl:matching-substring>
+          <xsl:value-of select='replace(., "\[(.*?)\]", "$1")'/>
+        </xsl:matching-substring>
+        <xsl:non-matching-substring>
+          <xsl:value-of select="."/>
+        </xsl:non-matching-substring>
+      </xsl:analyze-string>
+    </xsl:variable>
+
+    <xsl:value-of select="$newUrl" />
   </xsl:function>
 
   <xsl:function name="iso19139:addUrlProtocol" as="xs:string">
     <xsl:param name="url" as="xs:string"/>
 
     <!-- TODO: Check to add ftp://,file:// if required -->
-    <xsl:variable name="validProtocols" select="'http://,https://'"/>
+    <xsl:variable name="validProtocols" select="'http://,https://,ftp://'"/>
 
     <xsl:variable name="validProtocolsList" select="tokenize($validProtocols, ',')" />
     <xsl:variable name="hasValidProtocol">
