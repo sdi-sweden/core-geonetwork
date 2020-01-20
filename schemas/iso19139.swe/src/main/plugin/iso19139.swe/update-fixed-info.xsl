@@ -27,6 +27,7 @@
 	xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco"
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:geonet="http://www.fao.org/geonetwork"
   xmlns:uuid="java:java.util.UUID"
   xmlns:java="java:org.fao.geonet.util.XslUtil" exclude-result-prefixes="#all">
@@ -937,6 +938,17 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="gmd:westBoundLongitude/gco:Decimal|
+                       gmd:eastBoundLongitude/gco:Decimal|
+                       gmd:southBoundLatitude/gco:Decimal|
+                       gmd:northBoundLatitude/gco:Decimal" priority="10">
+    <xsl:copy>
+      <xsl:choose>
+        <xsl:when test=". castable as xs:decimal"> <xsl:value-of select='format-number(., "#.00##########")'/></xsl:when>
+        <xsl:otherwise><xsl:value-of select="." /></xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
 
 <!-- ================================================================= -->
 	<!-- copy everything else as is -->

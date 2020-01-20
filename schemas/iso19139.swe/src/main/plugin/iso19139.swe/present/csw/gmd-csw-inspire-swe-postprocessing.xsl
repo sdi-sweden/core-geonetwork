@@ -553,7 +553,57 @@
               <xsl:variable name="protocolValue" select="gmd:CI_OnlineResource/gmd:protocol/*/text()" />
 
               <xsl:if test="string(normalize-space($linkageValue)) and string(normalize-space($protocolValue))">
-                <xsl:copy-of select="." copy-namespaces="no" />
+                <xsl:variable name="isWms" select="$protocolValue = 'HTTP:OGC:WMS'" />
+                <xsl:variable name="isWfs" select="$protocolValue = 'HTTP:OGC:WFS'" />
+                <xsl:variable name="missingParams" select="ends-with($linkageValue, '?')" />
+
+                <xsl:choose>
+                  <xsl:when test="($isWms = true()) and ($missingParams = true())">
+                    <xsl:copy copy-namespaces="no">
+                      <xsl:copy-of select="@*" />
+
+                      <xsl:for-each select="gmd:CI_OnlineResource">
+                        <xsl:copy copy-namespaces="no">
+                          <xsl:copy-of select="@*" />
+
+                          <gmd:linkage>
+                            <gmd:URL><xsl:value-of select="concat($linkageValue, 'request=GetCapabilities&amp;service=WMS&amp;version=1.3.0')" /></gmd:URL>
+                          </gmd:linkage>
+
+                          <xsl:copy-of select="gmd:protocol" copy-namespaces="no" />
+                          <xsl:copy-of select="gmd:applicationProfile" copy-namespaces="no" />
+                          <xsl:copy-of select="gmd:name" copy-namespaces="no" />
+                          <xsl:copy-of select="gmd:description" copy-namespaces="no" />
+                          <xsl:copy-of select="gmd:function" copy-namespaces="no" />
+                        </xsl:copy>
+                      </xsl:for-each>
+                    </xsl:copy>
+                  </xsl:when>
+                  <xsl:when test="($isWfs = true()) and ($missingParams = true())">
+                    <xsl:copy copy-namespaces="no">
+                      <xsl:copy-of select="@*" />
+
+                      <xsl:for-each select="gmd:CI_OnlineResource">
+                        <xsl:copy copy-namespaces="no">
+                          <xsl:copy-of select="@*" />
+
+                          <gmd:linkage>
+                            <gmd:URL><xsl:value-of select="concat($linkageValue, 'request=GetCapabilities&amp;service=WFS&amp;version=2.0.0')" /></gmd:URL>
+                          </gmd:linkage>
+
+                          <xsl:copy-of select="gmd:protocol" copy-namespaces="no" />
+                          <xsl:copy-of select="gmd:applicationProfile" copy-namespaces="no" />
+                          <xsl:copy-of select="gmd:name" copy-namespaces="no" />
+                          <xsl:copy-of select="gmd:description" copy-namespaces="no" />
+                          <xsl:copy-of select="gmd:function" copy-namespaces="no" />
+                        </xsl:copy>
+                      </xsl:for-each>
+                    </xsl:copy>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:copy-of select="." copy-namespaces="no" />
+                  </xsl:otherwise>
+                </xsl:choose>
               </xsl:if>
             </xsl:for-each>
           </xsl:variable>
