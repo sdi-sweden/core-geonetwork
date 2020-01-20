@@ -483,7 +483,7 @@
                                 <gco:CharacterString>Överensstämmer med de angivna specifikationerna.</gco:CharacterString>
                             </gmd:explanation>
                             <gmd:pass>
-                                <gco:Boolean>true</gco:Boolean>
+                                <gco:Boolean>false</gco:Boolean>
                             </gmd:pass>
                         </gmd:DQ_ConformanceResult>
                     </gmd:result>
