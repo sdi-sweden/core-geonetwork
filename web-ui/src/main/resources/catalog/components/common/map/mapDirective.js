@@ -357,24 +357,75 @@
               * Called on for showing geo suggestions.
               */
              scope.getNameSearch = function(val) {
-               var posturl = 'https://www.geodata.se/NameWebService/search';
-                val = encodeURIComponent(val);
-                var params = {
-                  'searchstring': val,
-                  'callback': 'JSON_CALLBACK'
-                };
-                return $http({
-                  method: 'JSONP',
-                  url: posturl,
-                  params: params
-                }).then(function(res) {
-                  var data = res.data;
-                  var status = res.status;
-                  var headers = res.headers;
-                  var config = res.config;
-                  var statusText = res.statusText;
-                  return data;
-                });
+//               var posturl = 'https://www.geodata.se/NameWebService/search';
+//                val = encodeURIComponent(val);
+//                var params = {
+//                  'searchstring': val,
+//                  'callback': 'JSON_CALLBACK'
+//                };
+//                return $http({
+//                  method: 'JSONP',
+//                  url: posturl,
+//                  params: params
+//                }).then(function(res) {
+//                  var data = res.data;
+//                  var status = res.status;
+//                  var headers = res.headers;
+//                  var config = res.config;
+//                  var statusText = res.statusText;
+//                  return data;
+//                });
+
+//            	    var parent = scope.$parent;
+//            	    var lang = parent.langs[parent.lang];
+
+            	    var formatter = function(loc) {
+            	        var props = [];
+            	        ['toponymName', 'adminName1', 'countryName'].
+            	            forEach(function(p) {
+            	              if (loc[p]) { props.push(loc[p]); }
+            	            });
+            	        return (props.length == 0) ? '' : '—' + props.join(', ');
+            	      };
+
+            	    //TODO: move api url and username to config
+            	    var url = 'http://api.geonames.org/searchJSON';
+            		  //redirect http request via proxy
+            	 	  if (!url.includes("https://")) {
+            			url = '../../proxy?url=' + encodeURIComponent(url);
+            	      }  
+            	      return $http.get(url, {
+            	        params: {
+            	          lang: 'sv',
+            	          style: 'full',
+            	          type: 'json',
+            	          maxRows: 10,
+            	          name_startsWith: val,
+            	          country: 'SE',
+            	          east: 24.1633,
+            	          west: 10.9614,
+            	          north: 69.059,
+            	          south: 55.3363,
+            	          username: 'georchestra'
+            	        }
+            	      }).
+            	        then(function(response) {
+            	          var loc;
+            	          var results = [];
+            	          for (var i = 0; i < response.data.geonames.length; i++) {
+            	            loc = response.data.geonames[i];
+            	            if (loc.bbox) {
+            	              results.push({
+            	                Name: loc.name,
+            	                Type: loc.toponymName,
+            	                extent: ol.proj.transformExtent([loc.bbox.west,
+            	                  loc.bbox.south, loc.bbox.east, loc.bbox.north],
+            	                'EPSG:4326', 'EPSG:3006')
+            	              });
+            	            }
+            	          }
+            	          return results;
+            	        });
             };
 
              /**
