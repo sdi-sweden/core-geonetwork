@@ -203,7 +203,7 @@ USA.
 		<!--	<sch:report test="$degree">(2.8.1) Degree of conformity found:
 				<sch:value-of select="$degree"/>
 			</sch:report>
-		 -->						
+		 -->
 		</sch:rule>
 
 		<sch:rule context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report">
@@ -219,11 +219,11 @@ USA.
 
 			<sch:let name="datasetSpec" value="//gmd:specification/*/gmd:title/*/text()/lower-case(.) = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster'" />
 			<sch:let name="serviceSpec" value="//gmd:specification/*/gmd:title/*/text()/lower-case(.) = 'kommissionens förordning (eg) nr 976/2009 av den 19 oktober 2009 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg med avseende på nättjänster'" />
-			
+
 			<sch:assert
 				test="($title_count > 0 and $pass_count > 0 and $date_count > 0 and $explanation_count > 0) or not($keywordValue_INS)">[Geodata.se:109] Resurser som ingår i Inspire bör ha en överensstämmelserapport
 			</sch:assert>
-			
+
 			<sch:assert test="($title_count = $report_count) or not($keywordValue_INS)">[Geodata.se:109a] Resurser som ingår i Inspire bör ha en överensstämmelserapport  - namn på specifikation saknas </sch:assert>
 			<sch:assert test="($explanation_count = $report_count) or not($keywordValue_INS)">[Geodata.se:109b] Resurser som ingår i Inspire skall ha en överensstämmelserapport - beskrivning av specifikationsuppfyllelse saknas </sch:assert>
 			<sch:assert test="($pass_count = $report_count) or not($keywordValue_INS)">[Geodata.se:109c] Resurser som ingår i Inspire skall ha en överensstämmelserapport) - överensstämmelse (ja/nej) saknas </sch:assert>
@@ -245,6 +245,17 @@ USA.
       >[Geodata.se:113b] Metadatakontakt måste ha epostadress och organisation eller person angiven</sch:assert>
 		</sch:rule>
 	</sch:pattern>
+
+  <sch:pattern fpi="[Geodata.se:200] - Vertical extent">
+    <sch:title>[Geodata.se:200] - Vertical extent</sch:title>
+
+    <sch:rule context="//gmd:MD_DataIdentification/gmd:extent/*/gmd:verticalElement/gmd:EX_VerticalExtent">
+      <sch:assert test="number(gmd:minimumValue/*/text())">[Geodata.se:200a] - Vertical extent - a numeric value is required for minimum value</sch:assert>
+      <sch:assert test="number(gmd:maximumValue/*/text())">[Geodata.se:200b] - Vertical extent -  a numeric value is required for maximum value</sch:assert>
+    	
+      <sch:assert test="string(normalize-space(gmd:verticalCRS/@xlink:title)) or count(gmd:verticalCRS/*) > 0">[Geodata.se:200c] - Vertical extent - vertical CRS is required</sch:assert>
+    </sch:rule>
+  </sch:pattern>
 
 	<!-- INSPIRE metadata rules / END -->
 	<!-- Kontroller för Geodata.se -->

@@ -25,7 +25,7 @@
 <labels xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="../../../labels.xsd" xmlns:gco="http://www.isotc211.org/2005/gco"
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:srv="http://www.isotc211.org/2005/srv"
-	xmlns:gml="http://www.opengis.net/gml" xmlns:gts="http://www.isotc211.org/2005/gts"
+	xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gts="http://www.isotc211.org/2005/gts"
 	xmlns:gmx="http://www.isotc211.org/2005/gmx">
 
 	<element name="gmd:MD_ScopeCode">
@@ -70,8 +70,8 @@
 		<label>Data ed ora previsti per la disponibilità</label>
 		<help>data ed ora di quando la risorsa diverrà disponibile</help>
 	</element>
-	<!--<element name="gmd:dateTime"> <label>Giorno/ora</label> <description>Data 
-		e ora o l'intervallo di data e ora su od oltre il quale il process step si 
+	<!--<element name="gmd:dateTime"> <label>Giorno/ora</label> <description>Data
+		e ora o l'intervallo di data e ora su od oltre il quale il process step si
 		è verificato (YYYY-MM-DDThh:mm:ss)</description> </element> -->
 	<element name="gco:Measure" id="100.0" context="gmd:DQ_Element">
 		<label>Nome della misura</label>
@@ -1354,7 +1354,7 @@ elementi quali il software, il sistema operativo del computer, nome del file, e 
 	<element name="gmd:nameOfMeasure" id="100.0">
 		<label>Nome di misura</label>
 		<description>Nome del test applicato ai dati</description>
-		<!-- ISO19138 Data quality basic measures Annex C - under revision ISO 
+		<!-- ISO19138 Data quality basic measures Annex C - under revision ISO
 			19157 http://www.iso.org/iso/fr/catalogue_detail.htm?csnumber=32575 -->
 		<helper rel="gmd:measureDescription">
 			<option value="">-- Completezza --</option>
@@ -2405,10 +2405,10 @@ e di trasformazione.</label>
 			<option value="OGC:WCS">OGC Web Coverage Service (OGC:WCS)</option>
 			<option value="W3C:HTML:DOWNLOAD">Download (W3C:HTML:DOWNLOAD)</option>
 			<option value="W3C:HTML:LINK">Information (W3C:HTML:LINK)</option>
-			<!-- INSPIRE Service type defined in MD IR / 1.3.1 Spatial data service 
-				type <option value="discovery">Discovery Service (discovery)</option> <option 
-				value="view">View Service (view)</option> <option value="download">Download 
-				Service (download)</option> <option value="transformation">Transformation 
+			<!-- INSPIRE Service type defined in MD IR / 1.3.1 Spatial data service
+				type <option value="discovery">Discovery Service (discovery)</option> <option
+				value="view">View Service (view)</option> <option value="download">Download
+				Service (download)</option> <option value="transformation">Transformation
 				Service (transformation)</option> <option value="other">Other Services (other)</option> -->
 		</helper>
 	</element>
@@ -2713,9 +2713,9 @@ e di trasformazione.</label>
 		<label>Periodo di durata</label>
 		<description>
             Il tipo di dati di durata è utilizzato per specificare un intervallo di tempo.
-            
+
             L'intervallo di tempo è specificato nella forma seguente "PnYnMnDTnHnMnS" in cui:
-            
+
             * P indica il periodo (obbligatorio)
             * nY indica il numero di anni
             * nM indica il numero di mesi
@@ -2723,7 +2723,7 @@ e di trasformazione.</label>
             * T indica l'inizio di una sezione di tempo (necessario se si sta andando a specificare le ore, minuti o secondi)
             * nH indica il numero di ore
             * nM indica il numero di minuti
-            * nS indica il numero di secondi            
+            * nS indica il numero di secondi
         </description>
     </element>
     <element name="gco:CharacterString">
@@ -2761,27 +2761,27 @@ e di trasformazione.</label>
     <element name="hidden-elements">
         <label>Hidden Elements</label>
         <description>Child elements and attributes have been hidden because you do no have access to view those elements</description>
-    </element> 
+    </element>
     <!-- ==================================================== -->
-    <element name="gmx:name"> 
-        <label>Name</label> 
-        <description>Feature catalogue name</description> 
-    </element> 
-    <element name="gmx:scope"> 
-        <label>Scope</label> 
-        <description>Scope definition</description> 
-    </element> 
-    <element name="gmx:versionNumber"> 
-        <label>Version</label> 
-        <description>Catalogue version</description> 
-    </element> 
-    <element name="gmx:versionDate"> 
-        <label>Date</label> 
-        <description>Catalogue date</description> 
-    </element> 
-    <element name="gmx:fieldOfApplication"> 
-        <label>Field of application</label> 
-        <description>Field of application</description> 
+    <element name="gmx:name">
+        <label>Name</label>
+        <description>Feature catalogue name</description>
+    </element>
+    <element name="gmx:scope">
+        <label>Scope</label>
+        <description>Scope definition</description>
+    </element>
+    <element name="gmx:versionNumber">
+        <label>Version</label>
+        <description>Catalogue version</description>
+    </element>
+    <element name="gmx:versionDate">
+        <label>Date</label>
+        <description>Catalogue date</description>
+    </element>
+    <element name="gmx:fieldOfApplication">
+        <label>Field of application</label>
+        <description>Field of application</description>
     </element>
     <element name="gmd:MD_TopologyLevelCode">
         <label>Topologia Level</label>

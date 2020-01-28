@@ -23,7 +23,8 @@
   -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
-	xmlns:gml="http://www.opengis.net/gml" xmlns:srv="http://www.isotc211.org/2005/srv"
+  xmlns:gml="http://www.opengis.net/gml/3.2"
+  xmlns:srv="http://www.isotc211.org/2005/srv"
 	xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco"
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -151,7 +152,7 @@
 	<xsl:template match="@gml:id">
 		<xsl:choose>
 			<xsl:when test="normalize-space(.)=''">
-				<xsl:attribute name="gml:id">
+        <xsl:attribute name="gml:id">
 					<xsl:value-of select="generate-id(.)"/>
 				</xsl:attribute>
 			</xsl:when>
@@ -783,11 +784,11 @@
 	</xsl:template>
 
 	<xsl:template match="gml:*">
-		<xsl:call-template name="correct_ns_prefix">
-			<xsl:with-param name="element" select="."/>
+    <xsl:call-template name="correct_ns_prefix">
+      <xsl:with-param name="element" select="."/>
 			<xsl:with-param name="prefix" select="'gml'"/>
-		</xsl:call-template>
-	</xsl:template>
+    </xsl:call-template>
+  </xsl:template>
 
 
 	<!-- If the value is defined in the labels helper (contains the value in the helper) and contains

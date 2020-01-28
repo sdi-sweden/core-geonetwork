@@ -23,7 +23,7 @@
   -->
 
 <labels xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gts="http://www.isotc211.org/2005/gts"
-	xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml"
+	xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2"
 	xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
 
 	<element name="gmd:MD_ScopeCode">
@@ -70,8 +70,8 @@
 		<label>Data prevista de disponibilitat de les dades</label>
 		<help>data en què el conjunt de dades estarà disponible</help>
 	</element>
-	<!--<element name="gmd:dateTime"> <label>DateTime</label> <description>Date 
-		and time or range of date and time on or over which the process step occurred 
+	<!--<element name="gmd:dateTime"> <label>DateTime</label> <description>Date
+		and time or range of date and time on or over which the process step occurred
 		(YYYY-MM-DDThh:mm:ss)</description> </element> -->
 	<element name="gco:Measure" id="100.0" context="gmd:DQ_Element">
 		<label>Nom de la mesura</label>
@@ -859,8 +859,8 @@
 		<description>Data de creació de la metadada (YYYY-MM-DDThh:mm:ss)</description>
 		<condition>mandatory</condition>
 	</element>
-	<!--<element name="gmd:dateTime" id="89.0"> <label>Date / Time</label> <description>Date 
-		and time or range of date and time on or over which the process step occurred 
+	<!--<element name="gmd:dateTime" id="89.0"> <label>Date / Time</label> <description>Date
+		and time or range of date and time on or over which the process step occurred
 		(YYYY-MM-DDThh:mm:ss)</description> </element> -->
 	<element name="gmd:dateTime" id="89.0" context="LI_ProcessStep">
 		<description>Data i hora o rangs de dates i hores en què es va produir
@@ -1511,8 +1511,8 @@
 			<option value="OGC:OWS Context">OGC:OWS Context</option>
 		</helper>
 	</element>
-	
-	
+
+
 	<element name="gmd:name" context="gmd:MD_ExtendedElementInformation"
 		id="307.0">
 		<label>Nom</label>
@@ -2363,10 +2363,10 @@
 			<option value="OGC:WCS">OGC Web Coverage Service (OGC:WCS)</option>
 			<option value="W3C:HTML:DOWNLOAD">Download (W3C:HTML:DOWNLOAD)</option>
 			<option value="W3C:HTML:LINK">Information (W3C:HTML:LINK)</option>
-			<!-- INSPIRE Service type defined in MD IR / 1.3.1 Spatial data service 
-				type <option value="discovery">Discovery Service (discovery)</option> <option 
-				value="view">View Service (view)</option> <option value="download">Download 
-				Service (download)</option> <option value="transformation">Transformation 
+			<!-- INSPIRE Service type defined in MD IR / 1.3.1 Spatial data service
+				type <option value="discovery">Discovery Service (discovery)</option> <option
+				value="view">View Service (view)</option> <option value="download">Download
+				Service (download)</option> <option value="transformation">Transformation
 				Service (transformation)</option> <option value="other">Other Services (other)</option> -->
 		</helper>
 	</element>
@@ -2679,9 +2679,9 @@
         <label>Període</label>
         <description>
             El tipus de dada per la duració permet definir un interval de temps.
-            
+
             El format és el següent "PnYnMnDTnHnMnS", on:
-            
+
             * P període (obligatori)
             * nY : anys
             * nM : nesos
@@ -2689,7 +2689,7 @@
             * T indica l'inici de la secció de temps (obligatori si s'especifica hores, minuts o segons)
             * nH : hores
             * nM : minuts
-            * nS : segons            
+            * nS : segons
         </description>
     </element>
     <element name="gco:CharacterString">
@@ -2729,24 +2729,24 @@
         <description>Child elements and attributes have been hidden because you do no have access to view those elements</description>
     </element>
     <!-- ==================================================== -->
-    <element name="gmx:name"> 
-        <label>Name</label> 
-        <description>Feature catalogue name</description> 
-    </element> 
-    <element name="gmx:scope"> 
-        <label>Scope</label> 
-        <description>Scope definition</description> 
-    </element> 
-    <element name="gmx:versionNumber"> 
-        <label>Version</label> 
-        <description>Catalogue version</description> 
-    </element> 
-    <element name="gmx:versionDate"> 
-        <label>Date</label> 
-        <description>Catalogue date</description> 
-    </element> 
-    <element name="gmx:fieldOfApplication"> 
-        <label>Field of application</label> 
-        <description>Field of application</description> 
-    </element> 
+    <element name="gmx:name">
+        <label>Name</label>
+        <description>Feature catalogue name</description>
+    </element>
+    <element name="gmx:scope">
+        <label>Scope</label>
+        <description>Scope definition</description>
+    </element>
+    <element name="gmx:versionNumber">
+        <label>Version</label>
+        <description>Catalogue version</description>
+    </element>
+    <element name="gmx:versionDate">
+        <label>Date</label>
+        <description>Catalogue date</description>
+    </element>
+    <element name="gmx:fieldOfApplication">
+        <label>Field of application</label>
+        <description>Field of application</description>
+    </element>
 </labels>

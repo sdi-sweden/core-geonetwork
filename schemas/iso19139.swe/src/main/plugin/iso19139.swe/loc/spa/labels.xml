@@ -24,7 +24,7 @@
   -->
 
 <labels xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gts="http://www.isotc211.org/2005/gts"
-	xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml"
+	xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2"
 	xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
 
 	<!-- ==================================================== -->
@@ -1720,7 +1720,7 @@
 			<option value="OGC:OWS Context">Contexto OGC:OWS</option>
 		</helper>
 	</element>
-	
+
 	<!-- ==================================================== -->
 	<element name="gmd:nameOfMeasure">
 		<label>Name of measure</label>
@@ -2452,14 +2452,14 @@
 	<element name="gco:Date">
 		<label>Fecha</label>
 		<description>El formato de fecha es de la forma 2007-09-12 (YYYY-MM-DD)</description>
-	</element>	
+	</element>
 	<!-- ==================================================== -->
 
 	<element name="gco:DateTime">
 		<label>Fecha y hora</label>
 		<description>El formato de fecha y hora es de la forma 2007-09-12T15:00:00 (YYYY-MM-DDTHH:mm:ss)</description>
-	</element>	
-	
+	</element>
+
 	<!-- ==================================================== -->
 
 	<element name="gco:Measure">
@@ -2557,7 +2557,7 @@
 		<description></description>
 	</element>
 	<!-- ==================================================== -->
-	<!-- All XML attributes declared in the GML schema are defined without namespace, 
+	<!-- All XML attributes declared in the GML schema are defined without namespace,
 		the only exception is the gml:id XML attribute. -->
 	<element name="srsName">
 		<label>Spatial Reference System Name</label>
@@ -2782,24 +2782,24 @@
         <description>Child elements and attributes have been hidden because you do no have access to view those elements</description>
     </element>
     <!-- ==================================================== -->
-    <element name="gmx:name"> 
-        <label>Name</label> 
-        <description>Feature catalogue name</description> 
-    </element> 
-    <element name="gmx:scope"> 
-        <label>Scope</label> 
-        <description>Scope definition</description> 
-    </element> 
-    <element name="gmx:versionNumber"> 
-        <label>Version</label> 
-        <description>Catalogue version</description> 
-    </element> 
-    <element name="gmx:versionDate"> 
-        <label>Date</label> 
-        <description>Catalogue date</description> 
-    </element> 
-    <element name="gmx:fieldOfApplication"> 
-        <label>Field of application</label> 
-        <description>Field of application</description> 
-    </element> 
+    <element name="gmx:name">
+        <label>Name</label>
+        <description>Feature catalogue name</description>
+    </element>
+    <element name="gmx:scope">
+        <label>Scope</label>
+        <description>Scope definition</description>
+    </element>
+    <element name="gmx:versionNumber">
+        <label>Version</label>
+        <description>Catalogue version</description>
+    </element>
+    <element name="gmx:versionDate">
+        <label>Date</label>
+        <description>Catalogue date</description>
+    </element>
+    <element name="gmx:fieldOfApplication">
+        <label>Field of application</label>
+        <description>Field of application</description>
+    </element>
 </labels>

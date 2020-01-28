@@ -291,10 +291,10 @@ USA.
 
   <sch:pattern fpi="[Geodata.se:112b] Kontaktinformation måste anges med organisationsnamn och epostadress ">
     <sch:title>[Geodata.se:112b] Kontaktinformation måste anges med organisationsnamn och epostadress </sch:title>
-    <sch:rule context="//gmd:identificationInfo[1]/*">
+    <sch:rule context="//gmd:identificationInfo[1]/*/gmd:pointOfContact">
 <!--    <sch:let name="pointOfContact-exists" value="gmd:pointOfContact" /> -->
-	<sch:let name="organisationName" value="gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName" />
-	<sch:let name="emailAddress" value="gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress" />
+	<sch:let name="organisationName" value="gmd:CI_ResponsibleParty/gmd:organisationName" />
+	<sch:let name="emailAddress" value="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress" />
 	<sch:assert
         test="$organisationName and $emailAddress"
       >[Geodata.se:112b] Kontaktinformation måste anges med organisationsnamn och epostadress</sch:assert>

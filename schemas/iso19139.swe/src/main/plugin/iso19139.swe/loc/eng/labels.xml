@@ -25,7 +25,7 @@
 <labels xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="../../../labels.xsd" xmlns:gco="http://www.isotc211.org/2005/gco"
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:srv="http://www.isotc211.org/2005/srv"
-	xmlns:gml="http://www.opengis.net/gml" xmlns:gts="http://www.isotc211.org/2005/gts"
+	xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gts="http://www.isotc211.org/2005/gts"
 	xmlns:gmx="http://www.isotc211.org/2005/gmx">
 
 	<element name="gmd:MD_ScopeCode">
@@ -40,7 +40,7 @@
         <element context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code" id="207.0" name="gmd:code">
 		<label>Identifier for resource</label>
         <description>Identifier for resource</description>
-	</element> 
+	</element>
 	<element name="code">
 		<label>System code</label>
 		<description>Code. i.e. EPSG code.</description>

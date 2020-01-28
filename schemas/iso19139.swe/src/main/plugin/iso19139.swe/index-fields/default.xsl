@@ -26,7 +26,7 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
-                xmlns:gml="http://www.opengis.net/gml"
+                xmlns:gml="http://www.opengis.net/gml/3.2"
                 xmlns:srv="http://www.isotc211.org/2005/srv"
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -311,9 +311,11 @@
 
 						<xsl:variable name="times">
 							<xsl:call-template name="newGmlTime">
-								<xsl:with-param name="begin" select="gml:beginPosition|gml:begin/gml:TimeInstant/gml:timePosition"/>
-								<xsl:with-param name="end" select="gml:endPosition|gml:end/gml:TimeInstant/gml:timePosition"/>
-							</xsl:call-template>
+								<xsl:with-param name="begin"
+                                select="gml:beginPosition|gml:begin/gml:TimeInstant/gml:timePosition"/>
+                <xsl:with-param name="end"
+                                select="gml:endPosition|gml:end/gml:TimeInstant/gml:timePosition"/>
+              </xsl:call-template>
 						</xsl:variable>
 
 						<Field name="tempExtentBegin" string="{lower-case(substring-before($times,'|'))}" store="true" index="true"/>
@@ -520,7 +522,7 @@
               <xsl:otherwise><xsl:value-of select="." /></xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
-          
+
 					<Field name="orgNameOwner" string="{string(normalize-space($orgNameOwner))}" store="true" index="true"/>
 				</xsl:if>
 			</xsl:for-each>

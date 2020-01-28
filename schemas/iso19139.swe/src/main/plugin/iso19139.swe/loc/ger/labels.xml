@@ -24,7 +24,7 @@
 
 <!-- @author annina (swisstopo) @author david @source : KOGIS working group -->
 <labels xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gts="http://www.isotc211.org/2005/gts"
-	xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml"
+	xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2"
 	xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
 
 	<element name="gmd:MD_Metadata" id="1">
@@ -2521,9 +2521,9 @@
 			alle Fälle obligatorisch nach INSPIRE</condition>
 		<description>Thematische Einordnung des Datenbestands</description>
 	</element>
-	<!-- <element name="gmd:intentionally left blank" context="gmd:MD_Identification" 
-		id="42"> <label/> <help/> <condition/> <description/> </element> <element 
-		name="gmd:intentionally left blank" context="gmd:MD_Identification" id="43"> 
+	<!-- <element name="gmd:intentionally left blank" context="gmd:MD_Identification"
+		id="42"> <label/> <help/> <condition/> <description/> </element> <element
+		name="gmd:intentionally left blank" context="gmd:MD_Identification" id="43">
 		<label/> <help/> <condition/> <description/> </element> -->
 	<element name="gmd:environmentDescription" id="44">
 		<label>Produktionsumgebung</label>
@@ -2574,25 +2574,25 @@
         <label>Ellipsoid</label>
         <description>ID des genutzten Ellipsoides</description>
         <help/>
-    </element>    
+    </element>
     <!-- this element is a duplicate <element name="gmd:verticalCRS">
       <label>Vertical CRS</label>
       <description/>
       </element>-->
-  
-  
+
+
   <element name="gml:begin">
     <label>Beginn</label>
     <description/>
-  </element>    
+  </element>
   <element name="gml:end">
     <label>Ende</label>
     <description/>
-  </element>    
+  </element>
   <element name="gml:duration">
     <label>Dauer (duration)</label>
     <description/>
-  </element>    
+  </element>
   <element name="gml:timeInterval">
     <label>Zeitintervall (time interval)</label>
     <description/>
@@ -2674,25 +2674,25 @@
         <description>Child elements and attributes have been hidden because you do no have access to view those elements</description>
     </element>
     <!-- ==================================================== -->
-    <element name="gmx:name"> 
-        <label>Name</label> 
-        <description>Feature catalogue name</description> 
-    </element> 
-    <element name="gmx:scope"> 
-        <label>Scope</label> 
-        <description>Scope definition</description> 
-    </element> 
-    <element name="gmx:versionNumber"> 
-        <label>Version</label> 
-        <description>Catalogue version</description> 
-    </element> 
-    <element name="gmx:versionDate"> 
-        <label>Date</label> 
-        <description>Catalogue date</description> 
-    </element> 
-    <element name="gmx:fieldOfApplication"> 
-        <label>Field of application</label> 
-        <description>Field of application</description> 
+    <element name="gmx:name">
+        <label>Name</label>
+        <description>Feature catalogue name</description>
+    </element>
+    <element name="gmx:scope">
+        <label>Scope</label>
+        <description>Scope definition</description>
+    </element>
+    <element name="gmx:versionNumber">
+        <label>Version</label>
+        <description>Catalogue version</description>
+    </element>
+    <element name="gmx:versionDate">
+        <label>Date</label>
+        <description>Catalogue date</description>
+    </element>
+    <element name="gmx:fieldOfApplication">
+        <label>Field of application</label>
+        <description>Field of application</description>
     </element>
     <element name="gmd:MD_CharacterSetCode">
         <label>Zeichensatz</label>

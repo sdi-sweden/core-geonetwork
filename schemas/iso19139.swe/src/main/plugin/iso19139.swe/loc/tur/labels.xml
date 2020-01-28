@@ -23,10 +23,10 @@
   -->
 
 <labels xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gts="http://www.isotc211.org/2005/gts"
-    xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml"
+    xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2"
     xmlns:srv="http://www.isotc211.org/2005/srv"
     xmlns:gmx="http://www.isotc211.org/2005/gmx">
-    
+
     <element name="gmd:MD_ScopeCode">
         <label>Scope code</label>
         <description>Class of information to which the referencing entity applies</description>
@@ -425,7 +425,7 @@
         <label>Scope description</label>
         <description>Description of the class of information covered by the
             information</description>
-        <condition>Either attributes, features, featureInstances, attributeInstnaces, dataset or other must be provided</condition>    
+        <condition>Either attributes, features, featureInstances, attributeInstnaces, dataset or other must be provided</condition>
     </element>
     <element name="gmd:MD_SecurityConstraints" id="73.0">
         <label>Security constraints</label>
@@ -661,7 +661,7 @@
         <description>Common title with holdings note. NOTE title identifies elements of a series
             collectively, combined with information about what volumes are available at the source
             cited</description>
-        <help>This field is used to name the Basic Geodata as defined in the GeoIV Annex I, as it is possible that there are more than 1 "physical" datasets assigned to 1 legal entry. E.g.: Entry no. 47 "Geophysikalisches Kartenwerk" consists of 3 datasets "Geophysikalische Karten 1:500000", "Geophysikalische Spezialkarten" and "Gravimetrischer Atlas 1:100000"</help>    
+        <help>This field is used to name the Basic Geodata as defined in the GeoIV Annex I, as it is possible that there are more than 1 "physical" datasets assigned to 1 legal entry. E.g.: Entry no. 47 "Geophysikalisches Kartenwerk" consists of 3 datasets "Geophysikalische Karten 1:500000", "Geophysikalische Spezialkarten" and "Gravimetrischer Atlas 1:100000"</help>
     </element>
     <element name="gmd:complianceCode" id="234.0">
         <label>Compliance code</label>
@@ -848,7 +848,7 @@
 		<option value="500000">1:500´000</option>
 		<option value="1000000">1:1´000´000</option>
     </helper>
-        
+
     </element>
     <element name="gmd:density" id="293.0">
         <label>Density</label>
@@ -2105,7 +2105,7 @@
     <element name="gml:begin">
         <label>Begin</label>
         <description/>
-    </element>    
+    </element>
     <element name="gml:end">
         <label>End</label>
         <description/>
@@ -2113,7 +2113,7 @@
     <element name="gml:duration">
         <label>Duration</label>
         <description/>
-    </element>    
+    </element>
     <element name="gml:timeInterval">
         <label>Time interval</label>
         <description/>
@@ -2180,7 +2180,7 @@
             <option value="view">View Service (view)</option>
             <option value="download">Download Service (download)</option>
             <option value="transformation">Transformation Service (transformation)</option>
-            <option value="other">Other Services (other)</option> --> 
+            <option value="other">Other Services (other)</option> -->
         </helper>
     </element>
     <element name="srv:serviceTypeVersion">
@@ -2495,9 +2495,9 @@
         <label>Period duration</label>
         <description>
             The duration data type is used to specify a time interval.
-            
+
             The time interval is specified in the following form "PnYnMnDTnHnMnS" where:
-            
+
             * P indicates the period (required)
             * nY indicates the number of years
             * nM indicates the number of months
@@ -2505,7 +2505,7 @@
             * T indicates the start of a time section (required if you are going to specify hours, minutes, or seconds)
             * nH indicates the number of hours
             * nM indicates the number of minutes
-            * nS indicates the number of seconds            
+            * nS indicates the number of seconds
         </description>
     </element>
     <element name="gco:CharacterString">
@@ -2537,24 +2537,24 @@
         <description>Child elements and attributes have been hidden because you do no have access to view those elements</description>
     </element>
     <!-- ==================================================== -->
-    <element name="gmx:name"> 
-        <label>Name</label> 
-        <description>Feature catalogue name</description> 
-    </element> 
-    <element name="gmx:scope"> 
-        <label>Scope</label> 
-        <description>Scope definition</description> 
-    </element> 
-    <element name="gmx:versionNumber"> 
-        <label>Version</label> 
-        <description>Catalogue version</description> 
-    </element> 
-    <element name="gmx:versionDate"> 
-        <label>Date</label> 
-        <description>Catalogue date</description> 
-    </element> 
-    <element name="gmx:fieldOfApplication"> 
-        <label>Field of application</label> 
-        <description>Field of application</description> 
-    </element> 
+    <element name="gmx:name">
+        <label>Name</label>
+        <description>Feature catalogue name</description>
+    </element>
+    <element name="gmx:scope">
+        <label>Scope</label>
+        <description>Scope definition</description>
+    </element>
+    <element name="gmx:versionNumber">
+        <label>Version</label>
+        <description>Catalogue version</description>
+    </element>
+    <element name="gmx:versionDate">
+        <label>Date</label>
+        <description>Catalogue date</description>
+    </element>
+    <element name="gmx:fieldOfApplication">
+        <label>Field of application</label>
+        <description>Field of application</description>
+    </element>
 </labels>
