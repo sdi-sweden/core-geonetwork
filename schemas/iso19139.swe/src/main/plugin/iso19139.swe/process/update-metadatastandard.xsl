@@ -2,6 +2,8 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                xmlns:gml="http://www.opengis.net/gml/3.2"
+                xmlns:gmlOld="http://www.opengis.net/gml"
                 xmlns:xlink='http://www.w3.org/1999/xlink'
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
@@ -9,7 +11,7 @@
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xls="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="gmd xlink gco xsi gmx srv skos rdf">
+                exclude-result-prefixes="#all">
 
   <!-- ================================================================= -->
 
@@ -18,11 +20,25 @@
   <xsl:variable name="inspire-thesaurus" select="document(concat('file:///', $thesauriDir, '/external/thesauri/theme/inspire-theme.rdf'))"/>
   <xsl:variable name="inspire-theme" select="$inspire-thesaurus//skos:Concept"/>
 
+  <xsl:template name="add-namespaces">
+    <xsl:namespace name="xsi" select="'http://www.w3.org/2001/XMLSchema-instance'"/>
+    <xsl:namespace name="gco" select="'http://www.isotc211.org/2005/gco'"/>
+    <xsl:namespace name="gmd" select="'http://www.isotc211.org/2005/gmd'"/>
+    <xsl:namespace name="srv" select="'http://www.isotc211.org/2005/srv'"/>
+    <xsl:namespace name="gmx" select="'http://www.isotc211.org/2005/gmx'"/>
+    <xsl:namespace name="gts" select="'http://www.isotc211.org/2005/gts'"/>
+    <xsl:namespace name="gsr" select="'http://www.isotc211.org/2005/gsr'"/>
+    <xsl:namespace name="gmi" select="'http://www.isotc211.org/2005/gmi'"/>
+    <xsl:namespace name="gml" select="'http://www.opengis.net/gml/3.2'"/>
+    <xsl:namespace name="xlink" select="'http://www.w3.org/1999/xlink'"/>
+  </xsl:template>
+
   <xsl:template match="gmd:MD_Metadata">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
+      <xsl:call-template name="add-namespaces"/>
+
       <!-- Remove schemaLocation, usually doesn't have gmx namespace. Let GeoNetwork add it from schema-ident.xml -->
       <xsl:copy-of select="@*[not(name()= 'xsi:schemaLocation')]" />
-      <xsl:namespace name="gmx" select="'http://www.isotc211.org/2005/gmx'"/>
 
       <xsl:apply-templates select="gmd:fileIdentifier" />
       <xsl:apply-templates select="gmd:language" />
@@ -62,10 +78,29 @@
   </xsl:template>
 
 
+  <xsl:template match="gmlOld:*">
+    <xsl:element name="{name()}" namespace="http://www.opengis.net/gml/3.2">
+      <xsl:copy-of select="namespace::*[not(name() = 'gml') and not(name() = 'geonet') and not(name() = 'csw')]" copy-namespaces="no" />
+
+      <xsl:for-each select="@gmlOld:*">
+        <xsl:attribute name="{name()}" namespace="http://www.opengis.net/gml/3.2">
+          <xsl:value-of select="."/>
+        </xsl:attribute>
+      </xsl:for-each>
+
+      <xsl:apply-templates select="@*[namespace-uri() != 'http://www.opengis.net/gml']|node()"/>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template match="@gmlOld:*">
+    <xsl:attribute name="{name()}" namespace="http://www.opengis.net/gml/3.2">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
 
   <!-- Change gmd:RS_Identifier to gmd:MD_Identifier as required by INSPIRE TG 2.0 -->
   <xsl:template match="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier[gmd:RS_Identifier]">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*" />
       <gmd:MD_Identifier>
         <xsl:copy-of select="gmd:RS_Identifier/gmd:authority" />
@@ -78,7 +113,7 @@
   <xsl:template match="gmd:specification">
     <xsl:variable name="title" select="gmd:CI_Citation/gmd:title/gco:CharacterString" />
 
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*" />
 
       <xsl:choose>
@@ -114,7 +149,7 @@
 
 
   <xsl:template match="gmd:MD_DataIdentification">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*" />
 
       <xsl:apply-templates select="gmd:citation" />
@@ -146,7 +181,7 @@
   </xsl:template>
 
   <xsl:template match="srv:SV_ServiceIdentification">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*" />
       <xsl:apply-templates select="gmd:citation" />
       <xsl:apply-templates select="gmd:abstract" />
@@ -233,7 +268,7 @@
   <!-- Convert GEMET keywords to Anchors -->
   <xsl:template match="gmd:keyword[../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'GEMET - INSPIRE themes, version 1.0' or
                                    ../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'GEMET - INSPIRE themes version 1.0']">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*" />
 
       <xsl:choose>
@@ -325,11 +360,11 @@
             <xsl:for-each select="gmd:resourceConstraints[gmd:MD_Constraints]">
               <xsl:choose>
                 <xsl:when test="position() = 1">
-                  <xsl:copy>
+                  <xsl:copy copy-namespaces="no">
                     <xsl:copy-of select="@*" />
 
                     <xsl:for-each select="gmd:MD_Constraints">
-                      <xsl:copy>
+                      <xsl:copy copy-namespaces="no">>
                         <xsl:copy-of select="@*" />
 
                         <gmd:useLimitation>
@@ -421,11 +456,11 @@
             <xsl:when test="$hasOtherConstraintsRelatedToInspire">
               <!-- If has any gmd:otherConstraints related to INSPIRE copy the gmd:resourceConstraints block and change
                    gmd:useConstraints to an Anchor -->
-              <xsl:copy>
+              <xsl:copy copy-namespaces="no">
                 <xsl:copy-of select="@*" />
 
                 <xsl:for-each select="gmd:MD_LegalConstraints">
-                  <xsl:copy>
+                  <xsl:copy copy-namespaces="no">
                     <xsl:copy-of select="@*" />
 
                     <xsl:apply-templates select="gmd:useLimitation" />
@@ -503,7 +538,7 @@
   <!-- copy everything else as is -->
 
   <xsl:template match="@*|node()">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
