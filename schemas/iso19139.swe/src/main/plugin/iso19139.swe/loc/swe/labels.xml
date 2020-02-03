@@ -226,7 +226,7 @@
         <description>Hur väl resursen stämmer med applikationsschemat (dataspecifikationen).</description>
     </element>
     <element id="129.0" name="gmd:DQ_ConformanceResult">
-        <label>Specifikationsuppfyllelse</label>
+        <label>Specifikation</label>
         <description>Resultat av utvärdering mot
 		en specificerad kravnivå</description>
     </element>
@@ -1394,7 +1394,7 @@ Exempelvis: datamängd, datamängdserie eller tjänst. (Sätts automatiskt och k
     </element>
     <element id="573.0" name="gmd:identifier">
         <label>Identifierare för resurs</label>
-        <description>Unik identifierare för resurs. 
+        <description>Unik identifierare för resurs.
         Ett UUID skapas automatiskt eller skriva ett nytt ID i formatet
         SE_{producent}_{produkt}_{version}_{tema} </description>
     </element>
@@ -1498,6 +1498,14 @@ Detta undviker vi att ange, ange istället organisation.</description>
             <code>fiu</code>
             <label>Tornedalsfinska(fiu)</label>
           </entry>
+          <entry>
+            <code>yid</code>
+            <label>Yiddish(yid)</label>
+          </entry>
+          <entry>
+            <code>rom</code>
+            <label>Romani chib(rom)</label>
+          </entry>
         </codelist>
     </element>
 	<element id="390.0" name="gmd:language">
@@ -1533,6 +1541,14 @@ Detta undviker vi att ange, ange istället organisation.</description>
           <entry>
             <code>fiu</code>
             <label>Tornedalsfinska(fiu)</label>
+          </entry>
+          <entry>
+            <code>yid</code>
+            <label>Yiddish(yid)</label>
+          </entry>
+          <entry>
+            <code>rom</code>
+            <label>Romani chib(rom)</label>
           </entry>
         </codelist>
     </element>

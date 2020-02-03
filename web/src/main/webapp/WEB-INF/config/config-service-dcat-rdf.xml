@@ -57,6 +57,11 @@
     <service name="rdf.metadata.public.get">
       <documentation>Return all public metadata in RDF/DCAT format.</documentation>
       <class name="org.fao.geonet.services.rdf.GetPublicMetadataAsRdf">
+        <!-- Define a comma separated list of elements that represent metadata records in the RDF output
+            Used in the pagination to process from 2on page these elements and excluded the rest (catalog, etc.),
+            that should be processed only in 1st page for the final document.
+       -->
+        <param name="catalogRecordElementNames" value="CatalogRecord,Description,Dataset" />
       </class>
       <output file="true" contentType="application/rdf+xml; charset=UTF-8"/>
     </service>

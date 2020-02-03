@@ -364,6 +364,11 @@
         return gnCurrentEdit.isTemplate === 'y';
       };
 
+      $scope.isPublished = function() {
+        if (gnCurrentEdit.metadata) {
+          return gnCurrentEdit.metadata['geonet:info'].isPublishedToAll === 'true';
+        }
+      };
 
       /**
        * Display or not attributes editor.

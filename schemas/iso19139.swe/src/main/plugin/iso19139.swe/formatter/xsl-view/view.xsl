@@ -157,6 +157,33 @@
     <xsl:param name="tabName" select="''" as="xs:string"/>
 
     <div class="entry name">
+      <xsl:choose>
+        <xsl:when test="name(..) = 'gmd:result'">
+          <dl>
+            <dt>
+              <xsl:value-of select="tr:node-label(tr:create($schema), 'gmd:result', null)"/>
+              <xsl:apply-templates mode="render-value"
+                                   select="@*"/>
+            </dt>
+            <dd>
+              <dl>
+                <dt>
+                  <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
+                </dt>
+                <dd>
+                  <xsl:apply-templates mode="render-field" select="gmd:specification">
+                    <xsl:with-param name="tabName" select="$tabName"/>
+                  </xsl:apply-templates>
+                </dd>
+              </dl>
+              <xsl:apply-templates mode="render-field" select="*[name() != 'gmd:specification']">
+                <xsl:with-param name="tabName" select="$tabName"/>
+              </xsl:apply-templates>
+            </dd>
+          </dl>
+        </xsl:when>
+
+        <xsl:otherwise>
       <h3>
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
         <xsl:apply-templates mode="render-value"
@@ -167,17 +194,36 @@
           <xsl:with-param name="tabName" select="$tabName"/>
         </xsl:apply-templates>
       </div>
+        </xsl:otherwise>
+      </xsl:choose>
+
     </div>
   </xsl:template>
 
+
+  <xsl:template  mode="render-field" match="gmd:pass" priority="100">
+    <xsl:param name="tabName" select="''" as="xs:string"/>
+
+    <dl>
+      <dt>
+        <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'pass-detail-page')"/>
+      </dt>
+      <dd>
+        <xsl:choose>
+          <xsl:when test="gco:Boolean = 'true'">Ja</xsl:when>
+          <xsl:when test="gco:Boolean = 'false'">Nej</xsl:when>
+        </xsl:choose>
+      </dd>
+    </dl>
+  </xsl:template>
 
   <!-- Bbox is displayed with an overview and the geom displayed on it
   and the coordinates displayed around -->
   <xsl:template mode="render-field"
                 match="gmd:EX_GeographicBoundingBox[
           gmd:westBoundLongitude/gco:Decimal != '']">
-		  
-		  
+
+
 	<xsl:variable name="west">
 		<xsl:value-of select="xs:double(gmd:westBoundLongitude/gco:Decimal)"/>
 	</xsl:variable>
@@ -309,7 +355,7 @@
 				<a href="http://{$website}" target="_blank">
 					<xsl:value-of select="normalize-space($website)"/>
 				</a>
-			  </xsl:if>	
+			  </xsl:if>
               <xsl:apply-templates mode="render-field"
                                    select="gmd:hoursOfService|gmd:contactInstructions"/>
               <xsl:apply-templates mode="render-field"
@@ -322,8 +368,8 @@
     </dl>
   </xsl:template>
   <!-- LI_Lineage part -->
-  <xsl:template mode="render-field" 
-				match="gmd:lineage/gmd:LI_Lineage" 
+  <xsl:template mode="render-field"
+				match="gmd:lineage/gmd:LI_Lineage"
 				priority="100">
 	<dl>
 		<dt>
@@ -345,7 +391,7 @@
       <dd>
         <xsl:apply-templates mode="render-value"
                              select="gmd:MD_ScopeCode/@codeListValue"/>
-        
+
       </dd>
     </dl>
   </xsl:template>
@@ -451,22 +497,22 @@
 			</dl>
 		  </dd>
 		</dl>
-		
+
 	</xsl:if>
   </xsl:template>
-  
+
   <!-- A Restriktioner:MD_Constraints is displayed -->
   <xsl:template mode="render-field"
                 match="gmd:MD_Constraints"
                 priority="100">
 	<xsl:param name="tabName" select="''" as="xs:string"/>
-	<xsl:for-each select="gmd:useLimitation">    
+	<xsl:for-each select="gmd:useLimitation">
 		<dl class="gn-contact">
 		  <dt>
 			<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'useLimitation')"/>
 		  </dt>
-		  <dd>		  
-			<xsl:value-of select="gco:CharacterString"/>		
+		  <dd>
+			<xsl:value-of select="gco:CharacterString"/>
 		  </dd>
 		</dl>
 	</xsl:for-each>
@@ -527,7 +573,7 @@
       </dl>
     </xsl:for-each>
   </xsl:template>
-  
+
   <!-- Metadata linkage -->
   <xsl:template mode="render-field"
                 match="gmd:fileIdentifier"
@@ -662,7 +708,7 @@
   </xsl:template>
 
   <xsl:template mode="render-field" match="gmd:onLine[position() > 1]" priority="100"/>
-  
+
   <!-- Identifier -->
   <xsl:template mode="render-field"
                 match="*[(gmd:RS_Identifier or gmd:MD_Identifier) and
@@ -825,7 +871,7 @@
   <xsl:template mode="render-field"
                 match="gmd:date[1]"
                 priority="100">
-				
+
 	  <xsl:param name="tabName" select="''" as="xs:string"/>
 	  <xsl:choose>
 		  <xsl:when test="$tabName = 'introduction'">
@@ -866,7 +912,7 @@
   </xsl:template>
 
   <xsl:template mode="render-field" match="gmd:date[position() > 1]" priority="100"/>
-  
+
   <!-- Enumeration -->
   <xsl:template mode="render-field"
                 match="gmd:topicCategory[1]|gmd:obligation[1]|gmd:pointInPixel[1]"
@@ -908,7 +954,7 @@
         <dd>
           <ul>
             <xsl:for-each select="parent::node()/*[name() = $nodeName]">
-              <li><a href="#uuid={@uuidref}">
+              <li><a href="#/metadata/{@uuidref}" target="_blank">
                 <i class="fa fa-link"></i>
                 <xsl:value-of select="gn-fn-render:getMetadataTitle(@uuidref, $language)"/>
               </a></li>
@@ -971,7 +1017,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <!-- Case to handle gco.LocalName: start -->
 	<xsl:template mode="render-value" match="gco:LocalName">
 		<xsl:variable name="localNameValue">
@@ -990,7 +1036,7 @@
 		</xsl:choose>
 	</xsl:template>
   <!-- Case to handle gco.LocalName: end -->
-  
+
   <xsl:template mode="render-value"
                 match="gmd:PT_FreeText">
     <xsl:apply-templates mode="localised" select="../node()">
@@ -1264,5 +1310,5 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	
+
 </xsl:stylesheet>

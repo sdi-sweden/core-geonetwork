@@ -838,6 +838,8 @@
     "system/server/protocol": "Föredraget protokoll",
     "system/server/securePort": "Säker port",
     "system/server/log": "Loggningsnivå",
+    "system/server/sitemapLinkUrl": "Sitemap URL template",
+    "system/server/sitemapLinkUrl-help": "Template to build the links to medatada document in catalogue sitemap. String {{UUID}} will be replaced by the metadata UUID. For example, for the template http://www.example.com/external/metadata/html?uuid={{UUID}} the resulting URL in sitemap document would be http://www.example.com/external/metadata/html?uuid=this-is-the-actual-uuid",
     "system/site": "Beskrivning av katalog",
     "system/site/name": "Katalognamn",
     "system/site/name-help": "Namnet som visas i olika medier (nyhetsflöden).",
@@ -1087,6 +1089,7 @@
     "map/wfsServer/workspace": "Geoserver - workspace",
     "map/wfsServer/layer": "Geoserver - lager",
     "selectExistingLogo": "Välj en logotyp",
-    "update-metadatastandard": "Metadata Swedish profile update process",
-    "transfer-options-migrate": "Process to migrate transfer options to distributor transfer options"
+    "update-metadatastandard": "Metadata Swedish profile update process from version 3.1.1 to 4.0.0",
+    "transfer-options-migrate": "Process to migrate transfer options to distributor transfer options",
+    "add-gmd-identifier-rs-identifier": "Fix Metadata identifiers - removes empty elements, placeholders and convert RS Identifier to MD Identifier (when no valid identifier is available)"
 }

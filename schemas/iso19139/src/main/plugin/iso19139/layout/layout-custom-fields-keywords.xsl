@@ -226,6 +226,13 @@
             * transformation: current transformation
           -->
 
+        <xsl:variable name="checkBoxActions">
+          <xsl:if test="$thesaurusTitle = 'Initiativ' and $widgetMode='checkboxes'">
+            {"actions":[{"triggerAction": "unchecked", "value":"https://resources.geodata.se/codelist/metadata/initiativ.xml#inspire", "message": "<xsl:value-of select="$strings/uncheck-initiative-inspire" />"}]}
+          </xsl:if>
+        </xsl:variable>
+
+
         <xsl:variable name="allLanguages"
                       select="concat($metadataLanguage, ',', $metadataOtherLanguages)"></xsl:variable>
         <div data-gn-keyword-selector="{$widgetMode}"
@@ -237,7 +244,8 @@
              data-current-transformation="{$transformation}"
              data-max-tags="{$maxTags}"
              data-lang="{$metadataOtherLanguagesAsJson}"
-             data-textgroup-only="false">
+             data-textgroup-only="false"
+             data-checkbox-actions="{$checkBoxActions}">
         </div>
 
         <xsl:variable name="isTypePlace"

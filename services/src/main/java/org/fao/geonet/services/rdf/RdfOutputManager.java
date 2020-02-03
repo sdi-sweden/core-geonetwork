@@ -27,6 +27,7 @@ import jeeves.server.context.ServiceContext;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
@@ -41,6 +42,7 @@ import org.jdom.Namespace;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -54,10 +56,23 @@ import java.util.List;
 public class RdfOutputManager {
     private final static int PAGE_SIZE = 5;
 
+    private final static String DEFAULT_CATALOG_RECORD_ELEMENT_NAMES = "CatalogRecord,Description,Dataset";
+
     private Element thesaurusEl;
+    private List<String> catalogRecordElementNamesList;
 
     public RdfOutputManager(Element thesaurusEl) {
+        this(thesaurusEl, DEFAULT_CATALOG_RECORD_ELEMENT_NAMES);
+    }
+
+    public RdfOutputManager(Element thesaurusEl, String catalogRecordElementNames) {
         this.thesaurusEl = thesaurusEl;
+
+        if (StringUtils.isEmpty(catalogRecordElementNames)) {
+            catalogRecordElementNames = DEFAULT_CATALOG_RECORD_ELEMENT_NAMES;
+        }
+
+        catalogRecordElementNamesList = Arrays.asList(catalogRecordElementNames.split(","));
     }
 
     /**
@@ -238,8 +253,7 @@ public class RdfOutputManager {
             // Ignore the catalog section
             if (elementName.equalsIgnoreCase("Catalog")) continue;
 
-            if (elementName.equalsIgnoreCase("CatalogRecord") ||
-                elementName.equalsIgnoreCase("Description")) {
+            if (catalogRecordElementNamesList.contains(elementName)) {
                 recordsSectionStarted = true;
             }
 

@@ -428,7 +428,7 @@
 
     <xsl:variable name="tagId" select="generate-id()"/>
 
-    <!-- <xsl:message>!render-element-template-field <xsl:copy-of select="$keyValues"/>
+    <!--<xsl:message>!render-element-template-field <xsl:copy-of select="$keyValues"/>
         <xsl:value-of select="$name"/>/tpl:
         <xsl:copy-of select="$template"/>/
         <xsl:value-of select="$id"/>/
@@ -439,8 +439,10 @@
     <xsl:variable name="firstFieldKey"
                   select="$template/values/key[position() = 1]/@label"/>
 
+    <xsl:variable name="mandatoryInMainLabel" select="count($template/values/key) = 1 and string($template/values/key[1]/@required)" />
+
     <div
-      class="form-group gn-field gn-{$firstFieldKey} {if ($isFirst) then '' else 'gn-extra-field'} {if ($isAddAction) then 'gn-add-field' else ''}"
+      class="form-group gn-field gn-{$firstFieldKey} {if ($isFirst) then '' else 'gn-extra-field'} {if ($isAddAction) then 'gn-add-field' else ''} {if ($mandatoryInMainLabel) then 'gn-required' else ''}"
       id="gn-el-{if ($refToDelete) then $refToDelete/@ref else generate-id()}"
       data-gn-field-highlight="">
 

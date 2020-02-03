@@ -22,19 +22,22 @@
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
 
-<beans
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.springframework.org/schema/beans"
-  xmlns:util="http://www.springframework.org/schema/util"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:exslt="http://exslt.org/common" xmlns:geonet="http://www.fao.org/geonetwork"
+                xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                version="2.0" exclude-result-prefixes="exslt">
 
-  <bean id="dublin-coreSchemaPlugin"
-        class="org.fao.geonet.schema.dublincore.DublinCoreSchemaPlugin">
-    <property name="xpathTitle">
-      <util:list value-type="java.lang.String">
-        <value>dc:title</value>
-      </util:list>
-    </property>
-  </bean>
-</beans>
+  <!-- Do a copy of every nodes and attributes -->
+  <xsl:template match="@*|node()">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- Remove keywords that are not from a thesaurus - only from non-harvested metadata -->
+  <xsl:template match="gmd:descriptiveKeywords[not(gmd:MD_Keywords/gmd:thesaurusName) and //geonet:info/isHarvested = 'n']" />
+
+  <!-- Remove geonet:* elements. -->
+  <xsl:template match="geonet:*" priority="2"/>
+</xsl:stylesheet>

@@ -27,7 +27,9 @@
 	xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco"
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:geonet="http://www.fao.org/geonetwork"
+  xmlns:uuid="java:java.util.UUID"
   xmlns:java="java:org.fao.geonet.util.XslUtil" exclude-result-prefixes="#all">
 
 	<xsl:include href="../iso19139/convert/functions.xsl"/>
@@ -297,6 +299,109 @@
 		</xsl:copy>
 	</xsl:template>
 
+  <xsl:template match="gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:title" />
+      <xsl:apply-templates select="gmd:alternateTitle" />
+      <xsl:apply-templates select="gmd:date" />
+      <xsl:apply-templates select="gmd:edition" />
+      <xsl:apply-templates select="gmd:editionDate" />
+
+      <xsl:choose>
+        <!-- record of type dataset or dataset series are created we shall automatically add a UUID for resource-identifier -->
+        <xsl:when test="(count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0) or
+              (count(//gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='series']) > 0)">
+
+          <xsl:choose>
+            <!-- Identifier doesn't exists - Add it -->
+            <xsl:when test="not(gmd:identifier)">
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gco:CharacterString><xsl:value-of select="uuid:randomUUID()"/></gco:CharacterString>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </xsl:when>
+
+            <!-- Identifier incomplete doesn't exists - Add it -->
+            <xsl:when test="count(gmd:identifier) = 1 and not(gmd:identifier/gmd:MD_Identifier)">
+              <xsl:for-each select="gmd:identifier">
+                <xsl:copy>
+                  <xsl:copy-of select="@*" />
+
+                  <gmd:MD_Identifier>
+                    <gmd:code>
+                      <gco:CharacterString><xsl:value-of select="uuid:randomUUID()"/></gco:CharacterString>
+                    </gmd:code>
+                  </gmd:MD_Identifier>
+
+                </xsl:copy>
+              </xsl:for-each>
+            </xsl:when>
+
+            <!-- Process identifiers to check at least 1 has a code -->
+            <xsl:otherwise>
+
+              <xsl:choose>
+                <!-- No identifier with code value - Add it -->
+                <xsl:when test="count(gmd:identifier[string(gmd:MD_Identifier/gmd:code/gco:CharacterString)]) = 0">
+                  <xsl:for-each select="gmd:identifier[gmd:MD_Identifier]">
+                    <xsl:choose>
+                      <!-- Add to first element -->
+                      <xsl:when test="position() = 1">
+                        <xsl:copy>
+                          <xsl:copy-of select="@*" />
+
+                          <xsl:for-each select="gmd:MD_Identifier">
+                            <xsl:copy>
+                              <xsl:copy-of select="@*" />
+                              <gmd:code>
+                                <gco:CharacterString><xsl:value-of select="uuid:randomUUID()"/></gco:CharacterString>
+                              </gmd:code>
+                            </xsl:copy>
+                          </xsl:for-each>
+                        </xsl:copy>
+                      </xsl:when>
+
+                      <!-- Copy the rest -->
+                      <xsl:otherwise>
+                        <xsl:copy-of select="." />
+                      </xsl:otherwise>
+                    </xsl:choose>
+
+                  </xsl:for-each>
+                </xsl:when>
+
+                <!-- identifiers with code - process identifiers -->
+                <xsl:otherwise>
+                  <xsl:apply-templates select="gmd:identifier" />
+                </xsl:otherwise>
+              </xsl:choose>
+
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:when>
+
+        <!-- other type fo records - process identifiers -->
+        <xsl:otherwise>
+          <xsl:apply-templates select="gmd:identifier" />
+        </xsl:otherwise>
+      </xsl:choose>
+
+
+
+      <xsl:apply-templates select="gmd:citedResponsibleParty" />
+      <xsl:apply-templates select="gmd:presentationForm" />
+      <xsl:apply-templates select="gmd:series" />
+      <xsl:apply-templates select="gmd:otherCitationDetails" />
+      <xsl:apply-templates select="gmd:collectiveTitle" />
+      <xsl:apply-templates select="gmd:ISBN" />
+      <xsl:apply-templates select="gmd:ISSN" />
+    </xsl:copy>
+  </xsl:template>
 
 	<!-- ================================================================= -->
 
@@ -469,6 +574,21 @@
         <xsl:copy-of select="."/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <!-- auto complete qa resurstyp based on md resurstyp -->
+  <xsl:template match="gmd:DQ_Scope">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <gmd:level>
+        <gmd:MD_ScopeCode codeListValue="{//gmd:hierarchyLevel[1]/gmd:MD_ScopeCode/@codeListValue}"
+          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"/>
+      </gmd:level>
+
+      <xsl:apply-templates select="gmd:extent" />
+      <xsl:apply-templates select="gmd:levelDescription" />
+    </xsl:copy>
   </xsl:template>
 
 	<xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification">
@@ -700,6 +820,135 @@
       </xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+
+  <!-- Fix the date for conformance reports -->
+  <xsl:template match="gmd:specification/gmd:CI_Citation[gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089' or
+                                                         gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976']" priority="1000">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+
+      <xsl:apply-templates select="gmd:title" />
+      <xsl:apply-templates select="gmd:alternateTitle" />
+
+      <!-- Fix the date -->
+      <xsl:choose>
+        <xsl:when test="gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2010/1089'">
+          <gmd:date>
+            <gmd:CI_Date>
+              <gmd:date>
+                <gco:Date>2010-12-08</gco:Date>
+              </gmd:date>
+              <gmd:dateType>
+                <gmd:CI_DateTypeCode
+                  codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode"
+                  codeListValue="publication"/>
+              </gmd:dateType>
+            </gmd:CI_Date>
+          </gmd:date>
+        </xsl:when>
+        <xsl:when test="gmd:title/gmx:Anchor/@xlink:href='http://data.europa.eu/eli/reg/2009/976'">
+          <gmd:date>
+            <gmd:CI_Date>
+              <gmd:date>
+                <gco:Date>2009-10-20</gco:Date>
+              </gmd:date>
+              <gmd:dateType>
+                <gmd:CI_DateTypeCode
+                  codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode"
+                  codeListValue="publication"/>
+              </gmd:dateType>
+            </gmd:CI_Date>
+          </gmd:date>
+        </xsl:when>
+      </xsl:choose>
+
+      <xsl:apply-templates select="gmd:edition" />
+      <xsl:apply-templates select="gmd:editionDate" />
+      <xsl:apply-templates select="gmd:identifier" />
+      <xsl:apply-templates select="gmd:citedResponsibleParty" />
+      <xsl:apply-templates select="gmd:presentationForm" />
+      <xsl:apply-templates select="gmd:series" />
+      <xsl:apply-templates select="gmd:otherCitationDetails" />
+      <xsl:apply-templates select="gmd:collectiveTitle" />
+      <xsl:apply-templates select="gmd:ISBN" />
+      <xsl:apply-templates select="gmd:ISSN" />
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- Remove temporal extent if empty beginPosition and endPosition -->
+  <xsl:template match="gmd:extent[not(gmd:EX_Extent/gmd:geographicElement) and
+                                  not(gmd:EX_Extent/gmd:verticalElement) and
+                                  gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition]">
+    <xsl:variable name="existTemporaExtentWithValues"
+                  select="count(gmd:EX_Extent/gmd:temporalElement[string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition) or string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition)]) > 0" />
+
+    <!-- Copy the gmd:extent if there are temporal extent(s) filled -->
+    <xsl:if test="$existTemporaExtentWithValues = true()">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+
+        <xsl:for-each select="gmd:EX_Extent">
+          <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:apply-templates select="node()" />
+          </xsl:copy>
+        </xsl:for-each>
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
+
+  <xsl:template match="gmd:temporalElement[gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition]">
+    <xsl:variable name="temporalExtentWithValues"
+                  select="string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition) or
+                          string(gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition)" />
+
+    <!-- Copy the element if values in beginPosition or endPosition -->
+    <xsl:if test="$temporalExtentWithValues = true()">
+      <xsl:copy>
+        <xsl:copy-of select="@*" />
+        <xsl:apply-templates select="*" />
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
+
+
+  <!-- Fix metadata contact role to pointOfContact -->
+  <xsl:template match="gmd:contact/gmd:CI_ResponsibleParty/gmd:role" priority="10">
+    <gmd:role>
+      <gmd:CI_RoleCode codeListValue="pointOfContact"
+                       codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"/>
+    </gmd:role>
+  </xsl:template>
+
+
+  <!-- if a gmd:ResourceMaintenance doesn't contain info (no codelist for MD_MaintenanceFrequencyCode and empty gmd:maintenanceNote, remove it
+	-->
+  <xsl:template match="gmd:resourceMaintenance">
+    <xsl:choose>
+      <!-- Remove gmd:resourceMaintenance if empty -->
+      <xsl:when test="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode[@codeListValue='' or not(@codeListValue)]
+        and string-length(normalize-space(gmd:MD_MaintenanceInformation/gmd:maintenanceNote/gco:CharacterString))=0">
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy>
+          <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="gmd:westBoundLongitude/gco:Decimal|
+                       gmd:eastBoundLongitude/gco:Decimal|
+                       gmd:southBoundLatitude/gco:Decimal|
+                       gmd:northBoundLatitude/gco:Decimal" priority="10">
+    <xsl:copy>
+      <xsl:choose>
+        <xsl:when test=". castable as xs:decimal"> <xsl:value-of select='format-number(., "#.00##########")'/></xsl:when>
+        <xsl:otherwise><xsl:value-of select="." /></xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
 
 <!-- ================================================================= -->
 	<!-- copy everything else as is -->

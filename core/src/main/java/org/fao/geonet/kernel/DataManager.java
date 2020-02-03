@@ -106,6 +106,7 @@ import org.fao.geonet.exceptions.SchematronValidationErrorEx;
 import org.fao.geonet.exceptions.ServiceNotAllowedEx;
 import org.fao.geonet.exceptions.XSDValidationErrorEx;
 import org.fao.geonet.kernel.schema.MetadataSchema;
+import org.fao.geonet.kernel.schema.SchemaPlugin;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.index.IndexingList;
 import org.fao.geonet.kernel.setting.SettingManager;
@@ -194,7 +195,7 @@ public class DataManager implements ApplicationEventPublisherAware {
     // initialize in init method
     private ServiceContext servContext;
     private EditLib editLib;
-    
+
     private static final boolean XSD_VALIDATION_ON = false;
 
     //--------------------------------------------------------------------------
@@ -1142,7 +1143,7 @@ public class DataManager implements ApplicationEventPublisherAware {
 
                     e.printStackTrace();
                 }
-                
+
                 if (Log.isDebugEnabled(Geonet.DATA_MANAGER))
                     Log.debug(Geonet.DATA_MANAGER, " - report:" + report.getText());
 
@@ -1541,7 +1542,10 @@ public class DataManager implements ApplicationEventPublisherAware {
         String schema = templateMetadata.getDataInfo().getSchemaId();
         String data = templateMetadata.getData();
         Element xml = Xml.loadString(data, false);
-        if (templateMetadata.getDataInfo().getType() == MetadataType.METADATA) {
+        boolean isMetadata = templateMetadata.getDataInfo().getType() == MetadataType.METADATA;
+        setMetadataTitle(schema, xml, context.getLanguage(), !isMetadata);
+
+        if (isMetadata) {
             xml = updateFixedInfo(schema, Optional.<Integer>absent(), uuid, xml, parentUuid, UpdateDatestamp.NO, context);
         }
         final Metadata newMetadata = new Metadata().setUuid(uuid);
@@ -1576,6 +1580,46 @@ public class DataManager implements ApplicationEventPublisherAware {
             fullRightsForGroup, true).getId();
 
         return String.valueOf(finalId);
+    }
+
+    /**
+     * Update XML document title as defined by schema plugin
+     * in xpathTitle property.
+     */
+    private void setMetadataTitle(String schema, Element xml, String language, boolean fromTemplate) {
+        ResourceBundle messages = ResourceBundle.getBundle(
+            "org.fao.geonet.api.Messages",
+            new Locale(language));
+
+        SchemaPlugin schemaPlugin = SchemaManager.getSchemaPlugin(schema);
+        List<String> xpathTitle = schemaPlugin.getXpathTitle();
+        if (xpathTitle != null) {
+            xpathTitle.forEach(path -> {
+                List<?> titleNodes = null;
+                try {
+                    titleNodes = Xml.selectNodes(
+                        xml,
+                        path,
+                        new ArrayList(schemaPlugin.getNamespaces()));
+
+                    for (Object o : titleNodes) {
+                        if (o instanceof Element) {
+                            Element title = (Element) o;
+                            title.setText(String.format(
+                                messages.getString(
+                                    "metadata.title.createdFrom" + (fromTemplate ? "Template" :  "Record")),
+                                title.getTextTrim(),
+                                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())
+                            ));
+                        }
+                    }
+                } catch (JDOMException e) {
+                    Log.debug(Geonet.DATA_MANAGER,
+                        String.format("Check xpath '%s' for schema plugin '%s'. Error is '%s'.",
+                            path, schema, e.getMessage()));
+                }
+            });
+        }
     }
 
     /**

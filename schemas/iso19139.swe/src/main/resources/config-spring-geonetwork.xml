@@ -2,8 +2,26 @@
 <beans
   xmlns="http://www.springframework.org/schema/beans"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
   <bean id="iso19139.sweSchemaPlugin"
-        class="org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin"/>
+          class="org.fao.geonet.schema.iso19139.ISO19139SchemaPlugin">
+    <property name="xpathTitle">
+      <util:list value-type="java.lang.String">
+        <value>gmd:identificationInfo/*/gmd:citation/*/gmd:title/gco:CharacterString</value>
+        <value>gmd:identificationInfo/*/gmd:citation/*/gmd:title/*/gmd:textGroup/gmd:LocalisedCharacterString</value>
+      </util:list>
+    </property>
+    <property name="savedQueries">
+      <list>
+        <bean class="org.fao.geonet.kernel.schema.SavedQuery">
+          <property name="id" value="wfs-indexing-config"/>
+          <property name="xpath"
+                    value="*//gmd:CI_OnlineResource[contains(gmd:protocol/gco:CharacterString, {{protocol}}) and gmd:name/gco:CharacterString = '{{name}}' and gmd:linkage/gmd:URL = '{{url}}']/gmd:applicationProfile/gco:CharacterString/text()"/>
+        </bean>
+      </list>
+    </property>
+  </bean>
 </beans>

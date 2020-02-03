@@ -794,7 +794,7 @@
           <ul>
             <xsl:for-each select="parent::node()/*[name() = $nodeName]">
               <li>
-                <a href="#uuid={@uuidref}">
+                <a href="#/metadata/{@uuidref}" target="_blank">
                   <i class="fa fa-link"></i>
                   <xsl:value-of select="gn-fn-render:getMetadataTitle(@uuidref, $language)"/>
                 </a>

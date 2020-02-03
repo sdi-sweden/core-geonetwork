@@ -22,19 +22,6 @@
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
 
-<beans
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.springframework.org/schema/beans"
-  xmlns:util="http://www.springframework.org/schema/util"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
-
-  <bean id="dublin-coreSchemaPlugin"
-        class="org.fao.geonet.schema.dublincore.DublinCoreSchemaPlugin">
-    <property name="xpathTitle">
-      <util:list value-type="java.lang.String">
-        <value>dc:title</value>
-      </util:list>
-    </property>
-  </bean>
-</beans>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+  <xsl:import href="../../iso19139/process/remove-freetext-keywords.xsl"/>
+</xsl:stylesheet>

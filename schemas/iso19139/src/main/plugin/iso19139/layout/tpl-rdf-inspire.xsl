@@ -310,7 +310,8 @@
     -->
 
   <xsl:param name="ResourceUri">
-      <xsl:variable name="rURI" select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/*/gmd:code/gco:CharacterString"/>
+      <!-- Select 1st identifier with a code value -->
+      <xsl:variable name="rURI" select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier[string(*/gmd:code/gco:CharacterString)][1]/*/gmd:code/gco:CharacterString"/>
     <xsl:if test="$rURI != '' and ( starts-with($rURI, 'http://') or starts-with($rURI, 'https://') )">
       <xsl:value-of select="$rURI"/>
     </xsl:if>
@@ -1081,7 +1082,7 @@
                       <xsl:copy-of select="$TitleAndDescription"/>
                       <!-- Access URL -->
                       <xsl:for-each select="gmd:linkage/gmd:URL">
-                        <dcat:accessURL rdf:resource="{.}"/>
+                        <dcat:accessURL rdf:resource="{iso19139:processUrl(.)}"/>
                       </xsl:for-each>
                       <!-- Constraints related to access and use -->
                       <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
@@ -1100,7 +1101,7 @@
                   <!-- ?? Should foaf:page be detailed with title, description, etc.? -->
                   <xsl:for-each select="gmd:linkage/gmd:URL">
                     <foaf:page>
-                      <foaf:Document rdf:about="{.}">
+                      <foaf:Document rdf:about="{iso19139:processUrl(.)}">
                         <xsl:copy-of select="$TitleAndDescription"/>
                       </foaf:Document>
                     </foaf:page>
@@ -1110,7 +1111,7 @@
                 <xsl:otherwise>
                   <xsl:for-each select="gmd:linkage/gmd:URL">
                     <dcat:landingPage>
-                      <foaf:Document rdf:about="{.}">
+                      <foaf:Document rdf:about="{iso19139:processUrl(.)}">
                         <xsl:copy-of select="$TitleAndDescription"/>
                       </foaf:Document>
                     </dcat:landingPage>
@@ -1232,7 +1233,9 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:param>
+    <xsl:if test="string($id)">
     <dct:identifier rdf:datatype="{$idDatatypeURI}"><xsl:value-of select="$id"/></dct:identifier>
+    </xsl:if>
   </xsl:template>
 
   <!-- Responsible Organisation -->
@@ -1322,12 +1325,12 @@
     </xsl:param>
     <xsl:param name="URL">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-        <foaf:workplaceHomepage rdf:resource="{iso19139:addUrlProtocol(normalize-space(.))}"/>
+        <foaf:workplaceHomepage rdf:resource="{iso19139:processUrl(normalize-space(.))}"/>
       </xsl:for-each>
     </xsl:param>
     <xsl:param name="URL-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-        <vcard:hasURL rdf:resource="{iso19139:addUrlProtocol(normalize-space(.))}"/>
+        <vcard:hasURL rdf:resource="{iso19139:processUrl(normalize-space(.))}"/>
       </xsl:for-each>
     </xsl:param>
     <xsl:param name="Telephone">
@@ -1706,7 +1709,7 @@
     <xsl:choose>
       <xsl:when test="$ResourceType = 'dataset' or $ResourceType = 'series'">
         <dct:title xml:lang="{$MetadataLanguage}"><xsl:value-of select="../gmd:description/gco:CharacterString"/></dct:title>
-        <dcat:accessURL rdf:resource="{gmd:URL}"/>
+        <dcat:accessURL rdf:resource="{iso19139:processUrl(gmd:URL)}"/>
       </xsl:when>
       <!--
             <xsl:when test="$ResourceType = 'service'">
@@ -2810,12 +2813,51 @@
       else generate-id($responsibleParty)"/>
   </xsl:function>
 
+  <xsl:function name="iso19139:processUrl" as="xs:string">
+    <xsl:param name="url" as="xs:string"/>
+
+    <xsl:variable name="urlFixedProtocol" select="iso19139:addUrlProtocol(translate($url, ' ', ''))" />
+
+    <!-- Replace placeholder elements in url between [] symbols, removing the []. Example:
+
+      http://www.trafikverket.se/TrvSeFiler/Foretag/[API-key]/Bygga_och_underhalla/Vag
+
+      is updated to
+
+      http://www.trafikverket.se/TrvSeFiler/Foretag/API-key/Bygga_och_underhalla/Vag
+  -->
+    <xsl:variable name="newUrl">
+      <xsl:analyze-string select="$urlFixedProtocol" regex="\[(.*?)\]">
+        <xsl:matching-substring>
+          <xsl:value-of select='replace(., "\[(.*?)\]", "$1")'/>
+        </xsl:matching-substring>
+        <xsl:non-matching-substring>
+          <xsl:value-of select="."/>
+        </xsl:non-matching-substring>
+      </xsl:analyze-string>
+    </xsl:variable>
+
+    <xsl:value-of select="$newUrl" />
+  </xsl:function>
 
   <xsl:function name="iso19139:addUrlProtocol" as="xs:string">
     <xsl:param name="url" as="xs:string"/>
 
+    <!-- TODO: Check to add ftp://,file:// if required -->
+    <xsl:variable name="validProtocols" select="'http://,https://,ftp://'"/>
+
+    <xsl:variable name="validProtocolsList" select="tokenize($validProtocols, ',')" />
+    <xsl:variable name="hasValidProtocol">
+      <xsl:for-each select="$validProtocolsList">
+        <xsl:message>Protocol<xsl:value-of select="." /></xsl:message>
+        <xsl:if test="starts-with($url, .)">
+          true
+        </xsl:if>
+      </xsl:for-each>
+    </xsl:variable>
+
     <xsl:choose>
-      <xsl:when test="starts-with($url, 'http')"><xsl:value-of select="$url" /></xsl:when>
+      <xsl:when test="string(normalize-space($hasValidProtocol))"><xsl:value-of select="$url" /></xsl:when>
       <xsl:otherwise><xsl:value-of select="concat('http://', $url)" /></xsl:otherwise>
     </xsl:choose>
   </xsl:function>
