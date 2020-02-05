@@ -305,8 +305,13 @@
           </foaf:phone>
         </xsl:if>
         <!-- xpath: gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/gco:CharacterString -->
+
+        <xsl:variable name="hasMail" select="string(normalize-space(gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString)) and
+                      matches(upper-case(gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString),'^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$')" />
+
+
         <xsl:if
-          test="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
+          test="$hasMail">
           <foaf:mbox
             rdf:resource="mailto:{gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString}"/>
         </xsl:if>
@@ -481,6 +486,11 @@
         <vcard:fn xml:lang="sv">
           <xsl:value-of select="current-grouping-key()"/>
         </vcard:fn>
+
+        <xsl:variable name="hasMail" select="string(normalize-space(gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString)) and
+                      matches(upper-case(gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString),'^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$')" />
+
+        <xsl:if test="$hasMail">
         <vcard:hasEmail rdf:resource="mailto:{gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString}"/>
         <!-- xpath: gmd:organisationName/gco:CharacterString -->
         <xsl:for-each-group
@@ -490,6 +500,7 @@
           <vcard:member
             rdf:resource="{$url}/organization/{encode-for-uri(iso19139:getContactId(.))}"/>
         </xsl:for-each-group>
+        </xsl:if>
       </vcard:Organization>
       <!--  </vcard:Kind>-->
 
@@ -501,7 +512,14 @@
       group-by="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString">
       <!-- Organization memeber
 
+
         xpath: //gmd:CI_ResponsibleParty-->
+
+      <xsl:variable name="hasMail" select="string(normalize-space(gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString)) and
+                      matches(upper-case(gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString),'^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$')" />
+
+
+      <xsl:if test="$hasMail">
       <dct:publisher>
 
 <!--      <foaf:Agent rdf:about="{$url}/person/{encode-for-uri(iso19139:getContactId(.))}"> -->
@@ -529,6 +547,7 @@
         <!-- xpath: gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString -->
       </foaf:Agent>
      </dct:publisher>
+      </xsl:if>
     </xsl:for-each-group>
 
 

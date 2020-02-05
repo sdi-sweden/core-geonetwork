@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2001-2016 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
@@ -366,8 +366,8 @@
 //                  return data;
 //                });
 
-            	    var parent = $scope.$parent;
-            	    var lang = parent.langs[parent.lang];
+//            	    var parent = scope.$parent;
+//            	    var lang = parent.langs[parent.lang];
 
             	    var formatter = function(loc) {
             	        var props = [];
@@ -386,7 +386,7 @@
             	      }  
             	      return $http.get(url, {
             	        params: {
-            	          lang: lang,
+            	          lang: 'sv',
             	          style: 'full',
             	          type: 'json',
             	          maxRows: 10,
