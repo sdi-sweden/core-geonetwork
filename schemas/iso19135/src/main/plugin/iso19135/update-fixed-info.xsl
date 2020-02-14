@@ -41,13 +41,13 @@
 
 	<xsl:template match="grg:RE_Register">
 		<xsl:copy>
-			<xsl:copy-of select="@*[name()!='xsi:schemaLocation' and 
+			<xsl:copy-of select="@*[name()!='xsi:schemaLocation' and
 			                        name()!='uuid']"/>
 			<xsl:attribute name="xsi:schemaLocation">http://www.isotc211.org/2005/grg http://www.isotc211.org/2005/grg/grg.xsd http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd http://www.isotc211.org/2005/gco http://www.isotc211.org/2005/gco/gco.xsd http://geonetwork-opensource.org/register http://geonetwork-opensource.org/schemas/register/register.xsd</xsl:attribute>
 			<xsl:attribute name="uuid">
 				<xsl:value-of select="/root/env/uuid"/>
 			</xsl:attribute>
-			
+
 			<xsl:apply-templates select="node()"/>
 		</xsl:copy>
 	</xsl:template>
@@ -72,13 +72,25 @@
 	<xsl:template match="grg:containedItem">
 		<xsl:choose>
 		  <xsl:when test="$generateUniformResourceIdentifier = 'true'">
-        <xsl:variable name="identifier" select="//grg:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString" />
+        <xsl:variable name="currentXlinkValue" select="@xlink:href" />
+
         <xsl:copy>
-          <xsl:copy-of select="@*[name() != 'xlink:href']" />
-          <xsl:attribute name="xlink:href" select="concat($uniformResourceIdentifierUrlPrefix, '/', $identifier, '/', @id)" />
+          <xsl:choose>
+            <xsl:when test="not(string($currentXlinkValue)) or starts-with($currentXlinkValue, $uniformResourceIdentifierUrlPrefix)">
+              <xsl:variable name="identifier" select="//grg:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString" />
+
+              <xsl:copy-of select="@*[name() != 'xlink:href']" />
+                <xsl:attribute name="xlink:href" select="concat($uniformResourceIdentifierUrlPrefix, '/', $identifier, '/', @id)" />
+            </xsl:when>
+            <xsl:otherwise>
+              <!-- Preserve the xlink:href value -->
+              <xsl:copy-of select="@*" />
+            </xsl:otherwise>
+          </xsl:choose>
 
           <xsl:apply-templates select="*" />
         </xsl:copy>
+
 		  </xsl:when>
 		  <xsl:otherwise>
 			  <xsl:copy>
@@ -94,10 +106,25 @@
   <xsl:template match="grg:uniformResourceIdentifier/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
     <xsl:choose>
       <xsl:when test="$generateUniformResourceIdentifier = 'true'">
-        <xsl:variable name="identifier" select="//grg:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString" />
-        <gmd:URL>
-          <xsl:value-of select="concat($uniformResourceIdentifierUrlPrefix, '/', $identifier)" />
-        </gmd:URL>
+        <xsl:variable name="currentXlinkValue" select="@xlink:href" />
+
+        <xsl:choose>
+          <xsl:when test="not(string($currentXlinkValue)) or starts-with($currentXlinkValue, $uniformResourceIdentifierUrlPrefix)">
+            <xsl:variable name="identifier" select="//grg:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString" />
+
+            <gmd:URL>
+              <xsl:value-of select="concat($uniformResourceIdentifierUrlPrefix, '/', $identifier)" />
+            </gmd:URL>
+          </xsl:when>
+          <xsl:otherwise>
+            <!-- Preserve the element -->
+            <xsl:copy>
+              <xsl:copy-of select="@*" />
+              <xsl:apply-templates select="*" />
+            </xsl:copy>
+          </xsl:otherwise>
+        </xsl:choose>
+
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy>
@@ -126,7 +153,7 @@
 	<!-- ================================================================= -->
 	<!-- codelists: set @codeList path -->
 	<!-- ================================================================= -->
-	
+
 	<xsl:template match="gmd:*[@codeListValue]|grg:*[@codeListValue]">
 		<xsl:copy>
 			<xsl:apply-templates select="@*"/>
@@ -222,10 +249,10 @@
 	</xsl:template>
 
 	<!-- ================================================================= -->
-	<!-- Adjust the namespace declaration - In some cases name() is used to get the 
-		element. The assumption is that the name is in the format of  <ns:element> 
-		however in some cases it is in the format of <element xmlns=""> so the 
-		following will convert them back to the expected value. This also corrects the issue 
+	<!-- Adjust the namespace declaration - In some cases name() is used to get the
+		element. The assumption is that the name is in the format of  <ns:element>
+		however in some cases it is in the format of <element xmlns=""> so the
+		following will convert them back to the expected value. This also corrects the issue
 		where the <element xmlns=""> loose the xmlns="" due to the exclude-result-prefixes="#all" -->
 	<!-- Note: Only included prefix gml, gmd and gco for now. -->
 	<!-- TODO: Figure out how to get the namespace prefix via a function so that we don't need to hard code them -->
@@ -270,7 +297,7 @@
 	</xsl:template>
 	<!-- ================================================================= -->
 	<!-- copy everything else as is -->
-	
+
 	<xsl:template match="@*|node()">
 	    <xsl:copy>
 	        <xsl:apply-templates select="@*|node()"/>
