@@ -691,7 +691,6 @@
           <xsl:analyze-string select="." regex="(id=)([^&amp;]+)">
             <xsl:matching-substring>
               <Field  name="operatesOn" string="{regex-group(2)}" store="true" index="true"/>
-              <xsl:value-of select="."/>
             </xsl:matching-substring>
           </xsl:analyze-string>
         </xsl:if>
