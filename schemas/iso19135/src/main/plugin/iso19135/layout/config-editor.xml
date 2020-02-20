@@ -40,7 +40,7 @@
       <name>grg:name</name>
     </expanded>
     <!-- All fields in ISO could be multilingual.
-    Define element to exlcude. 
+    Define element to exlcude.
     -->
     <exclude>
     </exclude>
@@ -122,7 +122,7 @@
               <values>
                 <key label="name" required="true" xpath="grg:RE_RegisterItem/grg:name/gco:CharacterString" tooltip="grg:name" />
                 <key label="id" xpath="@id" tooltip="id" />
-                <key label="xlink" xpath="@xlink:href" tooltip="xlink:href" disabled="true"/>
+                <key label="xlink" xpath="@xlink:href" tooltip="xlink:href" />
                 <key label="status" xpath="grg:RE_RegisterItem/grg:status/grg:RE_ItemStatus" tooltip="grg:RE_ItemStatus">
                   <codelist name="grg:RE_ItemStatus"/>
                 </key>
@@ -130,7 +130,7 @@
                 <key label="itemclass" required="true" xpath="grg:RE_RegisterItem/grg:itemClass/grg:RE_ItemClass/grg:name/gco:CharacterString" tooltip="grg:itemClass" />
               </values>
               <snippet>
-                <grg:containedItem id="{{id}}">
+gi                <grg:containedItem id="{{id}}" xlink:href="{{xlink}}">
                   <grg:RE_RegisterItem>
                     <gn:copy select="grg:itemIdentifier"/>
                     <grg:name>

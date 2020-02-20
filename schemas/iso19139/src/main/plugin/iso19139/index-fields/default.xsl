@@ -22,7 +22,7 @@
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
 
-<xsl:stylesheet 
+<xsl:stylesheet
 			xmlns:xs="http://www.w3.org/2001/XMLSchema"
 			xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
@@ -31,7 +31,7 @@
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                xmlns:xlink="http://www.w3.org/1999/xlink" 
+                xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -685,6 +685,15 @@
 
 			<xsl:for-each select="srv:operatesOn/@xlink:href">
 				<Field name="operatesOn" string="{string(.)}" store="true" index="true"/>
+
+        <!-- Extract UUID from CSW url -->
+        <xsl:if test="starts-with(lower-case(.), 'http')">
+          <xsl:analyze-string select="." regex="(id=)([^&amp;]+)">
+            <xsl:matching-substring>
+              <Field  name="operatesOn" string="{regex-group(2)}" store="true" index="true"/>
+            </xsl:matching-substring>
+          </xsl:analyze-string>
+        </xsl:if>
 			</xsl:for-each>
 
 
