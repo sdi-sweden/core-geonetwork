@@ -245,13 +245,13 @@
               <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Nedladdning:Atom'">
                 <xsl:value-of select="'ATOM'"/>
               </xsl:when>
+              <xsl:when test="gmd:protocol/gco:CharacterString = 'HTTP:Information:Produktspecifikation'">
+                <xsl:value-of select="'PDF'"/>
+              </xsl:when>
               <xsl:otherwise>
-
+                <xsl:value-of select="'INFO'"/>
               </xsl:otherwise>
             </xsl:choose>
-
-
-
           </dct:format>
         </xsl:if>
         <!-- xpath: gmd:protocol/gco:CharacterString -->
