@@ -177,7 +177,7 @@ public class LmProxyFilter implements Filter {
 
             byte[] data = responseWrapper.getData();
             
-            _logger.debug("received data: " + new String(responseWrapper.getData(), StandardCharsets.UTF_8));
+          //_logger.debug("received data: " + new String(responseWrapper.getData(), StandardCharsets.UTF_8));
 
             long start = System.currentTimeMillis();
 
