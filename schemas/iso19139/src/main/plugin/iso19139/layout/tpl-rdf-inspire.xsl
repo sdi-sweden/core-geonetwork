@@ -2849,7 +2849,7 @@
     <xsl:variable name="validProtocolsList" select="tokenize($validProtocols, ',')" />
     <xsl:variable name="hasValidProtocol">
       <xsl:for-each select="$validProtocolsList">
-        <xsl:message>Protocol<xsl:value-of select="." /></xsl:message>
+<!--         <xsl:message>Protocol<xsl:value-of select="." /></xsl:message>  -->
         <xsl:if test="starts-with($url, .)">
           true
         </xsl:if>
