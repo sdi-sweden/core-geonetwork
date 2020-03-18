@@ -100,8 +100,8 @@
     </filter>
     <filter-mapping>
         <filter-name>HeaderLogger</filter-name>
-        <!-- this will log headers when user switches language to spanish -->
-        <url-pattern>/srv/spa/catalog.search</url-pattern>
+        <!-- this will log headers when user switches language to swedish -->
+        <url-pattern>/srv/swe/catalog.search</url-pattern>
     </filter-mapping>
 
 
@@ -139,6 +139,26 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <filter>
+      <display-name>AbuseFilter</display-name>
+      <filter-name>AbuseFilter</filter-name>
+      <filter-class>org.lmv.geodata.common.server.servlet.filter.abuse.AbuseFilter</filter-class>
+      <init-param>
+        <param-name>duration</param-name>
+        <param-value>60000</param-value>
+      </init-param>
+      <init-param>
+        <param-name>maxRequests</param-name>
+        <param-value>30</param-value>
+      </init-param>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>AbuseFilter</filter-name>
+      <url-pattern>/srv/swe/csw</url-pattern>
+      <url-pattern>/srv/eng/csw</url-pattern>
+    </filter-mapping>
+  
 	<!-- end added by LM -->
 
   <!-- Spring security -->
