@@ -84,83 +84,161 @@ USA.
 			<sch:let name="keywordValue_INS" value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='Inspire'"/>
 			<sch:let name="keywordValue_SDT"
                value="//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='humanInteractionService' or
+                contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'humanInteractionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='humanCatalogueViewer' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'humanCatalogueViewer')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='humanGeographicViewer' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'humanGeographicViewer')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='humanGeographicSpreadsheetViewer' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'humanGeographicSpreadsheetViewer')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='humanServiceEditor' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'humanServiceEditor')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='humanChainDefinitionEditor' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'humanChainDefinitionEditor')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='humanWorkflowEnactmentManager' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'humanWorkflowEnactmentManager')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='humanGeographicFeatureEditor' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'humanGeographicFeatureEditor')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='humanGeographicSymbolEditor' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'humanGeographicSymbolEditor')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='humanFeatureGeneralizationEditor' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'humanFeatureGeneralizationEditor')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='humanGeographicDataStructureViewer' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'humanGeographicDataStructureViewer')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoManagementService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoManagementService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoFeatureAccessService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoFeatureAccessService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoMapAccessService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoMapAccessService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoCoverageAccessService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoCoverageAccessService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoSensorDescriptionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoSensorDescriptionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoProductAccessService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoProductAccessService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoFeatureTypeService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoFeatureTypeService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoCatalogueService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoCatalogueService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoRegistryService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoRegistryService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoGazetteerService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoGazetteerService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoOrderHandlingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoOrderHandlingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='infoStandingOrderService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'infoStandingOrderService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='taskManagementService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'taskManagementService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='chainDefinitionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'chainDefinitionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='workflowEnactmentService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'workflowEnactmentService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='subscriptionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'subscriptionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialProcessingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialProcessingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialCoordinateConversionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialCoordinateConversionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialCoordinateTransformationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialCoordinateTransformationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialCoverageVectorConversionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialCoverageVectorConversionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialImageCoordinateConversionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialImageCoordinateConversionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialRectificationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialRectificationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialOrthorectificationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialOrthorectificationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialSensorGeometryModelAdjustmentService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialSensorGeometryModelAdjustmentService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialImageGeometryModelConversionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialImageGeometryModelConversionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialSubsettingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialSubsettingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialSamplingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialSamplingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialTilingChangeService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialTilingChangeService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialDimensionMeasurementService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialDimensionMeasurementService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialFeatureManipulationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialFeatureManipulationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialFeatureMatchingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialFeatureMatchingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialFeatureGeneralizationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialFeatureGeneralizationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialRouteDeterminationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialRouteDeterminationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialPositioningService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialPositioningService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='spatialProximityAnalysisService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'spatialProximityAnalysisService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicProcessingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicProcessingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicGoparameterCalculationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicGoparameterCalculationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicClassificationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicClassificationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicFeatureGeneralizationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicFeatureGeneralizationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicSubsettingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicSubsettingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicSpatialCountingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicSpatialCountingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicChangeDetectionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicChangeDetectionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicGeographicInformationExtractionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicGeographicInformationExtractionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicImageProcessingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicImageProcessingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicReducedResolutionGenerationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicReducedResolutionGenerationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicImageManipulationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicImageManipulationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicImageUnderstandingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicImageUnderstandingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicImageSynthesisService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicImageSynthesisService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicMultibandImageManipulationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicMultibandImageManipulationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicObjectDetectionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicObjectDetectionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicGeoparsingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicGeoparsingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='thematicGeocodingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'thematicGeocodingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='temporalProcessingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'temporalProcessingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='temporalReferenceSystemTransformationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'temporalReferenceSystemTransformationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='temporalSubsettingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'temporalSubsettingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='temporalSamplingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'temporalSamplingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='temporalProximityAnalysisService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'temporalProximityAnalysisService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='metadataProcessingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'metadataProcessingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='metadataStatisticalCalculationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'metadataStatisticalCalculationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='metadataGeographicAnnotationService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'metadataGeographicAnnotationService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='comService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'comService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='comEncodingService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'comEncodingService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='comTransferService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'comTransferService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='comGeographicCompressionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'comGeographicCompressionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='comGeographicFormatConversionService' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'comGeographicFormatConversionService')
 				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='comMessagingService' or
-				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='comRemoteFileAndExecutableManagement'"/>
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'comMessagingService')
+				//gmd:descriptiveKeywords/*/gmd:keyword/*/text()='comRemoteFileAndExecutableManagement' or
+				contains(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/@xlink:href, 'comRemoteFileAndExecutableManagement')"/>
 			<!-- assertions and report -->
 			<!-- Ändrad text 2013-08-21-->
 			<sch:assert test="$keywordValue_SDT or not($keywordValue_INS)">[Geodata.se:106d] Nyckelord tjänsteklassificering är obligatoriskt för tjänster som ingår i Inspire.</sch:assert>
