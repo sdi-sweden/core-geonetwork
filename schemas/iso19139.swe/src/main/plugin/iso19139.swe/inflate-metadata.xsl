@@ -1348,10 +1348,13 @@
       <xsl:apply-templates select="gmd:scope" />
       <xsl:apply-templates select="gmd:report" />
 
+
       <!-- Conformance report check: add it if not available (dataset) -->
+      <xsl:variable name="datasetConformanceText" select="'KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster'" />
+
       <xsl:if test="$isInspireMetadata and
                     $isDataset and
-                    count(//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='dataset']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://data.europa.eu/eli/reg')]) = 0">
+                    count(//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='dataset']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[normalize-space(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/*/text()) = $datasetConformanceText]) = 0">
 
         <xsl:message>dataset</xsl:message>
         <gmd:report>
@@ -1362,7 +1365,7 @@
                   <gmd:CI_Citation>
                     <gmd:title>
                       <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">
-                        KOMMISSIONENS FÖRORDNING (EU) nr 1089/2010 av den 23 november 2010 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG vad gäller interoperabilitet för rumsliga datamängder och datatjänster
+                        <xsl:value-of select="$datasetConformanceText" />
                       </gmx:Anchor>
                     </gmd:title>
                     <gmd:date>
@@ -1393,9 +1396,11 @@
       </xsl:if>
 
       <!-- Conformance report check: add it if not available (service) -->
+      <xsl:variable name="serviceConformanceText" select="'Kommissionens förordning (EG) nr 976/2009 av den 19 oktober 2009 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG med avseende på nättjänster'" />
+
       <xsl:if test="$isInspireMetadata and
                     $isService and
-                    count(//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[starts-with(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href, 'http://data.europa.eu/eli/reg')]) = 0">
+                    count(//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']/gmd:report/gmd:DQ_DomainConsistency/gmd:result[normalize-space(gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/*/text()) = $serviceConformanceText]) = 0">
 
         <xsl:message>service</xsl:message>
         <gmd:report>
@@ -1406,7 +1411,7 @@
                   <gmd:CI_Citation>
                     <gmd:title>
                       <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2009/976">
-                        Kommissionens förordning (eg) nr 976/2009 av den 19 oktober 2009 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg med avseende på nättjänster
+                        <xsl:value-of select="$serviceConformanceText" />
                       </gmx:Anchor>
                     </gmd:title>
                     <gmd:date>
