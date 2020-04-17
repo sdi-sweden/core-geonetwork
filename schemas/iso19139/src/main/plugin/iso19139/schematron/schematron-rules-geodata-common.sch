@@ -439,14 +439,13 @@ USA.
       <sch:assert test="string($north[1]) and ($south[1] &lt;= $north[1]) and ($north[1] &lt;= 90.00)">[Geodata.se:125] Nordlig koordinat saknas eller har fel värde</sch:assert>
 
       <!-- Check the number of decimals equal or greater than 2 -->
-<!--
-      <sch:assert test="not(string($west[1])) or string-length($westDecimals) >= 2">[Geodata.se:125] Västlig koordinat kräver 2 decimaler</sch:assert>
+<!--      <sch:assert test="not(string($west[1])) or string-length($westDecimals) >= 2">Västlig koordinat kräver 2 decimaler</sch:assert>
 
-      <sch:assert test="not(string($east[1])) or string-length($eastDecimals) >= 2">[Geodata.se:125] Östlig koordinat kräver 2 decimaler</sch:assert>
+      <sch:assert test="not(string($east[1])) or string-length($eastDecimals) >= 2">Östlig koordinat kräver 2 decimaler</sch:assert>
 
-      <sch:assert test="not(string($south[1])) or string-length($southDecimals) >= 2">[Geodata.se:125] Syd koordinat kräver 2 decimaler</sch:assert>
+      <sch:assert test="not(string($south[1])) or string-length($southDecimals) >= 2">Syd koordinat kräver 2 decimaler</sch:assert>
 
-      <sch:assert test="not(string($north[1])) or string-length($northDecimals) >= 2">[Geodata.se:125] Nordlig koordinat kräver 2 decimaler</sch:assert>
+      <sch:assert test="not(string($north[1])) or string-length($northDecimals) >= 2">Nordlig koordinat kräver 2 decimaler</sch:assert>
 -->
     </sch:rule>
   </sch:pattern>
