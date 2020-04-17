@@ -81,7 +81,7 @@
     <level value="WARN"/>
   </logger>
   <logger name="geonetwork.harvester" additivity="false">
-    <level value="WARN"/>
+    <level value="DEBUG"/>
     <appender-ref ref="consoleAppender"/>
     <appender-ref ref="fileAppender"/>
   </logger>
@@ -116,10 +116,10 @@
     <level value="WARN"/>
   </logger>
   <logger name="geonetwork.camel-harvester">
-    <level value="DEBUG"/>
+    <level value="WARN"/>
   </logger>
   <logger name="geonetwork.harvest.wfs.features">
-    <level value="DEBUG"/>
+    <level value="WARN"/>
   </logger>
 
   <!--  Jeeves module and submodule logger configuration -->

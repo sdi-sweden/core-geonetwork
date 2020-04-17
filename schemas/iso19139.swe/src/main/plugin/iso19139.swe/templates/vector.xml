@@ -101,7 +101,7 @@
     <gco:DateTime>2005-03-31T19:13:30</gco:DateTime>
   </gmd:dateStamp>
   <gmd:metadataStandardName>
-    <gco:CharacterString>SS-EN ISO 19115:2005-se 4.0</gco:CharacterString>
+    <gco:CharacterString>SS-EN-ISO-19115:2005-NMDP 4.0</gco:CharacterString>
   </gmd:metadataStandardName>
   <gmd:metadataStandardVersion>
     <gco:CharacterString>4.0</gco:CharacterString>
