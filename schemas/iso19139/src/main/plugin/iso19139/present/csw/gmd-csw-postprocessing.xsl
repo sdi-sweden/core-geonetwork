@@ -1047,11 +1047,8 @@
 
       <xsl:apply-templates select="gmd:distributor"/>
 
-      <xsl:choose>
-        <xsl:when test="not(gmd:transferOptions)"><xsl:copy-of select="$addtransferOptions"/></xsl:when>
-        <xsl:otherwise><xsl:apply-templates select="gmd:transferOptions"/></xsl:otherwise>
-      </xsl:choose>
-
+      <!-- Always replace gmd:transferOptions with gmd:distributorTransferOptions content -->
+      <xsl:copy-of select="$addtransferOptions"/>
     </xsl:copy>
   </xsl:template>
 
