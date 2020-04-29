@@ -1092,5 +1092,6 @@
     "update-metadatastandard": "Metadata Swedish profile update process from version 3.1.1 to 4.0.0",
     "transfer-options-migrate": "Process to migrate transfer options to distributor transfer options",
     "remove-transferoptions": "Process to remove gmd:transferOptions from metadata.",
+    "change-spatialdataservicedategory-keywords-to-anchor": "Metadata Swedish profile 4.0.0 - Update metadata spatial data service category keywords to anchor and fix thesaurus info",
     "add-gmd-identifier-rs-identifier": "Fix Metadata identifiers - removes empty elements, placeholders and convert RS Identifier to MD Identifier (when no valid identifier is available)"
 }

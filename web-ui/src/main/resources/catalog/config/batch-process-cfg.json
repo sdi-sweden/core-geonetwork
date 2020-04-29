@@ -1,4 +1,10 @@
 {"config": [{
+  "key": "change-spatialdataservicedategory-keywords-to-anchor",
+  "type": "fixed-params",
+  "params": [
+  ]
+  },
+  {
   "key": "remove-transferoptions",
   "type": "fixed-params",
   "params": [
