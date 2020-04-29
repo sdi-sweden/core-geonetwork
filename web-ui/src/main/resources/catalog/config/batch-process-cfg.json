@@ -1,4 +1,10 @@
 {"config": [{
+  "key": "remove-transferoptions",
+  "type": "fixed-params",
+  "params": [
+  ]
+  },
+  {
   "key": "update-metadatastandard",
   "type": "fixed-params",
   "params": [
