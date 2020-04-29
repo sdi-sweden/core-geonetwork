@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:adms="http://www.w3.org/ns/adms#" xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:vann="http://purl.org/vocab/vann/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dct="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/">
   <skos:ConceptScheme rdf:about="http://geonetwork-opensource.org/inspire-theme">
-    <dc:title>kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster</dc:title>
+    <dc:title>KOMMISSIONENS FÖRORDNING (EG) nr 1205/2008 av den 3 december 2008 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG om metadata 2018-12-03</dc:title>
     <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="sv">Nyckelorden är baserade på den geografiska tjänstetaxonomin i EN ISO 19119. Denna taxonomi är indelad i kategorier, där underkategorierna definierar värdedomänen för de rumsliga datatjänsternas klassificering.</dc:description>
     <dc:creator>
       <foaf:Organization>
