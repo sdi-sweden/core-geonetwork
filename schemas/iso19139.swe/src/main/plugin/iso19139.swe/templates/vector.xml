@@ -321,9 +321,6 @@
   </gmd:identificationInfo>
   <gmd:distributionInfo>
     <gmd:MD_Distribution>
-      <gmd:transferOptions>
-        <gmd:MD_DigitalTransferOptions/>
-      </gmd:transferOptions>
     </gmd:MD_Distribution>
   </gmd:distributionInfo>
   <gmd:dataQualityInfo>

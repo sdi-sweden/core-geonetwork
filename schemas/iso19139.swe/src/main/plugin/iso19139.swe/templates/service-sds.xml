@@ -277,7 +277,7 @@
             <srv:couplingType>
                 <srv:SV_CouplingType codeListValue="tight" codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#SV_CouplingType"/>
             </srv:couplingType>
-<!-- 
+<!--
             <srv:couplingType>
                 <srv:SV_CouplingType codeListValue="tight"
                                      codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#SV_CouplingType"/>
@@ -296,7 +296,7 @@
                         <srv:DCPList codeList="http://inspire.ec.europa.eu/metadata-codelist/DCPList"
                                      codeListValue=""/>
                     </srv:DCP> -->
-                    <srv:connectPoint/>                    
+                    <srv:connectPoint/>
                 </srv:SV_OperationMetadata>
             </srv:containsOperations>
         </srv:SV_ServiceIdentification>
@@ -313,9 +313,6 @@
             </gmd:version>
           </gmd:MD_Format>
         </gmd:distributionFormat>
-        <gmd:transferOptions>
-          <gmd:MD_DigitalTransferOptions/>
-        </gmd:transferOptions>
       </gmd:MD_Distribution>
     </gmd:distributionInfo>
     <gmd:dataQualityInfo>
