@@ -408,10 +408,13 @@
   <!-- Fix -->
   <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:title[gco:CharacterString = 'Tjänsteklassificering']">
     <gmd:title>
-      <gco:CharacterString>kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster</gco:CharacterString>
+      <gco:CharacterString>KOMMISSIONENS FÖRORDNING (EG) nr 1205/2008 av den 3 december 2008 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG om metadata 2018-12-03</gco:CharacterString>
     </gmd:title>
   </xsl:template>
 
+  <xsl:template match="gmd:thesaurusName/gmd:CI_Citation[gmd:title/gco:CharacterString = 'Tjänsteklassificering']/gmd:date/gmd:CI_Date/gmd:date/gco:Date">
+    <gco:Date>2008-12-03</gco:Date>
+  </xsl:template>
 
   <!-- Template to process gmd:resourceConstraints to upgrade them to TG 2.0.
 
