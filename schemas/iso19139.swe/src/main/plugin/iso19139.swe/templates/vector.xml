@@ -214,14 +214,14 @@
         </gmd:MD_MaintenanceInformation>
       </gmd:resourceMaintenance>
       <gmd:graphicOverview/>
-      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+      <gmd:resourceConstraints>
         <gmd:MD_Constraints>
           <gmd:useLimitation gco:nilReason="missing">
             <gco:CharacterString/>
           </gmd:useLimitation>
         </gmd:MD_Constraints>
       </gmd:resourceConstraints>
-      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+      <gmd:resourceConstraints>
         <gmd:MD_LegalConstraints>
           <gmd:accessConstraints>
             <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
@@ -232,7 +232,7 @@
           </gmd:otherConstraints>
         </gmd:MD_LegalConstraints>
       </gmd:resourceConstraints>
-      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+      <gmd:resourceConstraints>
         <gmd:MD_LegalConstraints>
           <gmd:accessConstraints>
             <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
@@ -243,7 +243,7 @@
           </gmd:otherConstraints>
         </gmd:MD_LegalConstraints>
       </gmd:resourceConstraints>
-      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+      <gmd:resourceConstraints>
         <gmd:MD_LegalConstraints>
           <gmd:useConstraints>
             <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"

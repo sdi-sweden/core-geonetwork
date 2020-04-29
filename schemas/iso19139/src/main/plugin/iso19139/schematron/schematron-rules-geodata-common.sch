@@ -269,8 +269,8 @@ USA.
     </sch:rule>
   </sch:pattern>
 
-  <sch:pattern fpi="Responsible organisation">
-    <sch:title>[Geodata.se:112b] Responsible organisation </sch:title>
+  <sch:pattern fpi="Ansvarig organisation">
+    <sch:title>[Geodata.se:112b] Ansvarig organisation </sch:title>
     <sch:rule context="//gmd:identificationInfo[1]/*">
       <sch:let name="organisationName" value="gmd:pointOfContact/*/gmd:organisationName/*/text()"/>
       <sch:let name="role" value="gmd:pointOfContact/*/gmd:role/*/@codeListValue"/>
