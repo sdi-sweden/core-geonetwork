@@ -433,10 +433,6 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:copy>
-
-    <gmd:title>
-      <gco:CharacterString>KOMMISSIONENS FÖRORDNING (EG) nr 1205/2008 av den 3 december 2008 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG om metadata 2018-12-03</gco:CharacterString>
-    </gmd:title>
   </xsl:template>
 
   <!-- Template to process gmd:resourceConstraints to upgrade them to TG 2.0.
