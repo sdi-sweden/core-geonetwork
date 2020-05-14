@@ -816,7 +816,7 @@
 					<xsl:variable name="linkage" select="gmd:linkage/gmd:URL" />
 					<xsl:variable name="title" select="normalize-space(gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType)"/>
 					<xsl:variable name="desc" select="normalize-space(gmd:description/gco:CharacterString)"/>
-					<xsl:variable name="protocol" select="normalize-space(gmd:protocol/gco:CharacterString)"/>
+					<xsl:variable name="protocol" select="normalize-space(gmd:protocol/*/text())"/>
 					<xsl:variable name="mimetype" select="geonet:protocolMimeType($linkage, $protocol, gmd:name/gmx:MimeFileType/@type)"/>
 
 					<!-- If the linkage points to WMS service and no protocol specified, manage as protocol OGC:WMS -->
