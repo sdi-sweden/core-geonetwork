@@ -116,7 +116,7 @@ public class OgcGenericFilters {
             Log.debug(Geonet.SEARCH_ENGINE, "Parsing filter");
         Object parseResult = parser
             .parse(new StringReader(string));
-        if (parser.getValidationErrors().size() > 0) {
+        if (parser.getValidationErrors().size() > 0 && filterExpr.getContentSize() > 0) {
             Log.error(Geonet.SEARCH_ENGINE, "Errors occurred when trying to parse a filter:");
             Log.error(Geonet.SEARCH_ENGINE, "----------------------------------------------");
             for (Object error : parser.getValidationErrors()) {
