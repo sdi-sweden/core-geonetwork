@@ -511,7 +511,17 @@
             <xsl:copy copy-namespaces="no">
               <xsl:copy-of select="@*[name() != 'xlink:href']" />
               <xsl:attribute name="xlink:href">
-                <xsl:value-of select="concat('https://www.geodata.se/geodataportalen/srv/eng/csw-inspire-swe?', substring-after(@xlink:href, '/csw?'))" />
+                <xsl:choose>
+                  <xsl:when test="contains(@xlink:href, '/csw?')">
+                    <xsl:value-of select="concat('https://www.geodata.se/geodataportalen/srv/eng/csw-inspire?', substring-after(@xlink:href, '/csw?'))" />
+                  </xsl:when>
+                  <xsl:when test="contains(@xlink:href, '/csw-inspire?')">
+                    <xsl:value-of select="concat('https://www.geodata.se/geodataportalen/srv/eng/csw-inspire?', substring-after(@xlink:href, '/csw-inspire?'))" />
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="@xlink:href" />
+                  </xsl:otherwise>
+                </xsl:choose>
               </xsl:attribute>
 
               <xsl:copy-of select="*" copy-namespaces="no" />
