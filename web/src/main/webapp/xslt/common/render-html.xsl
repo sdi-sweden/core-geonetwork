@@ -38,7 +38,7 @@
     <xsl:param name="description"
                select="''"/>
 
-    <html>
+    <html ng-app="{$angularModule}" lang="{$lang2chars}" id="ng-app">
       <head>
         <title><xsl:value-of select="$title"/></title>
         <meta charset="utf-8"/>
