@@ -136,7 +136,7 @@
 	if not set. -->
 	<xsl:template match="gmd:metadataStandardName[@gco:nilReason='missing' or gco:CharacterString='']" priority="10">
 		<xsl:copy>
-			<gco:CharacterString>ISO 19115:2003/19139</gco:CharacterString>
+			<gco:CharacterString>SS-EN-ISO-19115:2005-NMDP 4.0</gco:CharacterString>
 		</xsl:copy>
 	</xsl:template>
 
