@@ -58,7 +58,8 @@
           </li>
           <!-- Download links Compact view-->
           <li data-ng-show="::downloads.length == 1">
-            <a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}"><span class="download-icn-cont"><span class="icon-down-fat"></span></span></a>
+            <a data-ng-if="::downloads[0].protocol.toLowerCase() != 'http:nedladdning:atom'" href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}"><span class="download-icn-cont"><span class="icon-down-fat"></span></span></a>
+            <a data-ng-if="::downloads[0].protocol.toLowerCase() == 'http:nedladdning:atom'" target="_blank" href="../api/records/{{md['geonet:info'].uuid}}/atom?feed={{::downloads[0].url}}"><span class="download-icn-cont"><span class="icon-down-fat"></span></span></a>
           </li>
 
           <li data-swe-toggle-style="" class="dropdown-compact more-info-dropdown" data-ng-show="::downloads.length > 1"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>
@@ -205,7 +206,8 @@
         </div>
 
         <div class="link-cont" data-ng-show="::downloads.length == 1">
-          <a href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}" class="-label-link"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>{{ 'downloadDataset' | translate }}</a>
+          <a data-ng-if="::downloads[0].protocol.toLowerCase() != 'http:nedladdning:atom'" href="{{::downloads[0].url}}" download="{{::downloads[0].desc}}" class="-label-link"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>{{ 'downloadDataset' | translate }}</a>
+          <a data-ng-if="::downloads[0].protocol.toLowerCase() == 'http:nedladdning:atom'" target="_blank" href="../api/records/{{md['geonet:info'].uuid}}/atom?feed={{::downloads[0].url}}" class="-label-link"><span class="download-icn-cont"><span class="icon-down-fat"></span></span>{{ 'downloadDataset' | translate }}</a>
         </div>
       </div>
     </div>
