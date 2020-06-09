@@ -155,9 +155,12 @@ class Harvester implements IHarvester<HarvestResult> {
 
         //--- align local node
 
-        Aligner aligner = new Aligner(cancelMonitor, log, context, server, params);
-
-        return aligner.align(records, errors);
+        if (errors.isEmpty()) {
+            Aligner aligner = new Aligner(cancelMonitor, log, context, server, params);
+            return aligner.align(records, errors);
+        } else {
+        	return new HarvestResult();
+        }
     }
     //---------------------------------------------------------------------------
 
@@ -228,8 +231,9 @@ class Harvester implements IHarvester<HarvestResult> {
 
     /**
      * Does CSW GetRecordsRequest.
+     * @throws Throwable 
      */
-    private Set<RecordInfo> search(CswServer server, Search s) throws Exception {
+    private Set<RecordInfo> search(CswServer server, Search s) throws Throwable {
         int start = 1;
 
         GetRecordsRequest request = new GetRecordsRequest(context);
@@ -275,7 +279,18 @@ class Harvester implements IHarvester<HarvestResult> {
 
         while (true) {
             request.setStartPosition(start);
-            Element response = doSearch(request, start, GETRECORDS_REQUEST_MAXRECORDS);
+            Element response = null;
+            try {
+            	response = doSearch(request, start, GETRECORDS_REQUEST_MAXRECORDS);
+            }catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                    log.debug("GetRecords request has failed: " + e.getMessage());
+                    // throw Throwable so harvest() knows a serious error has occurred
+                    throw new Throwable();
+                }
+            	
+            }
             if (log.isDebugEnabled()) {
                 log.debug("Number of child elements in response: " + response.getChildren().size());
             }

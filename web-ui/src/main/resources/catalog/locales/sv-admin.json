@@ -1,4 +1,4 @@
-{
+﻿{
     "Administrator": "Administratör",
     "NEW": "Ny",
     "abstract": "Sammanfattning",
@@ -1056,8 +1056,8 @@
     "selectExistingLogo": "Välj en logotyp",
     "map/isMyPositionEnabled": "Display a button to zoom to My Position",
     "map/isMyPositionEnabled-help": "From the map viewer, a tool to zoom to the user position is displayed.",
-    "system/site/googleTagManagerKey": "Google Tag Manager key",
-    "system/site/googleTagManagerKey-help": "If this value is filled, the Google Tag Manager javascript tracking code will be added in the application pages",
+    "system/site/googleTagManagerKey": "Angulartics Tag Manager key",
+    "system/site/googleTagManagerKey-help": "If this value is filled, the Angulartics Tag Manager javascript tracking code will be added in the application pages",
     "managePredefinedMaps": "Predefined maps",
     "predefinedmaps": "Predefined maps",
     "predefinedMapsPos": "Position",
@@ -1091,5 +1091,7 @@
     "selectExistingLogo": "Välj en logotyp",
     "update-metadatastandard": "Metadata Swedish profile update process from version 3.1.1 to 4.0.0",
     "transfer-options-migrate": "Process to migrate transfer options to distributor transfer options",
+    "remove-transferoptions": "Process to remove gmd:transferOptions from metadata.",
+    "change-spatialdataservicedategory-keywords-to-anchor": "Metadata Swedish profile 4.0.0 - Update metadata spatial data service category keywords to anchor and fix thesaurus info",
     "add-gmd-identifier-rs-identifier": "Fix Metadata identifiers - removes empty elements, placeholders and convert RS Identifier to MD Identifier (when no valid identifier is available)"
 }

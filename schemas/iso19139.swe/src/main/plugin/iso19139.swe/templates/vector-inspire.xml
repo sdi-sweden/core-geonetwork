@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 
 <!--
@@ -101,7 +101,7 @@
     <gco:DateTime>2005-03-31T19:13:30</gco:DateTime>
   </gmd:dateStamp>
   <gmd:metadataStandardName>
-    <gco:CharacterString>SS-EN ISO 19115:2005-se 4.0</gco:CharacterString>
+    <gco:CharacterString>SS-EN-ISO-19115:2005-NMDP 4.0</gco:CharacterString>
   </gmd:metadataStandardName>
   <gmd:metadataStandardVersion>
     <gco:CharacterString>4.0</gco:CharacterString>
@@ -248,14 +248,14 @@
         </gmd:MD_Keywords>
       </gmd:descriptiveKeywords>
 
-      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+      <gmd:resourceConstraints>
         <gmd:MD_Constraints>
           <gmd:useLimitation gco:nilReason="missing">
             <gco:CharacterString/>
           </gmd:useLimitation>
         </gmd:MD_Constraints>
       </gmd:resourceConstraints>
-      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+      <gmd:resourceConstraints>
         <gmd:MD_LegalConstraints>
           <gmd:accessConstraints>
             <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
@@ -266,7 +266,7 @@
           </gmd:otherConstraints>
         </gmd:MD_LegalConstraints>
       </gmd:resourceConstraints>
-      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+      <gmd:resourceConstraints>
         <gmd:MD_LegalConstraints>
           <gmd:accessConstraints>
             <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
@@ -277,7 +277,7 @@
           </gmd:otherConstraints>
         </gmd:MD_LegalConstraints>
       </gmd:resourceConstraints>
-      <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+      <gmd:resourceConstraints>
         <gmd:MD_LegalConstraints>
           <gmd:useConstraints>
             <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"

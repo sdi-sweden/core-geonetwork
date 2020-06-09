@@ -65,7 +65,7 @@ USA.
 			<!-- Visa fel om inte Inspire Thesaurs visas. -->
 			<sch:assert test="count($inspire-theme) > 0"> INSPIRE Themes saknas. Installationen är ej korrekt filen </sch:assert>
 			<sch:let name="keyword"
-               value="gmd:descriptiveKeywords/*/gmd:keyword/gco:CharacterString"/>
+               value="//gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/*/text(), 'GEMET')]/gmd:keyword/*/text()"/>
 			<sch:let name="inspire-theme-found"
                value="count($inspire-thesaurus//skos:Concept[skos:prefLabel = $keyword])"/>
 			<sch:assert test="not($keywordValue_INSPIRE) or $inspire-theme-found > 0"

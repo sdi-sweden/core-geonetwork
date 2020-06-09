@@ -51,6 +51,7 @@ import org.fao.geonet.exceptions.NotAllowedEx;
 import org.fao.geonet.exceptions.ServiceNotFoundEx;
 import org.fao.geonet.exceptions.ServiceNotMatchedEx;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
+import org.fao.geonet.util.XslUtil;
 import org.fao.geonet.utils.BLOB;
 import org.fao.geonet.utils.BinaryFile;
 import org.fao.geonet.utils.IO;
@@ -945,6 +946,7 @@ public class ServiceManager {
 
     private void addPrefixes(Element root, String lang, String service, String nodeId) {
         root.addContent(new Element(Jeeves.Elem.LANGUAGE).setText(lang));
+        root.addContent(new Element(Jeeves.Elem.LANGUAGE_2_CHARS).setText(XslUtil.twoCharLangCode(lang)));
         root.addContent(new Element(Jeeves.Elem.REQ_SERVICE).setText(service));
         root.addContent(new Element(Jeeves.Elem.BASE_URL).setText(baseUrl));
         root.addContent(new Element(Jeeves.Elem.LOC_URL).setText(baseUrl + "/loc/" + lang));

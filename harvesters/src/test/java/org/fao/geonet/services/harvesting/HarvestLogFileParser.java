@@ -21,6 +21,7 @@ public class HarvestLogFileParser {
 	    LineIterator it = FileUtils.lineIterator(theFile, "UTF-8");
 	    Integer lineCount = 0;
 	    Integer errorCount = 0;
+	    String ruleSet = "";
 	    boolean findErrorMsg = false;
 	    try {
 	        while (it.hasNext()) {
@@ -34,7 +35,13 @@ public class HarvestLogFileParser {
 	            	findErrorMsg = true;	            	
 	            }
 	            if (findErrorMsg) {
+	            	if(lineContainsRuleHeader(line)) {
+	            	  ruleSet = getRuleSetName(line);
+	            	}
 	            	if (lineContainsErrorMsg(line)) {
+	            		if (StringUtils.isNotEmpty(ruleSet)) {
+	            			System.out.println("Schematron Rule Set = " + ruleSet);
+	            		}
 	            		printErrorMsg(line);
 	            	}
 	            }
@@ -59,12 +66,30 @@ public class HarvestLogFileParser {
 	}
 
 	private void printErrorMsg(String line) {
-        Integer msgStartPos = StringUtils.indexOf(line, "<svrl:text>");
-        Integer msgEndPos = StringUtils.indexOf(line, "</svrl:text>");
+//        Integer msgStartPos = StringUtils.indexOf(line, "<svrl:text>");
+//        Integer msgEndPos = StringUtils.indexOf(line, "</svrl:text>");
 		String msg = StringUtils.substringBetween(line, "<svrl:text>", "</svrl:text>");
 		System.out.println(msg);
 	}
 
+    private String getRuleSetName(String line) {
+//        Integer msgStartPos = StringUtils.indexOf(line, "title=");
+//        Integer msgEndPos = StringUtils.indexOf(line, " schemaVersion=");
+		String msg = StringUtils.substringBetween(line, "title=", " schemaVersion=");
+		if (StringUtils.isNotEmpty(msg)) {
+		    return msg;
+		} else {
+			return "";
+		}
+    }
+    
+	private boolean lineContainsRuleHeader(String line) {
+		if(StringUtils.contains(line, "<svrl:schematron-output")) {
+        	return true;
+        }
+		return false;
+	}
+	
 	private boolean lineContainsErrorMsg(String line) {
         if(StringUtils.contains(line, "<svrl:text>")) {
         	return true;

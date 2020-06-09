@@ -59,6 +59,9 @@
   <logger name="geonetwork.editor">
     <level value="WARN"/>
   </logger>
+  <logger name="geonetwork.datamanager">
+    <level value="WARN"/>
+  </logger>
   <logger name="geonetwork.schemamanager">
     <level value="WARN"/>
   </logger>
@@ -131,10 +134,10 @@
     <level value="WARN"/>
   </logger>
   <logger name="geonetwork.camel-harvester">
-    <level value="DEBUG"/>
+    <level value="WARN"/>
   </logger>
   <logger name="geonetwork.harvest.wfs.features">
-    <level value="DEBUG"/>
+    <level value="WARN"/>
   </logger>
 
   <!--  Jeeves module and submodule logger configuration -->

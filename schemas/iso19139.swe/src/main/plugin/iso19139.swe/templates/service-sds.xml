@@ -95,7 +95,7 @@
         <gco:DateTime>2008-11-17T23:12:03</gco:DateTime>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
-      <gco:CharacterString>SS-EN ISO 19115:2005-se 4.0</gco:CharacterString>
+      <gco:CharacterString>SS-EN-ISO-19115:2005-NMDP 4.0</gco:CharacterString>
     </gmd:metadataStandardName>
     <gmd:metadataStandardVersion>
       <gco:CharacterString>4.0</gco:CharacterString>
@@ -203,14 +203,14 @@
                     </gmd:type>
                 </gmd:MD_Keywords>
             </gmd:descriptiveKeywords>
-          <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+          <gmd:resourceConstraints>
             <gmd:MD_Constraints>
               <gmd:useLimitation gco:nilReason="missing">
                 <gco:CharacterString/>
               </gmd:useLimitation>
             </gmd:MD_Constraints>
           </gmd:resourceConstraints>
-          <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+          <gmd:resourceConstraints>
             <gmd:MD_LegalConstraints>
               <gmd:accessConstraints>
                 <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
@@ -221,7 +221,7 @@
               </gmd:otherConstraints>
             </gmd:MD_LegalConstraints>
           </gmd:resourceConstraints>
-          <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+          <gmd:resourceConstraints>
             <gmd:MD_LegalConstraints>
               <gmd:accessConstraints>
                 <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
@@ -232,7 +232,7 @@
               </gmd:otherConstraints>
             </gmd:MD_LegalConstraints>
           </gmd:resourceConstraints>
-          <gmd:resourceConstraints xmlns:gn="http://www.fao.org/geonetwork">
+          <gmd:resourceConstraints>
             <gmd:MD_LegalConstraints>
               <gmd:useConstraints>
                 <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"
@@ -277,7 +277,7 @@
             <srv:couplingType>
                 <srv:SV_CouplingType codeListValue="tight" codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#SV_CouplingType"/>
             </srv:couplingType>
-<!-- 
+<!--
             <srv:couplingType>
                 <srv:SV_CouplingType codeListValue="tight"
                                      codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#SV_CouplingType"/>
@@ -296,7 +296,7 @@
                         <srv:DCPList codeList="http://inspire.ec.europa.eu/metadata-codelist/DCPList"
                                      codeListValue=""/>
                     </srv:DCP> -->
-                    <srv:connectPoint/>                    
+                    <srv:connectPoint/>
                 </srv:SV_OperationMetadata>
             </srv:containsOperations>
         </srv:SV_ServiceIdentification>
@@ -313,9 +313,6 @@
             </gmd:version>
           </gmd:MD_Format>
         </gmd:distributionFormat>
-        <gmd:transferOptions>
-          <gmd:MD_DigitalTransferOptions/>
-        </gmd:transferOptions>
       </gmd:MD_Distribution>
     </gmd:distributionInfo>
     <gmd:dataQualityInfo>

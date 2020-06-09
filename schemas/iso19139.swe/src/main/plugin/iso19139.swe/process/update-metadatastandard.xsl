@@ -34,7 +34,7 @@
       <xsl:apply-templates select="gmd:dateStamp" />
 
       <gmd:metadataStandardName>
-        <gco:CharacterString>SS-EN ISO 19115:2005-se 4.0</gco:CharacterString>
+        <gco:CharacterString>SS-EN-ISO-19115:2005-NMDP 4.0</gco:CharacterString>
       </gmd:metadataStandardName>
       <gmd:metadataStandardVersion>
         <gco:CharacterString>4.0</gco:CharacterString>

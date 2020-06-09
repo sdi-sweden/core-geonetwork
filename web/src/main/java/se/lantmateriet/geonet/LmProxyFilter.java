@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -175,6 +176,8 @@ public class LmProxyFilter implements Filter {
             inChain.doFilter(inReq, responseWrapper);
 
             byte[] data = responseWrapper.getData();
+            
+            //_logger.debug("received data: " + new String(responseWrapper.getData(), StandardCharsets.UTF_8));
 
             long start = System.currentTimeMillis();
 
