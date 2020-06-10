@@ -3316,7 +3316,7 @@ Detta undvikar vi att ange.</description>
       <option show="y" title="http://resources.geodata.se/codelist/metadata/anvandningsrestriktioner.xml#CC01.0" value="Creative commons  CC0 1.0 Universiell">Creative commons  CC0 1.0 Universiell</option>
       <option show="y" title="https://resources.geodata.se/codelist/metadata/anvandningsrestriktioner.xml#CCby4.0" value="Creative commons Erkännande 4.0 Internationell">Creative commons Erkännande 4.0 Internationell</option>
       <option show="y" title="https://resources.geodata.se/codelist/metadata/anvandningsrestriktioner.xml#CCby-sa4.0" value="Creative commons Erkännande-DelaLika 4.0 Internationell">Creative commons Erkännande-DelaLika 4.0 Internationell</option>
-      <option show="y" title="https://resources.geodata.se/codelist/metadata/anvandningsrestriktioner.xml#licensBehovs" value="licens behövs">Här kan du skriva in detaljer och adresser som beskriver licensen mer utförligt</option>
+      <option show="y" title="https://resources.geodata.se/codelist/metadata/anvandningsrestriktioner.xml#licensBehovs" value="licens behövs">Licens behövs</option>
     </helper>
   </element>
 
