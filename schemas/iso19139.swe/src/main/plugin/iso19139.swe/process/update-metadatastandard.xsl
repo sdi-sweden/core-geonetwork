@@ -255,7 +255,7 @@
   <!-- Fix -->
   <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:title[gco:CharacterString = 'Tjänsteklassificering']">
     <gmd:title>
-      <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+      <gco:CharacterString>KOMMISSIONENS FÖRORDNING (EG) nr 1205/2008 av den 3 december 2008 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG om metadata</gco:CharacterString>
     </gmd:title>
   </xsl:template>
 

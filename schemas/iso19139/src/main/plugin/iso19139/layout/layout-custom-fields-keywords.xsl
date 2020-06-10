@@ -144,7 +144,7 @@
                   as="element()?"
                   select="if ($thesaurusList/thesaurus[@key=substring-after($thesaurusIdentifier/*/text(), 'geonetwork.thesaurus.')])
                           then $thesaurusList/thesaurus[@key=substring-after($thesaurusIdentifier/*/text(), 'geonetwork.thesaurus.')]
-                          else $listOfThesaurus/thesaurus[title=$thesaurusTitle]"/>
+                          else $listOfThesaurus/thesaurus[lower-case(title)=lower-case($thesaurusTitle)]"/>
 
     <xsl:choose>
       <xsl:when test="$thesaurusConfig">
