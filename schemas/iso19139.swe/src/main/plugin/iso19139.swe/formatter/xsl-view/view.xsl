@@ -552,21 +552,18 @@
 
             <xsl:choose>
               <xsl:when test="count(../gmd:accessConstraints) > 0 and contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')">
-                (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="$schemaLabels/element[@name='LimitationsOnPublicAcces']/helper/option[@title = $anchorHref]"/>)
+                (<xsl:value-of select="$schemaLabels/element[@name='LimitationsOnPublicAcces']/helper/option[@title = $anchorHref]"/>)
               </xsl:when>
 
               <xsl:when test="count(../gmd:accessConstraints) > 0 and not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))">
-                (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="$schemaLabels/element[@name='conditionsForAccess']/helper/option[@title = $anchorHref]"/>)
+                (<xsl:value-of select="$schemaLabels/element[@name='conditionsForAccess']/helper/option[@title = $anchorHref]"/>)
               </xsl:when>
 
               <xsl:when test="count(../gmd:useConstraints) > 0">
-                (<xsl:value-of select="$anchorHref" /> - <xsl:value-of select="$schemaLabels/element[@name='conditionsForUse']/helper/option[@title = $anchorHref]"/>)
+                (<xsl:value-of select="$schemaLabels/element[@name='conditionsForUse']/helper/option[@title = $anchorHref]"/>)
               </xsl:when>
 
-              <xsl:otherwise>
-                <xsl:value-of select="$anchorHref"/>
-              </xsl:otherwise>
-
+              <xsl:otherwise />
             </xsl:choose>
           </xsl:if>
         </dd>
@@ -1085,12 +1082,6 @@
   <xsl:template mode="render-value"
                 match="gmx:Anchor">
     <span><xsl:value-of select="." /></span>
-    <xsl:if test="@xlink:href">
-      <xsl:choose>
-        <xsl:when test="starts-with(@xlink:href, 'http')">(<a href="{@xlink:href}"><xsl:value-of select="@xlink:href" /></a>)</xsl:when>
-        <xsl:otherwise>(<xsl:value-of select="@xlink:href" />)</xsl:otherwise>
-      </xsl:choose>
-    </xsl:if>
   </xsl:template>
 
   <!-- ... Codelists -->
