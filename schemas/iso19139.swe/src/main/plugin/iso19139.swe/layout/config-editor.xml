@@ -632,7 +632,8 @@
           <field name="SpatialDataServiceCategory"
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
             gmd:descriptiveKeywords
-            [contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gmx:Anchor, 'SpatialDataServiceCategory')]"
+            [lower-case(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[1]) =
+                                   lower-case('KOMMISSIONENS FÖRORDNING (EG) nr 1205/2008 av den 3 december 2008 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG om metadata')]"
             if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
           <action type="add"
@@ -641,8 +642,8 @@
                   or="descriptiveKeywords"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
                   if="(count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:descriptiveKeywords[
-                          contains(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gmx:Anchor,
-                                   'SpatialDataServiceCategory')]) = 0)">
+                          lower-case(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[1]) =
+                                   lower-case('KOMMISSIONENS FÖRORDNING (EG) nr 1205/2008 av den 3 december 2008 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG om metadata')]) = 0)">
             <template>
               <snippet>
                 <gmd:descriptiveKeywords>
@@ -657,7 +658,7 @@
                     <gmd:thesaurusName>
                       <gmd:CI_Citation>
                         <gmd:title>
-                          <gco:CharacterString>KOMMISSIONENS FÖRORDNING (EG) nr 1205/2008 av den 3 december 2008 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG om metadata 2018-12-03</gco:CharacterString>
+                          <gco:CharacterString>KOMMISSIONENS FÖRORDNING (EG) nr 1205/2008 av den 3 december 2008 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG om metadata</gco:CharacterString>
                         </gmd:title>
                         <gmd:date>
                           <gmd:CI_Date>
@@ -670,15 +671,6 @@
                             </gmd:dateType>
                           </gmd:CI_Date>
                         </gmd:date>
-                        <gmd:identifier>
-                          <gmd:MD_Identifier>
-                            <gmd:code>
-                              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                                          xlink:href="http://localhost:8080/geonetwork/srv/swe/thesaurus.download?ref=external.theme.SpatialDataServiceCategorySwedish">
-                                geonetwork.thesaurus.external.theme.SpatialDataServiceCategorySwedish</gmx:Anchor>
-                            </gmd:code>
-                          </gmd:MD_Identifier>
-                        </gmd:identifier>
                       </gmd:CI_Citation>
                     </gmd:thesaurusName>
                   </gmd:MD_Keywords>
