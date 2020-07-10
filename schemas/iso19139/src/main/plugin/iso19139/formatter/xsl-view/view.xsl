@@ -308,7 +308,7 @@
 				<a href="http://{$website}" target="_blank">
 					<xsl:value-of select="normalize-space($website)"/>
 				</a>
-			  </xsl:if>	
+			  </xsl:if>
               <xsl:apply-templates mode="render-field"
                                    select="gmd:hoursOfService|gmd:contactInstructions"/>
               <xsl:apply-templates mode="render-field"
@@ -332,7 +332,7 @@
       <dd>
         <xsl:apply-templates mode="render-value"
                              select="gmd:MD_ScopeCode/@codeListValue"/>
-        
+
       </dd>
     </dl>
   </xsl:template>
@@ -423,11 +423,16 @@
       </dd>
     </dl>
   </xsl:template> -->
-  
+
+  <!-- Display only gmd:distributorTransferOptions -->
   <xsl:template mode="render-field"
-                match="gmd:onLine[1]"
+                match="gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[1]"
+                priority="100" />
+
+  <xsl:template mode="render-field"
+                match="gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[1]"
                 priority="100">
-	
+
 		<dl class="gn-link">
 			<dt>
 				<xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, 'onLinkLinks')"/>
@@ -507,8 +512,8 @@
 								</xsl:choose>
 							</td>
 						</tr>
-					</xsl:for-each>	
-				</table>				
+					</xsl:for-each>
+				</table>
 			</dd>
 		</dl>
   </xsl:template>
@@ -771,7 +776,7 @@
 			</dl>
 		  </dd>
 		</dl>
-		
+
 	</xsl:if>
   </xsl:template>
 
@@ -816,7 +821,7 @@
       </dd>
     </dl>
   </xsl:template>
-  
+
  <!-- Elements to avoid render -->
   <xsl:template mode="render-field" match="gmd:PT_Locale" priority="100"/>
 
