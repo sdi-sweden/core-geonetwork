@@ -23,20 +23,20 @@
 
   <!-- Fix -->
   <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:title[gco:CharacterString = 'Tjänsteklassificering' or
-                        gco:CharacterString = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster']">
+                        lower-case(gco:CharacterString) = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster' or
+                        lower-case(gco:CharacterString) = 'kommissionens förordning (eg) nr 1205/2008 av den 3 december 2008 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg om metadata 2018-12-03']">
     <gmd:title>
-      <gco:CharacterString>KOMMISSIONENS FÖRORDNING (EG) nr 1205/2008 av den 3 december 2008 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG om metadata 2018-12-03</gco:CharacterString>
+      <gco:CharacterString>KOMMISSIONENS FÖRORDNING (EG) nr 1205/2008 av den 3 december 2008 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG om metadata</gco:CharacterString>
     </gmd:title>
   </xsl:template>
 
   <xsl:template match="gmd:thesaurusName/gmd:CI_Citation[gmd:title/gco:CharacterString = 'Tjänsteklassificering' or
-                        gmd:title/gco:CharacterString = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster']/gmd:date/gmd:CI_Date/gmd:date/gco:Date">
+                        lower-case(gmd:title/gco:CharacterString) = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster']/gmd:date/gmd:CI_Date/gmd:date/gco:Date">
     <gco:Date>2008-12-03</gco:Date>
   </xsl:template>
 
   <xsl:template match="gmd:keyword[../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'Tjänsteklassificering' or
-                        ../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster']">
-    <xsl:message>11111</xsl:message>
+                        lower-case(../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString) = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster']">
     <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*" />
 

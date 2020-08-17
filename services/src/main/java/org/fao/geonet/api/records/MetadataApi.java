@@ -28,8 +28,18 @@ import io.swagger.annotations.*;
 import jeeves.constants.Jeeves;
 import jeeves.server.context.ServiceContext;
 import jeeves.services.ReadWriteController;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.URI;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.FileUtils;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.fao.geonet.ApplicationContextHolder;
+import org.fao.geonet.Constants;
 import org.fao.geonet.api.API;
 import org.fao.geonet.api.ApiParams;
 import org.fao.geonet.api.ApiUtils;
@@ -580,5 +590,138 @@ public class MetadataApi implements ApplicationContextAware {
         final Element transform = Xml.transform(raw, relatedXsl);
         RelatedResponse response = (RelatedResponse) Xml.unmarshall(transform, RelatedResponse.class);
         return response;
+    }
+
+
+    @ApiOperation(value = "Get HTML page for ATOM feed",
+        nickname = "get")
+    @RequestMapping(value = "/{metadataUuid}/atom",
+        method = RequestMethod.GET,
+        produces = {
+            MediaType.TEXT_HTML_VALUE,
+        })
+    public
+    @ResponseBody
+    void getAtom(
+        @ApiParam(value = "Record UUID.",
+            required = true)
+        @PathVariable
+            String metadataUuid,
+        @RequestHeader(
+            value = HttpHeaders.ACCEPT,
+            defaultValue =   MediaType.TEXT_HTML_VALUE
+        )
+            String acceptHeader,
+        @RequestParam
+            String feed,
+        HttpServletResponse response,
+        HttpServletRequest request
+    )
+        throws Exception {
+
+        ServiceContext context = ServiceContext.get();
+        SchemaManager schemaMan = context.getBean(SchemaManager.class);
+        GeonetworkDataDirectory dataDirectory = context.getBean(GeonetworkDataDirectory.class);
+        MetadataRepository metadataRepository = context.getBean(MetadataRepository.class);
+        Metadata md = metadataRepository.findOneByUuid(metadataUuid);
+        if (md == null) {
+            // TODO: i18n
+            throw new ResourceNotFoundException(String.format(
+                "Metadata with UUID '%s' not found in this catalog.",
+                metadataUuid
+            ));
+        }
+        try {
+            Lib.resource.checkPrivilege(context,
+                md.getId() + "",
+                ReservedOperation.view);
+        } catch (Exception e) {
+            // TODO: i18n
+            // TODO: Report exception in JSON format
+            throw new SecurityException(String.format(
+                "Metadata with UUID '%s' not shared with you.",
+                metadataUuid
+            ));
+        }
+
+        Locale language = languageUtils.parseAcceptLanguage(request.getLocales());
+        Element rawRelated = new Element("root").addContent(Arrays.asList(
+            new Element("gui").addContent(Arrays.asList(
+                new Element("language").setText(language.getISO3Language()),
+                new Element("url").setText(context.getBaseUrl())
+            )),
+            MetadataUtils.getRelated(context, md.getId(), md.getUuid(), new RelatedItemType[0], 1, 100, true)
+        ));
+        Path relatedXsl = dataDirectory.getWebappDir().resolve("xslt/services/metadata/relation.xsl");
+
+        Element related = Xml.transform(rawRelated, relatedXsl);
+        related.setName("relation");
+
+        boolean validFeed = false;
+        for(Element online: (List<Element>)related.getChild("onlines").getChildren("item")) {
+            String protocol = online.getChildText("protocol");
+            String url = online.getChildText("url");
+
+            if (protocol.equalsIgnoreCase("http:nedladdning:atom") && url.equalsIgnoreCase(feed)) {
+                validFeed = true;
+                break;
+            }
+        }
+
+        if (validFeed) {
+            //Create an HttpClient object
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+
+            try{
+                HttpGet httpget = new HttpGet(feed);
+                httpget.addHeader("Content-type", "text/xml");
+                httpget.addHeader("Accept-Charset", "utf-8");
+
+                CloseableHttpResponse httpresponse = httpclient.execute(httpget);
+
+                try{
+                    String atomFeed = "";
+                    if(httpresponse.getStatusLine().getStatusCode() ==  org.apache.commons.httpclient.HttpStatus.SC_OK){
+                        atomFeed = EntityUtils.toString(httpresponse.getEntity(), HTTP.UTF_8);
+                    }
+
+                    String schema = md.getDataInfo().getSchemaId();
+
+                    Path xslProcessing = schemaMan.getSchemaDir(schema).resolve("convert").resolve("ATOMToHTML.xsl");
+                    if (!Files.exists(xslProcessing)) {
+                        // Return the feed document
+                        response.setCharacterEncoding(Constants.ENCODING);
+                        response.setContentType("text/xml");
+                        response.setContentLength(atomFeed.getBytes().length);
+                        response.setHeader("Cache-Control", "no-cache");
+                        response.getOutputStream().write(atomFeed.getBytes());
+                    } else {
+                        Element result = Xml.transform(Xml.loadString(atomFeed, false), xslProcessing);
+
+                        byte[] bytes = Xml.getString(result).getBytes(Constants.CHARSET);
+
+                        response.setCharacterEncoding(Constants.ENCODING);
+                        response.setContentType("text/html");
+                        response.setContentLength(bytes.length);
+                        response.setHeader("Cache-Control", "no-cache");
+                        response.getOutputStream().write(bytes);
+                    }
+
+                }finally{
+                    httpresponse.close();
+                }
+            }finally{
+                httpclient.close();
+            }
+
+        } else {
+            throw new ResourceNotFoundException(String.format(
+                "Metadata feed url '%s' for metadata with UUID '%s' not found in this catalog.",
+                feed, metadataUuid
+            ));
+        }
+
+
+
     }
 }
