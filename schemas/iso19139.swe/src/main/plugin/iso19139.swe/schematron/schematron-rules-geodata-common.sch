@@ -413,10 +413,6 @@ USA.
 
       </sch:assert>
     </sch:rule>
-    <sch:rule context="//gmd:distributionInfo">
-      <sch:assert	test="(//gmd:transferOptions/*/gmd:onLine/*/gmd:linkage or //gmd:distributorTransferOptions/*/gmd:onLine/*/gmd:linkage)"
-      >[Geodata.se:118] Tillhandahållande adress måste anges om sådan finns</sch:assert>
-    </sch:rule>
 
     <sch:rule context="//gmd:hierarchyLevel[1]/*[@codeListValue ='service']">
       <sch:assert	test="(//gmd:transferOptions/*/gmd:onLine/*/gmd:linkage or //gmd:distributorTransferOptions/*/gmd:onLine/*/gmd:linkage)"
