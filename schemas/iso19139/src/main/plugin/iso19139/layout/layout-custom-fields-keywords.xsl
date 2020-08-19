@@ -103,7 +103,7 @@
         <xsl:when test="$thesaurusTitle = 'Initiativ'">Initiativ</xsl:when>
         <xsl:when test="$thesaurusTitle = 'INSPIRE priority data set'">InspirePriorityDataset</xsl:when>
         <xsl:when test="$thesaurusTitle = 'GEMET - INSPIRE themes, version 1.0'">InspireThemes</xsl:when>
-        <xsl:when test="$thesaurusTitle = 'Amnesomrade'">Amnesomrade</xsl:when>
+        <xsl:when test="$thesaurusTitle = 'Ämnesområde'">Ämnesområde</xsl:when>
         <xsl:when test="$thesaurusTitle = 'Tjänsteklassificering'">Tjänsteklassificering</xsl:when>
         <xsl:otherwise><xsl:value-of select="name()" /></xsl:otherwise>
       </xsl:choose>
