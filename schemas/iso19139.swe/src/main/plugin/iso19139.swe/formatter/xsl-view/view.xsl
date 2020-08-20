@@ -615,8 +615,13 @@
     </dl>
   </xsl:template> -->
 
+  <!-- Display only gmd:distributorTransferOptions -->
   <xsl:template mode="render-field"
-                match="gmd:onLine[1]"
+                match="gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[1]"
+                priority="100" />
+
+  <xsl:template mode="render-field"
+                match="gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[1]"
                 priority="100">
 
     <dl class="gn-link">

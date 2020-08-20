@@ -6,8 +6,8 @@
          xmlns:skos="http://www.w3.org/2004/02/skos/core#">
 
   <skos:ConceptScheme rdf:about="http://www.geodata.com/thesaurus/topiccats">
-    <dc:title>Amnesomrade</dc:title>
-    <dc:description>Amnesomrade vocabulary.</dc:description>
+    <dc:title>Ämnesområde</dc:title>
+    <dc:description>Ämnesområde vocabulary.</dc:description>
     <dcterms:issued>2008-04-17 12:00:00</dcterms:issued>
     <dcterms:modified>2008-04-17 12:00:00</dcterms:modified>
   </skos:ConceptScheme>

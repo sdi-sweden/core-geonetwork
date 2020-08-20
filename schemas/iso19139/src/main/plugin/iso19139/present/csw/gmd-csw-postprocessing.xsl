@@ -329,7 +329,7 @@
             <gmd:thesaurusName>
               <gmd:CI_Citation>
                 <gmd:title>
-                  <gco:CharacterString>Amnesomrade</gco:CharacterString>
+                  <gco:CharacterString>Ämnesområde</gco:CharacterString>
                 </gmd:title>
                 <gmd:date>
                   <gmd:CI_Date>

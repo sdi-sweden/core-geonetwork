@@ -346,7 +346,7 @@
 						<Field name="initiativKeyword" string="{$keyword}" store="true" index="true"/>
 					</xsl:if>
 
-                    <xsl:if test="lower-case($thesaurusName) = 'amnesomrade'">
+                    <xsl:if test="lower-case($thesaurusName) = 'ämnesområde'">
                       <xsl:variable name="key" select="$topiccats-thesaurus/*/skos:Concept[normalize-space(skos:prefLabel)=normalize-space($keyword)]/@rdf:about" />
 
                       <xsl:if test="string($key)">
