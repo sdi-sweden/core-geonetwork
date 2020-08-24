@@ -420,9 +420,10 @@
       <xsl:apply-templates select="gmd:resourceSpecificUsage" />
       <xsl:apply-templates select="gmd:resourceConstraints" />
 
+     <xsl:variable name="isInspireMetadata" select="count(//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[*/text() = 'Inspire' and ../gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'Initiativ']) > 0" />
 
       <!-- Add element for Use Limitation -->
-      <xsl:if test="count(gmd:resourceConstraints[gmd:MD_Constraints/gmd:useLimitation]) = 0">
+      <xsl:if test="$isInspireMetadata and count(gmd:resourceConstraints[gmd:MD_Constraints/gmd:useLimitation]) = 0">
         <gmd:resourceConstraints>
           <gmd:MD_Constraints>
             <gmd:useLimitation>
@@ -433,7 +434,7 @@
       </xsl:if>
 
       <!-- Add element for Limitations on public access -->
-      <xsl:if test="count(gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]) = 0">
+      <xsl:if test="$isInspireMetadata and count(gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces')]) = 0">
         <gmd:resourceConstraints>
           <gmd:MD_LegalConstraints>
             <gmd:accessConstraints>
@@ -449,7 +450,7 @@
       </xsl:if>
 
       <!-- Add element for Conditions for access and use -->
-      <xsl:if test="count(gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))]) = 0">
+      <xsl:if test="$isInspireMetadata and count(gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:accessConstraints]/gmd:otherConstraints[not(contains(gmx:Anchor/@xlink:href, 'LimitationsOnPublicAcces'))]) = 0">
         <gmd:resourceConstraints>
           <gmd:MD_LegalConstraints>
             <gmd:accessConstraints>
@@ -464,7 +465,7 @@
         </gmd:resourceConstraints>
       </xsl:if>
 
-      <xsl:if test="count(gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints) = 0">
+      <xsl:if test="$isInspireMetadata and count(gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints]/gmd:otherConstraints) = 0">
         <gmd:resourceConstraints>
           <gmd:MD_LegalConstraints>
             <gmd:useConstraints>
