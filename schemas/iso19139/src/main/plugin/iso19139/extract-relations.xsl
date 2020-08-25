@@ -30,6 +30,7 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
                 xmlns:gn-fn-rel="http://geonetwork-opensource.org/xsl/functions/relations"
                 version="2.0"
@@ -43,6 +44,9 @@
     <xsl:choose>
       <xsl:when test="$el/gco:CharacterString!=''">
         <xsl:value-of select="$el/gco:CharacterString"/>
+      </xsl:when>
+      <xsl:when test="$el/gmx:Anchor!=''">
+        <xsl:value-of select="$el/gmx:Anchor"/>
       </xsl:when>
       <xsl:when
         test="($el/gmd:PT_FreeText//gmd:LocalisedCharacterString[@locale = $lang][text() != ''])[1]">
