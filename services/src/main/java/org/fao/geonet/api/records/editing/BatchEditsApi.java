@@ -28,11 +28,11 @@ import io.swagger.annotations.*;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.API;
 import org.fao.geonet.api.ApiParams;
+import org.fao.geonet.api.ApiUtils;
 import org.fao.geonet.api.processing.report.IProcessingReport;
 import org.fao.geonet.api.processing.report.SimpleMetadataProcessingReport;
 import org.fao.geonet.api.records.model.BatchEditParameter;
 import org.fao.geonet.domain.Metadata;
-import org.fao.geonet.domain.Profile;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.AddElemValue;
 import org.fao.geonet.kernel.DataManager;
@@ -61,6 +61,8 @@ import java.util.Set;
 
 import jeeves.server.context.ServiceContext;
 import jeeves.services.ReadWriteController;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RequestMapping(value = {
     "/api/records",
@@ -105,7 +107,8 @@ public class BatchEditsApi implements ApplicationContextAware {
             required = false,
             example = "iso19139")
         @RequestParam(required = false) String[] uuids,
-        @RequestBody BatchEditParameter[] edits)
+        @RequestBody BatchEditParameter[] edits,
+        HttpServletRequest request)
         throws Exception {
 
         List<BatchEditParameter> listOfUpdates = Arrays.asList(edits);
@@ -114,7 +117,7 @@ public class BatchEditsApi implements ApplicationContextAware {
         }
 
 
-        ServiceContext serviceContext = ServiceContext.get();
+        ServiceContext serviceContext = ApiUtils.createServiceContext(request);
         final Set<String> setOfUuidsToEdit;
         if (uuids == null) {
             SelectionManager selectionManager =

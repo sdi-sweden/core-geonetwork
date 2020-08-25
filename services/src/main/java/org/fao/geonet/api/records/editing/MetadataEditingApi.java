@@ -8,7 +8,7 @@
  * the Free Software Foundation; either version 2 of the License, or (at
  * your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but
+ * This program is distributed BatchEditsServiceTestin the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
@@ -166,7 +166,7 @@ public class MetadataEditingApi {
             try {
                 SettingManager sm = applicationContext.getBean(SettingManager.class);
                 final String siteURL = sm.getSiteURL(context);
-                final String process = "update-metadatastandard";
+                final String process = "-metadatastandard";
                 XsltMetadataProcessingReport report = new XsltMetadataProcessingReport(process);
 
                 Element processedMetadata = XslProcessUtils.process(
