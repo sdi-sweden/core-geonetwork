@@ -307,7 +307,7 @@ public class MetadataApi implements ApplicationContextAware {
     )
         throws Exception {
 
-        ServiceContext context = ServiceContext.get();
+        final ServiceContext context = ApiUtils.createServiceContext(request);
         DataManager dataManager = context.getBean(DataManager.class);
         MetadataRepository metadataRepository = context.getBean(MetadataRepository.class);
         Metadata md = metadataRepository.findOneByUuid(metadataUuid);
@@ -619,7 +619,7 @@ public class MetadataApi implements ApplicationContextAware {
     )
         throws Exception {
 
-        ServiceContext context = ServiceContext.get();
+        final ServiceContext context = ApiUtils.createServiceContext(request);
         SchemaManager schemaMan = context.getBean(SchemaManager.class);
         GeonetworkDataDirectory dataDirectory = context.getBean(GeonetworkDataDirectory.class);
         MetadataRepository metadataRepository = context.getBean(MetadataRepository.class);
