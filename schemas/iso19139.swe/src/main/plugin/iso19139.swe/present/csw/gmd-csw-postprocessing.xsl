@@ -222,8 +222,8 @@
       <xsl:message>hasOtherConstraintsTypes: <xsl:value-of select="$hasOtherConstraintsTypes" /></xsl:message>-->
 
       <!-- Copy INSPIRE limitationsOnPublicAccess -->
-      <xsl:copy-of select="gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
-        starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')]" copy-namespaces="no" />
+      <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+        starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')]" />
 
 
       <xsl:choose>
@@ -240,7 +240,7 @@
                 <xsl:copy copy-namespaces="no">
                   <xsl:copy-of select="@*" />
 
-                  <xsl:copy-of select="*" copy-namespaces="no" />
+                  <xsl:copy-of select="*[name() != 'gmd:useLimitation']" copy-namespaces="no" />
 
                   <!-- Add any other gmd:MD_LegalConstraints/gmd:otherConstraints
                        not related to INSPIRE limitationsOnPublicAccess as children -->
@@ -275,7 +275,7 @@
                 <xsl:copy copy-namespaces="no">
                   <xsl:copy-of select="@*" />
 
-                  <xsl:copy-of select="*" copy-namespaces="no" />
+                  <xsl:copy-of select="*[name() != 'gmd:useLimitation']" copy-namespaces="no" />
 
                   <!-- Add any other gmd:MD_LegalConstraints/gmd:otherConstraints
                        not related to INSPIRE limitationsOnPublicAccess as children -->
@@ -329,6 +329,10 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- remove all useLimitation (TODO: temporary change) -->
+  <xsl:template match="gmd:useLimitation" />
+
+  <xsl:template match="gmd:resourceConstraints/gmd:MD_Constraints" />
 
   <!-- remove the parent of DQ_UsabilityElement, if DQ_UsabilityElement is present -->
   <xsl:template match="*[gmd:DQ_UsabilityElement]"/>
@@ -608,8 +612,8 @@
       <xsl:message>CSW postprocessing - hasOtherConstraintsTypes: <xsl:value-of select="$hasOtherConstraintsTypes" /></xsl:message>
 
       <!-- Copy INSPIRE limitationsOnPublicAccess -->
-      <xsl:copy-of select="gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
-        starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')]" copy-namespaces="no" />
+      <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+        starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')]" />
 
 
       <xsl:choose>
@@ -626,7 +630,7 @@
                 <xsl:copy copy-namespaces="no">
                   <xsl:copy-of select="@*" />
 
-                  <xsl:copy-of select="*" copy-namespaces="no" />
+                  <xsl:copy-of select="*[name() != 'gmd:useLimitation']" copy-namespaces="no" />
 
                   <!-- Add any other gmd:MD_LegalConstraints/gmd:otherConstraints
                        not related to INSPIRE limitationsOnPublicAccess as children -->
@@ -661,7 +665,7 @@
                 <xsl:copy copy-namespaces="no">
                   <xsl:copy-of select="@*" />
 
-                  <xsl:copy-of select="*" copy-namespaces="no" />
+                  <xsl:copy-of select="*[name() != 'gmd:useLimitation']" copy-namespaces="no" />
 
                   <!-- Add any other gmd:MD_LegalConstraints/gmd:otherConstraints
                        not related to INSPIRE limitationsOnPublicAccess as children -->
