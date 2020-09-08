@@ -494,8 +494,10 @@
         <xsl:choose>
           <!-- Step 2.1) Exists gmd:resourceConstraints[gmd:MD_Constraints] -->
           <xsl:when test="gmd:resourceConstraints[gmd:MD_Constraints]">
+            <!-- remove all useLimitation (TODO: temporary change) -->
+
             <!-- Copy gmd:MD_LegalConstraints/gmd:otherConstraints to first gmd:MD_Constraints/gmd:useLimitation -->
-            <xsl:for-each select="gmd:resourceConstraints[gmd:MD_Constraints]">
+            <!--<xsl:for-each select="gmd:resourceConstraints[gmd:MD_Constraints]">
               <xsl:choose>
                 <xsl:when test="position() = 1">
                   <xsl:copy copy-namespaces="no">
@@ -513,14 +515,14 @@
                             <xsl:for-each select="//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[string(gco:CharacterString)]">
                               <xsl:variable name="currentValue" select="gco:CharacterString" />
 
-                              <!-- If the value is is the same as the current use limitations, don't copy it -->
+                              &lt;!&ndash; If the value is is the same as the current use limitations, don't copy it &ndash;&gt;
                               <xsl:if test="$currentValue != $currentUseLimitation">
                                 <xsl:choose>
-                                  <!-- Is the text related to INSPIRE -> DON'T COPY IT -->
+                                  &lt;!&ndash; Is the text related to INSPIRE -> DON'T COPY IT &ndash;&gt;
                                   <xsl:when test="string($restrictions/restrictions/restriction[lower-case(@value) = lower-case($currentValue)]/@value)">
 
                                   </xsl:when>
-                                  <!-- Otherwise copy it -->
+                                  &lt;!&ndash; Otherwise copy it &ndash;&gt;
                                   <xsl:otherwise>
                                     ###################
                                     <xsl:value-of select="gco:CharacterString" />
@@ -541,27 +543,28 @@
                 </xsl:otherwise>
               </xsl:choose>
 
-            </xsl:for-each>
+            </xsl:for-each>-->
 
           </xsl:when>
 
           <!-- Step 2.2) Doesn't exist gmd:resourceConstraints[gmd:MD_Constraints] -> Create it -->
           <xsl:otherwise>
-            <gmd:resourceConstraints>
+            <!-- remove all useLimitation (TODO: temporary change) -->
+            <!--<gmd:resourceConstraints>
               <gmd:MD_Constraints>
                 <gmd:useLimitation>
                   <gco:CharacterString>
-                    <!-- Copy gmd:MD_LegalConstraints/gmd:otherConstraints -->
+                    &lt;!&ndash; Copy gmd:MD_LegalConstraints/gmd:otherConstraints &ndash;&gt;
                     <xsl:for-each select="//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[string(gco:CharacterString)]">
 
                       <xsl:variable name="currentValue" select="gco:CharacterString" />
 
                       <xsl:choose>
-                        <!-- Is the text related to INSPIRE -> DON'T COPY IT -->
+                        &lt;!&ndash; Is the text related to INSPIRE -> DON'T COPY IT &ndash;&gt;
                         <xsl:when test="string($restrictions/restrictions/restriction[@value = $currentValue]/@value)">
 
                         </xsl:when>
-                        <!-- Otherwise copy it -->
+                        &lt;!&ndash; Otherwise copy it &ndash;&gt;
                         <xsl:otherwise>
                           <xsl:value-of select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString" />
                           ###################
@@ -571,7 +574,7 @@
                   </gco:CharacterString>
                 </gmd:useLimitation>
               </gmd:MD_Constraints>
-            </gmd:resourceConstraints>
+            </gmd:resourceConstraints>-->
 
           </xsl:otherwise>
         </xsl:choose>
@@ -599,7 +602,8 @@
                   <xsl:copy copy-namespaces="no">
                     <xsl:copy-of select="@*" />
 
-                    <xsl:apply-templates select="gmd:useLimitation" />
+                    <!-- remove all useLimitation (TODO: temporary change) -->
+                    <!--<xsl:apply-templates select="gmd:useLimitation" />-->
                     <xsl:apply-templates select="gmd:accessConstraints" />
                     <xsl:apply-templates select="gmd:useConstraints" />
 
@@ -667,8 +671,10 @@
   <xsl:template match="gmd:aggregationInfo" />
 
 
+  <!-- remove all useLimitation (TODO: temporary change) -->
+  <xsl:template match="gmd:useLimitation" />
 
-
+  <xsl:template match="gmd:resourceConstraints/gmd:MD_Constraints" />
 
 
   <!-- remove the parent of DQ_UsabilityElement, if DQ_UsabilityElement is present -->

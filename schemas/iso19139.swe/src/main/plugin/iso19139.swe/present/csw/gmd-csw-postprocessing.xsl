@@ -77,6 +77,8 @@
 
   <!-- remove namespace declaration of gse from root element -->
   <xsl:template match="gmd:MD_Metadata">
+    <xsl:message>CSW postprocessing - dataset metadata</xsl:message>
+
     <xsl:element name="{name()}" namespace="{namespace-uri()}">
       <xsl:copy-of select="namespace::*[not(name() = 'gse') and not(name() = 'gml')]" />
       <xsl:namespace name="gmx" select="'http://www.isotc211.org/2005/gmx'"/>
@@ -190,8 +192,104 @@
 
       <xsl:apply-templates select="gmd:resourceSpecificUsage" />
 
-      <xsl:apply-templates select="gmd:resourceConstraints" />
+      <!-- Copy resource constraints with gmd:MD_Constraints or gmd:MD_SecurityConstraints -->
+      <xsl:apply-templates select="gmd:resourceConstraints[not(gmd:MD_LegalConstraints)]" />
 
+      <!-- Copy resource constraints with gmd:MD_LegalConstraints and not gmd:otherConstraints or restriction code != 'otherRestrictions'  -->
+      <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_LegalConstraints[not(gmd:otherConstraints) or */gmd:MD_RestrictionCode/@codeListValue != 'otherRestrictions']]" />
+
+      <!-- Check if has INSPIRE limitationsOnPublicAccess -->
+      <xsl:variable name="limitationsOnPublicAccess" select="count(gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+        starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')])" />
+
+      <xsl:variable name="hasLimitationsOnPublicAccess" select="$limitationsOnPublicAccess > 0" />
+
+      <!-- Check if has INSPIRE conditionsApplyingToAccessAndUse -->
+      <xsl:variable name="conditionsApplyingToAccessAndUse" select="gmd:resourceConstraints[gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+        starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse')]" />
+
+      <xsl:variable name="hasConditionsApplyingToAccessAndUse" select="count($conditionsApplyingToAccessAndUse) > 0" />
+
+
+      <xsl:variable name="otherConstraintsTypes" select="gmd:resourceConstraints[gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+        not(starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')) and
+        not(starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse'))]" />
+
+      <xsl:variable name="hasOtherConstraintsTypes" select="count($otherConstraintsTypes)  > 0" />
+
+      <!--<xsl:message>hasLimitationsOnPublicAccess: <xsl:value-of select="$hasLimitationsOnPublicAccess" /></xsl:message>
+      <xsl:message>hasConditionsApplyingToAccessAndUse: <xsl:value-of select="$hasConditionsApplyingToAccessAndUse" /></xsl:message>
+      <xsl:message>hasOtherConstraintsTypes: <xsl:value-of select="$hasOtherConstraintsTypes" /></xsl:message>-->
+
+      <!-- Copy INSPIRE limitationsOnPublicAccess -->
+      <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+        starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')]" />
+
+
+      <xsl:choose>
+        <!-- If has INSPIRE conditionsApplyingToAccessAndUse, copy the first one and add any other gmd:MD_LegalConstraints/gmd:otherConstraints
+             not related to INSPIRE limitationsOnPublicAccess as children -->
+        <xsl:when test="$hasConditionsApplyingToAccessAndUse">
+          <xsl:for-each select="gmd:resourceConstraints[gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+            starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse')][1]">
+
+            <xsl:copy copy-namespaces="no">
+              <xsl:copy-of select="@*" />
+
+              <xsl:for-each select="gmd:MD_LegalConstraints">
+                <xsl:copy copy-namespaces="no">
+                  <xsl:copy-of select="@*" />
+
+                  <xsl:copy-of select="*[name() != 'gmd:useLimitation']" copy-namespaces="no" />
+
+                  <!-- Add any other gmd:MD_LegalConstraints/gmd:otherConstraints
+                       not related to INSPIRE limitationsOnPublicAccess as children -->
+                  <xsl:for-each select="$conditionsApplyingToAccessAndUse/gmd:MD_LegalConstraints/gmd:otherConstraints">
+                    <xsl:if test="position() > 1">
+                      <xsl:copy-of select="." copy-namespaces="no" />
+                    </xsl:if>
+                  </xsl:for-each>
+
+                  <xsl:for-each select="$otherConstraintsTypes/gmd:MD_LegalConstraints/gmd:otherConstraints">
+                    <xsl:copy-of select="." copy-namespaces="no" />
+                  </xsl:for-each>
+                </xsl:copy>
+              </xsl:for-each>
+
+            </xsl:copy>
+          </xsl:for-each>
+
+
+        </xsl:when>
+        <!-- If doesn't have INSPIRE conditionsApplyingToAccessAndUse, copy the first gmd:MD_LegalConstraints/gmd:otherConstraints
+             not related to INSPIRE limitationsOnPublicAccess and all the others as children -->
+        <xsl:when test="$hasOtherConstraintsTypes">
+          <xsl:for-each select="gmd:resourceConstraints[gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+            not(starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')) and
+            not(starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse'))][1]">
+
+            <xsl:copy copy-namespaces="no">
+              <xsl:copy-of select="@*" />
+
+              <xsl:for-each select="gmd:MD_LegalConstraints">
+                <xsl:copy copy-namespaces="no">
+                  <xsl:copy-of select="@*" />
+
+                  <xsl:copy-of select="*[name() != 'gmd:useLimitation']" copy-namespaces="no" />
+
+                  <!-- Add any other gmd:MD_LegalConstraints/gmd:otherConstraints
+                       not related to INSPIRE limitationsOnPublicAccess as children -->
+                  <xsl:for-each select="$otherConstraintsTypes/gmd:MD_LegalConstraints/gmd:otherConstraints">
+                    <xsl:if test="position() > 1">
+                      <xsl:copy-of select="." copy-namespaces="no" />
+                    </xsl:if>
+                  </xsl:for-each>
+                </xsl:copy>
+              </xsl:for-each>
+            </xsl:copy>
+          </xsl:for-each>
+        </xsl:when>
+      </xsl:choose>
 
       <xsl:apply-templates select="gmd:aggregationInfo" />
       <xsl:apply-templates select="gmd:spatialRepresentationType" />
@@ -231,6 +329,10 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- remove all useLimitation (TODO: temporary change) -->
+  <xsl:template match="gmd:useLimitation" />
+
+  <xsl:template match="gmd:resourceConstraints/gmd:MD_Constraints" />
 
   <!-- remove the parent of DQ_UsabilityElement, if DQ_UsabilityElement is present -->
   <xsl:template match="*[gmd:DQ_UsabilityElement]"/>
@@ -431,7 +533,9 @@
   (d) create new element as <srv:containsOperations gco:nilReason='missing'> and add it at proper place as follows:
     (d.1) If gmd:identificationInfo/srv:SV_ServiceIdentification/srv:operatesOn is present, add srv:containsOperations after srv:couplingType and before srv:operatesOn
     (d.2) If srv:operatesOn is missing, add srv:containsOperations as last child of srv:SV_ServiceIdentification -->
-  <xsl:template match="gmd:MD_Metadata[gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue = 'service']/gmd:identificationInfo/srv:SV_ServiceIdentification">
+  <xsl:template match="gmd:MD_Metadata[gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue = 'service']/gmd:identificationInfo/srv:SV_ServiceIdentification" priority="10">
+    <xsl:message>CSW postprocessing - service metadata</xsl:message>
+
     <xsl:copy copy-namespaces="no">
       <!--<xsl:apply-templates select="node()[not(self::srv:couplingType)][not(self::srv:containsOperations)][not(self::srv:operatesOn)][not(self::gmd:topicCategory)]"/>-->
 
@@ -478,7 +582,104 @@
 
       <xsl:apply-templates select="gmd:resourceSpecificUsage" />
 
-      <xsl:apply-templates select="gmd:resourceConstraints" />
+      <!-- Copy resource constraints with gmd:MD_Constraints or gmd:MD_SecurityConstraints -->
+      <xsl:apply-templates select="gmd:resourceConstraints[not(gmd:MD_LegalConstraints)]" />
+
+      <!-- Copy resource constraints with gmd:MD_LegalConstraints and not gmd:otherConstraints or restriction code != 'otherRestrictions'  -->
+      <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_LegalConstraints[not(gmd:otherConstraints) or */gmd:MD_RestrictionCode/@codeListValue != 'otherRestrictions']]" />
+
+      <!-- Check if has INSPIRE limitationsOnPublicAccess -->
+      <xsl:variable name="limitationsOnPublicAccess" select="count(gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+        starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')])" />
+
+      <xsl:variable name="hasLimitationsOnPublicAccess" select="$limitationsOnPublicAccess > 0" />
+
+      <!-- Check if has INSPIRE conditionsApplyingToAccessAndUse -->
+      <xsl:variable name="conditionsApplyingToAccessAndUse" select="gmd:resourceConstraints[gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+        starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse')]" />
+
+      <xsl:variable name="hasConditionsApplyingToAccessAndUse" select="count($conditionsApplyingToAccessAndUse) > 0" />
+
+
+      <xsl:variable name="otherConstraintsTypes" select="gmd:resourceConstraints[gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+        not(starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')) and
+        not(starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse'))]" />
+
+      <xsl:variable name="hasOtherConstraintsTypes" select="count($otherConstraintsTypes)  > 0" />
+
+      <xsl:message>CSW postprocessing - hasLimitationsOnPublicAccess: <xsl:value-of select="$hasLimitationsOnPublicAccess" /></xsl:message>
+      <xsl:message>CSW postprocessing - hasConditionsApplyingToAccessAndUse: <xsl:value-of select="$hasConditionsApplyingToAccessAndUse" /></xsl:message>
+      <xsl:message>CSW postprocessing - hasOtherConstraintsTypes: <xsl:value-of select="$hasOtherConstraintsTypes" /></xsl:message>
+
+      <!-- Copy INSPIRE limitationsOnPublicAccess -->
+      <xsl:apply-templates select="gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+        starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')]" />
+
+
+      <xsl:choose>
+        <!-- If has INSPIRE conditionsApplyingToAccessAndUse, copy the first one and add any other gmd:MD_LegalConstraints/gmd:otherConstraints
+             not related to INSPIRE limitationsOnPublicAccess as children -->
+        <xsl:when test="$hasConditionsApplyingToAccessAndUse">
+          <xsl:for-each select="gmd:resourceConstraints[gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+            starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse')][1]">
+
+            <xsl:copy copy-namespaces="no">
+              <xsl:copy-of select="@*" />
+
+              <xsl:for-each select="gmd:MD_LegalConstraints">
+                <xsl:copy copy-namespaces="no">
+                  <xsl:copy-of select="@*" />
+
+                  <xsl:copy-of select="*[name() != 'gmd:useLimitation']" copy-namespaces="no" />
+
+                  <!-- Add any other gmd:MD_LegalConstraints/gmd:otherConstraints
+                       not related to INSPIRE limitationsOnPublicAccess as children -->
+                  <xsl:for-each select="$conditionsApplyingToAccessAndUse/gmd:MD_LegalConstraints/gmd:otherConstraints">
+                    <xsl:if test="position() > 1">
+                      <xsl:copy-of select="." copy-namespaces="no" />
+                    </xsl:if>
+                  </xsl:for-each>
+
+                  <xsl:for-each select="$otherConstraintsTypes/gmd:MD_LegalConstraints/gmd:otherConstraints">
+                    <xsl:copy-of select="." copy-namespaces="no" />
+                  </xsl:for-each>
+                </xsl:copy>
+              </xsl:for-each>
+
+            </xsl:copy>
+          </xsl:for-each>
+
+
+        </xsl:when>
+        <!-- If doesn't have INSPIRE conditionsApplyingToAccessAndUse, copy the first gmd:MD_LegalConstraints/gmd:otherConstraints
+             not related to INSPIRE limitationsOnPublicAccess and all the others as children -->
+        <xsl:when test="$hasOtherConstraintsTypes">
+          <xsl:for-each select="gmd:resourceConstraints[gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue = 'otherRestrictions' and
+            not(starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess')) and
+            not(starts-with(gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse'))][1]">
+
+            <xsl:copy copy-namespaces="no">
+              <xsl:copy-of select="@*" />
+
+              <xsl:for-each select="gmd:MD_LegalConstraints">
+                <xsl:copy copy-namespaces="no">
+                  <xsl:copy-of select="@*" />
+
+                  <xsl:copy-of select="*[name() != 'gmd:useLimitation']" copy-namespaces="no" />
+
+                  <!-- Add any other gmd:MD_LegalConstraints/gmd:otherConstraints
+                       not related to INSPIRE limitationsOnPublicAccess as children -->
+                  <xsl:for-each select="$otherConstraintsTypes/gmd:MD_LegalConstraints/gmd:otherConstraints">
+                    <xsl:if test="position() > 1">
+                      <xsl:copy-of select="." copy-namespaces="no" />
+                    </xsl:if>
+                  </xsl:for-each>
+                </xsl:copy>
+              </xsl:for-each>
+            </xsl:copy>
+          </xsl:for-each>
+        </xsl:when>
+      </xsl:choose>
 
       <xsl:apply-templates select="gmd:aggregationInfo" />
       <xsl:apply-templates select="srv:serviceType" />
