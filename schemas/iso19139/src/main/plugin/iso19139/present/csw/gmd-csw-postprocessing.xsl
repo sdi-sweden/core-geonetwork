@@ -793,6 +793,9 @@
   <!-- Remove descriptiveKeywords if thesaurus title starts with 'SGU' text. -->
   <xsl:template match="gmd:descriptiveKeywords[starts-with(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'SGU')]" />
 
+  <!-- Remove gmd:descriptiveKeywords for Initiativ if no keyword values -->
+  <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword[string(normalize-space(*/text()))]) = 0) and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'Initiativ']" priority="20" />
+
   <!-- end of InspireCSWProxy rules -->
 
 
