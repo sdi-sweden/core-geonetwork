@@ -76,7 +76,16 @@
   <xsl:template match="gmd:LanguageCode">
     <xsl:copy copy-namespaces="no">
       <xsl:attribute name="codeList">http://www.loc.gov/standards/iso639-2/</xsl:attribute>
-      <xsl:copy-of select="@*[not(name() = 'codeList')]" />
+
+      <xsl:choose>
+        <xsl:when test="@codeListValue = 'sv'">
+          <xsl:attribute name="codeListValue">swe</xsl:attribute>
+          <xsl:copy-of select="@*[not(name() = 'codeList') and not(name() = 'codeListValue')]" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="@*[not(name() = 'codeList')]" />
+        </xsl:otherwise>
+      </xsl:choose>
 
       <xsl:apply-templates select="*" />
     </xsl:copy>
