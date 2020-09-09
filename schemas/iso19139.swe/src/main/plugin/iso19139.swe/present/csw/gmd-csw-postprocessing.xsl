@@ -329,6 +329,9 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- Remove gmd:descriptiveKeywords for INSPIRE Priority Dataset if no keyword values -->
+  <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword[string(normalize-space(*/text()))]) = 0) and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'INSPIRE priority data set']" priority="20" />
+
   <!-- remove all useLimitation (TODO: temporary change) -->
   <xsl:template match="gmd:useLimitation" />
 

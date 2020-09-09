@@ -576,6 +576,9 @@
     </xsl:choose>
   </xsl:template>
 
+  <!-- Remove gmd:descriptiveKeywords for INSPIRE Priority Dataset if no keyword values -->
+  <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword[string(normalize-space(*/text()))]) = 0) and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'INSPIRE priority data set']" priority="20" />
+
   <!-- auto complete qa resurstyp based on md resurstyp -->
   <xsl:template match="gmd:DQ_Scope">
     <xsl:copy>
