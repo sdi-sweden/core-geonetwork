@@ -793,6 +793,9 @@
   <!-- Remove descriptiveKeywords if thesaurus title starts with 'SGU' text. -->
   <xsl:template match="gmd:descriptiveKeywords[starts-with(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'SGU')]" />
 
+  <!-- Remove gmd:descriptiveKeywords for GEMET - INSPIRE themes version 1.0 (invalid name, missing comma) with template value (not valid): INSPIRE Tema -->
+  <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword) = 1) and (normalize-space(gmd:MD_Keywords/gmd:keyword/*/text()) = '--- INSPIRE Tema')  and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes version 1.0']" priority="20" />
+
   <!-- Remove gmd:descriptiveKeywords for GEMET - INSPIRE themes, version 1.0 if no keyword values -->
   <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword[string(normalize-space(*/text()))]) = 0) and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']" priority="20" />
 
