@@ -76,7 +76,16 @@
   <xsl:template match="gmd:LanguageCode">
     <xsl:copy copy-namespaces="no">
       <xsl:attribute name="codeList">http://www.loc.gov/standards/iso639-2/</xsl:attribute>
-      <xsl:copy-of select="@*[not(name() = 'codeList')]" />
+
+      <xsl:choose>
+        <xsl:when test="@codeListValue = 'sv'">
+          <xsl:attribute name="codeListValue">swe</xsl:attribute>
+          <xsl:copy-of select="@*[not(name() = 'codeList') and not(name() = 'codeListValue')]" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="@*[not(name() = 'codeList')]" />
+        </xsl:otherwise>
+      </xsl:choose>
 
       <xsl:apply-templates select="*" />
     </xsl:copy>
@@ -784,6 +793,15 @@
   <!-- Remove descriptiveKeywords if thesaurus title starts with 'SGU' text. -->
   <xsl:template match="gmd:descriptiveKeywords[starts-with(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'SGU')]" />
 
+  <!-- Remove gmd:descriptiveKeywords for GEMET - INSPIRE themes version 1.0 (invalid name, missing comma) with template value (not valid): INSPIRE Tema -->
+  <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword) = 1) and (normalize-space(gmd:MD_Keywords/gmd:keyword/*/text()) = '--- INSPIRE Tema')  and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes version 1.0']" priority="20" />
+
+  <!-- Remove gmd:descriptiveKeywords for GEMET - INSPIRE themes, version 1.0 if no keyword values -->
+  <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword[string(normalize-space(*/text()))]) = 0) and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']" priority="20" />
+
+  <!-- Remove gmd:descriptiveKeywords for Initiativ if no keyword values -->
+  <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword[string(normalize-space(*/text()))]) = 0) and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'Initiativ']" priority="20" />
+
   <!-- end of InspireCSWProxy rules -->
 
 
@@ -1190,6 +1208,8 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- Remove gmd:identifier with empty code -->
+  <xsl:template match="gmd:identifier[gmd:MD_Identifier/gmd:code[@gco:nilReason='missing' and not(string(gco:CharacterString))]]" />
 
   <!-- Fixed values for GEMET thesaurus name. Date type requires text value also -->
   <xsl:template match="gmd:thesaurusName[gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']">
