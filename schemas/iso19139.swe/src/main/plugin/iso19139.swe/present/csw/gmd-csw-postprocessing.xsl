@@ -338,6 +338,19 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- Fix GEMET keywords with empty xlink:href in gmx:Anchor -->
+  <xsl:template match="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']/gmd:MD_Keywords/gmd:keyword/gmx:Anchor[not(string(@xlink:href))]" priority="50">
+    <xsl:variable name="keywordValue" select= "lower-case(.)" />
+    <xsl:variable name="key" select="$inspire-theme[skos:prefLabel[@xml:lang='sv' and lower-case(text()) = $keywordValue]]/@rdf:about" />
+
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of select="@*" />
+      <xsl:attribute name="xlink:href" select="$key" />
+
+      <xsl:value-of select="." />
+    </xsl:copy>
+  </xsl:template>
+
   <!-- Remove gmd:descriptiveKeywords for GEMET - INSPIRE themes version 1.0 (invalid name, missing comma) with template value (not valid): INSPIRE Tema -->
   <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword) = 1) and (normalize-space(gmd:MD_Keywords/gmd:keyword/*/text()) = '--- INSPIRE Tema')  and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes version 1.0']" priority="20" />
 
