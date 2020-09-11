@@ -928,6 +928,8 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- Remove gmd:identifier with empty code -->
+  <xsl:template match="gmd:identifier[gmd:MD_Identifier/gmd:code[@gco:nilReason='missing' and not(string(gco:CharacterString))]]" />
 
   <!-- Fixed values for GEMET thesaurus name. Date type requires text value also -->
   <xsl:template match="gmd:thesaurusName[gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']">
