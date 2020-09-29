@@ -90,7 +90,9 @@ public class InspireAtomFeed extends GeonetEntity implements Serializable {
                     InspireAtomFeedEntry inspireAtomFeedEntry = new InspireAtomFeedEntry();
 
                     inspireAtomFeedEntry.setTitle(entry.getChildText("title", ns));
-                    inspireAtomFeedEntry.setCrs(entry.getChild("category", ns).getAttributeValue("term"));
+                    if (entry.getChild("category", ns) != null) {
+                        inspireAtomFeedEntry.setCrs(entry.getChild("category", ns).getAttributeValue("term"));
+                    }
 
                     inspireAtomFeedEntry.setType(linkEl.getAttributeValue("type"));
                     inspireAtomFeedEntry.setLang(linkEl.getAttributeValue("hreflang"));
@@ -184,7 +186,7 @@ public class InspireAtomFeed extends GeonetEntity implements Serializable {
         this._atomDatasetns = atomDatasetns;
     }
 
-    @Column(length = 255)
+    @Column(length = 2048)
     public String getSubtitle() {
         return _subtitle;
     }

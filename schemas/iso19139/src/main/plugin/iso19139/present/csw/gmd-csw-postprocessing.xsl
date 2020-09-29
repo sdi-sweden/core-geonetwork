@@ -76,7 +76,16 @@
   <xsl:template match="gmd:LanguageCode">
     <xsl:copy copy-namespaces="no">
       <xsl:attribute name="codeList">http://www.loc.gov/standards/iso639-2/</xsl:attribute>
-      <xsl:copy-of select="@*[not(name() = 'codeList')]" />
+
+      <xsl:choose>
+        <xsl:when test="@codeListValue = 'sv'">
+          <xsl:attribute name="codeListValue">swe</xsl:attribute>
+          <xsl:copy-of select="@*[not(name() = 'codeList') and not(name() = 'codeListValue')]" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="@*[not(name() = 'codeList')]" />
+        </xsl:otherwise>
+      </xsl:choose>
 
       <xsl:apply-templates select="*" />
     </xsl:copy>
@@ -494,8 +503,10 @@
         <xsl:choose>
           <!-- Step 2.1) Exists gmd:resourceConstraints[gmd:MD_Constraints] -->
           <xsl:when test="gmd:resourceConstraints[gmd:MD_Constraints]">
+            <!-- remove all useLimitation (TODO: temporary change) -->
+
             <!-- Copy gmd:MD_LegalConstraints/gmd:otherConstraints to first gmd:MD_Constraints/gmd:useLimitation -->
-            <xsl:for-each select="gmd:resourceConstraints[gmd:MD_Constraints]">
+            <!--<xsl:for-each select="gmd:resourceConstraints[gmd:MD_Constraints]">
               <xsl:choose>
                 <xsl:when test="position() = 1">
                   <xsl:copy copy-namespaces="no">
@@ -513,14 +524,14 @@
                             <xsl:for-each select="//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[string(gco:CharacterString)]">
                               <xsl:variable name="currentValue" select="gco:CharacterString" />
 
-                              <!-- If the value is is the same as the current use limitations, don't copy it -->
+                              &lt;!&ndash; If the value is is the same as the current use limitations, don't copy it &ndash;&gt;
                               <xsl:if test="$currentValue != $currentUseLimitation">
                                 <xsl:choose>
-                                  <!-- Is the text related to INSPIRE -> DON'T COPY IT -->
+                                  &lt;!&ndash; Is the text related to INSPIRE -> DON'T COPY IT &ndash;&gt;
                                   <xsl:when test="string($restrictions/restrictions/restriction[lower-case(@value) = lower-case($currentValue)]/@value)">
 
                                   </xsl:when>
-                                  <!-- Otherwise copy it -->
+                                  &lt;!&ndash; Otherwise copy it &ndash;&gt;
                                   <xsl:otherwise>
                                     ###################
                                     <xsl:value-of select="gco:CharacterString" />
@@ -541,27 +552,28 @@
                 </xsl:otherwise>
               </xsl:choose>
 
-            </xsl:for-each>
+            </xsl:for-each>-->
 
           </xsl:when>
 
           <!-- Step 2.2) Doesn't exist gmd:resourceConstraints[gmd:MD_Constraints] -> Create it -->
           <xsl:otherwise>
-            <gmd:resourceConstraints>
+            <!-- remove all useLimitation (TODO: temporary change) -->
+            <!--<gmd:resourceConstraints>
               <gmd:MD_Constraints>
                 <gmd:useLimitation>
                   <gco:CharacterString>
-                    <!-- Copy gmd:MD_LegalConstraints/gmd:otherConstraints -->
+                    &lt;!&ndash; Copy gmd:MD_LegalConstraints/gmd:otherConstraints &ndash;&gt;
                     <xsl:for-each select="//gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[string(gco:CharacterString)]">
 
                       <xsl:variable name="currentValue" select="gco:CharacterString" />
 
                       <xsl:choose>
-                        <!-- Is the text related to INSPIRE -> DON'T COPY IT -->
+                        &lt;!&ndash; Is the text related to INSPIRE -> DON'T COPY IT &ndash;&gt;
                         <xsl:when test="string($restrictions/restrictions/restriction[@value = $currentValue]/@value)">
 
                         </xsl:when>
-                        <!-- Otherwise copy it -->
+                        &lt;!&ndash; Otherwise copy it &ndash;&gt;
                         <xsl:otherwise>
                           <xsl:value-of select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString" />
                           ###################
@@ -571,7 +583,7 @@
                   </gco:CharacterString>
                 </gmd:useLimitation>
               </gmd:MD_Constraints>
-            </gmd:resourceConstraints>
+            </gmd:resourceConstraints>-->
 
           </xsl:otherwise>
         </xsl:choose>
@@ -599,7 +611,8 @@
                   <xsl:copy copy-namespaces="no">
                     <xsl:copy-of select="@*" />
 
-                    <xsl:apply-templates select="gmd:useLimitation" />
+                    <!-- remove all useLimitation (TODO: temporary change) -->
+                    <!--<xsl:apply-templates select="gmd:useLimitation" />-->
                     <xsl:apply-templates select="gmd:accessConstraints" />
                     <xsl:apply-templates select="gmd:useConstraints" />
 
@@ -667,8 +680,10 @@
   <xsl:template match="gmd:aggregationInfo" />
 
 
+  <!-- remove all useLimitation (TODO: temporary change) -->
+  <xsl:template match="gmd:useLimitation" />
 
-
+  <xsl:template match="gmd:resourceConstraints/gmd:MD_Constraints" />
 
 
   <!-- remove the parent of DQ_UsabilityElement, if DQ_UsabilityElement is present -->
@@ -777,6 +792,15 @@
 
   <!-- Remove descriptiveKeywords if thesaurus title starts with 'SGU' text. -->
   <xsl:template match="gmd:descriptiveKeywords[starts-with(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString, 'SGU')]" />
+
+  <!-- Remove gmd:descriptiveKeywords for GEMET - INSPIRE themes version 1.0 (invalid name, missing comma) with template value (not valid): INSPIRE Tema -->
+  <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword) = 1) and (normalize-space(gmd:MD_Keywords/gmd:keyword/*/text()) = '--- INSPIRE Tema')  and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes version 1.0']" priority="20" />
+
+  <!-- Remove gmd:descriptiveKeywords for GEMET - INSPIRE themes, version 1.0 if no keyword values -->
+  <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword[string(normalize-space(*/text()))]) = 0) and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']" priority="20" />
+
+  <!-- Remove gmd:descriptiveKeywords for Initiativ if no keyword values -->
+  <xsl:template match="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword[string(normalize-space(*/text()))]) = 0) and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'Initiativ']" priority="20" />
 
   <!-- end of InspireCSWProxy rules -->
 
@@ -1184,6 +1208,8 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- Remove gmd:identifier with empty code -->
+  <xsl:template match="gmd:identifier[gmd:MD_Identifier/gmd:code[@gco:nilReason='missing' and not(string(gco:CharacterString))]]" />
 
   <!-- Fixed values for GEMET thesaurus name. Date type requires text value also -->
   <xsl:template match="gmd:thesaurusName[gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']">

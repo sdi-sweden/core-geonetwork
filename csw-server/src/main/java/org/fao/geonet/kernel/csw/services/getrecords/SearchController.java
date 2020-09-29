@@ -40,6 +40,7 @@ import org.fao.geonet.csw.common.exceptions.NoApplicableCodeEx;
 import org.fao.geonet.domain.Pair;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.SchemaManager;
+import org.fao.geonet.kernel.ThesaurusManager;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
@@ -589,11 +590,13 @@ public class SearchController {
                                                ResultType resultType, String id, String displayLanguage) throws InvalidParameterValueEx {
         Path schemaDir  = schemaManager.getSchemaCSWPresentDir(schema);
         Path styleSheet = schemaDir.resolve(outputSchema + "-"+ context.getService() + "-postprocessing.xsl");
+        Path thesaurusDir = context.getBean(ThesaurusManager.class).getThesauriDirectory();
 
         if (Files.exists(styleSheet)) {
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("lang", displayLanguage);
             params.put("displayInfo", resultType == ResultType.RESULTS_WITH_SUMMARY ? "true" : "false");
+            params.put("thesauriDir", thesaurusDir.toString());
 
             try {
                 result = Xml.transform(result, styleSheet, params);
