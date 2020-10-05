@@ -28,6 +28,7 @@ import jeeves.server.context.ServiceContext;
 
 import org.fao.geonet.Util;
 import org.fao.geonet.domain.ReservedOperation;
+import org.fao.geonet.exceptions.ResourceNotFoundEx;
 import org.fao.geonet.inspireatom.InspireAtomService;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
@@ -103,13 +104,17 @@ public class AtomServiceDescription implements Service {
 
         // Check if it is a service metadata
         if (!InspireAtomUtil.isServiceMetadata(dm, schema, md)) {
-            throw new Exception("No service metadata found with uuid:" + fileIdentifier);
+            throw new ResourceNotFoundEx("No service metadata found with uuid:" + fileIdentifier);
         }
 
         // Get dataset identifiers referenced by service metadata.
         List<String> datasetIdentifiers = null;
 
         InspireAtomFeed inspireAtomFeed = service.findByMetadataId(Integer.parseInt(id));
+
+        if (inspireAtomFeed == null) {
+            throw new ResourceNotFoundEx("No atom feed for service metadata found with uuid:" + fileIdentifier);
+        }
 
         // Check the metadata has an atom document (checks in the lucene index).
         String atomUrl = inspireAtomFeed.getAtomUrl();
@@ -190,6 +195,12 @@ public class AtomServiceDescription implements Service {
             String id = dm.getMetadataId(datasetUuid);
             InspireAtomFeed inspireAtomFeed = repository.findByMetadataId(Integer.parseInt(id));
 
+            if (inspireAtomFeed == null) {
+                Log.warning(Geonet.ATOM, "AtomServiceDescription for service metadata (" + serviceIdentifier +
+                    "): atom feed for metadata dataset identifier " + datasetIdentifier + " is not found, ignoring it.");
+                continue;
+            }
+
             String idNs = inspireAtomFeed.getAtomDatasetid();
             String namespace = inspireAtomFeed.getAtomDatasetns();
 
@@ -208,7 +219,7 @@ public class AtomServiceDescription implements Service {
                 continue;
             }
 
-            Element datasetEl = buildDatasetInfo(datasetIdentifier, namespace);
+            Element datasetEl = buildDatasetInfo(idNs, namespace);
             datasetEl.addContent(new Element("atom_url").setText(atomUrl));
 
             // Get dataset download info
