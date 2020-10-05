@@ -39,7 +39,7 @@
     <!-- Get first element -->
     <atomfeed>
       <xsl:value-of
-        select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource[lower-case(gmd:protocol/gco:CharacterString) = lower-case($atomProtocol)]/gmd:linkage/gmd:URL"/>
+        select="gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorTransferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource[lower-case(gmd:protocol/gco:CharacterString) = lower-case($atomProtocol)]/gmd:linkage/gmd:URL"/>
     </atomfeed>
 
   </xsl:template>

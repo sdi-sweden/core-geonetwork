@@ -350,8 +350,7 @@ USA.
     <sch:rule context="//gmd:MD_Metadata">
       <sch:assert
         test="((gmd:contact/gmd:CI_ResponsibleParty/gmd:organisationName) and (gmd:contact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress))"
-      >[Geodata.se:113c] Metadatakontakt måste ha epostadress och organisation
-        angiven</sch:assert>
+      >[Geodata.se:113c] Metadatakontakt måste ha epostadress och organisation angiven</sch:assert>
     </sch:rule>
   </sch:pattern>
 

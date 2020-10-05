@@ -188,7 +188,7 @@
 
                 <button class="btn btn-primary pull-right ng-scope"
                         data-ng-switch-when="system/inspire/atom"
-                        data-ng-click="executeAtomHarvester()">
+                        data-gn-click-and-spin="executeAtomHarvester()">
                   <span class="fa fa-refresh"></span>&nbsp;
                   {{'system/inspire/atomExecute' | translate}}
                 </button>
@@ -203,7 +203,7 @@
                         <h4 class="modal-title" data-translate="">
                           inspireatom-loadAtomHarvesterReport</h4>
                       </div>
-                      <div class="modal-body">
+                      <div class="modal-body" style="overflow-y: auto; max-height: 400px;">
                         <div data-ng-show="loadTplReport">
                           <p data-ng-show="loadTplReport['error']">
                             <strong>{{loadTplReport['error']}}</strong>
