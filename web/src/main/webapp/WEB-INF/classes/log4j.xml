@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration debug="false">
 
@@ -102,6 +102,11 @@
   </logger>
   <logger name="geonetwork.harvest-man">
     <level value="DEBUG"/>
+  </logger>
+  <logger name="geonetwork.atom" additivity="false">
+    <level value="INFO"/>
+    <appender-ref ref="consoleAppender"/>
+    <appender-ref ref="fileAppender"/>
   </logger>
   <logger name="geonetwork.lucene">
     <level value="WARN"/>

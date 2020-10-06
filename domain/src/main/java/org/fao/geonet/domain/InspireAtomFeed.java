@@ -73,8 +73,15 @@ public class InspireAtomFeed extends GeonetEntity implements Serializable {
         Namespace nsXml = Namespace.getNamespace("xml", "http://www.w3.org/XML/1998/namespace");
 
         inspireAtomFeed.setTitle(atomDoc.getChildText("title", ns));
-        inspireAtomFeed.setSubtitle(atomDoc.getChildText("subtitle", ns));
-        inspireAtomFeed.setRights(atomDoc.getChildText("rights", ns));
+
+        if (atomDoc.getChildText("subtitle", ns) != null) {
+            inspireAtomFeed.setSubtitle(atomDoc.getChildText("subtitle", ns));
+        }
+
+        if (atomDoc.getChildText("rights", ns) != null) {
+            inspireAtomFeed.setRights(atomDoc.getChildText("rights", ns));
+        }
+
         inspireAtomFeed.setLang(atomDoc.getAttributeValue("lang", ns));
         Element authorEl = atomDoc.getChild("author", ns);
         if (authorEl != null) {
@@ -86,7 +93,7 @@ public class InspireAtomFeed extends GeonetEntity implements Serializable {
         List<Element> entryList = atomDoc.getChildren("entry", ns);
         for (Element entry : entryList) {
             for (Element linkEl : (List<Element>) entry.getChildren("link", ns)) {
-                if (linkEl.getAttributeValue("rel").equals("alternate")) {
+                if (linkEl.getAttributeValue("rel", "").equals("alternate")) {
                     InspireAtomFeedEntry inspireAtomFeedEntry = new InspireAtomFeedEntry();
 
                     inspireAtomFeedEntry.setTitle(entry.getChildText("title", ns));
