@@ -351,6 +351,7 @@ public class InspireAtomHarvester {
                 inspireAtomFeed.setAtomUrl(atomUrl);
                 inspireAtomFeed.setAtom(atomFeedDocument);
 
+                logger.debug("About to save Inspire Atom Feed document for metadata : " + metadataId);
                 repository.save(inspireAtomFeed);
 
                 // Index the metadata to store the atom feed information in the index
