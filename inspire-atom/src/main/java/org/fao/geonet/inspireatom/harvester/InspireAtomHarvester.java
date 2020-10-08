@@ -154,7 +154,8 @@ public class InspireAtomHarvester {
         SettingManager sm = context.getBean(SettingManager.class);
 
         final MetadataRepository metadataRepository = gc.getBean(MetadataRepository.class);
-        Metadata iso19139Metadata = metadataRepository.findOne(Specifications.where(MetadataSpecs.isType(MetadataType.METADATA)).and(MetadataSpecs.isIso19139Schema()));
+        Metadata iso19139Metadata = metadataRepository.findOne(Specifications.where(MetadataSpecs.isType(MetadataType.METADATA)).
+            and(MetadataSpecs.isIso19139Schema()).and(MetadataSpecs.hasMetadataId(Integer.parseInt(metadataId))));
 
 
         Element result = new Element("response");

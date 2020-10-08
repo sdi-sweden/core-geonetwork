@@ -99,6 +99,8 @@ public class AtomServiceDescription implements Service {
         Element md = dm.getMetadata(id);
         String schema = dm.getMetadataSchema(id);
 
+        String atomProtocol = sm.getValue(Settings.SYSTEM_INSPIRE_ATOM_PROTOCOL);
+
         // Check if allowed to the metadata
         Lib.resource.checkPrivilege(context, id, ReservedOperation.view);
 
@@ -113,7 +115,20 @@ public class AtomServiceDescription implements Service {
         InspireAtomFeed inspireAtomFeed = service.findByMetadataId(Integer.parseInt(id));
 
         if (inspireAtomFeed == null) {
-            throw new ResourceNotFoundEx("No atom feed for service metadata found with uuid:" + fileIdentifier);
+            String serviceFeedUrl = InspireAtomUtil.extractAtomFeedUrl(schema, md, dm, atomProtocol);
+
+            if (StringUtils.isEmpty(serviceFeedUrl)) {
+                throw new ResourceNotFoundEx("No atom feed for service metadata found with uuid:" + fileIdentifier);
+            } else {
+                InspireAtomHarvester inspireAtomHarvester = new InspireAtomHarvester(gc);
+                inspireAtomHarvester.harvestServiceMetadata(context, id);
+
+                inspireAtomFeed = service.findByMetadataId(Integer.parseInt(id));
+
+                if (inspireAtomFeed == null) {
+                    throw new ResourceNotFoundEx("No atom feed for service metadata found with uuid:" + fileIdentifier);
+                }
+            }
         }
 
         // Check the metadata has an atom document (checks in the lucene index).
@@ -121,7 +136,7 @@ public class AtomServiceDescription implements Service {
 
         // If no atom document indexed, check if still metadata has feed url --> no processed by atom harvester yet
         if (StringUtils.isEmpty(atomUrl)) {
-            String atomProtocol = sm.getValue(Settings.SYSTEM_INSPIRE_ATOM_PROTOCOL);
+
             atomUrl = InspireAtomUtil.extractAtomFeedUrl(schema, md, dm, atomProtocol);
             if (StringUtils.isEmpty(atomUrl)) throw new Exception("Metadata has no atom feed");
 
