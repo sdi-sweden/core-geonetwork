@@ -338,7 +338,7 @@
 
         <init-param>
             <param-name>loginConfig</param-name>
-            <param-value>${bamboo.lmProxy.loginConfig}</param-value>
+            <param-value>${lmProxy.loginConfig}</param-value>
         </init-param>
          <init-param>
             <param-name>acceptAll</param-name>
@@ -367,7 +367,7 @@
 
         <init-param>
             <param-name>loginConfig</param-name>
-            <param-value>${bamboo.odProxy.loginConfig}</param-value>
+            <param-value>${odProxy.loginConfig}</param-value>
         </init-param>
          <init-param>
             <param-name>acceptAll</param-name>
@@ -396,7 +396,7 @@
 
         <init-param>
             <param-name>loginConfig</param-name>
-            <param-value>${bamboo.lmProxyVer.loginConfig}</param-value>
+            <param-value>${lmProxyVer.loginConfig}</param-value>
         </init-param>
          <init-param>
             <param-name>acceptAll</param-name>
@@ -421,11 +421,11 @@
 
 		<init-param>
 			<param-name>userName</param-name>
-			<param-value>${bamboo.topoWms.userName}</param-value>
+			<param-value>${topoWms.userName}</param-value>
 		</init-param>
 		<init-param>
 			<param-name>pwd</param-name>
-			<param-value>${bamboo.topoWms.pwd}</param-value>
+			<param-value>${topoWms.pwd}</param-value>
 		</init-param>
 	</servlet>
 
