@@ -215,7 +215,7 @@ public final class MetadataSpecs {
             @Override
             public Predicate toPredicate(Root<Metadata> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Path<String> schemaIdAttributePath = root.get(Metadata_.dataInfo).get(MetadataDataInfo_.schemaId);
-                Predicate likeSchemaIdPredicate = cb.like(schemaIdAttributePath, cb.literal("iso19139"));
+                Predicate likeSchemaIdPredicate = cb.like(schemaIdAttributePath, cb.literal("iso19139%"));
                 return likeSchemaIdPredicate;
             }
         };
