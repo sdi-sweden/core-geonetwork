@@ -32,8 +32,15 @@
   </xsl:template>
 
   <xsl:template match="gmd:thesaurusName/gmd:CI_Citation[gmd:title/gco:CharacterString = 'Tjänsteklassificering' or
-                        lower-case(gmd:title/gco:CharacterString) = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster']/gmd:date/gmd:CI_Date/gmd:date/gco:Date">
-    <gco:Date>2008-12-03</gco:Date>
+                        lower-case(gmd:title/gco:CharacterString) = 'kommissionens förordning (eu) nr 1089/2010 av den 23 november 2010 om genomförande av europaparlamentets och rådets direktiv 2007/2/eg vad gäller interoperabilitet för rumsliga datamängder och datatjänster']/gmd:date/gmd:CI_Date">
+     <gmd:CI_Date>
+       <gmd:date>
+         <gco:Date>2017-01-01</gco:Date>
+       </gmd:date>
+       <gmd:dateType>
+         <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+       </gmd:dateType>
+     </gmd:CI_Date>  
   </xsl:template>
 
   <xsl:template match="gmd:keyword[../gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'Tjänsteklassificering' or
