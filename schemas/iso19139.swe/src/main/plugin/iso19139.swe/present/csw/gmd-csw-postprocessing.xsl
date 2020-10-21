@@ -55,6 +55,21 @@
     </xsl:attribute>
   </xsl:template>
 
+  <xsl:template match="gmd:language[gco:CharacterString]">
+    <xsl:variable name="langValue" select="normalize-space(gco:CharacterString)" />
+
+    <xsl:copy copy-namespaces="no">
+      <xsl:choose>
+        <xsl:when test="$langValue = 'sv' or $langValue = 'swe' or $langValue = 'svenska' or not(string($langValue))">
+          <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="swe" />
+        </xsl:when>
+        <xsl:otherwise>
+          <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{$langValue}" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="gmd:LanguageCode">
     <xsl:copy copy-namespaces="no">
       <xsl:attribute name="codeList">http://www.loc.gov/standards/iso639-2/</xsl:attribute>
