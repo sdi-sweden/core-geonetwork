@@ -633,6 +633,7 @@
             xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/
             gmd:descriptiveKeywords
             [lower-case(gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[1]) =
+
                                    lower-case('KOMMISSIONENS FÖRORDNING (EG) nr 1205/2008 av den 3 december 2008 om genomförande av Europaparlamentets och rådets direktiv 2007/2/EG om metadata')]"
             if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0"/>
           <!-- FIXME: MUST be provided in template and thesaurus available in the catalog, to be displayed properly -->
@@ -2027,7 +2028,7 @@
         </section>
 
 
-        <section name="referenceSystemInfo2" displayIfRecord="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0 or gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName != 'other'">
+        <section name="referenceSystemInfo2" displayIfRecord="(count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) + count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification[srv:serviceType/gco:LocalName != 'other'])) > 0 ">
           <field name="rsIdentifier"
                  xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"
                  del="../.." />
