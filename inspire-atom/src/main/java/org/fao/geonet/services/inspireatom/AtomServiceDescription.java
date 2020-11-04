@@ -30,6 +30,7 @@ import org.fao.geonet.Util;
 import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.exceptions.ResourceNotFoundEx;
 import org.fao.geonet.inspireatom.InspireAtomService;
+import org.fao.geonet.inspireatom.model.DatasetFeedInfo;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.InspireAtomFeedRepository;
@@ -51,6 +52,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * INSPIRE OpenSearchDescription atom service.
@@ -109,9 +111,6 @@ public class AtomServiceDescription implements Service {
             throw new ResourceNotFoundEx("No service metadata found with uuid:" + fileIdentifier);
         }
 
-        // Get dataset identifiers referenced by service metadata.
-        List<String> datasetIdentifiers = null;
-
         InspireAtomFeed inspireAtomFeed = service.findByMetadataId(Integer.parseInt(id));
 
         if (inspireAtomFeed == null) {
@@ -134,23 +133,20 @@ public class AtomServiceDescription implements Service {
         // Check the metadata has an atom document (checks in the lucene index).
         String atomUrl = inspireAtomFeed.getAtomUrl();
 
-        // If no atom document indexed, check if still metadata has feed url --> no processed by atom harvester yet
+        // If no atom document indexed, check if still metadata has feed ur --> no processed by atom harvester yet
         if (StringUtils.isEmpty(atomUrl)) {
-
             atomUrl = InspireAtomUtil.extractAtomFeedUrl(schema, md, dm, atomProtocol);
             if (StringUtils.isEmpty(atomUrl)) throw new Exception("Metadata has no atom feed");
-
-            // Harvest this individual record
-            datasetIdentifiers = InspireAtomUtil.extractRelatedDatasetsIdentifiers(schema, md, dm);
 
             InspireAtomHarvester inspireAtomHarvester = new InspireAtomHarvester(gc);
             inspireAtomHarvester.harvestServiceMetadata(context, id);
 
             // Read again the feed
             inspireAtomFeed = service.findByMetadataId(Integer.parseInt(id));
-        } else {
-            datasetIdentifiers = InspireAtomUtil.extractRelatedDatasetsIdentifiers(schema, md, dm);
         }
+
+        // Dataset feeds referenced by service feed.
+        List<DatasetFeedInfo>  datasetsInformation = InspireAtomUtil.extractRelatedDatasetsInfoFromServiceFeed(inspireAtomFeed.getAtom(), dm);
 
         // Get information from the the service atom feed.
         String feedAuthorName = inspireAtomFeed.getAuthorName();
@@ -163,7 +159,7 @@ public class AtomServiceDescription implements Service {
 
 
         // Process datasets information
-        Element datasetsEl = processDatasetsInfo(datasetIdentifiers, fileIdentifier, context);
+        Element datasetsEl = processDatasetsInfo(datasetsInformation, fileIdentifier, context);
 
         // Build response.
         return new Element("response")
@@ -181,13 +177,13 @@ public class AtomServiceDescription implements Service {
     /**
      * Retrieves the information from datasets referenced in a service metadata.
      *
-     * @param datasetIdentifiers List of dataset identifiers to process.
+     * @param datasetsInformation List of dataset identifiers to process.
      * @param serviceIdentifier  Service identifier.
      * @param context            Service context.
      * @return JDOM Element with the datasets information.
      * @throws Exception Exception.
      */
-    private Element processDatasetsInfo(final List<String> datasetIdentifiers, final String serviceIdentifier,
+    private Element processDatasetsInfo(final List<DatasetFeedInfo> datasetsInformation, final String serviceIdentifier,
                                         final ServiceContext context)
         throws Exception {
         Element datasetsEl = new Element("datasets");
@@ -196,14 +192,14 @@ public class AtomServiceDescription implements Service {
 
         DataManager dm = context.getBean(DataManager.class);
 
-        for (String datasetIdentifier : datasetIdentifiers) {
+        for (DatasetFeedInfo datasetFeedInfo : datasetsInformation) {
             // Get the metadata uuid for the dataset
-            String datasetUuid = repository.retrieveDatasetUuidFromIdentifier(datasetIdentifier);
+            String datasetUuid = repository.retrieveDatasetUuidFromIdentifier(datasetFeedInfo.identifier);
 
             // If dataset metadata not found, ignore
             if (StringUtils.isEmpty(datasetUuid)) {
                 Log.warning(Geonet.ATOM, "AtomServiceDescription for service metadata (" + serviceIdentifier +
-                    "): metadata for dataset identifier " + datasetIdentifier + " is not found, ignoring it.");
+                    "): metadata for dataset identifier " + datasetFeedInfo.identifier + " is not found, ignoring it.");
                 continue;
             }
 
@@ -212,7 +208,7 @@ public class AtomServiceDescription implements Service {
 
             if (inspireAtomFeed == null) {
                 Log.warning(Geonet.ATOM, "AtomServiceDescription for service metadata (" + serviceIdentifier +
-                    "): atom feed for metadata dataset identifier " + datasetIdentifier + " is not found, ignoring it.");
+                    "): atom feed for metadata dataset identifier " + datasetFeedInfo.identifier + " is not found, ignoring it.");
                 continue;
             }
 
