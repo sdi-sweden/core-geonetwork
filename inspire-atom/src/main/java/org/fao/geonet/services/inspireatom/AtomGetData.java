@@ -128,7 +128,7 @@ public class AtomGetData implements Service {
             // Only one download for the CRS specified
         } else if (downloadCount == 1) {
 
-            // Jeeves checks for <reponse redirect="true" url="...." mime-type="..." /> to manage about redirecting
+            // Jeeves checks for <response redirect="true" url="...." mime-type="..." /> to manage about redirecting
             // to the provided file
             return new Element("response")
                 .setAttribute("redirect", "true")
