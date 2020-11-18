@@ -83,8 +83,17 @@
               kv = keyValue.split('=');
               key = this_.tryDecodeURIComponent(kv[0]);
               if (angular.isDefined(key)) {
-                obj[key] = angular.isDefined(kv[1]) ?
+                // To handle cases with parameters including = as part of the value
+                // Example: https://stationsregister.miljodatasamverkan.se/geoserver/stationsregistret/wms?cql_filter=(datahost_id=11)
+                if (kv.length > 2) {
+                  var kJoin = kv.slice(1).join("=");
+
+                  obj[key] = angular.isDefined(kJoin) ?
+                    this_.tryDecodeURIComponent(kJoin) : true;
+                } else {
+                  obj[key] = angular.isDefined(kv[1]) ?
                     this_.tryDecodeURIComponent(kv[1]) : true;
+                }
               }
             }
           });
@@ -153,12 +162,12 @@
       return new UrlUtils();
     };
   });
-  
+
   //To get GetFeatureInfo output format from GetCapabilities
     module.factory("gfiOutputFormatCheck", function() {
       return{
          result: ""
       };
     });
-  
+
 })();
