@@ -630,6 +630,10 @@
         </gmd:descriptiveKeywords>
       </xsl:if>
 
+      <!-- Remove gmd:descriptiveKeywords for INSPIRE Priority Dataset if no keyword values -->
+      <xsl:if test="gmd:descriptiveKeywords[(count(gmd:MD_Keywords/gmd:keyword[string(normalize-space(*/text()))]) = 0) and gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'INSPIRE priority data set']" >
+      </xsl:if>
+
       <xsl:apply-templates select="gmd:resourceSpecificUsage" />
 
       <!-- Copy resource constraints with gmd:MD_Constraints or gmd:MD_SecurityConstraints -->
