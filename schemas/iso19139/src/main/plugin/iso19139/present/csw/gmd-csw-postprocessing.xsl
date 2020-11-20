@@ -785,12 +785,13 @@
     </xsl:copy>
   </xsl:template>
 
-  <!-- ensure codespace always comes after code -->
+  <!-- remove codespace, invalid for INSPIRE -->
   <xsl:template match="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier">
-    <xsl:copy copy-namespaces="no">
+    <xsl:copy>
       <xsl:apply-templates select="@*"/>
-      <xsl:copy-of select="gmd:code" copy-namespaces="no" />
-      <xsl:copy-of select="gmd:codeSpace" copy-namespaces="no" />
+      <xsl:copy-of select="gmd:code"/>
+      <!-- ensure codespace always comes after code
+      <xsl:copy-of select="gmd:codeSpace"/>-->
     </xsl:copy>
   </xsl:template>
 
