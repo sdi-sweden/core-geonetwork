@@ -131,6 +131,24 @@
       </dd>
     </dl>
   </xsl:template>
+
+  <xsl:template mode="render-field"
+                match="srv:operatesOn"
+                priority="50">
+    <xsl:param name="fieldName" select="''" as="xs:string"/>
+
+    <dl>
+      <dt>
+        <xsl:value-of select="if ($fieldName)
+                                then $fieldName
+                                else tr:node-label(tr:create($schema), name(), null)"/>
+      </dt>
+      <dd>
+        <a target="_blank" href="{@xlink:href}"><xsl:value-of select="@xlink:href"/></a>
+      </dd>
+    </dl>
+  </xsl:template>
+
   <!-- Case to handle gco.LocalName: end -->
   <!-- Some elements are only containers so bypass them -->
   <xsl:template mode="render-field"
@@ -397,6 +415,42 @@
   </xsl:template>
 
   <!-- A maintenanceAndUpdateFrequency is displayed with its translated codeListValue -->
+  <xsl:template mode="render-field"
+                match="gmd:resourceMaintenance"
+                priority="100">
+    <xsl:param name="fieldName" select="''" as="xs:string"/>
+
+
+    <dl class="gn-contact">
+      <dt>
+        <xsl:value-of select="if ($fieldName)
+                                  then $fieldName
+                                  else tr:node-label(tr:create($schema), name(), null)"/>
+      </dt>
+      <dd>
+        <dl class="gn-contact">
+          <dt>
+            <xsl:value-of select="tr:node-label(tr:create($schema), 'gmd:maintenanceAndUpdateFrequency', null)"/>
+          </dt>
+          <dd>
+            <xsl:apply-templates mode="render-value"
+                                 select="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue"/>
+
+          </dd>
+        </dl>
+
+        <dl>
+          <dt>
+            <xsl:value-of select="tr:node-label(tr:create($schema), 'gmd:maintenanceNote', null)"/>
+          </dt>
+          <dd>
+            <xsl:apply-templates mode="render-value" select="gmd:MD_MaintenanceInformation/gmd:maintenanceNote"/>
+          </dd>
+        </dl>
+      </dd>
+    </dl>
+  </xsl:template>
+
   <xsl:template mode="render-field"
                 match="gmd:maintenanceAndUpdateFrequency"
                 priority="100">
