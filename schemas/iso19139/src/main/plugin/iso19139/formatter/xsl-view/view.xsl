@@ -26,7 +26,9 @@
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                xmlns:srv="http://www.isotc211.org/2005/srv"
                 xmlns:gml="http://www.opengis.net/gml"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:tr="java:org.fao.geonet.api.records.formatters.SchemaLocalizations"
                 xmlns:gn-fn-render="http://geonetwork-opensource.org/xsl/functions/render"
@@ -339,6 +341,42 @@
 
   <!-- A maintenanceAndUpdateFrequency is displayed with its translated codeListValue -->
   <xsl:template mode="render-field"
+                match="gmd:resourceMaintenance"
+                priority="100">
+    <xsl:param name="fieldName" select="''" as="xs:string"/>
+
+
+    <dl class="gn-contact">
+      <dt>
+        <xsl:value-of select="if ($fieldName)
+                                  then $fieldName
+                                  else tr:node-label(tr:create($schema), name(), null)"/>
+      </dt>
+      <dd>
+        <dl class="gn-contact">
+          <dt>
+            <xsl:value-of select="tr:node-label(tr:create($schema), 'gmd:maintenanceAndUpdateFrequency', null)"/>
+          </dt>
+          <dd>
+            <xsl:apply-templates mode="render-value"
+                                 select="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue"/>
+
+          </dd>
+        </dl>
+
+        <dl>
+          <dt>
+            <xsl:value-of select="tr:node-label(tr:create($schema), 'gmd:maintenanceNote', null)"/>
+          </dt>
+          <dd>
+            <xsl:apply-templates mode="render-value" select="gmd:MD_MaintenanceInformation/gmd:maintenanceNote"/>
+          </dd>
+        </dl>
+      </dd>
+    </dl>
+  </xsl:template>
+
+  <xsl:template mode="render-field"
                 match="gmd:maintenanceAndUpdateFrequency"
                 priority="100">
     <xsl:param name="fieldName" select="''" as="xs:string"/>
@@ -551,6 +589,22 @@
     </dl>
   </xsl:template>
 
+  <xsl:template mode="render-field"
+                match="srv:operatesOn"
+                priority="50">
+    <xsl:param name="fieldName" select="''" as="xs:string"/>
+
+    <dl>
+      <dt>
+        <xsl:value-of select="if ($fieldName)
+                                then $fieldName
+                                else tr:node-label(tr:create($schema), name(), null)"/>
+      </dt>
+      <dd>
+        <a target="_blank" href="{@xlink:href}"><xsl:value-of select="@xlink:href"/></a>
+      </dd>
+    </dl>
+  </xsl:template>
 
   <!-- Display thesaurus name and the list of keywords -->
   <xsl:template mode="render-field"
