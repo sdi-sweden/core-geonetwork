@@ -1,5 +1,6 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
                 xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:gde="http://www.metagis.se/gde"
                 xmlns:gml="http://www.opengis.net/gml/3.2"
                 xmlns:gmlOld="http://www.opengis.net/gml"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
@@ -1667,4 +1668,6 @@
       <xsl:value-of select="." />
     </xsl:copy>
   </xsl:template>
+
+  <xsl:template match="gde:*" />
 </xsl:stylesheet>
