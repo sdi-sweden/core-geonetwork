@@ -1,5 +1,6 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
                 xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:gde="http://www.metagis.se/gde"
                 xmlns:gml="http://www.opengis.net/gml/3.2"
                 xmlns:gmlOld="http://www.opengis.net/gml"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
@@ -508,9 +509,9 @@
 
   <!-- remove codespace, invalid for INSPIRE -->
   <xsl:template match="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*"/>
-      <xsl:copy-of select="gmd:code"/>
+      <xsl:copy-of select="gmd:code" copy-namespaces="no" />
       <!-- ensure codespace always comes after code
       <xsl:copy-of select="gmd:codeSpace"/>-->
     </xsl:copy>
@@ -1400,4 +1401,6 @@
       </gmd:levelDescription>
     </xsl:copy>
   </xsl:template>
+
+  <xsl:template match="gde:*" />
 </xsl:stylesheet>
