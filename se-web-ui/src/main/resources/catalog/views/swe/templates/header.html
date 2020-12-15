@@ -1,7 +1,7 @@
 ﻿<div class="header-cont" data-ng-style="{'top':(!showCookieWarning)?'0px':'90px'}">
 
   <div class="header-left-cont">
-    <a href="https://www.geodata.se" target="_blank" class="logo">
+    <a href="https://www.lantmateriet.se/sv/Om-Lantmateriet/Om-oss/Vart-samordningsansvar/" target="_blank" class="logo">
       <img src="../../catalog/views/swe/images/geo-logo.png">
     </a>
   </div>
@@ -15,17 +15,13 @@
         <span class="hidden-xs hidden-sm" data-translate="">otherGeodata</span><span class="icon-down-dir"></span>
       </div>
       <ul class="-list">
-        <li><a class="-text-link" target="_blank" href="https://maps.slu.se/">
-              <span data-translate="">getService</span>
-            </a>
-        </li>
         <li><a class="-text-link" target="_blank" href="http://www.kartverket.no/Kart/Gratis-kartdata/WMS-tjenester/">
               <span data-translate="">norwegianMetadata</span>
             </a>
         </li>
       </ul>
     </div>
-<!-- 	<swe-geo-technics-filter data-config-url="{{geotechnicsUrl}}" data-show-map-fn="showFullMapPanel"></swe-geo-technics-filter> -->
+	<!-- <swe-geo-technics-filter data-config-url="{{geotechnicsUrl}}" data-show-map-fn="showFullMapPanel"></swe-geo-technics-filter> -->
     <a data-ng-show="!authenticated && service !== 'catalog.signin'" data-ng-keypress="$event" href="../../login" class="header-login header-text">
     <span class="hidden-xs hidden-sm" data-translate="">forPublishers</span>
     </a>
@@ -41,6 +37,38 @@
     <a data-ng-show="authenticated" href="/AGLogout" class="header-logout header-text">
     <span class="hidden-xs hidden-sm" data-translate="">logout</span>
     </a>
+    
+    <div class="dropdown-cont other-geodata-cont" data-swe-toggle-style="">
+      <div class="-label"><span class="icon-dot-3"></span>
+        <span class="hidden-xs hidden-sm" data-translate="">Help</span><span class="icon-down-dir"></span>
+      </div>
+      <ul class="-list">
+        <li><a class="-text-link" target="_blank" href="https://www.lantmateriet.se/sv/forstasidan">
+              <span data-translate="">searchHelp</span>
+            </a>
+        </li>
+        <li><a class="-text-link" target="_blank" href="https://www.lantmateriet.se/sv/forstasidan/for-publicerare">
+              <span data-translate="">publisherHelp</span>
+            </a>
+        </li>
+        <li><a class="-text-link" target="_blank" href="https://secure.quickchannel.com/qc/?id=1ssfer">
+              <span data-translate="">videoOverview</span>
+            </a>
+        </li>
+        <li><a class="-text-link" target="_blank" href="https://secure.quickchannel.com/qc/?id=j5a5v4">
+              <span data-translate="">videoResults</span>
+            </a>
+        </li>
+        <li><a class="-text-link" target="_blank" href="https://secure.quickchannel.com/qc/?id=9tqtfu">
+              <span data-translate="">videoMap</span>
+            </a>
+        </li>
+        <li><a class="-text-link" target="_blank" href="https://secure.quickchannel.com/qc/?id=ac2w71">
+              <span data-translate="">videoAdvancedView</span>
+            </a>
+        </li>
+      </ul>
+    </div>
   </div>
 
 <!--   <div class="header-right-cont">
