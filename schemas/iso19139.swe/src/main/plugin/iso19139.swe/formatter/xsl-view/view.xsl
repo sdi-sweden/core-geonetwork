@@ -35,6 +35,7 @@
                 xmlns:tr="java:org.fao.geonet.api.records.formatters.SchemaLocalizations"
                 xmlns:gn-fn-render="http://geonetwork-opensource.org/xsl/functions/render"
                 xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
+                xmlns:gn-fn-iso19139="http://geonetwork-opensource.org/xsl/functions/profiles/iso19139"
                 xmlns:saxon="http://saxon.sf.net/"
                 extension-element-prefixes="saxon"
                 exclude-result-prefixes="#all">
@@ -56,9 +57,14 @@
   <xsl:variable name="configuration"
                 select="document('../../layout/config-editor.xml')"/>
 
+  <!-- Required for utility-fn.xsl -->
+  <xsl:variable name="editorConfig"
+                select="document('../../layout/config-editor.xml')"/>
+
   <!-- Some utility -->
   <xsl:include href="../../layout/evaluate.xsl"/>
   <xsl:include href="../../layout/utility-tpl-multilingual.xsl"/>
+  <xsl:include href="../../layout/utility-fn.xsl"/>
 
   <!-- The core formatter XSL layout based on the editor configuration -->
   <xsl:include href="sharedFormatterDir/xslt/render-layout.xsl"/>
@@ -68,6 +74,7 @@
   <xsl:variable name="metadata"
                 select="/root/gmd:MD_Metadata"/>
 
+  <xsl:variable name="langId" select="gn-fn-iso19139:getLangId($metadata, $language)"/>
 
   <xsl:variable name="schemaLabels"
                 select="/root/schemas/*[name() = $schema]/labels"/>
@@ -165,8 +172,8 @@
 
   <!-- Some major sections are boxed -->
   <xsl:template mode="render-field"
-                match="*[name() = $configuration/editor/fieldsWithFieldset/name
-    or @gco:isoType = $configuration/editor/fieldsWithFieldset/name]|
+                match="*[name() = $editorConfig/editor/fieldsWithFieldset/name
+    or @gco:isoType = $editorConfig/editor/fieldsWithFieldset/name]|
       gmd:report/*|
       gmd:result/*|
       gmd:extent[name(..)!='gmd:EX_TemporalExtent']|
@@ -1049,7 +1056,24 @@
   <!-- ########################## -->
   <!-- Render values for text ... -->
   <xsl:template mode="render-value"
-                match="gmd:statement|gco:CharacterString|gco:Integer|gco:Decimal|
+                match="*[gco:CharacterString]|gco:CharacterString">
+
+    <xsl:variable name="txt">
+      <xsl:apply-templates mode="localised" select=".">
+        <xsl:with-param name="langId" select="$langId"/>
+      </xsl:apply-templates>
+    </xsl:variable>
+
+    <span>
+      <xsl:call-template name="addLineBreaksAndHyperlinks">
+        <xsl:with-param name="txt" select="$txt"/>
+      </xsl:call-template>
+    </span>
+  </xsl:template>
+
+
+  <xsl:template mode="render-value"
+                match="gco:Integer|gco:Decimal|
        gco:Boolean|gco:Real|gco:Measure|gco:Length|gco:Distance|gco:Angle|gmx:FileName|
        gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|
        gco:LocalName|gml:beginPosition|gml:endPosition">
@@ -1211,7 +1235,7 @@
                               else tr:node-label(tr:create($schema), name(), null)"/>
       </dt>
       <dd>
-        <xsl:apply-templates mode="render-value" select="gco:CharacterString"/>
+        <xsl:apply-templates mode="render-value" select="."/>
       </dd>
    </dl>
  </xsl:template>
