@@ -9,6 +9,7 @@
   <xsl:import href="render-variables.xsl"/>
   <xsl:import href="render-functions.xsl"/>
   <xsl:import href="render-layout-fields.xsl"/>
+  <xsl:import href="text-utilities.xsl"/>
 
   <!-- Those templates should be overriden in the schema plugin - start -->
   <xsl:template mode="getMetadataTitle" match="undefined"/>
@@ -147,7 +148,7 @@
     </xsl:variable>
 
 	<xsl:variable name="tabName" select="../..[name()='tab']/@id" />
-	
+
     <xsl:for-each select="$nodes">
       <xsl:apply-templates mode="render-field">
         <xsl:with-param name="fieldName" select="$fieldName"/>
@@ -205,7 +206,7 @@
         </xsl:variable>
 
 		<xsl:variable name="tabName" select="../..[name()='tab']/@id" />
-		
+
         <xsl:for-each select="$nodes">
           <xsl:apply-templates mode="render-field">
             <xsl:with-param name="fieldName" select="$fieldName"/>
@@ -235,7 +236,7 @@
     </xsl:variable>
 
 	<xsl:variable name="tabName" select="../..[name()='tab']/@id" />
-	
+
     <xsl:for-each select="$nodes">
       <xsl:apply-templates mode="render-field">
         <xsl:with-param name="fieldName" select="$fieldName"/>
