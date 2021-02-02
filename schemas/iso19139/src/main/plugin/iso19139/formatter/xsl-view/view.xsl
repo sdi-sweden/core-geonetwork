@@ -891,9 +891,17 @@
    <xsl:template mode="render-value"
                 match="*[gco:CharacterString]">
 
-    <xsl:apply-templates mode="localised" select=".">
-      <xsl:with-param name="langId" select="$langId"/>
-    </xsl:apply-templates>
+     <xsl:variable name="txt">
+       <xsl:apply-templates mode="localised" select=".">
+         <xsl:with-param name="langId" select="$langId"/>
+       </xsl:apply-templates>
+     </xsl:variable>
+
+     <span>
+       <xsl:call-template name="addLineBreaksAndHyperlinks">
+         <xsl:with-param name="txt" select="$txt"/>
+       </xsl:call-template>
+     </span>
   </xsl:template>
 
   <xsl:template mode="render-value"
