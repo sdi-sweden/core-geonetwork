@@ -222,10 +222,11 @@ public class InspireAtomHarvester {
 
                 logger.info("Processing feed (" + i++ + "/"+ total + ") for service metadata with uuid:" + metadataUuid + ", feed url: " + atomUrl);
 
-                if (!atomUrl.toLowerCase().endsWith(".xml")) {
-                    logger.warning("Atom feed Document (" + atomUrl + ") for service metadata (" + metadataUuid + ") is not a valid feed");
-                    continue;
-                }
+//  Lantmäteriet services dont expose an xml file in thier service URLs                
+//                if (!atomUrl.toLowerCase().endsWith(".xml")) {
+//                    logger.warning("Atom feed Document (" + atomUrl + ") for service metadata (" + metadataUuid + ") is not a valid feed");
+//                    continue;
+//                }
 
                 String atomFeedDocument = InspireAtomUtil.retrieveRemoteAtomFeedDocument(gc, atomUrl);
                 logger.debug("Atom feed Document for service metadata (" + metadataUuid + "): " + atomFeedDocument);

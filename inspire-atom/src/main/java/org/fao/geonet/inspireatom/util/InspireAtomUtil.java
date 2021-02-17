@@ -45,7 +45,10 @@ import org.fao.geonet.lib.Lib;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -80,7 +83,8 @@ public class InspireAtomUtil {
      */
     public static String retrieveRemoteAtomFeedDocument(final ServiceContext context,
                                                         final String url) throws Exception {
-        XmlRequest remoteRequest = context.getBean(GeonetHttpRequestFactory.class).createXmlRequest(new URL(url));
+    	String newURL = proxifyURL(url);
+        XmlRequest remoteRequest = context.getBean(GeonetHttpRequestFactory.class).createXmlRequest(new URL(newURL));
 
         final SettingManager sm = context.getBean(SettingManager.class);
 
@@ -93,7 +97,8 @@ public class InspireAtomUtil {
 
     public static String retrieveRemoteAtomFeedDocument(final GeonetContext context,
                                                         final String url) throws Exception {
-        XmlRequest remoteRequest = context.getBean(GeonetHttpRequestFactory.class).createXmlRequest(new URL(url));
+    	String newURL = proxifyURL(url);
+        XmlRequest remoteRequest = context.getBean(GeonetHttpRequestFactory.class).createXmlRequest(new URL(newURL));
 
         final SettingManager sm = context.getBean(SettingManager.class);
 
@@ -334,4 +339,18 @@ public class InspireAtomUtil {
 
         return uuid;
     }
+
+/*
+ * Lantmäteriets services require a validation token to access them
+ * od-proxy adds that token to the request
+ */
+    public static String proxifyURL(String oldURL) {
+    	String newURL = oldURL;
+    	if (StringUtils.contains(oldURL, "api.lantmateriet.se")) {
+     	    //				newURL = "http://localhost:8080/geodataportalen/od-proxy?url=" + URLEncoder.encode(oldURL, StandardCharsets.UTF_8.toString());
+			newURL = "https://ver.geodata.se/geodataportalen/od-proxy?url=" + oldURL;    		
+    	}
+    	System.out.println("Proxified URL newURL = " + newURL);
+    	return newURL;
+    }    
 }
