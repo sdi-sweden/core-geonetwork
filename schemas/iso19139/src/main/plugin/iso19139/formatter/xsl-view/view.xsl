@@ -211,7 +211,7 @@
                 match="*[gmd:CI_ResponsibleParty]"
                 priority="100">
     <xsl:variable name="email">
-      <xsl:apply-templates mode="render-value"
+      <xsl:apply-templates mode="render-value-no-breaklines"
                            select="*/gmd:contactInfo/
                                       */gmd:address/*/gmd:electronicMailAddress"/>
     </xsl:variable>
@@ -222,12 +222,12 @@
         <xsl:when
                 test="normalize-space(*/gmd:organisationName) != '' and normalize-space(*/gmd:individualName) != ''">
           <!-- Org name may be multilingual -->
-          <xsl:apply-templates mode="render-value"
+          <xsl:apply-templates mode="render-value-no-breaklines"
                                select="*/gmd:organisationName"/>
           -
           <xsl:value-of select="*/gmd:individualName"/>
           <xsl:if test="normalize-space(*/gmd:positionName) != ''">
-            (<xsl:apply-templates mode="render-value"
+            (<xsl:apply-templates mode="render-value-no-breaklines"
                                   select="*/gmd:positionName"/>)
           </xsl:if>
         </xsl:when>
@@ -274,7 +274,7 @@
               <xsl:for-each select="gmd:address/*/(
                                           gmd:deliveryPoint|gmd:city|
                                           gmd:administrativeArea|gmd:postalCode|gmd:country)">
-                <xsl:apply-templates mode="render-value" select="."/>
+                <xsl:apply-templates mode="render-value-no-breaklines" select="."/>
               </xsl:for-each>
             </xsl:for-each>
           </address>
@@ -284,7 +284,7 @@
             <xsl:for-each select="*/gmd:contactInfo/*">
               <xsl:for-each select="gmd:phone/*/gmd:voice[normalize-space(.) != '']">
                 <xsl:variable name="phoneNumber">
-                  <xsl:apply-templates mode="render-value" select="."/>
+                  <xsl:apply-templates mode="render-value-no-breaklines" select="."/>
                 </xsl:variable>
                 <i class="fa fa-phone"></i>
                 <a href="tel:{$phoneNumber}">
@@ -293,7 +293,7 @@
               </xsl:for-each>
               <xsl:for-each select="gmd:phone/*/gmd:facsimile[normalize-space(.) != '']">
                 <xsl:variable name="phoneNumber">
-                  <xsl:apply-templates mode="render-value" select="."/>
+                  <xsl:apply-templates mode="render-value-no-breaklines" select="."/>
                 </xsl:variable>
                 <i class="fa fa-fax"></i>
                 <a href="tel:{normalize-space($phoneNumber)}">
@@ -424,7 +424,7 @@
         <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
       </dt>
       <dd>
-        <xsl:apply-templates mode="render-value" select="*"/>
+        <xsl:apply-templates mode="render-value-no-breaklines" select="*"/>
         <xsl:apply-templates mode="render-value" select="@*"/>
 
         <a class="btn btn-link" href="xml.metadata.get?id={$metadataId}">
@@ -494,7 +494,7 @@
 					</tr>
 					<xsl:for-each select="parent::node()/gmd:onLine">
 						<xsl:variable name="protocol">
-							<xsl:apply-templates mode="render-value" select="*/gmd:protocol"/>
+							<xsl:apply-templates mode="render-value-no-breaklines" select="*/gmd:protocol"/>
 						</xsl:variable>
 						<xsl:variable name="aliasProtocol">
 							<xsl:choose>
@@ -519,7 +519,7 @@
 							</xsl:choose>
 						</xsl:variable>
 						<xsl:variable name="name">
-							<xsl:apply-templates mode="render-value" select="*/gmd:name"/>
+							<xsl:apply-templates mode="render-value-no-breaklines" select="*/gmd:name"/>
             </xsl:variable>
             <xsl:variable name="description">
               <xsl:apply-templates mode="render-value" select="*/gmd:description"/>
@@ -903,6 +903,22 @@
        </xsl:call-template>
      </span>
   </xsl:template>
+
+  <xsl:template mode="render-value-no-breaklines"
+                match="*[gco:CharacterString]">
+
+    <xsl:variable name="txtNonNormalized">
+      <xsl:apply-templates mode="localised" select=".">
+        <xsl:with-param name="langId" select="$langId"/>
+      </xsl:apply-templates>
+    </xsl:variable>
+
+    <xsl:variable name="txt" select="normalize-space($txtNonNormalized)" />
+    <span>
+      <xsl:value-of select="$txt" />
+    </span>
+  </xsl:template>
+
 
   <xsl:template mode="render-value"
                 match="gco:Integer|gco:Decimal|
