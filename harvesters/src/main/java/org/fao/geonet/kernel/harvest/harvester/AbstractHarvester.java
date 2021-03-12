@@ -138,6 +138,10 @@ public abstract class AbstractHarvester<T extends HarvestResult> {
     private volatile boolean running = false;
     private Element loadedInfo;
 
+    public Logger getLogger() {
+        return this.log;
+    }
+
     /**
      * TODO javadoc.
      */
