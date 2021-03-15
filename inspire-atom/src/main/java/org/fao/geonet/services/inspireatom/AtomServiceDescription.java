@@ -90,14 +90,17 @@ public class AtomServiceDescription implements Service {
 
         String fileIdentifier = Util.getParam(params, SERVICE_IDENTIFIER_PARAM, "");
         if (StringUtils.isEmpty(fileIdentifier)) {
+        	Log.debug(Geonet.ATOM, "fileIdentifier was empty");
             return new Element("response");
         }
 
         InspireAtomService service = context.getBean(InspireAtomService.class);
 
         String id = dm.getMetadataId(fileIdentifier);
-        if (id == null) throw new MetadataNotFoundEx("Metadata not found.");
-
+        if (id == null) { 
+        	Log.debug(Geonet.ATOM, "Metadata with fileIdentifier " + fileIdentifier + " was not found");
+        	throw new MetadataNotFoundEx("Metadata not found.");
+        }
         Element md = dm.getMetadata(id);
         String schema = dm.getMetadataSchema(id);
 
@@ -117,6 +120,7 @@ public class AtomServiceDescription implements Service {
             String serviceFeedUrl = InspireAtomUtil.extractAtomFeedUrl(schema, md, dm, atomProtocol);
 
             if (StringUtils.isEmpty(serviceFeedUrl)) {
+            	Log.debug(Geonet.ATOM, "No atom feed for service metadata found with uuid:" + fileIdentifier);
                 throw new ResourceNotFoundEx("No atom feed for service metadata found with uuid:" + fileIdentifier);
             } else {
                 InspireAtomHarvester inspireAtomHarvester = new InspireAtomHarvester(gc);

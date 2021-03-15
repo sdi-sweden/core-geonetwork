@@ -222,11 +222,11 @@ public class InspireAtomHarvester {
 
                 logger.info("Processing feed (" + i++ + "/"+ total + ") for service metadata with uuid:" + metadataUuid + ", feed url: " + atomUrl);
 
-//  Lantmäteriet services dont expose an xml file in thier service URLs                
-//                if (!atomUrl.toLowerCase().endsWith(".xml")) {
-//                    logger.warning("Atom feed Document (" + atomUrl + ") for service metadata (" + metadataUuid + ") is not a valid feed");
+//  Lantmäteriet services dont expose an xml file in their service URLs                
+                if (!atomUrl.toLowerCase().endsWith(".xml")) {
+                    logger.warning("Atom feed Document (" + atomUrl + ") for service metadata (" + metadataUuid + ") is not a valid feed");
 //                    continue;
-//                }
+                }
 
                 String atomFeedDocument = InspireAtomUtil.retrieveRemoteAtomFeedDocument(gc, atomUrl);
                 logger.debug("Atom feed Document for service metadata (" + metadataUuid + "): " + atomFeedDocument);
@@ -239,6 +239,7 @@ public class InspireAtomHarvester {
                     continue;
                 }
 
+                logger.debug("Build Atom feed Document to save in repository for service metadata (" + metadataUuid + ")");
                 InspireAtomFeed inspireAtomFeed = InspireAtomFeed.build(atomDoc);
                 inspireAtomFeed.setMetadataId(Integer.parseInt(metadataId));
                 inspireAtomFeed.setAtomUrl(atomUrl);
@@ -247,6 +248,7 @@ public class InspireAtomHarvester {
                 inspireAtomFeed.setAtomDatasetns("");
 
                 repository.save(inspireAtomFeed);
+                logger.debug("Atom feed Document Saved in repository for service metadata (" + metadataUuid + ")");
 
                 // Index the metadata to store the atom feed information in the index
                 dataMan.indexMetadata(Arrays.asList(new String[]{metadataId}));

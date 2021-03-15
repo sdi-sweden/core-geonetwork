@@ -83,10 +83,9 @@ public class InspireAtomUtil {
      */
     public static String retrieveRemoteAtomFeedDocument(final ServiceContext context,
                                                         final String url) throws Exception {
-    	String newURL = proxifyURL(url);
-        XmlRequest remoteRequest = context.getBean(GeonetHttpRequestFactory.class).createXmlRequest(new URL(newURL));
-
         final SettingManager sm = context.getBean(SettingManager.class);
+        String newURL = proxifyURL(url, sm);
+        XmlRequest remoteRequest = context.getBean(GeonetHttpRequestFactory.class).createXmlRequest(new URL(newURL));
 
         Lib.net.setupProxy(sm, remoteRequest);
 
@@ -97,10 +96,9 @@ public class InspireAtomUtil {
 
     public static String retrieveRemoteAtomFeedDocument(final GeonetContext context,
                                                         final String url) throws Exception {
-    	String newURL = proxifyURL(url);
-        XmlRequest remoteRequest = context.getBean(GeonetHttpRequestFactory.class).createXmlRequest(new URL(newURL));
-
         final SettingManager sm = context.getBean(SettingManager.class);
+    	String newURL = proxifyURL(url, sm);
+        XmlRequest remoteRequest = context.getBean(GeonetHttpRequestFactory.class).createXmlRequest(new URL(newURL));
 
         Lib.net.setupProxy(sm, remoteRequest);
 
@@ -344,11 +342,14 @@ public class InspireAtomUtil {
  * Lantmäteriets services require a validation token to access them
  * od-proxy adds that token to the request
  */
-    public static String proxifyURL(String oldURL) {
+    public static String proxifyURL(String oldURL, SettingManager sm) {
     	String newURL = oldURL;
     	if (StringUtils.contains(oldURL, "api.lantmateriet.se")) {
-     	    //				newURL = "http://localhost:8080/geodataportalen/od-proxy?url=" + URLEncoder.encode(oldURL, StandardCharsets.UTF_8.toString());
-			newURL = "https://ver.geodata.se/geodataportalen/od-proxy?url=" + oldURL;    		
+    		String protocol = sm.getValue("system/server/protocol");
+    		String port = sm.getValue("system/server/port");
+    		String host = sm.getValue("system/server/host");
+    		newURL = protocol + "://" + host + ":" + port + "/geodataportalen/od-proxy?url=" + oldURL;
+//    		newURL = "https://ver.geodata.se/geodataportalen/od-proxy?url=" + oldURL;    		
     	}
     	System.out.println("Proxified URL newURL = " + newURL);
     	return newURL;
