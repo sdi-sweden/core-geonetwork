@@ -17,6 +17,8 @@
 
 package org.fao.geonet.services.harvesting.notifier;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
@@ -166,7 +168,21 @@ public class SendNotification {
         htmlMessage = htmlMessage.replace("$$harvesterType$$", ah.getType());
         subject = subject.replace("$$harvesterType$$", ah.getType());
 
-        MailUtil.sendHtmlMail(toAddress, subject, htmlMessage, settings);
+        String loggerAppender = ah.getLogger().getFileAppender();
+
+        if (!StringUtils.isEmpty(loggerAppender)) {
+            String from = settings.getValue(Settings.SYSTEM_FEEDBACK_EMAIL);
+
+            List<EmailAttachment> attachments = new ArrayList<>();
+            EmailAttachment logfileAttachment = new EmailAttachment();
+            logfileAttachment.setDescription("Harvester log file");
+            logfileAttachment.setName("HarvesterLogFile");
+            logfileAttachment.setPath(loggerAppender);
+            attachments.add(logfileAttachment);
+            MailUtil.sendHtmlMailWithAttachment(toAddress, from, subject, htmlMessage, attachments, settings);
+        } else {
+            MailUtil.sendHtmlMail(toAddress, subject, htmlMessage, settings);
+        }
     }
 
     /**

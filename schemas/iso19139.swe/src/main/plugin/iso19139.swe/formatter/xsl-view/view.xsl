@@ -344,7 +344,7 @@
               <xsl:for-each select="gmd:address/*/(
                                           gmd:deliveryPoint|gmd:city|
                                           gmd:administrativeArea|gmd:postalCode|gmd:country)">
-                <xsl:apply-templates mode="render-value" select="."/>
+                <xsl:apply-templates mode="render-value-no-breaklines" select="."/>
               </xsl:for-each>
             </xsl:for-each>
           </address>
@@ -354,7 +354,7 @@
             <xsl:for-each select="*/gmd:contactInfo/*">
               <xsl:for-each select="gmd:phone/*/gmd:voice[normalize-space(.) != '']">
                 <xsl:variable name="phoneNumber">
-                  <xsl:apply-templates mode="render-value" select="."/>
+                  <xsl:apply-templates mode="render-value-no-breaklines" select="."/>
                 </xsl:variable>
                 <i class="fa fa-phone"></i>
                 <a href="tel:{$phoneNumber}">
@@ -363,7 +363,7 @@
               </xsl:for-each>
               <xsl:for-each select="gmd:phone/*/gmd:facsimile[normalize-space(.) != '']">
                 <xsl:variable name="phoneNumber">
-                  <xsl:apply-templates mode="render-value" select="."/>
+                  <xsl:apply-templates mode="render-value-no-breaklines" select="."/>
                 </xsl:variable>
                 <i class="fa fa-fax"></i>
                 <a href="tel:{normalize-space($phoneNumber)}">
@@ -708,7 +708,7 @@
           </tr>
           <xsl:for-each select="parent::node()/gmd:onLine">
             <xsl:variable name="protocol">
-              <xsl:apply-templates mode="render-value" select="*/gmd:protocol"/>
+              <xsl:apply-templates mode="render-value-no-breaklines" select="*/gmd:protocol"/>
             </xsl:variable>
             <xsl:variable name="aliasProtocol">
               <xsl:choose>
@@ -733,7 +733,7 @@
               </xsl:choose>
             </xsl:variable>
             <xsl:variable name="name">
-              <xsl:apply-templates mode="render-value" select="*/gmd:name"/>
+              <xsl:apply-templates mode="render-value-no-breaklines" select="*/gmd:name"/>
             </xsl:variable>
             <xsl:variable name="description">
               <xsl:apply-templates mode="render-value" select="*/gmd:description"/>
@@ -788,7 +788,7 @@
                                select="*/gmd:codeSpace"/>
           /
         </xsl:if> -->
-        <xsl:apply-templates mode="render-value"
+        <xsl:apply-templates mode="render-value-no-breaklines"
                              select="*/gmd:code"/>
         <!-- <xsl:if test="*/gmd:version">
           / <xsl:apply-templates mode="render-value"
@@ -894,9 +894,9 @@
       </dt>
       <dd>
           <xsl:for-each select="parent::node()/gmd:distributorFormat">
-              <xsl:apply-templates mode="render-value"
+              <xsl:apply-templates mode="render-value-no-breaklines"
                                    select="*/gmd:name"/>
-              (<xsl:apply-templates mode="render-value"
+              (<xsl:apply-templates mode="render-value-no-breaklines"
                                     select="*/gmd:version"/>)
                 <xsl:apply-templates mode="render-field"
                                      select="*/(gmd:amendmentNumber|gmd:specification|
@@ -1068,6 +1068,21 @@
       <xsl:call-template name="addLineBreaksAndHyperlinks">
         <xsl:with-param name="txt" select="$txt"/>
       </xsl:call-template>
+    </span>
+  </xsl:template>
+
+  <xsl:template mode="render-value-no-breaklines"
+                match="*[gco:CharacterString]">
+
+    <xsl:variable name="txtNonNormalized">
+      <xsl:apply-templates mode="localised" select=".">
+        <xsl:with-param name="langId" select="$langId"/>
+      </xsl:apply-templates>
+    </xsl:variable>
+
+    <xsl:variable name="txt" select="normalize-space($txtNonNormalized)" />
+    <span>
+      <xsl:value-of select="$txt" />
     </span>
   </xsl:template>
 
