@@ -687,7 +687,7 @@ public class MetadataApi implements ApplicationContextAware {
 
                     String schema = md.getDataInfo().getSchemaId();
 
-                    Path xslProcessing = schemaMan.getSchemaDir(schema).resolve("convert").resolve("ATOMToHTML.xsl");
+                    Path xslProcessing = schemaMan.getSchemaDir(schema).resolve("convert").resolve("ATOMtoHTML.xsl");
                     if (!Files.exists(xslProcessing)) {
                         // Return the feed document
                         response.setCharacterEncoding(Constants.ENCODING);

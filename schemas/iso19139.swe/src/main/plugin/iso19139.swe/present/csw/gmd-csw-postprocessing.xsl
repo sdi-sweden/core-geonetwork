@@ -189,7 +189,7 @@
 
   <xsl:template match="gmd:metadataStandardName">
     <gmd:metadataStandardName>
-      <gco:CharacterString>SS-EN ISO 19115:2005-geodata.se</gco:CharacterString>
+      <gco:CharacterString>SS-EN-ISO-19115:2005-NMDP 4.0</gco:CharacterString>
     </gmd:metadataStandardName>
   </xsl:template>
 
