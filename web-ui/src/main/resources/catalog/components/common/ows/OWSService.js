@@ -211,7 +211,7 @@
 								      } else if (url.includes("api.lantmateriet.se")) {
 								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
 								      } else if (!url.includes("https://")) {
-								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+								    	  layers[j].Style[k].LegendURL[l].OnlineResource = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
 								      }
         						  }
         					  } 
