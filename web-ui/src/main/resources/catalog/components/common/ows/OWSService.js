@@ -124,14 +124,7 @@
              var wmsLayers = parseUrl[1].split("=")
           }
           
-          // check if URL needs to go through the Lantmäteriet proxy
-          if (url.includes("maps.lantmateriet.se")) {
-        	  url = '../../' + gnGlobalSettings.lmProxyUrl + encodeURIComponent(url);
-          } else if (url.includes("maps-ver.lantmateriet.se")) {
-          	url = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
-          } else if (url.includes("api.lantmateriet.se")) {
-          	url = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
-          }
+          url = proxyfyURL(url);
           
           //Function to parse layers inside each layergroup 
           var parseLayerGroup = function(layer){
@@ -217,6 +210,8 @@
 								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
 								      } else if (url.includes("api.lantmateriet.se")) {
 								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
+								      } else if (!url.includes("https://")) {
+								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.proxyUrl + encodeURIComponent(url);
 								      }
         						  }
         					  } 
