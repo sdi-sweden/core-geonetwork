@@ -228,8 +228,15 @@ public class InspireAtomHarvester {
 //                    continue;
                 }
 
-                String atomFeedDocument = InspireAtomUtil.retrieveRemoteAtomFeedDocument(gc, atomUrl);
-                logger.debug("Atom feed Document for service metadata (" + metadataUuid + "): " + atomFeedDocument);
+                String atomFeedDocument = null;
+				try {
+					atomFeedDocument = InspireAtomUtil.retrieveRemoteAtomFeedDocument(gc, atomUrl);
+					logger.debug("Atom feed Document for service metadata (" + metadataUuid + "): " + atomFeedDocument);
+				} catch (Exception e) {
+					logger.info("error retreiving Atom feed document: " + e.getMessage());
+					e.printStackTrace();
+					continue;
+				}
 
                 Element atomDoc = Xml.loadString(atomFeedDocument, false);
 
