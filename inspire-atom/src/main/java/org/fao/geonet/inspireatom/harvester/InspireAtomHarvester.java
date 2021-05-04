@@ -223,8 +223,8 @@ public class InspireAtomHarvester {
                 logger.info("Processing feed (" + i++ + "/"+ total + ") for service metadata with uuid:" + metadataUuid + ", feed url: " + atomUrl);
 
                 if (!atomUrl.toLowerCase().endsWith(".xml")) {
-                    logger.warning("Atom feed Document (" + atomUrl + ") for service metadata (" + metadataUuid + ") is not a valid feed");
-                    continue;
+                    logger.warning("Atom feed Document (" + atomUrl + ") for service metadata (" + metadataUuid + ") is not a valid feed (not XML)");
+//                    continue;
                 }
 
                 String atomFeedDocument = null;
@@ -241,8 +241,8 @@ public class InspireAtomHarvester {
 
                 // Skip document if not a feed
                 if (!atomDoc.getNamespace().equals(Geonet.Namespaces.ATOM)) {
-                    logger.warning("Atom feed Document (" + atomUrl + ") for service metadata (" + metadataUuid + ") is not a valid feed");
-                    continue;
+                    logger.warning("Atom feed Document (" + atomUrl + ") for service metadata (" + metadataUuid + ") is not a valid feed (namspace)");
+//                    continue;
                 }
 
                 InspireAtomFeed inspireAtomFeed = InspireAtomFeed.build(atomDoc);
@@ -327,8 +327,8 @@ public class InspireAtomHarvester {
                 }
 
                 if (!atomUrl.toLowerCase().endsWith(".xml")) {
-                    logger.warning("Atom feed Document (" + atomUrl + ") for dataset metadata (" + metadataUuid + ") is not a valid feed");
-                    continue;
+                    logger.warning("Atom feed Document (" + atomUrl + ") for dataset metadata (" + metadataUuid + ") is not a valid feed (not XML)");
+//                    continue;
                 }
 
                 String metadataId = dataMan.getMetadataId(metadataUuid);
@@ -342,8 +342,8 @@ public class InspireAtomHarvester {
 
                 // Skip document if not a feed
                 if (!atomDoc.getNamespace().equals(Geonet.Namespaces.ATOM)) {
-                    logger.warning("Atom feed Document (" + atomUrl + ") for dataset metadata (" + metadataUuid + ") is not a valid feed");
-                    continue;
+                    logger.warning("Atom feed Document (" + atomUrl + ") for dataset metadata (" + metadataUuid + ") is not a valid feed (namespace)");
+//                    continue;
                 }
 
                 InspireAtomFeed inspireAtomFeed = InspireAtomFeed.build(atomDoc);
