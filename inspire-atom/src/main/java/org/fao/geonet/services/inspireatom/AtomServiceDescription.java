@@ -129,6 +129,7 @@ public class AtomServiceDescription implements Service {
                 inspireAtomFeed = service.findByMetadataId(Integer.parseInt(id));
 
                 if (inspireAtomFeed == null) {
+                	Log.debug(Geonet.ATOM, "No atom feed for service metadata found with uuid:" + fileIdentifier + " (id:" + id);
                     throw new ResourceNotFoundEx("No atom feed for service metadata found with uuid:" + fileIdentifier);
                 }
             }

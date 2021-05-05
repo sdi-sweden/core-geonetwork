@@ -228,6 +228,7 @@ public class InspireAtomHarvester {
 //                    continue;
                 }
 
+                logger.debug("About to get Atom feed Document for service metadata (" + metadataUuid + ")");                
                 String atomFeedDocument = null;
 				try {
 					atomFeedDocument = InspireAtomUtil.retrieveRemoteAtomFeedDocument(gc, atomUrl);
@@ -237,7 +238,7 @@ public class InspireAtomHarvester {
 					e.printStackTrace();
 					continue;
 				}
-
+				logger.debug("Convert Atom feed Document to XML Doc for service metadata (" + metadataUuid + ")");
                 Element atomDoc = Xml.loadString(atomFeedDocument, false);
 
                 // Skip document if not a feed
@@ -346,7 +347,7 @@ public class InspireAtomHarvester {
                 // Skip document if not a feed
                 if (!atomDoc.getNamespace().equals(Geonet.Namespaces.ATOM)) {
                     logger.warning("Atom feed Document (" + atomUrl + ") for dataset metadata (" + metadataUuid + ") is not a valid feed (namespace)");
-//                    continue;
+                    continue;
                 }
 
                 InspireAtomFeed inspireAtomFeed = InspireAtomFeed.build(atomDoc);
