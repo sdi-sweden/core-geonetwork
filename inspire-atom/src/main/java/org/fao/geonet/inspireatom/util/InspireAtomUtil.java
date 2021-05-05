@@ -84,13 +84,15 @@ public class InspireAtomUtil {
     public static String retrieveRemoteAtomFeedDocument(final ServiceContext context,
                                                         final String url) throws Exception {
         final SettingManager sm = context.getBean(SettingManager.class);
+        System.out.println("got SettingsManager");
         String newURL = proxifyURL(url, sm);
-        XmlRequest remoteRequest = context.getBean(GeonetHttpRequestFactory.class).createXmlRequest(new URL(newURL));
-
-        Lib.net.setupProxy(sm, remoteRequest);
-
+    	System.out.println("create request Atom document");
+    	XmlRequest remoteRequest = context.getBean(GeonetHttpRequestFactory.class).createXmlRequest(new URL(newURL));
+        
+    	Lib.net.setupProxy(sm, remoteRequest);
+        System.out.println("about to execute request for Atom document");
         Element atomFeed = remoteRequest.execute();
-
+        System.out.println("got response for Atom Document");
         return Xml.getString(atomFeed);
     }
 

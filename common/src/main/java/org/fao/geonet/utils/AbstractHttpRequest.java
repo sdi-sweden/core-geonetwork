@@ -345,6 +345,9 @@ public class AbstractHttpRequest {
         builder.setCircularRedirectsAllowed(true);
         builder.setMaxRedirects(3);
         builder.setCookieSpec(CookieSpecs.BROWSER_COMPATIBILITY);
+        builder.setConnectionRequestTimeout(30000);
+        builder.setConnectTimeout(30000);
+        builder.setSocketTimeout(30000);
 
         httpMethod.setConfig(builder.build());
         return httpMethod;
