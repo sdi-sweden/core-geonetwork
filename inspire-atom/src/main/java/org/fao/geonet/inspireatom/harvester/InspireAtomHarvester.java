@@ -243,7 +243,7 @@ public class InspireAtomHarvester {
                 // Skip document if not a feed
                 if (!atomDoc.getNamespace().equals(Geonet.Namespaces.ATOM)) {
                     logger.warning("Atom feed Document (" + atomUrl + ") for service metadata (" + metadataUuid + ") is not a valid feed (namspace)");
-//                    continue;
+                    continue;
                 }
 
                 logger.debug("Build Atom feed Document to save in repository for service metadata (" + metadataUuid + ")");
