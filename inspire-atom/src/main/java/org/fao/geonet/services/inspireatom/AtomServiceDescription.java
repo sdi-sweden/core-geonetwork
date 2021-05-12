@@ -73,6 +73,8 @@ public class AtomServiceDescription implements Service {
     //--------------------------------------------------------------------------
     //---
     //--- Exec
+    //--- The output of this method is processed by an xslt file to generate the OpenSearch document
+    //--- ../xslt/services/inspire-atom/opensearch.xsl
     //---
     //--------------------------------------------------------------------------
 
@@ -194,6 +196,7 @@ public class AtomServiceDescription implements Service {
 
         for (DatasetFeedInfo datasetFeedInfo : datasetsInformation) {
             // Get the metadata uuid for the dataset
+        	Log.debug(Geonet.ATOM, "Try to find Dataset UUID for datasetFeed ID: " + datasetFeedInfo.identifier);
             String datasetUuid = repository.retrieveDatasetUuidFromIdentifier(datasetFeedInfo.identifier);
 
             // If dataset metadata not found, ignore
