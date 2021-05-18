@@ -348,7 +348,7 @@ public class InspireAtomUtil {
  */
     public static String proxifyURL(String oldURL, SettingManager sm) {
     	String newURL = oldURL;
-    	if (StringUtils.contains(oldURL, "api.lantmateriet.se")) {
+    	if (StringUtils.contains(oldURL, "api.lantmateriet.se") || StringUtils.contains(oldURL, "api-ver.lantmateriet.se")) {
     		String protocol = sm.getValue("system/server/protocol");
     		String port = sm.getValue("system/server/port");
     		String host = sm.getValue("system/server/host");

@@ -212,7 +212,7 @@
                      <gmd:identifier>
                         <gmd:MD_Identifier>
                            <gmd:code>
-                              <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/swe/thesaurus.download?ref=external.theme.SpatialDataServiceCategorySwedish">geonetwork.thesaurus.external.theme.SpatialDataServiceCategorySwedish</gmx:Anchor>
+                              <gmx:Anchor xlink:href="https://www.geonetwork.se/geodataportalen/srv/swe/thesaurus.download?ref=external.theme.SpatialDataServiceCategorySwedish">geonetwork.thesaurus.external.theme.SpatialDataServiceCategorySwedish</gmx:Anchor>
                            </gmd:code>
                         </gmd:MD_Identifier>
                      </gmd:identifier>
