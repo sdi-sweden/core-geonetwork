@@ -102,11 +102,11 @@
             	newUrl = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
             } else if (url.includes("api.lantmateriet.se")) {
         	    newUrl = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
-            } else {
-           	    if (!url.includes("https://")) {
-             	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                }
-            }
+            } 
+//            else { if (!url.includes("https://")) {
+//             	    newUrl = gnGlobalSettings.proxyUrl + url;
+//                }
+//            }
             return newUrl;
     	}
     	
@@ -210,9 +210,10 @@
 								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.lmProxyVerUrl + encodeURIComponent(url);
 								      } else if (url.includes("api.lantmateriet.se")) {
 								    	  layers[j].Style[k].LegendURL[l].OnlineResource = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
-								      } else if (!url.includes("https://")) {
-								    	  layers[j].Style[k].LegendURL[l].OnlineResource = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-								      }
+								      } 
+//                                        else if (!url.includes("https://")) {
+//								    	  layers[j].Style[k].LegendURL[l].OnlineResource = gnGlobalSettings.proxyUrl + url;
+//								      }
         						  }
         					  } 
         				  }

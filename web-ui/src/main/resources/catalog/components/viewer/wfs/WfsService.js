@@ -93,11 +93,11 @@
             }  else if (url.includes("api.lantmateriet.se")) {
             	newUrl = '../../' + gnGlobalSettings.odProxyUrl + encodeURIComponent(url);
             }
-             else {
-           	    if (!url.includes("https://")) {
-             	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
-                }
-            }
+//             else {
+//           	    if (!url.includes("https://")) {
+//             	    newUrl = gnGlobalSettings.proxyUrl + encodeURIComponent(url);
+//                }
+//            }
             return newUrl;
     	}
 

@@ -149,6 +149,7 @@ public class HttpProxyServlet extends HttpServlet {
 
             // Checks if allowed host
             if (!isAllowedHost(host)) {
+            	Log.error(Geonet.GEONETWORK + ".httpproxy", "This proxy does not allow you to access location: "+ host);
                 //throw new ServletException("This proxy does not allow you to access that location.");
                 response.sendError(org.springframework.http.HttpStatus.BAD_REQUEST.value(), "This proxy does not allow you to access " +
                     "that location.");
@@ -178,6 +179,7 @@ public class HttpProxyServlet extends HttpServlet {
                     if (!isValidContentType(contentTypesReturned[0])) {
                         contentTypesReturned = contentType.getValue().split(" ");
                         if (!isValidContentType(contentTypesReturned[0])) {
+                        	Log.error(Geonet.GEONETWORK + ".httpproxy", "Status: 415 Unsupported media type:" + contentTypesReturned[0]);
                             response.sendError(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE,
                                 String.format(
                                     "Status: 415 Unsupported media type '%s'",
@@ -201,17 +203,20 @@ public class HttpProxyServlet extends HttpServlet {
                     }
 
                 } else {
-                    returnExceptionMessage(response,
+                	Log.error(Geonet.GEONETWORK + ".httpproxy", "Unexpected failure: " + httpResponse.getStatusLine().getStatusCode());
+                	returnExceptionMessage(response,
                         httpResponse.getStatusLine().getStatusCode(),
                         "Unexpected failure: " + httpResponse.getStatusLine().getReasonPhrase()
                     );
                 }
 
             } else {
-                //throw new ServletException("only HTTP(S) protocol supported");
+            	Log.error(Geonet.GEONETWORK + ".httpproxy", "only HTTP(S) protocol supported");
+            	//throw new ServletException("only HTTP(S) protocol supported");
                 response.sendError(org.springframework.http.HttpStatus.BAD_REQUEST.value(), "only HTTP(S) protocol supported");
             }
         } catch (Exception e) {
+        	Log.error(Geonet.GEONETWORK + ".httpproxy", "Some unexpected error occurred. Error text was: " + e.getMessage());
             response.sendError(org.springframework.http.HttpStatus.NOT_FOUND.value(), "Some unexpected error occurred. Error text was: " + e.getMessage());
         } finally {
             if (method != null) method.releaseConnection();
@@ -231,6 +236,7 @@ public class HttpProxyServlet extends HttpServlet {
             // Checks if allowed host
             if (!isAllowedHost(host)) {
                 //throw new ServletException("This proxy does not allow you to access that location.");
+            	Log.error(Geonet.GEONETWORK + ".httpproxy", "Error resolving address of host:" + host);
                 returnExceptionMessage(response, HttpStatus.SC_FORBIDDEN, "This proxy does not allow you to access that location.");
                 return;
             }
@@ -258,6 +264,7 @@ public class HttpProxyServlet extends HttpServlet {
                     if (!isValidContentType(contentTypesReturned[0])) {
                         contentTypesReturned = contentType.getValue().split(" ");
                         if (!isValidContentType(contentTypesReturned[0])) {
+                        	Log.error(Geonet.GEONETWORK + ".httpproxy", "Status: 415 Unsupported media type " + contentTypesReturned[0]);
                             throw new ServletException(
                                 String.format("Status: 415 Unsupported media type '%s'",
                                     contentTypesReturned[0]));
@@ -279,6 +286,7 @@ public class HttpProxyServlet extends HttpServlet {
                     out.close();
 
                 } else {
+                	Log.error(Geonet.GEONETWORK + ".httpproxy", "Unexpected failure: " + httpResponse.getStatusLine().getStatusCode());
                     returnExceptionMessage(response,
                         httpResponse.getStatusLine().getStatusCode(),
                         "Unexpected failure: " + httpResponse.getStatusLine().getReasonPhrase()
@@ -291,9 +299,11 @@ public class HttpProxyServlet extends HttpServlet {
                 returnExceptionMessage(response, HttpStatus.SC_FORBIDDEN, "only HTTP(S) protocol supported");
             }
         } catch (UnknownHostException e) {
+        	Log.error(Geonet.GEONETWORK + ".httpproxy", "url can't be found");
             e.printStackTrace();
             response.sendError(HttpStatus.SC_NOT_FOUND, "url can't be found");
         } catch (Exception e) {
+        	Log.error(Geonet.GEONETWORK + ".httpproxy", "Some unexpected error occurred. Error text was: " + e.getMessage());
             e.printStackTrace();
             //throw new ServletException("Some unexpected error occurred. Error text was: " + e.getMessage());
             returnExceptionMessage(response, HttpStatus.SC_INTERNAL_SERVER_ERROR,
@@ -341,6 +351,7 @@ public class HttpProxyServlet extends HttpServlet {
             // Checks if allowed host
             if (!isAllowedHost(host)) {
                 //throw new ServletException("This proxy does not allow you to access that location.");
+            	Log.error(Geonet.GEONETWORK + ".httpproxy", "This proxy does not allow you to access location: " + host);
                 returnExceptionMessage(response, HttpStatus.SC_FORBIDDEN, "This proxy does not allow you to access that location.");
                 return;
             }
@@ -385,6 +396,7 @@ public class HttpProxyServlet extends HttpServlet {
                     if (!isValidContentType(contentTypesReturned[0])) {
                         contentTypesReturned = contentType.getValue().split(" ");
                         if (!isValidContentType(contentTypesReturned[0])) {
+                        	Log.error(Geonet.GEONETWORK + ".httpproxy", "Status: 415 Unsupported media type " + contentTypesReturned[0]);
                             throw new ServletException(
                                 String.format(
                                     "Status: 415 Unsupported media type '%s'",
@@ -401,6 +413,7 @@ public class HttpProxyServlet extends HttpServlet {
                     out.close();
 
                 } else {
+                	Log.error(Geonet.GEONETWORK + ".httpproxy", "Unexpected failure: " + httpResponse.getStatusLine().getStatusCode());
                     returnExceptionMessage(response,
                         httpResponse.getStatusLine().getStatusCode(),
                         "Unexpected failure: " + httpResponse.getStatusLine().getReasonPhrase()
@@ -408,13 +421,16 @@ public class HttpProxyServlet extends HttpServlet {
                 }
 
             } else {
+            	Log.error(Geonet.GEONETWORK + ".httpproxy",  "only HTTP(S) protocol supported");
                 //throw new ServletException("only HTTP(S) protocol supported");
                 returnExceptionMessage(response, HttpStatus.SC_FORBIDDEN, "only HTTP(S) protocol supported");
             }
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+        	Log.error(Geonet.GEONETWORK + ".httpproxy",  "url can't be found");
+        	e.printStackTrace();
             response.sendError(HttpStatus.SC_NOT_FOUND, "url can't be found");
         } catch (Throwable e) {
+        	Log.error(Geonet.GEONETWORK + ".httpproxy",  "Some unexpected error occurred. Error text was: " + e.getMessage());
             e.printStackTrace();
             //throw new ServletException("Some unexpected error occurred. Error text was: " + e.getMessage());
             returnExceptionMessage(response, HttpStatus.SC_INTERNAL_SERVER_ERROR,
