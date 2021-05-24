@@ -175,6 +175,13 @@
 					<Field name="identifier" string="{string(.)}" store="true" index="true"/>
 				</xsl:for-each>
 
+				<xsl:for-each select="gmd:identifier/gmd:MD_Identifier/gmd:code/gmx:Anchor/@xlink:href">
+					<Field name="identifier" string="{string(.)}" store="true" index="true"/>
+				</xsl:for-each>
+
+				<xsl:for-each select="gmd:identifier/gmd:RS_Identifier/gmd:code/gmx:Anchor/@xlink:href">
+					<Field name="identifier" string="{string(.)}" store="true" index="true"/>
+				</xsl:for-each>
 
 				<xsl:for-each select="gmd:title/gco:CharacterString">
 					<Field name="title" string="{string(.)}" store="true" index="true"/>
