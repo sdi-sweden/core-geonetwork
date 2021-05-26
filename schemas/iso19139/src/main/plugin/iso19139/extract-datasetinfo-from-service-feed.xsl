@@ -37,7 +37,7 @@
             <xsl:value-of select="inspire_dls:spatial_dataset_identifier_namespace"/>
           </namespace>
           <feedUrl>
-            <xsl:value-of select="atom:link[@type='application/atom+xml']/@href"/>
+            <xsl:value-of select="atom:link[@type='application/atom+xml' and @rel='alternate']/@href"/>
           </feedUrl>
         </dataset>
       </xsl:for-each>
