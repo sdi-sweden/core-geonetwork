@@ -96,15 +96,15 @@
     <level value="WARN"/>
   </logger>
   <logger name="geonetwork.harvester" additivity="false">
-    <level value="DEBUG"/>
+    <level value="INFO"/>
     <appender-ref ref="consoleAppender"/>
     <appender-ref ref="fileAppender"/>
   </logger>
   <logger name="geonetwork.harvest-man">
-    <level value="DEBUG"/>
+    <level value="INFO"/>
   </logger>
   <logger name="geonetwork.atom" additivity="false">
-    <level value="INFO"/>
+    <level value="DEBUG"/>
     <appender-ref ref="consoleAppender"/>
     <appender-ref ref="fileAppender"/>
   </logger>
