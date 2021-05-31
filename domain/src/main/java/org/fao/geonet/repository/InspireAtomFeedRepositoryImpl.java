@@ -27,6 +27,8 @@ import org.fao.geonet.domain.InspireAtomFeed;
 import org.fao.geonet.domain.InspireAtomFeed_;
 import org.fao.geonet.domain.Metadata;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -40,14 +42,14 @@ public class InspireAtomFeedRepositoryImpl implements InspireAtomFeedRepositoryC
 
 
     @Override
-    public String retrieveDatasetUuidFromIdentifierNs(String datasetIdCode, String datasetIdNs) {
+    public String retrieveDatasetUuidFromIdentifierNs(String atomDatasetId, String datasetIdNs) {
 
         String metadataUuid = "";
 
         /*
         "SELECT m.uuid FROM Metadata m " +
                     "LEFT JOIN inspireatomfeed f ON m.id = f.metadataId " +
-                    "WHERE f.atomdatasetid = ? and f.atomdatasetns = ?"
+                    "WHERE f.atomDatasetid = ? and f.atomdatasetns = ?"
          */
         final CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
         final CriteriaQuery<InspireAtomFeed> cbQuery = cb.createQuery(InspireAtomFeed.class);
@@ -56,20 +58,21 @@ public class InspireAtomFeedRepositoryImpl implements InspireAtomFeedRepositoryC
         Path<String> datasetIdCodeAttributePath = root.get(InspireAtomFeed_.atomDatasetid);
         Path<String> datasetIdNsAttributePath = root.get(InspireAtomFeed_.atomDatasetns);
 
-        Predicate datasetIdCodePredicate = cb.equal(datasetIdCodeAttributePath, datasetIdCode);
+        Predicate datasetIdCodePredicate = cb.equal(datasetIdCodeAttributePath, atomDatasetId);
         Predicate datasetIdNsPredicate = cb.equal(datasetIdNsAttributePath, datasetIdNs);
 
         cbQuery.where(cb.and(datasetIdCodePredicate, datasetIdNsPredicate));
 
-        InspireAtomFeed feed = null;
+        List<InspireAtomFeed> feedList = null;
 
         try {
-            feed = _entityManager.createQuery(cbQuery).getSingleResult();
+            feedList = _entityManager.createQuery(cbQuery).getResultList();
         } catch (NoResultException nre) {
             //Ignore this
         }
 
-        if (feed != null) {
+        if ((feedList != null) && (feedList.size() > 0) ) {
+        	InspireAtomFeed feed = feedList.get(0);
             Metadata md = _entityManager.find(Metadata.class, feed.getMetadataId());
             metadataUuid = md.getUuid();
         }
@@ -110,5 +113,34 @@ public class InspireAtomFeedRepositoryImpl implements InspireAtomFeedRepositoryC
         }
 
         return metadataUuid;
+    }
+    
+    @Override
+    public InspireAtomFeed retrieveInspireAtomFeedFromIdentifierNs(final String datasetIdCode, final String datasetIdNs) {
+
+        /*
+        "SELECT * FROM inspireatomfeed f " +
+                    "WHERE f.atomDatasetId = ? and f.atomdatasetns = ?"
+         */
+        final CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
+        final CriteriaQuery<InspireAtomFeed> cbQuery = cb.createQuery(InspireAtomFeed.class);
+        final Root<InspireAtomFeed> root = cbQuery.from(InspireAtomFeed.class);
+
+        Path<String> datasetIdCodeAttributePath = root.get(InspireAtomFeed_.atomDatasetid);
+        Path<String> datasetIdNsAttributePath = root.get(InspireAtomFeed_.atomDatasetns);
+
+        Predicate datasetIdCodePredicate = cb.equal(datasetIdCodeAttributePath, datasetIdCode);
+        Predicate datasetIdNsPredicate = cb.equal(datasetIdNsAttributePath, datasetIdNs);
+
+        cbQuery.where(cb.and(datasetIdCodePredicate, datasetIdNsPredicate));
+
+        InspireAtomFeed feed = null;
+
+        try {
+            feed = _entityManager.createQuery(cbQuery).getSingleResult();
+        } catch (NoResultException nre) {
+            //Ignore this
+        }    	
+    	return feed;
     }
 }

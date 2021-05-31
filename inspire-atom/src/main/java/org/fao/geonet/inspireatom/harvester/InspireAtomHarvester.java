@@ -358,11 +358,13 @@ public class InspireAtomHarvester {
                 inspireAtomFeed.setAtomUrl(atomUrl);
                 inspireAtomFeed.setAtom(atomFeedDocument);
 
-                logger.debug("About to save Inspire Atom Feed document for metadata : " + metadataId);
+                logger.debug("About to save Inspire Atom Feed document in repository for metadata : " + metadataId);
                 repository.save(inspireAtomFeed);
 
+                logger.debug("About to Index Inspire Atom Feed for metadata : " + metadataId);
                 // Index the metadata to store the atom feed information in the index
                 dataMan.indexMetadata(Arrays.asList(new String[]{metadataId}));
+                logger.debug("About to add Inspire Atom Feed to report for metadata : " + metadataId);
                 result.addContent(new Element("feed").setAttribute("uuid", metadataUuid)
                     .setAttribute("feed", atomUrl).setAttribute("status", "ok"));
 

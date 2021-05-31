@@ -201,8 +201,8 @@ public class AtomServiceDescription implements Service {
 
         for (DatasetFeedInfo datasetFeedInfo : datasetsInformation) {
             // Get the metadata uuid for the dataset
-        	Log.debug(Geonet.ATOM, "Try to find Dataset UUID for datasetFeed ID: " + datasetFeedInfo.identifier);
-            String datasetUuid = repository.retrieveDatasetUuidFromIdentifier(datasetFeedInfo.identifier);
+        	Log.debug(Geonet.ATOM, "Try to find Dataset UUID for datasetFeed ID: " + datasetFeedInfo.identifier + " and Namespace:" + datasetFeedInfo.namespace);
+        	String datasetUuid = repository.retrieveDatasetUuidFromIdentifierNs(datasetFeedInfo.identifier, datasetFeedInfo.namespace);
 
             // If dataset metadata not found, ignore
             if (StringUtils.isEmpty(datasetUuid)) {
@@ -211,8 +211,7 @@ public class AtomServiceDescription implements Service {
                 continue;
             }
 
-            String id = dm.getMetadataId(datasetUuid);
-            InspireAtomFeed inspireAtomFeed = repository.findByMetadataId(Integer.parseInt(id));
+            InspireAtomFeed inspireAtomFeed = repository.retrieveInspireAtomFeedFromIdentifierNs(datasetFeedInfo.identifier, datasetFeedInfo.namespace);
 
             if (inspireAtomFeed == null) {
                 Log.warning(Geonet.ATOM, "AtomServiceDescription for service metadata (" + serviceIdentifier +
