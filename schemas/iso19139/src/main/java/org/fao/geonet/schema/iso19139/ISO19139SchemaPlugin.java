@@ -26,6 +26,7 @@ package org.fao.geonet.schema.iso19139;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.kernel.schema.*;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -38,6 +39,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by francois on 6/15/14.
@@ -160,11 +163,36 @@ public class ISO19139SchemaPlugin
 
     private Set<String> getAttributeUuidrefValues(Element metadata, String tagName, Namespace namespace) {
         ElementFilter elementFilter = new ElementFilter(tagName, namespace);
-        return Xml.filterElementValues(
+        // Extract uuids from xlink:href, as uuidref has the resource identifier.
+        Set<String> links = Xml.filterElementValues(
             metadata,
             elementFilter,
             null, null,
-            "uuidref");
+            "href", ISO19139Namespaces.XLINK);
+
+        Pattern pattern = Pattern.compile("(.*id=)(.+)(&.*)|(.*id=)(.+)$");
+
+
+        Set<String> uuids = new HashSet<>();
+        for (String link : links) {
+            Matcher matcher = pattern.matcher(link);
+
+            if (matcher.matches()) {
+                if (StringUtils.isNotEmpty(matcher.group(2))) {
+                    uuids.add(matcher.group(2));
+                } else if (StringUtils.isNotEmpty(matcher.group(5))) {
+                    uuids.add(matcher.group(5));
+                }
+            }
+        }
+
+        return uuids;
+
+        /*return Xml.filterElementValues(
+            metadata,
+            elementFilter,
+            null, null,
+            "uuidref");*/
     }
 
     @Override

@@ -1,4 +1,9 @@
 {"config": [{
+  "key": "update-operateson",
+  "type": "fixed-params",
+  "params": [
+  ]
+  },{
   "key": "change-spatialdataservicedategory-keywords-to-anchor",
   "type": "fixed-params",
   "params": [

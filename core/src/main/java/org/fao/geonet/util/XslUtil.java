@@ -28,6 +28,7 @@ import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
+import net.sf.saxon.value.TextFragmentValue;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
@@ -293,7 +294,14 @@ public final class XslUtil {
      * @return metadata title or an empty string if Lucene index or uuid could not be found
      */
     public static String getIndexField(Object appName, Object uuid, Object field, Object lang) {
-        String id = uuid.toString();
+        if (uuid == null) return "";
+
+        String id;
+        if (uuid instanceof TextFragmentValue) {
+            id = ((TextFragmentValue) uuid).getStringValue();
+        } else {
+            id = uuid.toString();
+        }
         String fieldname = field.toString();
         String language = (lang.toString().equals("") ? null : lang.toString());
         try {

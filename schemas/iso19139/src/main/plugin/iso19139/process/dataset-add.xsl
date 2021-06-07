@@ -30,6 +30,7 @@ attached it to the metadata for data.
                 xmlns:srv="http://www.isotc211.org/2005/srv"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns:java="java:org.fao.geonet.util.XslUtil"
                 version="2.0"
 >
 
@@ -45,6 +46,10 @@ attached it to the metadata for data.
   <!-- ============================================================================= -->
 
   <xsl:template match="/gmd:MD_Metadata|*[@gco:isoType='gmd:MD_Metadata']">
+
+    <xsl:variable name="baseUrl" select="''"/>
+    <xsl:variable name="resourcerefAux" select="java:getIndexField($baseUrl, $uuidref, 'identifier', 'en')"/>
+    <xsl:variable name="resourceref" select="if (string($resourcerefAux)) then $resourcerefAux else $uuidref"/>
 
     <xsl:copy>
       <xsl:copy-of select="@*"/>
@@ -169,15 +174,11 @@ attached it to the metadata for data.
               gmd:identificationInfo/srv:SV_ServiceIdentification/srv:containsOperations|
               gmd:identificationInfo/*[@gco:isoType='srv:SV_ServiceIdentification']/srv:containsOperations|
               gmd:identificationInfo/srv:SV_ServiceIdentification/srv:operatesOn[@uuidref!=$uuidref]|
-              gmd:identificationInfo/*[@gco:isoType='srv:SV_ServiceIdentification']/srv:operatesOn[@uuidref!=$uuidref]"/>
+              gmd:identificationInfo/*[@gco:isoType='srv:SV_ServiceIdentification']/srv:operatesOn[@uuidref!=$uuidref]|
+              gmd:identificationInfo/srv:SV_ServiceIdentification/srv:operatesOn[@uuidref!=$resourceref]|
+              gmd:identificationInfo/*[@gco:isoType='srv:SV_ServiceIdentification']/srv:operatesOn[@uuidref!=$resourceref]"/>
 
-              <!-- Handle operatesOn
-
-                            // TODO : it looks like the dataset identifier and not the
-                            // metadata UUID should be set in the operatesOn element of
-                            // the service metadata record.
-                            -->
-              <srv:operatesOn uuidref="{$uuidref}"
+               <srv:operatesOn uuidref="{$resourceref}"
                               xlink:href="{$siteUrl}csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidref}"/>
 
             </srv:SV_ServiceIdentification>

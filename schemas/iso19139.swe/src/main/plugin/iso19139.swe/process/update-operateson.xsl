@@ -22,25 +22,6 @@
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:gmd="http://www.isotc211.org/2005/gmd"
-                xmlns:srv="http://www.isotc211.org/2005/srv"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                version="2.0">
-  <xsl:template match="gmd:MD_Metadata">
-    <datasets>
-      <xsl:for-each select="gmd:identificationInfo/srv:SV_ServiceIdentification/srv:operatesOn/@xlink:href">
-
-        <!-- Extract UUID from CSW url -->
-        <xsl:if test="starts-with(lower-case(.), 'http')">
-          <xsl:analyze-string select="." regex="(id=)([^&amp;]+)">
-            <xsl:matching-substring>
-              <dataset>
-                <xsl:value-of select="regex-group(2)"/>
-              </dataset>
-            </xsl:matching-substring>
-          </xsl:analyze-string>
-        </xsl:if>
-      </xsl:for-each>
-    </datasets>
-  </xsl:template>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+  <xsl:import href="../../iso19139/process/update-operateson.xsl"/>
 </xsl:stylesheet>
