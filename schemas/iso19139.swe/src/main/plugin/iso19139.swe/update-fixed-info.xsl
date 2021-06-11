@@ -410,7 +410,7 @@
 		service metadata to datasets. This will avoid to have
 		error on XSD validation. -->
 
-  <xsl:template match="srv:operatesOn|gmd:featureCatalogueCitation">
+  <xsl:template match="gmd:featureCatalogueCitation"> <!-- srv:operatesOn -->
     <xsl:copy>
       <xsl:choose>
         <!-- Do not expand operatesOn sub-elements when using uuidref
