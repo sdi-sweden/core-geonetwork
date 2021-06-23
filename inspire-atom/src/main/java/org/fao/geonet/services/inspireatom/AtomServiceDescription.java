@@ -215,7 +215,7 @@ public class AtomServiceDescription implements Service {
 
             if (inspireAtomFeed == null) {
                 Log.warning(Geonet.ATOM, "AtomServiceDescription for service metadata (" + serviceIdentifier +
-                    "): atom feed for metadata dataset identifier " + datasetFeedInfo.identifier + " is not found, ignoring it.");
+                    "): atom feed for metadata dataset identifier " + datasetFeedInfo.identifier + "/" + datasetFeedInfo.namespace + " is not found, ignoring it.");
                 continue;
             }
 
